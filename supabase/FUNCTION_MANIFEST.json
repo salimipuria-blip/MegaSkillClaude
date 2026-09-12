@@ -1,0 +1,18 @@
+{
+  "project_ref": "aupkeramhsufnmhkbihl",
+  "project_name": "free-llm-router",
+  "region": "eu-central-1",
+  "snapshot_date": "2026-09-12",
+  "functions": [
+    {"slug":"free-llm-router","version":4,"verify_jwt":true,"entrypoint":"index.ts","deployed_sha256":"ae036a25ae3c074ed7f539d95f2ea684657f4df1903089c7b0b8ebb92ba7d055"},
+    {"slug":"global-free-llm-mesh","version":3,"verify_jwt":true,"entrypoint":"index.ts","deployed_sha256":"876b17d6dab3fc922972fe318ba815a6b7eeecf1f8dbc34c8836325bd9bf0941"},
+    {"slug":"github-llm-scanner","version":2,"verify_jwt":true,"entrypoint":"index.ts","deployed_sha256":"cbd74c772ba79cde29b3a756ec6af191b6466a023394479a59497a6a4d89bfec"},
+    {"slug":"github-llm-verifier","version":3,"verify_jwt":true,"entrypoint":"index.ts","deployed_sha256":"fc7bb02862c6ce56d3a9e73b8436825e43fa94257a34df0aa7dbb81453bcbc96"},
+    {"slug":"github-admin-gateway","version":2,"verify_jwt":true,"entrypoint":"index.ts","deployed_sha256":"37084cb752e206f0b938b1d16f637d3e77b46df88a24b965bf0728134eefccb9"},
+    {"slug":"skill-installer","version":4,"verify_jwt":true,"entrypoint":"index.ts","deployed_sha256":"6b5b8c59f88022a5c1f73cf594158ec6d0b1e89d01c683301e000d6a6f259e6e"},
+    {"slug":"skill-orchestrator","version":3,"verify_jwt":true,"entrypoint":"index.ts","deployed_sha256":"3f9609a5ef85f4f84addc2e634bd12ae155337c8e610ad3120823ce2c8337fe6"},
+    {"slug":"skill-router","version":2,"verify_jwt":true,"entrypoint":"index.ts","deployed_sha256":"c479be049a86b6b2f91a2fce7033d68bca54e112704810a46911618a0c8863a9"},
+    {"slug":"prompt-compiler","version":2,"verify_jwt":true,"entrypoint":"index.ts","deployed_sha256":"ea6e9d86bb99d25659434d8281d294ce0b3db5ef4e6556c548a6884dffaca044"},
+    {"slug":"task-orchestrator","version":2,"verify_jwt":true,"entrypoint":"index.ts","deployed_sha256":"dbb884001bd055dd7a191e69efa17883d7a46cef88b643fac29e3ec260ce2435"}
+  ]
+}
