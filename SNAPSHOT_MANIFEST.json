@@ -1,0 +1,37 @@
+{
+  "snapshot_date": "2026-09-12",
+  "branch": "audit/omni-v4-hardening",
+  "supabase_project_ref": "aupkeramhsufnmhkbihl",
+  "production_mutated": false,
+  "edge_function_count": 10,
+  "edge_function_sha_match": true,
+  "skill_install_state": {
+    "expected_skills": 3000,
+    "expected_triggers": 15000,
+    "installed_skills": 0,
+    "installed_triggers": 0,
+    "status": "staging",
+    "error": null
+  },
+  "baseline_ci": {
+    "workflow": "baseline-ci",
+    "run_id": 34672103835,
+    "conclusion": "success",
+    "python_contracts": "13 passed",
+    "repository_guard": "passed",
+    "deno_deployability": "passed"
+  },
+  "live_edge_function_shas": {
+    "free-llm-router": "ae036a25ae3c074ed7f539d95f2ea684657f4df1903089c7b0b8ebb92ba7d055",
+    "global-free-llm-mesh": "876b17d6dab3fc922972fe318ba815a6b7eeecf1f8dbc34c8836325bd9bf0941",
+    "github-llm-scanner": "cbd74c772ba79cde29b3a756ec6af191b6466a023394479a59497a6a4d89bfec",
+    "github-llm-verifier": "fc7bb02862c6ce56d3a9e73b8436825e43fa94257a34df0aa7dbb81453bcbc96",
+    "github-admin-gateway": "37084cb752e206f0b938b1d16f637d3e77b46df88a24b965bf0728134eefccb9",
+    "skill-installer": "6b5b8c59f88022a5c1f73cf594158ec6d0b1e89d01c683301e000d6a6f259e6e",
+    "skill-orchestrator": "3f9609a5ef85f4f84addc2e634bd12ae155337c8e610ad3120823ce2c8337fe6",
+    "skill-router": "c479be049a86b6b2f91a2fce7033d68bca54e112704810a46911618a0c8863a9",
+    "prompt-compiler": "ea6e9d86bb99d25659434d8281d294ce0b3db5ef4e6556c548a6884dffaca044",
+    "task-orchestrator": "dbb884001bd055dd7a191e69efa17883d7a46cef88b643fac29e3ec260ce2435"
+  },
+  "next_plan": "resumable Mega Skills artifact + installer activation"
+}
