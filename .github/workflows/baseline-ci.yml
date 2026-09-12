@@ -28,7 +28,7 @@ jobs:
       - name: Python contracts
         run: |
           python -m pip install --upgrade pip pytest
-          pytest -q \
+          python -m pytest -q \
             tests/test_repository_contract.py \
             tests/test_function_manifest.py \
             tests/test_database_baseline_contract.py \
