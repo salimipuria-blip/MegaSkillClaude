@@ -1,0 +1,21 @@
+{
+  "snapshot": "porya-omni-llm-orchestrator-progress-v2.zip",
+  "policy": "large generated registries are deterministically rebuilt in the installer-hardening phase rather than committed during source recovery",
+  "skills_manifest": {
+    "path": "skills/registry/skills-manifest.json",
+    "bytes": 3935300,
+    "sha256": "2135fe9acab0309bc27b7230626c86b6428805ff2b2d915eba1cd5dfe4b89203",
+    "skills": 3000,
+    "triggers": 15000,
+    "repaired": 10
+  },
+  "triggers": {
+    "path": "skills/registry/triggers.json",
+    "bytes": 1977119,
+    "sha256": "c05061e198103b405fbf0823359e6fbcb5e41cbd09aba5e507441fd7c1862cf2",
+    "skills": 3000,
+    "triggers": 15000
+  },
+  "materialization_required_before_strict_test": true,
+  "strict_test": "tests/test_mega_skills_installation.py"
+}
