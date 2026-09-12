@@ -72,3 +72,23 @@ Reference remediation documentation:
 - Cron command bodies that can reference Vault credentials are excluded; only scheduler metadata is recorded.
 - The SQL snapshot is a recovery/reference artifact and is explicitly marked not to be applied back onto the existing production project.
 - Live Edge Function source and deployed checksums are tracked separately in `supabase/FUNCTION_MANIFEST.json`.
+
+## Final recovery verification
+
+Fresh verification was performed after CI recovery:
+
+- production behavior changed by this phase: `no`
+- Edge Function deployments performed by this phase: `no`
+- database migrations applied by this phase: `no`
+- production install state re-read: `staging`, `0` installed skills, `0` installed triggers, `error=null`
+- live skill table re-read: `0` skills, `0` trigger phrases
+- all 10 live Edge Function deployed SHA-256 values match `supabase/FUNCTION_MANIFEST.json`
+- repository guard: `pass`
+- Python contracts: `13 passed`
+- Deno deployability checks: `pass`
+- successful GitHub Actions workflow run: `34672103835`
+- checkpoint manifest: `SNAPSHOT_MANIFEST.json`
+
+Known recovery-only limitation: `github-llm-verifier` is deployed as JavaScript-style TypeScript and does not pass Deno strict type checking without type annotations. Recovery preserves the deployed source byte-for-byte; CI therefore validates syntax/import/deployability on a temporary `@ts-nocheck` copy. Strict typing of that function is deferred to the hardening phase so recovery does not silently alter production behavior.
+
+Next plan: resumable Mega Skills artifact generation, deterministic 3000-skill/15000-trigger installation, idempotency verification, and activation only after installer gates pass.
