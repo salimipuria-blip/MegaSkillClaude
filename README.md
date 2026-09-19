@@ -1,14 +1,17 @@
-# porya-omni-llm-orchestrator
+# MEGA SKILLS 3000 | ۳۰۰۰ مگا اسکیل
 
-PORYA OMNI LLM Orchestrator — preinstalled Mega Skills 3000, Supabase orchestration, free LLM mesh, routing and verification.
+One canonical project. This private repository currently holds earlier Supabase orchestration sources and deployment/audit templates. Historical names ALGORITHME, Hermes, POORS and APEX are module and reference provenance—not additional products or proof of live integration.
+
+See [the unified project register](docs/MEGA_SKILLS_3000_UNIFICATION.md) for exactly what is implemented, what remains pending, and the laptop migration safety gates.
 
 ## Source of truth
 
-- GitHub owns all deployable Edge Function source, SQL migrations, tests, benchmark code, and deployment configuration templates.
-- Supabase Secrets/Vault owns credentials and secret values. Secret material must never be committed to Git.
-- Canonical skill artifacts are tracked by hashes/checksums; generated ZIPs and install payloads are not source-controlled.
-- Production deployments must originate from reviewed commits and remain reproducible from this repository.
+- This GitHub repository owns reviewed deployable source, SQL migrations, tests, benchmarks and deployment configuration templates.
+- A recovered, tested Vercel V3 website/routing baseline has been separately saved as `MEGA_SKILLS_3000_UNIFIED_BASELINE_V1.zip` in the user's ChatGPT Library. It has **not** yet been committed to or deployed from this repository.
+- The existing Supabase snapshot is historical; the full 3,000 SKILL.md bodies are not yet confirmed installed in a live cloud environment. Do not represent the system as a fully autonomous agent.
+- Secrets remain in authorized platform secret storage and must never be committed to Git. Track imported skill sources with integrity hashes; do not source-control generated ZIPs or third-party code before licensing review.
+- Spending policy: zero-dollar budget, no automatic paid-provider fallback. Free tiers remain subject to provider quotas and terms.
 
 ## Safety
 
-Run `python scripts/audit/check_repository_contract.py` before committing changes. The guard rejects committed secret-like files and generated archives that must stay outside Git.
+Run `python scripts/audit/check_repository_contract.py` before committing changes. Keep laptop originals until complete SHA-256 checked backups, source reconciliation, and an iPhone-only live test succeed.
