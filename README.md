@@ -2,6 +2,8 @@
 
 One canonical project. This private repository currently holds earlier Supabase orchestration sources and deployment/audit templates. Historical names ALGORITHME, Hermes, POORS and APEX are module and reference provenance—not additional products or proof of live integration.
 
+**[Open the central workspace index / فهرست مرکزی تمام پروژه‌ها](docs/WORKSPACE_INDEX.md)** — inventory of accessible GitHub repositories, deployment visibility, cleanup history, and links to the iPhone-first migration branch.
+
 See [the unified project register](docs/MEGA_SKILLS_3000_UNIFICATION.md) for exactly what is implemented, what remains pending, and the laptop migration safety gates.
 
 ## Source of truth
