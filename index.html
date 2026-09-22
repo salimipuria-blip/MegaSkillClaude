@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="theme-color" content="#11100e"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<link rel="manifest" href="/manifest.webmanifest"/>
+<title>VIKING EXPERIENCE COMMAND</title>
+<style>
+:root{--bg:#11100e;--panel:#1a1916;--panel2:#22201c;--line:#35312b;--text:#f4efe7;--muted:#9c958a;--orange:#ff6b2c;--orange2:#ff8a4c;--green:#86d7a2;--red:#ff8f82;--safe:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,sans-serif}body{min-height:100dvh}button,input,textarea,select{font:inherit}
+button{border:0;cursor:pointer}.app{max-width:1180px;margin:auto;min-height:100dvh}.top{position:sticky;top:0;z-index:20;background:#11100ee9;backdrop-filter:blur(18px);border-bottom:1px solid var(--line);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{display:flex;align-items:center;gap:10px}.mark{width:42px;height:42px;border-radius:13px;background:linear-gradient(145deg,#2e1c12,#151310);display:grid;place-items:center;border:1px solid #5b3924;font-weight:900;color:var(--orange);font-size:22px}.brand h1{font-size:14px;margin:0;letter-spacing:.5px}.brand small{display:block;color:var(--muted);margin-top:3px;font-size:10px}.top-actions{display:flex;gap:8px}.iconbtn{width:42px;height:42px;border-radius:12px;background:var(--panel2);color:var(--text);border:1px solid var(--line)}
+main{padding:18px 18px calc(92px + var(--safe))}.hero{position:relative;overflow:hidden;min-height:295px;border:1px solid #4a3528;border-radius:24px;padding:30px;background:radial-gradient(circle at 15% 20%,#5d2a1455,transparent 38%),linear-gradient(145deg,#201a16,#12110f)}.hero:after{content:"V";position:absolute;left:10px;bottom:-72px;font-size:260px;line-height:1;font-weight:900;color:#ff6b2c14;transform:skew(-8deg)}.eyebrow{color:var(--orange);font-size:11px;font-weight:800;letter-spacing:1px}.hero h2{font-size:38px;line-height:1.2;margin:14px 0 10px;max-width:650px}.hero p{max-width:650px;color:#c7bfb4;line-height:2;font-size:13px}.hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}.primary,.secondary{min-height:46px;border-radius:12px;padding:0 16px;font-weight:750}.primary{background:var(--orange);color:#130d09}.secondary{background:#26231f;color:var(--text);border:1px solid #4b443b}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0 24px}.metric{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px}.metric small{color:var(--muted);font-size:10px}.metric strong{display:block;font-size:26px;margin-top:6px}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:28px 0 12px}.section-head h3{margin:0;font-size:18px}.section-head p{margin:4px 0 0;color:var(--muted);font-size:11px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:17px;min-width:0}.card h4{font-size:15px;margin:0 0 8px}.card p{font-size:11px;color:#bcb4aa;line-height:1.9;margin:0}.card .tag{display:inline-flex;margin-top:13px;padding:6px 9px;border-radius:999px;background:#30251e;color:#ffb28a;font-size:9px}
+.workspace{display:none}.workspace.active{display:block}.toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}.toolbar h2{font-size:22px;margin:0}.toolbar-actions{display:flex;gap:8px;flex-wrap:wrap}.records{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.record{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:15px}.record-top{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:10px}.record h3{font-size:16px;margin:10px 0 6px}.record p{font-size:11px;color:#bbb3a8;line-height:1.9;white-space:pre-wrap}.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}.actions button{min-height:36px;padding:0 10px;border-radius:9px;background:#2a2722;color:#ddd6cc;font-size:10px}.actions .danger{color:var(--red)}
+.empty{border:1px dashed #4a443b;border-radius:16px;padding:30px;text-align:center;color:var(--muted);font-size:12px}.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.photo{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden}.photo img{width:100%;aspect-ratio:4/3;object-fit:cover;background:#26231f;display:block}.photo-body{padding:12px}.photo-body h4{margin:0 0 4px}.photo-body small{color:var(--muted)}.photo .actions{margin-top:9px}
+.bottom{position:fixed;z-index:30;left:0;right:0;bottom:0;background:#151411ee;backdrop-filter:blur(18px);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:7px 4px calc(8px + var(--safe))}.bottom button{min-width:48px;min-height:53px;background:transparent;color:#9c958a;border-radius:10px;display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:center;font-size:9px}.bottom button b{font-size:18px}.bottom button.active{color:var(--orange);background:#2c211a}
+.modal-bg{position:fixed;z-index:80;inset:0;background:#000a;display:none;align-items:flex-end;justify-content:center}.modal-bg.show{display:flex}.modal{width:min(620px,100%);max-height:92dvh;background:#181714;border:1px solid #4c443b;border-radius:22px 22px 0 0;overflow:hidden}.modal-head{display:flex;justify-content:space-between;align-items:center;padding:17px 18px;border-bottom:1px solid var(--line)}.modal-head h3{margin:0}.modal-body{padding:16px 18px;overflow:auto;max-height:70dvh}.form{display:grid;gap:13px}.form label{display:grid;gap:7px;font-size:11px;color:#d9d2c8}.form input,.form textarea,.form select{width:100%;border:1px solid #494239;background:#211f1b;color:white;border-radius:11px;padding:11px;min-height:44px}.form textarea{min-height:110px;resize:vertical}.modal-foot{padding:13px 18px calc(13px + var(--safe));border-top:1px solid var(--line);display:flex;gap:8px;justify-content:flex-end}
+.notice{padding:11px 13px;border-radius:11px;background:#1f3025;color:#a9e5bd;border:1px solid #365c43;font-size:11px;margin-bottom:12px}.settings{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.setting{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px}.setting h4{margin:0 0 8px}.setting p{font-size:11px;line-height:1.9;color:var(--muted)}
+@media(max-width:760px){.hero{min-height:360px;padding:24px 20px}.hero h2{font-size:31px}.metrics{grid-template-columns:repeat(2,1fr)}.grid,.records,.settings{grid-template-columns:1fr}.gallery{grid-template-columns:repeat(2,minmax(0,1fr))}.toolbar{align-items:flex-start;flex-direction:column}.toolbar-actions{width:100%}.toolbar-actions .primary,.toolbar-actions .secondary{flex:1}.brand h1{font-size:12px}}
+@media(max-width:430px){main{padding-right:13px;padding-left:13px}.gallery{grid-template-columns:1fr}.hero-actions .primary,.hero-actions .secondary{width:100%}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top"><div class="brand"><div class="mark">V</div><div><h1>VIKING EXPERIENCE COMMAND</h1><small>مرکز فرمان تجربه‌های آفرودی</small></div></div><div class="top-actions"><button class="iconbtn" id="quickAdd" title="افزودن">＋</button></div></header>
+<main>
+<section id="home" class="workspace active">
+<div class="hero"><div class="eyebrow">EXPERIENCE FIRST • OFFROAD CORE</div><h2>سفر نمی‌فروشیم؛ تجربه‌ای می‌سازیم که تعریفش می‌کنند.</h2><p>مرکز واحد برای طراحی تجربه، سفرها، محتوا، گالری، وظایف و گزارش‌های وایکینگ. همه‌چیز برای کار سریع روی آیفون طراحی شده.</p><div class="hero-actions"><button class="primary" onclick="openAdd('experience')">طراحی یک تجربه</button><button class="secondary" onclick="go('trips')">مدیریت سفرها</button></div></div>
+<div class="metrics"><div class="metric"><small>سفرها</small><strong id="mTrips">0</strong></div><div class="metric"><small>تجربه‌ها</small><strong id="mExp">0</strong></div><div class="metric"><small>وظایف باز</small><strong id="mTasks">0</strong></div><div class="metric"><small>عکس‌ها</small><strong id="mPhotos">0</strong></div></div>
+<div class="section-head"><div><h3>سیستم تجربه وایکینگ</h3><p>پنج ضرب اصلی هر سفر</p></div></div>
+<div class="grid">
+<div class="card"><h4>01 — انتظار</h4><p>قبل از حرکت، حس «نباید از دستش بدم» ساخته می‌شود.</p><span class="tag">FOMO</span></div>
+<div class="card"><h4>02 — ورود</h4><p>اولین برخورد باید سریعاً نشان دهد این یک تور معمولی نیست.</p><span class="tag">ARRIVAL</span></div>
+<div class="card"><h4>03 — اوج</h4><p>یک لحظهٔ قهرمان که سفر بدون آن کامل نیست.</p><span class="tag">PEAK</span></div>
+<div class="card"><h4>04 — ارتباط</h4><p>آدم‌ها بخشی از محصول‌اند؛ نه فقط هم‌سفر.</p><span class="tag">SOCIAL</span></div>
+<div class="card"><h4>05 — دنباله‌دار</h4><p>بعد از سفر، داستان باید ادامه پیدا کند و بازگشت بسازد.</p><span class="tag">AFTERGLOW</span></div>
+</div>
+</section>
+
+<section id="trips" class="workspace"><div class="toolbar"><div><h2>سفرها</h2><p style="color:var(--muted);font-size:11px">برنامه‌ریزی، ظرفیت و وضعیت اجرا</p></div><div class="toolbar-actions"><button class="primary" onclick="openAdd('trip')">＋ سفر جدید</button></div></div><div id="tripList" class="records"></div></section>
+<section id="experiences" class="workspace"><div class="toolbar"><div><h2>طراحی تجربه</h2><p style="color:var(--muted);font-size:11px">پنج ضرب تجربه برای هر سفر</p></div><div class="toolbar-actions"><button class="primary" onclick="openAdd('experience')">＋ تجربه جدید</button></div></div><div id="experienceList" class="records"></div></section>
+<section id="tasks" class="workspace"><div class="toolbar"><div><h2>وظایف</h2><p style="color:var(--muted);font-size:11px">کارهای اجرایی، محتوا و پیگیری</p></div><div class="toolbar-actions"><button class="primary" onclick="openAdd('task')">＋ وظیفه</button></div></div><div id="taskList" class="records"></div></section>
+<section id="gallery" class="workspace"><div class="toolbar"><div><h2>گالری</h2><p style="color:var(--muted);font-size:11px">عکس واقعی پروژه، ذخیره روی همین دستگاه</p></div><div class="toolbar-actions"><label class="primary" style="display:flex;align-items:center;justify-content:center;cursor:pointer"><input id="photoInput" type="file" accept="image/jpeg,image/png,image/webp" multiple hidden>＋ آپلود عکس</label></div></div><div id="galleryList" class="gallery"></div></section>
+<section id="reports" class="workspace"><div class="toolbar"><div><h2>گزارش‌ها</h2><p style="color:var(--muted);font-size:11px">ثبت دستی عملکرد سفر و محتوا</p></div><div class="toolbar-actions"><button class="primary" onclick="openAdd('report')">＋ گزارش</button></div></div><div id="reportList" class="records"></div></section>
+<section id="settings" class="workspace"><div class="toolbar"><div><h2>تنظیمات و پشتیبان</h2><p style="color:var(--muted);font-size:11px">مدیریت داده روی آیفون</p></div></div><div class="settings">
+<div class="setting"><h4>خروجی داده</h4><p>تمام داده‌های متنی را به JSON دانلود می‌کند. تصاویر جداگانه در گالری قابل دانلودند.</p><button class="secondary" onclick="exportData()">دانلود JSON</button></div>
+<div class="setting"><h4>بازیابی داده</h4><p>فایل JSON قبلی را انتخاب کن. داده فعلی جایگزین می‌شود.</p><label class="secondary" style="display:inline-flex;align-items:center;cursor:pointer"><input id="importInput" type="file" accept="application/json" hidden>انتخاب فایل</label></div>
+<div class="setting"><h4>پاک‌سازی</h4><p>داده‌های متنی و عکس‌های ذخیره‌شده در همین مرورگر را پاک می‌کند.</p><button class="secondary" style="color:var(--red)" onclick="resetAll()">پاک کردن همه</button></div>
+<div class="setting"><h4>نسخه</h4><p>V3 Mobile Static — بدون وابستگی به لپ‌تاپ. داده فعلاً Local-first است و بعداً می‌تواند به Supabase متصل شود.</p></div>
+</div></section>
+</main>
+
+<nav class="bottom">
+<button class="active" data-go="home"><b>⌂</b>خانه</button>
+<button data-go="trips"><b>↗</b>سفرها</button>
+<button data-go="experiences"><b>◆</b>تجربه</button>
+<button data-go="gallery"><b>▣</b>گالری</button>
+<button data-go="settings"><b>⚙</b>بیشتر</button>
+</nav>
+</div>
+
+<div class="modal-bg" id="modalBg"><div class="modal"><div class="modal-head"><h3 id="modalTitle">ثبت</h3><button class="iconbtn" onclick="closeModal()">×</button></div><div class="modal-body"><div id="modalNotice"></div><form id="dataForm" class="form"></form></div><div class="modal-foot"><button class="secondary" onclick="closeModal()">انصراف</button><button class="primary" id="saveBtn">ذخیره</button></div></div></div>
+
+<script>
+const KEY='viking-command-v3';
+let state=load();
+let edit={type:null,id:null};
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||{trips:[],experiences:[],tasks:[],reports:[]}}catch{return{trips:[],experiences:[],tasks:[],reports:[]}}}
+function save(){localStorage.setItem(KEY,JSON.stringify(state));render()}
+function esc(s=''){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function uid(){return crypto.randomUUID?crypto.randomUUID():Date.now()+'-'+Math.random().toString(16).slice(2)}
+function go(id){document.querySelectorAll('.workspace').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.bottom button').forEach(b=>b.classList.toggle('active',b.dataset.go===id));window.scrollTo({top:0,behavior:'smooth'})}
+document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
+document.getElementById('quickAdd').onclick=()=>openAdd('trip');
+
+const defs={
+trip:{title:'سفر',fields:[['title','نام سفر','text'],['date','تاریخ','date'],['location','لوکیشن','text'],['capacity','ظرفیت','number'],['price','قیمت / توضیح قیمت','text'],['status','وضعیت','select',['پیش‌نویس','آماده انتشار','در حال ثبت‌نام','تکمیل','لغو']],['notes','یادداشت','textarea']]},
+experience:{title:'تجربه',fields:[['title','عنوان تجربه','text'],['trip','سفر مرتبط','text'],['expectation','انتظار — قبل از سفر','textarea'],['arrival','ورود — اولین برخورد','textarea'],['peak','اوج — لحظه قهرمان','textarea'],['connection','ارتباط — تعامل آدم‌ها','textarea'],['afterglow','دنباله‌دار — بعد از سفر','textarea']]},
+task:{title:'وظیفه',fields:[['title','عنوان','text'],['date','ددلاین','date'],['owner','مسئول','text'],['status','وضعیت','select',['باز','در حال انجام','انجام شد']],['notes','جزئیات','textarea']]},
+report:{title:'گزارش',fields:[['title','عنوان گزارش','text'],['date','تاریخ','date'],['reach','Reach','number'],['leads','درخواست / لید','number'],['sales','فروش / ثبت‌نام','number'],['notes','تحلیل و نکته','textarea']]}
+};
+function openAdd(type,id=null){
+ edit={type,id};const d=defs[type];document.getElementById('modalTitle').textContent=(id?'ویرایش ':'ثبت ')+d.title;
+ const item=id?state[type+'s'].find(x=>x.id===id):{};
+ document.getElementById('dataForm').innerHTML=d.fields.map(f=>{
+ const [k,l,t,opts]=f;const v=item?.[k]??'';
+ if(t==='textarea')return '<label>'+l+'<textarea name="'+k+'">'+esc(v)+'</textarea></label>';
+ if(t==='select')return '<label>'+l+'<select name="'+k+'">'+opts.map(o=>'<option '+(o===v?'selected':'')+'>'+esc(o)+'</option>').join('')+'</select></label>';
+ return '<label>'+l+'<input name="'+k+'" type="'+t+'" value="'+esc(v)+'"></label>'
+ }).join('');
+ document.getElementById('modalBg').classList.add('show');
+}
+function closeModal(){document.getElementById('modalBg').classList.remove('show')}
+document.getElementById('saveBtn').onclick=e=>{e.preventDefault();const fd=new FormData(document.getElementById('dataForm'));const obj=Object.fromEntries(fd.entries());obj.id=edit.id||uid();obj.updatedAt=new Date().toISOString();const arr=state[edit.type+'s'];const i=arr.findIndex(x=>x.id===obj.id);if(i>=0)arr[i]=obj;else arr.unshift(obj);save();closeModal()}
+function del(type,id){if(!confirm('این مورد حذف شود؟'))return;state[type+'s']=state[type+'s'].filter(x=>x.id!==id);save()}
+function record(type,x,body){
+ return '<article class="record"><div class="record-top"><span>'+esc(type)+'</span><span>'+esc(x.date||x.status||'')+'</span></div><h3>'+esc(x.title||'بدون عنوان')+'</h3><p>'+esc(body||'—')+'</p><div class="actions"><button onclick="openAdd(\''+typeKey(type)+'\',\''+x.id+'\')">ویرایش</button><button class="danger" onclick="del(\''+typeKey(type)+'\',\''+x.id+'\')">حذف</button></div></article>'
+}
+function typeKey(label){return {'سفر':'trip','تجربه':'experience','وظیفه':'task','گزارش':'report'}[label]}
+function render(){
+ document.getElementById('mTrips').textContent=state.trips.length;
+ document.getElementById('mExp').textContent=state.experiences.length;
+ document.getElementById('mTasks').textContent=state.tasks.filter(x=>x.status!=='انجام شد').length;
+ fill('tripList',state.trips.map(x=>record('سفر',x,[x.location,x.status,x.capacity?('ظرفیت: '+x.capacity):'',x.notes].filter(Boolean).join('\n'))));
+ fill('experienceList',state.experiences.map(x=>record('تجربه',x,[x.expectation&&'انتظار: '+x.expectation,x.arrival&&'ورود: '+x.arrival,x.peak&&'اوج: '+x.peak,x.connection&&'ارتباط: '+x.connection,x.afterglow&&'دنباله‌دار: '+x.afterglow].filter(Boolean).join('\n'))));
+ fill('taskList',state.tasks.map(x=>record('وظیفه',x,[x.owner,x.status,x.notes].filter(Boolean).join('\n'))));
+ fill('reportList',state.reports.map(x=>record('گزارش',x,['Reach: '+(x.reach||'—'),'لید: '+(x.leads||'—'),'فروش: '+(x.sales||'—'),x.notes].filter(Boolean).join('\n'))));
+ renderPhotos()
+}
+function fill(id,items){document.getElementById(id).innerHTML=items.length?items.join(''):'<div class="empty">هنوز چیزی ثبت نشده.</div>'}
+
+function exportData(){const blob=new Blob([JSON.stringify({version:3,exportedAt:new Date().toISOString(),state},null,2)],{type:'application/json'});downloadBlob(blob,'viking-backup-'+new Date().toISOString().slice(0,10)+'.json')}
+document.getElementById('importInput').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const j=JSON.parse(await f.text());if(!j.state||!Array.isArray(j.state.trips))throw 0;if(confirm('داده فعلی با فایل پشتیبان جایگزین شود؟')){state=j.state;save()}}catch{alert('فایل پشتیبان معتبر نیست')}e.target.value=''}
+function downloadBlob(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+async function resetAll(){if(!confirm('همه داده‌ها و عکس‌ها پاک شوند؟'))return;localStorage.removeItem(KEY);state=load();const db=await photoDB();const tx=db.transaction('photos','readwrite');tx.objectStore('photos').clear();await new Promise(r=>tx.oncomplete=r);render()}
+
+function photoDB(){return new Promise((res,rej)=>{const q=indexedDB.open('viking-media',1);q.onupgradeneeded=()=>q.result.createObjectStore('photos',{keyPath:'id'});q.onsuccess=()=>res(q.result);q.onerror=()=>rej(q.error)})}
+async function getPhotos(){const db=await photoDB();return new Promise((res,rej)=>{const q=db.transaction('photos').objectStore('photos').getAll();q.onsuccess=()=>res(q.result||[]);q.onerror=()=>rej(q.error)})}
+async function putPhoto(file){if(file.size>8*1024*1024)throw new Error('حداکثر حجم هر عکس ۸ مگابایت است');const db=await photoDB();const obj={id:uid(),name:file.name||'photo',type:file.type,createdAt:new Date().toISOString(),blob:file};return new Promise((res,rej)=>{const q=db.transaction('photos','readwrite').objectStore('photos').put(obj);q.onsuccess=()=>res();q.onerror=()=>rej(q.error)})}
+async function deletePhoto(id){const db=await photoDB();await new Promise((res,rej)=>{const q=db.transaction('photos','readwrite').objectStore('photos').delete(id);q.onsuccess=()=>res();q.onerror=()=>rej(q.error)});renderPhotos()}
+async function renderPhotos(){const list=await getPhotos();document.getElementById('mPhotos').textContent=list.length;const el=document.getElementById('galleryList');if(!list.length){el.innerHTML='<div class="empty">عکس واقعی پروژه را از آیفون آپلود کن.</div>';return}el.innerHTML='';for(const p of list.sort((a,b)=>b.createdAt.localeCompare(a.createdAt))){const url=URL.createObjectURL(p.blob);const d=document.createElement('article');d.className='photo';d.innerHTML='<img alt=""><div class="photo-body"><h4>'+esc(p.name)+'</h4><small>'+new Date(p.createdAt).toLocaleDateString('fa-IR')+'</small><div class="actions"><button>دانلود</button><button class="danger">حذف</button></div></div>';d.querySelector('img').src=url;d.querySelectorAll('button')[0].onclick=()=>downloadBlob(p.blob,p.name);d.querySelectorAll('button')[1].onclick=()=>deletePhoto(p.id);el.appendChild(d)}}
+document.getElementById('photoInput').onchange=async e=>{for(const f of [...e.target.files]){try{await putPhoto(f)}catch(err){alert(err.message||'خطا در ذخیره عکس')}}e.target.value='';renderPhotos()}
+
+if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js').catch(()=>{}));
+render();
+</script>
+</body></html>
