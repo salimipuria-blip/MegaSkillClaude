@@ -7,13 +7,14 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="description" content="Viking Experience Command — Private offroad team workspace">
 <title>وایکینگ | مرکز فرمان تیم</title>
+<style>html,body{margin:0;min-height:100%;background:#0c1110;color:#f9f5ef;font-family:Tahoma,-apple-system,sans-serif}[hidden]{display:none!important}#auth{min-height:100dvh}#notice.visible{position:fixed;z-index:999;top:12px;right:12px;left:12px;padding:12px 16px;background:#293d31;color:white;border:1px solid #759b82;border-radius:12px}#notice.error{background:#4d2727;border-color:#bd6666}#loadStatus{max-width:450px;margin:0 auto;color:#fdb68f;font-size:12px;line-height:2;padding:10px 22px;text-align:center}</style>
 <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
 <div id="notice" role="status" aria-live="polite"></div>
-<div id="auth" class="auth-shell" hidden>
+<div id="auth" class="auth-shell">
  <div class="auth-art"><div class="auth-mark">V<span>×</span></div><div class="auth-orb"></div><div class="auth-tag">VIKING / PRIVATE WORKSPACE</div><h1>فرمان سفرها،<br><em>دست تیم تو.</em></h1><p>مدیریت مشترک سفرهای آفرودی، وظایف و آرشیو رسانه در یک محیط خصوصی.</p></div>
- <div class="auth-panel"><div class="auth-label">TEAM ACCESS / 01</div><h2>ورود اعضای وایکینگ</h2><p class="sub">فقط ایمیل اعضای دعوت‌شده به اطلاعات تیم دسترسی دارد.</p><form id="loginForm" class="fields"><label>ایمیل کاری<input name="email" type="email" autocomplete="email" inputmode="email" required placeholder="name@example.com"></label><label>رمز عبور<input name="password" type="password" autocomplete="current-password" minlength="6" required placeholder="حداقل ۶ کاراکتر"></label><button class="cta" type="submit" id="loginBtn">ورود به مرکز فرمان <span>↗</span></button></form><div class="auth-alt"><button id="signupBtn" class="text-link">ثبت حساب برای عضو دعوت‌شده</button><button id="forgotBtn" class="text-link">بازیابی رمز عبور</button></div><p class="auth-help">اولین ورود اعضای جدید نیازمند دعوت مدیر و تأیید ایمیل است. برای بازگشت به نسخهٔ قدیمی، <a href="/preview.html">نمایش نسخهٔ قبلی</a>.</p></div>
+ <div class="auth-panel"><div class="auth-label">TEAM ACCESS / 01</div><h2>ورود اعضای وایکینگ</h2><p class="sub">فقط ایمیل اعضای دعوت‌شده به اطلاعات تیم دسترسی دارد.</p><form id="loginForm" class="fields"><label>ایمیل کاری<input name="email" type="email" autocomplete="email" inputmode="email" required placeholder="name@example.com"></label><label>رمز عبور<input name="password" type="password" autocomplete="current-password" minlength="6" required placeholder="حداقل ۶ کاراکتر"></label><button class="cta" type="submit" id="loginBtn">ورود به مرکز فرمان <span>↗</span></button></form><div class="auth-alt"><button id="signupBtn" class="text-link">ثبت حساب برای عضو دعوت‌شده</button><button id="forgotBtn" class="text-link">بازیابی رمز عبور</button></div><p id="loadStatus">در حال آماده‌سازی اتصال امن…</p><p class="auth-help">اولین ورود اعضای جدید نیازمند دعوت مدیر و تأیید ایمیل است. برای بازگشت به نسخهٔ قدیمی، <a href="/preview.html">نمایش نسخهٔ قبلی</a>.</p></div>
 </div>
 <div id="app" class="app-shell" hidden>
 <header class="topbar"><div class="identity"><span class="brand-symbol">V</span><span class="brand-copy"><b>VIKING<span>®</span></b><small>EXPERIENCE COMMAND / TEAM</small></span></div><div class="top-status"><span class="live-dot"></span><span id="connectionStatus">اتصال تیم</span><button class="avatar" id="profileButton" aria-label="منوی حساب">PS</button></div></header>
@@ -30,6 +31,7 @@
 <nav class="bottom-nav" id="bottomNav" aria-label="پیمایش"><button data-view="home" class="active"><b>⌂</b><small>خانه</small></button><button data-view="trips"><b>↗</b><small>سفرها</small></button><button data-view="tasks"><b>◎</b><small>وظایف</small></button><button data-view="gallery"><b>▣</b><small>رسانه</small></button><button data-view="team"><b>♧</b><small>تیم</small></button></nav>
 </div>
 <div id="sheet" class="sheet-backdrop" hidden><section class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle"><div class="sheet-top"><span class="kicker">VIKING / EDITOR</span><button id="closeSheet" aria-label="بستن">×</button></div><h2 id="sheetTitle">ثبت مورد جدید</h2><form id="editForm" class="fields"></form><div class="sheet-actions"><button id="saveRecord" type="button" class="cta">ذخیرهٔ تغییرات ↗</button><button id="cancelSheet" type="button" class="outline">انصراف</button></div></section></div>
+<script>setTimeout(()=>{const e=document.getElementById('loadStatus');if(e && !document.getElementById('auth').hidden && e.textContent.includes('در حال آماده‌سازی'))e.textContent='اگر ورود فعال نمی‌شود، فایل‌های برنامه یا سرویس ورود در این شبکه بارگیری نشده‌اند. این خطا مربوط به اتصال است؛ صفحه را در Safari باز کنید.'},12000)</script>
 <script type="module" src="./app.js"></script>
 </body>
 </html>
