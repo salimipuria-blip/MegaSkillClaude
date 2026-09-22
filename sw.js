@@ -1,1 +1,16 @@
-const C='viking-v3-static-1';const S=['/','/index.html','/manifest.webmanifest'];self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(S)));self.skipWaiting()});self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==C).map(x=>caches.delete(x)))));self.clients.claim()});self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;e.respondWith(fetch(e.request).then(r=>{if(r.ok){const z=r.clone();caches.open(C).then(c=>c.put(e.request,z))}return r}).catch(()=>caches.match(e.request).then(r=>r||(e.request.mode==='navigate'?caches.match('/index.html'):Response.error()))))});
+// Public legacy shell only. NEVER cache signed-in team pages, APIs, image blobs, or cross-origin requests.
+const VERSION='viking-static-public-v4';
+const PUBLIC=['/','/index.html','/manifest.webmanifest'];
+self.addEventListener('install',event=>{event.waitUntil(caches.open(VERSION).then(cache=>cache.addAll(PUBLIC)));self.skipWaiting()});
+self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==VERSION).map(key=>caches.delete(key)))));self.clients.claim()});
+self.addEventListener('fetch',event=>{
+ const request=event.request;
+ if(request.method!=='GET'||new URL(request.url).origin!==self.location.origin)return;
+ const pathname=new URL(request.url).pathname;
+ if(pathname.startsWith('/team/'))return; // authenticated app uses network requests only
+ if(!PUBLIC.includes(pathname))return;
+ event.respondWith(fetch(request).then(response=>{
+  if(response.ok&&response.type==='basic')event.waitUntil(caches.open(VERSION).then(cache=>cache.put(request,response.clone())));
+  return response;
+ }).catch(()=>caches.match(request)));
+});
