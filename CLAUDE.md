@@ -31,3 +31,7 @@
 - `lithos`: `npm test && npm run build`
 - مسیریاب مهارت‌ها: `python -m unittest discover -s tests`
 - CI در `.github/workflows/ci.yml` همه را روی هر PR اجرا می‌کند.
+
+## نوار وضعیت و هوک‌ها
+- `.claude/statusline/`: نوار وضعیت یک‌خطی (مدل | درصد کانتکست | آخرین کار ▸ | پیشرفت چک‌لیست | هزینه | پوشه)، بدون مصرف توکن. هوک PostToolUse آخرین ابزار را ثبت می‌کند؛ دستورها هرگز کامل نمایش داده نمی‌شوند. عرض با `ECC_STATUSLINE_MAX_WIDTH` محدود می‌شود.
+- `.claude/hooks/session-start.sh`: در جلسه‌های ابری وابستگی‌های `lithos` را نصب می‌کند.
