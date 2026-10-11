@@ -1,0 +1,31 @@
+project_id = "aupkeramhsufnmhkbihl"
+
+[functions.free-llm-router]
+verify_jwt = true
+
+[functions.global-free-llm-mesh]
+verify_jwt = true
+
+[functions.github-llm-scanner]
+verify_jwt = true
+
+[functions.github-llm-verifier]
+verify_jwt = true
+
+[functions.github-admin-gateway]
+verify_jwt = true
+
+[functions.skill-installer]
+verify_jwt = true
+
+[functions.skill-orchestrator]
+verify_jwt = true
+
+[functions.skill-router]
+verify_jwt = true
+
+[functions.prompt-compiler]
+verify_jwt = true
+
+[functions.task-orchestrator]
+verify_jwt = true
