@@ -9,7 +9,7 @@ CI واحد (`.github/workflows/ci.yml`) روی هر PR تست و بیلد هم�
 | `lithos/` | Lithos: داشبورد خصوصی | Vite + Supabase | `npm install && npm test && npm run build` | Vercel `lithos-live-intelligence-vercel-fixed` |
 | `fjcod/` | CHAM Store OS: سامانهٔ فروشگاه چام | React 19 + TypeScript + Vite | `npm ci && npm run check` | Vercel `cham-store-os` |
 | `viking-team/` | Viking Experience Command: مرکز فرمان تیم | HTML ایستا + Supabase Auth/RLS | `python3 -m unittest discover -s tests` | Vercel |
-| `bison-brand-book/` | BISON Brand Book | Vite + GSAP + Lenis | `npm ci && npm run build` | GitHub Pages |
+| `bison-brand-book/` | BISON Brand Book | Vite + GSAP + Lenis | `npm ci && npm run build` | GitHub Pages + Vercel `bison.brandbook.site.2026` |
 | `orchestrator/` | Omni LLM Orchestrator (تاریخی) | توابع Supabase Edge + پایتون | `python scripts/audit/check_repository_contract.py` و pytest | Supabase |
 | `.claude/skills/mega-skills-router/`، `plugins/`، `library/` | مسیریاب و کتابخانهٔ مهارت‌ها | پایتون | `python -m unittest discover -s tests` (از ریشه) | — |
 | `brands/viking-offroad/` | استیکرها و دارایی‌های برند وایکینگ آفرود | PNG + سورس | — | — |
@@ -21,5 +21,5 @@ CI واحد (`.github/workflows/ci.yml`) روی هر PR تست و بیلد هم�
 `fjcod/`، `viking-team/` و `bison-brand-book/` هنوز از مخزن‌های قدیمی خودشان منتشر می‌شوند. تا وقتی این اتصال عوض نشود، تغییرات اینجا روی آن سایت‌ها نمی‌رود.
 
 1. **Vercel** (`cham-store-os` و پروژهٔ Viking): Settings ← Git ← اتصال به `MegaSkillClaude`، و در Build & Deployment مقدار **Root Directory** را نام پوشه بگذار (`fjcod` یا `viking-team`).
-2. **BISON**: GitHub Pages این مخزن را روی خروجی بیلد `bison-brand-book/` تنظیم کن، یا آن را مثل بقیه به Vercel ببر.
+2. **BISON** (Vercel `bison.brandbook.site.2026`): همان کار مرحلهٔ ۱ با Root Directory = `bison-brand-book`. بعد GitHub Pages مخزن قدیمی را خاموش کن تا فقط یک نسخهٔ زنده بماند.
 3. وقتی هر سه از اینجا منتشر شدند، مخزن‌های قدیمی (`FJCod`، `viking-experience-command`، `bison-brand-book`، `porya-omni-llm-orchestrator`، `Viking`) را **Archive** کن. حذفشان نکن.

@@ -12,7 +12,7 @@
 | ۲ | **Lithos Live Intelligence** | `lithos/` | Vite 6.4 | Supabase (فقط مالک) | Vercel `lithos-live-intelligence-vercel-fixed` (از همین مخزن) | 🟢 تست ۳/۳ و بیلد سبز |
 | ۳ | **CHAM Store OS** (FJCOD) | `fjcod/` | React 19 + TypeScript + Vite | ندارد؛ داده در مرورگر | Vercel `cham-store-os` (هنوز از مخزن قدیمی `FJCod`) | 🟡 تست ۲۷/۲۷ و بیلد سبز؛ ورود و داده فقط سمت مرورگر |
 | ۴ | **Viking Experience Command** | `viking-team/` | HTML ایستا + PWA | Supabase Auth + RLS + باکت خصوصی | Vercel (هنوز از مخزن قدیمی) | 🟢 ورود واقعی Supabase برگشته (PR #3 مخزن قدیمی)؛ RLS و فرار HTML بررسی شد |
-| ۵ | **BISON Brand Book** | `bison-brand-book/` | Vite، اسکرول سینمایی | ندارد | GitHub Pages (هنوز از مخزن قدیمی) | 🟢 بیلد درست شد (نشانگر ادغام نیمه‌کاره در `index.html` بیلد را می‌شکست) |
+| ۵ | **BISON Brand Book** | `bison-brand-book/` | Vite، اسکرول سینمایی | ندارد | GitHub Pages + Vercel `bison.brandbook.site.2026` (هنوز از مخزن قدیمی) | 🟢 بیلد درست شد (نشانگر ادغام نیمه‌کاره در `index.html` بیلد را می‌شکست) |
 | ۶ | **Omni LLM Orchestrator** | `orchestrator/` | — | ۱۰ تابع Supabase Edge | Supabase | 🟡 ۱۳ تست قرارداد سبز؛ هم‌پوشانی با موتور MEGA SKILLS 3000؛ تاریخی |
 
 مخزن `Viking` فقط یک README خالی داشت و چیزی برای انتقال نداشت. مخزن‌های `POORS` و `Bison-Z-Weekly-*` در فهرست مخزن‌های قابل‌دسترسی نیستند.
