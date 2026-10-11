@@ -14,7 +14,7 @@
 0. **بهبود پرامپت کاربر:** با مهارت `prompt-master` (`library/github-skills/prompt-master/SKILL.md`، بخش Image AI) پرامپت کاربر را حرفه‌ای‌تر کن. **مفهوم نباید ذره‌ای تغییر کند:** هیچ سوژه، عنصر، متن یا حال‌وهوایی اضافه یا حذف نشود؛ فقط وضوح و جزئیات فنی (قاب، نور، سبک، نسبت تصویر، منفی‌ها) اضافه شود. بعد بدون توقف برو مرحله‌ی بعد و پرامپت نهایی را همراه عکس تحویل بده.
 1. **انتخاب مهارت:** با مسیریاب مگا (`mega-skills-router`) مهارت مرتبط را پیدا و SKILL.md آن را بخوان.
 2. **دستورالعمل:** طبق همان مهارت کانسپت، سبک و پرامپت ساخت‌یافته را بنویس.
-3. **ساخت:** اول با Figma (`mcp__Figma__generate_image`، planKey `team::1529441187564361142`)؛ اگر اعتبار تمام شد، هر تصویرساز رایگان دیگری که در دسترس است. فایل را با `curl` از `www.figma.com/api/mcp/asset/...` دانلود کن (دامنه در تنظیمات شبکه باز است).
+3. **ساخت:** اول با Figma (`mcp__Figma__generate_image`، planKey `team::1529441187564361142`)؛ اگر اعتبار تمام شد، هر تصویرساز رایگان دیگری که در دسترس است. فایل را با `curl` از `www.figma.com/api/mcp/asset/...` دانلود کن. **پیش‌شرط:** `www.figma.com` و `s3-figma-hubfile-images-production.figma.com` باید در Allowed domains محیط (سطح Limited، نه Full) باشند؛ تا ۱۴۰۵/۰۷/۱۹ باز نبودند و دانلود با خطای پراکسی رد می‌شد. اگر رد شد، به کاربر بگو و با کد جایگزین نکن.
 4. **بررسی و اصلاح:** خودت هر عکس را باز کن؛ ایراد (متن غلط، چهره‌ی ساختگی، دست خراب، کادر نامناسب) را با ساخت دوباره یا اصلاح رفع کن، بعد تحویل بده.
 5. **تحویل:** فقط فایل را با `SendUserFile` بفرست. **صفحه‌ی Artifact نساز** (کاربر نمی‌خواهد).
 - لینک مستقیم Canva/Figma برای کاربر کار نمی‌کند؛ هرگز فقط لینک نده.
@@ -27,8 +27,13 @@
 - **Lithos**: پوشه‌ی `lithos/`، داشبورد خصوصی؛ دیتابیس Supabase فقط برای مالک (جدول `lithos_owners`).
 
 ## پروژه‌ها و تست
+همهٔ پروژه‌ها در همین مخزن‌اند؛ نقشهٔ پوشه‌ها و انتشار در `README.md`، وضعیت و کارهای بعدی در `ROADMAP.md`.
 - `psk`: `npm run check && npm test`
 - `lithos`: `npm test && npm run build`
+- `fjcod` (فروشگاه چام): `npm ci && npm run check`
+- `bison-brand-book`: `npm ci && npm run build`
+- `viking-team`: `python3 -m unittest discover -s tests`
+- `orchestrator`: `python scripts/audit/check_repository_contract.py` و pytest (فهرست فایل‌ها در CI)
 - مسیریاب مهارت‌ها: `python -m unittest discover -s tests`
 - CI در `.github/workflows/ci.yml` همه را روی هر PR اجرا می‌کند.
 
