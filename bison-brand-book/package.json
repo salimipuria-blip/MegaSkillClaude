@@ -1,0 +1,19 @@
+{
+  "name": "bison-brand-book",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "BISON digital brand book — cinematic scroll experience with live desktop and mobile demos.",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0 --port 5173",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0 --port 4173"
+  },
+  "dependencies": {
+    "gsap": "^3.13.0",
+    "lenis": "^1.3.11"
+  },
+  "devDependencies": {
+    "vite": "^6.3.5"
+  }
+}

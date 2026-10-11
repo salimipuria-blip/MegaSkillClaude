@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>دانلود BISON Brand Book</title>
+    <style>
+      :root {
+        --iron: #0b0a09;
+        --gold: #c6a15b;
+        --ember: #a16207;
+        --bone: #e8dfd2;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; min-height: 100%; }
+      body {
+        min-height: 100svh;
+        display: grid;
+        place-items: center;
+        padding: 32px 20px;
+        background: var(--iron);
+        color: var(--bone);
+        font-family: Georgia, "Times New Roman", serif;
+        text-align: center;
+      }
+      img { width: min(46vw, 220px); margin: 0 auto 28px; display: block; }
+      h1 {
+        font-size: clamp(2.4rem, 8vw, 5.5rem);
+        letter-spacing: 0.18em;
+        font-weight: 500;
+        margin: 0 0 12px;
+        font-family: Georgia, serif;
+        direction: ltr;
+      }
+      p {
+        margin: 0 0 28px;
+        font-family: system-ui, sans-serif;
+        font-weight: 300;
+        line-height: 1.7;
+        color: rgba(232, 223, 210, 0.78);
+        max-width: 36ch;
+      }
+      .dl {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 56px;
+        min-width: 240px;
+        padding: 16px 28px;
+        background: var(--ember);
+        color: #fff;
+        text-decoration: none;
+        font-family: system-ui, sans-serif;
+        font-size: 15px;
+        letter-spacing: 0.08em;
+        cursor: pointer;
+      }
+      .dl:hover { opacity: 0.92; }
+      .meta {
+        margin-top: 18px;
+        font-family: ui-monospace, monospace;
+        font-size: 12px;
+        letter-spacing: 0.12em;
+        color: var(--gold);
+        direction: ltr;
+      }
+      a.back {
+        display: inline-block;
+        margin-top: 36px;
+        color: var(--bone);
+        font-family: system-ui, sans-serif;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <img src="/images/mark-body.png" alt="BISON" />
+      <h1>BISON</h1>
+      <p>روی دکمه بزن تا فایل ZIP سایت دانلود شود. بعد از باز کردن پوشه، فایل <b>index.html</b> را باز کن.</p>
+      <a class="dl" href="/BISON-Brand-Book.zip" download="BISON-Brand-Book.zip">دانلود فایل ZIP</a>
+      <div class="meta">BISON-Brand-Book.zip · 4.1 MB</div>
+      <a class="back" href="/">بازگشت به سایت</a>
+    </main>
+  </body>
+</html>
