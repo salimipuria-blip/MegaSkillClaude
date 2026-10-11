@@ -1,0 +1,33 @@
+name: Viking team static checks
+on:
+  push:
+    paths:
+      - 'team/**'
+      - 'sql/**'
+      - 'tests/**'
+      - '.github/workflows/viking-team-static-check.yml'
+  pull_request:
+    paths:
+      - 'team/**'
+      - 'sql/**'
+      - 'tests/**'
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate browser module syntax
+        run: node --check --input-type=module < team/app.js
+      - name: Run dependency-free integrity tests
+        run: python3 -m unittest discover -s tests -v
+      - name: Validate app entry and CSS references
+        run: |
+          test -s team/index.html
+          test -s team/styles.css
+          test -s team/app.js
+          grep -q 'src="./app.js"' team/index.html
+          grep -q 'href="./styles.css"' team/index.html
+          grep -q 'viking_trip_media' team/app.js
+          grep -q 'viking_team_members' team/app.js
+          ! grep -R -E 'service_role|sb_secret_' team
+          echo 'Viking static checks passed'
