@@ -1,30 +1,30 @@
 # 🗺 نقشهٔ راه بک‌اند و فرانت‌اند — همهٔ پروژه‌ها
 
-> تاریخ: ۱۴۰۵/۰۷/۱۲ · مبنا: بررسی مستقیم کد هر مخزن و پروژه‌های Vercel در همین تاریخ.
+> تاریخ: ۱۴۰۵/۰۷/۱۹ · مبنا: اجرای واقعی تست و بیلد همهٔ پروژه‌ها در همین مخزن.
 > سیاست ثابت: بودجهٔ صفر دلار، بدون رفتن خودکار به مسیر پولی؛ هیچ کلید یا رمزی در Git.
+> **همهٔ پروژه‌ها حالا در همین مخزن‌اند** (با تاریخچهٔ کامل). نقشهٔ پوشه‌ها: [README.md](README.md).
 
 ## 📋 فهرست پروژه‌ها و وضعیت فعلی
 
-| # | پروژه | مخزن | فرانت‌اند | بک‌اند | انتشار | وضعیت |
+| # | پروژه | پوشه | فرانت‌اند | بک‌اند | انتشار | وضعیت |
 |---|---|---|---|---|---|---|
-| ۱ | **MEGA SKILLS 3000** (سایت + موتور ۳۰۰۰ مهارت + نمونه‌کار + دربارهٔ ما) | `-` (پوشهٔ `psk/`) | HTML/CSS/JS ایستا | ۳ تابع Vercel، مسیریاب، ۳۰۰۰ SKILL.md با SHA-256 | Vercel `psk-3000` | 🟢 زنده؛ کلید مدل رایگان هنوز اضافه نشده |
-| ۲ | **Omni LLM Orchestrator** | `porya-omni-llm-orchestrator` (خصوصی) | — | ۱۰ تابع Supabase Edge (skill-router، free-llm-router، …) | Supabase | 🟡 هم‌پوشانی با موتور MEGA SKILLS 3000؛ تاریخی |
-| ۳ | **CHAM Store OS** (FJCOD) | `FJCod` | React 19 + TypeScript + Vite | ندارد؛ داده در مرورگر | Vercel `cham-store-os` | 🟡 ورود و داده فقط سمت مرورگر |
-| ۴ | **Viking Experience Command** | `viking-experience-command` (خصوصی) | HTML ایستا + PWA | Supabase Auth + RLS + باکت خصوصی | Vercel | 🟡 آخرین کامیت حالت «بدون ورود» را فعال کرده؛ با README هم‌خوان نیست |
-| ۵ | **Lithos Live Intelligence** | نامشخص | Vite | نامشخص | Vercel `lithos-live-intelligence-vercel-fixed` | 🔴 به اشتباه به مخزن `-` وصل است؛ هر بیلد شکست می‌خورد |
-| ۶ | **BISON Brand Book** | `bison-brand-book` | Vite، اسکرول سینمایی | ندارد | GitHub Pages + Vercel | 🟢 پایدار |
-| ۷ | **Bison Z Weekly Content** | `my-`، `Bison-Z-Weekly-Content-`، `Bison-Z-Weekly-` (خالی) | یک فایل HTML (دو نسخهٔ متفاوت) | ندارد | — | 🟡 سه مخزن پراکنده |
-| ۸ | **POORS** (نسخهٔ قدیمی MEGA SKILLS 3000) | `POORS` | همان سایت MEGA SKILLS 3000 | همان API | — | ⚪ تکراری؛ نامزد بایگانی |
+| ۱ | **MEGA SKILLS 3000** (سایت + موتور ۳۰۰۰ مهارت) | `psk/` | HTML/CSS/JS ایستا | ۳ تابع Vercel، مسیریاب، ۳۰۰۰ SKILL.md با SHA-256 | Vercel `psk-3000` (از همین مخزن) | 🟢 تست ۱۶/۱۶؛ کلید مدل رایگان هنوز اضافه نشده |
+| ۲ | **Lithos Live Intelligence** | `lithos/` | Vite 6.4 | Supabase (فقط مالک) | Vercel `lithos-live-intelligence-vercel-fixed` (از همین مخزن) | 🟢 تست ۳/۳ و بیلد سبز |
+| ۳ | **CHAM Store OS** (FJCOD) | `fjcod/` | React 19 + TypeScript + Vite | ندارد؛ داده در مرورگر | Vercel `cham-store-os` (هنوز از مخزن قدیمی `FJCod`) | 🟡 تست ۲۷/۲۷ و بیلد سبز؛ ورود و داده فقط سمت مرورگر |
+| ۴ | **Viking Experience Command** | `viking-team/` | HTML ایستا + PWA | Supabase Auth + RLS + باکت خصوصی | Vercel (هنوز از مخزن قدیمی) | 🟢 ورود واقعی Supabase برگشته (PR #3 مخزن قدیمی)؛ RLS و فرار HTML بررسی شد |
+| ۵ | **BISON Brand Book** | `bison-brand-book/` | Vite، اسکرول سینمایی | ندارد | GitHub Pages + Vercel `bison.brandbook.site.2026` (هنوز از مخزن قدیمی) | 🟢 بیلد درست شد (نشانگر ادغام نیمه‌کاره در `index.html` بیلد را می‌شکست) |
+| ۶ | **Omni LLM Orchestrator** | `orchestrator/` | — | ۱۰ تابع Supabase Edge | Supabase | 🟡 ۱۳ تست قرارداد سبز؛ هم‌پوشانی با موتور MEGA SKILLS 3000؛ تاریخی |
+
+مخزن `Viking` فقط یک README خالی داشت و چیزی برای انتقال نداشت. مخزن‌های `POORS` و `Bison-Z-Weekly-*` در فهرست مخزن‌های قابل‌دسترسی نیستند.
 
 ## 🚨 فاز ۰ — فوری (این هفته)
 
 | اولویت | کار | پروژه | چرا |
 |---|---|---|---|
-| P0 | بازبینی امنیتی ورود و تعویض رمزها (جزئیات در مسیر خصوصی) | CHAM | سخت‌سازی دسترسی پیش از استفادهٔ واقعی در فروشگاه |
-| P0 | قطع اتصال پروژهٔ Lithos از مخزن `-` در Vercel و اتصال به مخزن درست | Lithos | هر کامیت MEGA SKILLS 3000 یک بیلد شکست‌خورده می‌سازد |
+| P0 | تصمیم دربارهٔ دیتابیس CHAM (شاخهٔ ادغام‌نشدهٔ `claude/cham-supabase-schema` در مخزن قدیمی هست) | CHAM | داده فقط در مرورگر هر دستگاه است؛ پاک شدن حافظهٔ مرورگر = از دست رفتن فروش |
+| P0 | وصل کردن Vercel/Pages پروژه‌های ۳ تا ۵ به همین مخزن (Root Directory = نام پوشه)، بعد بایگانی مخزن‌های قدیمی | CHAM، Viking، BISON | یک منبع حقیقت؛ تغییرات اینجا هنوز روی سایت‌های زنده نمی‌روند |
 | P1 | افزودن یک کلید مدل رایگان (Groq یا Google AI Studio) در Vercel | MEGA SKILLS 3000 | حالت «پاسخ» موتور فعال شود |
-| P1 | روشن کردن تکلیف حالت «بدون ورود» Viking: موقت یا دائمی | Viking | دادهٔ تیم بدون احراز هویت در دسترس است |
-| P2 | بایگانی `POORS` و `Bison-Z-Weekly-` پس از بررسی لینک‌ها | POORS، Bison Z | کاهش سردرگمی |
+| P2 | `npm audit fix` برای `source-map-js` (فقط زمان بیلد) | BISON | یک هشدار high |
 
 ## 🧱 فاز ۱ — زیرساخت مشترک (هفتهٔ ۱ تا ۴)
 
@@ -32,7 +32,7 @@
 - **یک Supabase مشترک** برای احراز هویت، پایگاه داده و فایل؛ هر پروژه اسکیمای جدا (`psk_*`، `cham_*`، `viking_*`) با RLS.
 - **یک موتور واحد:** مسیر درخواست در توابع Vercel پروژهٔ MEGA SKILLS 3000 بماند؛ توابع تکراری Supabase در Orchestrator (`skill-router`، `free-llm-router`، `skill-orchestrator`) پس از تست قرارداد بازنشسته شوند. Orchestrator فقط مخزن مهاجرت و مستندات بماند.
 - **مدیریت کلیدها:** فقط در Vercel/Supabase Secrets؛ چرخش دوره‌ای.
-- **CI در همهٔ مخزن‌ها:** GitHub Actions با `npm run check && npm test` روی هر PR.
+- **CI واحد:** `.github/workflows/ci.yml` تست و بیلد هر هفت پروژه را روی هر PR اجرا می‌کند. ✅
 
 ### فرانت‌اند
 - **سیستم طراحی مشترک:** توکن‌های رنگ/فاصله برای هر برند (MEGA SKILLS 3000 آبی، نمونه‌کار کاغذی/قرمز، BISON آهن/طلا، CHAM کرم/سرمه‌ای) در یک فایل `tokens.css` در هر مخزن.
@@ -65,6 +65,4 @@
 | پوشش تست هر PR | `check` + `test` اجباری |
 
 ## ❓ موارد نامشخص (نیازمند پاسخ)
-- مخزن کد Lithos کجاست؟
-- نام نهایی محصول نهایی شد: همه‌جا فقط **MEGA SKILLS 3000** (نام‌های MEGA SKILLS 3000/APEX/نمونه‌کار حذف شدند).
-- Viking: حالت «بدون ورود» موقت است یا دائمی؟
+- CHAM واقعاً در فروشگاه استفاده می‌شود؟ (تعیین‌کنندهٔ فوریت دیتابیس)

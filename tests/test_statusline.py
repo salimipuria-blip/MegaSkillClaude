@@ -57,6 +57,13 @@ class StatuslineTest(unittest.TestCase):
         self.assertNotIn("s3cret", out)
         self.assertNotIn("example.com", out)
 
+    def test_assignment_only_command_shows_tool_without_values(self):
+        self.record("Bash", {"command": "API_KEY=s3cret TOKEN=abc123"})
+        out = self.line({"session_id": "s1", "context_window": {"remaining_percentage": 90}}, COLUMNS="160")
+        self.assertIn("▸ Bash", out)
+        self.assertNotIn("s3cret", out)
+        self.assertNotIn("abc123", out)
+
     def test_narrow_width_keeps_context_on_one_line(self):
         self.record("Read", {"file_path": "/repo/README.md"})
         out = self.line({"session_id": "s1", "model": {"display_name": "Opus"},
