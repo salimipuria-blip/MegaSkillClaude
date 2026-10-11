@@ -1,0 +1,6 @@
+{
+  "name": "viking-stickers",
+  "private": true,
+  "scripts": { "render": "node render.js all" },
+  "dependencies": { "playwright-core": "1.56.0" }
+}

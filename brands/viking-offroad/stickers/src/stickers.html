@@ -1,0 +1,179 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face { font-family: Lalezar; src: url(Lalezar.woff2) format('woff2'); }
+@font-face { font-family: RubikDirt; src: url(RubikDirt.woff2) format('woff2'); }
+html, body { margin: 0; background: transparent; }
+body.sheet { background: #24222b; padding: 28px; font-family: Lalezar; color: #fff; }
+body.sheet h1 { margin: 0 0 18px; font-size: 54px; direction: rtl; text-align: center; font-weight: normal; }
+.grid { display: grid; grid-template-columns: repeat(6, 256px); gap: 10px; }
+body.sheet { background: #2a2730; }
+.grid svg { width: 256px; height: 256px; }
+.fa { font-family: Lalezar; direction: rtl; }
+.en { font-family: RubikDirt; }
+</style></head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="cream" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff1de"/><stop offset="0.55" stop-color="#ffd9a8"/><stop offset="1" stop-color="#f5b26b"/></linearGradient>
+    <linearGradient id="orange" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7b65c"/><stop offset="0.5" stop-color="#d9772a"/><stop offset="1" stop-color="#9c4a17"/></linearGradient>
+    <linearGradient id="wood" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a8461a"/><stop offset="1" stop-color="#d9672a"/></linearGradient>
+    <linearGradient id="steel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd9a3"/><stop offset="1" stop-color="#f59a3c"/></linearGradient>
+    <linearGradient id="beard" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8702a"/><stop offset="1" stop-color="#a8400f"/></linearGradient>
+    <linearGradient id="tunic" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f58a2e"/><stop offset="1" stop-color="#c8561a"/></linearGradient>
+    <linearGradient id="tunicM" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f58a2e"/><stop offset="1" stop-color="#c8561a"/></linearGradient>
+    <linearGradient id="dressF" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff9a3c"/><stop offset="1" stop-color="#d9601a"/></linearGradient>
+    <linearGradient id="orange2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd08a"/><stop offset="0.55" stop-color="#ffab4a"/><stop offset="1" stop-color="#f07a1a"/></linearGradient>
+    <linearGradient id="fire" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#d9431e"/><stop offset="0.6" stop-color="#f39a2b"/><stop offset="1" stop-color="#ffd86b"/></linearGradient>
+    <linearGradient id="gloss" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0.35"/><stop offset="0.5" stop-color="#fff" stop-opacity="0"/></linearGradient>
+    <filter id="diecut" x="-15%" y="-15%" width="130%" height="130%">
+      <feMorphology in="SourceAlpha" operator="dilate" radius="10" result="dil"/>
+      <feFlood flood-color="#ffffff"/><feComposite in2="dil" operator="in" result="white"/>
+      <feGaussianBlur in="dil" stdDeviation="5" result="blur"/><feOffset in="blur" dx="0" dy="6" result="off"/>
+      <feFlood flood-color="#000" flood-opacity="0.32"/><feComposite in2="off" operator="in" result="shadow"/>
+      <feMerge><feMergeNode in="shadow"/><feMergeNode in="white"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+</svg>
+<div id="root"></div>
+<script src="character.js"></script>
+<script src="female.js"></script>
+<script src="packs.js"></script>
+<script src="duos.js"></script>
+<script>
+const NS = 'http://www.w3.org/2000/svg';
+const ZW = s => s.replace(/_/g, '‌');
+function el(name, attrs, parent) {
+  const e = document.createElementNS(NS, name);
+  for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+  if (parent) parent.appendChild(e);
+  return e;
+}
+function shade(hex, f) {
+  const n = parseInt(hex.slice(1), 16);
+  const c = [n >> 16, (n >> 8) & 255, n & 255].map(v => Math.max(0, Math.min(255, Math.round(v * f))));
+  return '#' + c.map(v => v.toString(16).padStart(2, '0')).join('');
+}
+
+// Monochrome orange: every hue is pushed to orange; outline, skin, pupils and whites stay.
+const KEEP = new Set(['#3b2414', '#f2c29b', '#1d1d22', '#26262c', '#2e1a0c', '#ffffff', '#f4f4f4']);
+function toOrange(hex) {
+  const h = hex.toLowerCase();
+  if (KEEP.has(h)) return hex;
+  const n = parseInt(h.slice(1), 16);
+  const [r, g, b] = [n >> 16, (n >> 8) & 255, n & 255].map(v => v / 255);
+  const mx = Math.max(r, g, b), mn = Math.min(r, g, b);
+  let L = (mx + mn) / 2;
+  if (L > 0.93) return hex;
+  L = Math.min(0.9, Math.max(0.2, L));
+  const S = 0.85, H = (L > 0.7 ? 33 : 24) / 360;
+  const q = L < 0.5 ? L * (1 + S) : L + S - L * S, p = 2 * L - q;
+  const f = t => { t = (t + 1) % 1; return t < 1 / 6 ? p + (q - p) * 6 * t : t < 0.5 ? q : t < 2 / 3 ? p + (q - p) * (2 / 3 - t) * 6 : p; };
+  return '#' + [f(H + 1 / 3), f(H), f(H - 1 / 3)].map(v => Math.round(v * 255).toString(16).padStart(2, '0')).join('');
+}
+function drawChar(gender, o) {
+  const opts = { eyes: o.e, brows: o.b || 'none', mouth: o.m, arms: o.a, prop: o.p, fx: o.f || [] };
+  const svg = gender === 'f' ? characterF(opts) : character(opts);
+  return svg.replace(/#[0-9a-fA-F]{6}\b/g, toOrange);
+}
+
+function textEl(parent, line, fill, en) {
+  const t = el('text', {
+    class: en ? 'en' : 'fa', x: 256, 'text-anchor': 'middle',
+    fill: `url(#${fill})`, stroke: K, 'paint-order': 'stroke', 'stroke-linejoin': 'round'
+  }, parent);
+  t.textContent = en ? line.toUpperCase() : line;
+  return t;
+}
+
+// size a text to its slot; align: 'center' | 'right' | 'left'
+function placeText(t, slotTop, slotH, maxW, align) {
+  let size = slotH * 1.05;
+  t.setAttribute('font-size', size);
+  let box = t.getBBox();
+  if (box.width > maxW) size *= maxW / box.width;
+  t.setAttribute('font-size', size);
+  t.setAttribute('stroke-width', Math.max(8, size * 0.15));
+  box = t.getBBox();
+  t.setAttribute('y', slotTop + slotH / 2 - (box.y + box.height / 2));
+  box = t.getBBox();
+  if (align === 'right') t.setAttribute('x', 256 + (494 - (box.x + box.width)));
+  if (align === 'left') t.setAttribute('x', 256 + (18 - box.x));
+}
+
+function fitInto(g, x0, y0, w, h, mirror) {
+  const bb = g.getBBox();
+  const s = Math.min(h / bb.height, w / bb.width);
+  const cx = x0 + w / 2, top = y0 + (h - bb.height * s);
+  const mx = mirror ? -1 : 1;
+  g.setAttribute('transform', `translate(${cx - mx * (bb.x + bb.width / 2) * s} ${top - bb.y * s}) scale(${mx * s} ${s})`);
+}
+
+function buildSolo(item, idx) {
+  const [rawText, o, style] = item;
+  const en = style === 'en';
+  const gender = idx % 3 === 1 ? 'f' : 'm';
+  const lines = ZW(rawText).split('|');
+  const svg = el('svg', { width: 512, height: 512, viewBox: '0 0 512 512' });
+  const art = el('g', { filter: 'url(#diecut)' }, svg);
+  const c = el('g', {}, art);
+  c.innerHTML = drawChar(gender, o);
+  const texts = lines.map((l, i) => textEl(art, l, i ? 'orange2' : 'orange', en));
+  return { svg, fit() {
+    const textH = lines.length > 1 ? 178 : 112;
+    fitInto(c, 36, 22, 440, 490 - 22 - textH + 6, false);
+    const slot = textH / lines.length;
+    texts.forEach((t, i) => placeText(t, 490 - textH + slot * i, slot, 470, 'center'));
+  } };
+}
+
+function buildDuo(duo) {
+  const [g1, l1, o1, l2, o2] = duo;
+  const g2 = g1 === 'm' ? 'f' : 'm';
+  const svg = el('svg', { width: 512, height: 512, viewBox: '0 0 512 512' });
+  const art = el('g', { filter: 'url(#diecut)' }, svg);
+  const right = el('g', {}, art);
+  right.innerHTML = drawChar(g1, o1);
+  const left = el('g', {}, art);
+  left.innerHTML = drawChar(g2, o2);
+  const hasText = o => (o.f || []).some(f => ['zzz', 'question', 'exclaim'].includes(f));
+  const t1 = textEl(art, ZW(l1), 'orange', false);
+  const t2 = textEl(art, ZW(l2), 'orange2', false);
+  return { svg, fit() {
+    fitInto(right, 262, 18, 232, 256, !hasText(o1));
+    fitInto(left, 18, 18, 232, 256, false);
+    placeText(t1, 276, 106, 476, 'right');
+    placeText(t2, 384, 106, 476, 'left');
+  } };
+}
+
+function packItems(pi) {
+  const pack = PACKS[pi];
+  return [
+    ...pack.items.map((it, i) => () => buildSolo(it, i)),
+    ...DUOS[pi].map(d => () => buildDuo(d))
+  ];
+}
+
+document.fonts.ready.then(() => {
+  const root = document.getElementById('root');
+  const [mode, a, b] = location.hash.slice(1).split(',');
+  const items = packItems(+a);
+  if (mode === 'sheet') {
+    document.body.className = 'sheet';
+    const h = document.createElement('h1');
+    h.textContent = 'پک ' + (+a + 1).toLocaleString('fa-IR') + ' — ' + ZW(PACKS[+a].name);
+    root.appendChild(h);
+    const grid = document.createElement('div');
+    grid.className = 'grid';
+    root.appendChild(grid);
+    items.forEach(make => { const r = make(); grid.appendChild(r.svg); r.fit(); });
+  } else {
+    const r = items[+b]();
+    root.appendChild(r.svg);
+    r.fit();
+  }
+  document.body.dataset.ready = '1';
+});
+</script>
+</body></html>
