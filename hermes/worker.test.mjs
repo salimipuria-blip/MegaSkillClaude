@@ -740,3 +740,10 @@ test('gmail_draft only drafts (UTF-8 subject), and team members never get Google
   assert.equal(JSON.stringify(gem[0].body.tools || []).includes('functionDeclarations'), false);
   delete USERS.tester;
 });
+
+test('natural image requests anywhere in the sentence are recognised; questions about photos are not', () => {
+  for (const t of ['یه عکس از جنگل پاییزی با جیپ بساز', 'یک تصویر خفن از پدل سواری بده', 'پوستر تور آخر هفته رو طراحی کن',
+    'یه عکس بفرست از کمپ', 'make me a cool poster for the tour']) assert.equal(imageRequest(t), t);
+  for (const t of ['کپشن برای این عکس بنویس', 'این عکس رو ببین چیه', 'میخوام عکس پست بذارم چه کپشنی خوبه',
+    'عکس پروفایلمو چطور عوض کنم', 'بهترین ساعت عکاسی چیه']) assert.equal(imageRequest(t), null);
+});
