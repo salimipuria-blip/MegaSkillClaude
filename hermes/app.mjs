@@ -76,6 +76,9 @@ export const APP_HTML = String.raw`<!doctype html>
   .node .ring { transition: stroke-width .3s, r .3s; }
   .node.hot .ring { stroke-width: 3; }
   .node.hot .halo { opacity: .55; }
+  .node.locked .ring { stroke: #ff6b6b; stroke-dasharray: 2 2.4; opacity: .7; }
+  .node.locked .lbl { fill: #8a5560; }
+  .node.locked .pulse { animation: none; }
   .halo { opacity: 0; transition: opacity .4s; }
   .node:focus { outline: none; } .node:focus-visible .ring { stroke: #fff; }
   .spoke { transition: stroke .4s, opacity .4s, stroke-width .4s; }
@@ -360,12 +363,13 @@ export const APP_HTML = String.raw`<!doctype html>
   const hash = new URLSearchParams(location.hash.slice(1));
   if (hash.get('k')) { store.set('hermes-key', hash.get('k')); history.replaceState(null, '', location.pathname); }
   const key = store.get('hermes-key') || store.get('hermes-session');
-  let busy = false, messages = [], me = null;
+  let busy = false, messages = [], me = null, locks = [];
 
   // ── Hermes' abilities: id, label, kind, x, y, live, label side, radius, Persian card ──
   const COL = { core: '#00e5ff', skill: '#f5a623', soon: '#7f9bb3' };
   const STATUS = {
     online: ['#34d399', 'آنلاین · هرمس خودکار از آن استفاده می‌کند'],
+    locked: ['#ff6b6b', 'قفل · این توانایی برای حساب تو بسته است'],
     queued: ['#c9a84c', 'در صف ساخت · مرحلهٔ بعدی پروژه'],
     planned: ['#7f9bb3', 'برنامه‌ریزی‌شده · هنوز وصل نیست'],
   };
@@ -463,7 +467,7 @@ export const APP_HTML = String.raw`<!doctype html>
     g.addEventListener('click', () => openCard(r));
     g.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCard(r); } });
     gNodes.append(g);
-    nodes[id] = { g, spoke, row: r, len: 0 };
+    nodes[id] = { g, spoke, row: r, len: 0, label: t };
   });
   Object.values(nodes).forEach((n) => { n.len = n.spoke.getTotalLength(); });
 
@@ -519,7 +523,7 @@ export const APP_HTML = String.raw`<!doctype html>
       ['research', /تحلیل|بازار|رقبا|بررسی|مقایسه|چیست|چرا/]];
     rules.forEach(([id, re]) => { if (re.test(t)) ids.push(id); });
     if (ids.length === 2) ids.push('research');
-    return ids;
+    return ids.filter((id) => !locks.includes(id));
   }
 
   // ── Status bar equalizer ──
@@ -711,8 +715,9 @@ export const APP_HTML = String.raw`<!doctype html>
   // ── Agent card ──
   const card = $('card');
   function openCard(r) {
-    const [id, label, kind, , , , , , role, status, caps, asks] = r;
-    const c = COL[kind], s = STATUS[status];
+    const [id, label, kind, , , , , , role, status0, caps, asks0] = r;
+    const isLocked = locks.includes(id), status = isLocked ? 'locked' : status0, asks = isLocked ? [] : asks0;
+    const c = isLocked ? '#ff6b6b' : COL[kind], s = STATUS[status];
     card.style.border = '1px solid ' + c + '44';
     card.style.boxShadow = '0 0 40px ' + c + '18, 0 8px 32px rgba(0,0,0,.6)';
     card.innerHTML = '';
@@ -882,6 +887,8 @@ export const APP_HTML = String.raw`<!doctype html>
       const b = document.createElement('b'); b.textContent = me.role === 'owner' ? 'پوریا' : me.name; w.prepend(b);
       $('tTg').classList.toggle('hide', me.role !== 'owner');
       $('tPass').classList.toggle('hide', me.role === 'owner');
+      locks = me.locks || [];
+      locks.forEach((id) => { const n = nodes[id]; if (!n) return; n.g.classList.add('locked'); n.label.textContent = n.row[1] + ' 🔒'; });
     } catch {}
   }
 

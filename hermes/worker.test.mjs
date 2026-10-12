@@ -257,7 +257,7 @@ test('team member chats with private memory and a personal system prompt', async
   const calls = mockFetch();
   const { status, body } = await loginAs(env, 'Tester', 'pass-1234');
   assert.equal(status, 200);
-  assert.deepEqual(body.user, { username: 'tester', name: 'Tester', role: 'member' });
+  assert.deepEqual(body.user, { username: 'tester', name: 'Tester', role: 'member', locks: [] });
   assert.deepEqual((await callApi(env, '/api/me', undefined, body.token)).body, body.user);
   const res = await callApi(env, '/api/chat', { message: 'سلام' }, body.token);
   assert.equal(res.body.reply, 'سلام پوریا');
@@ -288,4 +288,27 @@ test('admin sees the team; members can change their password', async () => {
   assert.equal((await callApi(env, '/api/password', { old: 'pass-1234', new: 'new-pass-99' }, token)).status, 200);
   assert.equal((await loginAs(env, 'tester', 'pass-1234')).status, 401);
   assert.equal((await loginAs(env, 'tester', 'new-pass-99')).status, 200);
+});
+
+test('locked abilities are refused before the AI is called; the owner has no locks', async () => {
+  USERS.nov = { name: 'NoViking', role: 'admin', locks: ['viking'], salt: 'salt-v', hash: await hashPassword('nov-pass-1', 'salt-v') };
+  USERS.nofj = { name: 'NoFJ', role: 'member', locks: ['fjcod'], salt: 'salt-f', hash: await hashPassword('nofj-pass-1', 'salt-f') };
+  const env = baseEnv();
+  const calls = mockFetch();
+  const nov = (await loginAs(env, 'nov', 'nov-pass-1')).body;
+  assert.deepEqual(nov.user.locks, ['viking']);
+  const refused = await callApi(env, '/api/chat', { message: 'متن معرفی تور آخر هفته بنویس' }, nov.token);
+  assert.equal(refused.status, 403);
+  assert.equal(refused.body.locked, 'viking');
+  assert.equal(calls.some((c) => c.url.includes('generativelanguage')), false);
+  assert.equal((await callApi(env, '/api/chat', { message: 'وضعیت FJCod چیه؟' }, nov.token)).status, 200);
+  assert.equal((await callApi(env, '/api/chat', { message: 'یک دستور پخت بده' }, nov.token)).status, 200);
+  const gemini = calls.filter((c) => c.url.includes('generativelanguage')).pop();
+  assert.match(gemini.body.systemInstruction.parts[0].text, /NO access to: Viking Offroad/);
+  const nofj = (await loginAs(env, 'nofj', 'nofj-pass-1')).body.token;
+  assert.equal((await callApi(env, '/api/chat', { message: 'fj-cod data' }, nofj)).status, 403);
+  assert.equal((await callApi(env, '/api/chat', { message: 'تور آفرود' }, nofj)).status, 200);
+  const owner = await callApi(env, '/api/chat', { message: 'FJCod و تور وایکینگ' });
+  assert.equal(owner.status, 200);
+  assert.deepEqual((await callApi(env, '/api/me')).body.locks, []);
 });

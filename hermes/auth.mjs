@@ -52,7 +52,7 @@ export async function login(env, username, password) {
   if (fails && env.MEMORY) await env.MEMORY.delete(failKey);
   const exp = Date.now() + SESSION_DAYS * 864e5;
   const data = `${username}.${exp}`;
-  return { token: `${data}.${await sign(env, data)}`, user: { username, name: acc.name, role: acc.role } };
+  return { token: `${data}.${await sign(env, data)}`, user: { username, name: acc.name, role: acc.role, locks: acc.locks || [] } };
 }
 
 // The user a session token belongs to, or null.
@@ -63,7 +63,7 @@ export async function sessionUser(env, token) {
   if (!(Number(exp) > Date.now())) return null;
   if (!sameText(await sign(env, `${username}.${exp}`), sig)) return null;
   const acc = await account(env, username);
-  return acc ? { username, name: acc.name, role: acc.role } : null;
+  return acc ? { username, name: acc.name, role: acc.role, locks: acc.locks || [] } : null;
 }
 
 export async function changePassword(env, username, oldPassword, newPassword) {
