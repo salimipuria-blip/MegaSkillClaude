@@ -147,6 +147,12 @@ input,select,textarea{font:inherit;color:var(--fg);background:var(--bg);border:1
 .btn.tg{background:#2aabee;color:#fff}.btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--line)}
 .btn[disabled]{opacity:.6}.msg{margin:0;font-weight:600}.err{color:var(--bad)}.ok{color:var(--ok)}.muted{color:var(--muted);font-size:.9rem;margin:0}
 .hp{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;clip-path:inset(50%)}.pre{white-space:pre-wrap;background:var(--bg);border:1px dashed var(--line);border-radius:12px;padding:12px}
+.cars{border:0;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:10px}.cars legend{font-weight:600;font-size:.92rem;margin-bottom:6px;padding:0}
+.car{position:relative;display:grid;justify-items:center;gap:2px;text-align:center;background:var(--bg);border:2px solid var(--line);border-radius:16px;padding:14px 8px;cursor:pointer;transition:border-color .15s,box-shadow .15s,transform .1s}
+.car input{position:absolute;opacity:0;pointer-events:none}.car .ic{font-size:1.8rem}.car small{color:var(--muted);font-weight:500;font-size:.78rem}
+.car:has(input:checked){border-color:var(--orange);box-shadow:0 0 0 3px rgba(243,154,43,.25),0 0 18px rgba(243,154,43,.35);background:#1d1610}
+.car:has(input:checked)::after{content:'✓';position:absolute;top:6px;inset-inline-end:10px;color:var(--orange);font-weight:800}
+.car:has(input:focus-visible){outline:2px solid var(--orange);outline-offset:2px}.car:active{transform:scale(.98)}
 footer{color:var(--muted);font-size:.78rem;text-align:center}
 @media (max-width:420px){h1{font-size:2.1rem}.row{grid-template-columns:1fr}}</style></head><body><div class="wrap">${body}</div></body></html>`;
 
@@ -157,7 +163,7 @@ export function tripPage() {
 <p class="sub">دو روز طبیعت، ماجراجویی و رفاقت در دل جنگل‌های هیرکانی</p><span class="date">📅 ${TRIP.dates}</span></div></header>
 <section><h2>توی این سفر</h2><ul class="list">
 <li><span class="e">🏄</span><div>پدل‌سواری در یکی از زیباترین دریاچه‌های گیلان<small>با تمام تجهیزات، مربی و تیم مجرب</small></div></li>
-<li><span class="e">🏕️</span><div>کمپ جنگلی فول‌برد</div></li><li><span class="e">🔥</span><div>آتیش‌بازی</div></li>
+<li><span class="e">🏕️</span><div>کمپ جنگلی فول‌برد</div></li><li><span class="e">🔥</span><div>شب‌نشینی دور آتیش و آتیش‌بازی</div></li>
 <li><span class="e">🎯</span><div>بازی و برنامه‌های گروهی</div></li><li><span class="e">🎶</span><div>میز بارتندر بدون الکل</div></li>
 <li><span class="e">🍽️</span><div>پذیرایی کامل<small>ناهار با مخلفات · شام · صبحانهٔ سرد و گرم سلف‌سرویس</small></div></li></ul></section>
 <section><h2>هزینه</h2><div class="price">
@@ -169,7 +175,9 @@ export function tripPage() {
 <div class="row"><label for="name">نام<input id="name" autocomplete="name" placeholder="مثلاً سارا" required></label>
 <label for="phone">شمارهٔ تماس<input id="phone" inputmode="tel" autocomplete="tel" dir="ltr" placeholder="0912…" required></label></div>
 <div class="row"><label for="count">تعداد نفرات<input id="count" type="number" min="1" max="20" value="1" inputmode="numeric"></label>
-<label for="car">رفت‌وآمد (اختیاری)<select id="car"><option value="">انتخاب نکردم</option>${CARS.map((c) => `<option>${c}</option>`).join('')}</select></label></div>
+</div>
+<fieldset class="cars"><legend>رفت‌وآمد (اختیاری) — روی یکی بزن</legend>
+${CARS.map((c, i) => `<label class="car"><input type="radio" name="car" value="${c}"><span class="ic">${i ? '🚐' : '🚙'}</span><b>${c}</b><small>${i ? '۳٫۵ میلیون اضافه' : 'با ماشین خودت'}</small></label>`).join('')}</fieldset>
 <label for="note">توضیح (اختیاری)<textarea id="note" rows="2" placeholder="سؤال یا درخواست خاص"></textarea></label>
 <input class="hp" id="website" tabindex="-1" autocomplete="off" aria-hidden="true">
 <label class="check" for="agree"><input id="agree" type="checkbox"> قبول دارم که پرداخت بعد از تأیید انجام می‌شه و بعد از پرداخت کنسلی و برگشت وجه نداره.</label>
@@ -180,8 +188,8 @@ export function tripPage() {
 <a class="btn ghost" id="st">مشاهدهٔ وضعیت رزرو</a></div>
 <a class="btn ghost" href="https://ig.me/m/viking.offroad" target="_blank" rel="noopener" style="margin-top:12px">سؤال داری؟ دایرکت اینستاگرام وایکینگ</a></section>
 <footer>🪪 با مجوز رسمی · @viking.offroad</footer>
-<script>(()=>{const $=(i)=>document.getElementById(i);$('f').addEventListener('submit',async(e)=>{e.preventDefault();$('err').hidden=true;$('go').disabled=true;
-try{const r=await fetch('/api/booking',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({name:$('name').value,phone:$('phone').value,count:$('count').value,car:$('car').value,note:$('note').value,website:$('website').value,agree:$('agree').checked})});
+<script>(()=>{const $=(i)=>document.getElementById(i);document.querySelectorAll('.car input').forEach((r)=>{r.closest('.car').addEventListener('pointerdown',()=>{r.dataset.was=r.checked});r.addEventListener('click',()=>{if(r.dataset.was==='true')r.checked=false;r.dataset.was=''})});$('f').addEventListener('submit',async(e)=>{e.preventDefault();$('err').hidden=true;$('go').disabled=true;
+try{const r=await fetch('/api/booking',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({name:$('name').value,phone:$('phone').value,count:$('count').value,car:(document.querySelector('input[name=car]:checked')||{}).value||'',note:$('note').value,website:$('website').value,agree:$('agree').checked})});
 const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||'خطا در ثبت؛ دوباره امتحان کن.');
 $('f').hidden=true;$('done').hidden=false;$('code').textContent=d.id;$('st').href=d.status;try{localStorage.setItem('viking-booking',d.status)}catch{}
 if(d.bot){$('tg').href='https://t.me/'+d.bot+'?start=bk_'+d.id;$('tg').hidden=false}$('done').scrollIntoView({behavior:'smooth'});}
