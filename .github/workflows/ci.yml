@@ -146,3 +146,7 @@ jobs:
           node-version: 22
       - run: node --check hermes/worker.mjs
       - run: node --test hermes/worker.test.mjs
+      - name: Build Mega Skills assets
+        run: |
+          node hermes/build-skills.mjs | tee build.log
+          grep -Eq "\] [0-9]{4,} skills" build.log

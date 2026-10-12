@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "postinstall": "node sync-secrets.mjs",
+    "postinstall": "node build-skills.mjs && node sync-secrets.mjs",
     "test": "node --test worker.test.mjs"
   },
   "devDependencies": {

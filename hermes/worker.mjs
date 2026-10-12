@@ -9,6 +9,7 @@ import { APP_HTML, MANIFEST, ICON } from './app.mjs';
 import { login, sessionUser, changePassword } from './auth.mjs';
 import { USERS } from './users.mjs';
 import { SKILLS } from './skills.mjs';
+import { relevantSkills, skillsBlock } from './skill-router.mjs';
 import { loadLog, toContents, appendTurn, archiveAndClear, noteFrom, loadNotes, addNote, clearNotes } from './memory.mjs';
 
 export const MODELS = ['gemini-3.8-flash', 'gemini-3.7-flash', 'gemini-3.5-flash-lite', 'gemini-2.5-flash'];
@@ -223,10 +224,10 @@ async function handle(msg, env, origin) {
 export async function converse(env, key, input, system = SYSTEM) {
   const note = noteFrom(input);
   if (note) await addNote(env, key, note);
-  const [log, notes] = await Promise.all([loadLog(env, key), loadNotes(env, key)]);
-  const fullSystem = notes.length
+  const [log, notes, skills] = await Promise.all([loadLog(env, key), loadNotes(env, key), relevantSkills(env, input)]);
+  const fullSystem = (notes.length
     ? `${system}\n\nLONG-TERM NOTES the user asked you to remember (always take them into account):\n- ${notes.join('\n- ')}`
-    : system;
+    : system) + skillsBlock(skills);
   const contents = [...toContents(log), { role: 'user', parts: [{ text: input }] }];
   const reply = await ask(env, contents, fullSystem);
   await appendTurn(env, key, log, input, reply);

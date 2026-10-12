@@ -12,3 +12,10 @@ id = "90fafb6bf15c4a1cb8b503668e070ab3"
 # Cloudflare Workers AI: free daily quota, no API key. Used when Gemini is missing or fails.
 [ai]
 binding = "AI"
+
+# Mega Skills: build-skills.mjs (npm postinstall) writes ./public/skills at deploy time from the repo's skill library.
+# run_worker_first keeps every URL routed through worker.mjs; the skills are only read internally via env.ASSETS.
+[assets]
+directory = "./public"
+binding = "ASSETS"
+run_worker_first = true
