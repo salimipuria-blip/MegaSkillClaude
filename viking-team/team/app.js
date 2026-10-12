@@ -1,5 +1,5 @@
 // VIKING / private team client. The key below is a public/anon browser key, NEVER a service-role key.
-const URL = 'https://aupkeramhsufnmhkbihl.supabase.co';
+const SUPABASE_URL = 'https://aupkeramhsufnmhkbihl.supabase.co';
 const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF1cGtlcmFtaHN1Zm5taGtiaWhsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkxNjI2NzUsImV4cCI6MjEwNDczODY3NX0.SATIibEZdkZc_cFo3vm4_9HGj_NJHeUblC2v4gBi6EI';
 const $ = (id) => document.getElementById(id);
 const esc = (text = '') => String(text ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -17,7 +17,7 @@ function updateSettings(){if(!session)return;$('settingsEmail').textContent=sess
 async function init(){
  try{
   const {createClient}=await import('https://esm.sh/@supabase/supabase-js@2.49.0?bundle').catch(()=>import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.0/+esm'));
-  api=createClient(URL,KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+  api=createClient(SUPABASE_URL,KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
   const result=await api.auth.getSession();if(result.error)throw result.error;
   $('loadStatus').textContent='اتصال امن آماده است.';session=result.data.session;await enter();
   api.auth.onAuthStateChange((event,updated)=>{if(event==='SIGNED_IN'&&updated?.user?.id!==session?.user?.id){session=updated;setTimeout(()=>enter(),0)}else if(event==='SIGNED_OUT'){session=null;leave()}});

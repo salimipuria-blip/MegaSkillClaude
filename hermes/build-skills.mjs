@@ -32,8 +32,9 @@ try {
     written++;
   });
   buildPostings(skills).forEach((shard, n) => writeFileSync(join(OUT, 't', `${n}.json`), JSON.stringify(shard)));
-  writeFileSync(join(OUT, 'meta.json'), JSON.stringify({ total: skills.length }));
-  console.log(`[build-skills] ${written} skills → public/skills`);
+  const active = skills.filter((s) => !s.incomplete).length;
+  writeFileSync(join(OUT, 'meta.json'), JSON.stringify({ total: active, packaged: skills.length, excludedIncomplete: skills.length - active }));
+  console.log(`[build-skills] ${written} skills → public/skills (${active} routable; ${skills.length - active} incomplete excluded)`);
 } catch (err) {
   mkdirSync(OUT, { recursive: true });
   writeFileSync(join(OUT, 'meta.json'), JSON.stringify({ total: 0 }));

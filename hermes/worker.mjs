@@ -2,22 +2,21 @@
 // Secrets (Worker → Settings → Variables and Secrets, type "Secret"):
 //   TELEGRAM_BOT_TOKEN, ALLOWED_USER_ID, and optionally GEMINI_API_KEY.
 // Brain: Gemini when its key works, otherwise Cloudflare Workers AI (binding AI, free, no key).
-// Optional KV binding MEMORY (see wrangler.toml) keeps chat history; without it the bot still works.
-// After deploy, open https://<worker>.workers.dev/setup once to register the Telegram webhook.
+// CONVERSATIONS (SQLite Durable Objects) stores/serializes chats; KV MEMORY keeps account data and legacy logs.
+// After deploy, connect Telegram with the owner-only `npm run setup:webhook` CLI.
 
 import { APP_HTML, MANIFEST, ICON } from './app.mjs';
 import { login, sessionUser, changePassword } from './auth.mjs';
 import { USERS } from './users.mjs';
-import { SKILLS } from './skills.mjs';
-import { relevantSkills, skillsBlock } from './skill-router.mjs';
-import { loadLog, toContents, appendTurn, archiveAndClear, noteFrom, loadNotes, addNote, clearNotes } from './memory.mjs';
+import { STYLE, SYSTEM } from './brain.mjs';
+import { appKey, webhookSecret, setupKey } from './security.mjs';
+export { appKey, webhookSecret, setupKey } from './security.mjs';
+import { converse } from './conversation.mjs';
+import { requireConversationBinding, loadLog, archiveAndClear, loadNotes, clearNotes } from './memory.mjs';
+export { ask, askGemini, askWorkersAI, MODELS, CF_MODELS } from './brain.mjs';
+export { converse } from './conversation.mjs';
 
-export const MODELS = ['gemini-3.8-flash', 'gemini-3.7-flash', 'gemini-3.5-flash-lite', 'gemini-2.5-flash'];
-export const CF_MODELS = ['@cf/google/gemma-3-12b-it', '@cf/meta/llama-3.3-70b-instruct-fp8-fast'];
-const GEMINI_API = 'https://generativelanguage.googleapis.com/v1beta';
 const TG_LIMIT = 4000;
-const STYLE = "Reply in the user's language (usually Persian). Be direct and accurate; short by default, detailed when the task needs it. Say so when you are not sure.\n" + SKILLS;
-const SYSTEM = "You are Hermes, Puria's personal assistant (Viking Offroad brand). " + STYLE;
 // Abilities that can be locked per person (users.mjs `locks`). A locked topic is refused before the AI is called.
 export const ABILITIES = {
   viking: { name: 'وایکینگ آفرود', topic: 'Viking Offroad business (tours, routes, customers, pricing, packages)',
@@ -31,8 +30,14 @@ const teamSystem = (who) => `You are Hermes, the AI assistant of the Viking Offr
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
-    if (request.method === 'GET' && url.pathname === '/setup') return setup(url, env);
-    if (request.method === 'GET' && url.pathname === '/') return home(url, env);
+    if (url.pathname === '/setup') {
+      if (request.method !== 'POST') return new Response('method not allowed', { status: 405, headers: { allow: 'POST' } });
+      if (!env.TELEGRAM_BOT_TOKEN || !String(env.ALLOWED_USER_ID || '').trim()) return text('not configured', 503);
+      if (request.headers.get('authorization') !== `Bearer ${await setupKey(env)}`) return text('forbidden', 403);
+      return setup(url, env);
+    }
+    // Public liveness probes must not query Telegram or mutate its webhook.
+    if (request.method === 'GET' && url.pathname === '/') return text('Hermes Lite is running. Connect Telegram with the owner-only setup CLI.');
     if (request.method === 'GET' && url.pathname === '/app') return page(APP_HTML, 'text/html');
     if (request.method === 'GET' && url.pathname === '/manifest.webmanifest') return page(MANIFEST, 'application/manifest+json');
     if (request.method === 'GET' && url.pathname === '/icon.svg') return page(ICON, 'image/svg+xml');
@@ -50,12 +55,6 @@ export default {
     return new Response('ok');
   },
 };
-
-// Private key for the web app, derived from the bot token so no extra secret is needed.
-export async function appKey(env) {
-  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`app:${env.TELEGRAM_BOT_TOKEN}`));
-  return [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, '0')).join('').slice(0, 40);
-}
 
 // The owner's web app shares memory with their private Telegram chat (chat id == user id).
 // Team members each get their own private memory.
@@ -84,6 +83,9 @@ async function api(request, url, env) {
   }
   const who = await caller(request, env);
   if (!who) return json({ error: 'unauthorized' }, 401);
+  if (['/api/chat', '/api/history', '/api/reset', '/api/notes', '/api/notes/clear'].includes(url.pathname)) {
+    try { requireConversationBinding(env); } catch (error) { return json({ error: error.message }, 503); }
+  }
   if (request.method === 'GET' && url.pathname === '/api/me') return json(who);
   if (request.method === 'GET' && url.pathname === '/api/team') {
     if (who.role !== 'owner' && who.role !== 'admin') return json({ error: 'forbidden' }, 403);
@@ -147,21 +149,6 @@ function page(body, type) {
   return new Response(body, { headers: { 'content-type': `${type}; charset=utf-8`, 'cache-control': 'no-cache' } });
 }
 
-export async function webhookSecret(env) {
-  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`hermes:${env.TELEGRAM_BOT_TOKEN}`));
-  return [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, '0')).join('').slice(0, 48);
-}
-
-// Opening the worker's home page registers the webhook if it is not ours yet, so no /setup visit is needed.
-async function home(url, env) {
-  if (!env.TELEGRAM_BOT_TOKEN) return text('Hermes Lite is running.');
-  const info = await tg(env, 'getWebhookInfo', {});
-  if (info.ok && info.result && info.result.url === `${url.origin}/telegram`) {
-    return text('Hermes Lite is running.\n✓ Telegram connected.');
-  }
-  return setup(url, env);
-}
-
 async function setup(url, env) {
   const missing = ['TELEGRAM_BOT_TOKEN', 'ALLOWED_USER_ID'].filter((k) => !env[k]);
   if (!env.GEMINI_API_KEY && !env.AI) missing.push('GEMINI_API_KEY (or the AI binding)');
@@ -172,22 +159,25 @@ async function setup(url, env) {
     url: `${url.origin}/telegram`,
     secret_token: await webhookSecret(env),
     allowed_updates: ['message'],
-    drop_pending_updates: true,
+    drop_pending_updates: false,
   });
   if (!hook.ok) return text(`✗ setWebhook failed: ${hook.description || 'unknown error'}`, 502);
-  const memory = env.MEMORY ? 'on' : 'off (no MEMORY binding)';
+  const memory = env.CONVERSATIONS ? 'SQLite Durable Object' : 'local-only compatibility (not distributed)';
   const brain = env.GEMINI_API_KEY ? `Gemini${env.AI ? ' (Workers AI as fallback)' : ''}` : 'Cloudflare Workers AI';
   return text(`✓ Webhook set for @${me.result.username}\n✓ Memory: ${memory}\n✓ Brain: ${brain}\nNow message the bot in Telegram.`);
 }
 
 async function handle(msg, env, origin) {
+  // Never answer in a group/channel, especially /app: its link grants owner access.
+  if (msg.chat?.type !== 'private') return;
   const chatId = msg.chat.id;
   const userId = msg.from && msg.from.id;
   if (String(userId) !== String(env.ALLOWED_USER_ID).trim()) {
     await send(env, chatId, `این بات خصوصی است. شناسهٔ شما: ${userId}`);
     return;
   }
-  const key = `history:${chatId}`;
+  if (String(chatId) !== String(userId)) return;
+  const key = ownerKey(env);
   const input = msg.text.trim();
   if (input === '/start') {
     return send(env, chatId, 'سلام! من هرمس هستم. هر چه می‌خواهی بپرس.\n' +
@@ -218,77 +208,6 @@ async function handle(msg, env, origin) {
     return send(env, chatId, `خطا: ${err.message}`);
   }
   await send(env, chatId, reply);
-}
-
-// One turn with permanent memory: recent messages + saved notes go to the brain; everything is kept.
-export async function converse(env, key, input, system = SYSTEM) {
-  const note = noteFrom(input);
-  if (note) await addNote(env, key, note);
-  const [log, notes, skills] = await Promise.all([loadLog(env, key), loadNotes(env, key), relevantSkills(env, input)]);
-  const fullSystem = (notes.length
-    ? `${system}\n\nLONG-TERM NOTES the user asked you to remember (always take them into account):\n- ${notes.join('\n- ')}`
-    : system) + skillsBlock(skills);
-  const contents = [...toContents(log), { role: 'user', parts: [{ text: input }] }];
-  const reply = await ask(env, contents, fullSystem);
-  await appendTurn(env, key, log, input, reply);
-  return reply;
-}
-
-export async function ask(env, contents, system = SYSTEM) {
-  if (env.GEMINI_API_KEY) {
-    try {
-      return await askGemini(env, contents, system);
-    } catch (err) {
-      if (!env.AI) throw err;
-      console.error('[Hermes] Gemini failed, using Workers AI:', err.message);
-    }
-  }
-  if (env.AI) return askWorkersAI(env, contents, system);
-  throw new Error('نه کلید جمینی تنظیم شده و نه Workers AI.');
-}
-
-export async function askWorkersAI(env, contents, system = SYSTEM) {
-  const messages = [
-    { role: 'system', content: system },
-    ...contents.map((c) => ({
-      role: c.role === 'model' ? 'assistant' : 'user',
-      content: c.parts.map((p) => p.text || '').join(''),
-    })),
-  ];
-  let lastError;
-  for (const model of CF_MODELS) {
-    try {
-      const out = await env.AI.run(model, { messages, max_tokens: 1024 });
-      const reply = (out && (out.response ||
-        (out.choices && out.choices[0] && out.choices[0].message && out.choices[0].message.content))) || '';
-      if (String(reply).trim()) return String(reply).trim();
-    } catch (err) {
-      lastError = err;
-    }
-  }
-  throw new Error(`Workers AI جواب نداد${lastError ? ` (${lastError.message})` : ''}.`);
-}
-
-export async function askGemini(env, contents, system = SYSTEM) {
-  const cached = env.MEMORY ? await env.MEMORY.get('model') : null;
-  const order = cached ? [cached, ...MODELS.filter((m) => m !== cached)] : MODELS;
-  for (const model of order) {
-    const res = await fetch(`${GEMINI_API}/models/${model}:generateContent`, {
-      method: 'POST',
-      headers: { 'content-type': 'application/json', 'x-goog-api-key': env.GEMINI_API_KEY },
-      body: JSON.stringify({ systemInstruction: { parts: [{ text: system }] }, contents }),
-    });
-    if (res.status === 404) continue;
-    if (res.status === 429) throw new Error('سهمیهٔ رایگان جمینی فعلاً پر است؛ چند دقیقه بعد دوباره بپرس.');
-    if (res.status === 400 || res.status === 403) throw new Error(`جمینی کلید را نپذیرفت (${res.status}). کلید را دوباره بساز.`);
-    if (!res.ok) throw new Error(`جمینی جواب نداد (${res.status}).`);
-    if (env.MEMORY && model !== cached) await env.MEMORY.put('model', model);
-    const data = await res.json();
-    const parts = (data.candidates && data.candidates[0] && data.candidates[0].content &&
-      data.candidates[0].content.parts) || [];
-    return parts.map((p) => p.text || '').join('').trim() || '(پاسخ خالی بود؛ دوباره بپرس)';
-  }
-  throw new Error('هیچ مدل جمینی برای این کلید در دسترس نیست.');
 }
 
 export function chunks(str, size = TG_LIMIT) {

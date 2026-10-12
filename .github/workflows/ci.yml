@@ -44,6 +44,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - run: python scripts/sync_skill_library.py --check
       - run: python -m unittest discover -s tests -p "test_*.py" -v
 
   fjcod:
@@ -80,6 +81,11 @@ jobs:
         working-directory: viking-team
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Media behavior regressions
+        run: node --test tests/*.test.mjs
       - name: Validate browser module syntax
         run: node --check --input-type=module < team/app.js
       - name: Run dependency-free integrity tests
@@ -109,18 +115,21 @@ jobs:
       - uses: denoland/setup-deno@v2
         with:
           deno-version: v2.x
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: GitHub admin authorization regressions
+        run: node --test supabase/functions/github-admin-gateway/*.test.mjs
+      - name: Native Deno gateway check and regressions (no network)
+        run: |
+          deno check --no-remote supabase/functions/github-admin-gateway/index.ts
+          deno test --no-remote --no-prompt supabase/functions/github-admin-gateway/handler.test.mjs
       - name: Repository guard
         run: python scripts/audit/check_repository_contract.py
       - name: Python contracts
         run: |
           python -m pip install --upgrade pip pytest
-          python -m pytest -q \
-            tests/test_repository_contract.py \
-            tests/test_function_manifest.py \
-            tests/test_database_baseline_contract.py \
-            tests/test_scanner_eligibility.py \
-            tests/test_skill_orchestrator_contract.py \
-            tests/test_verifier_hosted_precedence.py
+          python -m pytest -q -ra tests
       - name: Deno deployability checks
         shell: bash
         run: |
@@ -144,8 +153,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: node --check hermes/worker.mjs
-      - run: node --test hermes/worker.test.mjs
+      - run: npm ci --prefix hermes --ignore-scripts --no-audit --no-fund
+      - run: npm run check --prefix hermes
+      - run: npm test --prefix hermes
+      - name: SQLite distributed-memory regressions (local workerd, no network)
+        run: npm run test:integration --prefix hermes
       - name: Build Mega Skills assets
         run: |
           node hermes/build-skills.mjs | tee build.log

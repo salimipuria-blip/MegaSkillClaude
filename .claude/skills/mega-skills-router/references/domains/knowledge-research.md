@@ -14,7 +14,7 @@ Skills: 329
 - `api-json-to-table` → `psk/data/skills/api-json-to-table/SKILL.md`
 - `ara-research-manager` → `library/github-skills/ara-research-manager/SKILL.md`
 - `archivebox-self-archive` → `psk/data/skills/archivebox-self-archive/SKILL.md`
-- `arxiv` → `library/github-skills/arxiv/SKILL.md`
+- `arxiv` → `library/github-skills/arxiv/SKILL.md` [incomplete: excluded from default routing]
 - `audio-meeting-import-pack` → `psk/data/skills/audio-meeting-import-pack/SKILL.md`
 - `autoresearch` → `psk/data/skills/autoresearch/SKILL.md`
 - `awesome-lint-validator` → `psk/data/skills/awesome-lint-validator/SKILL.md`
@@ -50,7 +50,7 @@ Skills: 329
 - `catalog-versioning-git` → `psk/data/skills/catalog-versioning-git/SKILL.md`
 - `changelog-directory-writer` → `psk/data/skills/changelog-directory-writer/SKILL.md`
 - `chart-to-data-ocr` → `psk/data/skills/chart-to-data-ocr/SKILL.md`
-- `citation-audit` → `library/github-skills/citation-audit/SKILL.md`
+- `citation-audit` → `library/github-skills/citation-audit/SKILL.md` [incomplete: excluded from default routing]
 - `clinic-backup-planner` → `psk/data/skills/clinic-backup-planner/SKILL.md`
 - `clinic-badge-auditor` → `psk/data/skills/clinic-badge-auditor/SKILL.md`
 - `clinic-dedupe-pack` → `psk/data/skills/clinic-dedupe-pack/SKILL.md`
@@ -83,7 +83,7 @@ Skills: 329
 - `deep-research` → `psk/data/skills/deep-research/SKILL.md`
 - `deepread` → `library/github-skills/deepread/SKILL.md`
 - `deepspot-m` → `library/github-skills/deepspot-m/SKILL.md`
-- `deepxiv` → `library/github-skills/deepxiv/SKILL.md`
+- `deepxiv` → `library/github-skills/deepxiv/SKILL.md` [incomplete: excluded from default routing]
 - `dental-backup-generator` → `psk/data/skills/dental-backup-generator/SKILL.md`
 - `dental-backup-planner` → `psk/data/skills/dental-backup-planner/SKILL.md`
 - `dental-crawl-pack` → `psk/data/skills/dental-crawl-pack/SKILL.md`
@@ -102,7 +102,7 @@ Skills: 329
 - `docusaurus-knowledge-portal` → `psk/data/skills/docusaurus-knowledge-portal/SKILL.md`
 - `docx-fa-style-normalizer` → `psk/data/skills/docx-fa-style-normalizer/SKILL.md`
 - `easyocr-fa-en-pack` → `psk/data/skills/easyocr-fa-en-pack/SKILL.md`
-- `ebay-item-detail` → `library/github-skills/ebay-item-detail/SKILL.md`
+- `ebay-item-detail` → `library/github-skills/ebay-item-detail/SKILL.md` [incomplete: excluded from default routing]
 - `ecolodge-archive-monitor` → `psk/data/skills/ecolodge-archive-monitor/SKILL.md`
 - `ecolodge-badge-analyzer` → `psk/data/skills/ecolodge-badge-analyzer/SKILL.md`
 - `ecolodge-badge-optimizer` → `psk/data/skills/ecolodge-badge-optimizer/SKILL.md`
@@ -141,8 +141,8 @@ Skills: 329
 - `genomic-coordinates` → `library/github-skills/genomic-coordinates/SKILL.md`
 - `glossary-registry-fa` → `psk/data/skills/glossary-registry-fa/SKILL.md`
 - `gmail-takeout-threader` → `psk/data/skills/gmail-takeout-threader/SKILL.md`
-- `google-social-media-finder` → `library/github-skills/google-social-media-finder/SKILL.md`
-- `grant-proposal` → `library/github-skills/grant-proposal/SKILL.md`
+- `google-social-media-finder` → `library/github-skills/google-social-media-finder/SKILL.md` [incomplete: excluded from default routing]
+- `grant-proposal` → `library/github-skills/grant-proposal/SKILL.md` [incomplete: excluded from default routing]
 - `gym-audio-autopilot` → `psk/data/skills/gym-audio-autopilot/SKILL.md`
 - `gym-dedupe-assistant` → `psk/data/skills/gym-dedupe-assistant/SKILL.md`
 - `gym-normalize-planner` → `psk/data/skills/gym-normalize-planner/SKILL.md`
@@ -155,7 +155,7 @@ Skills: 329
 - `hotel-search-pack` → `psk/data/skills/hotel-search-pack/SKILL.md`
 - `hotel-versioning-reporter` → `psk/data/skills/hotel-versioning-reporter/SKILL.md`
 - `human-verification-gates` → `psk/data/skills/human-verification-gates/SKILL.md`
-- `idea-creator` → `library/github-skills/idea-creator/SKILL.md`
+- `idea-creator` → `library/github-skills/idea-creator/SKILL.md` [incomplete: excluded from default routing]
 - `ig-post-image-spec-extractor` → `psk/data/skills/ig-post-image-spec-extractor/SKILL.md`
 - `inbox-setup` → `library/github-skills/inbox-setup/SKILL.md`
 - `inbox-to-catalog-triage` → `psk/data/skills/inbox-to-catalog-triage/SKILL.md`
@@ -167,7 +167,7 @@ Skills: 329
 - `jewelry-versioning-auditor` → `psk/data/skills/jewelry-versioning-auditor/SKILL.md`
 - `joplin-notebook-importer` → `psk/data/skills/joplin-notebook-importer/SKILL.md`
 - `json-schema-catalog-contract` → `psk/data/skills/json-schema-catalog-contract/SKILL.md`
-- `kill-argument` → `library/github-skills/kill-argument/SKILL.md`
+- `kill-argument` → `library/github-skills/kill-argument/SKILL.md` [incomplete: excluded from default routing]
 - `latex-paper-conversion` → `library/github-skills/latex-paper-conversion/SKILL.md`
 - `latex-posters` → `library/github-skills/latex-posters/SKILL.md`
 - `linktree-link-hub` → `library/github-skills/linktree-link-hub/SKILL.md`
@@ -190,7 +190,7 @@ Skills: 329
 - `nocodb-base-designer` → `psk/data/skills/nocodb-base-designer/SKILL.md`
 - `notion-export-normalizer` → `psk/data/skills/notion-export-normalizer/SKILL.md`
 - `nougat-scientific-pdf` → `psk/data/skills/nougat-scientific-pdf/SKILL.md`
-- `novelty-check` → `library/github-skills/novelty-check/SKILL.md`
+- `novelty-check` → `library/github-skills/novelty-check/SKILL.md` [incomplete: excluded from default routing]
 - `nuts-archive-auditor` → `psk/data/skills/nuts-archive-auditor/SKILL.md`
 - `nuts-badge-generator` → `psk/data/skills/nuts-badge-generator/SKILL.md`
 - `nuts-crawl-library` → `psk/data/skills/nuts-crawl-library/SKILL.md`
@@ -204,10 +204,10 @@ Skills: 329
 - `paddleocr-production-pack` → `psk/data/skills/paddleocr-production-pack/SKILL.md`
 - `paper-compile` → `library/github-skills/paper-compile/SKILL.md`
 - `paper-figure` → `library/github-skills/paper-figure/SKILL.md`
-- `paper-illustration` → `library/github-skills/paper-illustration/SKILL.md`
-- `paper-plan` → `library/github-skills/paper-plan/SKILL.md`
+- `paper-illustration` → `library/github-skills/paper-illustration/SKILL.md` [incomplete: excluded from default routing]
+- `paper-plan` → `library/github-skills/paper-plan/SKILL.md` [incomplete: excluded from default routing]
 - `paper-slides` → `library/github-skills/paper-slides/SKILL.md`
-- `paper-write` → `library/github-skills/paper-write/SKILL.md`
+- `paper-write` → `library/github-skills/paper-write/SKILL.md` [incomplete: excluded from default routing]
 - `paperzilla` → `library/github-skills/paperzilla/SKILL.md`
 - `patch-diff-exploit` → `library/github-skills/patch-diff-exploit/SKILL.md`
 - `pdf-form-field-extractor` → `psk/data/skills/pdf-form-field-extractor/SKILL.md`
@@ -227,10 +227,10 @@ Skills: 329
 - `realestate-transcribe-planner` → `psk/data/skills/realestate-transcribe-planner/SKILL.md`
 - `realestate-vision-planner` → `psk/data/skills/realestate-vision-planner/SKILL.md`
 - `research-grants` → `library/github-skills/research-grants/SKILL.md`
-- `research-lit` → `library/github-skills/research-lit/SKILL.md`
+- `research-lit` → `library/github-skills/research-lit/SKILL.md` [incomplete: excluded from default routing]
 - `research-lookup` → `library/github-skills/research-lookup/SKILL.md`
-- `research-pipeline` → `library/github-skills/research-pipeline/SKILL.md`
-- `research-refine` → `library/github-skills/research-refine/SKILL.md`
+- `research-pipeline` → `library/github-skills/research-pipeline/SKILL.md` [incomplete: excluded from default routing]
+- `research-refine` → `library/github-skills/research-refine/SKILL.md` [incomplete: excluded from default routing]
 - `restaurant-archive-autopilot` → `psk/data/skills/restaurant-archive-autopilot/SKILL.md`
 - `restaurant-backup-analyzer` → `psk/data/skills/restaurant-backup-analyzer/SKILL.md`
 - `restaurant-badge-monitor` → `psk/data/skills/restaurant-badge-monitor/SKILL.md`
@@ -281,7 +281,7 @@ Skills: 329
 - `syllabus` → `library/github-skills/syllabus/SKILL.md`
 - `synonym-ring-builder` → `psk/data/skills/synonym-ring-builder/SKILL.md`
 - `tag-governance-policy` → `psk/data/skills/tag-governance-policy/SKILL.md`
-- `taobao-keyword-search` → `library/github-skills/taobao-keyword-search/SKILL.md`
+- `taobao-keyword-search` → `library/github-skills/taobao-keyword-search/SKILL.md` [incomplete: excluded from default routing]
 - `taxonomy-architect` → `psk/data/skills/taxonomy-architect/SKILL.md`
 - `telegram-channel-export` → `psk/data/skills/telegram-channel-export/SKILL.md`
 - `tesseract-ocr-pipeline` → `psk/data/skills/tesseract-ocr-pipeline/SKILL.md`
@@ -314,10 +314,10 @@ Skills: 329
 - `whisper-transcriber-fa` → `psk/data/skills/whisper-transcriber-fa/SKILL.md`
 - `whisperx-diarization` → `psk/data/skills/whisperx-diarization/SKILL.md`
 - `wiki` → `library/github-skills/wiki/SKILL.md`
-- `wiki-enrich` → `library/github-skills/wiki-enrich/SKILL.md`
+- `wiki-enrich` → `library/github-skills/wiki-enrich/SKILL.md` [incomplete: excluded from default routing]
 - `wiki-fold` → `library/github-skills/wiki-fold/SKILL.md`
 - `wiki-ingest` → `library/github-skills/wiki-ingest/SKILL.md`
-- `wiki-mode` → `library/github-skills/wiki-mode/SKILL.md`
+- `wiki-mode` → `library/github-skills/wiki-mode/SKILL.md` [incomplete: excluded from default routing]
 - `wiki-query` → `library/github-skills/wiki-query/SKILL.md`
 - `wiki-researcher` → `library/github-skills/wiki-researcher/SKILL.md`
 - `wiki-retrieve` → `library/github-skills/wiki-retrieve/SKILL.md`

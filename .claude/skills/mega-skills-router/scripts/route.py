@@ -68,13 +68,15 @@ def _tokens(value: str) -> set[str]:
     return {_stem(ALIASES.get(token, token)) for token in raw if token not in STOPWORDS and len(token) > 1}
 
 
-def search_index(index_path: Path, query: str, min_score: float = 0.50) -> list[dict[str, object]]:
+def search_index(index_path: Path, query: str, min_score: float = 0.50, *, include_incomplete: bool = False) -> list[dict[str, object]]:
     payload = json.loads(index_path.read_text(encoding="utf-8"))
     query_tokens = _tokens(query)
     if not query_tokens:
         return []
     ranked: list[tuple[tuple[object, ...], dict[str, object]]] = []
     for skill in payload["skills"]:
+        if skill.get("incomplete") and not include_incomplete:
+            continue
         name_hits = len(query_tokens & _tokens(skill["name"]))
         best_score = name_hits / len(query_tokens)
         best_precision = 0.0
@@ -104,9 +106,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("query")
     parser.add_argument("--min-score", type=float, default=0.50)
     parser.add_argument("--index", type=Path)
+    parser.add_argument("--include-incomplete", action="store_true", help="Include disabled, incomplete skills for manual review only")
     args = parser.parse_args(argv)
     index = args.index or Path(__file__).resolve().parents[1] / "references" / "triggers.json"
-    print(json.dumps(search_index(index, args.query, args.min_score), ensure_ascii=False, indent=2))
+    print(json.dumps(search_index(index, args.query, args.min_score, include_incomplete=args.include_incomplete), ensure_ascii=False, indent=2))
     return 0
 
 

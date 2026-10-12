@@ -1,9 +1,20 @@
-# Cloudflare Workers config for Hermes Lite (worker.mjs).
+# Cloudflare Workers config for Hermes Lite (entry.mjs).
 # Deploy: Cloudflare → Workers & Pages → Create → Import a repository → MegaSkillClaude, root directory "hermes".
 # Secrets are set in the dashboard, never here.
 name = "hermes"
-main = "worker.mjs"
+main = "entry.mjs"
 compatibility_date = "2026-09-01"
+
+[vars]
+REQUIRE_CONVERSATIONS = "true"
+
+[[durable_objects.bindings]]
+name = "CONVERSATIONS"
+class_name = "HermesConversation"
+
+[[migrations]]
+tag = "conversation-sqlite-v1"
+new_sqlite_classes = ["HermesConversation"]
 
 [[kv_namespaces]]
 binding = "MEMORY"
@@ -14,7 +25,7 @@ id = "90fafb6bf15c4a1cb8b503668e070ab3"
 binding = "AI"
 
 # Mega Skills: build-skills.mjs (npm postinstall) writes ./public/skills at deploy time from the repo's skill library.
-# run_worker_first keeps every URL routed through worker.mjs; the skills are only read internally via env.ASSETS.
+# run_worker_first keeps every URL routed through the Worker entrypoint; the skills are only read internally via env.ASSETS.
 [assets]
 directory = "./public"
 binding = "ASSETS"

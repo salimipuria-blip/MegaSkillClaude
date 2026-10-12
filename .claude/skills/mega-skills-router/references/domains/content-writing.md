@@ -6,7 +6,7 @@ Skills: 161
 - `academy-repurpose-library` → `psk/data/skills/academy-repurpose-library/SKILL.md`
 - `academy-thread-analyzer` → `psk/data/skills/academy-thread-analyzer/SKILL.md`
 - `agile-product-owner` → `library/github-skills/agile-product-owner/SKILL.md`
-- `ai-studio-image` → `library/github-skills/ai-studio-image/SKILL.md`
+- `ai-studio-image` → `library/github-skills/ai-studio-image/SKILL.md` [incomplete: excluded from default routing]
 - `alternatives-pages` → `library/github-skills/alternatives-pages/SKILL.md`
 - `ama-question-bank` → `psk/data/skills/ama-question-bank/SKILL.md`
 - `annual-report-narrative` → `psk/data/skills/annual-report-narrative/SKILL.md`
@@ -107,7 +107,7 @@ Skills: 161
 - `mission-vision-writer` → `psk/data/skills/mission-vision-writer/SKILL.md`
 - `nature-education-cards` → `psk/data/skills/nature-education-cards/SKILL.md`
 - `nuts-casestudy-planner` → `psk/data/skills/nuts-casestudy-planner/SKILL.md`
-- `on-call-handoff-patterns` → `library/github-skills/on-call-handoff-patterns/SKILL.md`
+- `on-call-handoff-patterns` → `library/github-skills/on-call-handoff-patterns/SKILL.md` [incomplete: excluded from default routing]
 - `onboarding-cro` → `library/github-skills/onboarding-cro/SKILL.md`
 - `packing-checklist-writer` → `psk/data/skills/packing-checklist-writer/SKILL.md`
 - `performance-review-writer` → `library/github-skills/performance-review-writer/SKILL.md`
@@ -138,7 +138,7 @@ Skills: 161
 - `social-captions-batcher` → `psk/data/skills/social-captions-batcher/SKILL.md`
 - `speak-summary` → `library/github-skills/speak-summary/SKILL.md`
 - `speaker-one-pager` → `psk/data/skills/speaker-one-pager/SKILL.md`
-- `specification-writing` → `library/github-skills/specification-writing/SKILL.md`
+- `specification-writing` → `library/github-skills/specification-writing/SKILL.md` [incomplete: excluded from default routing]
 - `story-long-analyze` → `library/github-skills/story-long-analyze/SKILL.md`
 - `story-short-analyze` → `library/github-skills/story-short-analyze/SKILL.md`
 - `storytelling-frameworks-kit` → `psk/data/skills/storytelling-frameworks-kit/SKILL.md`

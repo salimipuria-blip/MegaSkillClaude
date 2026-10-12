@@ -15,12 +15,12 @@ Skills: 487
 - `affiliate-link-system` → `references/skills/affiliate-link-system/INSTRUCTIONS.md`
 - `after-sale-care-sequence` → `references/skills/after-sale-care-sequence/INSTRUCTIONS.md`
 - `after-sales-upsell-email` → `references/skills/after-sales-upsell-email/INSTRUCTIONS.md`
-- `ai-multilingual-dubbing` → `references/skills/ai-multilingual-dubbing/INSTRUCTIONS.md`
-- `ai-podcast-voiceover` → `references/skills/ai-podcast-voiceover/INSTRUCTIONS.md`
+- `ai-multilingual-dubbing` → `references/skills/ai-multilingual-dubbing/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `ai-podcast-voiceover` → `references/skills/ai-podcast-voiceover/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `akaunting-ledger-kit` → `references/skills/akaunting-ledger-kit/INSTRUCTIONS.md`
 - `ansoff-matrix` → `references/skills/ansoff-matrix/INSTRUCTIONS.md`
 - `apple-hig-expert` → `references/skills/apple-hig-expert/INSTRUCTIONS.md`
-- `babysit-pr` → `references/skills/babysit-pr/INSTRUCTIONS.md`
+- `babysit-pr` → `references/skills/babysit-pr/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `baoyu-article-illustrator` → `references/skills/baoyu-article-illustrator/INSTRUCTIONS.md`
 - `baoyu-post-to-weibo` → `references/skills/baoyu-post-to-weibo/INSTRUCTIONS.md`
 - `battlecard-competitor-fa` → `references/skills/battlecard-competitor-fa/INSTRUCTIONS.md`
@@ -121,7 +121,7 @@ Skills: 487
 - `deal-desk` → `references/skills/deal-desk/INSTRUCTIONS.md`
 - `debugging-wizard` → `references/skills/debugging-wizard/INSTRUCTIONS.md`
 - `decision-memo-onepager` → `references/skills/decision-memo-onepager/INSTRUCTIONS.md`
-- `defi-protocol-templates` → `references/skills/defi-protocol-templates/INSTRUCTIONS.md`
+- `defi-protocol-templates` → `references/skills/defi-protocol-templates/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `delivery-expectation-page` → `references/skills/delivery-expectation-page/INSTRUCTIONS.md`
 - `demo-script-framework` → `references/skills/demo-script-framework/INSTRUCTIONS.md`
 - `dental-crm-assistant` → `references/skills/dental-crm-assistant/INSTRUCTIONS.md`
@@ -270,7 +270,7 @@ Skills: 487
 - `linkedin-engagement` → `references/skills/linkedin-engagement/INSTRUCTIONS.md`
 - `loyalty-club-designer-fa` → `references/skills/loyalty-club-designer-fa/INSTRUCTIONS.md`
 - `manim-video` → `references/skills/manim-video/INSTRUCTIONS.md`
-- `market-sizing-analysis` → `references/skills/market-sizing-analysis/INSTRUCTIONS.md`
+- `market-sizing-analysis` → `references/skills/market-sizing-analysis/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `market-sizing-topdown` → `references/skills/market-sizing-topdown/INSTRUCTIONS.md`
 - `marketing-campaign-planner` → `references/skills/marketing-campaign-planner/INSTRUCTIONS.md`
 - `marketing-context` → `references/skills/marketing-context/INSTRUCTIONS.md`
@@ -466,7 +466,7 @@ Skills: 487
 - `variant-pricing-kit` → `references/skills/variant-pricing-kit/INSTRUCTIONS.md`
 - `vendor-management` → `references/skills/vendor-management/INSTRUCTIONS.md`
 - `verify-document` → `references/skills/verify-document/INSTRUCTIONS.md`
-- `voiceover-narration-studio` → `references/skills/voiceover-narration-studio/INSTRUCTIONS.md`
+- `voiceover-narration-studio` → `references/skills/voiceover-narration-studio/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `warranty-doc-fa` → `references/skills/warranty-doc-fa/INSTRUCTIONS.md`
 - `wedding-nps-generator` → `references/skills/wedding-nps-generator/INSTRUCTIONS.md`
 - `wedding-objection-analyzer` → `references/skills/wedding-objection-analyzer/INSTRUCTIONS.md`
@@ -476,7 +476,7 @@ Skills: 487
 - `whatsapp-sales-script-fa` → `references/skills/whatsapp-sales-script-fa/INSTRUCTIONS.md`
 - `win-loss-interview-kit` → `references/skills/win-loss-interview-kit/INSTRUCTIONS.md`
 - `wondelai` → `references/skills/wondelai/INSTRUCTIONS.md`
-- `x-keyword-comment` → `references/skills/x-keyword-comment/INSTRUCTIONS.md`
+- `x-keyword-comment` → `references/skills/x-keyword-comment/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `yalda-campaign-shop` → `references/skills/yalda-campaign-shop/INSTRUCTIONS.md`
 - `yoga-closing-analyzer` → `references/skills/yoga-closing-analyzer/INSTRUCTIONS.md`
 - `yoga-closing-pack` → `references/skills/yoga-closing-pack/INSTRUCTIONS.md`
@@ -488,4 +488,4 @@ Skills: 487
 - `yoga-referral-auditor` → `references/skills/yoga-referral-auditor/INSTRUCTIONS.md`
 - `yoga-reviews-assistant` → `references/skills/yoga-reviews-assistant/INSTRUCTIONS.md`
 - `yoga-reviews-reporter` → `references/skills/yoga-reviews-reporter/INSTRUCTIONS.md`
-- `youtube-transcript` → `references/skills/youtube-transcript/INSTRUCTIONS.md`
+- `youtube-transcript` → `references/skills/youtube-transcript/INSTRUCTIONS.md` [incomplete: excluded from default routing]

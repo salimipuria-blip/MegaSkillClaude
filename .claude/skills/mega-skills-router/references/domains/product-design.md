@@ -75,7 +75,7 @@ Skills: 144
 - `itil-expert` → `library/github-skills/itil-expert/SKILL.md`
 - `journey-map-camper` → `psk/data/skills/journey-map-camper/SKILL.md`
 - `julia-pro` → `library/github-skills/julia-pro/SKILL.md`
-- `jurisdiction-format` → `library/github-skills/jurisdiction-format/SKILL.md`
+- `jurisdiction-format` → `library/github-skills/jurisdiction-format/SKILL.md` [incomplete: excluded from default routing]
 - `leiloeiro-ia` → `library/github-skills/leiloeiro-ia/SKILL.md`
 - `logistics-exception-management` → `library/github-skills/logistics-exception-management/SKILL.md`
 - `loyalty-ui-kit` → `psk/data/skills/loyalty-ui-kit/SKILL.md`
@@ -128,7 +128,7 @@ Skills: 144
 - `stepper-progress-kit` → `psk/data/skills/stepper-progress-kit/SKILL.md`
 - `strategic-alignment` → `library/github-skills/strategic-alignment/SKILL.md`
 - `table-mobile-patterns` → `psk/data/skills/table-mobile-patterns/SKILL.md`
-- `taobao-shop-catalog` → `library/github-skills/taobao-shop-catalog/SKILL.md`
+- `taobao-shop-catalog` → `library/github-skills/taobao-shop-catalog/SKILL.md` [incomplete: excluded from default routing]
 - `toast-alert-patterns` → `psk/data/skills/toast-alert-patterns/SKILL.md`
 - `tour-a11y-monitor` → `psk/data/skills/tour-a11y-monitor/SKILL.md`
 - `tour-empty-state-assistant` → `psk/data/skills/tour-empty-state-assistant/SKILL.md`

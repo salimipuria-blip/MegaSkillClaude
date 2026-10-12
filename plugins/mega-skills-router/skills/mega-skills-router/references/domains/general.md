@@ -10,7 +10,7 @@ Skills: 241
 - `alerting-oncall` → `references/skills/alerting-oncall/INSTRUCTIONS.md`
 - `algorithmic-art` → `references/skills/algorithmic-art/INSTRUCTIONS.md`
 - `audit-logging` → `references/skills/audit-logging/INSTRUCTIONS.md`
-- `beatra` → `references/skills/beatra/INSTRUCTIONS.md`
+- `beatra` → `references/skills/beatra/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `board-governance` → `references/skills/board-governance/INSTRUCTIONS.md`
 - `bookstore-parser-analyzer` → `references/skills/bookstore-parser-analyzer/INSTRUCTIONS.md`
 - `bookstore-reporter-optimizer` → `references/skills/bookstore-reporter-optimizer/INSTRUCTIONS.md`
@@ -45,7 +45,7 @@ Skills: 241
 - `crossframe` → `references/skills/crossframe/INSTRUCTIONS.md`
 - `daily` → `references/skills/daily/INSTRUCTIONS.md`
 - `day-book` → `references/skills/day-book/INSTRUCTIONS.md`
-- `debug-buttercup` → `references/skills/debug-buttercup/INSTRUCTIONS.md`
+- `debug-buttercup` → `references/skills/debug-buttercup/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `decision-log-rebuilder` → `references/skills/decision-log-rebuilder/INSTRUCTIONS.md`
 - `dental-intent-reporter` → `references/skills/dental-intent-reporter/INSTRUCTIONS.md`
 - `dental-purge-monitor` → `references/skills/dental-purge-monitor/INSTRUCTIONS.md`
@@ -60,7 +60,7 @@ Skills: 241
 - `ecolodge-actions-assistant` → `references/skills/ecolodge-actions-assistant/INSTRUCTIONS.md`
 - `ecolodge-privacy-library` → `references/skills/ecolodge-privacy-library/INSTRUCTIONS.md`
 - `ecolodge-reporter-reporter` → `references/skills/ecolodge-reporter-reporter/INSTRUCTIONS.md`
-- `emergency-card` → `references/skills/emergency-card/INSTRUCTIONS.md`
+- `emergency-card` → `references/skills/emergency-card/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `employee-suggestion-hub` → `references/skills/employee-suggestion-hub/INSTRUCTIONS.md`
 - `enterprise-vpn-attack` → `references/skills/enterprise-vpn-attack/INSTRUCTIONS.md`
 - `escalation-trigger-rules` → `references/skills/escalation-trigger-rules/INSTRUCTIONS.md`
@@ -109,7 +109,7 @@ Skills: 241
 - `intent-cluster-embeddings` → `references/skills/intent-cluster-embeddings/INSTRUCTIONS.md`
 - `intern-program` → `references/skills/intern-program/INSTRUCTIONS.md`
 - `internal-communication` → `references/skills/internal-communication/INSTRUCTIONS.md`
-- `invention-structuring` → `references/skills/invention-structuring/INSTRUCTIONS.md`
+- `invention-structuring` → `references/skills/invention-structuring/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `inventory-demand-planning` → `references/skills/inventory-demand-planning/INSTRUCTIONS.md`
 - `inventory-stock-reconciliation` → `references/skills/inventory-stock-reconciliation/INSTRUCTIONS.md`
 - `ios-redteam-pipeline` → `references/skills/ios-redteam-pipeline/INSTRUCTIONS.md`
@@ -129,7 +129,7 @@ Skills: 241
 - `leiloeiro-juridico` → `references/skills/leiloeiro-juridico/INSTRUCTIONS.md`
 - `lm-eval-benchmark-pack` → `references/skills/lm-eval-benchmark-pack/INSTRUCTIONS.md`
 - `load-balancing` → `references/skills/load-balancing/INSTRUCTIONS.md`
-- `logic-review` → `references/skills/logic-review/INSTRUCTIONS.md`
+- `logic-review` → `references/skills/logic-review/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `loki-logging` → `references/skills/loki-logging/INSTRUCTIONS.md`
 - `m365-entra-attack` → `references/skills/m365-entra-attack/INSTRUCTIONS.md`
 - `makepad-widgets` → `references/skills/makepad-widgets/INSTRUCTIONS.md`
@@ -140,7 +140,7 @@ Skills: 241
 - `meeting-summarizer` → `references/skills/meeting-summarizer/INSTRUCTIONS.md`
 - `memory-write-policy-audit` → `references/skills/memory-write-policy-audit/INSTRUCTIONS.md`
 - `mid-engagement-ir-detection` → `references/skills/mid-engagement-ir-detection/INSTRUCTIONS.md`
-- `monte-carlo-performance-diagnosis` → `references/skills/monte-carlo-performance-diagnosis/INSTRUCTIONS.md`
+- `monte-carlo-performance-diagnosis` → `references/skills/monte-carlo-performance-diagnosis/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `multi-session-thread-linker` → `references/skills/multi-session-thread-linker/INSTRUCTIONS.md`
 - `notification-reminder-hub` → `references/skills/notification-reminder-hub/INSTRUCTIONS.md`
 - `nuts-cluster-autopilot` → `references/skills/nuts-cluster-autopilot/INSTRUCTIONS.md`
@@ -218,7 +218,7 @@ Skills: 241
 - `sred-project-organizer` → `references/skills/sred-project-organizer/INSTRUCTIONS.md`
 - `ssl-tls-management` → `references/skills/ssl-tls-management/INSTRUCTIONS.md`
 - `storyboard-generator` → `references/skills/storyboard-generator/INSTRUCTIONS.md`
-- `suno-lyrics-to-song` → `references/skills/suno-lyrics-to-song/INSTRUCTIONS.md`
+- `suno-lyrics-to-song` → `references/skills/suno-lyrics-to-song/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `supabase` → `references/skills/supabase/INSTRUCTIONS.md`
 - `systemd-services` → `references/skills/systemd-services/INSTRUCTIONS.md`
 - `team-calendar` → `references/skills/team-calendar/INSTRUCTIONS.md`

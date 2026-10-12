@@ -1,5 +1,8 @@
 import hashlib, json
 from pathlib import Path
+import pytest
+
+pytestmark = pytest.mark.materialized_skills
 
 ROOT = Path(__file__).resolve().parents[1]
 SKILLS = ROOT / 'skills'

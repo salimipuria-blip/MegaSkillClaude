@@ -106,7 +106,12 @@ function load(): DB {
 /* ------------------------------------------------------------------ */
 
 let db: DB = load();
-let session: { userId: string | null } = { userId: storageGet(SESSION_KEY, true) };
+// A browser-stored user id is not an authenticated session. Always start locked;
+// only a successful login in this page instance may create the local session.
+// This is a stopgap, NOT server-side auth or protection for the local database.
+let session: { userId: string | null } = { userId: null };
+let authenticatedIdentity: Pick<User, 'id' | 'role' | 'salt' | 'passwordHash'> | null = null;
+storageRemove(SESSION_KEY, true); // discard legacy/forged persisted ids without touching data
 let persistWarning = false;
 const listeners = new Set<() => void>();
 let snapshot = { db, session, persistWarning };
@@ -161,7 +166,11 @@ function audit(d: DB, action: string, detail: string) {
 }
 
 export function currentUser(d: DB = db): User | null {
-  return d.users.find((u) => u.id === session.userId && u.active) ?? null;
+  const u = d.users.find((user) => user.id === session.userId && user.active);
+  const verified = authenticatedIdentity;
+  // Role/password edits from another tab, backup or storage must require a new login.
+  return u && verified && u.id === verified.id && u.role === verified.role &&
+    u.salt === verified.salt && u.passwordHash === verified.passwordHash ? u : null;
 }
 
 function requireUser(): User {
@@ -234,7 +243,7 @@ export function login(password: string): { ok: true; mustChange: boolean; user: 
   }
   const user = matches[0];
   session = { userId: user.id };
-  storageSet(SESSION_KEY, user.id, true);
+  authenticatedIdentity = { id: user.id, role: user.role, salt: user.salt, passwordHash: user.passwordHash };
   mutate((d) => {
     d.authGuard = { fails: 0, lockedUntil: 0 };
     d.audit.push({ id: uid('a-'), at: now, userId: user.id, action: 'auth.login', detail: 'ورود به سامانه' });
@@ -245,6 +254,7 @@ export function login(password: string): { ok: true; mustChange: boolean; user: 
 export function logout() {
   if (session.userId) mutate((d) => audit(d, 'auth.logout', 'خروج'));
   session = { userId: null };
+  authenticatedIdentity = null;
   storageRemove(SESSION_KEY, true);
   emit();
 }
@@ -269,6 +279,7 @@ function setPassword(userId: string, next: string, forceChange: boolean) {
     const u = d.users.find((x) => x.id === userId) ?? fail('کاربر یافت نشد.');
     u.salt = randomSalt();
     u.passwordHash = hashPassword(next, u.salt);
+    if (u.id === session.userId) authenticatedIdentity = { id: u.id, role: u.role, salt: u.salt, passwordHash: u.passwordHash };
     u.mustChangePassword = forceChange;
     audit(d, 'auth.password', `تغییر رمز: ${u.name}`);
   });
@@ -629,7 +640,7 @@ export function importBackup(json: string) {
   }
   if (!isValidDB(parsed)) fail('ساختار فایل پشتیبان معتبر نیست.');
   const next = migrate(parsed as DB);
-  // keep the current operator signed in only if they still exist
+  // A backup cannot keep a session if it changes the operator's role/credentials.
   commit(next);
   mutate((d) => audit(d, 'system.restore', 'بازیابی از پشتیبان'));
   if (!currentUser()) logout();
@@ -637,11 +648,10 @@ export function importBackup(json: string) {
 
 export function resetToDemo() {
   need('system.backup');
-  const keepSession = session.userId;
+  session = { userId: null };
+  authenticatedIdentity = null;
+  storageRemove(SESSION_KEY, true);
   commit(seedDemo(Date.now()));
-  session = { userId: db.users.some((u) => u.id === keepSession) ? keepSession : null };
-  if (!session.userId) storageRemove(SESSION_KEY, true);
-  emit();
 }
 
 export function startClean() {

@@ -6,7 +6,7 @@ One skill that routes each request to the relevant skills among **5,986** (3,000
 In Claude Code:
 
 ```
-/plugin marketplace add salimipuria-blip/-
+/plugin marketplace add salimipuria-blip/MegaSkillClaude
 /plugin install mega-skills-router@psk
 ```
 
@@ -20,3 +20,16 @@ Then start a new session and ask normally; the router picks the skills.
 - `skills/mega-skills-router/references/skills/<name>/INSTRUCTIONS.md` – the skills (GitHub skills keep their `scripts/`, `references/`, `SOURCE.md`)
 
 GitHub skills are third-party: review a skill before running any script it ships.
+
+
+## Generated library and incomplete workflows
+
+Of 5,986 packaged skills, 5,705 are routable by default; the 281 canonical `incomplete` entries
+remain available for provenance/manual review but are not selected automatically. Python's
+`--include-incomplete` is an explicit review opt-in. Upstream license texts ship under
+`references/licenses/`.
+
+Do not edit the portable `references/` copies independently. From the monorepo root run
+`python3 scripts/sync_skill_library.py`; `--check` is the read-only CI drift gate. Canonical bodies
+and companions live in `psk/data/` and `library/`. This keeps the plugin installable outside the
+monorepo without letting thousands of duplicated files become a second source of truth.

@@ -32,7 +32,7 @@ Skills: 249
 - `camp-trigger-generator` → `psk/data/skills/camp-trigger-generator/SKILL.md`
 - `camp-worktree-assistant` → `psk/data/skills/camp-worktree-assistant/SKILL.md`
 - `cc-skill-continuous-learning` → `library/github-skills/cc-skill-continuous-learning/SKILL.md`
-- `claims-drafting` → `library/github-skills/claims-drafting/SKILL.md`
+- `claims-drafting` → `library/github-skills/claims-drafting/SKILL.md` [incomplete: excluded from default routing]
 - `claude-code-templates-marketplace` → `psk/data/skills/claude-code-templates-marketplace/SKILL.md`
 - `claude-md-context-scaffolder` → `psk/data/skills/claude-md-context-scaffolder/SKILL.md`
 - `claude-md-memory-rules` → `psk/data/skills/claude-md-memory-rules/SKILL.md`

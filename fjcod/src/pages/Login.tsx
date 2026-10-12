@@ -3,6 +3,7 @@ import { Eye, EyeOff, LogIn } from 'lucide-react';
 import { login, useStore } from '../core/store';
 import { ROLES } from '../core/permissions';
 import { toast } from '../components/ui';
+import { LocalOnlyNotice } from '../components/LocalOnlyNotice';
 
 /** Password-only entry: the password identifies the user, and the user's position opens its panel. */
 export function Login({ onSuccess }: { onSuccess: (password: string, mustChange: boolean) => void }) {
@@ -36,6 +37,7 @@ export function Login({ onSuccess }: { onSuccess: (password: string, mustChange:
         <div className="login-hero-name">{db.settings.storeName}</div>
         <div className="login-hero-en">{db.settings.storeNameEn}</div>
         <div className="login-rule" aria-hidden />
+        <LocalOnlyNotice />
         <form onSubmit={submit}>
           <h1 className="sr-only">ورود به سامانهٔ {db.settings.storeName}</h1>
           <div style={{ position: 'relative' }}>
