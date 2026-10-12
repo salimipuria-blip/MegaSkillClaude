@@ -122,12 +122,19 @@ test('home page registers the webhook once, then only reports status', async () 
   assert.ok(calls.some((c) => c.url.endsWith('/setWebhook')));
   globalThis.fetch = async (url) => {
     if (String(url).endsWith('/getWebhookInfo')) {
-      return new Response(JSON.stringify({ ok: true, result: { url: 'https://hermes.example.workers.dev/telegram' } }));
+      return new Response(JSON.stringify({ ok: true, result: { url: 'https://hermes.example.workers.dev/telegram', allowed_updates: ['message', 'callback_query'] } }));
     }
     throw new Error(`unexpected call ${url}`);
   };
   const res = await worker.fetch(new Request('https://hermes.example.workers.dev/'), env, {});
   assert.match(await res.text(), /connected/);
+  // An older webhook without button presses (callback_query) is re-registered.
+  calls = mockFetch();
+  globalThis.fetch = ((inner) => async (url, init) => String(url).endsWith('/getWebhookInfo')
+    ? new Response(JSON.stringify({ ok: true, result: { url: 'https://hermes.example.workers.dev/telegram', allowed_updates: ['message'] } }))
+    : inner(url, init))(globalThis.fetch);
+  await worker.fetch(new Request('https://hermes.example.workers.dev/'), env, {});
+  assert.deepEqual(calls.find((c) => c.url.endsWith('/setWebhook')).body.allowed_updates, ['message', 'callback_query']);
 });
 
 test('setup lists missing secrets by name only', async () => {
@@ -746,4 +753,83 @@ test('natural image requests anywhere in the sentence are recognised; questions 
     'یه عکس بفرست از کمپ', 'make me a cool poster for the tour']) assert.equal(imageRequest(t), t);
   for (const t of ['کپشن برای این عکس بنویس', 'این عکس رو ببین چیه', 'میخوام عکس پست بذارم چه کپشنی خوبه',
     'عکس پروفایلمو چطور عوض کنم', 'بهترین ساعت عکاسی چیه']) assert.equal(imageRequest(t), null);
+});
+
+// Bookings: public form → team Telegram with ✅/❌ → traveller sees payment info only after approval.
+function bookingFetch() {
+  const calls = [];
+  let msgId = 100;
+  globalThis.fetch = async (url, init) => {
+    const u = String(url);
+    const body = init && typeof init.body === 'string' ? JSON.parse(init.body) : null;
+    calls.push({ url: u, body });
+    if (u.endsWith('/getMe')) return new Response(JSON.stringify({ ok: true, result: { username: 'Pouragent_bot' } }));
+    if (u.endsWith('/sendMessage')) return new Response(JSON.stringify({ ok: true, result: { chat: { id: body.chat_id }, message_id: msgId++ } }));
+    return new Response(JSON.stringify({ ok: true }));
+  };
+  return calls;
+}
+const book = (env, body, ip = '1.2.3.4') => worker.fetch(new Request('https://h.workers.dev/api/booking', {
+  method: 'POST', headers: { 'content-type': 'application/json', 'cf-connecting-ip': ip }, body: JSON.stringify(body) }), env, {});
+const okBody = { name: 'سارا', phone: '۰۹۱۲ ۳۴۵ ۶۷۸۹', count: '۲', car: 'خودروی شخصی', note: 'گیاهخوارم', agree: true };
+
+test('trip page is public and has the booking form', async () => {
+  const res = await worker.fetch(new Request('https://h.workers.dev/trip'), baseEnv(), {});
+  assert.equal(res.status, 200);
+  const html = await res.text();
+  assert.match(html, /\/api\/booking/);
+  assert.match(html, /کنسلی و برگشت وجه نداره/);
+});
+
+test('booking goes to the team Telegram with approve/reject buttons; bad input is refused', async () => {
+  const env = { ...baseEnv(), BOOKING_CHAT_ID: '-100777' };
+  const calls = bookingFetch();
+  assert.equal((await book(env, { ...okBody, agree: false })).status, 400);
+  assert.equal((await book(env, { ...okBody, phone: '12' })).status, 400);
+  const res = await book(env, okBody);
+  assert.equal(res.status, 200);
+  const data = await res.json();
+  assert.match(data.id, /^[a-z2-9]{6}$/);
+  assert.equal(data.bot, 'Pouragent_bot');
+  const msg = calls.find((c) => c.url.endsWith('/sendMessage')).body;
+  assert.equal(msg.chat_id, '-100777');
+  assert.match(msg.text, /سارا[\s\S]*09123456789[\s\S]*2 نفر/);
+  assert.equal(msg.reply_markup.inline_keyboard[0][0].callback_data, `bk:ok:${data.id}`);
+  const saved = JSON.parse(env.MEMORY.store.get(`booking:${data.id}`));
+  assert.equal(saved.status, 'pending');
+  const status = await worker.fetch(new Request(`https://h.workers.dev${data.status}`), env, {});
+  assert.match(await status.text(), /در حال بررسی/);
+});
+
+test('booking rate limit: 5 per hour per IP', async () => {
+  const env = baseEnv();
+  bookingFetch();
+  for (let i = 0; i < 5; i++) assert.equal((await book(env, okBody, '9.9.9.9')).status, 200);
+  assert.equal((await book(env, okBody, '9.9.9.9')).status, 429);
+  assert.equal((await book(env, okBody, '8.8.8.8')).status, 200);
+});
+
+test('team approves: traveller who tapped the Telegram link gets payment info; strangers cannot approve', async () => {
+  const env = { ...baseEnv(), PAYMENT_INFO: 'کارت ۶۰۳۷-xxxx به نام وایکینگ', BOOKING_ADMIN_IDS: '555' };
+  const calls = bookingFetch();
+  const { id } = await (await book(env, okBody)).json();
+  await post(env, { message: { chat: { id: 9001 }, from: { id: 9001 }, text: `/start bk_${id}` } });
+  assert.match(sent(calls).at(-1), /ثبت شده/);
+  assert.equal(JSON.parse(env.MEMORY.store.get(`booking:${id}`)).chat, 9001);
+  const press = (from) => post(env, { callback_query: { id: 'cq1', from: { id: from, first_name: 'Mahyar' }, data: `bk:ok:${id}`, message: { chat: { id: -100 }, message_id: 7 } } });
+  await press(4242);
+  assert.equal(JSON.parse(env.MEMORY.store.get(`booking:${id}`)).status, 'pending', 'stranger cannot approve');
+  await press(555);
+  assert.equal(JSON.parse(env.MEMORY.store.get(`booking:${id}`)).status, 'approved');
+  const toTraveller = calls.filter((c) => c.url.endsWith('/sendMessage') && c.body.chat_id === 9001).at(-1).body.text;
+  assert.match(toTraveller, /تأیید شد[\s\S]*۶۰۳۷[\s\S]*برگشت وجه/);
+  assert.match(calls.find((c) => c.url.endsWith('/editMessageText')).body.text, /✅ تأیید شد[\s\S]*Mahyar/);
+  const page = await worker.fetch(new Request(`https://h.workers.dev/trip/s/${id}`), env, {});
+  assert.match(await page.text(), /۶۰۳۷/);
+});
+
+test('owner /trip command returns the public page link', async () => {
+  const calls = bookingFetch();
+  await post(baseEnv(), message('/trip'));
+  assert.match(sent(calls)[0], /https:\/\/hermes\.example\.workers\.dev\/trip/);
 });
