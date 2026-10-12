@@ -124,8 +124,8 @@ async function api(request, url, env) {
       const wanted = imageRequest(message);
       if (wanted !== null) {
         if (!wanted) return json({ error: 'بنویس چه عکسی می‌خواهی، مثلاً «عکس بساز: کمپ کنار دریاچه در جنگل پاییزی».' }, 400);
-        const { image, prompt } = await picture(env, historyKey(env, who), message, wanted);
-        return json({ reply: `🖼️ ساخته شد.\n\n${prompt}`, image: `data:image/jpeg;base64,${image}` });
+        const { image, mime, model, prompt } = await picture(env, historyKey(env, who), message, wanted);
+        return json({ reply: `🖼️ ساخته شد (${model}).\n\n${prompt}`, image: `data:${mime};base64,${image}` });
       }
       const system = who.role === 'owner' ? SYSTEM : teamSystem(who);
       return json({ reply: await converse(env, historyKey(env, who), message, system) });
@@ -224,11 +224,11 @@ async function handle(msg, env, origin) {
     if (!wanted) return send(env, chatId, 'بنویس چه عکسی می‌خواهی، مثلاً:\nعکس بساز: کمپ کنار دریاچه در جنگل پاییزی');
     await tg(env, 'sendChatAction', { chat_id: chatId, action: 'upload_photo' });
     try {
-      const { image, prompt } = await picture(env, key, input, wanted);
+      const { image, mime, prompt } = await picture(env, key, input, wanted);
       const form = new FormData();
       form.append('chat_id', String(chatId));
       form.append('caption', prompt.slice(0, 1000));
-      form.append('photo', new Blob([base64ToBytes(image)], { type: 'image/jpeg' }), 'hermes.jpg');
+      form.append('photo', new Blob([base64ToBytes(image)], { type: mime }), mime === 'image/png' ? 'hermes.png' : 'hermes.jpg');
       await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendPhoto`, { method: 'POST', body: form });
     } catch (err) {
       await send(env, chatId, `خطا در ساخت عکس: ${err.message}`);
@@ -263,9 +263,9 @@ export async function converse(env, key, input, system = SYSTEM) {
 // Text request → English prompt → FLUX image. The turn is kept in memory as text (the prompt), not the image bytes.
 export async function picture(env, key, input, wanted) {
   const prompt = await imagePrompt(ask, env, wanted);
-  const image = await makeImage(env, prompt);
-  await appendTurn(env, key, await loadLog(env, key), input, `[عکس ساخته شد] ${prompt}`);
-  return { image, prompt };
+  const { image, mime, model } = await makeImage(env, prompt);
+  await appendTurn(env, key, await loadLog(env, key), input, `[عکس ساخته شد با ${model}] ${prompt}`);
+  return { image, mime, model, prompt };
 }
 
 export async function ask(env, contents, system = SYSTEM) {

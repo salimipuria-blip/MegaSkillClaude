@@ -459,9 +459,54 @@ test('web app: image request returns a data URL; empty request asks for a descri
   assert.equal((await callApi(env, '/api/chat', { message: 'عکس بساز' })).status, 400);
 });
 
-test('without the AI binding, image requests fail with a clear message', async () => {
+test('without Gemini and the AI binding, image requests fail with a clear message', async () => {
   mockFetch();
-  const res = await callApi(baseEnv(), '/api/chat', { message: 'عکس بساز: دریاچه' });
+  const res = await callApi({ ...baseEnv(), GEMINI_API_KEY: undefined }, '/api/chat', { message: 'عکس بساز: دریاچه' });
   assert.equal(res.status, 502);
   assert.match(res.body.error, /Workers AI/);
+});
+
+function geminiImageFetch(imageStatus = 200) {
+  const calls = [];
+  globalThis.fetch = async (url, init) => {
+    const u = String(url);
+    calls.push({ url: u, body: init && typeof init.body === 'string' ? JSON.parse(init.body) : init ? init.body : null });
+    if (u.endsWith('/models?pageSize=1000')) return new Response(JSON.stringify({ models: [
+      { name: 'models/gemini-2.5-flash-image', supportedGenerationMethods: ['generateContent'] },
+      { name: 'models/gemini-3.5-flash-image', supportedGenerationMethods: ['generateContent'] },
+      { name: 'models/imagen-4.0-generate-001', supportedGenerationMethods: ['predict'] },
+      { name: 'models/gemini-3.8-flash', supportedGenerationMethods: ['generateContent'] },
+    ] }));
+    if (u.includes('-image:generateContent')) {
+      return imageStatus === 200
+        ? new Response(JSON.stringify({ candidates: [{ content: { parts: [{ text: 'ok' }, { inlineData: { mimeType: 'image/png', data: btoa('png') } }] } }] }))
+        : new Response('{}', { status: imageStatus });
+    }
+    if (u.includes('generativelanguage')) return new Response(JSON.stringify({ candidates: [{ content: { parts: [{ text: 'autumn forest lake' }] } }] }));
+    return new Response(JSON.stringify({ ok: true }));
+  };
+  return calls;
+}
+
+test('images use Google Gemini image models first, newest version first', async () => {
+  const env = { ...baseEnv(), AI: imageAI() };
+  const calls = geminiImageFetch();
+  const res = await callApi(env, '/api/chat', { message: 'عکس بساز: دریاچه پاییزی' });
+  assert.equal(res.status, 200);
+  assert.match(res.body.image, /^data:image\/png;base64,/);
+  assert.match(res.body.reply, /gemini-3\.5-flash-image/);
+  const imageCall = calls.find((c) => c.url.includes('-image:generateContent'));
+  assert.match(imageCall.url, /gemini-3\.5-flash-image/);
+  assert.deepEqual(imageCall.body.generationConfig.responseModalities, ['TEXT', 'IMAGE']);
+  assert.equal(env.AI.calls.some((c) => c.model === IMAGE_MODEL), false);
+  assert.equal(await env.MEMORY.get('image-model'), 'gemini-3.5-flash-image');
+});
+
+test('when Gemini image quota is out, FLUX on Workers AI makes the image', async () => {
+  const env = { ...baseEnv(), AI: imageAI() };
+  geminiImageFetch(429);
+  const res = await callApi(env, '/api/chat', { message: 'عکس بساز: جیپ در جنگل' });
+  assert.equal(res.status, 200);
+  assert.match(res.body.image, /^data:image\/jpeg;base64,/);
+  assert.match(res.body.reply, /flux/);
 });
