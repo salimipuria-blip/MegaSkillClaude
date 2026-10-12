@@ -16,7 +16,15 @@ const HISTORY_MESSAGES = 20;
 const TG_LIMIT = 4000;
 const STYLE = "Reply in the user's language (usually Persian), short, direct and accurate. Say so when you are not sure.";
 const SYSTEM = "You are Hermes, Puria's personal assistant (Viking Offroad brand). " + STYLE;
-const teamSystem = (who) => `You are Hermes, the AI assistant of the Viking Offroad team. You are talking with ${who.name}. ` + STYLE;
+// Abilities that can be locked per person (users.mjs `locks`). A locked topic is refused before the AI is called.
+export const ABILITIES = {
+  viking: { name: 'وایکینگ آفرود', topic: 'Viking Offroad business (tours, routes, customers, pricing, packages)',
+    re: /وایکینگ|وایکینک|viking|آفرود|off-?road|(?<![\u0600-\u06FF])تور(?:ها|‌ها)?(?![\u0600-\u06FF])/i },
+  fjcod: { name: 'FJCod', topic: 'the FJCod project and its data', re: /fj\s*-?\s*cod|اف\s*جی\s*کد|فی\s*جی\s*کد/i },
+};
+const lockedHit = (who, text) => (who.locks || []).find((id) => ABILITIES[id] && ABILITIES[id].re.test(text));
+const teamSystem = (who) => `You are Hermes, the AI assistant of the Viking Offroad team. You are talking with ${who.name}. ` + STYLE +
+  (who.locks && who.locks.length ? ` This user has NO access to: ${who.locks.map((id) => ABILITIES[id] ? ABILITIES[id].topic : id).join('; ')}. Politely refuse anything about those topics.` : '');
 
 export default {
   async fetch(request, env, ctx) {
@@ -58,7 +66,7 @@ async function caller(request, env) {
   const auth = request.headers.get('authorization') || '';
   if (!auth.startsWith('Bearer ')) return null;
   const token = auth.slice(7);
-  if (token === await appKey(env)) return { username: 'owner', name: 'Owner', role: 'owner' };
+  if (token === await appKey(env)) return { username: 'owner', name: 'Owner', role: 'owner', locks: [] };
   return sessionUser(env, token);
 }
 
@@ -101,6 +109,8 @@ async function api(request, url, env) {
     const body = await request.json().catch(() => ({}));
     const message = typeof body.message === 'string' ? body.message.trim().slice(0, 4000) : '';
     if (!message) return json({ error: 'پیام خالی است.' }, 400);
+    const locked = lockedHit(who, message);
+    if (locked) return json({ error: `دسترسی به «${ABILITIES[locked].name}» برای حساب تو بسته است.`, locked }, 403);
     try {
       const system = who.role === 'owner' ? SYSTEM : teamSystem(who);
       return json({ reply: await converse(env, historyKey(env, who), message, system) });
