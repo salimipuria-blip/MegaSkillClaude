@@ -1,0 +1,12 @@
+{
+  "name": "hermes",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "postinstall": "node sync-secrets.mjs",
+    "test": "node --test worker.test.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "4.149.0"
+  }
+}
