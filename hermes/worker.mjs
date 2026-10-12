@@ -12,12 +12,15 @@ import { SKILLS } from './skills.mjs';
 import { relevantSkills, skillsBlock } from './skill-router.mjs';
 import { loadLog, toContents, appendTurn, archiveAndClear, noteFrom, loadNotes, addNote, clearNotes } from './memory.mjs';
 import { imageRequest, imagePrompt, makeImage, base64ToBytes } from './image.mjs';
+import { transcribe, describeImage, telegramFile, parseDataUrl } from './media.mjs';
 
 export const MODELS = ['gemini-3.8-flash', 'gemini-3.7-flash', 'gemini-3.5-flash-lite', 'gemini-2.5-flash'];
 export const CF_MODELS = ['@cf/google/gemma-3-12b-it', '@cf/meta/llama-3.3-70b-instruct-fp8-fast'];
 const GEMINI_API = 'https://generativelanguage.googleapis.com/v1beta';
 const TG_LIMIT = 4000;
 const STYLE = "Reply in the user's language (usually Persian). Be direct and accurate; short by default, detailed when the task needs it. Say so when you are not sure.\n" +
+  "You CAN hear and see: voice messages are transcribed for you, and photos the user sends are attached to their message. " +
+  "You CAN search Google for current facts (news, prices, weather, schedules) when the Gemini brain is active; use it instead of guessing, and keep the sources line.\n" +
   "You CAN make images: a message that starts with «عکس بساز:» (or /img) is turned into a picture automatically. When the user wants a picture, tell them to send «عکس بساز: <description>»; when they ask for a design or post, also offer ready «عکس بساز: ...» lines for its backgrounds.\n" + SKILLS;
 const SYSTEM = "You are Hermes, Puria's personal assistant (Viking Offroad brand). " + STYLE;
 // Abilities that can be locked per person (users.mjs `locks`). A locked topic is refused before the AI is called.
@@ -46,7 +49,7 @@ export default {
     }
     const update = await request.json().catch(() => null);
     const msg = update && update.message;
-    if (msg && typeof msg.text === 'string') {
+    if (msg && (typeof msg.text === 'string' || msg.voice || msg.audio || (msg.photo && msg.photo.length))) {
       ctx.waitUntil(handle(msg, env, url.origin).catch((err) => console.error('[Hermes]', err.message)));
     }
     return new Response('ok');
@@ -114,21 +117,33 @@ async function api(request, url, env) {
     await clearNotes(env, historyKey(env, who));
     return json({ ok: true });
   }
+  if (request.method === 'POST' && url.pathname === '/api/transcribe') {
+    const body = await request.json().catch(() => ({}));
+    const audio = parseDataUrl(body.audio, 'audio');
+    if (!audio) return json({ error: 'ویس نامعتبر یا بزرگ‌تر از ۸ مگابایت است.' }, 400);
+    try {
+      return json({ text: await transcribe(env, askGemini, audio.data, audio.mime) });
+    } catch (err) {
+      return json({ error: err.message }, 502);
+    }
+  }
   if (request.method === 'POST' && url.pathname === '/api/chat') {
     const body = await request.json().catch(() => ({}));
-    const message = typeof body.message === 'string' ? body.message.trim().slice(0, 4000) : '';
+    const photo = body.image ? parseDataUrl(body.image, 'image') : null;
+    if (body.image && !photo) return json({ error: 'عکس نامعتبر یا بزرگ‌تر از ۸ مگابایت است.' }, 400);
+    const message = (typeof body.message === 'string' ? body.message.trim().slice(0, 4000) : '') || (photo ? 'این عکس رو ببین و بگو چی توشه.' : '');
     if (!message) return json({ error: 'پیام خالی است.' }, 400);
     const locked = lockedHit(who, message);
     if (locked) return json({ error: `دسترسی به «${ABILITIES[locked].name}» برای حساب تو بسته است.`, locked }, 403);
     try {
-      const wanted = imageRequest(message);
+      const wanted = photo ? null : imageRequest(message);
       if (wanted !== null) {
         if (!wanted) return json({ error: 'بنویس چه عکسی می‌خواهی، مثلاً «عکس بساز: کمپ کنار دریاچه در جنگل پاییزی».' }, 400);
         const { image, mime, model, prompt } = await picture(env, historyKey(env, who), message, wanted);
         return json({ reply: `🖼️ ساخته شد (${model}).\n\n${prompt}`, image: `data:${mime};base64,${image}` });
       }
       const system = who.role === 'owner' ? SYSTEM : teamSystem(who);
-      return json({ reply: await converse(env, historyKey(env, who), message, system) });
+      return json({ reply: await converse(env, historyKey(env, who), message, system, photo ? [photo] : []) });
     } catch (err) {
       return json({ error: err.message }, 502);
     }
@@ -196,11 +211,29 @@ async function handle(msg, env, origin) {
     return;
   }
   const key = `history:${chatId}`;
-  const input = msg.text.trim();
+  let input = typeof msg.text === 'string' ? msg.text.trim() : '';
+  let images = [], heard = '';
+  if (!input) {
+    try {
+      const voice = msg.voice || msg.audio;
+      if (voice) {
+        await tg(env, 'sendChatAction', { chat_id: chatId, action: 'typing' });
+        const file = await telegramFile(env, voice.file_id, voice.mime_type || 'audio/ogg');
+        input = heard = await transcribe(env, askGemini, file.data, file.mime);
+      } else if (msg.photo && msg.photo.length) {
+        images = [await telegramFile(env, msg.photo[msg.photo.length - 1].file_id, 'image/jpeg')];
+        input = (msg.caption || '').trim() || 'این عکس رو ببین و بگو چی توشه.';
+      }
+    } catch (err) {
+      return send(env, chatId, `خطا: ${err.message}`);
+    }
+    if (!input) return;
+  }
   if (input === '/start') {
     return send(env, chatId, 'سلام! من هرمس هستم. هر چه می‌خواهی بپرس.\n' +
       'همهٔ گفتگوها ذخیره می‌ماند. با «یادت باشه ...» چیزی را برای همیشه به خاطر می‌سپارم.\n' +
       'عکس بساز: ... یک عکس می‌سازم\n' +
+      'ویس بفرست تا گوش بدهم، عکس بفرست تا ببینم؛ برای خبرها و چیزهای روز در گوگل جست‌وجو می‌کنم.\n' +
       '/reset گفتگوی جدید (قبلی بایگانی می‌شود)\n/notes یادداشت‌های حافظه\n/forget پاک کردن یادداشت‌ها\n/app لینک اپ');
   }
   if (input === '/notes') {
@@ -239,25 +272,41 @@ async function handle(msg, env, origin) {
   await tg(env, 'sendChatAction', { chat_id: chatId, action: 'typing' });
   let reply;
   try {
-    reply = await converse(env, key, input);
+    reply = await converse(env, key, input, SYSTEM, images);
   } catch (err) {
     return send(env, chatId, `خطا: ${err.message}`);
   }
-  await send(env, chatId, reply);
+  await send(env, chatId, heard ? `🎙️ «${heard}»\n\n${reply}` : reply);
 }
 
 // One turn with permanent memory: recent messages + saved notes go to the brain; everything is kept.
-export async function converse(env, key, input, system = SYSTEM) {
+export async function converse(env, key, input, system = SYSTEM, images = []) {
   const note = noteFrom(input);
   if (note) await addNote(env, key, note);
   const [log, notes, skills] = await Promise.all([loadLog(env, key), loadNotes(env, key), relevantSkills(env, input)]);
   const fullSystem = (notes.length
     ? `${system}\n\nLONG-TERM NOTES the user asked you to remember (always take them into account):\n- ${notes.join('\n- ')}`
     : system) + skillsBlock(skills);
-  const contents = [...toContents(log), { role: 'user', parts: [{ text: input }] }];
-  const reply = await ask(env, contents, fullSystem);
-  await appendTurn(env, key, log, input, reply);
+  const parts = [...images.map((i) => ({ inlineData: { mimeType: i.mime, data: i.data } })), { text: input }];
+  const contents = [...toContents(log), { role: 'user', parts }];
+  const reply = images.length ? await see(env, contents, fullSystem, images, input) : await ask(env, contents, fullSystem);
+  await appendTurn(env, key, log, images.length ? `[عکس] ${input}` : input, reply);
   return reply;
+}
+
+// Photo turn: Gemini sees the image itself; otherwise Workers AI describes it and the text brain answers.
+async function see(env, contents, system, images, input) {
+  if (env.GEMINI_API_KEY) {
+    try {
+      return await askGemini(env, contents, system);
+    } catch (err) {
+      if (!env.AI) throw err;
+      console.error('[Hermes] Gemini vision failed, using Workers AI:', err.message);
+    }
+  }
+  const description = await describeImage(env, images[0].data, input);
+  const textOnly = [...contents.slice(0, -1), { role: 'user', parts: [{ text: `${input}\n\n[Description of the attached photo: ${description}]` }] }];
+  return ask(env, textOnly, system);
 }
 
 // Text request → English prompt → FLUX image. The turn is kept in memory as text (the prompt), not the image bytes.
@@ -268,10 +317,10 @@ export async function picture(env, key, input, wanted) {
   return { image, mime, model, prompt };
 }
 
-export async function ask(env, contents, system = SYSTEM) {
+export async function ask(env, contents, system = SYSTEM, search = true) {
   if (env.GEMINI_API_KEY) {
     try {
-      return await askGemini(env, contents, system);
+      return await askGemini(env, contents, system, search);
     } catch (err) {
       if (!env.AI) throw err;
       console.error('[Hermes] Gemini failed, using Workers AI:', err.message);
@@ -303,15 +352,19 @@ export async function askWorkersAI(env, contents, system = SYSTEM) {
   throw new Error(`Workers AI جواب نداد${lastError ? ` (${lastError.message})` : ''}.`);
 }
 
-export async function askGemini(env, contents, system = SYSTEM) {
+// search=true lets Gemini use Google Search for current facts (free tier); models that refuse the tool are retried without it.
+export async function askGemini(env, contents, system = SYSTEM, search = true) {
   const cached = env.MEMORY ? await env.MEMORY.get('model') : null;
   const order = cached ? [cached, ...MODELS.filter((m) => m !== cached)] : MODELS;
+  const call = (model, withSearch) => fetch(`${GEMINI_API}/models/${model}:generateContent`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json', 'x-goog-api-key': env.GEMINI_API_KEY },
+    body: JSON.stringify({ systemInstruction: { parts: [{ text: system }] }, contents,
+      ...(withSearch ? { tools: [{ google_search: {} }] } : {}) }),
+  });
   for (const model of order) {
-    const res = await fetch(`${GEMINI_API}/models/${model}:generateContent`, {
-      method: 'POST',
-      headers: { 'content-type': 'application/json', 'x-goog-api-key': env.GEMINI_API_KEY },
-      body: JSON.stringify({ systemInstruction: { parts: [{ text: system }] }, contents }),
-    });
+    let res = await call(model, search);
+    if (search && (res.status === 400 || res.status === 429)) res = await call(model, false);
     if (res.status === 404) continue;
     if (res.status === 429) throw new Error('سهمیهٔ رایگان جمینی فعلاً پر است؛ چند دقیقه بعد دوباره بپرس.');
     if (res.status === 400 || res.status === 403) throw new Error(`جمینی کلید را نپذیرفت (${res.status}). کلید را دوباره بساز.`);
@@ -320,9 +373,17 @@ export async function askGemini(env, contents, system = SYSTEM) {
     const data = await res.json();
     const parts = (data.candidates && data.candidates[0] && data.candidates[0].content &&
       data.candidates[0].content.parts) || [];
-    return parts.map((p) => p.text || '').join('').trim() || '(پاسخ خالی بود؛ دوباره بپرس)';
+    const answer = parts.map((p) => p.text || '').join('').trim() || '(پاسخ خالی بود؛ دوباره بپرس)';
+    return answer + sources(data.candidates && data.candidates[0]);
   }
   throw new Error('هیچ مدل جمینی برای این کلید در دسترس نیست.');
+}
+
+// Up to 3 web sources when Gemini searched Google for the answer.
+function sources(candidate) {
+  const chunks = (candidate && candidate.groundingMetadata && candidate.groundingMetadata.groundingChunks) || [];
+  const web = chunks.map((c) => c.web).filter((w) => w && w.uri).slice(0, 3);
+  return web.length ? '\n\nمنابع:\n' + web.map((w) => `• ${w.title || 'لینک'}: ${w.uri}`).join('\n') : '';
 }
 
 export function chunks(str, size = TG_LIMIT) {

@@ -510,3 +510,104 @@ test('when Gemini image quota is out, FLUX on Workers AI makes the image', async
   assert.match(res.body.image, /^data:image\/jpeg;base64,/);
   assert.match(res.body.reply, /flux/);
 });
+
+// Voice, photos and Google Search.
+function mediaFetch({ gemini = 'جواب هرمس', grounding = null, searchStatus = 200 } = {}) {
+  const calls = [];
+  globalThis.fetch = async (url, init) => {
+    const u = String(url);
+    const body = init && typeof init.body === 'string' ? JSON.parse(init.body) : null;
+    calls.push({ url: u, body });
+    if (u.endsWith('/getFile')) {
+      const path = body.file_id.startsWith('v') ? 'voice/file_1.oga' : 'photos/file_2.jpg';
+      return new Response(JSON.stringify({ ok: true, result: { file_path: path } }));
+    }
+    if (u.includes('/file/bot')) return new Response(new Uint8Array([1, 2, 3, 4]));
+    if (u.includes('generativelanguage')) {
+      if (body.tools && searchStatus !== 200) return new Response('{}', { status: searchStatus });
+      const isTranscribe = body.contents.at(-1).parts.some((p) => p.text && p.text.startsWith('Transcribe'));
+      return new Response(JSON.stringify({ candidates: [{ content: { parts: [{ text: isTranscribe ? 'فردا هوا چطوره' : gemini }] },
+        ...(grounding ? { groundingMetadata: grounding } : {}) }] }));
+    }
+    return new Response(JSON.stringify({ ok: true }));
+  };
+  return calls;
+}
+const gem = (calls) => calls.filter((c) => c.url.includes('generativelanguage'));
+
+test('Telegram voice is transcribed and answered, transcript shown first', async () => {
+  const env = baseEnv();
+  const calls = mediaFetch();
+  await post(env, { message: { chat: { id: 42 }, from: { id: Number(OWNER) }, voice: { file_id: 'v1', mime_type: 'audio/ogg' } } });
+  const audio = gem(calls)[0].body.contents[0].parts[0].inlineData;
+  assert.equal(audio.mimeType, 'audio/ogg');
+  assert.equal(gem(calls)[0].body.tools, undefined, 'no search for transcription');
+  assert.deepEqual(sent(calls), ['🎙️ «فردا هوا چطوره»\n\nجواب هرمس']);
+  assert.equal(JSON.parse(env.MEMORY.store.get('history:42'))[0].parts[0].text, 'فردا هوا چطوره');
+});
+
+test('voice falls back to Whisper on Workers AI without Gemini', async () => {
+  const env = { ...baseEnv(), GEMINI_API_KEY: undefined, AI: { calls: [], async run(model, input) {
+    this.calls.push({ model, input }); return model.includes('whisper') ? { text: 'سلام' } : { response: 'سلام از کلادفلر' }; } } };
+  const calls = mediaFetch();
+  await post(env, { message: { chat: { id: 42 }, from: { id: Number(OWNER) }, voice: { file_id: 'v1' } } });
+  assert.equal(env.AI.calls[0].model, '@cf/openai/whisper-large-v3-turbo');
+  assert.deepEqual(sent(calls), ['🎙️ «سلام»\n\nسلام از کلادفلر']);
+});
+
+test('Telegram photo is shown to Gemini with its caption and kept in memory as text', async () => {
+  const env = baseEnv();
+  const calls = mediaFetch({ gemini: 'یک جیپ در جنگل' });
+  await post(env, { message: { chat: { id: 42 }, from: { id: Number(OWNER) }, caption: 'کپشن بنویس',
+    photo: [{ file_id: 'p-small' }, { file_id: 'p-big' }] } });
+  assert.equal(calls.find((c) => c.url.endsWith('/getFile')).body.file_id, 'p-big');
+  const parts = gem(calls)[0].body.contents.at(-1).parts;
+  assert.equal(parts[0].inlineData.mimeType, 'image/jpeg');
+  assert.equal(parts[1].text, 'کپشن بنویس');
+  assert.deepEqual(sent(calls), ['یک جیپ در جنگل']);
+  const log = JSON.parse(env.MEMORY.store.get('history:42'));
+  assert.equal(log[0].parts[0].text, '[عکس] کپشن بنویس');
+  assert.equal(JSON.stringify(log).includes('inlineData'), false);
+});
+
+test('photo without Gemini: Workers AI describes it, then the text brain answers', async () => {
+  const env = { ...baseEnv(), GEMINI_API_KEY: undefined, AI: { calls: [], async run(model, input) {
+    this.calls.push({ model, input }); return model.includes('llava') ? { description: 'a jeep in a forest' } : { response: 'جیپ در جنگل' }; } } };
+  const calls = mediaFetch();
+  await post(env, { message: { chat: { id: 42 }, from: { id: Number(OWNER) }, photo: [{ file_id: 'p1' }] } });
+  assert.equal(env.AI.calls[0].model, '@cf/llava-hf/llava-1.5-7b-hf');
+  assert.match(env.AI.calls[1].input.messages.at(-1).content, /a jeep in a forest/);
+  assert.deepEqual(sent(calls), ['جیپ در جنگل']);
+});
+
+test('Gemini answers with Google Search and lists sources', async () => {
+  const env = baseEnv();
+  const calls = mediaFetch({ gemini: 'دلار امروز ...', grounding: { groundingChunks: [{ web: { uri: 'https://example.com/a', title: 'example.com' } }] } });
+  await post(env, message('قیمت دلار امروز؟'));
+  assert.deepEqual(gem(calls)[0].body.tools, [{ google_search: {} }]);
+  assert.deepEqual(sent(calls), ['دلار امروز ...\n\nمنابع:\n• example.com: https://example.com/a']);
+});
+
+test('a model that rejects the search tool is retried without it', async () => {
+  const env = baseEnv();
+  const calls = mediaFetch({ searchStatus: 400 });
+  await post(env, message('سلام'));
+  assert.equal(gem(calls).length, 2);
+  assert.equal(gem(calls)[1].body.tools, undefined);
+  assert.deepEqual(sent(calls), ['جواب هرمس']);
+});
+
+test('web app: transcribe endpoint and photo chat', async () => {
+  const env = baseEnv();
+  const calls = mediaFetch();
+  const t = await callApi(env, '/api/transcribe', { audio: 'data:audio/webm;codecs=opus;base64,AAAA' });
+  assert.equal(t.status, 200);
+  assert.equal(t.body.text, 'فردا هوا چطوره');
+  assert.equal(gem(calls)[0].body.contents[0].parts[0].inlineData.mimeType, 'audio/webm');
+  assert.equal((await callApi(env, '/api/transcribe', { audio: 'data:image/png;base64,AAAA' })).status, 400);
+  const c = await callApi(env, '/api/chat', { image: 'data:image/jpeg;base64,AAAA' });
+  assert.equal(c.status, 200);
+  assert.equal(c.body.reply, 'جواب هرمس');
+  assert.equal(gem(calls).at(-1).body.contents.at(-1).parts[0].inlineData.mimeType, 'image/jpeg');
+  assert.equal((await callApi(env, '/api/chat', { message: 'x', image: 'data:text/html;base64,AAAA' })).status, 400);
+});

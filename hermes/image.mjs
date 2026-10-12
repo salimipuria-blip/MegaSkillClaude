@@ -19,7 +19,7 @@ export function imageRequest(input) {
 // Persian (or short) requests become a detailed English prompt; if the text brain fails, use the request as is.
 export async function imagePrompt(ask, env, request) {
   try {
-    const out = (await ask(env, [{ role: 'user', parts: [{ text: request }] }], PROMPT_SYSTEM)).trim().replace(/^["'`]+|["'`]+$/g, '');
+    const out = (await ask(env, [{ role: 'user', parts: [{ text: request }] }], PROMPT_SYSTEM, false)).trim().replace(/^["'`]+|["'`]+$/g, '');
     return out ? out.slice(0, 2000) : request;
   } catch {
     return request;
