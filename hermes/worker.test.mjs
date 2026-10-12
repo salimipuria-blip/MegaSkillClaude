@@ -312,3 +312,60 @@ test('locked abilities are refused before the AI is called; the owner has no loc
   assert.equal(owner.status, 200);
   assert.deepEqual((await callApi(env, '/api/me')).body.locks, []);
 });
+
+// ── Permanent memory ──
+test('memory keeps every message; the AI sees only recent ones, without extra fields', async () => {
+  const env = baseEnv();
+  const old = Array.from({ length: 60 }, (_, i) => ({ role: i % 2 ? 'model' : 'user', parts: [{ text: `m${i}` }], t: i }));
+  env.MEMORY.store.set('history:42', JSON.stringify(old));
+  const calls = mockFetch();
+  await post(env, message('سلام'));
+  const stored = JSON.parse(env.MEMORY.store.get('history:42'));
+  assert.equal(stored.length, 62);
+  assert.equal(stored[0].parts[0].text, 'm0');
+  const sentContents = calls.find((c) => c.url.includes('generativelanguage')).body.contents;
+  assert.equal(sentContents.length, 41);
+  assert.ok(sentContents.every((c) => !('t' in c)));
+  assert.match(calls.find((c) => c.url.includes('generativelanguage')).body.systemInstruction.parts[0].text, /PLAYBOOKS/);
+});
+
+test('/reset archives the conversation instead of deleting it', async () => {
+  const env = baseEnv();
+  env.MEMORY.store.set('history:42', JSON.stringify([{ role: 'user', parts: [{ text: 'کهنه' }] }]));
+  const calls = mockFetch();
+  await post(env, message('/reset'));
+  assert.equal(env.MEMORY.store.has('history:42'), false);
+  const archived = [...env.MEMORY.store.keys()].filter((k) => k.startsWith('archive:history:42:'));
+  assert.equal(archived.length, 1);
+  assert.match(env.MEMORY.store.get(archived[0]), /کهنه/);
+  assert.match(sent(calls)[0], /بایگانی/);
+});
+
+test('"یادت باشه" saves a long-term note that reaches later prompts; /notes and /forget manage it', async () => {
+  const env = baseEnv();
+  let calls = mockFetch();
+  await post(env, message('یادت باشه: تور بعدی ۲۵ آبان به دماوند است'));
+  assert.deepEqual(JSON.parse(env.MEMORY.store.get('notes:history:42')), ['تور بعدی ۲۵ آبان به دماوند است']);
+  calls = mockFetch();
+  await post(env, message('تور بعدی کی است؟'));
+  const sys = calls.find((c) => c.url.includes('generativelanguage')).body.systemInstruction.parts[0].text;
+  assert.match(sys, /LONG-TERM NOTES[\s\S]*دماوند/);
+  calls = mockFetch();
+  await post(env, message('/notes'));
+  assert.match(sent(calls)[0], /دماوند/);
+  await post(env, message('/forget'));
+  assert.equal(env.MEMORY.store.has('notes:history:42'), false);
+});
+
+test('web notes endpoints and archived reset work for team members too', async () => {
+  const env = baseEnv();
+  mockFetch();
+  const token = (await loginAs(env, 'tester', 'pass-1234')).body.token;
+  await callApi(env, '/api/chat', { message: 'remember that I prefer short answers' }, token);
+  assert.deepEqual((await callApi(env, '/api/notes', undefined, token)).body.notes, ['I prefer short answers']);
+  await callApi(env, '/api/reset', {}, token);
+  assert.ok([...env.MEMORY.store.keys()].some((k) => k.startsWith('archive:history:user:tester:')));
+  assert.deepEqual((await callApi(env, '/api/notes', undefined, token)).body.notes, ['I prefer short answers']);
+  await callApi(env, '/api/notes/clear', {}, token);
+  assert.deepEqual((await callApi(env, '/api/notes', undefined, token)).body.notes, []);
+});

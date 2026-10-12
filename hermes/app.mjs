@@ -218,6 +218,13 @@ export const APP_HTML = String.raw`<!doctype html>
   .lhead span { font: 10px/1 var(--mono); letter-spacing: .14em; color: var(--dorm); }
   .lhead .cx { margin-left: auto; }
   .lbody { flex: 1; overflow-y: auto; padding: 18px 16px calc(var(--safe-b) + 24px); display: flex; flex-direction: column; gap: 18px; }
+  .notes { border: 1px solid rgba(0,229,255,.16); border-radius: 12px; padding: 10px 14px; background: rgba(0,229,255,.04); direction: rtl; }
+  .notes .nt { display: flex; align-items: center; gap: 8px; font: 10px/1 var(--mono); letter-spacing: .24em; color: var(--cyan-hi); margin-bottom: 8px; direction: ltr; justify-content: flex-end; }
+  .notes .nt button { margin-right: auto; background: none; border: 0; color: var(--dorm); cursor: pointer; font: 10px/1 var(--mono); letter-spacing: .14em; }
+  .notes .nt button:hover { color: #ff8a8a; }
+  .notes div.n { font: 13.5px/1.8 var(--fa); color: rgba(240,237,232,.85); }
+  .notes div.n::before { content: "◆ "; color: var(--cyan); font-size: 9px; }
+  .notes .hint { font: 12px/1.7 var(--fa); color: var(--dorm); }
   .lbody:empty::after { content: "NO MESSAGES YET"; font: 10px/1 var(--mono); letter-spacing: .3em; color: var(--dorm); text-align: center; margin-top: 30vh; }
   .m { font: 15px/1.85 var(--fa); direction: rtl; white-space: pre-wrap; overflow-wrap: anywhere; }
   .m.me { align-self: flex-end; max-width: 88%; padding: 9px 15px; border-radius: 16px 16px 16px 5px; background: linear-gradient(135deg, rgba(0,229,255,.12), rgba(0,229,255,.04)); border: 1px solid rgba(0,229,255,.18); }
@@ -296,7 +303,7 @@ export const APP_HTML = String.raw`<!doctype html>
   <div class="tiles">
     <a class="tile hide" id="tTg" href="https://t.me/Pouragent_bot" target="_blank" rel="noopener noreferrer">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M21 4 3 11l6 2 2 6 3-4 5 4z"/><path d="m9 13 8-6"/></svg>هرمس در تلگرام</a>
-    <button class="tile" id="tNew"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>گفتگوی جدید (پاک کردن حافظه)</button>
+    <button class="tile" id="tNew"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>گفتگوی جدید (قبلی بایگانی می‌شود)</button>
     <button class="tile" id="tLog"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>تاریخچهٔ گفتگو</button>
     <button class="tile hide" id="tPass"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="8" cy="15" r="4"/><path d="m11 12 9-9M17 6l3 3"/></svg>تغییر رمز</button>
     <button class="tile" id="tForget"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M7 11V8a5 5 0 0 1 10 0v3M5 11h14v10H5z"/></svg>خروج از حساب</button>
@@ -812,7 +819,22 @@ export const APP_HTML = String.raw`<!doctype html>
     $('lcount').textContent = messages.length ? messages.length + ' MSG' : '';
     $('pill').textContent = (innerWidth < 500 ? 'Log' : 'Session log') + (messages.length ? ' · ' + messages.length : '') + ' ↗';
   }
-  const openLog = () => { renderLog(); $('log').classList.add('show'); const lb = $('lbody'); lb.scrollTop = lb.scrollHeight; };
+  async function renderNotes() {
+    let notes = [];
+    try { notes = (await api('/api/notes')).notes || []; } catch { return; }
+    const box = document.createElement('div'); box.className = 'notes';
+    const head = document.createElement('div'); head.className = 'nt'; head.textContent = 'LONG-TERM MEMORY · ' + notes.length;
+    if (notes.length) {
+      const clear = document.createElement('button'); clear.textContent = 'CLEAR';
+      clear.onclick = async () => { if (!confirm('یادداشت‌های حافظه پاک شود؟')) return; try { await api('/api/notes/clear', {}); box.remove(); } catch (err) { alert(err.message); } };
+      head.prepend(clear);
+    }
+    box.append(head);
+    notes.forEach((n) => { const d = document.createElement('div'); d.className = 'n'; d.textContent = n; box.append(d); });
+    if (!notes.length) { const h = document.createElement('div'); h.className = 'hint'; h.textContent = 'بنویس «یادت باشه ...» تا برای همیشه به خاطر بسپارم.'; box.append(h); }
+    $('lbody').prepend(box);
+  }
+  const openLog = () => { renderLog(); renderNotes(); $('log').classList.add('show'); const lb = $('lbody'); lb.scrollTop = lb.scrollHeight; };
   $('pill').onclick = openLog; $('tLog').onclick = () => { toggleLamp(); openLog(); };
   $('lclose').onclick = () => $('log').classList.remove('show');
 
@@ -855,7 +877,7 @@ export const APP_HTML = String.raw`<!doctype html>
   input.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey && !('ontouchstart' in window)) { e.preventDefault(); submit(); } });
   $('form').addEventListener('submit', (e) => { e.preventDefault(); submit(); });
   $('tNew').onclick = async () => {
-    if (busy || !confirm('گفتگو و حافظه پاک شود؟')) return;
+    if (busy || !confirm('گفتگوی جدید شروع شود؟ گفتگوی فعلی بایگانی می‌شود و یادداشت‌ها می‌مانند.')) return;
     try { await api('/api/reset', {}); messages = []; renderLog(); reply.classList.remove('show'); layout(); toggleLamp(); }
     catch (err) { showReply('error', err.message); }
   };
