@@ -1,7 +1,7 @@
 // node --test hermes/  (Node 20+, no dependencies)
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import worker, { webhookSecret, chunks, MODELS } from './worker.mjs';
+import worker, { webhookSecret, chunks, MODELS, CF_MODELS } from './worker.mjs';
 
 const OWNER = '123456789';
 const baseEnv = () => ({ TELEGRAM_BOT_TOKEN: '1:abc', GEMINI_API_KEY: 'g', ALLOWED_USER_ID: OWNER, MEMORY: kv() });
@@ -132,6 +132,47 @@ test('setup lists missing secrets by name only', async () => {
   const res = await worker.fetch(new Request('https://x.workers.dev/setup'), { GEMINI_API_KEY: 'g' }, {});
   assert.equal(res.status, 400);
   assert.match(await res.text(), /TELEGRAM_BOT_TOKEN, ALLOWED_USER_ID/);
+});
+
+function fakeAI(reply = 'سلام از کلادفلر') {
+  const calls = [];
+  return { calls, async run(model, input) { calls.push({ model, input }); return { response: reply }; } };
+}
+
+test('without a Gemini key the bot answers with Workers AI', async () => {
+  const env = { ...baseEnv(), GEMINI_API_KEY: undefined, AI: fakeAI() };
+  const calls = mockFetch();
+  await post(env, message('سلام'));
+  assert.deepEqual(sent(calls), ['سلام از کلادفلر']);
+  assert.equal(calls.some((c) => c.url.includes('generativelanguage')), false);
+  assert.equal(env.AI.calls[0].model, CF_MODELS[0]);
+  assert.equal(env.AI.calls[0].input.messages[0].role, 'system');
+});
+
+test('a rejected Gemini key falls back to Workers AI', async () => {
+  const env = { ...baseEnv(), AI: fakeAI() };
+  const calls = mockFetch([403]);
+  await post(env, message('سلام'));
+  assert.deepEqual(sent(calls), ['سلام از کلادفلر']);
+});
+
+test('Workers AI falls through to the next model when the first one fails', async () => {
+  const env = { ...baseEnv(), GEMINI_API_KEY: undefined, AI: {
+    calls: [],
+    async run(model) { this.calls.push(model); if (model === CF_MODELS[0]) throw new Error('down'); return { response: 'ok' }; },
+  } };
+  const calls = mockFetch();
+  await post(env, message('سلام'));
+  assert.deepEqual(sent(calls), ['ok']);
+  assert.deepEqual(env.AI.calls, CF_MODELS);
+});
+
+test('setup accepts the AI binding instead of a Gemini key', async () => {
+  const env = { ...baseEnv(), GEMINI_API_KEY: undefined, AI: fakeAI() };
+  mockFetch();
+  const res = await worker.fetch(new Request('https://hermes.example.workers.dev/setup'), env, {});
+  assert.equal(res.status, 200);
+  assert.match(await res.text(), /Workers AI/);
 });
 
 test('long replies are split under the Telegram limit', () => {

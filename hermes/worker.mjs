@@ -1,10 +1,12 @@
 // Hermes Lite: Telegram bot + Gemini on Cloudflare Workers. Free, 24/7, no server, no card.
 // Secrets (Worker → Settings → Variables and Secrets, type "Secret"):
-//   TELEGRAM_BOT_TOKEN, GEMINI_API_KEY, ALLOWED_USER_ID
+//   TELEGRAM_BOT_TOKEN, ALLOWED_USER_ID, and optionally GEMINI_API_KEY.
+// Brain: Gemini when its key works, otherwise Cloudflare Workers AI (binding AI, free, no key).
 // Optional KV binding MEMORY (see wrangler.toml) keeps chat history; without it the bot still works.
 // After deploy, open https://<worker>.workers.dev/setup once to register the Telegram webhook.
 
 export const MODELS = ['gemini-3.8-flash', 'gemini-3.7-flash', 'gemini-3.5-flash-lite', 'gemini-2.5-flash'];
+export const CF_MODELS = ['@cf/google/gemma-3-12b-it', '@cf/meta/llama-3.3-70b-instruct-fp8-fast'];
 const GEMINI_API = 'https://generativelanguage.googleapis.com/v1beta';
 const HISTORY_MESSAGES = 20;
 const TG_LIMIT = 4000;
@@ -46,7 +48,8 @@ async function home(url, env) {
 }
 
 async function setup(url, env) {
-  const missing = ['TELEGRAM_BOT_TOKEN', 'GEMINI_API_KEY', 'ALLOWED_USER_ID'].filter((k) => !env[k]);
+  const missing = ['TELEGRAM_BOT_TOKEN', 'ALLOWED_USER_ID'].filter((k) => !env[k]);
+  if (!env.GEMINI_API_KEY && !env.AI) missing.push('GEMINI_API_KEY (or the AI binding)');
   if (missing.length) return text(`✗ Missing secrets: ${missing.join(', ')}`, 400);
   const me = await tg(env, 'getMe', {});
   if (!me.ok) return text('✗ Telegram rejected TELEGRAM_BOT_TOKEN. Copy it again from @BotFather.', 400);
@@ -58,7 +61,8 @@ async function setup(url, env) {
   });
   if (!hook.ok) return text(`✗ setWebhook failed: ${hook.description || 'unknown error'}`, 502);
   const memory = env.MEMORY ? 'on' : 'off (no MEMORY binding)';
-  return text(`✓ Webhook set for @${me.result.username}\n✓ Memory: ${memory}\nNow message the bot in Telegram.`);
+  const brain = env.GEMINI_API_KEY ? `Gemini${env.AI ? ' (Workers AI as fallback)' : ''}` : 'Cloudflare Workers AI';
+  return text(`✓ Webhook set for @${me.result.username}\n✓ Memory: ${memory}\n✓ Brain: ${brain}\nNow message the bot in Telegram.`);
 }
 
 async function handle(msg, env) {
@@ -81,7 +85,7 @@ async function handle(msg, env) {
   const contents = [...history, { role: 'user', parts: [{ text: input }] }];
   let reply;
   try {
-    reply = await askGemini(env, contents);
+    reply = await ask(env, contents);
   } catch (err) {
     return send(env, chatId, `خطا: ${err.message}`);
   }
@@ -90,6 +94,41 @@ async function handle(msg, env) {
     await env.MEMORY.put(key, JSON.stringify(next));
   }
   await send(env, chatId, reply);
+}
+
+export async function ask(env, contents) {
+  if (env.GEMINI_API_KEY) {
+    try {
+      return await askGemini(env, contents);
+    } catch (err) {
+      if (!env.AI) throw err;
+      console.error('[Hermes] Gemini failed, using Workers AI:', err.message);
+    }
+  }
+  if (env.AI) return askWorkersAI(env, contents);
+  throw new Error('نه کلید جمینی تنظیم شده و نه Workers AI.');
+}
+
+export async function askWorkersAI(env, contents) {
+  const messages = [
+    { role: 'system', content: SYSTEM },
+    ...contents.map((c) => ({
+      role: c.role === 'model' ? 'assistant' : 'user',
+      content: c.parts.map((p) => p.text || '').join(''),
+    })),
+  ];
+  let lastError;
+  for (const model of CF_MODELS) {
+    try {
+      const out = await env.AI.run(model, { messages, max_tokens: 1024 });
+      const reply = (out && (out.response ||
+        (out.choices && out.choices[0] && out.choices[0].message && out.choices[0].message.content))) || '';
+      if (String(reply).trim()) return String(reply).trim();
+    } catch (err) {
+      lastError = err;
+    }
+  }
+  throw new Error(`Workers AI جواب نداد${lastError ? ` (${lastError.message})` : ''}.`);
 }
 
 export async function askGemini(env, contents) {
