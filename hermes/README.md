@@ -19,6 +19,8 @@
 - **توکن بات:** از `@BotFather` ← `/newbot`. اگر بات داری، `/token`.
 - **شناسهٔ عددی تلگرام:** به `@userinfobot` پیام `/start` بده.
 
+> **کلید جمینی اختیاری است.** اگر نباشد یا گوگل آن را رد کند (مثلاً 403)، بات خودکار از هوش مصنوعی رایگان خود Cloudflare (Workers AI) استفاده می‌کند. نه کلید می‌خواهد و نه VPN.
+
 **۲. ساخت Worker از همین مخزن**
 dash.cloudflare.com ← Workers & Pages ← Create ← **Import a repository** ← GitHub ← `MegaSkillClaude`
 - Project name: `hermes` (دقیقاً همین)

@@ -8,3 +8,7 @@ compatibility_date = "2026-09-01"
 [[kv_namespaces]]
 binding = "MEMORY"
 id = "90fafb6bf15c4a1cb8b503668e070ab3"
+
+# Cloudflare Workers AI: free daily quota, no API key. Used when Gemini is missing or fails.
+[ai]
+binding = "AI"
