@@ -134,3 +134,10 @@ jobs:
               deno check "$tmp"
             )
           done
+
+  hermes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: bash -n hermes/setup.sh
+      - run: shellcheck -S warning hermes/setup.sh
