@@ -8,13 +8,15 @@
 import { APP_HTML, MANIFEST, ICON } from './app.mjs';
 import { login, sessionUser, changePassword } from './auth.mjs';
 import { USERS } from './users.mjs';
+import { SKILLS } from './skills.mjs';
+import { relevantSkills, skillsBlock } from './skill-router.mjs';
+import { loadLog, toContents, appendTurn, archiveAndClear, noteFrom, loadNotes, addNote, clearNotes } from './memory.mjs';
 
 export const MODELS = ['gemini-3.8-flash', 'gemini-3.7-flash', 'gemini-3.5-flash-lite', 'gemini-2.5-flash'];
 export const CF_MODELS = ['@cf/google/gemma-3-12b-it', '@cf/meta/llama-3.3-70b-instruct-fp8-fast'];
 const GEMINI_API = 'https://generativelanguage.googleapis.com/v1beta';
-const HISTORY_MESSAGES = 20;
 const TG_LIMIT = 4000;
-const STYLE = "Reply in the user's language (usually Persian), short, direct and accurate. Say so when you are not sure.";
+const STYLE = "Reply in the user's language (usually Persian). Be direct and accurate; short by default, detailed when the task needs it. Say so when you are not sure.\n" + SKILLS;
 const SYSTEM = "You are Hermes, Puria's personal assistant (Viking Offroad brand). " + STYLE;
 // Abilities that can be locked per person (users.mjs `locks`). A locked topic is refused before the AI is called.
 export const ABILITIES = {
@@ -94,7 +96,7 @@ async function api(request, url, env) {
     return res.error ? json({ error: res.error }, res.status) : json(res);
   }
   if (request.method === 'GET' && url.pathname === '/api/history') {
-    const history = env.MEMORY ? (await env.MEMORY.get(historyKey(env, who), 'json')) || [] : [];
+    const history = (await loadLog(env, historyKey(env, who))).slice(-200);
     return json({ messages: history.map((m) => ({
       role: m.role === 'model' ? 'assistant' : 'user',
       text: m.parts.map((p) => p.text || '').join(''),
@@ -102,7 +104,12 @@ async function api(request, url, env) {
   }
   if (request.method === 'GET' && url.pathname === '/api/weather') return json(await weather(request));
   if (request.method === 'POST' && url.pathname === '/api/reset') {
-    if (env.MEMORY) await env.MEMORY.delete(historyKey(env, who));
+    await archiveAndClear(env, historyKey(env, who));
+    return json({ ok: true });
+  }
+  if (request.method === 'GET' && url.pathname === '/api/notes') return json({ notes: await loadNotes(env, historyKey(env, who)) });
+  if (request.method === 'POST' && url.pathname === '/api/notes/clear') {
+    await clearNotes(env, historyKey(env, who));
     return json({ ok: true });
   }
   if (request.method === 'POST' && url.pathname === '/api/chat') {
@@ -182,13 +189,25 @@ async function handle(msg, env, origin) {
   }
   const key = `history:${chatId}`;
   const input = msg.text.trim();
-  if (input === '/start') return send(env, chatId, 'سلام! من هرمس هستم. هر چه می‌خواهی بپرس. /reset حافظه را پاک می‌کند. /app لینک اپ چت را می‌دهد.');
+  if (input === '/start') {
+    return send(env, chatId, 'سلام! من هرمس هستم. هر چه می‌خواهی بپرس.\n' +
+      'همهٔ گفتگوها ذخیره می‌ماند. با «یادت باشه ...» چیزی را برای همیشه به خاطر می‌سپارم.\n' +
+      '/reset گفتگوی جدید (قبلی بایگانی می‌شود)\n/notes یادداشت‌های حافظه\n/forget پاک کردن یادداشت‌ها\n/app لینک اپ');
+  }
+  if (input === '/notes') {
+    const notes = await loadNotes(env, key);
+    return send(env, chatId, notes.length ? 'به خاطر دارم:\n' + notes.map((n, i) => `${i + 1}. ${n}`).join('\n') : 'هنوز یادداشتی ندارم. بنویس «یادت باشه ...».');
+  }
+  if (input === '/forget') {
+    await clearNotes(env, key);
+    return send(env, chatId, 'یادداشت‌های حافظه پاک شد. گفتگوها بایگانی‌شده می‌مانند.');
+  }
   if (input === '/app') {
     return send(env, chatId, `اپ چت هرمس (لینک خصوصی، برای کسی نفرست):\n${origin}/app#k=${await appKey(env)}\n\nدر سافاری باز کن و Share ← Add to Home Screen را بزن تا مثل اپ نصب شود.`);
   }
   if (input === '/reset') {
-    if (env.MEMORY) await env.MEMORY.delete(key);
-    return send(env, chatId, 'حافظه پاک شد.');
+    await archiveAndClear(env, key);
+    return send(env, chatId, 'گفتگوی جدید شروع شد. گفتگوی قبلی بایگانی شد و یادداشت‌ها سر جایشان هستند.');
   }
 
   await tg(env, 'sendChatAction', { chat_id: chatId, action: 'typing' });
@@ -201,15 +220,17 @@ async function handle(msg, env, origin) {
   await send(env, chatId, reply);
 }
 
-// One turn with memory: load history, ask the brain, save both messages.
+// One turn with permanent memory: recent messages + saved notes go to the brain; everything is kept.
 export async function converse(env, key, input, system = SYSTEM) {
-  const history = env.MEMORY ? (await env.MEMORY.get(key, 'json')) || [] : [];
-  const contents = [...history, { role: 'user', parts: [{ text: input }] }];
-  const reply = await ask(env, contents, system);
-  if (env.MEMORY) {
-    const next = [...contents, { role: 'model', parts: [{ text: reply }] }].slice(-HISTORY_MESSAGES);
-    await env.MEMORY.put(key, JSON.stringify(next));
-  }
+  const note = noteFrom(input);
+  if (note) await addNote(env, key, note);
+  const [log, notes, skills] = await Promise.all([loadLog(env, key), loadNotes(env, key), relevantSkills(env, input)]);
+  const fullSystem = (notes.length
+    ? `${system}\n\nLONG-TERM NOTES the user asked you to remember (always take them into account):\n- ${notes.join('\n- ')}`
+    : system) + skillsBlock(skills);
+  const contents = [...toContents(log), { role: 'user', parts: [{ text: input }] }];
+  const reply = await ask(env, contents, fullSystem);
+  await appendTurn(env, key, log, input, reply);
   return reply;
 }
 

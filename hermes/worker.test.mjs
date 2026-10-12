@@ -312,3 +312,106 @@ test('locked abilities are refused before the AI is called; the owner has no loc
   assert.equal(owner.status, 200);
   assert.deepEqual((await callApi(env, '/api/me')).body.locks, []);
 });
+
+// ── Permanent memory ──
+test('memory keeps every message; the AI sees only recent ones, without extra fields', async () => {
+  const env = baseEnv();
+  const old = Array.from({ length: 60 }, (_, i) => ({ role: i % 2 ? 'model' : 'user', parts: [{ text: `m${i}` }], t: i }));
+  env.MEMORY.store.set('history:42', JSON.stringify(old));
+  const calls = mockFetch();
+  await post(env, message('سلام'));
+  const stored = JSON.parse(env.MEMORY.store.get('history:42'));
+  assert.equal(stored.length, 62);
+  assert.equal(stored[0].parts[0].text, 'm0');
+  const sentContents = calls.find((c) => c.url.includes('generativelanguage')).body.contents;
+  assert.equal(sentContents.length, 41);
+  assert.ok(sentContents.every((c) => !('t' in c)));
+  assert.match(calls.find((c) => c.url.includes('generativelanguage')).body.systemInstruction.parts[0].text, /PLAYBOOKS/);
+});
+
+test('/reset archives the conversation instead of deleting it', async () => {
+  const env = baseEnv();
+  env.MEMORY.store.set('history:42', JSON.stringify([{ role: 'user', parts: [{ text: 'کهنه' }] }]));
+  const calls = mockFetch();
+  await post(env, message('/reset'));
+  assert.equal(env.MEMORY.store.has('history:42'), false);
+  const archived = [...env.MEMORY.store.keys()].filter((k) => k.startsWith('archive:history:42:'));
+  assert.equal(archived.length, 1);
+  assert.match(env.MEMORY.store.get(archived[0]), /کهنه/);
+  assert.match(sent(calls)[0], /بایگانی/);
+});
+
+test('"یادت باشه" saves a long-term note that reaches later prompts; /notes and /forget manage it', async () => {
+  const env = baseEnv();
+  let calls = mockFetch();
+  await post(env, message('یادت باشه: تور بعدی ۲۵ آبان به دماوند است'));
+  assert.deepEqual(JSON.parse(env.MEMORY.store.get('notes:history:42')), ['تور بعدی ۲۵ آبان به دماوند است']);
+  calls = mockFetch();
+  await post(env, message('تور بعدی کی است؟'));
+  const sys = calls.find((c) => c.url.includes('generativelanguage')).body.systemInstruction.parts[0].text;
+  assert.match(sys, /LONG-TERM NOTES[\s\S]*دماوند/);
+  calls = mockFetch();
+  await post(env, message('/notes'));
+  assert.match(sent(calls)[0], /دماوند/);
+  await post(env, message('/forget'));
+  assert.equal(env.MEMORY.store.has('notes:history:42'), false);
+});
+
+test('web notes endpoints and archived reset work for team members too', async () => {
+  const env = baseEnv();
+  mockFetch();
+  const token = (await loginAs(env, 'tester', 'pass-1234')).body.token;
+  await callApi(env, '/api/chat', { message: 'remember that I prefer short answers' }, token);
+  assert.deepEqual((await callApi(env, '/api/notes', undefined, token)).body.notes, ['I prefer short answers']);
+  await callApi(env, '/api/reset', {}, token);
+  assert.ok([...env.MEMORY.store.keys()].some((k) => k.startsWith('archive:history:user:tester:')));
+  assert.deepEqual((await callApi(env, '/api/notes', undefined, token)).body.notes, ['I prefer short answers']);
+  await callApi(env, '/api/notes/clear', {}, token);
+  assert.deepEqual((await callApi(env, '/api/notes', undefined, token)).body.notes, []);
+});
+
+// ── Mega Skills routing ──
+import { buildPostings, tokens, relevantSkills, shardOf } from './skill-router.mjs';
+
+function fakeAssets(skills, docs) {
+  const shards = buildPostings(skills);
+  const files = new Map([['skills/meta.json', JSON.stringify({ total: skills.length })]]);
+  shards.forEach((sh, n) => files.set(`skills/t/${n}.json`, JSON.stringify(sh)));
+  docs.forEach((d, id) => files.set(`skills/s/${id}.md`, `# ${skills[id].name}\n${d}`));
+  return { fetch: async (req) => {
+    const p = new URL(req.url).pathname.slice(1);
+    return files.has(p) ? new Response(files.get(p)) : new Response('', { status: 404 });
+  } };
+}
+
+const LIB = [
+  { name: 'instagram-caption-writer', triggers: ['instagram caption', 'کپشن اینستاگرام', 'نوشتن کپشن'] },
+  { name: 'desert-tour-planner', triggers: ['desert tour plan', 'برنامه تور کویر', 'سفر کویر'] },
+  { name: 'csv-cleaner', triggers: ['clean csv data', 'python csv'] },
+  { name: 'constructor-guide', triggers: ['javascript constructor pattern'] },
+];
+
+test('skill router: Persian aliases, no prototype collisions, stable shards', () => {
+  assert.ok(tokens('یک کپشن اینستاگرام بنویس').has('instagram'));
+  assert.ok(tokens('constructor toString').has('constructor'));
+  assert.equal(shardOf('instagram'), shardOf('instagram'));
+  assert.doesNotThrow(() => buildPostings([{ name: 'x', triggers: ['constructor __proto__ hasOwnProperty'] }]));
+});
+
+test('relevant skills are injected into the prompt; chit-chat gets none', async () => {
+  const env = { ...baseEnv(), ASSETS: fakeAssets(LIB, ['HOOK FIRST, then CTA.', 'Carry water.', 'Use pandas.', 'Use class.']) };
+  const picked = await relevantSkills(env, 'برای تور کویر سه روزه برنامه سفر بده');
+  assert.equal(picked[0].name, 'desert-tour-planner');
+  assert.deepEqual(await relevantSkills(env, 'سلام خوبی؟'), []);
+  const calls = mockFetch();
+  await post(env, message('یک کپشن اینستاگرام جذاب برای عکس جدیدم بنویس'));
+  const sys = calls.find((c) => c.url.includes('generativelanguage')).body.systemInstruction.parts[0].text;
+  assert.match(sys, /SPECIALIZED SKILLS[\s\S]*instagram-caption-writer[\s\S]*HOOK FIRST/);
+});
+
+test('skill routing failures never break chat', async () => {
+  const env = { ...baseEnv(), ASSETS: { fetch: async () => { throw new Error('boom'); } } };
+  const calls = mockFetch();
+  await post(env, message('یک کپشن اینستاگرام جذاب بنویس'));
+  assert.deepEqual(sent(calls), ['سلام پوریا']);
+});
