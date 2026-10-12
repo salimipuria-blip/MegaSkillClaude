@@ -779,6 +779,7 @@ test('trip page is public and has the booking form', async () => {
   const html = await res.text();
   assert.match(html, /\/api\/booking/);
   assert.match(html, /کنسلی و برگشت وجه نداره/);
+  assert.match(html, /ig\.me\/m\/viking\.offroad/);
 });
 
 test('booking goes to the team Telegram with approve/reject buttons; bad input is refused', async () => {
@@ -786,12 +787,14 @@ test('booking goes to the team Telegram with approve/reject buttons; bad input i
   const calls = bookingFetch();
   assert.equal((await book(env, { ...okBody, agree: false })).status, 400);
   assert.equal((await book(env, { ...okBody, phone: '12' })).status, 400);
+  const noCar = await book(env, { ...okBody, car: '' });
+  assert.equal(noCar.status, 200, 'car choice is optional');
   const res = await book(env, okBody);
   assert.equal(res.status, 200);
   const data = await res.json();
   assert.match(data.id, /^[a-z2-9]{6}$/);
   assert.equal(data.bot, 'Pouragent_bot');
-  const msg = calls.find((c) => c.url.endsWith('/sendMessage')).body;
+  const msg = calls.filter((c) => c.url.endsWith('/sendMessage')).at(-1).body;
   assert.equal(msg.chat_id, '-100777');
   assert.match(msg.text, /سارا[\s\S]*09123456789[\s\S]*2 نفر/);
   assert.equal(msg.reply_markup.inline_keyboard[0][0].callback_data, `bk:ok:${data.id}`);

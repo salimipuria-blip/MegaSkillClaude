@@ -26,11 +26,10 @@ export function validate(body) {
   const name = String(b.name || '').trim().slice(0, 60);
   const phone = toLatin(b.phone).replace(/[\s()-]/g, '');
   const count = Number(toLatin(b.count)) || 0;
-  const car = CARS.includes(b.car) ? b.car : '';
+  const car = CARS.includes(b.car) ? b.car : 'انتخاب نشده';
   if (name.length < 2) return { error: 'نام رو کامل بنویس.' };
   if (!/^\+?\d{10,14}$/.test(phone)) return { error: 'شمارهٔ تماس درست نیست.' };
   if (count < 1 || count > 20) return { error: 'تعداد نفرات باید بین ۱ تا ۲۰ باشه.' };
-  if (!car) return { error: 'نوع رفت‌وآمد رو انتخاب کن.' };
   if (b.agree !== true) return { error: 'برای ثبت رزرو، شرایط رو تأیید کن.' };
   return { booking: { name, phone, count, car, note: String(b.note || '').trim().slice(0, 400) } };
 }
@@ -158,7 +157,7 @@ export function tripPage() {
 <p class="sub">دو روز طبیعت، ماجراجویی و رفاقت در دل جنگل‌های هیرکانی</p><span class="date">📅 ${TRIP.dates}</span></div></header>
 <section><h2>توی این سفر</h2><ul class="list">
 <li><span class="e">🏄</span><div>پدل‌سواری در یکی از زیباترین دریاچه‌های گیلان<small>با تمام تجهیزات، مربی و تیم مجرب</small></div></li>
-<li><span class="e">🏕️</span><div>کمپ جنگلی فول‌برد</div></li><li><span class="e">🔥</span><div>شب‌نشینی دور آتیش و آتش‌بازی</div></li>
+<li><span class="e">🏕️</span><div>کمپ جنگلی فول‌برد</div></li><li><span class="e">🔥</span><div>آتیش‌بازی</div></li>
 <li><span class="e">🎯</span><div>بازی و برنامه‌های گروهی</div></li><li><span class="e">🎶</span><div>میز بارتندر بدون الکل</div></li>
 <li><span class="e">🍽️</span><div>پذیرایی کامل<small>ناهار با مخلفات · شام · صبحانهٔ سرد و گرم سلف‌سرویس</small></div></li></ul></section>
 <section><h2>هزینه</h2><div class="price">
@@ -170,7 +169,7 @@ export function tripPage() {
 <div class="row"><label for="name">نام<input id="name" autocomplete="name" placeholder="مثلاً سارا" required></label>
 <label for="phone">شمارهٔ تماس<input id="phone" inputmode="tel" autocomplete="tel" dir="ltr" placeholder="0912…" required></label></div>
 <div class="row"><label for="count">تعداد نفرات<input id="count" type="number" min="1" max="20" value="1" inputmode="numeric"></label>
-<label for="car">رفت‌وآمد<select id="car">${CARS.map((c) => `<option>${c}</option>`).join('')}</select></label></div>
+<label for="car">رفت‌وآمد (اختیاری)<select id="car"><option value="">انتخاب نکردم</option>${CARS.map((c) => `<option>${c}</option>`).join('')}</select></label></div>
 <label for="note">توضیح (اختیاری)<textarea id="note" rows="2" placeholder="سؤال یا درخواست خاص"></textarea></label>
 <input class="hp" id="website" tabindex="-1" autocomplete="off" aria-hidden="true">
 <label class="check" for="agree"><input id="agree" type="checkbox"> قبول دارم که پرداخت بعد از تأیید انجام می‌شه و بعد از پرداخت کنسلی و برگشت وجه نداره.</label>
@@ -178,7 +177,8 @@ export function tripPage() {
 <div class="box" id="done" hidden><p class="msg ok">✅ درخواستت ثبت شد. کد پیگیری: <b id="code"></b></p>
 <p class="muted">تیم وایکینگ بررسیش می‌کنه و بعد از تأیید، اطلاعات پرداخت رو می‌بینی.</p>
 <a class="btn tg" id="tg" target="_blank" rel="noopener" hidden>📲 خبر تأیید رو در تلگرام بگیر</a>
-<a class="btn ghost" id="st">مشاهدهٔ وضعیت رزرو</a></div></section>
+<a class="btn ghost" id="st">مشاهدهٔ وضعیت رزرو</a></div>
+<a class="btn ghost" href="https://ig.me/m/viking.offroad" target="_blank" rel="noopener" style="margin-top:12px">سؤال داری؟ دایرکت اینستاگرام وایکینگ</a></section>
 <footer>🪪 با مجوز رسمی · @viking.offroad</footer>
 <script>(()=>{const $=(i)=>document.getElementById(i);$('f').addEventListener('submit',async(e)=>{e.preventDefault();$('err').hidden=true;$('go').disabled=true;
 try{const r=await fetch('/api/booking',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({name:$('name').value,phone:$('phone').value,count:$('count').value,car:$('car').value,note:$('note').value,website:$('website').value,agree:$('agree').checked})});
