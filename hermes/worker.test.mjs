@@ -1,7 +1,7 @@
 // node --test hermes/  (Node 20+, no dependencies)
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import worker, { webhookSecret, chunks, MODELS, CF_MODELS } from './worker.mjs';
+import worker, { webhookSecret, appKey, chunks, MODELS, CF_MODELS } from './worker.mjs';
 
 const OWNER = '123456789';
 const baseEnv = () => ({ TELEGRAM_BOT_TOKEN: '1:abc', GEMINI_API_KEY: 'g', ALLOWED_USER_ID: OWNER, MEMORY: kv() });
@@ -173,6 +173,50 @@ test('setup accepts the AI binding instead of a Gemini key', async () => {
   const res = await worker.fetch(new Request('https://hermes.example.workers.dev/setup'), env, {});
   assert.equal(res.status, 200);
   assert.match(await res.text(), /Workers AI/);
+});
+
+async function callApi(env, path, body, key) {
+  const req = new Request(`https://hermes.example.workers.dev${path}`, {
+    method: body === undefined ? 'GET' : 'POST',
+    headers: { authorization: `Bearer ${key ?? await appKey(env)}`, 'content-type': 'application/json' },
+    body: body === undefined ? undefined : JSON.stringify(body),
+  });
+  const res = await worker.fetch(req, env, {});
+  return { status: res.status, body: await res.json() };
+}
+
+test('web app page and assets are served', async () => {
+  for (const [path, type] of [['/app', 'text/html'], ['/manifest.webmanifest', 'application/manifest+json'], ['/icon.svg', 'image/svg+xml']]) {
+    const res = await worker.fetch(new Request(`https://x.workers.dev${path}`), baseEnv(), {});
+    assert.equal(res.status, 200);
+    assert.ok(res.headers.get('content-type').startsWith(type));
+  }
+});
+
+test('api rejects a wrong key', async () => {
+  mockFetch();
+  const res = await callApi(baseEnv(), '/api/chat', { message: 'hi' }, 'nope');
+  assert.equal(res.status, 401);
+});
+
+test('web chat replies and shares memory with the owner Telegram chat', async () => {
+  const env = baseEnv();
+  mockFetch();
+  const res = await callApi(env, '/api/chat', { message: 'سلام' });
+  assert.deepEqual(res, { status: 200, body: { reply: 'سلام پوریا' } });
+  const stored = JSON.parse(env.MEMORY.store.get(`history:${OWNER}`));
+  assert.equal(stored.length, 2);
+  const hist = await callApi(env, '/api/history');
+  assert.deepEqual(hist.body.messages.map((m) => m.role), ['user', 'assistant']);
+  await callApi(env, '/api/reset', {});
+  assert.equal(env.MEMORY.store.has(`history:${OWNER}`), false);
+});
+
+test('/app in Telegram sends the private link with the derived key', async () => {
+  const env = baseEnv();
+  const calls = mockFetch();
+  await post(env, message('/app'));
+  assert.ok(sent(calls)[0].includes(`https://hermes.example.workers.dev/app#k=${await appKey(env)}`));
 });
 
 test('long replies are split under the Telegram limit', () => {

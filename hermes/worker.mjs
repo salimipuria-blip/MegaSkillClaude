@@ -5,6 +5,8 @@
 // Optional KV binding MEMORY (see wrangler.toml) keeps chat history; without it the bot still works.
 // After deploy, open https://<worker>.workers.dev/setup once to register the Telegram webhook.
 
+import { APP_HTML, MANIFEST, ICON } from './app.mjs';
+
 export const MODELS = ['gemini-3.8-flash', 'gemini-3.7-flash', 'gemini-3.5-flash-lite', 'gemini-2.5-flash'];
 export const CF_MODELS = ['@cf/google/gemma-3-12b-it', '@cf/meta/llama-3.3-70b-instruct-fp8-fast'];
 const GEMINI_API = 'https://generativelanguage.googleapis.com/v1beta';
@@ -18,6 +20,10 @@ export default {
     const url = new URL(request.url);
     if (request.method === 'GET' && url.pathname === '/setup') return setup(url, env);
     if (request.method === 'GET' && url.pathname === '/') return home(url, env);
+    if (request.method === 'GET' && url.pathname === '/app') return page(APP_HTML, 'text/html');
+    if (request.method === 'GET' && url.pathname === '/manifest.webmanifest') return page(MANIFEST, 'application/manifest+json');
+    if (request.method === 'GET' && url.pathname === '/icon.svg') return page(ICON, 'image/svg+xml');
+    if (url.pathname.startsWith('/api/')) return api(request, url, env);
     if (request.method !== 'POST' || url.pathname !== '/telegram') return new Response('Hermes Lite is running.');
     if (!env.TELEGRAM_BOT_TOKEN ||
         request.headers.get('X-Telegram-Bot-Api-Secret-Token') !== await webhookSecret(env)) {
@@ -26,11 +32,56 @@ export default {
     const update = await request.json().catch(() => null);
     const msg = update && update.message;
     if (msg && typeof msg.text === 'string') {
-      ctx.waitUntil(handle(msg, env).catch((err) => console.error('[Hermes]', err.message)));
+      ctx.waitUntil(handle(msg, env, url.origin).catch((err) => console.error('[Hermes]', err.message)));
     }
     return new Response('ok');
   },
 };
+
+// Private key for the web app, derived from the bot token so no extra secret is needed.
+export async function appKey(env) {
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`app:${env.TELEGRAM_BOT_TOKEN}`));
+  return [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, '0')).join('').slice(0, 40);
+}
+
+// The web app shares memory with the owner's private Telegram chat (chat id == user id).
+const ownerKey = (env) => `history:${String(env.ALLOWED_USER_ID).trim()}`;
+
+async function api(request, url, env) {
+  const json = (body, status = 200) => new Response(JSON.stringify(body), {
+    status, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' },
+  });
+  if (!env.TELEGRAM_BOT_TOKEN || !env.ALLOWED_USER_ID ||
+      request.headers.get('authorization') !== `Bearer ${await appKey(env)}`) {
+    return json({ error: 'unauthorized' }, 401);
+  }
+  if (request.method === 'GET' && url.pathname === '/api/history') {
+    const history = env.MEMORY ? (await env.MEMORY.get(ownerKey(env), 'json')) || [] : [];
+    return json({ messages: history.map((m) => ({
+      role: m.role === 'model' ? 'assistant' : 'user',
+      text: m.parts.map((p) => p.text || '').join(''),
+    })) });
+  }
+  if (request.method === 'POST' && url.pathname === '/api/reset') {
+    if (env.MEMORY) await env.MEMORY.delete(ownerKey(env));
+    return json({ ok: true });
+  }
+  if (request.method === 'POST' && url.pathname === '/api/chat') {
+    const body = await request.json().catch(() => ({}));
+    const message = typeof body.message === 'string' ? body.message.trim().slice(0, 4000) : '';
+    if (!message) return json({ error: 'پیام خالی است.' }, 400);
+    try {
+      return json({ reply: await converse(env, ownerKey(env), message) });
+    } catch (err) {
+      return json({ error: err.message }, 502);
+    }
+  }
+  return json({ error: 'not found' }, 404);
+}
+
+function page(body, type) {
+  return new Response(body, { headers: { 'content-type': `${type}; charset=utf-8`, 'cache-control': 'no-cache' } });
+}
 
 export async function webhookSecret(env) {
   const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`hermes:${env.TELEGRAM_BOT_TOKEN}`));
@@ -65,7 +116,7 @@ async function setup(url, env) {
   return text(`✓ Webhook set for @${me.result.username}\n✓ Memory: ${memory}\n✓ Brain: ${brain}\nNow message the bot in Telegram.`);
 }
 
-async function handle(msg, env) {
+async function handle(msg, env, origin) {
   const chatId = msg.chat.id;
   const userId = msg.from && msg.from.id;
   if (String(userId) !== String(env.ALLOWED_USER_ID).trim()) {
@@ -74,26 +125,35 @@ async function handle(msg, env) {
   }
   const key = `history:${chatId}`;
   const input = msg.text.trim();
-  if (input === '/start') return send(env, chatId, 'سلام! من هرمس هستم. هر چه می‌خواهی بپرس. /reset حافظه را پاک می‌کند.');
+  if (input === '/start') return send(env, chatId, 'سلام! من هرمس هستم. هر چه می‌خواهی بپرس. /reset حافظه را پاک می‌کند. /app لینک اپ چت را می‌دهد.');
+  if (input === '/app') {
+    return send(env, chatId, `اپ چت هرمس (لینک خصوصی، برای کسی نفرست):\n${origin}/app#k=${await appKey(env)}\n\nدر سافاری باز کن و Share ← Add to Home Screen را بزن تا مثل اپ نصب شود.`);
+  }
   if (input === '/reset') {
     if (env.MEMORY) await env.MEMORY.delete(key);
     return send(env, chatId, 'حافظه پاک شد.');
   }
 
   await tg(env, 'sendChatAction', { chat_id: chatId, action: 'typing' });
-  const history = env.MEMORY ? (await env.MEMORY.get(key, 'json')) || [] : [];
-  const contents = [...history, { role: 'user', parts: [{ text: input }] }];
   let reply;
   try {
-    reply = await ask(env, contents);
+    reply = await converse(env, key, input);
   } catch (err) {
     return send(env, chatId, `خطا: ${err.message}`);
   }
+  await send(env, chatId, reply);
+}
+
+// One turn with memory: load history, ask the brain, save both messages.
+export async function converse(env, key, input) {
+  const history = env.MEMORY ? (await env.MEMORY.get(key, 'json')) || [] : [];
+  const contents = [...history, { role: 'user', parts: [{ text: input }] }];
+  const reply = await ask(env, contents);
   if (env.MEMORY) {
     const next = [...contents, { role: 'model', parts: [{ text: reply }] }].slice(-HISTORY_MESSAGES);
     await env.MEMORY.put(key, JSON.stringify(next));
   }
-  await send(env, chatId, reply);
+  return reply;
 }
 
 export async function ask(env, contents) {
