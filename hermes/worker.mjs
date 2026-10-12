@@ -6,14 +6,17 @@
 // After deploy, open https://<worker>.workers.dev/setup once to register the Telegram webhook.
 
 import { APP_HTML, MANIFEST, ICON } from './app.mjs';
+import { login, sessionUser, changePassword } from './auth.mjs';
+import { USERS } from './users.mjs';
 
 export const MODELS = ['gemini-3.8-flash', 'gemini-3.7-flash', 'gemini-3.5-flash-lite', 'gemini-2.5-flash'];
 export const CF_MODELS = ['@cf/google/gemma-3-12b-it', '@cf/meta/llama-3.3-70b-instruct-fp8-fast'];
 const GEMINI_API = 'https://generativelanguage.googleapis.com/v1beta';
 const HISTORY_MESSAGES = 20;
 const TG_LIMIT = 4000;
-const SYSTEM = "You are Hermes, Puria's personal assistant (Viking Offroad brand). " +
-  "Reply in the user's language (usually Persian), short, direct and accurate. Say so when you are not sure.";
+const STYLE = "Reply in the user's language (usually Persian), short, direct and accurate. Say so when you are not sure.";
+const SYSTEM = "You are Hermes, Puria's personal assistant (Viking Offroad brand). " + STYLE;
+const teamSystem = (who) => `You are Hermes, the AI assistant of the Viking Offroad team. You are talking with ${who.name}. ` + STYLE;
 
 export default {
   async fetch(request, env, ctx) {
@@ -44,19 +47,46 @@ export async function appKey(env) {
   return [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, '0')).join('').slice(0, 40);
 }
 
-// The web app shares memory with the owner's private Telegram chat (chat id == user id).
+// The owner's web app shares memory with their private Telegram chat (chat id == user id).
+// Team members each get their own private memory.
 const ownerKey = (env) => `history:${String(env.ALLOWED_USER_ID).trim()}`;
+const historyKey = (env, who) => (who.role === 'owner' ? ownerKey(env) : `history:user:${who.username}`);
+
+// Who is calling: the owner (private /app key from Telegram) or a team member (login session).
+async function caller(request, env) {
+  if (!env.TELEGRAM_BOT_TOKEN || !env.ALLOWED_USER_ID) return null;
+  const auth = request.headers.get('authorization') || '';
+  if (!auth.startsWith('Bearer ')) return null;
+  const token = auth.slice(7);
+  if (token === await appKey(env)) return { username: 'owner', name: 'Owner', role: 'owner' };
+  return sessionUser(env, token);
+}
 
 async function api(request, url, env) {
   const json = (body, status = 200) => new Response(JSON.stringify(body), {
     status, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' },
   });
-  if (!env.TELEGRAM_BOT_TOKEN || !env.ALLOWED_USER_ID ||
-      request.headers.get('authorization') !== `Bearer ${await appKey(env)}`) {
-    return json({ error: 'unauthorized' }, 401);
+  if (request.method === 'POST' && url.pathname === '/api/login') {
+    if (!env.TELEGRAM_BOT_TOKEN) return json({ error: 'not configured' }, 503);
+    const body = await request.json().catch(() => ({}));
+    const res = await login(env, body.username, body.password);
+    return res.error ? json({ error: res.error }, res.status) : json(res);
+  }
+  const who = await caller(request, env);
+  if (!who) return json({ error: 'unauthorized' }, 401);
+  if (request.method === 'GET' && url.pathname === '/api/me') return json(who);
+  if (request.method === 'GET' && url.pathname === '/api/team') {
+    if (who.role !== 'owner' && who.role !== 'admin') return json({ error: 'forbidden' }, 403);
+    return json({ team: Object.entries(USERS).map(([username, u]) => ({ username, name: u.name, role: u.role })) });
+  }
+  if (request.method === 'POST' && url.pathname === '/api/password') {
+    if (who.role === 'owner') return json({ error: 'مالک با لینک تلگرام وارد می‌شود و رمز ندارد.' }, 400);
+    const body = await request.json().catch(() => ({}));
+    const res = await changePassword(env, who.username, body.old, body.new);
+    return res.error ? json({ error: res.error }, res.status) : json(res);
   }
   if (request.method === 'GET' && url.pathname === '/api/history') {
-    const history = env.MEMORY ? (await env.MEMORY.get(ownerKey(env), 'json')) || [] : [];
+    const history = env.MEMORY ? (await env.MEMORY.get(historyKey(env, who), 'json')) || [] : [];
     return json({ messages: history.map((m) => ({
       role: m.role === 'model' ? 'assistant' : 'user',
       text: m.parts.map((p) => p.text || '').join(''),
@@ -64,7 +94,7 @@ async function api(request, url, env) {
   }
   if (request.method === 'GET' && url.pathname === '/api/weather') return json(await weather(request));
   if (request.method === 'POST' && url.pathname === '/api/reset') {
-    if (env.MEMORY) await env.MEMORY.delete(ownerKey(env));
+    if (env.MEMORY) await env.MEMORY.delete(historyKey(env, who));
     return json({ ok: true });
   }
   if (request.method === 'POST' && url.pathname === '/api/chat') {
@@ -72,7 +102,8 @@ async function api(request, url, env) {
     const message = typeof body.message === 'string' ? body.message.trim().slice(0, 4000) : '';
     if (!message) return json({ error: 'پیام خالی است.' }, 400);
     try {
-      return json({ reply: await converse(env, ownerKey(env), message) });
+      const system = who.role === 'owner' ? SYSTEM : teamSystem(who);
+      return json({ reply: await converse(env, historyKey(env, who), message, system) });
     } catch (err) {
       return json({ error: err.message }, 502);
     }
@@ -161,10 +192,10 @@ async function handle(msg, env, origin) {
 }
 
 // One turn with memory: load history, ask the brain, save both messages.
-export async function converse(env, key, input) {
+export async function converse(env, key, input, system = SYSTEM) {
   const history = env.MEMORY ? (await env.MEMORY.get(key, 'json')) || [] : [];
   const contents = [...history, { role: 'user', parts: [{ text: input }] }];
-  const reply = await ask(env, contents);
+  const reply = await ask(env, contents, system);
   if (env.MEMORY) {
     const next = [...contents, { role: 'model', parts: [{ text: reply }] }].slice(-HISTORY_MESSAGES);
     await env.MEMORY.put(key, JSON.stringify(next));
@@ -172,22 +203,22 @@ export async function converse(env, key, input) {
   return reply;
 }
 
-export async function ask(env, contents) {
+export async function ask(env, contents, system = SYSTEM) {
   if (env.GEMINI_API_KEY) {
     try {
-      return await askGemini(env, contents);
+      return await askGemini(env, contents, system);
     } catch (err) {
       if (!env.AI) throw err;
       console.error('[Hermes] Gemini failed, using Workers AI:', err.message);
     }
   }
-  if (env.AI) return askWorkersAI(env, contents);
+  if (env.AI) return askWorkersAI(env, contents, system);
   throw new Error('نه کلید جمینی تنظیم شده و نه Workers AI.');
 }
 
-export async function askWorkersAI(env, contents) {
+export async function askWorkersAI(env, contents, system = SYSTEM) {
   const messages = [
-    { role: 'system', content: SYSTEM },
+    { role: 'system', content: system },
     ...contents.map((c) => ({
       role: c.role === 'model' ? 'assistant' : 'user',
       content: c.parts.map((p) => p.text || '').join(''),
@@ -207,14 +238,14 @@ export async function askWorkersAI(env, contents) {
   throw new Error(`Workers AI جواب نداد${lastError ? ` (${lastError.message})` : ''}.`);
 }
 
-export async function askGemini(env, contents) {
+export async function askGemini(env, contents, system = SYSTEM) {
   const cached = env.MEMORY ? await env.MEMORY.get('model') : null;
   const order = cached ? [cached, ...MODELS.filter((m) => m !== cached)] : MODELS;
   for (const model of order) {
     const res = await fetch(`${GEMINI_API}/models/${model}:generateContent`, {
       method: 'POST',
       headers: { 'content-type': 'application/json', 'x-goog-api-key': env.GEMINI_API_KEY },
-      body: JSON.stringify({ systemInstruction: { parts: [{ text: SYSTEM }] }, contents }),
+      body: JSON.stringify({ systemInstruction: { parts: [{ text: system }] }, contents }),
     });
     if (res.status === 404) continue;
     if (res.status === 429) throw new Error('سهمیهٔ رایگان جمینی فعلاً پر است؛ چند دقیقه بعد دوباره بپرس.');

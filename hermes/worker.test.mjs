@@ -2,6 +2,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import worker, { webhookSecret, appKey, chunks, MODELS, CF_MODELS } from './worker.mjs';
+import { hashPassword } from './auth.mjs';
+import { USERS } from './users.mjs';
 
 const OWNER = '123456789';
 const baseEnv = () => ({ TELEGRAM_BOT_TOKEN: '1:abc', GEMINI_API_KEY: 'g', ALLOWED_USER_ID: OWNER, MEMORY: kv() });
@@ -229,4 +231,61 @@ test('long replies are split under the Telegram limit', () => {
   const parts = chunks('x'.repeat(9000));
   assert.equal(parts.length, 3);
   assert.ok(parts.every((p) => p.length <= 4000));
+});
+
+// ── Team accounts ──
+USERS.tester = { name: 'Tester', role: 'member', salt: 'salt-t', hash: await hashPassword('pass-1234', 'salt-t') };
+USERS.boss = { name: 'Boss', role: 'admin', salt: 'salt-b', hash: await hashPassword('boss-5678', 'salt-b') };
+
+async function loginAs(env, username, password) {
+  const res = await worker.fetch(new Request('https://x.workers.dev/api/login', {
+    method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ username, password }),
+  }), env, {});
+  return { status: res.status, body: await res.json() };
+}
+
+test('team login: wrong password is refused, then too many tries are throttled', async () => {
+  const env = baseEnv();
+  assert.equal((await loginAs(env, 'tester', 'nope')).status, 401);
+  assert.equal((await loginAs(env, 'ghost', 'nope')).status, 401);
+  for (let i = 0; i < 8; i++) await loginAs(env, 'tester', 'nope');
+  assert.equal((await loginAs(env, 'tester', 'pass-1234')).status, 429);
+});
+
+test('team member chats with private memory and a personal system prompt', async () => {
+  const env = baseEnv();
+  const calls = mockFetch();
+  const { status, body } = await loginAs(env, 'Tester', 'pass-1234');
+  assert.equal(status, 200);
+  assert.deepEqual(body.user, { username: 'tester', name: 'Tester', role: 'member' });
+  assert.deepEqual((await callApi(env, '/api/me', undefined, body.token)).body, body.user);
+  const res = await callApi(env, '/api/chat', { message: 'سلام' }, body.token);
+  assert.equal(res.body.reply, 'سلام پوریا');
+  assert.ok(env.MEMORY.store.has('history:user:tester'));
+  assert.equal(env.MEMORY.store.has(`history:${OWNER}`), false);
+  const gemini = calls.find((c) => c.url.includes('generativelanguage'));
+  assert.match(gemini.body.systemInstruction.parts[0].text, /talking with Tester/);
+  assert.equal((await callApi(env, '/api/team', undefined, body.token)).status, 403);
+});
+
+test('tampered or foreign session tokens are rejected', async () => {
+  const env = baseEnv();
+  const { body } = await loginAs(env, 'tester', 'pass-1234');
+  const [u, exp, sig] = body.token.split('.');
+  assert.equal((await callApi(env, '/api/me', undefined, `boss.${exp}.${sig}`)).status, 401);
+  assert.equal((await callApi(env, '/api/me', undefined, `${u}.${Number(exp) + 1}.${sig}`)).status, 401);
+  assert.equal((await callApi({ ...env, TELEGRAM_BOT_TOKEN: '2:other' }, '/api/me', undefined, body.token)).status, 401);
+});
+
+test('admin sees the team; members can change their password', async () => {
+  const env = baseEnv();
+  const admin = (await loginAs(env, 'boss', 'boss-5678')).body.token;
+  const team = await callApi(env, '/api/team', undefined, admin);
+  assert.ok(team.body.team.some((m) => m.username === 'tester' && !('hash' in m)));
+  const token = (await loginAs(env, 'tester', 'pass-1234')).body.token;
+  assert.equal((await callApi(env, '/api/password', { old: 'wrong', new: 'new-pass-99' }, token)).status, 401);
+  assert.equal((await callApi(env, '/api/password', { old: 'pass-1234', new: 'short' }, token)).status, 400);
+  assert.equal((await callApi(env, '/api/password', { old: 'pass-1234', new: 'new-pass-99' }, token)).status, 200);
+  assert.equal((await loginAs(env, 'tester', 'pass-1234')).status, 401);
+  assert.equal((await loginAs(env, 'tester', 'new-pass-99')).status, 200);
 });

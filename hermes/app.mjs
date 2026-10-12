@@ -105,12 +105,12 @@ export const APP_HTML = String.raw`<!doctype html>
   .cone { position: absolute; top: 14px; left: 8px; width: min(520px, 94vw); height: 240px; filter: blur(10px); transition: all .5s;
     background: radial-gradient(ellipse 48% 70% at 46% 0%, rgba(0,229,255,.16), rgba(0,229,255,.04) 46%, transparent 72%); }
   .overview.open .cone { background: radial-gradient(ellipse 48% 70% at 46% 0%, rgba(0,229,255,.33), rgba(0,229,255,.04) 46%, transparent 72%); }
-  .lamp { position: relative; height: 40px; cursor: pointer; pointer-events: auto; outline: none; }
-  .fil { position: absolute; top: 14px; left: 8px; width: min(320px, calc(100vw - 150px)); height: 2px; border-radius: 2px; background: #a5f3fc;
+  .lamp { position: relative; height: 40px; width: min(330px, calc(100vw - 150px)); cursor: pointer; pointer-events: auto; outline: none; }
+  .fil { position: absolute; top: 14px; left: 8px; width: min(320px, calc(100vw - 160px)); height: 2px; border-radius: 2px; background: #a5f3fc;
     box-shadow: 0 0 10px var(--cyan), 0 0 26px var(--cyan); transition: all .5s; }
-  .overview.open .fil { width: min(480px, calc(100vw - 150px)); box-shadow: 0 0 10px var(--cyan), 0 0 26px var(--cyan), 0 0 54px var(--cyan); }
+  .overview.open .fil { width: min(480px, calc(100vw - 160px)); box-shadow: 0 0 10px var(--cyan), 0 0 26px var(--cyan), 0 0 54px var(--cyan); }
   .knob { position: absolute; top: 11px; left: 6px; width: 8px; height: 8px; border-radius: 50%; background: #e0fbff; box-shadow: 0 0 10px var(--cyan), 0 0 18px var(--cyan); transition: left .5s; }
-  .overview.open .knob { left: min(480px, calc(100vw - 150px)); }
+  .overview.open .knob { left: min(480px, calc(100vw - 160px)); }
   .lamp span { position: absolute; top: 20px; left: 10px; font: 9px/1 var(--mono); letter-spacing: .34em; color: rgba(165,243,252,.55); transition: color .4s; }
   .overview.open .lamp span { color: rgba(165,243,252,.9); }
   .clockbox { position: relative; padding: 6px 0 0 14px; display: flex; align-items: flex-end; gap: 26px; width: fit-content; pointer-events: auto; }
@@ -142,14 +142,15 @@ export const APP_HTML = String.raw`<!doctype html>
 
   /* Dock: latest reply + composer */
   #dock { position: fixed; left: 50%; bottom: 0; z-index: 35; width: min(720px, 100vw); transform: translateX(-50%); padding: 0 12px calc(var(--safe-b) + 12px); }
-  #reply {
+  #reply, #login {
     display: none; position: fixed; left: 50%; z-index: 34; width: min(720px, calc(100vw - 24px)); transform: translateX(-50%);
     max-height: 34vh; overflow: hidden; flex-direction: column; border-radius: 16px;
     background: rgba(4,9,20,.82); -webkit-backdrop-filter: blur(22px); backdrop-filter: blur(22px);
     border: 1px solid rgba(245,166,35,.22); box-shadow: 0 0 40px rgba(245,166,35,.06), 0 8px 32px rgba(0,0,0,.55);
     -webkit-user-select: text; user-select: text; animation: rise .45s cubic-bezier(.2,.9,.2,1);
   }
-  #reply.show { display: flex; }
+  #reply.show, .locked #login { display: flex; }
+  #login { width: min(400px, calc(100vw - 24px)); max-height: none; border-color: rgba(0,229,255,.22); }
   #reply.err { border-color: rgba(255,107,107,.35); }
   @keyframes rise { from { opacity: 0; transform: translate(-50%, 12px); } }
   .rhead { display: flex; align-items: center; gap: 10px; padding: 11px 14px; border-bottom: 1px solid rgba(245,166,35,.12);
@@ -221,10 +222,29 @@ export const APP_HTML = String.raw`<!doctype html>
   .m.bot::before { content: ""; position: absolute; right: 0; top: 6px; bottom: 6px; width: 1.5px; background: linear-gradient(var(--gold), rgba(245,166,35,.05)); box-shadow: 0 0 10px rgba(245,166,35,.4); }
 
   .locked #dock, .locked #reply, .locked .pill, .locked .tiles { display: none !important; }
-  #lockmsg { display: none; position: fixed; left: 50%; transform: translateX(-50%); z-index: 36; width: min(420px, calc(100vw - 32px)); text-align: center; font: 14px/1.9 var(--fa); color: var(--minor); direction: rtl; }
-  .locked #lockmsg { display: block; }
-  #lockmsg b { display: block; color: var(--text); font-size: 18px; margin-bottom: 4px; }
-  #lockmsg code { font-family: var(--mono); color: var(--gold-hi); background: rgba(245,166,35,.1); padding: 2px 8px; border-radius: 6px; }
+  .lform { display: flex; flex-direction: column; gap: 10px; padding: 16px; direction: rtl; }
+  .lform input { width: 100%; font: 16px/1.4 var(--mono); color: var(--text); background: rgba(2,6,12,.7); border: 1px solid rgba(0,229,255,.18);
+    border-radius: 12px; padding: 12px 14px; outline: none; text-align: left; -webkit-user-select: text; user-select: text; transition: border-color .2s, box-shadow .2s; }
+  .lform input:focus { border-color: rgba(0,229,255,.5); box-shadow: 0 0 0 3px rgba(0,229,255,.08); }
+  .lform input::placeholder { font-family: var(--fa); color: rgba(147,168,186,.55); text-align: right; }
+  .lbtn { margin-top: 4px; border: 0; border-radius: 12px; padding: 12px; cursor: pointer; font: 600 15px/1 var(--fa); color: #1a0f00;
+    background: radial-gradient(circle at 50% 30%, #fff3d6, var(--gold-hi) 40%, var(--gold) 90%); box-shadow: 0 0 18px rgba(245,166,35,.4); }
+  .lbtn:disabled { opacity: .5; }
+  .lerr { min-height: 1.2em; font: 13px/1.5 var(--fa); color: #ff8a8a; }
+  .lnote { font: 12px/1.7 var(--fa); color: var(--dorm); }
+  .lnote code { font-family: var(--mono); color: var(--gold-hi); background: rgba(245,166,35,.1); padding: 1px 6px; border-radius: 5px; }
+  .who { padding: 10px 0 0 14px; font: 10px/1 var(--mono); letter-spacing: .2em; color: rgba(165,243,252,.6); pointer-events: none; position: relative; }
+  .who b { font: 600 12px/1 var(--fa); letter-spacing: 0; color: var(--text); margin-right: 6px; }
+  .tile.hide { display: none; }
+  @media (max-height: 540px) {
+    #login { width: min(640px, calc(100vw - 24px)); }
+    #login .rhead { display: none; }
+    .lform { display: grid; grid-template-columns: 1fr 1fr auto; gap: 8px; padding: 10px; }
+    .lform input { padding: 10px 12px; }
+    .lbtn { margin: 0; padding: 0 22px; }
+    .lerr, .lnote { grid-column: 1 / -1; min-height: 0; }
+    .lerr:empty { display: none; }
+  }
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: .001s !important; animation-iteration-count: 1 !important; transition: none !important; }
@@ -269,16 +289,18 @@ export const APP_HTML = String.raw`<!doctype html>
     <div><div class="time" id="time">--:--</div><div class="date" id="date"></div></div>
     <div><div class="temp" id="temp">-</div><div class="city" id="city">&nbsp;</div></div>
   </div>
+  <div class="who" id="who"></div>
   <div class="tiles">
-    <a class="tile" href="https://t.me/Pouragent_bot" target="_blank" rel="noopener noreferrer">
+    <a class="tile hide" id="tTg" href="https://t.me/Pouragent_bot" target="_blank" rel="noopener noreferrer">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M21 4 3 11l6 2 2 6 3-4 5 4z"/><path d="m9 13 8-6"/></svg>هرمس در تلگرام</a>
     <button class="tile" id="tNew"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>گفتگوی جدید (پاک کردن حافظه)</button>
     <button class="tile" id="tLog"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>تاریخچهٔ گفتگو</button>
-    <button class="tile" id="tForget"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M7 11V8a5 5 0 0 1 10 0v3M5 11h14v10H5z"/></svg>خروج از این دستگاه</button>
+    <button class="tile hide" id="tPass"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="8" cy="15" r="4"/><path d="m11 12 9-9M17 6l3 3"/></svg>تغییر رمز</button>
+    <button class="tile" id="tForget"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M7 11V8a5 5 0 0 1 10 0v3M5 11h14v10H5z"/></svg>خروج از حساب</button>
   </div>
 </div>
 
-<button class="pill" id="pill">Session log ↗</button>
+<button class="pill" id="pill">Log ↗</button>
 
 <div id="status" aria-live="polite">
   <svg viewBox="0 0 420 110" fill="none">
@@ -293,7 +315,16 @@ export const APP_HTML = String.raw`<!doctype html>
   </svg>
 </div>
 
-<div id="lockmsg"><b>دسترسی قفل است</b>در تلگرام به بات هرمس <code>/app</code> بفرست و لینک خصوصی را باز کن.</div>
+<section id="login" aria-label="ورود">
+  <div class="rhead"><span class="rdot" style="background:#00e5ff;box-shadow:0 0 10px #00e5ff"></span><span class="rname" style="color:#a5f3fc">ACCESS</span><span class="rtime">HERMES · VIKING OFFROAD</span></div>
+  <form class="lform" id="lform" autocomplete="on">
+    <input id="lu" name="username" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="نام کاربری" dir="ltr" required>
+    <input id="lp" name="password" type="password" autocomplete="current-password" placeholder="رمز عبور" dir="ltr" required>
+    <button class="lbtn" id="lgo" type="submit">ورود</button>
+    <div class="lerr" id="lerr" role="alert"></div>
+    <div class="lnote">مالک سیستم: در تلگرام به بات <code>/app</code> بفرست.</div>
+  </form>
+</section>
 
 <section id="reply" aria-live="polite">
   <div class="rhead"><span class="rdot"></span><span class="rname" id="rname">HERMES</span><span class="rtime" id="rtime"></span>
@@ -328,8 +359,8 @@ export const APP_HTML = String.raw`<!doctype html>
                   del: (k) => { try { localStorage.removeItem(k); } catch {} } };
   const hash = new URLSearchParams(location.hash.slice(1));
   if (hash.get('k')) { store.set('hermes-key', hash.get('k')); history.replaceState(null, '', location.pathname); }
-  const key = store.get('hermes-key');
-  let busy = false, messages = [];
+  const key = store.get('hermes-key') || store.get('hermes-session');
+  let busy = false, messages = [], me = null;
 
   // ── Hermes' abilities: id, label, kind, x, y, live, label side, radius, Persian card ──
   const COL = { core: '#00e5ff', skill: '#f5a623', soon: '#7f9bb3' };
@@ -439,16 +470,18 @@ export const APP_HTML = String.raw`<!doctype html>
   // ── Layout: fit the 680x480 world into the free area between the HUD and the dock ──
   let scale = 1;
   function layout() {
-    const W = innerWidth, H = innerHeight, narrow = W < 700;
+    const W = innerWidth, H = innerHeight, narrow = W < 700, short = H < 540;
     const dockH = $('dock').offsetHeight;
-    const st = $('status'), stH = narrow ? 92 : 104;
+    const st = $('status'), stH = short ? 0 : narrow ? 92 : 104;
+    st.style.display = short ? 'none' : '';
     st.style.bottom = (dockH - 6) + 'px';
-    const reply = $('reply');
-    reply.style.bottom = (dockH + stH - 6) + 'px';
-    $('lockmsg').style.bottom = (stH + 40) + 'px';
-    const topY = narrow ? 128 : 64;
+    const reply = $('reply'), loginBox = $('login');
+    const panelBottom = Math.max(12, dockH + stH - 6);
+    reply.style.bottom = loginBox.style.bottom = panelBottom + 'px';
+    const panel = body.classList.contains('locked') ? loginBox : reply.classList.contains('show') ? reply : null;
+    const topY = narrow ? 128 : short ? 40 : 64;
     let bottomY = H - dockH - stH + 4;
-    if (reply.classList.contains('show')) bottomY = Math.min(bottomY, H - (dockH + stH - 6) - reply.offsetHeight - 6);
+    if (panel) bottomY = Math.min(bottomY, H - panelBottom - panel.offsetHeight - 6);
     const aw = W, ah = Math.max(160, bottomY - topY);
     scale = Math.min(aw / (narrow ? 690 : 640), ah / 430, 2.4);
     const cx = W / 2, cy = topY + ah / 2;
@@ -460,6 +493,7 @@ export const APP_HTML = String.raw`<!doctype html>
   addEventListener('resize', layout);
   new ResizeObserver(layout).observe($('dock'));
   new ResizeObserver(layout).observe($('reply'));
+  new ResizeObserver(layout).observe($('login'));
 
   // ── State: idle | thinking | speaking ──
   const LABEL = { idle: 'STANDBY', thinking: 'PROCESSING', speaking: 'SPEAKING' };
@@ -771,7 +805,7 @@ export const APP_HTML = String.raw`<!doctype html>
       lb.append(d);
     });
     $('lcount').textContent = messages.length ? messages.length + ' MSG' : '';
-    $('pill').textContent = 'Session log' + (messages.length ? ' · ' + messages.length : '') + ' ↗';
+    $('pill').textContent = (innerWidth < 500 ? 'Log' : 'Session log') + (messages.length ? ' · ' + messages.length : '') + ' ↗';
   }
   const openLog = () => { renderLog(); $('log').classList.add('show'); const lb = $('lbody'); lb.scrollTop = lb.scrollHeight; };
   $('pill').onclick = openLog; $('tLog').onclick = () => { toggleLamp(); openLog(); };
@@ -784,7 +818,7 @@ export const APP_HTML = String.raw`<!doctype html>
       body: payload === undefined ? undefined : JSON.stringify(payload),
     });
     const data = await res.json().catch(() => ({}));
-    if (res.status === 401) throw new Error('لینک ورود معتبر نیست. در تلگرام دوباره /app بفرست.');
+    if (res.status === 401) { store.del('hermes-key'); store.del('hermes-session'); location.reload(); throw new Error('نشست منقضی شد. دوباره وارد شو.'); }
     if (!res.ok) throw new Error(data.error || 'خطای ارتباط (' + res.status + ')');
     return data;
   }
@@ -820,9 +854,38 @@ export const APP_HTML = String.raw`<!doctype html>
     try { await api('/api/reset', {}); messages = []; renderLog(); reply.classList.remove('show'); layout(); toggleLamp(); }
     catch (err) { showReply('error', err.message); }
   };
-  $('tForget').onclick = () => { if (confirm('این دستگاه از هرمس خارج شود؟')) { store.del('hermes-key'); location.reload(); } };
+  $('tForget').onclick = () => { if (confirm('از حساب خارج شوی؟')) { store.del('hermes-key'); store.del('hermes-session'); location.reload(); } };
+  $('tPass').onclick = async () => {
+    const old = prompt('رمز فعلی:'); if (!old) return;
+    const next = prompt('رمز جدید (حداقل ۸ حرف):'); if (!next) return;
+    if (prompt('رمز جدید را دوباره بنویس:') !== next) { alert('دو رمز یکی نیستند.'); return; }
+    try { await api('/api/password', { old, new: next }); alert('رمز عوض شد.'); } catch (err) { alert(err.message); }
+  };
 
-  if (!key) body.classList.add('locked');
+  $('lform').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = $('lgo'); btn.disabled = true; $('lerr').textContent = '';
+    try {
+      const res = await fetch('/api/login', { method: 'POST', headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ username: $('lu').value, password: $('lp').value }) });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.token) throw new Error(data.error || 'ورود ناموفق بود.');
+      store.set('hermes-session', data.token);
+      location.reload();
+    } catch (err) { $('lerr').textContent = err.message; btn.disabled = false; }
+  });
+  const ROLE = { owner: 'OWNER', admin: 'ADMIN', member: 'VIKING' };
+  async function loadMe() {
+    try {
+      me = await api('/api/me');
+      const w = $('who'); w.textContent = ROLE[me.role] || '';
+      const b = document.createElement('b'); b.textContent = me.role === 'owner' ? 'پوریا' : me.name; w.prepend(b);
+      $('tTg').classList.toggle('hide', me.role !== 'owner');
+      $('tPass').classList.toggle('hide', me.role === 'owner');
+    } catch {}
+  }
+
+  if (!key) body.classList.add('locked'); else loadMe();
   layout(); setState('idle');
   raf = requestAnimationFrame(frame);
   requestAnimationFrame(() => requestAnimationFrame(() => body.classList.remove('instant')));
