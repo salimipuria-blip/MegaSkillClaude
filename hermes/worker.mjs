@@ -11,7 +11,7 @@ import { USERS } from './users.mjs';
 import { SKILLS } from './skills.mjs';
 import { relevantSkills, skillsBlock } from './skill-router.mjs';
 import { loadLog, toContents, appendTurn, archiveAndClear, noteFrom, loadNotes, addNote, clearNotes } from './memory.mjs';
-import { imageRequest, imagePrompt, makeImage, base64ToBytes } from './image.mjs';
+import { imageRequest, imagePrompt, makeImage, sizeFor, base64ToBytes } from './image.mjs';
 import { transcribe, describeImage, telegramFile, parseDataUrl } from './media.mjs';
 
 export const MODELS = ['gemini-3.8-flash', 'gemini-3.7-flash', 'gemini-3.5-flash-lite', 'gemini-2.5-flash'];
@@ -312,7 +312,7 @@ async function see(env, contents, system, images, input) {
 // Text request → English prompt → FLUX image. The turn is kept in memory as text (the prompt), not the image bytes.
 export async function picture(env, key, input, wanted) {
   const prompt = await imagePrompt(ask, env, wanted);
-  const { image, mime, model } = await makeImage(env, prompt);
+  const { image, mime, model } = await makeImage(env, prompt, sizeFor(wanted));
   await appendTurn(env, key, await loadLog(env, key), input, `[عکس ساخته شد با ${model}] ${prompt}`);
   return { image, mime, model, prompt };
 }

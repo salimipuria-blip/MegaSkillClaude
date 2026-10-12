@@ -488,8 +488,8 @@ function geminiImageFetch(imageStatus = 200) {
   return calls;
 }
 
-test('images use Google Gemini image models first, newest version first', async () => {
-  const env = { ...baseEnv(), AI: imageAI() };
+test('without Cloudflare image models, Gemini image models are used, newest version first', async () => {
+  const env = { ...baseEnv() };
   const calls = geminiImageFetch();
   const res = await callApi(env, '/api/chat', { message: 'عکس بساز: دریاچه پاییزی' });
   assert.equal(res.status, 200);
@@ -498,11 +498,41 @@ test('images use Google Gemini image models first, newest version first', async 
   const imageCall = calls.find((c) => c.url.includes('-image:generateContent'));
   assert.match(imageCall.url, /gemini-3\.5-flash-image/);
   assert.deepEqual(imageCall.body.generationConfig.responseModalities, ['TEXT', 'IMAGE']);
-  assert.equal(env.AI.calls.some((c) => c.model === IMAGE_MODEL), false);
   assert.equal(await env.MEMORY.get('image-model'), 'gemini-3.5-flash-image');
 });
 
-test('when Gemini image quota is out, FLUX on Workers AI makes the image', async () => {
+test('best free Cloudflare model first (FLUX.2 dev, multipart, 4:5 for a post); cheaper ones when it fails', async () => {
+  const png = new Uint8Array(200); png[0] = 0x89; png[1] = 0x50;
+  const runs = [];
+  const env = { ...baseEnv(), GEMINI_API_KEY: undefined, AI: { async run(model, input) {
+    runs.push({ model, input });
+    if (model.includes('flux-2-dev')) return { image: btoa(String.fromCharCode(...png)) };
+    return { response: 'prompt' };
+  } } };
+  mockFetch();
+  const res = await callApi(env, '/api/chat', { message: 'عکس بساز: پست اینستاگرام جیپ در جنگل' });
+  assert.equal(res.status, 200);
+  assert.match(res.body.reply, /flux-2-dev/);
+  assert.match(res.body.image, /^data:image\/png;base64,/);
+  const dev = runs.find((r) => r.model.includes('flux-2-dev'));
+  const form = await new Response(dev.input.multipart.body, { headers: { 'content-type': dev.input.multipart.contentType } }).formData();
+  assert.equal(form.get('width'), '1024');
+  assert.equal(form.get('height'), '1280');
+
+  const runs2 = [];
+  const env2 = { ...env, AI: { async run(model, input) {
+    runs2.push(model);
+    if (model.includes('flux-2-dev') || model.includes('lucid')) throw new Error('daily free allocation exceeded');
+    if (model.includes('phoenix')) return new Response(png).body;
+    return { response: 'prompt' };
+  } } };
+  const res2 = await callApi(env2, '/api/chat', { message: 'عکس بساز: کمپ' });
+  assert.match(res2.body.reply, /phoenix-1\.0/);
+  assert.deepEqual(runs2.filter((m) => m.includes('flux-2-dev') || m.includes('leonardo')),
+    ['@cf/black-forest-labs/flux-2-dev', '@cf/leonardo/lucid-origin', '@cf/leonardo/phoenix-1.0']);
+});
+
+test('when the better models are out, FLUX.1 schnell still makes the image', async () => {
   const env = { ...baseEnv(), AI: imageAI() };
   geminiImageFetch(429);
   const res = await callApi(env, '/api/chat', { message: 'عکس بساز: جیپ در جنگل' });
