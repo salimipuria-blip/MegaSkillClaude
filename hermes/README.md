@@ -61,6 +61,15 @@ Worker `hermes` ← Settings ← Variables and Secrets ← Add. هر سه را �
 - **عکس:** در تلگرام عکس (با یا بی کپشن) بفرست؛ در اپ دکمهٔ دوربین. هرمس عکس را می‌بیند و جواب می‌دهد (Gemini، پشتیبان LLaVA).
 - **جست‌وجوی گوگل:** برای خبر، قیمت و چیزهای روز خودش در گوگل می‌گردد و منبع می‌آورد.
 - **ساخت عکس:** بنویس «عکس بساز: ...» (یا `/img ...`). بهترین مدل‌های رایگان کلادفلر به ترتیب کیفیت: FLUX.2 [dev] ← Leonardo Lucid Origin ← Leonardo Phoenix ← FLUX.2 [klein] ← FLUX.1 schnell؛ همه بدون واترمارک و از سهمیهٔ رایگان روزانهٔ Workers AI. اندازه از متن: «استوری» ۹:۱۶، «پست» ۴:۵، «بنر» ۱۶:۹. Gemini image فقط اگر حساب گوگل پولی باشد.
+- **گوگل (فقط مالک):** جیمیل (خواندن و پیش‌نویس؛ هرگز خودش نمی‌فرستد)، تقویم (دیدن و ساختن رویداد)، درایو (جست‌وجو) و شیت (خواندن و اضافه کردن ردیف). مثلاً «ایمیل‌های خوانده‌نشدهٔ امروز رو خلاصه کن»، «فردا ساعت ۱۰ جلسه با حسام بذار»، «این رزرو رو به شیت رزروها اضافه کن».
+
+### اتصال گوگل (یک بار)
+1. console.cloud.google.com → پروژهٔ جدید «Hermes».
+2. APIs & Services → Library: این‌ها را Enable کن: Gmail API، Google Calendar API، Google Drive API، Google Sheets API.
+3. Google Auth Platform → Branding (نام Hermes و ایمیل) → Audience: External و **Publish app** (وگرنه اتصال هر ۷ روز قطع می‌شود؛ هشدار «unverified» برای استفادهٔ شخصی عادی است).
+4. Clients → Create client → Web application → Authorized redirect URI: `https://<worker>.workers.dev/connect/google/callback`
+5. Client ID و Client secret را در کلادفلر (Workers → hermes → Settings → Variables and Secrets، نوع Secret) با نام‌های `GOOGLE_CLIENT_ID` و `GOOGLE_CLIENT_SECRET` بگذار. در چت نفرست.
+6. در تلگرام `/google` را بزن، لینک یک‌بار مصرف را باز کن و اجازه بده. قطع: `/google_off`.
 - **مهارت‌ها:** روش کار و دستورالعمل‌های محتوا، تور، برنامه‌ریزی، ویرایش، ترجمه، پژوهش و کد در `skills.mjs` است.
 - **کتابخانهٔ کامل مهارت‌ها (Mega Skills):** همهٔ ۵٬۹۸۶ مهارت مخزن (`plugins/mega-skills-router`) موقع دیپلوی با `build-skills.mjs` به فایل‌های داخلی Worker تبدیل می‌شوند. برای هر پیام، `skill-router.mjs` تا ۳ مهارت مرتبط را پیدا می‌کند و دستورالعملشان را به هرمس می‌دهد. پیام‌های معمولی مثل «سلام» بدون مهارت جواب داده می‌شوند.
 - **ارتقا:** کارهای بعدی در [`ROADMAP.md`](ROADMAP.md). یک روتین روزانه (۹:۵۵ صبح تهران) اولین کار باز را می‌سازد و PR می‌دهد.

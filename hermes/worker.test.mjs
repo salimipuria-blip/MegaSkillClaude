@@ -641,3 +641,102 @@ test('web app: transcribe endpoint and photo chat', async () => {
   assert.equal(gem(calls).at(-1).body.contents.at(-1).parts[0].inlineData.mimeType, 'image/jpeg');
   assert.equal((await callApi(env, '/api/chat', { message: 'x', image: 'data:text/html;base64,AAAA' })).status, 400);
 });
+
+// Google connectors (owner only): OAuth connect flow and Gemini function calling.
+const gEnv = () => ({ ...baseEnv(), GOOGLE_CLIENT_ID: 'cid', GOOGLE_CLIENT_SECRET: 'csecret' });
+function googleFetch({ geminiSteps }) {
+  const calls = [];
+  let step = 0;
+  globalThis.fetch = async (url, init = {}) => {
+    const u = String(url);
+    const body = init.body instanceof URLSearchParams ? Object.fromEntries(init.body) : typeof init.body === 'string' ? JSON.parse(init.body) : null;
+    calls.push({ url: u, body, headers: init.headers || {} });
+    if (u === 'https://oauth2.googleapis.com/token') {
+      return new Response(JSON.stringify(body.grant_type === 'authorization_code'
+        ? { access_token: 'at1', refresh_token: 'rt1', expires_in: 3600 } : { access_token: 'at2', expires_in: 3600 }));
+    }
+    if (u.includes('/gmail/v1/users/me/messages?')) return new Response(JSON.stringify({ messages: [{ id: 'm1' }] }));
+    if (u.includes('/gmail/v1/users/me/messages/m1')) return new Response(JSON.stringify({ snippet: 'tour booking',
+      labelIds: ['UNREAD'], payload: { headers: [{ name: 'From', value: 'ali@x.com' }, { name: 'Subject', value: 'رزرو' }, { name: 'Date', value: 'Mon' }] } }));
+    if (u.includes('/gmail/v1/users/me/drafts')) return new Response(JSON.stringify({ id: 'd1' }));
+    if (u.includes('generativelanguage')) return new Response(JSON.stringify({ candidates: [{ content: { parts: geminiSteps[Math.min(step++, geminiSteps.length - 1)] } }] }));
+    return new Response(JSON.stringify({ ok: true }));
+  };
+  return calls;
+}
+
+test('Google connect: one-time link from /google, state-checked callback stores the refresh token', async () => {
+  const env = gEnv();
+  const calls = googleFetch({ geminiSteps: [[{ text: 'x' }]] });
+  assert.equal((await worker.fetch(new Request('https://h.workers.dev/connect/google'), env, {})).status, 403);
+  assert.equal((await worker.fetch(new Request(`https://h.workers.dev/connect/google?t=${'a'.repeat(32)}`), env, {})).status, 403);
+  await post(env, message('/google'));
+  const link = sent(calls)[0].match(/https:\/\/\S+\/connect\/google\?t=[0-9a-f]{32}/)[0];
+  const startUrl = link.replace(/^https:\/\/[^/]+/, 'https://h.workers.dev');
+  const start = await worker.fetch(new Request(startUrl), env, {});
+  assert.equal(start.status, 302);
+  assert.equal((await worker.fetch(new Request(startUrl), env, {})).status, 403, 'connect link is single-use');
+  const to = new URL(start.headers.get('location'));
+  assert.equal(to.origin + to.pathname, 'https://accounts.google.com/o/oauth2/v2/auth');
+  assert.equal(to.searchParams.get('redirect_uri'), 'https://h.workers.dev/connect/google/callback');
+  assert.match(to.searchParams.get('scope'), /gmail\.readonly.*calendar\.events.*spreadsheets/);
+  assert.equal(to.searchParams.get('access_type'), 'offline');
+  const bad = await worker.fetch(new Request('https://h.workers.dev/connect/google/callback?code=c&state=nope'), env, {});
+  assert.equal(bad.status, 400);
+  const ok = await worker.fetch(new Request(`https://h.workers.dev/connect/google/callback?code=c1&state=${to.searchParams.get('state')}`), env, {});
+  assert.equal(ok.status, 200);
+  assert.match(await ok.text(), /وصل شد/);
+  assert.equal(env.MEMORY.store.get('google:refresh'), 'rt1');
+  assert.equal(calls.find((c) => c.url.includes('oauth2')).body.code, 'c1');
+  const replay = await worker.fetch(new Request(`https://h.workers.dev/connect/google/callback?code=c1&state=${to.searchParams.get('state')}`), env, {});
+  assert.equal(replay.status, 400, 'state is single-use');
+});
+
+test('/google without client secrets explains what to set', async () => {
+  const env = baseEnv();
+  const calls = googleFetch({ geminiSteps: [[{ text: 'x' }]] });
+  await post(env, message('/google'));
+  assert.match(sent(calls)[0], /GOOGLE_CLIENT_ID/);
+});
+
+test('owner asks about email: Gemini calls gmail_search, gets the result, then answers', async () => {
+  const env = gEnv();
+  env.MEMORY.store.set('google:refresh', 'rt1');
+  const calls = googleFetch({ geminiSteps: [
+    [{ functionCall: { name: 'gmail_search', args: { query: 'is:unread newer_than:1d' } } }],
+    [{ text: 'یک ایمیل رزرو از علی داری.' }],
+  ] });
+  await post(env, message('ایمیل‌های امروزم رو چک کن'));
+  const gem = calls.filter((c) => c.url.includes('generativelanguage'));
+  assert.equal(gem.length, 2);
+  assert.ok(gem[0].body.tools.some((t) => t.functionDeclarations && t.functionDeclarations.some((d) => d.name === 'gmail_draft')));
+  const fr = gem[1].body.contents.at(-1).parts[0].functionResponse;
+  assert.equal(fr.name, 'gmail_search');
+  assert.equal(fr.response.result.messages[0].subject, 'رزرو');
+  assert.equal(calls.find((c) => c.url.includes('/gmail/v1/')).headers.authorization, 'Bearer at2');
+  assert.match(calls.find((c) => c.url.includes('/messages?')).url, /q=is%3Aunread/);
+  assert.deepEqual(sent(calls), ['یک ایمیل رزرو از علی داری.']);
+});
+
+test('gmail_draft only drafts (UTF-8 subject), and team members never get Google tools', async () => {
+  const env = gEnv();
+  env.MEMORY.store.set('google:refresh', 'rt1');
+  const calls = googleFetch({ geminiSteps: [
+    [{ functionCall: { name: 'gmail_draft', args: { to: 'ali@x.com', subject: 'تایید رزرو', body: 'سلام علی' } } }],
+    [{ text: 'پیش‌نویس ساخته شد.' }],
+  ] });
+  await post(env, message('یه جواب برای علی بنویس'));
+  const draft = calls.find((c) => c.url.includes('/drafts'));
+  const raw = atob(draft.body.message.raw.replace(/-/g, '+').replace(/_/g, '/'));
+  assert.match(raw, /^To: ali@x\.com\r\nSubject: =\?UTF-8\?B\?/);
+  assert.equal(calls.some((c) => c.url.includes('gmail') && c.url.includes('/send')), false);
+
+  USERS.tester = { name: 'Tester', role: 'member', locks: [], salt: 's', hash: await hashPassword('pw-123456', 's') };
+  const login = await worker.fetch(new Request('https://h.workers.dev/api/login', { method: 'POST', body: JSON.stringify({ username: 'tester', password: 'pw-123456' }) }), env, {});
+  const { token } = await login.json();
+  const calls2 = googleFetch({ geminiSteps: [[{ text: 'سلام' }]] });
+  await callApi(env, '/api/chat', { message: 'ایمیل‌هام' }, token);
+  const gem = calls2.filter((c) => c.url.includes('generativelanguage'));
+  assert.equal(JSON.stringify(gem[0].body.tools || []).includes('functionDeclarations'), false);
+  delete USERS.tester;
+});
