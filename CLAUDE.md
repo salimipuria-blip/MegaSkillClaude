@@ -35,6 +35,7 @@
 - `viking-team`: `python3 -m unittest discover -s tests`
 - `orchestrator`: `python scripts/audit/check_repository_contract.py` و pytest (فهرست فایل‌ها در CI)
 - مسیریاب مهارت‌ها: `python -m unittest discover -s tests`
+- `hermes` (از ریشه): `node --test hermes/worker.test.mjs` و `bash -n hermes/setup.sh`
 - CI در `.github/workflows/ci.yml` همه را روی هر PR اجرا می‌کند.
 
 ## نوار وضعیت و هوک‌ها
