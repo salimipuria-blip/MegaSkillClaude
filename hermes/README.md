@@ -37,6 +37,8 @@ Worker `hermes` ← Settings ← Variables and Secrets ← Add. هر سه را �
 | `GEMINI_API_KEY` | کلید جمینی |
 | `ALLOWED_USER_ID` | شناسهٔ عددی تو |
 
+> اگر رمزها را اشتباهی در Settings ← Build ← Variables and secrets گذاشتی، مشکلی نیست: `sync-secrets.mjs` موقع هر ساخت آن‌ها را به رمزهای خود بات کپی می‌کند.
+
 **۴. فعال‌سازی:** یک‌بار صفحهٔ اصلی Worker (`https://hermes.<زیردامنهٔ تو>.workers.dev`) را باز یا رفرش کن؛ خودش بات را وصل می‌کند. (`/setup` هم همان کار را می‌کند) (با VPN، چون workers.dev در ایران فیلتر است). باید ببینی:
 ```
 ✓ Webhook set for @نام_بات
