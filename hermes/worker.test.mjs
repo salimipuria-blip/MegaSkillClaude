@@ -488,8 +488,8 @@ function geminiImageFetch(imageStatus = 200) {
   return calls;
 }
 
-test('images use Google Gemini image models first, newest version first', async () => {
-  const env = { ...baseEnv(), AI: imageAI() };
+test('without Cloudflare image models, Gemini image models are used, newest version first', async () => {
+  const env = { ...baseEnv() };
   const calls = geminiImageFetch();
   const res = await callApi(env, '/api/chat', { message: 'عکس بساز: دریاچه پاییزی' });
   assert.equal(res.status, 200);
@@ -498,15 +498,146 @@ test('images use Google Gemini image models first, newest version first', async 
   const imageCall = calls.find((c) => c.url.includes('-image:generateContent'));
   assert.match(imageCall.url, /gemini-3\.5-flash-image/);
   assert.deepEqual(imageCall.body.generationConfig.responseModalities, ['TEXT', 'IMAGE']);
-  assert.equal(env.AI.calls.some((c) => c.model === IMAGE_MODEL), false);
   assert.equal(await env.MEMORY.get('image-model'), 'gemini-3.5-flash-image');
 });
 
-test('when Gemini image quota is out, FLUX on Workers AI makes the image', async () => {
+test('best free Cloudflare model first (FLUX.2 dev, multipart, 4:5 for a post); cheaper ones when it fails', async () => {
+  const png = new Uint8Array(200); png[0] = 0x89; png[1] = 0x50;
+  const runs = [];
+  const env = { ...baseEnv(), GEMINI_API_KEY: undefined, AI: { async run(model, input) {
+    runs.push({ model, input });
+    if (model.includes('flux-2-dev')) return { image: btoa(String.fromCharCode(...png)) };
+    return { response: 'prompt' };
+  } } };
+  mockFetch();
+  const res = await callApi(env, '/api/chat', { message: 'عکس بساز: پست اینستاگرام جیپ در جنگل' });
+  assert.equal(res.status, 200);
+  assert.match(res.body.reply, /flux-2-dev/);
+  assert.match(res.body.image, /^data:image\/png;base64,/);
+  const dev = runs.find((r) => r.model.includes('flux-2-dev'));
+  const form = await new Response(dev.input.multipart.body, { headers: { 'content-type': dev.input.multipart.contentType } }).formData();
+  assert.equal(form.get('width'), '1024');
+  assert.equal(form.get('height'), '1280');
+
+  const runs2 = [];
+  const env2 = { ...env, AI: { async run(model, input) {
+    runs2.push(model);
+    if (model.includes('flux-2-dev') || model.includes('lucid')) throw new Error('daily free allocation exceeded');
+    if (model.includes('phoenix')) return new Response(png).body;
+    return { response: 'prompt' };
+  } } };
+  const res2 = await callApi(env2, '/api/chat', { message: 'عکس بساز: کمپ' });
+  assert.match(res2.body.reply, /phoenix-1\.0/);
+  assert.deepEqual(runs2.filter((m) => m.includes('flux-2-dev') || m.includes('leonardo')),
+    ['@cf/black-forest-labs/flux-2-dev', '@cf/leonardo/lucid-origin', '@cf/leonardo/phoenix-1.0']);
+});
+
+test('when the better models are out, FLUX.1 schnell still makes the image', async () => {
   const env = { ...baseEnv(), AI: imageAI() };
   geminiImageFetch(429);
   const res = await callApi(env, '/api/chat', { message: 'عکس بساز: جیپ در جنگل' });
   assert.equal(res.status, 200);
   assert.match(res.body.image, /^data:image\/jpeg;base64,/);
   assert.match(res.body.reply, /flux/);
+});
+
+// Voice, photos and Google Search.
+function mediaFetch({ gemini = 'جواب هرمس', grounding = null, searchStatus = 200 } = {}) {
+  const calls = [];
+  globalThis.fetch = async (url, init) => {
+    const u = String(url);
+    const body = init && typeof init.body === 'string' ? JSON.parse(init.body) : null;
+    calls.push({ url: u, body });
+    if (u.endsWith('/getFile')) {
+      const path = body.file_id.startsWith('v') ? 'voice/file_1.oga' : 'photos/file_2.jpg';
+      return new Response(JSON.stringify({ ok: true, result: { file_path: path } }));
+    }
+    if (u.includes('/file/bot')) return new Response(new Uint8Array([1, 2, 3, 4]));
+    if (u.includes('generativelanguage')) {
+      if (body.tools && searchStatus !== 200) return new Response('{}', { status: searchStatus });
+      const isTranscribe = body.contents.at(-1).parts.some((p) => p.text && p.text.startsWith('Transcribe'));
+      return new Response(JSON.stringify({ candidates: [{ content: { parts: [{ text: isTranscribe ? 'فردا هوا چطوره' : gemini }] },
+        ...(grounding ? { groundingMetadata: grounding } : {}) }] }));
+    }
+    return new Response(JSON.stringify({ ok: true }));
+  };
+  return calls;
+}
+const gem = (calls) => calls.filter((c) => c.url.includes('generativelanguage'));
+
+test('Telegram voice is transcribed and answered, transcript shown first', async () => {
+  const env = baseEnv();
+  const calls = mediaFetch();
+  await post(env, { message: { chat: { id: 42 }, from: { id: Number(OWNER) }, voice: { file_id: 'v1', mime_type: 'audio/ogg' } } });
+  const audio = gem(calls)[0].body.contents[0].parts[0].inlineData;
+  assert.equal(audio.mimeType, 'audio/ogg');
+  assert.equal(gem(calls)[0].body.tools, undefined, 'no search for transcription');
+  assert.deepEqual(sent(calls), ['🎙️ «فردا هوا چطوره»\n\nجواب هرمس']);
+  assert.equal(JSON.parse(env.MEMORY.store.get('history:42'))[0].parts[0].text, 'فردا هوا چطوره');
+});
+
+test('voice falls back to Whisper on Workers AI without Gemini', async () => {
+  const env = { ...baseEnv(), GEMINI_API_KEY: undefined, AI: { calls: [], async run(model, input) {
+    this.calls.push({ model, input }); return model.includes('whisper') ? { text: 'سلام' } : { response: 'سلام از کلادفلر' }; } } };
+  const calls = mediaFetch();
+  await post(env, { message: { chat: { id: 42 }, from: { id: Number(OWNER) }, voice: { file_id: 'v1' } } });
+  assert.equal(env.AI.calls[0].model, '@cf/openai/whisper-large-v3-turbo');
+  assert.deepEqual(sent(calls), ['🎙️ «سلام»\n\nسلام از کلادفلر']);
+});
+
+test('Telegram photo is shown to Gemini with its caption and kept in memory as text', async () => {
+  const env = baseEnv();
+  const calls = mediaFetch({ gemini: 'یک جیپ در جنگل' });
+  await post(env, { message: { chat: { id: 42 }, from: { id: Number(OWNER) }, caption: 'کپشن بنویس',
+    photo: [{ file_id: 'p-small' }, { file_id: 'p-big' }] } });
+  assert.equal(calls.find((c) => c.url.endsWith('/getFile')).body.file_id, 'p-big');
+  const parts = gem(calls)[0].body.contents.at(-1).parts;
+  assert.equal(parts[0].inlineData.mimeType, 'image/jpeg');
+  assert.equal(parts[1].text, 'کپشن بنویس');
+  assert.deepEqual(sent(calls), ['یک جیپ در جنگل']);
+  const log = JSON.parse(env.MEMORY.store.get('history:42'));
+  assert.equal(log[0].parts[0].text, '[عکس] کپشن بنویس');
+  assert.equal(JSON.stringify(log).includes('inlineData'), false);
+});
+
+test('photo without Gemini: Workers AI describes it, then the text brain answers', async () => {
+  const env = { ...baseEnv(), GEMINI_API_KEY: undefined, AI: { calls: [], async run(model, input) {
+    this.calls.push({ model, input }); return model.includes('llava') ? { description: 'a jeep in a forest' } : { response: 'جیپ در جنگل' }; } } };
+  const calls = mediaFetch();
+  await post(env, { message: { chat: { id: 42 }, from: { id: Number(OWNER) }, photo: [{ file_id: 'p1' }] } });
+  assert.equal(env.AI.calls[0].model, '@cf/llava-hf/llava-1.5-7b-hf');
+  assert.match(env.AI.calls[1].input.messages.at(-1).content, /a jeep in a forest/);
+  assert.deepEqual(sent(calls), ['جیپ در جنگل']);
+});
+
+test('Gemini answers with Google Search and lists sources', async () => {
+  const env = baseEnv();
+  const calls = mediaFetch({ gemini: 'دلار امروز ...', grounding: { groundingChunks: [{ web: { uri: 'https://example.com/a', title: 'example.com' } }] } });
+  await post(env, message('قیمت دلار امروز؟'));
+  assert.deepEqual(gem(calls)[0].body.tools, [{ google_search: {} }]);
+  assert.deepEqual(sent(calls), ['دلار امروز ...\n\nمنابع:\n• example.com: https://example.com/a']);
+});
+
+test('a model that rejects the search tool is retried without it', async () => {
+  const env = baseEnv();
+  const calls = mediaFetch({ searchStatus: 400 });
+  await post(env, message('سلام'));
+  assert.equal(gem(calls).length, 2);
+  assert.equal(gem(calls)[1].body.tools, undefined);
+  assert.deepEqual(sent(calls), ['جواب هرمس']);
+});
+
+test('web app: transcribe endpoint and photo chat', async () => {
+  const env = baseEnv();
+  const calls = mediaFetch();
+  const t = await callApi(env, '/api/transcribe', { audio: 'data:audio/webm;codecs=opus;base64,AAAA' });
+  assert.equal(t.status, 200);
+  assert.equal(t.body.text, 'فردا هوا چطوره');
+  assert.equal(gem(calls)[0].body.contents[0].parts[0].inlineData.mimeType, 'audio/webm');
+  assert.equal((await callApi(env, '/api/transcribe', { audio: 'data:image/png;base64,AAAA' })).status, 400);
+  const c = await callApi(env, '/api/chat', { image: 'data:image/jpeg;base64,AAAA' });
+  assert.equal(c.status, 200);
+  assert.equal(c.body.reply, 'جواب هرمس');
+  assert.equal(gem(calls).at(-1).body.contents.at(-1).parts[0].inlineData.mimeType, 'image/jpeg');
+  assert.equal((await callApi(env, '/api/chat', { message: 'x', image: 'data:text/html;base64,AAAA' })).status, 400);
 });

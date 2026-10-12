@@ -1,5 +1,4 @@
-// Image generation. First choice: Google's Gemini image models (AI Studio key, free tier where available),
-// found automatically from the key's model list, newest first. Fallback: FLUX.1 schnell on Workers AI (free, no key).
+// Image generation: the best free models on Cloudflare Workers AI (FLUX.2, Leonardo, FLUX.1), then Gemini image if paid.
 // Triggered by messages such as «عکس بساز: ...», «تصویر بساز ...» or /img ... in Telegram and the web app.
 
 export const IMAGE_MODEL = '@cf/black-forest-labs/flux-1-schnell';
@@ -19,23 +18,82 @@ export function imageRequest(input) {
 // Persian (or short) requests become a detailed English prompt; if the text brain fails, use the request as is.
 export async function imagePrompt(ask, env, request) {
   try {
-    const out = (await ask(env, [{ role: 'user', parts: [{ text: request }] }], PROMPT_SYSTEM)).trim().replace(/^["'`]+|["'`]+$/g, '');
+    const out = (await ask(env, [{ role: 'user', parts: [{ text: request }] }], PROMPT_SYSTEM, false)).trim().replace(/^["'`]+|["'`]+$/g, '');
     return out ? out.slice(0, 2000) : request;
   } catch {
     return request;
   }
 }
 
-// Returns { image: base64, mime, model }. Tries Gemini image models, then FLUX.
-export async function makeImage(env, prompt) {
-  let geminiErr = null;
-  if (env.GEMINI_API_KEY) {
-    try { return await geminiImage(env, prompt); } catch (err) { geminiErr = err; console.error('[Hermes] Gemini image failed:', err.message); }
+// Free models on Cloudflare Workers AI, best first; all share the free 10,000 neurons/day, so when the budget
+// is low the expensive ones fail and the next, cheaper one answers. None adds a watermark.
+//   FLUX.2 [dev] ≈ 2/day · Leonardo Lucid Origin ≈ 3/day · Leonardo Phoenix ≈ 4/day · FLUX.2 [klein] 9B ≈ 7/day · FLUX.1 schnell: many.
+export const CF_IMAGE_MODELS = [
+  { id: '@cf/black-forest-labs/flux-2-dev', name: 'flux-2-dev', multipart: true, extra: { steps: 25 } },
+  { id: '@cf/leonardo/lucid-origin', name: 'lucid-origin', extra: { steps: 30 } },
+  { id: '@cf/leonardo/phoenix-1.0', name: 'phoenix-1.0', extra: { num_steps: 25 } },
+  { id: '@cf/black-forest-labs/flux-2-klein-9b', name: 'flux-2-klein-9b', multipart: true, extra: {} },
+  { id: IMAGE_MODEL, name: 'flux-1-schnell', square: true, extra: { steps: 8 } },
+];
+
+// Shape from the request: story/reel 9:16, post/portrait 4:5, banner/landscape 16:9, else square.
+export function sizeFor(text) {
+  const t = String(text || '');
+  if (/استوری|ریلز|story|reel|9:16/i.test(t)) return { width: 768, height: 1344 };
+  if (/پست|اینستا|عمودی|پرتره|post|portrait|4:5/i.test(t)) return { width: 1024, height: 1280 };
+  if (/بنر|افقی|کاور|landscape|banner|16:9|wide/i.test(t)) return { width: 1344, height: 768 };
+  return { width: 1024, height: 1024 };
+}
+
+const sniff = (b) => (b[0] === 0x89 && b[1] === 0x50 ? 'image/png' : b[0] === 0x52 && b[1] === 0x49 ? 'image/webp' : 'image/jpeg');
+
+// Workers AI image models answer as { image: base64 }, a ReadableStream, or raw bytes.
+async function normalize(out) {
+  if (!out) return null;
+  if (typeof out.image === 'string' && out.image) {
+    const head = atob(out.image.slice(0, 16));
+    return { image: out.image, mime: sniff([head.charCodeAt(0), head.charCodeAt(1)]) };
   }
-  if (!env.AI) throw geminiErr || new Error('برای ساخت عکس، کلید جمینی یا اتصال Workers AI (binding AI) لازم است.');
-  const out = await env.AI.run(IMAGE_MODEL, { prompt, steps: 8 });
-  if (!out || !out.image) throw new Error('مدل تصویر جوابی نداد. دوباره امتحان کن.');
-  return { image: out.image, mime: 'image/jpeg', model: 'flux-1-schnell' };
+  let bytes = null;
+  if (out instanceof Uint8Array) bytes = out;
+  else if (out instanceof ArrayBuffer) bytes = new Uint8Array(out);
+  else if (typeof out.getReader === 'function') bytes = new Uint8Array(await new Response(out).arrayBuffer());
+  if (!bytes || bytes.length < 100) return null;
+  let bin = '';
+  for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+  return { image: btoa(bin), mime: sniff(bytes) };
+}
+
+async function runCloudflare(env, m, prompt, size) {
+  const params = { prompt, ...(m.square ? {} : size), ...m.extra };
+  if (!m.multipart) return env.AI.run(m.id, params);
+  const form = new FormData();
+  for (const [k, v] of Object.entries(params)) form.append(k, String(v));
+  const body = new Response(form);
+  return env.AI.run(m.id, { multipart: { body: body.body, contentType: body.headers.get('content-type') } });
+}
+
+// Returns { image: base64, mime, model }. Free Cloudflare models first (no watermark), Gemini image last
+// (the Gemini API image models are paid-only now and carry Google's invisible SynthID mark).
+export async function makeImage(env, prompt, size = { width: 1024, height: 1024 }) {
+  let lastErr = null;
+  if (env.AI) {
+    for (const m of CF_IMAGE_MODELS) {
+      try {
+        const out = await normalize(await runCloudflare(env, m, prompt, size));
+        if (out) return { ...out, model: m.name };
+        lastErr = new Error(`${m.name}: empty`);
+      } catch (err) {
+        lastErr = err;
+        console.error(`[Hermes] ${m.name} failed:`, err.message);
+      }
+    }
+  }
+  if (env.GEMINI_API_KEY) {
+    try { return await geminiImage(env, prompt); } catch (err) { lastErr = err; }
+  }
+  if (!env.AI && !env.GEMINI_API_KEY) throw new Error('برای ساخت عکس، اتصال Workers AI (binding AI) یا کلید جمینی لازم است.');
+  throw new Error(`سهمیهٔ رایگان امروزِ ساخت عکس تمام شده یا مدل‌ها جواب ندادند؛ فردا دوباره امتحان کن. (${lastErr ? lastErr.message : ''})`);
 }
 
 // Image-capable Gemini models for this key (e.g. gemini-*-flash-image), newest version first, "pro" before "flash".
