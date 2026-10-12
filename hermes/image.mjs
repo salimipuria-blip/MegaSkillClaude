@@ -9,10 +9,21 @@ const PROMPT_SYSTEM = 'You write prompts for a photorealistic text-to-image mode
   '(subject, setting, light, mood, camera/composition, "ultra realistic, high detail"). Keep every concrete detail the user gave. ' +
   'No text, letters or logos in the image unless asked. Output only the prompt, at most 80 words.';
 
-// «عکس بساز: X» → "X"; anything else → null. An empty description is still an image request ("").
+// Natural requests anywhere in the sentence: «یه عکس از جنگل پاییزی بساز/بده/بکش», «generate an image of ...».
+const NOUN = '(?:عکس|تصویر|پوستر|بنر|لوگو|والپیپر|کاور|طرح|نقاشی|ایلوستریشن)';
+const VERB = '(?:بساز|بسازی|بسازید|بکش|درست\\s*کن|طراحی\\s*کن|تولید\\s*کن|خلق\\s*کن|بده|بفرست)';
+const INTENT_FA = new RegExp(`${NOUN}[^.!؟?\\n]{0,60}?${VERB}(?![\\u0600-\\u06FF])`);
+const INTENT_EN = /\b(?:generate|create|draw|make|render)\s+(?:me\s+)?(?:an?\s+|the\s+)?(?:\w+\s+){0,3}?(?:image|picture|photo|poster|illustration|logo)\b/i;
+const NOT_NEW = /(?:این|اون|همین)\s*(?:عکس|تصویر)|عکسی\s*که|عکسم|عکس\s*رو\s*ببین|this\s+(?:image|photo|picture)/i;
+
+// «عکس بساز: X» → "X"; a natural request → the whole sentence; anything else → null.
+// An empty description after the prefix is still an image request ("").
 export function imageRequest(input) {
-  const m = String(input).trim().match(IMAGE_RE);
-  return m ? String(input).trim().slice(m[0].length).trim().slice(0, 1000) : null;
+  const text = String(input).trim();
+  const m = text.match(IMAGE_RE);
+  if (m) return text.slice(m[0].length).trim().slice(0, 1000);
+  if (text.length <= 600 && !NOT_NEW.test(text) && (INTENT_FA.test(text) || INTENT_EN.test(text))) return text.slice(0, 1000);
+  return null;
 }
 
 // Persian (or short) requests become a detailed English prompt; if the text brain fails, use the request as is.
