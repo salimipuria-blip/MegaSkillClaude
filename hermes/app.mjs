@@ -170,6 +170,9 @@ export const APP_HTML = String.raw`<!doctype html>
   .md pre code { background: none; color: #d6e6ee; padding: 0; font: 13px/1.6 var(--mono); }
   .md a { color: var(--cyan); text-decoration: none; border-bottom: 1px solid rgba(0,229,255,.35); }
   .md b { color: #fff; }
+  .pic { display: block; position: relative; margin: 2px 0 10px; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,.14); white-space: normal; }
+  .pic img { display: block; width: 100%; height: auto; }
+  .pic span { position: absolute; left: 8px; bottom: 8px; padding: 3px 9px; border-radius: 99px; background: rgba(0,0,0,.65); color: var(--gold); font: 600 11px/1.6 ui-monospace, monospace; letter-spacing: .08em; }
   .caret { display: inline-block; width: 7px; height: 1.05em; vertical-align: -3px; margin-right: 2px; background: var(--gold); box-shadow: 0 0 10px var(--gold); animation: blink .7s infinite; }
   .scan { height: 9px; border-radius: 5px; margin: 6px 0 0 auto; width: 70%;
     background: linear-gradient(90deg, rgba(245,166,35,.05) 0%, rgba(245,166,35,.4) 50%, rgba(245,166,35,.05) 100%); background-size: 200% 100%; animation: scan 1.1s linear infinite; }
@@ -809,11 +812,20 @@ export const APP_HTML = String.raw`<!doctype html>
     });
   }
 
+  // A generated image with a save link (long-press also works on iPhone).
+  function picture(src) {
+    const a = document.createElement('a'); a.className = 'pic'; a.href = src; a.download = 'hermes-' + Date.now() + '.jpg';
+    const img = document.createElement('img'); img.src = src; img.alt = 'generated image';
+    const s = document.createElement('span'); s.textContent = 'SAVE ↓';
+    a.append(img, s);
+    return a;
+  }
   function renderLog() {
     const lb = $('lbody'); lb.innerHTML = '';
     messages.forEach((m) => {
       const d = document.createElement('div'); d.className = 'm ' + (m.role === 'user' ? 'me' : 'bot md');
       if (m.role === 'user') d.textContent = m.text; else d.innerHTML = md(m.text);
+      if (m.image) d.prepend(picture(m.image));
       lb.append(d);
     });
     $('lcount').textContent = messages.length ? messages.length + ' MSG' : '';
@@ -858,11 +870,12 @@ export const APP_HTML = String.raw`<!doctype html>
     setState('thinking', consultFor(text)); eqLevel(true);
     showReply('thinking');
     try {
-      const { reply: answer } = await api('/api/chat', { message: text });
-      messages.push({ role: 'assistant', text: answer });
+      const { reply: answer, image } = await api('/api/chat', { message: text });
+      messages.push({ role: 'assistant', text: answer, image });
       showReply('reply', '', hhmm());
       setState('speaking');
       await reveal(answer);
+      if (image) { rbody.prepend(picture(image)); layout(); }
       replyText = answer;
     } catch (err) {
       showReply('error', err.message);

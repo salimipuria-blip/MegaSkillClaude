@@ -2,6 +2,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import worker, { webhookSecret, appKey, chunks, MODELS, CF_MODELS } from './worker.mjs';
+import { imageRequest, IMAGE_MODEL } from './image.mjs';
 import { hashPassword } from './auth.mjs';
 import { USERS } from './users.mjs';
 
@@ -22,7 +23,7 @@ function mockFetch(geminiStatuses = [200]) {
   const calls = [];
   let g = 0;
   globalThis.fetch = async (url, init) => {
-    const body = init && init.body ? JSON.parse(init.body) : null;
+    const body = init && typeof init.body === 'string' ? JSON.parse(init.body) : init ? init.body : null;
     calls.push({ url: String(url), body });
     if (String(url).includes('generativelanguage')) {
       const status = geminiStatuses[Math.min(g++, geminiStatuses.length - 1)];
@@ -414,4 +415,53 @@ test('skill routing failures never break chat', async () => {
   const calls = mockFetch();
   await post(env, message('یک کپشن اینستاگرام جذاب بنویس'));
   assert.deepEqual(sent(calls), ['سلام پوریا']);
+});
+
+// Image generation: FLUX on Workers AI, prompt rewritten to English by the text brain.
+function imageAI() {
+  const calls = [];
+  return { calls, async run(model, input) {
+    calls.push({ model, input });
+    return model === IMAGE_MODEL ? { image: btoa('jpeg-bytes') } : { response: 'misty forest lake, ultra realistic' };
+  } };
+}
+
+test('image requests are recognised in Persian and with /img', () => {
+  assert.equal(imageRequest('عکس بساز: کمپ کنار دریاچه'), 'کمپ کنار دریاچه');
+  assert.equal(imageRequest('یه عکس بساز از جنگل پاییزی'), 'از جنگل پاییزی');
+  assert.equal(imageRequest('تصویر بساز دریاچه'), 'دریاچه');
+  assert.equal(imageRequest('/img a jeep in snow'), 'a jeep in snow');
+  assert.equal(imageRequest('عکس بساز'), '');
+  assert.equal(imageRequest('این عکس رو ببین'), null);
+  assert.equal(imageRequest('سلام'), null);
+});
+
+test('Telegram: «عکس بساز» sends a generated photo and keeps the prompt in memory', async () => {
+  const env = { ...baseEnv(), GEMINI_API_KEY: undefined, AI: imageAI() };
+  const calls = mockFetch();
+  await post(env, message('عکس بساز: کمپ کنار دریاچه در جنگل'));
+  const photo = calls.find((c) => c.url.endsWith('/sendPhoto'));
+  assert.ok(photo, 'sendPhoto called');
+  assert.equal(photo.body.get('chat_id'), '42');
+  assert.equal(photo.body.get('caption'), 'misty forest lake, ultra realistic');
+  const img = env.AI.calls.find((c) => c.model === IMAGE_MODEL);
+  assert.equal(img.input.prompt, 'misty forest lake, ultra realistic');
+  const log = JSON.parse(env.MEMORY.store.get('history:42'));
+  assert.match(log[1].parts[0].text, /عکس ساخته شد/);
+});
+
+test('web app: image request returns a data URL; empty request asks for a description', async () => {
+  const env = { ...baseEnv(), GEMINI_API_KEY: undefined, AI: imageAI() };
+  mockFetch();
+  const res = await callApi(env, '/api/chat', { message: 'عکس بساز: جیپ در برف' });
+  assert.equal(res.status, 200);
+  assert.match(res.body.image, /^data:image\/jpeg;base64,/);
+  assert.equal((await callApi(env, '/api/chat', { message: 'عکس بساز' })).status, 400);
+});
+
+test('without the AI binding, image requests fail with a clear message', async () => {
+  mockFetch();
+  const res = await callApi(baseEnv(), '/api/chat', { message: 'عکس بساز: دریاچه' });
+  assert.equal(res.status, 502);
+  assert.match(res.body.error, /Workers AI/);
 });

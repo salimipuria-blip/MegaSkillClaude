@@ -11,12 +11,14 @@ import { USERS } from './users.mjs';
 import { SKILLS } from './skills.mjs';
 import { relevantSkills, skillsBlock } from './skill-router.mjs';
 import { loadLog, toContents, appendTurn, archiveAndClear, noteFrom, loadNotes, addNote, clearNotes } from './memory.mjs';
+import { imageRequest, imagePrompt, makeImage, base64ToBytes } from './image.mjs';
 
 export const MODELS = ['gemini-3.8-flash', 'gemini-3.7-flash', 'gemini-3.5-flash-lite', 'gemini-2.5-flash'];
 export const CF_MODELS = ['@cf/google/gemma-3-12b-it', '@cf/meta/llama-3.3-70b-instruct-fp8-fast'];
 const GEMINI_API = 'https://generativelanguage.googleapis.com/v1beta';
 const TG_LIMIT = 4000;
-const STYLE = "Reply in the user's language (usually Persian). Be direct and accurate; short by default, detailed when the task needs it. Say so when you are not sure.\n" + SKILLS;
+const STYLE = "Reply in the user's language (usually Persian). Be direct and accurate; short by default, detailed when the task needs it. Say so when you are not sure.\n" +
+  "You CAN make images: a message that starts with «عکس بساز:» (or /img) is turned into a picture automatically. When the user wants a picture, tell them to send «عکس بساز: <description>»; when they ask for a design or post, also offer ready «عکس بساز: ...» lines for its backgrounds.\n" + SKILLS;
 const SYSTEM = "You are Hermes, Puria's personal assistant (Viking Offroad brand). " + STYLE;
 // Abilities that can be locked per person (users.mjs `locks`). A locked topic is refused before the AI is called.
 export const ABILITIES = {
@@ -119,6 +121,12 @@ async function api(request, url, env) {
     const locked = lockedHit(who, message);
     if (locked) return json({ error: `دسترسی به «${ABILITIES[locked].name}» برای حساب تو بسته است.`, locked }, 403);
     try {
+      const wanted = imageRequest(message);
+      if (wanted !== null) {
+        if (!wanted) return json({ error: 'بنویس چه عکسی می‌خواهی، مثلاً «عکس بساز: کمپ کنار دریاچه در جنگل پاییزی».' }, 400);
+        const { image, prompt } = await picture(env, historyKey(env, who), message, wanted);
+        return json({ reply: `🖼️ ساخته شد.\n\n${prompt}`, image: `data:image/jpeg;base64,${image}` });
+      }
       const system = who.role === 'owner' ? SYSTEM : teamSystem(who);
       return json({ reply: await converse(env, historyKey(env, who), message, system) });
     } catch (err) {
@@ -192,6 +200,7 @@ async function handle(msg, env, origin) {
   if (input === '/start') {
     return send(env, chatId, 'سلام! من هرمس هستم. هر چه می‌خواهی بپرس.\n' +
       'همهٔ گفتگوها ذخیره می‌ماند. با «یادت باشه ...» چیزی را برای همیشه به خاطر می‌سپارم.\n' +
+      'عکس بساز: ... یک عکس می‌سازم\n' +
       '/reset گفتگوی جدید (قبلی بایگانی می‌شود)\n/notes یادداشت‌های حافظه\n/forget پاک کردن یادداشت‌ها\n/app لینک اپ');
   }
   if (input === '/notes') {
@@ -208,6 +217,23 @@ async function handle(msg, env, origin) {
   if (input === '/reset') {
     await archiveAndClear(env, key);
     return send(env, chatId, 'گفتگوی جدید شروع شد. گفتگوی قبلی بایگانی شد و یادداشت‌ها سر جایشان هستند.');
+  }
+
+  const wanted = imageRequest(input);
+  if (wanted !== null) {
+    if (!wanted) return send(env, chatId, 'بنویس چه عکسی می‌خواهی، مثلاً:\nعکس بساز: کمپ کنار دریاچه در جنگل پاییزی');
+    await tg(env, 'sendChatAction', { chat_id: chatId, action: 'upload_photo' });
+    try {
+      const { image, prompt } = await picture(env, key, input, wanted);
+      const form = new FormData();
+      form.append('chat_id', String(chatId));
+      form.append('caption', prompt.slice(0, 1000));
+      form.append('photo', new Blob([base64ToBytes(image)], { type: 'image/jpeg' }), 'hermes.jpg');
+      await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendPhoto`, { method: 'POST', body: form });
+    } catch (err) {
+      await send(env, chatId, `خطا در ساخت عکس: ${err.message}`);
+    }
+    return;
   }
 
   await tg(env, 'sendChatAction', { chat_id: chatId, action: 'typing' });
@@ -232,6 +258,14 @@ export async function converse(env, key, input, system = SYSTEM) {
   const reply = await ask(env, contents, fullSystem);
   await appendTurn(env, key, log, input, reply);
   return reply;
+}
+
+// Text request → English prompt → FLUX image. The turn is kept in memory as text (the prompt), not the image bytes.
+export async function picture(env, key, input, wanted) {
+  const prompt = await imagePrompt(ask, env, wanted);
+  const image = await makeImage(env, prompt);
+  await appendTurn(env, key, await loadLog(env, key), input, `[عکس ساخته شد] ${prompt}`);
+  return { image, prompt };
 }
 
 export async function ask(env, contents, system = SYSTEM) {
