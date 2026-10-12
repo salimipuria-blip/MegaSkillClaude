@@ -1,0 +1,10 @@
+# Cloudflare Workers config for Hermes Lite (worker.mjs).
+# Deploy: Cloudflare → Workers & Pages → Create → Import a repository → MegaSkillClaude, root directory "hermes".
+# Secrets are set in the dashboard, never here.
+name = "hermes"
+main = "worker.mjs"
+compatibility_date = "2026-09-01"
+
+[[kv_namespaces]]
+binding = "MEMORY"
+id = "90fafb6bf15c4a1cb8b503668e070ab3"
