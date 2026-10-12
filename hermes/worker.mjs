@@ -15,6 +15,7 @@ export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
     if (request.method === 'GET' && url.pathname === '/setup') return setup(url, env);
+    if (request.method === 'GET' && url.pathname === '/') return home(url, env);
     if (request.method !== 'POST' || url.pathname !== '/telegram') return new Response('Hermes Lite is running.');
     if (!env.TELEGRAM_BOT_TOKEN ||
         request.headers.get('X-Telegram-Bot-Api-Secret-Token') !== await webhookSecret(env)) {
@@ -32,6 +33,16 @@ export default {
 export async function webhookSecret(env) {
   const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`hermes:${env.TELEGRAM_BOT_TOKEN}`));
   return [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, '0')).join('').slice(0, 48);
+}
+
+// Opening the worker's home page registers the webhook if it is not ours yet, so no /setup visit is needed.
+async function home(url, env) {
+  if (!env.TELEGRAM_BOT_TOKEN) return text('Hermes Lite is running.');
+  const info = await tg(env, 'getWebhookInfo', {});
+  if (info.ok && info.result && info.result.url === `${url.origin}/telegram`) {
+    return text('Hermes Lite is running.\n✓ Telegram connected.');
+  }
+  return setup(url, env);
 }
 
 async function setup(url, env) {

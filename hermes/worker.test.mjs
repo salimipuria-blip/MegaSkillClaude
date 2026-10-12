@@ -112,6 +112,21 @@ test('setup registers the webhook with the derived secret', async () => {
   assert.equal((await res.text()).includes('1:abc'), false);
 });
 
+test('home page registers the webhook once, then only reports status', async () => {
+  const env = baseEnv();
+  let calls = mockFetch();
+  await worker.fetch(new Request('https://hermes.example.workers.dev/'), env, {});
+  assert.ok(calls.some((c) => c.url.endsWith('/setWebhook')));
+  globalThis.fetch = async (url) => {
+    if (String(url).endsWith('/getWebhookInfo')) {
+      return new Response(JSON.stringify({ ok: true, result: { url: 'https://hermes.example.workers.dev/telegram' } }));
+    }
+    throw new Error(`unexpected call ${url}`);
+  };
+  const res = await worker.fetch(new Request('https://hermes.example.workers.dev/'), env, {});
+  assert.match(await res.text(), /connected/);
+});
+
 test('setup lists missing secrets by name only', async () => {
   mockFetch();
   const res = await worker.fetch(new Request('https://x.workers.dev/setup'), { GEMINI_API_KEY: 'g' }, {});
