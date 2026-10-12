@@ -10,6 +10,7 @@ CI واحد (`.github/workflows/ci.yml`) روی هر PR تست و بیلد هم�
 | `fjcod/` | CHAM Store OS: سامانهٔ فروشگاه چام | React 19 + TypeScript + Vite | `npm ci && npm run check` | Vercel `cham-store-os` |
 | `viking-team/` | Viking Experience Command: مرکز فرمان تیم | HTML ایستا + Supabase Auth/RLS | `python3 -m unittest discover -s tests` | Vercel |
 | `bison-brand-book/` | BISON Brand Book | Vite + GSAP + Lenis | `npm ci && npm run build` | GitHub Pages + Vercel `bison.brandbook.site.2026` |
+| `hermes/` | ایجنت هرمس ۲۴/۷ روی اوراکل رایگان + تلگرام | اسکریپت bash | `bash -n setup.sh` | سرور اوراکل (Always Free) |
 | `orchestrator/` | Omni LLM Orchestrator (تاریخی) | توابع Supabase Edge + پایتون | `python scripts/audit/check_repository_contract.py` و pytest | Supabase |
 | `.claude/skills/mega-skills-router/`، `plugins/`، `library/` | مسیریاب و کتابخانهٔ مهارت‌ها | پایتون | `python -m unittest discover -s tests` (از ریشه) | — |
 | `brands/viking-offroad/` | استیکرها و دارایی‌های برند وایکینگ آفرود | PNG + سورس | — | — |
