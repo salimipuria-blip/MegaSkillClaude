@@ -62,6 +62,7 @@ async function api(request, url, env) {
       text: m.parts.map((p) => p.text || '').join(''),
     })) });
   }
+  if (request.method === 'GET' && url.pathname === '/api/weather') return json(await weather(request));
   if (request.method === 'POST' && url.pathname === '/api/reset') {
     if (env.MEMORY) await env.MEMORY.delete(ownerKey(env));
     return json({ ok: true });
@@ -77,6 +78,21 @@ async function api(request, url, env) {
     }
   }
   return json({ error: 'not found' }, 404);
+}
+
+// Weather for the app's HUD: the caller's city from Cloudflare's geo data, else Tehran. Keyless open-meteo.
+export async function weather(request) {
+  const cf = request.cf || {};
+  const lat = Number(cf.latitude), lon = Number(cf.longitude);
+  const here = Number.isFinite(lat) && Number.isFinite(lon) && cf.city;
+  const [la, lo, city] = here ? [lat, lon, cf.city] : [35.69, 51.39, 'Tehran'];
+  try {
+    const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${la}&longitude=${lo}&current=temperature_2m,weather_code`);
+    const data = await res.json();
+    return { city, temp: data.current?.temperature_2m ?? null, code: data.current?.weather_code ?? null };
+  } catch {
+    return { city, temp: null, code: null };
+  }
 }
 
 function page(body, type) {

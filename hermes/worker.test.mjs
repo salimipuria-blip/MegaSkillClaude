@@ -212,6 +212,12 @@ test('web chat replies and shares memory with the owner Telegram chat', async ()
   assert.equal(env.MEMORY.store.has(`history:${OWNER}`), false);
 });
 
+test('weather endpoint needs the key and falls back to Tehran', async () => {
+  globalThis.fetch = async () => new Response(JSON.stringify({ current: { temperature_2m: 21.4, weather_code: 0 } }));
+  assert.equal((await callApi(baseEnv(), '/api/weather', undefined, 'nope')).status, 401);
+  assert.deepEqual((await callApi(baseEnv(), '/api/weather')).body, { city: 'Tehran', temp: 21.4, code: 0 });
+});
+
 test('/app in Telegram sends the private link with the derived key', async () => {
   const env = baseEnv();
   const calls = mockFetch();
