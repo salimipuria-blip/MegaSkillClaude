@@ -37,6 +37,9 @@ Worker `hermes` ← Settings ← Variables and Secrets ← Add. هر سه را �
 |---|---|
 | `TELEGRAM_BOT_TOKEN` | توکن BotFather |
 | `GEMINI_API_KEY` | کلید جمینی |
+| `GITHUB_MODELS_TOKEN` | (اختیاری، رایگان) توکن گیت‌هاب با دسترسی Models — مغز پشتیبان GPT-4.1 |
+| `GROQ_API_KEY` | (اختیاری، رایگان) کلید console.groq.com — مغز پشتیبان سریع |
+| `CEREBRAS_API_KEY` / `OPENROUTER_API_KEY` | (اختیاری، رایگان) مغزهای پشتیبان بیشتر |
 | `ALLOWED_USER_ID` | شناسهٔ عددی تو |
 
 > اگر رمزها را اشتباهی در Settings ← Build ← Variables and secrets گذاشتی، مشکلی نیست: `sync-secrets.mjs` موقع هر ساخت آن‌ها را به رمزهای خود بات کپی می‌کند.
@@ -141,3 +144,6 @@ curl -fsSL https://raw.githubusercontent.com/salimipuria-blip/MegaSkillClaude/ma
 اسکریپت کلید جمینی، توکن بات و شناسهٔ عددی را می‌پرسد. کلید و توکن موقع تایپ دیده نمی‌شوند و فقط روی همان سرور ذخیره می‌شوند. هرمس به صورت سرویس systemd اجرا می‌شود و بعد از ری‌استارت هم بالا می‌آید.
 
 **نگهداری:** `hermes gateway status`، `hermes gateway restart`، `hermes doctor`. اگر بات ساکت ماند: `journalctl --user -u hermes-gateway -n 50 --no-pager`.
+
+
+**ترتیب مغزها:** جمینی (همهٔ مدل‌ها) ← GitHub Models ← Groq ← Cerebras ← OpenRouter ← Workers AI. هر کدام که کلیدش نباشد رد می‌شود؛ پر شدن سهمیهٔ یکی، نوبت را به بعدی می‌دهد. نام مدل‌ها را می‌شود با `GITHUB_MODELS`، `GROQ_MODELS` و … (جداشده با کاما) عوض کرد.

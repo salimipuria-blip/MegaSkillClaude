@@ -834,3 +834,23 @@ test('image prompt: Persian request never reaches the image model raw; vague ask
   assert.equal(await imagePrompt(async () => 'a red jeep on a dune', {}, 'جیپ قرمز'), 'a red jeep on a dune');
   assert.equal(await imagePrompt(fails, {}, 'a red jeep'), 'a red jeep');
 });
+
+test('when every Gemini model is out of quota, the next free provider answers (bad keys are skipped)', async () => {
+  const env = { ...baseEnv(), GITHUB_MODELS_TOKEN: 'bad', GROQ_API_KEY: 'k', AI: { run: async () => { throw new Error('Workers AI must not be used'); } } };
+  const calls = [];
+  globalThis.fetch = async (url, init) => {
+    const u = String(url);
+    const body = init && typeof init.body === 'string' ? JSON.parse(init.body) : null;
+    calls.push({ url: u, body });
+    if (u.includes('generativelanguage')) return new Response('{}', { status: 429 });
+    if (u.includes('models.github.ai')) return new Response('{}', { status: 401 });
+    if (u.includes('api.groq.com')) return new Response(JSON.stringify({ choices: [{ message: { content: '<think>x</think>سلام از گروک' } }] }));
+    return new Response(JSON.stringify({ ok: true, result: {} }));
+  };
+  await post(env, message('سلام'));
+  assert.deepEqual(sent(calls), ['سلام از گروک']);
+  assert.equal(calls.filter((c) => c.url.includes('models.github.ai')).length, 1, 'a rejected key is not retried per model');
+  const groq = calls.find((c) => c.url.includes('api.groq.com'));
+  assert.equal(groq.body.messages[0].role, 'system');
+  assert.equal(groq.body.messages.at(-1).content, 'سلام');
+});

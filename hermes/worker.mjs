@@ -14,6 +14,7 @@ import { loadLog, toContents, appendTurn, archiveAndClear, noteFrom, loadNotes, 
 import { imageRequest, imagePrompt, makeImage, sizeFor, base64ToBytes } from './image.mjs';
 import { transcribe, describeImage, telegramFile, parseDataUrl } from './media.mjs';
 import { tripPage, createBooking } from './booking.mjs';
+import { askProviders, configuredProviders } from './providers.mjs';
 import { googleConfigured, googleConnected, googleTools, connectUrl, finishConnect, disconnect } from './google.mjs';
 
 export const MODELS = ['gemini-3.8-flash', 'gemini-3.7-flash', 'gemini-3.5-flash-lite', 'gemini-2.5-flash'];
@@ -233,7 +234,7 @@ async function setup(url, env) {
   });
   if (!hook.ok) return text(`✗ setWebhook failed: ${hook.description || 'unknown error'}`, 502);
   const memory = env.MEMORY ? 'on' : 'off (no MEMORY binding)';
-  const brain = env.GEMINI_API_KEY ? `Gemini${env.AI ? ' (Workers AI as fallback)' : ''}` : 'Cloudflare Workers AI';
+  const brain = [env.GEMINI_API_KEY && 'Gemini', ...configuredProviders(env).map((p) => p.name), env.AI && 'Workers AI'].filter(Boolean).join(' → ') || 'none';
   return text(`✓ Webhook set for @${me.result.username}\n✓ Memory: ${memory}\n✓ Brain: ${brain}\nNow message the bot in Telegram.`);
 }
 
@@ -370,17 +371,33 @@ export async function picture(env, key, input, wanted) {
   return { image, mime, model, prompt };
 }
 
+// Brains in order: Gemini (search + Google tools) → other free providers whose key is set → Workers AI.
 export async function ask(env, contents, system = SYSTEM, search = true, tools = null) {
+  const errors = [];
   if (env.GEMINI_API_KEY) {
     try {
       return await askGemini(env, contents, system, search, tools);
     } catch (err) {
-      if (!env.AI) throw err;
-      console.error('[Hermes] Gemini failed, using Workers AI:', err.message);
+      errors.push(err.message);
+      console.error('[Hermes] Gemini failed:', err.message);
     }
   }
-  if (env.AI) return askWorkersAI(env, contents, system);
-  throw new Error('نه کلید جمینی تنظیم شده و نه Workers AI.');
+  if (configuredProviders(env).length) {
+    try {
+      return await askProviders(env, contents, system);
+    } catch (err) {
+      errors.push(err.message);
+      console.error('[Hermes] free providers failed:', err.message);
+    }
+  }
+  if (env.AI) {
+    try {
+      return await askWorkersAI(env, contents, system);
+    } catch (err) {
+      errors.push(err.message);
+    }
+  }
+  throw new Error(errors.length ? errors.join(' | ') : 'هیچ مغزی تنظیم نشده (کلید جمینی یا یکی از کلیدهای رایگان دیگر).');
 }
 
 export async function askWorkersAI(env, contents, system = SYSTEM) {
