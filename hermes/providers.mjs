@@ -1,4 +1,6 @@
-// Free text brains with an OpenAI-compatible API. Each one is used only when its key is set as a Cloudflare
+// Free text brains with an OpenAI-compatible API. GitHub Models gives every model its own daily quota, so many models
+// are listed (and more are read from its catalog when those are busy) to get as many free answers a day as possible.
+// Each one is used only when its key is set as a Cloudflare
 // secret; they run in this order after Gemini and before Workers AI, so a full quota on one hands over to the next.
 // Model names go stale, so when none of the listed ones exist (404) the provider's own model list is read and the
 // best match is used (and remembered in KV). A comma-separated secret/var (e.g. GROQ_MODELS) overrides the list.
@@ -6,7 +8,11 @@
 // characters and retried much shorter when a provider still says it is too large (413).
 export const PROVIDERS = [
   { name: 'GitHub Models', key: 'GITHUB_MODELS_TOKEN', list: 'GITHUB_MODELS', url: 'https://models.github.ai/inference/chat/completions',
-    budget: 12000, catalog: 'https://models.github.ai/catalog/models', models: ['openai/gpt-4.1', 'openai/gpt-4o', 'openai/gpt-4.1-mini'] },
+    budget: 12000, catalog: 'https://models.github.ai/catalog/models', models: [
+      'openai/gpt-4.1', 'openai/gpt-4o', 'deepseek/DeepSeek-V3-0324', 'xai/grok-3', 'meta/Llama-4-Maverick-17B-128E-Instruct-FP8',
+      'mistral-ai/mistral-medium-2505', 'openai/gpt-4.1-mini', 'meta/Llama-3.3-70B-Instruct', 'openai/gpt-4o-mini',
+      'xai/grok-3-mini', 'cohere/cohere-command-a',
+    ], discover: 8 },
   { name: 'Groq', key: 'GROQ_API_KEY', list: 'GROQ_MODELS', url: 'https://api.groq.com/openai/v1/chat/completions',
     budget: 14000, catalog: 'https://api.groq.com/openai/v1/models', models: ['llama-3.3-70b-versatile', 'openai/gpt-oss-120b', 'qwen/qwen3-32b'] },
   { name: 'Cerebras', key: 'CEREBRAS_API_KEY', list: 'CEREBRAS_MODELS', url: 'https://api.cerebras.ai/v1/chat/completions',
@@ -17,12 +23,13 @@ export const PROVIDERS = [
 
 // Preferred families when discovering, best first; chat models only.
 const PREFER = [/gpt-4\.1(?!-nano)/i, /gpt-4o(?!-mini)/i, /gpt-oss-120b/i, /deepseek.*(v3|chat)/i, /llama-?3\.3-70b|llama-4/i, /qwen-?3/i, /gpt|llama|qwen|mistral|gemma/i];
-const NOT_CHAT = /whisper|tts|embed|guard|vision-preview|audio|image|moderation/i;
+const NOT_CHAT = /whisper|tts|embed|guard|vision-preview|audio|image|moderation|(^|\/)o\d/i;
 
 export const configuredProviders = (env) => PROVIDERS.filter((p) => env[p.key]);
 
 const FULL_BUDGET = 24000;
 const SMALL_BUDGET = 5000;
+const MAX_CALLS = 16;
 
 const modelsOf = (env, p) => (env[p.list] ? String(env[p.list]).split(',').map((s) => s.trim()).filter(Boolean) : p.models);
 
@@ -45,7 +52,7 @@ export async function discoverModels(env, p) {
   const ids = list.map((m) => m && (m.id || m.name)).filter((id) => typeof id === 'string' && !NOT_CHAT.test(id))
     .filter((id) => p.name !== 'OpenRouter' || id.endsWith(':free'));
   const rank = (id) => { const i = PREFER.findIndex((re) => re.test(id)); return i < 0 ? PREFER.length : i; };
-  return ids.sort((a, b) => rank(a) - rank(b)).slice(0, 3);
+  return ids.sort((a, b) => rank(a) - rank(b)).slice(0, p.discover || 3);
 }
 
 const cut = (text, max) => (text.length > max ? `${text.slice(0, Math.max(0, max - 1))}…` : text);
@@ -100,14 +107,16 @@ export async function askProviders(env, contents, system) {
     const small = fitContext(all, SMALL_BUDGET);
     const tried = new Set();
     const reasons = [];
-    let allMissing = true;
+    let allMissing = true, calls = 0;
     const attempt = async (models) => {
       for (const model of models) {
         if (tried.has(model)) continue;
+        if (calls >= MAX_CALLS) break; // stay well under the Workers limit of 50 outbound requests per message
         tried.add(model);
         try {
+          calls++;
           let r = await callModel(env, p, model, full);
-          if (tooLarge(r)) r = await callModel(env, p, model, small);
+          if (tooLarge(r)) { calls++; r = await callModel(env, p, model, small); }
           if (r.status === 401 || r.status === 403) { reasons.push(`کلید پذیرفته نشد (${r.status})`); allMissing = false; return 'stop'; }
           if (r.status !== 200) {
             reasons.push(`${model}: ${r.status}${r.why ? ` ${r.why}` : ''}`);
@@ -126,7 +135,7 @@ export async function askProviders(env, contents, system) {
       return null;
     };
     let out = await attempt([...(cached ? [cached] : []), ...modelsOf(env, p)]);
-    if (out === null && allMissing && p.catalog) {
+    if (out === null && (allMissing || p.discover) && p.catalog) {
       try { out = await attempt(await discoverModels(env, p)); } catch { /* keep the earlier reasons */ }
     }
     if (out && out !== 'stop') return out;
