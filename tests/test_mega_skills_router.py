@@ -64,7 +64,23 @@ class RouterRankingTest(unittest.TestCase):
         for directory in COPIES.values():
             index = json.loads((directory / "references/triggers.json").read_text())
             self.assertEqual({s["name"] for s in index["skills"] if s.get("incomplete")}, expected)
-            self.assertEqual(index["counts"]["routable_skills"], 5705)
+            self.assertEqual(index["counts"]["routable_skills"], len(index["skills"]) - len(expected))
+
+    def test_matt_pocock_pack_survives_canonical_portable_synchronization(self):
+        github = json.loads((ROOT / "library/github-skills/INDEX.json").read_text())
+        pack = {s["name"] for s in github if s["repo"] == "mattpocock/skills"}
+        self.assertGreaterEqual(len(pack), 31)
+        self.assertTrue({"ask-matt", "mp-code-review", "tdd", "to-tickets"} <= pack)
+        for directory in COPIES.values():
+            index = json.loads((directory / "references/triggers.json").read_text())
+            self.assertTrue(pack <= {s["name"] for s in index["skills"]})
+        for name in pack:
+            canonical = ROOT / "library/github-skills" / name / "SKILL.md"
+            portable = COPIES["plugin"] / "references/skills" / name / "INSTRUCTIONS.md"
+            self.assertEqual(canonical.read_bytes(), portable.read_bytes())
+        license_name = "mattpocock__skills__LICENSE"
+        self.assertEqual((ROOT / "library/github-skills/_licenses" / license_name).read_bytes(),
+                         (COPIES["plugin"] / "references/licenses" / license_name).read_bytes())
 
     def test_indexed_paths_exist(self):
         project = _load(COPIES["project"])

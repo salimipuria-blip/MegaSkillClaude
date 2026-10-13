@@ -4,7 +4,8 @@
 import { writeFileSync, rmSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 
-const NAMES = ['TELEGRAM_BOT_TOKEN', 'GEMINI_API_KEY', 'ALLOWED_USER_ID'];
+const NAMES = ['TELEGRAM_BOT_TOKEN', 'GEMINI_API_KEY', 'ALLOWED_USER_ID', 'GITHUB_MODELS_TOKEN', 'GROQ_API_KEY', 'CEREBRAS_API_KEY',
+  'MISTRAL_API_KEY', 'HF_TOKEN', 'OPENROUTER_API_KEY', 'POLLINATIONS_TOKEN'];
 const found = Object.fromEntries(NAMES.filter((n) => process.env[n]).map((n) => [n, process.env[n].trim()]));
 
 if (!process.env.CLOUDFLARE_API_TOKEN || Object.keys(found).length === 0) {

@@ -8,13 +8,18 @@
 import { APP_HTML, MANIFEST, ICON } from './app.mjs';
 import { login, sessionUser, changePassword } from './auth.mjs';
 import { USERS } from './users.mjs';
-import { STYLE, SYSTEM } from './brain.mjs';
+import { STYLE, SYSTEM, askGemini } from './brain.mjs';
 import { appKey, webhookSecret, setupKey } from './security.mjs';
 export { appKey, webhookSecret, setupKey } from './security.mjs';
-import { converse } from './conversation.mjs';
+import { converse, picture } from './conversation.mjs';
+export { converse, picture } from './conversation.mjs';
 import { requireConversationBinding, loadLog, archiveAndClear, loadNotes, clearNotes } from './memory.mjs';
 export { ask, askGemini, askWorkersAI, MODELS, CF_MODELS } from './brain.mjs';
-export { converse } from './conversation.mjs';
+import { imageRequest, base64ToBytes } from './image.mjs';
+import { transcribe, telegramFile, parseDataUrl } from './media.mjs';
+import { tripPage, createBooking, onContact } from './booking.mjs';
+import { configuredProviders } from './providers.mjs';
+import { googleConfigured, googleConnected, googleTools, connectUrl, finishConnect, disconnect } from './google.mjs';
 
 const TG_LIMIT = 4000;
 // Abilities that can be locked per person (users.mjs `locks`). A locked topic is refused before the AI is called.
@@ -41,7 +46,10 @@ export default {
     if (request.method === 'GET' && url.pathname === '/app') return page(APP_HTML, 'text/html');
     if (request.method === 'GET' && url.pathname === '/manifest.webmanifest') return page(MANIFEST, 'application/manifest+json');
     if (request.method === 'GET' && url.pathname === '/icon.svg') return page(ICON, 'image/svg+xml');
+    if (request.method === 'GET' && url.pathname === '/trip') return page(tripPage(), 'text/html');
     if (url.pathname.startsWith('/api/')) return api(request, url, env);
+    if (request.method === 'GET' && url.pathname === '/connect/google') return googleStart(url, env);
+    if (request.method === 'GET' && url.pathname === '/connect/google/callback') return googleCallback(url, env);
     if (request.method !== 'POST' || url.pathname !== '/telegram') return new Response('Hermes Lite is running.');
     if (!env.TELEGRAM_BOT_TOKEN ||
         request.headers.get('X-Telegram-Bot-Api-Secret-Token') !== await webhookSecret(env)) {
@@ -49,7 +57,7 @@ export default {
     }
     const update = await request.json().catch(() => null);
     const msg = update && update.message;
-    if (msg && typeof msg.text === 'string') {
+    if (msg && (typeof msg.text === 'string' || msg.contact || msg.voice || msg.audio || (msg.photo && msg.photo.length))) {
       ctx.waitUntil(handle(msg, env, url.origin).catch((err) => console.error('[Hermes]', err.message)));
     }
     return new Response('ok');
@@ -75,6 +83,11 @@ async function api(request, url, env) {
   const json = (body, status = 200) => new Response(JSON.stringify(body), {
     status, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' },
   });
+  if (request.method === 'POST' && url.pathname === '/api/booking') {
+    if (!env.TELEGRAM_BOT_TOKEN) return json({ error: 'رزرو موقتاً در دسترس نیست.' }, 503);
+    const res = await createBooking(env, tg, request, await request.json().catch(() => ({})));
+    return json(res.data, res.status);
+  }
   if (request.method === 'POST' && url.pathname === '/api/login') {
     if (!env.TELEGRAM_BOT_TOKEN) return json({ error: 'not configured' }, 503);
     const body = await request.json().catch(() => ({}));
@@ -114,15 +127,34 @@ async function api(request, url, env) {
     await clearNotes(env, historyKey(env, who));
     return json({ ok: true });
   }
+  if (request.method === 'POST' && url.pathname === '/api/transcribe') {
+    const body = await request.json().catch(() => ({}));
+    const audio = parseDataUrl(body.audio, 'audio');
+    if (!audio) return json({ error: 'ویس نامعتبر یا بزرگ‌تر از ۸ مگابایت است.' }, 400);
+    try {
+      return json({ text: await transcribe(env, askGemini, audio.data, audio.mime) });
+    } catch (err) {
+      return json({ error: err.message }, 502);
+    }
+  }
   if (request.method === 'POST' && url.pathname === '/api/chat') {
     const body = await request.json().catch(() => ({}));
-    const message = typeof body.message === 'string' ? body.message.trim().slice(0, 4000) : '';
+    const photo = body.image ? parseDataUrl(body.image, 'image') : null;
+    if (body.image && !photo) return json({ error: 'عکس نامعتبر یا بزرگ‌تر از ۸ مگابایت است.' }, 400);
+    const message = (typeof body.message === 'string' ? body.message.trim().slice(0, 4000) : '') || (photo ? 'این عکس رو ببین و بگو چی توشه.' : '');
     if (!message) return json({ error: 'پیام خالی است.' }, 400);
     const locked = lockedHit(who, message);
     if (locked) return json({ error: `دسترسی به «${ABILITIES[locked].name}» برای حساب تو بسته است.`, locked }, 403);
     try {
+      const wanted = photo ? null : imageRequest(message);
+      if (wanted !== null) {
+        if (!wanted) return json({ error: 'بنویس چه عکسی می‌خواهی، مثلاً «عکس بساز: کمپ کنار دریاچه در جنگل پاییزی».' }, 400);
+        const { image, mime, model, prompt } = await picture(env, historyKey(env, who), message, wanted);
+        return json({ reply: `🖼️ ساخته شد (${model}).\n\n${prompt}`, image: `data:${mime};base64,${image}` });
+      }
       const system = who.role === 'owner' ? SYSTEM : teamSystem(who);
-      return json({ reply: await converse(env, historyKey(env, who), message, system) });
+      const tools = who.role === 'owner' ? await googleTools(env) : null;
+      return json({ reply: await converse(env, historyKey(env, who), message, system, photo ? [photo] : [], tools) });
     } catch (err) {
       return json({ error: err.message }, 502);
     }
@@ -145,25 +177,47 @@ export async function weather(request) {
   }
 }
 
+// Owner-only Google connection: Telegram /google issues a one-time link (10 minutes) → Google consent → callback.
+async function googleStart(url, env) {
+  const t = url.searchParams.get('t') || '';
+  if (!env.MEMORY || !/^[0-9a-f]{32}$/.test(t) || !(await env.MEMORY.get(`google:start:${t}`))) return text('✗ لینک منقضی شده؛ در تلگرام دوباره /google را بزن.', 403);
+  await env.MEMORY.delete(`google:start:${t}`);
+  if (!googleConfigured(env)) return text('✗ GOOGLE_CLIENT_ID و GOOGLE_CLIENT_SECRET را در Secrets کلادفلر بگذار (راهنما: hermes/README.md).', 400);
+  return Response.redirect(await connectUrl(env, url.origin), 302);
+}
+
+async function googleCallback(url, env) {
+  if (!googleConfigured(env)) return text('not configured', 400);
+  if (url.searchParams.get('error')) return text(`✗ اتصال لغو شد (${url.searchParams.get('error')}).`, 400);
+  try {
+    await finishConnect(env, url.origin, url.searchParams.get('code'), url.searchParams.get('state'));
+  } catch (err) {
+    return text(`✗ ${err.message}`, 400);
+  }
+  return page('<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">' +
+    '<body style="font:18px/1.8 system-ui;background:#06101c;color:#eee;display:grid;place-items:center;height:100vh;margin:0;text-align:center">' +
+    '<div>✅ گوگل به هرمس وصل شد<br><small>جیمیل، تقویم، درایو و شیت. حالا برگرد به تلگرام.</small></div>', 'text/html');
+}
+
 function page(body, type) {
   return new Response(body, { headers: { 'content-type': `${type}; charset=utf-8`, 'cache-control': 'no-cache' } });
 }
 
 async function setup(url, env) {
   const missing = ['TELEGRAM_BOT_TOKEN', 'ALLOWED_USER_ID'].filter((k) => !env[k]);
-  if (!env.GEMINI_API_KEY && !env.AI) missing.push('GEMINI_API_KEY (or the AI binding)');
+  if (!env.GEMINI_API_KEY && !env.AI && !configuredProviders(env).length) missing.push('GEMINI_API_KEY (or the AI binding)');
   if (missing.length) return text(`✗ Missing secrets: ${missing.join(', ')}`, 400);
   const me = await tg(env, 'getMe', {});
   if (!me.ok) return text('✗ Telegram rejected TELEGRAM_BOT_TOKEN. Copy it again from @BotFather.', 400);
   const hook = await tg(env, 'setWebhook', {
     url: `${url.origin}/telegram`,
     secret_token: await webhookSecret(env),
-    allowed_updates: ['message'],
+    allowed_updates: ['message', 'callback_query'],
     drop_pending_updates: false,
   });
   if (!hook.ok) return text(`✗ setWebhook failed: ${hook.description || 'unknown error'}`, 502);
   const memory = env.CONVERSATIONS ? 'SQLite Durable Object' : 'local-only compatibility (not distributed)';
-  const brain = env.GEMINI_API_KEY ? `Gemini${env.AI ? ' (Workers AI as fallback)' : ''}` : 'Cloudflare Workers AI';
+  const brain = [env.GEMINI_API_KEY && 'Gemini', ...configuredProviders(env).map((p) => p.name), env.AI && 'Workers AI'].filter(Boolean).join(' → ') || 'none';
   return text(`✓ Webhook set for @${me.result.username}\n✓ Memory: ${memory}\n✓ Brain: ${brain}\nNow message the bot in Telegram.`);
 }
 
@@ -172,16 +226,45 @@ async function handle(msg, env, origin) {
   if (msg.chat?.type !== 'private') return;
   const chatId = msg.chat.id;
   const userId = msg.from && msg.from.id;
-  if (String(userId) !== String(env.ALLOWED_USER_ID).trim()) {
-    await send(env, chatId, `این بات خصوصی است. شناسهٔ شما: ${userId}`);
+  if (String(chatId) !== String(userId)) return;
+  if (msg.contact && env.MEMORY) {
+    const done = await onContact(env, msg);
+    await tg(env, 'sendMessage', { chat_id: chatId, text: done, reply_markup: { remove_keyboard: true } });
+    if (done.startsWith('✅') && String(userId) !== String(env.ALLOWED_USER_ID).trim()) {
+      await send(env, String(env.ALLOWED_USER_ID).trim(), `گزارش رزروها از این به بعد فقط برای ${[msg.from.first_name, msg.from.username && `@${msg.from.username}`].filter(Boolean).join(' ')} فرستاده می‌شه.`);
+    }
     return;
   }
-  if (String(chatId) !== String(userId)) return;
+  if (String(userId) !== String(env.ALLOWED_USER_ID).trim()) {
+    await tg(env, 'sendMessage', { chat_id: chatId, text: `این بات خصوصی است. شناسهٔ شما: ${userId}\n\nمسئول رزرو وایکینگ هستی؟ دکمهٔ پایین رو بزن تا شماره‌ت ثبت بشه و گزارش رزروها برات بیاد.`,
+      reply_markup: { keyboard: [[{ text: '📱 ارسال شمارهٔ من', request_contact: true }]], resize_keyboard: true, one_time_keyboard: true } });
+    return;
+  }
   const key = ownerKey(env);
-  const input = msg.text.trim();
+  let input = typeof msg.text === 'string' ? msg.text.trim() : '';
+  let images = [], heard = '';
+  if (!input) {
+    try {
+      const voice = msg.voice || msg.audio;
+      if (voice) {
+        await tg(env, 'sendChatAction', { chat_id: chatId, action: 'typing' });
+        const file = await telegramFile(env, voice.file_id, voice.mime_type || 'audio/ogg');
+        input = heard = await transcribe(env, askGemini, file.data, file.mime);
+      } else if (msg.photo && msg.photo.length) {
+        images = [await telegramFile(env, msg.photo[msg.photo.length - 1].file_id, 'image/jpeg')];
+        input = (msg.caption || '').trim() || 'این عکس رو ببین و بگو چی توشه.';
+      }
+    } catch (err) {
+      return send(env, chatId, `خطا: ${err.message}`);
+    }
+    if (!input) return;
+  }
   if (input === '/start') {
     return send(env, chatId, 'سلام! من هرمس هستم. هر چه می‌خواهی بپرس.\n' +
       'همهٔ گفتگوها ذخیره می‌ماند. با «یادت باشه ...» چیزی را برای همیشه به خاطر می‌سپارم.\n' +
+      'عکس بساز: ... یک عکس می‌سازم\n' +
+      'ویس بفرست تا گوش بدهم، عکس بفرست تا ببینم؛ برای خبرها و چیزهای روز در گوگل جست‌وجو می‌کنم.\n' +
+      '/google اتصال جیمیل، تقویم، درایو و شیت\n' +
       '/reset گفتگوی جدید (قبلی بایگانی می‌شود)\n/notes یادداشت‌های حافظه\n/forget پاک کردن یادداشت‌ها\n/app لینک اپ');
   }
   if (input === '/notes') {
@@ -195,19 +278,50 @@ async function handle(msg, env, origin) {
   if (input === '/app') {
     return send(env, chatId, `اپ چت هرمس (لینک خصوصی، برای کسی نفرست):\n${origin}/app#k=${await appKey(env)}\n\nدر سافاری باز کن و Share ← Add to Home Screen را بزن تا مثل اپ نصب شود.`);
   }
+  if (input === '/trip') {
+    return send(env, chatId, `صفحهٔ عمومی سفر و رزرو (برای لینک بیو):\n${origin}/trip\n\nاطلاعات هر رزرو به‌صورت خصوصی برای تو و هر کس در BOOKING_ADMIN_IDS فرستاده می‌شود (هر نفر یک بار باید بات را استارت کند).`);
+  }
+  if (input === '/google') {
+    if (!googleConfigured(env)) return send(env, chatId, 'اول GOOGLE_CLIENT_ID و GOOGLE_CLIENT_SECRET را در Secrets کلادفلر بگذار، بعد دوباره /google را بزن.');
+    const state = await googleConnected(env) ? 'الان وصل است. برای اتصال دوباره (یا حساب دیگر):' : 'برای وصل کردن جیمیل، تقویم، درایو و شیت این لینک را باز کن:';
+    const t = [...crypto.getRandomValues(new Uint8Array(16))].map((b) => b.toString(16).padStart(2, '0')).join('');
+    await env.MEMORY.put(`google:start:${t}`, '1', { expirationTtl: 600 });
+    return send(env, chatId, `${state}\n${origin}/connect/google?t=${t}\n(این لینک یک‌بار مصرف است و ۱۰ دقیقه اعتبار دارد.)\n\nقطع اتصال: /google_off`);
+  }
+  if (input === '/google_off') {
+    await disconnect(env);
+    return send(env, chatId, 'اتصال گوگل قطع شد. (برای قطع کامل، در myaccount.google.com/permissions هم دسترسی Hermes را بردار.)');
+  }
   if (input === '/reset') {
     await archiveAndClear(env, key);
     return send(env, chatId, 'گفتگوی جدید شروع شد. گفتگوی قبلی بایگانی شد و یادداشت‌ها سر جایشان هستند.');
   }
 
+  const wanted = imageRequest(input);
+  if (wanted !== null) {
+    if (!wanted) return send(env, chatId, 'بنویس چه عکسی می‌خواهی، مثلاً:\nعکس بساز: کمپ کنار دریاچه در جنگل پاییزی');
+    await tg(env, 'sendChatAction', { chat_id: chatId, action: 'upload_photo' });
+    try {
+      const { image, mime, prompt } = await picture(env, key, input, wanted);
+      const form = new FormData();
+      form.append('chat_id', String(chatId));
+      form.append('caption', prompt.slice(0, 1000));
+      form.append('photo', new Blob([base64ToBytes(image)], { type: mime }), mime === 'image/png' ? 'hermes.png' : 'hermes.jpg');
+      await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendPhoto`, { method: 'POST', body: form });
+    } catch (err) {
+      await send(env, chatId, `خطا در ساخت عکس: ${err.message}`);
+    }
+    return;
+  }
+
   await tg(env, 'sendChatAction', { chat_id: chatId, action: 'typing' });
   let reply;
   try {
-    reply = await converse(env, key, input);
+    reply = await converse(env, key, input, SYSTEM, images, await googleTools(env));
   } catch (err) {
     return send(env, chatId, `خطا: ${err.message}`);
   }
-  await send(env, chatId, reply);
+  await send(env, chatId, heard ? `🎙️ «${heard}»\n\n${reply}` : reply);
 }
 
 export function chunks(str, size = TG_LIMIT) {

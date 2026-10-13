@@ -170,6 +170,9 @@ export const APP_HTML = String.raw`<!doctype html>
   .md pre code { background: none; color: #d6e6ee; padding: 0; font: 13px/1.6 var(--mono); }
   .md a { color: var(--cyan); text-decoration: none; border-bottom: 1px solid rgba(0,229,255,.35); }
   .md b { color: #fff; }
+  .pic { display: block; position: relative; margin: 2px 0 10px; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,.14); white-space: normal; }
+  .pic img { display: block; width: 100%; height: auto; }
+  .pic span { position: absolute; left: 8px; bottom: 8px; padding: 3px 9px; border-radius: 99px; background: rgba(0,0,0,.65); color: var(--gold); font: 600 11px/1.6 ui-monospace, monospace; letter-spacing: .08em; }
   .caret { display: inline-block; width: 7px; height: 1.05em; vertical-align: -3px; margin-right: 2px; background: var(--gold); box-shadow: 0 0 10px var(--gold); animation: blink .7s infinite; }
   .scan { height: 9px; border-radius: 5px; margin: 6px 0 0 auto; width: 70%;
     background: linear-gradient(90deg, rgba(245,166,35,.05) 0%, rgba(245,166,35,.4) 50%, rgba(245,166,35,.05) 100%); background-size: 200% 100%; animation: scan 1.1s linear infinite; }
@@ -185,6 +188,9 @@ export const APP_HTML = String.raw`<!doctype html>
   .send { width: 42px; height: 42px; flex: none; border: 0; border-radius: 50%; cursor: pointer; display: grid; place-items: center; color: #1a0f00;
     background: radial-gradient(circle at 50% 40%, #fff3d6, var(--gold-hi) 35%, var(--gold) 75%);
     box-shadow: 0 0 0 1px rgba(255,208,128,.6), 0 0 18px rgba(245,166,35,.55); transition: opacity .2s, transform .1s; }
+  .tool { width: 38px; height: 42px; flex: none; border: 0; background: none; color: rgba(147,168,186,.8); cursor: pointer; display: grid; place-items: center; border-radius: 50%; transition: color .2s, background .2s; }
+  .tool:hover { color: var(--text); } .tool.on { color: var(--gold); background: rgba(245,166,35,.12); }
+  .tool.rec { color: #ff5d5d; background: rgba(255,60,60,.14); animation: blink 1s infinite; }
   .send:active { transform: scale(.92); } .send:disabled { opacity: .25; box-shadow: none; cursor: default; }
 
   /* Agent overview card */
@@ -344,6 +350,9 @@ export const APP_HTML = String.raw`<!doctype html>
 
 <div id="dock">
   <form class="composer" id="form">
+    <input type="file" id="file" accept="image/*" hidden>
+    <button class="tool" id="attach" type="button" aria-label="فرستادن عکس"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="15" rx="3"/><circle cx="12" cy="12.5" r="3.5"/><path d="M8 5l1.5-2h5L16 5"/></svg></button>
+    <button class="tool" id="mic" type="button" aria-label="ویس"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button>
     <textarea id="input" rows="1" placeholder="به هرمس بگو…" autocomplete="off"></textarea>
     <button class="send" id="send" type="submit" aria-label="ارسال" disabled>
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
@@ -405,15 +414,15 @@ export const APP_HTML = String.raw`<!doctype html>
       ['فارسی ↔ انگلیسی و زبان‌های دیگر', 'حفظ لحن متن', 'ترجمهٔ پیام مشتری خارجی'], ['این را به انگلیسی ترجمه کن: ']],
     ['editor', 'Editor', 'skill', 502, 312, true, 'r', 6.5, 'ویرایش متن', 'online',
       ['روان و کوتاه کردن متن', 'رسمی یا خودمانی کردن لحن', 'غلط‌گیری'], ['این متن را روان‌تر کن: ']],
-    ['voice', 'Voice', 'skill', 118, 356, false, 'l', 6, 'پیام صوتی', 'queued',
-      ['ویس تلگرام را می‌فهمد', 'جواب را صوتی هم می‌دهد'], []],
-    ['vision', 'Vision', 'soon', 256, 388, false, 't', 5.5, 'دیدن عکس', 'planned',
-      ['عکس را تحلیل می‌کند', 'برای عکس کپشن می‌نویسد'], []],
+    ['voice', 'Voice', 'skill', 118, 356, true, 'l', 6, 'پیام صوتی', 'online',
+      ['ویس تلگرام را می‌فهمد', 'در اپ: دکمهٔ میکروفون، بزن و حرف بزن'], []],
+    ['vision', 'Vision', 'skill', 256, 388, true, 't', 5.5, 'دیدن عکس', 'online',
+      ['عکس را تحلیل می‌کند', 'برای عکس کپشن می‌نویسد', 'در اپ: دکمهٔ دوربین کنار پیام'], []],
     ['remind', 'Reminders', 'soon', 414, 392, true, 't', 5.5, 'یادآور و خلاصهٔ صبح', 'queued',
       ['یادآوری سر ساعت در تلگرام', 'هر صبح خلاصهٔ روز'], []],
     ['calendar', 'Calendar', 'soon', 560, 356, true, 'r', 5.5, 'تقویم و رزرو تور', 'planned',
       ['ثبت رزرو تورها', 'یادآوری قبل از حرکت'], []],
-    ['search', 'Search', 'soon', 608, 286, false, 'r', 5.5, 'جست‌وجوی وب', 'planned',
+    ['search', 'Search', 'skill', 608, 286, true, 'r', 5.5, 'جست‌وجوی وب', 'online',
       ['خبر و قیمت روز', 'منبع‌دار جواب می‌دهد'], []],
     ['fjcod', 'FJCod', 'soon', 582, 132, false, 'r', 5.5, 'اتصال به FJCod', 'planned',
       ['دسترسی به داده‌های پروژهٔ FJCod'], []],
@@ -527,7 +536,8 @@ export const APP_HTML = String.raw`<!doctype html>
     const t = text.toLowerCase(), ids = ['brain', 'memory'];
     const rules = [['captions', /کپشن|هشتگ|caption/], ['content', /محتوا|پست|ریلز|استوری|اینستا/], ['planner', /برنامه|کار|چک|لیست|امروز|فردا/],
       ['viking', /وایکینگ|تور|آفرود|مشتری|viking/], ['translate', /ترجمه|انگلیسی|translate/], ['editor', /روان|ویرایش|متن|غلط/],
-      ['research', /تحلیل|بازار|رقبا|بررسی|مقایسه|چیست|چرا/]];
+      ['research', /تحلیل|بازار|رقبا|بررسی|مقایسه|چیست|چرا/], ['search', /خبر|امروز|الان|قیمت|هوا|جدید|آخرین|news|latest/],
+      ['vision', /عکس|تصویر|photo|image/]];
     rules.forEach(([id, re]) => { if (re.test(t)) ids.push(id); });
     if (ids.length === 2) ids.push('research');
     return ids.filter((id) => !locks.includes(id));
@@ -809,11 +819,20 @@ export const APP_HTML = String.raw`<!doctype html>
     });
   }
 
+  // A generated image with a save link (long-press also works on iPhone).
+  function picture(src) {
+    const a = document.createElement('a'); a.className = 'pic'; a.href = src; a.download = 'hermes-' + Date.now() + '.jpg';
+    const img = document.createElement('img'); img.src = src; img.alt = 'generated image';
+    const s = document.createElement('span'); s.textContent = 'SAVE ↓';
+    a.append(img, s);
+    return a;
+  }
   function renderLog() {
     const lb = $('lbody'); lb.innerHTML = '';
     messages.forEach((m) => {
       const d = document.createElement('div'); d.className = 'm ' + (m.role === 'user' ? 'me' : 'bot md');
       if (m.role === 'user') d.textContent = m.text; else d.innerHTML = md(m.text);
+      if (m.image) d.prepend(picture(m.image));
       lb.append(d);
     });
     $('lcount').textContent = messages.length ? messages.length + ' MSG' : '';
@@ -851,18 +870,20 @@ export const APP_HTML = String.raw`<!doctype html>
   }
 
   async function submit() {
-    const text = input.value.trim();
+    const photo = pendingImage;
+    const text = input.value.trim() || (photo ? 'این عکس رو ببین و بگو چی توشه.' : '');
     if (!text || busy) return;
-    busy = true; clearTimeout(surge); input.value = ''; resize();
-    messages.push({ role: 'user', text });
+    busy = true; clearTimeout(surge); input.value = ''; setImage(null); resize();
+    messages.push({ role: 'user', text, image: photo || undefined });
     setState('thinking', consultFor(text)); eqLevel(true);
     showReply('thinking');
     try {
-      const { reply: answer } = await api('/api/chat', { message: text });
-      messages.push({ role: 'assistant', text: answer });
+      const { reply: answer, image } = await api('/api/chat', photo ? { message: text, image: photo } : { message: text });
+      messages.push({ role: 'assistant', text: answer, image });
       showReply('reply', '', hhmm());
       setState('speaking');
       await reveal(answer);
+      if (image) { rbody.prepend(picture(image)); layout(); }
       replyText = answer;
     } catch (err) {
       showReply('error', err.message);
@@ -872,7 +893,54 @@ export const APP_HTML = String.raw`<!doctype html>
     }
   }
 
-  function resize() { input.style.height = 'auto'; input.style.height = Math.min(input.scrollHeight, 140) + 'px'; send.disabled = busy || !input.value.trim(); }
+  function resize() { input.style.height = 'auto'; input.style.height = Math.min(input.scrollHeight, 140) + 'px'; send.disabled = busy || (!input.value.trim() && !pendingImage); }
+
+  // Photo: shrink on the device (max 1600px JPEG) before sending.
+  let pendingImage = null;
+  function setImage(src) {
+    pendingImage = src; $('attach').classList.toggle('on', !!src);
+    input.placeholder = src ? 'عکس آماده است؛ سؤالت را بنویس یا بفرست…' : 'به هرمس بگو…'; resize();
+  }
+  $('attach').onclick = () => { if (pendingImage) setImage(null); else $('file').click(); };
+  $('file').onchange = () => {
+    const f = $('file').files[0]; $('file').value = ''; if (!f) return;
+    const img = new Image(), url = URL.createObjectURL(f);
+    img.onload = () => {
+      const k = Math.min(1, 1600 / Math.max(img.width, img.height));
+      const c = document.createElement('canvas'); c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(url);
+      setImage(c.toDataURL('image/jpeg', 0.85)); input.focus();
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); showReply('error', 'این عکس باز نشد.'); };
+    img.src = url;
+  };
+
+  // Voice: tap to record, tap again to send. The transcript is sent as a normal message.
+  let recorder = null;
+  $('mic').onclick = async () => {
+    if (busy) return;
+    if (recorder) { recorder.stop(); return; }
+    if (!navigator.mediaDevices || !window.MediaRecorder) { showReply('error', 'این مرورگر ضبط صدا را پشتیبانی نمی‌کند.'); return; }
+    let stream;
+    try { stream = await navigator.mediaDevices.getUserMedia({ audio: true }); } catch { showReply('error', 'اجازهٔ میکروفون داده نشد.'); return; }
+    const parts = []; recorder = new MediaRecorder(stream);
+    recorder.ondataavailable = (e) => { if (e.data.size) parts.push(e.data); };
+    recorder.onstop = () => {
+      stream.getTracks().forEach((t) => t.stop()); $('mic').classList.remove('rec');
+      const blob = new Blob(parts, { type: recorder.mimeType || 'audio/webm' }); recorder = null;
+      if (!blob.size) return;
+      const fr = new FileReader();
+      fr.onload = async () => {
+        busy = true; resize(); setState('thinking', ['brain', 'voice']); showReply('thinking');
+        try {
+          const { text } = await api('/api/transcribe', { audio: fr.result });
+          busy = false; input.value = text; resize(); submit();
+        } catch (err) { busy = false; resize(); setState('idle'); showReply('error', err.message); }
+      };
+      fr.readAsDataURL(blob);
+    };
+    recorder.start(); $('mic').classList.add('rec');
+  };
   input.addEventListener('input', resize);
   input.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey && !('ontouchstart' in window)) { e.preventDefault(); submit(); } });
   $('form').addEventListener('submit', (e) => { e.preventDefault(); submit(); });

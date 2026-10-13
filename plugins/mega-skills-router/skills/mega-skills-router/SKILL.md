@@ -1,6 +1,6 @@
 ---
 name: mega-skills-router
-description: Use for any substantive Persian, Finglish or English request that may benefit from the project's Mega Skills library (5,986 skills - the 3,000 core skills, the 6-skill business pack and 2,980 curated GitHub skills). Routes the intent through 15 domain indexes and ~30,000 contextual triggers to every materially relevant specialized workflow, without loading all skills into context.
+description: Use for any substantive Persian, Finglish or English request that may benefit from the project's Mega Skills library (6,017 skills - the 3,000 core skills, the 6-skill business pack and 3,011 curated GitHub skills). Routes the intent through 15 domain indexes and ~30,000 contextual triggers to every materially relevant specialized workflow, without loading all skills into context.
 ---
 
 # Mega Skills Router

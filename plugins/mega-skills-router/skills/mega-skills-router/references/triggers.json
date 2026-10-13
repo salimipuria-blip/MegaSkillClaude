@@ -1,18 +1,18 @@
 {
  "schema_version": 1,
  "counts": {
-  "skills": 5986,
-  "triggers": 29929,
+  "skills": 6017,
+  "triggers": 30065,
   "colliding_triggers": 0,
   "incomplete_skills": 281,
-  "routable_skills": 5705
+  "routable_skills": 5736
  },
  "domains": {
   "agents-automation": 764,
   "business-sales": 487,
   "content-writing": 161,
   "data-spreadsheets": 297,
-  "general": 241,
+  "general": 248,
   "graphic-design": 229,
   "image-ai": 117,
   "knowledge-research": 329,
@@ -22,7 +22,7 @@
   "social-media": 260,
   "travel-outdoors": 439,
   "video-ai": 123,
-  "web-development": 1808
+  "web-development": 1832
  },
  "collisions": [],
  "skills": [
@@ -78121,6 +78121,390 @@
     "web development postman openapi converter",
     "Convert OpenAPI 3.x or Swagger 2.0 specs (YAML or JSON) into complete, import-ready Postman Collection v2.1 JSON files.",
     "Convert OpenAPI 3.x or Swagger 2.0 specs (YAML or JSON) into complete, import-ready Postman Collection v2.1 JSON files. (github-skills)"
+   ],
+   "origin": "github"
+  },
+  {
+   "name": "ask-matt",
+   "domain": "web-development",
+   "source_path": "references/skills/ask-matt/INSTRUCTIONS.md",
+   "triggers": [
+    "ask-matt",
+    "ask matt",
+    "web development ask matt",
+    "Ask which skill or flow fits your situation. A router over t",
+    "Ask which skill or flow fits your situation. A router over the skills in this repo."
+   ],
+   "origin": "github"
+  },
+  {
+   "name": "mp-code-review",
+   "domain": "web-development",
+   "source_path": "references/skills/mp-code-review/INSTRUCTIONS.md",
+   "triggers": [
+    "mp-code-review",
+    "mp code review",
+    "web development mp code review",
+    "Review the changes since a fixed point (commit, branch, tag,",
+    "Review the changes since a fixed point (commit, branch, tag, or merge-base) along two axes: Standards (does the code follow this repo's documented coding standa"
+   ],
+   "origin": "github"
+  },
+  {
+   "name": "mp-codebase-design",
+   "domain": "web-development",
+   "source_path": "references/skills/mp-codebase-design/INSTRUCTIONS.md",
+   "triggers": [
+    "mp-codebase-design",
+    "mp codebase design",
+    "web development mp codebase design",
+    "Shared vocabulary for designing deep modules. Use when the u"
+   ],
+   "origin": "github"
+  },
+  {
+   "name": "mp-diagnosing-bugs",
+   "domain": "web-development",
+   "source_path": "references/skills/mp-diagnosing-bugs/INSTRUCTIONS.md",
+   "triggers": [
+    "mp-diagnosing-bugs",
+    "mp diagnosing bugs",
+    "web development mp diagnosing bugs",
+    "Diagnosis loop for hard bugs and performance regressions. Us"
+   ],
+   "origin": "github"
+  },
+  {
+   "name": "mp-domain-modeling",
+   "domain": "web-development",
+   "source_path": "references/skills/mp-domain-modeling/INSTRUCTIONS.md",
+   "triggers": [
+    "mp-domain-modeling",
+    "mp domain modeling",
+    "web development mp domain modeling",
+    "Build and sharpen a project's domain model. Use when discuss",
+    "Build and sharpen a project's domain model. Use when discussing codebase terminology, writing or editing a GLOSSARY.md, or recording or editing an ADR."
+   ],
+   "origin": "github"
+  },
+  {
+   "name": "mp-grill-with-docs",
+   "domain": "web-development",
+   "source_path": "references/skills/mp-grill-with-docs/INSTRUCTIONS.md",
+   "triggers": [
+    "mp-grill-with-docs",
+    "mp grill with docs",
+    "web development mp grill with docs",
+    "A relentless interview to sharpen a plan or design, which al",
+    "A relentless interview to sharpen a plan or design, which also creates docs (ADR's and glossary) as we go."
+   ],
+   "origin": "github"
+  },
+  {
+   "name": "implement-spec",
+   "domain": "web-development",
+   "source_path": "references/skills/implement-spec/INSTRUCTIONS.md",
+   "triggers": [
+    "implement-spec",
+    "implement spec",
+    "web development implement spec",
+    "Implement the result of /to-spec and /to-tickets in code."
+   ],
+   "origin": "github"
+  },
+  {
+   "name": "implement",
+   "domain": "web-development",
+   "source_path": "references/skills/implement/INSTRUCTIONS.md",
+   "triggers": [
+    "implement",
+    "web development implement",
+    "Implement a piece of work based on a spec or set of tickets."
+   ],
+   "origin": "github"
+  },
+  {
+   "name": "mp-improve-codebase-architecture",
+   "domain": "web-development",
+   "source_path": "references/skills/mp-improve-codebase-architecture/INSTRUCTIONS.md",
+   "triggers": [
+    "mp-improve-codebase-architecture",
+    "mp improve codebase architecture",
+    "web development mp improve codebase architecture",
+    "Scan a codebase for deepening opportunities, present them as"
+   ],
+   "origin": "github"
+  },
+  {
+   "name": "pr",
+   "domain": "web-development",
+   "source_path": "references/skills/pr/INSTRUCTIONS.md",
+   "triggers": [
+    "pr",
+    "web development pr",
+    "Use when writing a PR body."
+   ],
+   "origin": "github"
+  },
+  {
+   "name": "prototype",
+   "domain": "web-development",
+   "source_path": "references/skills/prototype/INSTRUCTIONS.md",
+   "triggers": [
+    "prototype",
+    "web development prototype",
+    "Build a throwaway prototype to answer a design question. Use",
+    "Build a throwaway prototype to answer a design question. Use when the user wants to sanity-check whether a state model or logic feels right, or explore what a U"
+   ],
+   "origin": "github"
+  },
+  {
+   "name": "mp-research",
+   "domain": "web-development",
+   "source_path": "references/skills/mp-research/INSTRUCTIONS.md",
+   "triggers": [
+    "mp-research",
+    "mp research",
+    "web development mp research",
+    "Investigate a question against high-trust primary sources an",
+    "Investigate a question against high-trust primary sources and capture the findings as a Markdown file in the repo. Use when the user wants a topic researched, d"
+   ],
+   "origin": "github"
+  },
+  {
+   "name": "retro",
+   "domain": "web-development",
+   "source_path": "references/skills/retro/INSTRUCTIONS.md",
+   "triggers": [
+    "retro",
+    "web development retro",
+    "Conduct a retrospective on a coding session."
+   ],
+   "origin": "github"
+  },
+  {
+   "name": "mp-setup-matt-pocock-skills",
+   "domain": "web-development",
+   "source_path": "references/skills/mp-setup-matt-pocock-skills/INSTRUCTIONS.md",
+   "triggers": [
+    "mp-setup-matt-pocock-skills",
+    "mp setup matt pocock skills",
+    "web development mp setup matt pocock skills",
+    "Configure this repo for the engineering skills: set up its i",
+    "Configure this repo for the engineering skills: set up its issue tracker, triage label vocabulary, and domain doc layout. Run once before first use of the other"
+   ],
+   "origin": "github"
+  },
+  {
+   "name": "tdd",
+   "domain": "web-development",
+   "source_path": "references/skills/tdd/INSTRUCTIONS.md",
+   "triggers": [
+    "tdd",
+    "web development tdd",
+    "Test-driven development. Use when the user wants to build fe",
+    "Test-driven development. Use when the user wants to build features or fix bugs test-first, mentions \"red-green-refactor\", or wants integration tests."
+   ],
+   "origin": "github"
+  },
+  {
+   "name": "to-spec",
+   "domain": "web-development",
+   "source_path": "references/skills/to-spec/INSTRUCTIONS.md",
+   "triggers": [
+    "to-spec",
+    "to spec",
+    "web development to spec",
+    "Turn the current conversation into a spec and publish it to ",
+    "Turn the current conversation into a spec and publish it to the project issue tracker: no interview, just synthesis of what you've already discussed."
+   ],
+   "origin": "github"
+  },
+  {
+   "name": "to-tickets",
+   "domain": "web-development",
+   "source_path": "references/skills/to-tickets/INSTRUCTIONS.md",
+   "triggers": [
+    "to-tickets",
+    "to tickets",
+    "web development to tickets",
+    "Break a plan, spec, or the current conversation into a set o",
+    "Break a plan, spec, or the current conversation into a set of tracer-bullet tickets, each declaring its blocking edges, published to the configured tracker (edg"
+   ],
+   "origin": "github"
+  },
+  {
+   "name": "mp-triage",
+   "domain": "web-development",
+   "source_path": "references/skills/mp-triage/INSTRUCTIONS.md",
+   "triggers": [
+    "mp-triage",
+    "mp triage",
+    "web development mp triage",
+    "Move issues and external PRs through a state machine of tria",
+    "Move issues and external PRs through a state machine of triage roles, categorise, verify, grill if needed, and write agent-ready briefs."
+   ],
+   "origin": "github"
+  },
+  {
+   "name": "wayfinder",
+   "domain": "web-development",
+   "source_path": "references/skills/wayfinder/INSTRUCTIONS.md",
+   "triggers": [
+    "wayfinder",
+    "web development wayfinder",
+    "Plan a huge chunk of work (more than one agent session can h",
+    "Plan a huge chunk of work (more than one agent session can hold) as a shared map of decision tickets on your issue tracker, and resolve them one at a time until"
+   ],
+   "origin": "github"
+  },
+  {
+   "name": "wizard",
+   "domain": "web-development",
+   "source_path": "references/skills/wizard/INSTRUCTIONS.md",
+   "triggers": [
+    "wizard",
+    "web development wizard",
+    "Generate an interactive bash wizard that walks a human throu",
+    "Generate an interactive bash wizard that walks a human through steps only they can perform. Use when provisioning infrastructure, setting up credentials or CI s"
+   ],
+   "origin": "github"
+  },
+  {
+   "name": "git-guardrails-claude-code",
+   "domain": "web-development",
+   "source_path": "references/skills/git-guardrails-claude-code/INSTRUCTIONS.md",
+   "triggers": [
+    "git-guardrails-claude-code",
+    "git guardrails claude code",
+    "web development git guardrails claude code",
+    "Set up Claude Code hooks to block dangerous git commands (pu",
+    "Set up Claude Code hooks to block dangerous git commands (push, reset --hard, clean, branch -D, etc.) before they execute. Use when user wants to prevent destru"
+   ],
+   "origin": "github"
+  },
+  {
+   "name": "migrate-to-shoehorn",
+   "domain": "web-development",
+   "source_path": "references/skills/migrate-to-shoehorn/INSTRUCTIONS.md",
+   "triggers": [
+    "migrate-to-shoehorn",
+    "migrate to shoehorn",
+    "web development migrate to shoehorn",
+    "Migrate test files from `as` type assertions to @total-types",
+    "Migrate test files from `as` type assertions to @total-typescript/shoehorn. Use when user mentions shoehorn, wants to replace `as` in tests, or needs partial te"
+   ],
+   "origin": "github"
+  },
+  {
+   "name": "scaffold-exercises",
+   "domain": "web-development",
+   "source_path": "references/skills/scaffold-exercises/INSTRUCTIONS.md",
+   "triggers": [
+    "scaffold-exercises",
+    "scaffold exercises",
+    "web development scaffold exercises",
+    "Create exercise directory structures with sections, problems",
+    "Create exercise directory structures with sections, problems, solutions, and explainers that pass linting. Use when user wants to scaffold exercises, create exe"
+   ],
+   "origin": "github"
+  },
+  {
+   "name": "setup-pre-commit",
+   "domain": "web-development",
+   "source_path": "references/skills/setup-pre-commit/INSTRUCTIONS.md",
+   "triggers": [
+    "setup-pre-commit",
+    "setup pre commit",
+    "web development setup pre commit",
+    "Set up Husky pre-commit hooks with lint-staged (Prettier), t",
+    "Set up Husky pre-commit hooks with lint-staged (Prettier), type checking, and tests in the current repo. Use when user wants to add pre-commit hooks, set up Hus"
+   ],
+   "origin": "github"
+  },
+  {
+   "name": "grill-me",
+   "domain": "general",
+   "source_path": "references/skills/grill-me/INSTRUCTIONS.md",
+   "triggers": [
+    "grill-me",
+    "grill me",
+    "general grill me",
+    "A relentless interview to sharpen a plan or design."
+   ],
+   "origin": "github"
+  },
+  {
+   "name": "grilling",
+   "domain": "general",
+   "source_path": "references/skills/grilling/INSTRUCTIONS.md",
+   "triggers": [
+    "grilling",
+    "general grilling",
+    "Grill the user relentlessly about a plan, decision, or idea.",
+    "Grill the user relentlessly about a plan, decision, or idea. Use when the user wants to stress-test their thinking, or uses any 'grill' trigger phrases."
+   ],
+   "origin": "github"
+  },
+  {
+   "name": "handoff",
+   "domain": "general",
+   "source_path": "references/skills/handoff/INSTRUCTIONS.md",
+   "triggers": [
+    "handoff",
+    "general handoff",
+    "Compact the current conversation into a handoff document for",
+    "Compact the current conversation into a handoff document for another agent to pick up."
+   ],
+   "origin": "github"
+  },
+  {
+   "name": "mp-teach",
+   "domain": "general",
+   "source_path": "references/skills/mp-teach/INSTRUCTIONS.md",
+   "triggers": [
+    "mp-teach",
+    "mp teach",
+    "general mp teach",
+    "Teach the user a new skill or concept, within this workspace"
+   ],
+   "origin": "github"
+  },
+  {
+   "name": "to-questionnaire",
+   "domain": "general",
+   "source_path": "references/skills/to-questionnaire/INSTRUCTIONS.md",
+   "triggers": [
+    "to-questionnaire",
+    "to questionnaire",
+    "general to questionnaire",
+    "Turn a decision you can't fully answer into a questionnaire ",
+    "Turn a decision you can't fully answer into a questionnaire for someone else to fill in."
+   ],
+   "origin": "github"
+  },
+  {
+   "name": "wait-what",
+   "domain": "general",
+   "source_path": "references/skills/wait-what/INSTRUCTIONS.md",
+   "triggers": [
+    "wait-what",
+    "wait what",
+    "general wait what",
+    "Stop. That last message did not land: re-pitch it."
+   ],
+   "origin": "github"
+  },
+  {
+   "name": "writing-for-agents",
+   "domain": "general",
+   "source_path": "references/skills/writing-for-agents/INSTRUCTIONS.md",
+   "triggers": [
+    "writing-for-agents",
+    "writing for agents",
+    "general writing for agents",
+    "Writing documents for agents. Use when creating or editing s",
+    "Writing documents for agents. Use when creating or editing skills, or modifying AGENTS.md or CLAUDE.md."
    ],
    "origin": "github"
   }

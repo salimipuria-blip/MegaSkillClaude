@@ -1,6 +1,6 @@
 # general
 
-Skills: 241
+Skills: 248
 
 - `academy-parser-pack` → `references/skills/academy-parser-pack/INSTRUCTIONS.md`
 - `access-review` → `references/skills/access-review/INSTRUCTIONS.md`
@@ -89,6 +89,8 @@ Skills: 241
 - `geo-proposal` → `references/skills/geo-proposal/INSTRUCTIONS.md`
 - `git-commit` → `references/skills/git-commit/INSTRUCTIONS.md`
 - `gmail-mbox-thread-rebuilder` → `references/skills/gmail-mbox-thread-rebuilder/INSTRUCTIONS.md`
+- `grill-me` → `references/skills/grill-me/INSTRUCTIONS.md`
+- `grilling` → `references/skills/grilling/INSTRUCTIONS.md`
 - `gym-cluster-analyzer` → `references/skills/gym-cluster-analyzer/INSTRUCTIONS.md`
 - `gym-privacy-optimizer` → `references/skills/gym-privacy-optimizer/INSTRUCTIONS.md`
 - `gym-privacy-workflow` → `references/skills/gym-privacy-workflow/INSTRUCTIONS.md`
@@ -97,6 +99,7 @@ Skills: 241
 - `gym-reporter-reporter` → `references/skills/gym-reporter-reporter/INSTRUCTIONS.md`
 - `gym-sentiment-workflow` → `references/skills/gym-sentiment-workflow/INSTRUCTIONS.md`
 - `hallucination-incident-log` → `references/skills/hallucination-incident-log/INSTRUCTIONS.md`
+- `handoff` → `references/skills/handoff/INSTRUCTIONS.md`
 - `hashicorp-vault` → `references/skills/hashicorp-vault/INSTRUCTIONS.md`
 - `health-wellness` → `references/skills/health-wellness/INSTRUCTIONS.md`
 - `homelab-network-setup` → `references/skills/homelab-network-setup/INSTRUCTIONS.md`
@@ -141,6 +144,7 @@ Skills: 241
 - `memory-write-policy-audit` → `references/skills/memory-write-policy-audit/INSTRUCTIONS.md`
 - `mid-engagement-ir-detection` → `references/skills/mid-engagement-ir-detection/INSTRUCTIONS.md`
 - `monte-carlo-performance-diagnosis` → `references/skills/monte-carlo-performance-diagnosis/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `mp-teach` → `references/skills/mp-teach/INSTRUCTIONS.md`
 - `multi-session-thread-linker` → `references/skills/multi-session-thread-linker/INSTRUCTIONS.md`
 - `notification-reminder-hub` → `references/skills/notification-reminder-hub/INSTRUCTIONS.md`
 - `nuts-cluster-autopilot` → `references/skills/nuts-cluster-autopilot/INSTRUCTIONS.md`
@@ -224,6 +228,7 @@ Skills: 241
 - `team-calendar` → `references/skills/team-calendar/INSTRUCTIONS.md`
 - `tech-matrix` → `references/skills/tech-matrix/INSTRUCTIONS.md`
 - `telegram-json-normalizer` → `references/skills/telegram-json-normalizer/INSTRUCTIONS.md`
+- `to-questionnaire` → `references/skills/to-questionnaire/INSTRUCTIONS.md`
 - `token-cost-per-conversation` → `references/skills/token-cost-per-conversation/INSTRUCTIONS.md`
 - `traderspy-technical-analysis` → `references/skills/traderspy-technical-analysis/INSTRUCTIONS.md`
 - `treatment-plans` → `references/skills/treatment-plans/INSTRUCTIONS.md`
@@ -233,12 +238,14 @@ Skills: 241
 - `unmet-need-miner` → `references/skills/unmet-need-miner/INSTRUCTIONS.md`
 - `vendor-contractor-management` → `references/skills/vendor-contractor-management/INSTRUCTIONS.md`
 - `vocabulary-fingerprint` → `references/skills/vocabulary-fingerprint/INSTRUCTIONS.md`
+- `wait-what` → `references/skills/wait-what/INSTRUCTIONS.md`
 - `weather-go-nogo-matrix` → `references/skills/weather-go-nogo-matrix/INSTRUCTIONS.md`
 - `wedding-purge-generator` → `references/skills/wedding-purge-generator/INSTRUCTIONS.md`
 - `wedding-reporter-auditor` → `references/skills/wedding-reporter-auditor/INSTRUCTIONS.md`
 - `weekly-self-review-agent` → `references/skills/weekly-self-review-agent/INSTRUCTIONS.md`
 - `whatsapp-chat-parser-fa` → `references/skills/whatsapp-chat-parser-fa/INSTRUCTIONS.md`
 - `workshop-create` → `references/skills/workshop-create/INSTRUCTIONS.md`
+- `writing-for-agents` → `references/skills/writing-for-agents/INSTRUCTIONS.md`
 - `x-article-publisher` → `references/skills/x-article-publisher/INSTRUCTIONS.md`
 - `yes-md` → `references/skills/yes-md/INSTRUCTIONS.md`
 - `yoga-intent-analyzer` → `references/skills/yoga-intent-analyzer/INSTRUCTIONS.md`

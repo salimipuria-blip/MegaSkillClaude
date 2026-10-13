@@ -8,12 +8,13 @@ import { appKey } from './worker.mjs';
 
 const bindings = { TELEGRAM_BOT_TOKEN: 'fixture-token', ALLOWED_USER_ID: '12345', GEMINI_API_KEY: 'fixture-key', REQUIRE_CONVERSATIONS: 'true' };
 const historyKey = 'history:12345';
-const modules = ['entry', 'worker', 'security', 'app', 'auth', 'users', 'skills', 'skill-router', 'memory', 'brain', 'conversation']
+const modules = ['entry', 'worker', 'security', 'app', 'auth', 'users', 'skills', 'skill-router', 'memory', 'brain', 'conversation', 'image', 'media', 'booking', 'trip-media', 'providers', 'google']
   .map((name) => ({ type: 'ESModule', path: fileURLToPath(new URL(`${name}.mjs`, import.meta.url)) }));
 
-async function fixture(t, brain) {
+async function fixture(t, brain, { extraBindings = {}, upstream } = {}) {
   const prompts = [];
   const outboundService = async (request) => {
+    if (upstream && (request.method === 'GET' || new URL(request.url).hostname !== 'generativelanguage.googleapis.com')) return upstream(request);
     assert.equal(new URL(request.url).hostname, 'generativelanguage.googleapis.com', 'unexpected outbound request');
     const body = await request.json();
     prompts.push(body);
@@ -22,7 +23,7 @@ async function fixture(t, brain) {
     return Response.json({ candidates: [{ content: { parts: [{ text: `answer ${body.contents.at(-1).parts[0].text}` }] } }] });
   };
   const workerOptions = (name) => ({
-    name, modules, compatibilityDate: '2026-09-01', bindings,
+    name, modules, compatibilityDate: '2026-09-01', bindings: { ...bindings, ...extraBindings },
     kvNamespaces: { MEMORY: 'fixture-memory' },
     durableObjects: { CONVERSATIONS: { className: 'HermesConversation', scriptName: 'hermes', useSQLite: true } },
     outboundService,
@@ -131,4 +132,95 @@ test('notes stay bounded and duplicate-free; clearing them does not delete messa
   await f.api('notes/clear', {});
   assert.deepEqual((await f.api('notes')).body.notes, []);
   assert.equal((await f.api('history')).body.messages.length, 2);
+});
+
+
+test('photo bytes reach the actor brain but SQL history only retains a textual photo turn', async (t) => {
+  const photo = btoa('fixture-only-photo-bytes');
+  const f = await fixture(t, async () => Response.json({ candidates: [{ content: { parts: [{ text: 'photo inspected' }] } }] }));
+  const response = await f.api('chat', { message: 'inspect photo', image: `data:image/jpeg;base64,${photo}` });
+  assert.equal(response.status, 200);
+  assert.equal(response.body.reply, 'photo inspected');
+  assert.deepEqual(f.prompts[0].contents.at(-1).parts[0].inlineData, { mimeType: 'image/jpeg', data: photo });
+  assert.equal((await f.api('history')).body.messages[0].text, '[عکس] inspect photo');
+  const stored = JSON.stringify(await f.sql.exec('SELECT parts FROM messages'));
+  assert.equal(stored.includes(photo), false);
+  assert.equal(stored.includes('inlineData'), false);
+  assert.equal((await f.api('chat', { message: 'next question' })).status, 200);
+  assert.equal(f.prompts.at(-1).contents[0].parts[0].text, '[عکس] inspect photo');
+});
+
+test('image generation stays in the shared actor queue through both model calls and reset', async (t) => {
+  let started, release;
+  const ready = new Promise((resolve) => { started = resolve; });
+  const gate = new Promise((resolve) => { release = resolve; });
+  const image = btoa('fixture-only-generated-image');
+  const f = await fixture(t, async (body) => {
+    if (body.generationConfig?.responseModalities?.includes('IMAGE')) {
+      return Response.json({ candidates: [{ content: { parts: [{ inlineData: { mimeType: 'image/png', data: image } }] } }] });
+    }
+    started(); await gate;
+    return Response.json({ candidates: [{ content: { parts: [{ text: 'a jeep by a forest lake' }] } }] });
+  }, { upstream: async (request) => {
+    assert.equal(new URL(request.url).hostname, 'generativelanguage.googleapis.com');
+    assert.equal(request.method, 'GET');
+    return Response.json({ models: [{ name: 'models/gemini-3.5-flash-image', supportedGenerationMethods: ['generateContent'] }] });
+  } });
+  const picture = f.api('chat', { message: '/img a jeep' });
+  await ready;
+  let resetFinished = false;
+  const reset = f.api('reset', {}, 1).then((r) => { resetFinished = true; return r; });
+  await delay(30);
+  assert.equal(resetFinished, false);
+  release();
+  const response = await picture;
+  assert.equal(response.status, 200, JSON.stringify(response.body));
+  assert.equal(response.body.image, `data:image/png;base64,${image}`);
+  assert.equal((await reset).status, 200);
+  assert.deepEqual((await f.api('history')).body.messages, []);
+  assert.deepEqual(await f.sql.exec('SELECT epoch, count(*) AS n FROM messages GROUP BY epoch'), [{ epoch: 0, n: 2 }]);
+  const stored = JSON.stringify(await f.sql.exec('SELECT parts FROM messages'));
+  assert.equal(stored.includes(image), false);
+  assert.ok(stored.includes('a jeep by a forest lake'));
+});
+
+test('Google tool closures are rebuilt after actor RPC and are never granted to a member actor', async (t) => {
+  const upstreamCalls = [];
+  const f = await fixture(t, async (body) => {
+    const declarations = body.tools?.some((tool) => tool.functionDeclarations);
+    if (!declarations) return Response.json({ candidates: [{ content: { parts: [{ text: 'no owner tools' }] } }] });
+    const response = body.contents.at(-1).parts.find((part) => part.functionResponse);
+    const parts = response ? [{ text: 'owner email checked' }] : [{ functionCall: { name: 'gmail_search', args: { query: 'is:unread' } } }];
+    return Response.json({ candidates: [{ content: { parts } }] });
+  }, {
+    extraBindings: { GOOGLE_CLIENT_ID: 'fixture-client', GOOGLE_CLIENT_SECRET: 'fixture-secret' },
+    upstream: async (request) => {
+      const url = new URL(request.url); upstreamCalls.push(url);
+      if (url.hostname === 'oauth2.googleapis.com') {
+        assert.equal(new URLSearchParams(await request.text()).get('refresh_token'), 'fixture-refresh');
+        return Response.json({ access_token: 'fixture-access', expires_in: 3600 });
+      }
+      assert.equal(url.hostname, 'gmail.googleapis.com');
+      assert.equal(request.headers.get('authorization'), 'Bearer fixture-access');
+      return Response.json({ messages: [] });
+    },
+  });
+  const kv = await f.mf.getKVNamespace('MEMORY', 'hermes');
+  await kv.put('google:refresh', 'fixture-refresh');
+  const owner = await f.api('chat', { message: 'check my email' });
+  assert.equal(owner.status, 200);
+  assert.equal(owner.body.reply, 'owner email checked');
+  assert.equal(f.prompts.length, 2);
+  assert.equal(f.prompts[1].contents.at(-1).parts[0].functionResponse.name, 'gmail_search');
+  assert.equal(upstreamCalls.length, 2);
+  const namespace = await f.mf.getDurableObjectNamespace('CONVERSATIONS', 'hermes');
+  const key = 'history:user:fixture-member';
+  const actor = namespace.get(namespace.idFromName(key));
+  const response = await actor.fetch('https://conversation.internal/turn', { method: 'POST', body: JSON.stringify({
+    key, input: 'check my email', system: 'Member fixture', googleTools: true,
+  }) });
+  assert.equal(response.status, 200);
+  assert.equal((await response.json()).reply, 'no owner tools');
+  assert.equal(upstreamCalls.length, 2, 'a member must not run the owner connector');
+  assert.equal(JSON.stringify(f.prompts.at(-1).tools).includes('functionDeclarations'), false);
 });

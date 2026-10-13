@@ -1,6 +1,6 @@
 # web-development
 
-Skills: 1808
+Skills: 1832
 
 - `1688-product-detail` → `references/skills/1688-product-detail/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `2slides-ppt-generator` → `references/skills/2slides-ppt-generator/INSTRUCTIONS.md`
@@ -127,6 +127,7 @@ Skills: 1808
 - `arm-templates` → `references/skills/arm-templates/INSTRUCTIONS.md`
 - `arquiteto-de-empresa` → `references/skills/arquiteto-de-empresa/INSTRUCTIONS.md`
 - `ask-copilot` → `references/skills/ask-copilot/INSTRUCTIONS.md`
+- `ask-matt` → `references/skills/ask-matt/INSTRUCTIONS.md`
 - `asset-inventory` → `references/skills/asset-inventory/INSTRUCTIONS.md`
 - `asset-it-management` → `references/skills/asset-it-management/INSTRUCTIONS.md`
 - `astro` → `references/skills/astro/INSTRUCTIONS.md`
@@ -747,6 +748,7 @@ Skills: 1808
 - `gguf-quantization` → `references/skills/gguf-quantization/INSTRUCTIONS.md`
 - `gha-security-review` → `references/skills/gha-security-review/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `ginkgo-cloud-lab` → `references/skills/ginkgo-cloud-lab/INSTRUCTIONS.md`
+- `git-guardrails-claude-code` → `references/skills/git-guardrails-claude-code/INSTRUCTIONS.md`
 - `git-hooks-automation` → `references/skills/git-hooks-automation/INSTRUCTIONS.md`
 - `git-pr-workflows-git-workflow` → `references/skills/git-pr-workflows-git-workflow/INSTRUCTIONS.md`
 - `git-workflow-and-versioning` → `references/skills/git-workflow-and-versioning/INSTRUCTIONS.md`
@@ -875,6 +877,8 @@ Skills: 1808
 - `imagegen-frontend-web` → `references/skills/imagegen-frontend-web/INSTRUCTIONS.md`
 - `imaging-data-commons` → `references/skills/imaging-data-commons/INSTRUCTIONS.md`
 - `impediment-prioritization` → `references/skills/impediment-prioritization/INSTRUCTIONS.md`
+- `implement` → `references/skills/implement/INSTRUCTIONS.md`
+- `implement-spec` → `references/skills/implement-spec/INSTRUCTIONS.md`
 - `import-infrastructure-as-code` → `references/skills/import-infrastructure-as-code/INSTRUCTIONS.md`
 - `improve-codebase-architecture` → `references/skills/improve-codebase-architecture/INSTRUCTIONS.md`
 - `incident-responder` → `references/skills/incident-responder/INSTRUCTIONS.md`
@@ -1047,6 +1051,7 @@ Skills: 1808
 - `microsoft-code-reference` → `references/skills/microsoft-code-reference/INSTRUCTIONS.md`
 - `microsoft-docs` → `references/skills/microsoft-docs/INSTRUCTIONS.md`
 - `microsoft-skill-creator` → `references/skills/microsoft-skill-creator/INSTRUCTIONS.md`
+- `migrate-to-shoehorn` → `references/skills/migrate-to-shoehorn/INSTRUCTIONS.md`
 - `migrating-oracle-to-postgres-data-access-code` → `references/skills/migrating-oracle-to-postgres-data-access-code/INSTRUCTIONS.md`
 - `migrating-oracle-to-postgres-stored-procedures` → `references/skills/migrating-oracle-to-postgres-stored-procedures/INSTRUCTIONS.md`
 - `migration-architect` → `references/skills/migration-architect/INSTRUCTIONS.md`
@@ -1080,6 +1085,15 @@ Skills: 1808
 - `motion-advanced` → `references/skills/motion-advanced/INSTRUCTIONS.md`
 - `motion-foundations` → `references/skills/motion-foundations/INSTRUCTIONS.md`
 - `motion-patterns` → `references/skills/motion-patterns/INSTRUCTIONS.md`
+- `mp-code-review` → `references/skills/mp-code-review/INSTRUCTIONS.md`
+- `mp-codebase-design` → `references/skills/mp-codebase-design/INSTRUCTIONS.md`
+- `mp-diagnosing-bugs` → `references/skills/mp-diagnosing-bugs/INSTRUCTIONS.md`
+- `mp-domain-modeling` → `references/skills/mp-domain-modeling/INSTRUCTIONS.md`
+- `mp-grill-with-docs` → `references/skills/mp-grill-with-docs/INSTRUCTIONS.md`
+- `mp-improve-codebase-architecture` → `references/skills/mp-improve-codebase-architecture/INSTRUCTIONS.md`
+- `mp-research` → `references/skills/mp-research/INSTRUCTIONS.md`
+- `mp-setup-matt-pocock-skills` → `references/skills/mp-setup-matt-pocock-skills/INSTRUCTIONS.md`
+- `mp-triage` → `references/skills/mp-triage/INSTRUCTIONS.md`
 - `ms365-tenant-manager` → `references/skills/ms365-tenant-manager/INSTRUCTIONS.md`
 - `msgraph-sdk` → `references/skills/msgraph-sdk/INSTRUCTIONS.md`
 - `msstore-cli` → `references/skills/msstore-cli/INSTRUCTIONS.md`
@@ -1259,6 +1273,7 @@ Skills: 1808
 - `postman-openapi-converter` → `references/skills/postman-openapi-converter/INSTRUCTIONS.md`
 - `power-apps-code-app-scaffold` → `references/skills/power-apps-code-app-scaffold/INSTRUCTIONS.md`
 - `pptx-posters` → `references/skills/pptx-posters/INSTRUCTIONS.md`
+- `pr` → `references/skills/pr/INSTRUCTIONS.md`
 - `pr-review-expert` → `references/skills/pr-review-expert/INSTRUCTIONS.md`
 - `pre-mortem` → `references/skills/pre-mortem/INSTRUCTIONS.md`
 - `pre-release-review` → `references/skills/pre-release-review/INSTRUCTIONS.md`
@@ -1287,6 +1302,7 @@ Skills: 1808
 - `proof-checker` → `references/skills/proof-checker/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `protect-mcp-setup` → `references/skills/protect-mcp-setup/INSTRUCTIONS.md`
 - `protobuf-grpc-api-review` → `references/skills/protobuf-grpc-api-review/INSTRUCTIONS.md`
+- `prototype` → `references/skills/prototype/INSTRUCTIONS.md`
 - `publish-to-pages` → `references/skills/publish-to-pages/INSTRUCTIONS.md`
 - `pubmed-database` → `references/skills/pubmed-database/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `pufferlib` → `references/skills/pufferlib/INSTRUCTIONS.md`
@@ -1379,6 +1395,7 @@ Skills: 1808
 - `restaurant-form-auditor` → `references/skills/restaurant-form-auditor/INSTRUCTIONS.md`
 - `restaurant-payment-assistant` → `references/skills/restaurant-payment-assistant/INSTRUCTIONS.md`
 - `result-to-claim` → `references/skills/result-to-claim/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `retro` → `references/skills/retro/INSTRUCTIONS.md`
 - `retro-design` → `references/skills/retro-design/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `retro-futurism` → `references/skills/retro-futurism/INSTRUCTIONS.md`
 - `review-agent-setup` → `references/skills/review-agent-setup/INSTRUCTIONS.md`
@@ -1428,6 +1445,7 @@ Skills: 1808
 - `sast-configuration` → `references/skills/sast-configuration/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `sast-scanning` → `references/skills/sast-scanning/INSTRUCTIONS.md`
 - `sbom-supply-chain` → `references/skills/sbom-supply-chain/INSTRUCTIONS.md`
+- `scaffold-exercises` → `references/skills/scaffold-exercises/INSTRUCTIONS.md`
 - `scaffolding-oracle-to-postgres-migration-test-project` → `references/skills/scaffolding-oracle-to-postgres-migration-test-project/INSTRUCTIONS.md`
 - `scala-pro` → `references/skills/scala-pro/INSTRUCTIONS.md`
 - `scan` → `references/skills/scan/INSTRUCTIONS.md`
@@ -1501,6 +1519,7 @@ Skills: 1808
 - `serverless-modal` → `references/skills/serverless-modal/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `service-mesh-observability` → `references/skills/service-mesh-observability/INSTRUCTIONS.md`
 - `serving-llms-vllm` → `references/skills/serving-llms-vllm/INSTRUCTIONS.md`
+- `setup-pre-commit` → `references/skills/setup-pre-commit/INSTRUCTIONS.md`
 - `shellcheck-configuration` → `references/skills/shellcheck-configuration/INSTRUCTIONS.md`
 - `shipping-and-launch` → `references/skills/shipping-and-launch/INSTRUCTIONS.md`
 - `shipping-artifacts` → `references/skills/shipping-artifacts/INSTRUCTIONS.md`
@@ -1607,6 +1626,7 @@ Skills: 1808
 - `taste` → `references/skills/taste/INSTRUCTIONS.md`
 - `taste-application` → `references/skills/taste-application/INSTRUCTIONS.md`
 - `tc-tracker` → `references/skills/tc-tracker/INSTRUCTIONS.md`
+- `tdd` → `references/skills/tdd/INSTRUCTIONS.md`
 - `tdd-guide` → `references/skills/tdd-guide/INSTRUCTIONS.md`
 - `tdd-orchestrator` → `references/skills/tdd-orchestrator/INSTRUCTIONS.md`
 - `team-composition-analysis` → `references/skills/team-composition-analysis/INSTRUCTIONS.md`
@@ -1647,6 +1667,8 @@ Skills: 1808
 - `timesfm-forecasting` → `references/skills/timesfm-forecasting/INSTRUCTIONS.md`
 - `tinystruct-patterns` → `references/skills/tinystruct-patterns/INSTRUCTIONS.md`
 - `tldr-prompt` → `references/skills/tldr-prompt/INSTRUCTIONS.md`
+- `to-spec` → `references/skills/to-spec/INSTRUCTIONS.md`
+- `to-tickets` → `references/skills/to-tickets/INSTRUCTIONS.md`
 - `torchdrug` → `references/skills/torchdrug/INSTRUCTIONS.md`
 - `tour-deploy-workflow` → `references/skills/tour-deploy-workflow/INSTRUCTIONS.md`
 - `tour-gallery-planner` → `references/skills/tour-gallery-planner/INSTRUCTIONS.md`
@@ -1732,6 +1754,7 @@ Skills: 1808
 - `waf-setup` → `references/skills/waf-setup/INSTRUCTIONS.md`
 - `waitlist-page-builder` → `references/skills/waitlist-page-builder/INSTRUCTIONS.md`
 - `walmart-category-listing` → `references/skills/walmart-category-listing/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `wayfinder` → `references/skills/wayfinder/INSTRUCTIONS.md`
 - `weather-model-data-fetching` → `references/skills/weather-model-data-fetching/INSTRUCTIONS.md`
 - `weather-observation-fetching` → `references/skills/weather-observation-fetching/INSTRUCTIONS.md`
 - `weather-pipeline-performance-diagnosis` → `references/skills/weather-pipeline-performance-diagnosis/INSTRUCTIONS.md`
@@ -1765,6 +1788,7 @@ Skills: 1808
 - `windows-server` → `references/skills/windows-server/INSTRUCTIONS.md`
 - `winmd-api-search` → `references/skills/winmd-api-search/INSTRUCTIONS.md`
 - `winui3-migration-guide` → `references/skills/winui3-migration-guide/INSTRUCTIONS.md`
+- `wizard` → `references/skills/wizard/INSTRUCTIONS.md`
 - `wjttc-builder` → `references/skills/wjttc-builder/INSTRUCTIONS.md`
 - `wjttc-tester` → `references/skills/wjttc-tester/INSTRUCTIONS.md`
 - `woocommerce-store-fa` → `references/skills/woocommerce-store-fa/INSTRUCTIONS.md`
