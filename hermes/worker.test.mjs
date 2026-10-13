@@ -89,6 +89,14 @@ test('quota errors are reported to the owner, not thrown', async () => {
   assert.match(sent(calls)[0], /سهمیه/);
 });
 
+test('a model whose free quota is full hands over to the next Gemini model, not to Workers AI', async () => {
+  const env = { ...baseEnv(), AI: { run: async () => { throw new Error('Workers AI must not be used'); } } };
+  const calls = mockFetch([429, 429, 200]);
+  await post(env, message('سلام'));
+  assert.deepEqual(sent(calls), ['سلام پوریا']);
+  assert.equal(env.MEMORY.store.get('model'), MODELS[1]);
+});
+
 test('/reset clears history', async () => {
   const env = baseEnv();
   env.MEMORY.store.set('history:42', '[]');
