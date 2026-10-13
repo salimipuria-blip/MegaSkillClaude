@@ -92,30 +92,32 @@ async function runCloudflare(env, m, prompt, size) {
 // Returns { image: base64, mime, model }. Free Cloudflare models first (no watermark), Gemini image last
 // (the Gemini API image models are paid-only now and carry Google's invisible SynthID mark).
 export async function makeImage(env, prompt, size = { width: 1024, height: 1024 }) {
-  let lastErr = null;
+  const errors = [];
   if (env.AI) {
+    let cfErr = null;
     for (const m of CF_IMAGE_MODELS) {
       try {
         const out = await normalize(await runCloudflare(env, m, prompt, size));
         if (out) return { ...out, model: m.name };
-        lastErr = new Error(`${m.name}: empty`);
+        cfErr = new Error(`${m.name}: empty`);
       } catch (err) {
-        lastErr = err;
+        cfErr = err;
         console.error(`[Hermes] ${m.name} failed:`, err.message);
       }
     }
+    if (cfErr) errors.push(`Cloudflare: ${String(cfErr.message).slice(0, 90)}`);
   }
   if (env.GEMINI_API_KEY) {
-    try { return await geminiImage(env, prompt); } catch (err) { lastErr = err; }
+    try { return await geminiImage(env, prompt); } catch (err) { errors.push(`Gemini: ${err.message}`); }
   }
   if (env.HF_TOKEN) {
-    try { return await hfImage(env, prompt, size); } catch (err) { lastErr = err; console.error('[Hermes] Hugging Face image failed:', err.message); }
+    try { return await hfImage(env, prompt, size); } catch (err) { errors.push(err.message); console.error('[Hermes] Hugging Face image failed:', err.message); }
   }
-  if (env.FREE_IMAGES === 'off' && !env.AI && !env.GEMINI_API_KEY) throw new Error('برای ساخت عکس، اتصال Workers AI (binding AI) یا کلید جمینی لازم است.');
+  if (env.FREE_IMAGES === 'off' && !env.AI && !env.GEMINI_API_KEY && !env.HF_TOKEN) throw new Error('برای ساخت عکس، اتصال Workers AI (binding AI) یا کلید جمینی لازم است.');
   if (env.FREE_IMAGES !== 'off') {
-    try { return await freeImage(prompt, size); } catch (err) { lastErr = err; console.error('[Hermes] free image failed:', err.message); }
+    try { return await freeImage(prompt, size, env.POLLINATIONS_TOKEN); } catch (err) { errors.push(err.message); console.error('[Hermes] free image failed:', err.message); }
   }
-  throw new Error(`سهمیهٔ رایگان امروزِ ساخت عکس تمام شده یا مدل‌ها جواب ندادند؛ کمی بعد دوباره امتحان کن. (${lastErr ? lastErr.message : ''})`);
+  throw new Error(`سهمیهٔ رایگان امروزِ ساخت عکس تمام شده یا مدل‌ها جواب ندادند؛ کمی بعد دوباره امتحان کن. (${errors.join(' | ')})`);
 }
 
 // Hugging Face free monthly credits (HF_TOKEN): FLUX.1 schnell, then FLUX.1 dev.
@@ -126,29 +128,45 @@ const toBase64 = (bytes) => {
   return btoa(bin);
 };
 export async function hfImage(env, prompt, size = { width: 1024, height: 1024 }) {
-  let lastErr = null;
+  const auth = { authorization: `Bearer ${String(env.HF_TOKEN).trim()}` };
+  const text = String(prompt).slice(0, 900);
+  const reasons = [];
   for (const model of HF_IMAGE_MODELS) {
     const res = await fetch(`https://router.huggingface.co/hf-inference/models/${model}`, {
       method: 'POST',
-      headers: { 'content-type': 'application/json', accept: 'image/jpeg', authorization: `Bearer ${String(env.HF_TOKEN).trim()}` },
-      body: JSON.stringify({ inputs: String(prompt).slice(0, 900), parameters: { width: size.width, height: size.height } }),
+      headers: { 'content-type': 'application/json', accept: 'image/jpeg', ...auth },
+      body: JSON.stringify({ inputs: text, parameters: { width: size.width, height: size.height } }),
     });
     const mime = (res.headers.get('content-type') || '').split(';')[0];
-    if (!res.ok || !mime.startsWith('image/')) { lastErr = new Error(`Hugging Face ${model}: ${res.status}`); continue; }
+    if (!res.ok || !mime.startsWith('image/')) { reasons.push(`${model.split('/')[1]} ${res.status}`); continue; }
     const bytes = new Uint8Array(await res.arrayBuffer());
-    if (bytes.length < 1000) { lastErr = new Error(`Hugging Face ${model}: empty`); continue; }
+    if (bytes.length < 1000) { reasons.push(`${model.split('/')[1]} empty`); continue; }
     return { image: toBase64(bytes), mime, model: `Hugging Face ${model.split('/')[1]}` };
   }
-  throw lastErr;
+  // Same free credits, other inference providers behind the HF router (OpenAI-style images API).
+  for (const [provider, model] of HF_ROUTED) {
+    const res = await fetch(`https://router.huggingface.co/${provider}/v1/images/generations`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', ...auth },
+      body: JSON.stringify({ model, prompt: text, n: 1, width: size.width, height: size.height, response_format: 'b64_json' }),
+    });
+    const data = await res.json().catch(() => null);
+    const b64 = data && data.data && data.data[0] && data.data[0].b64_json;
+    if (!res.ok || !b64) { reasons.push(`${provider} ${res.status}`); continue; }
+    return { image: b64, mime: 'image/png', model: `Hugging Face/${provider} ${model.split('/').pop()}` };
+  }
+  throw new Error(`Hugging Face: ${reasons.join('، ')}`);
 }
+const HF_ROUTED = [['together', 'black-forest-labs/FLUX.1-schnell'], ['nebius', 'black-forest-labs/flux-schnell']];
 
 // Last resort with no key and no quota: Pollinations' free public FLUX endpoint (set FREE_IMAGES=off to disable).
 export const FREE_IMAGE_API = 'https://image.pollinations.ai/prompt/';
-export async function freeImage(prompt, size = { width: 1024, height: 1024 }) {
+export async function freeImage(prompt, size = { width: 1024, height: 1024 }, token = '') {
   const seed = crypto.getRandomValues(new Uint32Array(1))[0] % 1000000;
   const url = `${FREE_IMAGE_API}${encodeURIComponent(String(prompt).slice(0, 900))}?width=${size.width}&height=${size.height}&model=flux&nologo=true&seed=${seed}`;
-  const res = await fetch(url);
+  const res = await fetch(url, token ? { headers: { authorization: `Bearer ${String(token).trim()}` } } : undefined);
   const mime = (res.headers.get('content-type') || '').split(';')[0];
+  if (res.status === 402 || res.status === 401) throw new Error(`Pollinations: ${res.status} (رایگانِ بی‌کلید بسته است${token ? '' : '؛ POLLINATIONS_TOKEN لازم'})`);
   if (!res.ok || !mime.startsWith('image/')) throw new Error(`Pollinations: ${res.status}`);
   const bytes = new Uint8Array(await res.arrayBuffer());
   if (bytes.length < 1000) throw new Error('Pollinations: empty');

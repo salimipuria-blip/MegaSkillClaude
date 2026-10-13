@@ -1008,3 +1008,19 @@ test('no-key Pollinations text brain answers when nothing else is configured; Hu
   assert.match(out.model, /Hugging Face FLUX\.1-schnell/);
   assert.equal(urls.some((u) => u.includes('pollinations')), false);
 });
+
+test('images: Hugging Face falls back to routed providers, and a total failure lists every source', async () => {
+  const { makeImage } = await import('./image.mjs');
+  globalThis.fetch = async (url) => {
+    const u = String(url);
+    if (u.includes('/together/v1/images/generations')) return new Response(JSON.stringify({ data: [{ b64_json: 'QUJD'.repeat(500) }] }));
+    if (u.includes('pollinations')) return new Response('{}', { status: 402 });
+    return new Response('{}', { status: 404 });
+  };
+  const out = await makeImage({ HF_TOKEN: 'hf' }, 'a jeep');
+  assert.match(out.model, /together/);
+  globalThis.fetch = async (url) => new Response('{}', { status: String(url).includes('pollinations') ? 402 : 404 });
+  const env = { HF_TOKEN: 'hf', AI: { run: async () => { throw new Error('4006: daily free allocation used up'); } } };
+  await assert.rejects(makeImage(env, 'a jeep'), (err) => /Cloudflare: 4006/.test(err.message) &&
+    /Hugging Face: FLUX\.1-schnell 404/.test(err.message) && /together 404/.test(err.message) && /Pollinations: 402/.test(err.message));
+});
