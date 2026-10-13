@@ -1,7 +1,7 @@
 // Public trip page + bookings. The traveller fills the form on /trip → POST /api/booking → saved in KV and
 // the booking details are sent privately to the booking manager: the Telegram account whose phone number matches
-// BOOKING_PHONE (registered once by sharing their contact with the bot). Until that account has registered, the
-// details go to every team member (ALLOWED_USER_ID + BOOKING_ADMIN_IDS) so no booking is lost.
+// BOOKING_PHONE (registered once by sharing their contact with the bot). That number is the owner's own, so until
+// another account registers with it, the details go only to the owner (ALLOWED_USER_ID).
 // No payment info goes out from here: the team contacts the traveller. After payment there is no cancellation.
 
 import { TRIP_HERO, TRIP_LOGO } from './trip-media.mjs';
@@ -56,7 +56,8 @@ export async function isBookingPhone(env, phone) {
 export const RECIPIENT_KEY = 'booking:recipient';
 export async function recipients(env) {
   const manager = env.MEMORY && await env.MEMORY.get(RECIPIENT_KEY);
-  return manager ? [manager] : team(env);
+  const owner = String(env.ALLOWED_USER_ID || '').trim();
+  return manager ? [manager] : owner ? [owner] : team(env);
 }
 
 // A Telegram contact shared with the bot: registers the booking manager when it is their own number and it matches.

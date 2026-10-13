@@ -790,7 +790,7 @@ test('trip page is public and has the booking form', async () => {
   assert.match(html, /ig\.me\/m\/viking\.offroad/);
 });
 
-test('booking is sent privately to every team member, with no payment info; bad input is refused', async () => {
+test('booking is sent privately only to the owner (not other admins), with no payment info; bad input is refused', async () => {
   const env = { ...baseEnv(), BOOKING_ADMIN_IDS: '555, 42' };
   const calls = bookingFetch();
   assert.equal((await book(env, { ...okBody, agree: false })).status, 400);
@@ -803,7 +803,7 @@ test('booking is sent privately to every team member, with no payment info; bad 
   const data = await res.json();
   assert.match(data.id, /^[a-z2-9]{6}$/);
   const msgs = calls.filter((c) => c.url.endsWith('/sendMessage')).map((c) => c.body);
-  assert.deepEqual(msgs.map((m) => String(m.chat_id)).sort(), ['42', '555', String(env.ALLOWED_USER_ID).trim()].sort());
+  assert.deepEqual(msgs.map((m) => String(m.chat_id)), [String(env.ALLOWED_USER_ID).trim()]);
   for (const m of msgs) {
     assert.match(m.text, /سارا[\s\S]*09123456789[\s\S]*2 نفر[\s\S]*خودروی شخصی/);
     assert.doesNotMatch(m.text, /پرداخت/);
