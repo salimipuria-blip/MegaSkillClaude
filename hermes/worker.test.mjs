@@ -943,3 +943,21 @@ test('GitHub Models: busy models hand over to the next one, then to more models 
   assert.equal(models.includes('openai/o3'), false, 'o-series reasoning models are skipped');
   assert.equal(models.some((m) => /embedding/.test(m)), false);
 });
+
+test('booking manager registers by sharing their own matching phone; then bookings go only to them', async () => {
+  const env = { ...baseEnv(), BOOKING_ADMIN_IDS: '555' };
+  const calls = bookingFetch();
+  const contact = (phone, userId = 777) => ({ message: { chat: { id: 777 }, from: { id: 777, first_name: 'Ali' }, contact: { phone_number: phone, user_id: userId } } });
+  await post(env, message('سلام', 777));
+  const ask = calls.find((c) => c.url.endsWith('/sendMessage') && c.body.chat_id === 42);
+  assert.equal(ask.body.reply_markup.keyboard[0][0].request_contact, true);
+  await post(env, contact('+98 912 000 0000'));
+  assert.equal(env.MEMORY.store.get('booking:recipient'), undefined, 'other numbers are refused');
+  await post(env, contact('+989123331540', 999));
+  assert.equal(env.MEMORY.store.get('booking:recipient'), undefined, 'someone else\'s contact card is refused');
+  await post(env, contact('09123331540'));
+  assert.equal(env.MEMORY.store.get('booking:recipient'), '777');
+  calls.length = 0;
+  assert.equal((await book(env, okBody)).status, 200);
+  assert.deepEqual(calls.filter((c) => c.url.endsWith('/sendMessage')).map((c) => String(c.body.chat_id)), ['777']);
+});

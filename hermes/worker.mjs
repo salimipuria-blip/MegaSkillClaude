@@ -13,7 +13,7 @@ import { relevantSkills, skillsBlock } from './skill-router.mjs';
 import { loadLog, toContents, appendTurn, archiveAndClear, noteFrom, loadNotes, addNote, clearNotes } from './memory.mjs';
 import { imageRequest, imagePrompt, makeImage, sizeFor, base64ToBytes } from './image.mjs';
 import { transcribe, describeImage, telegramFile, parseDataUrl } from './media.mjs';
-import { tripPage, createBooking } from './booking.mjs';
+import { tripPage, createBooking, onContact } from './booking.mjs';
 import { askProviders, configuredProviders } from './providers.mjs';
 import { googleConfigured, googleConnected, googleTools, connectUrl, finishConnect, disconnect } from './google.mjs';
 
@@ -55,7 +55,7 @@ export default {
     }
     const update = await request.json().catch(() => null);
     const msg = update && update.message;
-    if (msg && (typeof msg.text === 'string' || msg.voice || msg.audio || (msg.photo && msg.photo.length))) {
+    if (msg && (typeof msg.text === 'string' || msg.contact || msg.voice || msg.audio || (msg.photo && msg.photo.length))) {
       ctx.waitUntil(handle(msg, env, url.origin).catch((err) => console.error('[Hermes]', err.message)));
     }
     return new Response('ok');
@@ -241,8 +241,17 @@ async function setup(url, env) {
 async function handle(msg, env, origin) {
   const chatId = msg.chat.id;
   const userId = msg.from && msg.from.id;
+  if (msg.contact && env.MEMORY) {
+    const done = await onContact(env, msg);
+    await tg(env, 'sendMessage', { chat_id: chatId, text: done, reply_markup: { remove_keyboard: true } });
+    if (done.startsWith('✅') && String(userId) !== String(env.ALLOWED_USER_ID).trim()) {
+      await send(env, String(env.ALLOWED_USER_ID).trim(), `گزارش رزروها از این به بعد فقط برای ${[msg.from.first_name, msg.from.username && `@${msg.from.username}`].filter(Boolean).join(' ')} فرستاده می‌شه.`);
+    }
+    return;
+  }
   if (String(userId) !== String(env.ALLOWED_USER_ID).trim()) {
-    await send(env, chatId, `این بات خصوصی است. شناسهٔ شما: ${userId}`);
+    await tg(env, 'sendMessage', { chat_id: chatId, text: `این بات خصوصی است. شناسهٔ شما: ${userId}\n\nمسئول رزرو وایکینگ هستی؟ دکمهٔ پایین رو بزن تا شماره‌ت ثبت بشه و گزارش رزروها برات بیاد.`,
+      reply_markup: { keyboard: [[{ text: '📱 ارسال شمارهٔ من', request_contact: true }]], resize_keyboard: true, one_time_keyboard: true } });
     return;
   }
   const key = `history:${chatId}`;

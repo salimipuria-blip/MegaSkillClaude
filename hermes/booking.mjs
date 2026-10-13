@@ -1,5 +1,7 @@
 // Public trip page + bookings. The traveller fills the form on /trip → POST /api/booking → saved in KV and
-// the booking details are sent privately to every team member (ALLOWED_USER_ID + BOOKING_ADMIN_IDS).
+// the booking details are sent privately to the booking manager: the Telegram account whose phone number matches
+// BOOKING_PHONE (registered once by sharing their contact with the bot). Until that account has registered, the
+// details go to every team member (ALLOWED_USER_ID + BOOKING_ADMIN_IDS) so no booking is lost.
 // No payment info goes out from here: the team contacts the traveller. After payment there is no cancellation.
 
 import { TRIP_HERO, TRIP_LOGO } from './trip-media.mjs';
@@ -35,6 +37,37 @@ export function validate(body) {
 export const team = (env) => [...new Set([env.ALLOWED_USER_ID, ...String(env.BOOKING_ADMIN_IDS || '').split(',')]
   .map((s) => String(s || '').trim()).filter(Boolean))];
 
+// Booking manager's phone, stored only as a SHA-256 of its digits (98…); a BOOKING_PHONE secret/var overrides it.
+const BOOKING_PHONE_SHA256 = 'f754020cff45bc404c2aab0e8c7940f150560f41c88d3fe0e087b6e856898ed2';
+export const normPhone = (s) => {
+  let d = toLatin(s).replace(/\D/g, '');
+  if (d.startsWith('00')) d = d.slice(2);
+  if (d.startsWith('0')) d = `98${d.slice(1)}`;
+  if (d.length === 10 && d.startsWith('9')) d = `98${d}`;
+  return d;
+};
+const sha256 = async (s) => [...new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s)))]
+  .map((b) => b.toString(16).padStart(2, '0')).join('');
+export async function isBookingPhone(env, phone) {
+  const d = normPhone(phone);
+  if (!d) return false;
+  return env.BOOKING_PHONE ? d === normPhone(env.BOOKING_PHONE) : (await sha256(d)) === BOOKING_PHONE_SHA256;
+}
+export const RECIPIENT_KEY = 'booking:recipient';
+export async function recipients(env) {
+  const manager = env.MEMORY && await env.MEMORY.get(RECIPIENT_KEY);
+  return manager ? [manager] : team(env);
+}
+
+// A Telegram contact shared with the bot: registers the booking manager when it is their own number and it matches.
+export async function onContact(env, msg) {
+  const c = msg.contact;
+  if (!c || !msg.from || String(c.user_id) !== String(msg.from.id)) return 'فقط شمارهٔ خودت رو با دکمهٔ پایین بفرست.';
+  if (!(await isBookingPhone(env, c.phone_number))) return 'این شماره برای دریافت رزروها ثبت نشده.';
+  await env.MEMORY.put(RECIPIENT_KEY, String(msg.chat.id));
+  return '✅ ثبت شد. از این به بعد گزارش رزروهای وایکینگ فقط برای همین حساب فرستاده می‌شه.';
+}
+
 const teamText = (id, k) => `🆕 رزرو جدید · کد ${id}\n${TRIP.title} (${TRIP.dates})\n\n` +
   `نام: ${k.name}\nشماره: ${k.phone}\nتعداد: ${k.count} نفر\nرفت‌وآمد: ${k.car}` + (k.note ? `\nتوضیح: ${k.note}` : '');
 
@@ -53,7 +86,7 @@ export async function createBooking(env, tg, request, body) {
   const record = { ...booking, id, t: Date.now() };
   await env.MEMORY.put(`booking:${id}`, JSON.stringify(record), { expirationTtl: TTL });
   const text = teamText(id, record);
-  const sent = await Promise.all(team(env).map((chat_id) => tg(env, 'sendMessage', { chat_id, text }).catch(() => null)));
+  const sent = await Promise.all((await recipients(env)).map((chat_id) => tg(env, 'sendMessage', { chat_id, text }).catch(() => null)));
   if (!sent.some((r) => r && r.ok)) console.error('[Hermes] booking', id, 'reached no team chat');
   return { status: 200, data: { id } };
 }
