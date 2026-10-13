@@ -441,7 +441,11 @@ export async function askGemini(env, contents, system = SYSTEM, search = true, t
     let res = await call(model, convo, withSearch, withFns);
     if (withSearch && (res.status === 400 || res.status === 429)) { withSearch = false; res = await call(model, convo, withSearch, withFns); }
     if (withFns && res.status === 400) { withFns = false; res = await call(model, convo, withSearch, withFns); }
-    if (res.status === 400 || res.status === 401 || res.status === 403) throw new Error(`جمینی کلید را نپذیرفت (${res.status}). کلید را دوباره بساز.`);
+    if (res.status === 400 || res.status === 401 || res.status === 403) {
+      // 400 is also Google's answer for a blocked region ("User location is not supported"), so show its own words.
+      const why = await res.json().then((d) => d && d.error && d.error.message).catch(() => '');
+      throw new Error(`جمینی جواب نداد (${res.status}${why ? `: ${String(why).slice(0, 160)}` : ''}).`);
+    }
     // Each model has its own free quota: a full (429), missing (404) or busy (5xx) model hands over to the next one.
     if (!res.ok) { busy = busy || res.status === 429; continue; }
     if (env.MEMORY && model !== cached) await env.MEMORY.put('model', model);
