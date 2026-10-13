@@ -108,11 +108,38 @@ export async function makeImage(env, prompt, size = { width: 1024, height: 1024 
   if (env.GEMINI_API_KEY) {
     try { return await geminiImage(env, prompt); } catch (err) { lastErr = err; }
   }
+  if (env.HF_TOKEN) {
+    try { return await hfImage(env, prompt, size); } catch (err) { lastErr = err; console.error('[Hermes] Hugging Face image failed:', err.message); }
+  }
   if (env.FREE_IMAGES === 'off' && !env.AI && !env.GEMINI_API_KEY) throw new Error('برای ساخت عکس، اتصال Workers AI (binding AI) یا کلید جمینی لازم است.');
   if (env.FREE_IMAGES !== 'off') {
     try { return await freeImage(prompt, size); } catch (err) { lastErr = err; console.error('[Hermes] free image failed:', err.message); }
   }
   throw new Error(`سهمیهٔ رایگان امروزِ ساخت عکس تمام شده یا مدل‌ها جواب ندادند؛ کمی بعد دوباره امتحان کن. (${lastErr ? lastErr.message : ''})`);
+}
+
+// Hugging Face free monthly credits (HF_TOKEN): FLUX.1 schnell, then FLUX.1 dev.
+const HF_IMAGE_MODELS = ['black-forest-labs/FLUX.1-schnell', 'black-forest-labs/FLUX.1-dev'];
+const toBase64 = (bytes) => {
+  let bin = '';
+  for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+  return btoa(bin);
+};
+export async function hfImage(env, prompt, size = { width: 1024, height: 1024 }) {
+  let lastErr = null;
+  for (const model of HF_IMAGE_MODELS) {
+    const res = await fetch(`https://router.huggingface.co/hf-inference/models/${model}`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', accept: 'image/jpeg', authorization: `Bearer ${String(env.HF_TOKEN).trim()}` },
+      body: JSON.stringify({ inputs: String(prompt).slice(0, 900), parameters: { width: size.width, height: size.height } }),
+    });
+    const mime = (res.headers.get('content-type') || '').split(';')[0];
+    if (!res.ok || !mime.startsWith('image/')) { lastErr = new Error(`Hugging Face ${model}: ${res.status}`); continue; }
+    const bytes = new Uint8Array(await res.arrayBuffer());
+    if (bytes.length < 1000) { lastErr = new Error(`Hugging Face ${model}: empty`); continue; }
+    return { image: toBase64(bytes), mime, model: `Hugging Face ${model.split('/')[1]}` };
+  }
+  throw lastErr;
 }
 
 // Last resort with no key and no quota: Pollinations' free public FLUX endpoint (set FREE_IMAGES=off to disable).
@@ -125,9 +152,7 @@ export async function freeImage(prompt, size = { width: 1024, height: 1024 }) {
   if (!res.ok || !mime.startsWith('image/')) throw new Error(`Pollinations: ${res.status}`);
   const bytes = new Uint8Array(await res.arrayBuffer());
   if (bytes.length < 1000) throw new Error('Pollinations: empty');
-  let bin = '';
-  for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
-  return { image: btoa(bin), mime, model: 'Pollinations FLUX (free)' };
+  return { image: toBase64(bytes), mime, model: 'Pollinations FLUX (free)' };
 }
 
 // Image-capable Gemini models for this key (e.g. gemini-*-flash-image), newest version first, "pro" before "flash".

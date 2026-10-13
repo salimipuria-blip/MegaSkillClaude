@@ -7,7 +7,7 @@ import { hashPassword } from './auth.mjs';
 import { USERS } from './users.mjs';
 
 const OWNER = '123456789';
-const baseEnv = () => ({ TELEGRAM_BOT_TOKEN: '1:abc', GEMINI_API_KEY: 'g', ALLOWED_USER_ID: OWNER, MEMORY: kv() });
+const baseEnv = () => ({ FREE_TEXT: 'off', TELEGRAM_BOT_TOKEN: '1:abc', GEMINI_API_KEY: 'g', ALLOWED_USER_ID: OWNER, MEMORY: kv() });
 
 function kv() {
   const store = new Map();
@@ -980,4 +980,31 @@ test('images: when Workers AI quota and Gemini both fail, the free no-key image 
   const free = urls.find((u) => u.includes('pollinations'));
   assert.match(free, /a%20red%20jeep%20on%20a%20dune\?width=1024&height=1280/);
   await assert.rejects(makeImage({ ...env, FREE_IMAGES: 'off' }, 'x'), /سهمیهٔ رایگان/);
+});
+
+test('no-key Pollinations text brain answers when nothing else is configured; Hugging Face images come before it', async () => {
+  const env = { ...baseEnv(), GEMINI_API_KEY: undefined, FREE_TEXT: undefined };
+  const calls = [];
+  globalThis.fetch = async (url, init) => {
+    const u = String(url);
+    calls.push({ url: u, init });
+    if (u === 'https://text.pollinations.ai/openai') return new Response(JSON.stringify({ choices: [{ message: { content: 'سلام از پولینیشنز' } }] }));
+    return new Response(JSON.stringify({ ok: true, result: {} }));
+  };
+  await post(env, message('سلام'));
+  assert.deepEqual(sent(calls.map((c) => ({ url: c.url, body: c.init && typeof c.init.body === 'string' ? JSON.parse(c.init.body) : null }))).slice(-1), ['سلام از پولینیشنز']);
+  const free = calls.find((c) => c.url === 'https://text.pollinations.ai/openai');
+  assert.equal(free.init.headers.authorization, undefined, 'no key is sent');
+
+  const { makeImage } = await import('./image.mjs');
+  const urls = [];
+  globalThis.fetch = async (url) => {
+    urls.push(String(url));
+    return String(url).includes('huggingface.co')
+      ? new Response(new Uint8Array(4000).fill(1), { headers: { 'content-type': 'image/jpeg' } })
+      : new Response('{}', { status: 500 });
+  };
+  const out = await makeImage({ HF_TOKEN: 'hf' }, 'a jeep');
+  assert.match(out.model, /Hugging Face FLUX\.1-schnell/);
+  assert.equal(urls.some((u) => u.includes('pollinations')), false);
 });
