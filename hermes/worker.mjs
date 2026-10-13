@@ -417,16 +417,16 @@ export async function askGemini(env, contents, system = SYSTEM, search = true, t
       body: JSON.stringify({ systemInstruction: { parts: [{ text: system }] }, contents: convo, ...(t.length ? { tools: t } : {}) }),
     });
   };
+  let busy = false;
   for (const model of order) {
     const convo = [...contents];
     let withSearch = search, withFns = !!tools;
     let res = await call(model, convo, withSearch, withFns);
     if (withSearch && (res.status === 400 || res.status === 429)) { withSearch = false; res = await call(model, convo, withSearch, withFns); }
     if (withFns && res.status === 400) { withFns = false; res = await call(model, convo, withSearch, withFns); }
-    if (res.status === 404) continue;
-    if (res.status === 429) throw new Error('سهمیهٔ رایگان جمینی فعلاً پر است؛ چند دقیقه بعد دوباره بپرس.');
-    if (res.status === 400 || res.status === 403) throw new Error(`جمینی کلید را نپذیرفت (${res.status}). کلید را دوباره بساز.`);
-    if (!res.ok) throw new Error(`جمینی جواب نداد (${res.status}).`);
+    if (res.status === 400 || res.status === 401 || res.status === 403) throw new Error(`جمینی کلید را نپذیرفت (${res.status}). کلید را دوباره بساز.`);
+    // Each model has its own free quota: a full (429), missing (404) or busy (5xx) model hands over to the next one.
+    if (!res.ok) { busy = busy || res.status === 429; continue; }
     if (env.MEMORY && model !== cached) await env.MEMORY.put('model', model);
     let data = await res.json();
     // Tool loop: run the functions Gemini asks for (Gmail, Calendar, ...) and give it the results, up to 6 rounds.
@@ -451,7 +451,7 @@ export async function askGemini(env, contents, system = SYSTEM, search = true, t
     const answer = parts.map((p) => p.text || '').join('').trim() || '(پاسخ خالی بود؛ دوباره بپرس)';
     return answer + sources(data.candidates && data.candidates[0]);
   }
-  throw new Error('هیچ مدل جمینی برای این کلید در دسترس نیست.');
+  throw new Error(busy ? 'سهمیهٔ رایگان همهٔ مدل‌های جمینی فعلاً پر است؛ چند دقیقه بعد دوباره بپرس.' : 'هیچ مدل جمینی برای این کلید در دسترس نیست.');
 }
 
 // Up to 3 web sources when Gemini searched Google for the answer.
