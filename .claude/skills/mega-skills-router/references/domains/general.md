@@ -1,6 +1,6 @@
 # general
 
-Skills: 241
+Skills: 248
 
 - `academy-parser-pack` → `psk/data/skills/academy-parser-pack/SKILL.md`
 - `access-review` → `library/github-skills/access-review/SKILL.md`
@@ -10,7 +10,7 @@ Skills: 241
 - `alerting-oncall` → `library/github-skills/alerting-oncall/SKILL.md`
 - `algorithmic-art` → `psk/data/skills/algorithmic-art/SKILL.md`
 - `audit-logging` → `library/github-skills/audit-logging/SKILL.md`
-- `beatra` → `library/github-skills/beatra/SKILL.md`
+- `beatra` → `library/github-skills/beatra/SKILL.md` [incomplete: excluded from default routing]
 - `board-governance` → `library/github-skills/board-governance/SKILL.md`
 - `bookstore-parser-analyzer` → `psk/data/skills/bookstore-parser-analyzer/SKILL.md`
 - `bookstore-reporter-optimizer` → `psk/data/skills/bookstore-reporter-optimizer/SKILL.md`
@@ -45,7 +45,7 @@ Skills: 241
 - `crossframe` → `library/github-skills/crossframe/SKILL.md`
 - `daily` → `library/github-skills/daily/SKILL.md`
 - `day-book` → `library/github-skills/day-book/SKILL.md`
-- `debug-buttercup` → `library/github-skills/debug-buttercup/SKILL.md`
+- `debug-buttercup` → `library/github-skills/debug-buttercup/SKILL.md` [incomplete: excluded from default routing]
 - `decision-log-rebuilder` → `psk/data/skills/decision-log-rebuilder/SKILL.md`
 - `dental-intent-reporter` → `psk/data/skills/dental-intent-reporter/SKILL.md`
 - `dental-purge-monitor` → `psk/data/skills/dental-purge-monitor/SKILL.md`
@@ -60,7 +60,7 @@ Skills: 241
 - `ecolodge-actions-assistant` → `psk/data/skills/ecolodge-actions-assistant/SKILL.md`
 - `ecolodge-privacy-library` → `psk/data/skills/ecolodge-privacy-library/SKILL.md`
 - `ecolodge-reporter-reporter` → `psk/data/skills/ecolodge-reporter-reporter/SKILL.md`
-- `emergency-card` → `library/github-skills/emergency-card/SKILL.md`
+- `emergency-card` → `library/github-skills/emergency-card/SKILL.md` [incomplete: excluded from default routing]
 - `employee-suggestion-hub` → `library/github-skills/employee-suggestion-hub/SKILL.md`
 - `enterprise-vpn-attack` → `library/github-skills/enterprise-vpn-attack/SKILL.md`
 - `escalation-trigger-rules` → `psk/data/skills/escalation-trigger-rules/SKILL.md`
@@ -89,6 +89,8 @@ Skills: 241
 - `geo-proposal` → `library/github-skills/geo-proposal/SKILL.md`
 - `git-commit` → `library/github-skills/git-commit/SKILL.md`
 - `gmail-mbox-thread-rebuilder` → `psk/data/skills/gmail-mbox-thread-rebuilder/SKILL.md`
+- `grill-me` → `library/github-skills/grill-me/SKILL.md`
+- `grilling` → `library/github-skills/grilling/SKILL.md`
 - `gym-cluster-analyzer` → `psk/data/skills/gym-cluster-analyzer/SKILL.md`
 - `gym-privacy-optimizer` → `psk/data/skills/gym-privacy-optimizer/SKILL.md`
 - `gym-privacy-workflow` → `psk/data/skills/gym-privacy-workflow/SKILL.md`
@@ -97,6 +99,7 @@ Skills: 241
 - `gym-reporter-reporter` → `psk/data/skills/gym-reporter-reporter/SKILL.md`
 - `gym-sentiment-workflow` → `psk/data/skills/gym-sentiment-workflow/SKILL.md`
 - `hallucination-incident-log` → `psk/data/skills/hallucination-incident-log/SKILL.md`
+- `handoff` → `library/github-skills/handoff/SKILL.md`
 - `hashicorp-vault` → `library/github-skills/hashicorp-vault/SKILL.md`
 - `health-wellness` → `library/github-skills/health-wellness/SKILL.md`
 - `homelab-network-setup` → `library/github-skills/homelab-network-setup/SKILL.md`
@@ -109,7 +112,7 @@ Skills: 241
 - `intent-cluster-embeddings` → `psk/data/skills/intent-cluster-embeddings/SKILL.md`
 - `intern-program` → `library/github-skills/intern-program/SKILL.md`
 - `internal-communication` → `library/github-skills/internal-communication/SKILL.md`
-- `invention-structuring` → `library/github-skills/invention-structuring/SKILL.md`
+- `invention-structuring` → `library/github-skills/invention-structuring/SKILL.md` [incomplete: excluded from default routing]
 - `inventory-demand-planning` → `library/github-skills/inventory-demand-planning/SKILL.md`
 - `inventory-stock-reconciliation` → `library/github-skills/inventory-stock-reconciliation/SKILL.md`
 - `ios-redteam-pipeline` → `library/github-skills/ios-redteam-pipeline/SKILL.md`
@@ -129,7 +132,7 @@ Skills: 241
 - `leiloeiro-juridico` → `library/github-skills/leiloeiro-juridico/SKILL.md`
 - `lm-eval-benchmark-pack` → `psk/data/skills/lm-eval-benchmark-pack/SKILL.md`
 - `load-balancing` → `library/github-skills/load-balancing/SKILL.md`
-- `logic-review` → `library/github-skills/logic-review/SKILL.md`
+- `logic-review` → `library/github-skills/logic-review/SKILL.md` [incomplete: excluded from default routing]
 - `loki-logging` → `library/github-skills/loki-logging/SKILL.md`
 - `m365-entra-attack` → `library/github-skills/m365-entra-attack/SKILL.md`
 - `makepad-widgets` → `library/github-skills/makepad-widgets/SKILL.md`
@@ -140,7 +143,8 @@ Skills: 241
 - `meeting-summarizer` → `psk/data/skills/meeting-summarizer/SKILL.md`
 - `memory-write-policy-audit` → `psk/data/skills/memory-write-policy-audit/SKILL.md`
 - `mid-engagement-ir-detection` → `library/github-skills/mid-engagement-ir-detection/SKILL.md`
-- `monte-carlo-performance-diagnosis` → `library/github-skills/monte-carlo-performance-diagnosis/SKILL.md`
+- `monte-carlo-performance-diagnosis` → `library/github-skills/monte-carlo-performance-diagnosis/SKILL.md` [incomplete: excluded from default routing]
+- `mp-teach` → `library/github-skills/mp-teach/SKILL.md`
 - `multi-session-thread-linker` → `psk/data/skills/multi-session-thread-linker/SKILL.md`
 - `notification-reminder-hub` → `library/github-skills/notification-reminder-hub/SKILL.md`
 - `nuts-cluster-autopilot` → `psk/data/skills/nuts-cluster-autopilot/SKILL.md`
@@ -218,12 +222,13 @@ Skills: 241
 - `sred-project-organizer` → `library/github-skills/sred-project-organizer/SKILL.md`
 - `ssl-tls-management` → `library/github-skills/ssl-tls-management/SKILL.md`
 - `storyboard-generator` → `psk/data/skills/storyboard-generator/SKILL.md`
-- `suno-lyrics-to-song` → `library/github-skills/suno-lyrics-to-song/SKILL.md`
+- `suno-lyrics-to-song` → `library/github-skills/suno-lyrics-to-song/SKILL.md` [incomplete: excluded from default routing]
 - `supabase` → `library/github-skills/supabase/SKILL.md`
 - `systemd-services` → `library/github-skills/systemd-services/SKILL.md`
 - `team-calendar` → `library/github-skills/team-calendar/SKILL.md`
 - `tech-matrix` → `library/github-skills/tech-matrix/SKILL.md`
 - `telegram-json-normalizer` → `psk/data/skills/telegram-json-normalizer/SKILL.md`
+- `to-questionnaire` → `library/github-skills/to-questionnaire/SKILL.md`
 - `token-cost-per-conversation` → `psk/data/skills/token-cost-per-conversation/SKILL.md`
 - `traderspy-technical-analysis` → `library/github-skills/traderspy-technical-analysis/SKILL.md`
 - `treatment-plans` → `library/github-skills/treatment-plans/SKILL.md`
@@ -233,12 +238,14 @@ Skills: 241
 - `unmet-need-miner` → `psk/data/skills/unmet-need-miner/SKILL.md`
 - `vendor-contractor-management` → `library/github-skills/vendor-contractor-management/SKILL.md`
 - `vocabulary-fingerprint` → `psk/data/skills/vocabulary-fingerprint/SKILL.md`
+- `wait-what` → `library/github-skills/wait-what/SKILL.md`
 - `weather-go-nogo-matrix` → `psk/data/skills/weather-go-nogo-matrix/SKILL.md`
 - `wedding-purge-generator` → `psk/data/skills/wedding-purge-generator/SKILL.md`
 - `wedding-reporter-auditor` → `psk/data/skills/wedding-reporter-auditor/SKILL.md`
 - `weekly-self-review-agent` → `psk/data/skills/weekly-self-review-agent/SKILL.md`
 - `whatsapp-chat-parser-fa` → `psk/data/skills/whatsapp-chat-parser-fa/SKILL.md`
 - `workshop-create` → `library/github-skills/workshop-create/SKILL.md`
+- `writing-for-agents` → `library/github-skills/writing-for-agents/SKILL.md`
 - `x-article-publisher` → `psk/data/skills/x-article-publisher/SKILL.md`
 - `yes-md` → `library/github-skills/yes-md/SKILL.md`
 - `yoga-intent-analyzer` → `psk/data/skills/yoga-intent-analyzer/SKILL.md`

@@ -4,9 +4,13 @@
   "type": "module",
   "scripts": {
     "postinstall": "node build-skills.mjs && node sync-secrets.mjs",
-    "test": "node --test worker.test.mjs"
+    "test": "node --test worker.test.mjs webhook-setup.test.mjs",
+    "test:integration": "node --test conversation.test.mjs",
+    "check": "node --check worker.mjs && node --check entry.mjs && node --check brain.mjs && node --check conversation.mjs && node --check memory.mjs && node --check security.mjs && node --check webhook-setup.mjs",
+    "setup:webhook": "node webhook-setup.mjs"
   },
   "devDependencies": {
+    "miniflare": "5.20261006.1-alpha",
     "wrangler": "4.149.0"
   }
 }

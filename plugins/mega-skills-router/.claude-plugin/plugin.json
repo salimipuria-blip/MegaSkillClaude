@@ -1,10 +1,10 @@
 {
   "name": "mega-skills-router",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Routes Persian, Finglish and English requests to the relevant skills among 5,986 (3,000 PSK skills, a 6-skill business pack and 2,980 curated MIT-licensed GitHub skills) through 15 domain indexes and ~30,000 triggers, loading only the matched skills.",
   "author": { "name": "Puria Salimi" },
-  "homepage": "https://github.com/salimipuria-blip/-",
-  "repository": "https://github.com/salimipuria-blip/-",
+  "homepage": "https://github.com/salimipuria-blip/MegaSkillClaude",
+  "repository": "https://github.com/salimipuria-blip/MegaSkillClaude",
   "license": "MIT",
   "keywords": ["skills", "router", "persian", "farsi", "productivity"]
 }

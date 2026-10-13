@@ -377,3 +377,15 @@ table.table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
 .row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .between { justify-content: space-between; }
 hr.sep { border: 0; border-top: 1px solid var(--border); margin: 0; }
+
+/* Explicit safety boundary for the local-only prototype, before and after sign-in. */
+.local-only-notice {
+  margin: 0;
+  padding: 12px 16px;
+  border-inline-start: 3px solid #b7791f;
+  background: #b7791f12;
+  color: var(--navy);
+  font-size: 12px;
+  line-height: 1.9;
+}
+.login-card .local-only-notice { margin-block: 0 18px; }

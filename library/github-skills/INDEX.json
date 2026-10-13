@@ -31038,5 +31038,284 @@
   "description": "Convert OpenAPI 3.x or Swagger 2.0 specs (YAML or JSON) into complete, import-ready Postman Collection v2.1 JSON files.",
   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/postman-openapi-converter",
   "incomplete": false
+ },
+ {
+  "name": "ask-matt",
+  "repo": "mattpocock/skills",
+  "path": "skills/engineering/ask-matt",
+  "license": "MIT",
+  "description": "Ask which skill or flow fits your situation. A router over the skills in this repo.",
+  "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/engineering/ask-matt",
+  "incomplete": false
+ },
+ {
+  "name": "mp-code-review",
+  "repo": "mattpocock/skills",
+  "path": "skills/engineering/code-review",
+  "license": "MIT",
+  "description": "Review the changes since a fixed point (commit, branch, tag, or merge-base) along two axes: Standards (does the code follow this repo's documented coding standa",
+  "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/engineering/code-review",
+  "incomplete": false
+ },
+ {
+  "name": "mp-codebase-design",
+  "repo": "mattpocock/skills",
+  "path": "skills/engineering/codebase-design",
+  "license": "MIT",
+  "description": "Shared vocabulary for designing deep modules. Use when the u",
+  "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/engineering/codebase-design",
+  "incomplete": false
+ },
+ {
+  "name": "mp-diagnosing-bugs",
+  "repo": "mattpocock/skills",
+  "path": "skills/engineering/diagnosing-bugs",
+  "license": "MIT",
+  "description": "Diagnosis loop for hard bugs and performance regressions. Us",
+  "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/engineering/diagnosing-bugs",
+  "incomplete": false
+ },
+ {
+  "name": "mp-domain-modeling",
+  "repo": "mattpocock/skills",
+  "path": "skills/engineering/domain-modeling",
+  "license": "MIT",
+  "description": "Build and sharpen a project's domain model. Use when discussing codebase terminology, writing or editing a GLOSSARY.md, or recording or editing an ADR.",
+  "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/engineering/domain-modeling",
+  "incomplete": false
+ },
+ {
+  "name": "mp-grill-with-docs",
+  "repo": "mattpocock/skills",
+  "path": "skills/engineering/grill-with-docs",
+  "license": "MIT",
+  "description": "A relentless interview to sharpen a plan or design, which also creates docs (ADR's and glossary) as we go.",
+  "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/engineering/grill-with-docs",
+  "incomplete": false
+ },
+ {
+  "name": "implement-spec",
+  "repo": "mattpocock/skills",
+  "path": "skills/engineering/implement-spec",
+  "license": "MIT",
+  "description": "Implement the result of /to-spec and /to-tickets in code.",
+  "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/engineering/implement-spec",
+  "incomplete": false
+ },
+ {
+  "name": "implement",
+  "repo": "mattpocock/skills",
+  "path": "skills/engineering/implement",
+  "license": "MIT",
+  "description": "Implement a piece of work based on a spec or set of tickets.",
+  "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/engineering/implement",
+  "incomplete": false
+ },
+ {
+  "name": "mp-improve-codebase-architecture",
+  "repo": "mattpocock/skills",
+  "path": "skills/engineering/improve-codebase-architecture",
+  "license": "MIT",
+  "description": "Scan a codebase for deepening opportunities, present them as",
+  "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/engineering/improve-codebase-architecture",
+  "incomplete": false
+ },
+ {
+  "name": "pr",
+  "repo": "mattpocock/skills",
+  "path": "skills/engineering/pr",
+  "license": "MIT",
+  "description": "Use when writing a PR body.",
+  "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/engineering/pr",
+  "incomplete": false
+ },
+ {
+  "name": "prototype",
+  "repo": "mattpocock/skills",
+  "path": "skills/engineering/prototype",
+  "license": "MIT",
+  "description": "Build a throwaway prototype to answer a design question. Use when the user wants to sanity-check whether a state model or logic feels right, or explore what a U",
+  "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/engineering/prototype",
+  "incomplete": false
+ },
+ {
+  "name": "mp-research",
+  "repo": "mattpocock/skills",
+  "path": "skills/engineering/research",
+  "license": "MIT",
+  "description": "Investigate a question against high-trust primary sources and capture the findings as a Markdown file in the repo. Use when the user wants a topic researched, d",
+  "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/engineering/research",
+  "incomplete": false
+ },
+ {
+  "name": "retro",
+  "repo": "mattpocock/skills",
+  "path": "skills/engineering/retro",
+  "license": "MIT",
+  "description": "Conduct a retrospective on a coding session.",
+  "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/engineering/retro",
+  "incomplete": false
+ },
+ {
+  "name": "mp-setup-matt-pocock-skills",
+  "repo": "mattpocock/skills",
+  "path": "skills/engineering/setup-matt-pocock-skills",
+  "license": "MIT",
+  "description": "Configure this repo for the engineering skills: set up its issue tracker, triage label vocabulary, and domain doc layout. Run once before first use of the other",
+  "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/engineering/setup-matt-pocock-skills",
+  "incomplete": false
+ },
+ {
+  "name": "tdd",
+  "repo": "mattpocock/skills",
+  "path": "skills/engineering/tdd",
+  "license": "MIT",
+  "description": "Test-driven development. Use when the user wants to build features or fix bugs test-first, mentions \"red-green-refactor\", or wants integration tests.",
+  "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/engineering/tdd",
+  "incomplete": false
+ },
+ {
+  "name": "to-spec",
+  "repo": "mattpocock/skills",
+  "path": "skills/engineering/to-spec",
+  "license": "MIT",
+  "description": "Turn the current conversation into a spec and publish it to the project issue tracker: no interview, just synthesis of what you've already discussed.",
+  "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/engineering/to-spec",
+  "incomplete": false
+ },
+ {
+  "name": "to-tickets",
+  "repo": "mattpocock/skills",
+  "path": "skills/engineering/to-tickets",
+  "license": "MIT",
+  "description": "Break a plan, spec, or the current conversation into a set of tracer-bullet tickets, each declaring its blocking edges, published to the configured tracker (edg",
+  "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/engineering/to-tickets",
+  "incomplete": false
+ },
+ {
+  "name": "mp-triage",
+  "repo": "mattpocock/skills",
+  "path": "skills/engineering/triage",
+  "license": "MIT",
+  "description": "Move issues and external PRs through a state machine of triage roles, categorise, verify, grill if needed, and write agent-ready briefs.",
+  "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/engineering/triage",
+  "incomplete": false
+ },
+ {
+  "name": "wayfinder",
+  "repo": "mattpocock/skills",
+  "path": "skills/engineering/wayfinder",
+  "license": "MIT",
+  "description": "Plan a huge chunk of work (more than one agent session can hold) as a shared map of decision tickets on your issue tracker, and resolve them one at a time until",
+  "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/engineering/wayfinder",
+  "incomplete": false
+ },
+ {
+  "name": "wizard",
+  "repo": "mattpocock/skills",
+  "path": "skills/engineering/wizard",
+  "license": "MIT",
+  "description": "Generate an interactive bash wizard that walks a human through steps only they can perform. Use when provisioning infrastructure, setting up credentials or CI s",
+  "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/engineering/wizard",
+  "incomplete": false
+ },
+ {
+  "name": "git-guardrails-claude-code",
+  "repo": "mattpocock/skills",
+  "path": "skills/misc/git-guardrails-claude-code",
+  "license": "MIT",
+  "description": "Set up Claude Code hooks to block dangerous git commands (push, reset --hard, clean, branch -D, etc.) before they execute. Use when user wants to prevent destru",
+  "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/misc/git-guardrails-claude-code",
+  "incomplete": false
+ },
+ {
+  "name": "migrate-to-shoehorn",
+  "repo": "mattpocock/skills",
+  "path": "skills/misc/migrate-to-shoehorn",
+  "license": "MIT",
+  "description": "Migrate test files from `as` type assertions to @total-typescript/shoehorn. Use when user mentions shoehorn, wants to replace `as` in tests, or needs partial te",
+  "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/misc/migrate-to-shoehorn",
+  "incomplete": false
+ },
+ {
+  "name": "scaffold-exercises",
+  "repo": "mattpocock/skills",
+  "path": "skills/misc/scaffold-exercises",
+  "license": "MIT",
+  "description": "Create exercise directory structures with sections, problems, solutions, and explainers that pass linting. Use when user wants to scaffold exercises, create exe",
+  "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/misc/scaffold-exercises",
+  "incomplete": false
+ },
+ {
+  "name": "setup-pre-commit",
+  "repo": "mattpocock/skills",
+  "path": "skills/misc/setup-pre-commit",
+  "license": "MIT",
+  "description": "Set up Husky pre-commit hooks with lint-staged (Prettier), type checking, and tests in the current repo. Use when user wants to add pre-commit hooks, set up Hus",
+  "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/misc/setup-pre-commit",
+  "incomplete": false
+ },
+ {
+  "name": "grill-me",
+  "repo": "mattpocock/skills",
+  "path": "skills/productivity/grill-me",
+  "license": "MIT",
+  "description": "A relentless interview to sharpen a plan or design.",
+  "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/productivity/grill-me",
+  "incomplete": false
+ },
+ {
+  "name": "grilling",
+  "repo": "mattpocock/skills",
+  "path": "skills/productivity/grilling",
+  "license": "MIT",
+  "description": "Grill the user relentlessly about a plan, decision, or idea. Use when the user wants to stress-test their thinking, or uses any 'grill' trigger phrases.",
+  "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/productivity/grilling",
+  "incomplete": false
+ },
+ {
+  "name": "handoff",
+  "repo": "mattpocock/skills",
+  "path": "skills/productivity/handoff",
+  "license": "MIT",
+  "description": "Compact the current conversation into a handoff document for another agent to pick up.",
+  "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/productivity/handoff",
+  "incomplete": false
+ },
+ {
+  "name": "mp-teach",
+  "repo": "mattpocock/skills",
+  "path": "skills/productivity/teach",
+  "license": "MIT",
+  "description": "Teach the user a new skill or concept, within this workspace",
+  "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/productivity/teach",
+  "incomplete": false
+ },
+ {
+  "name": "to-questionnaire",
+  "repo": "mattpocock/skills",
+  "path": "skills/productivity/to-questionnaire",
+  "license": "MIT",
+  "description": "Turn a decision you can't fully answer into a questionnaire for someone else to fill in.",
+  "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/productivity/to-questionnaire",
+  "incomplete": false
+ },
+ {
+  "name": "wait-what",
+  "repo": "mattpocock/skills",
+  "path": "skills/productivity/wait-what",
+  "license": "MIT",
+  "description": "Stop. That last message did not land: re-pitch it.",
+  "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/productivity/wait-what",
+  "incomplete": false
+ },
+ {
+  "name": "writing-for-agents",
+  "repo": "mattpocock/skills",
+  "path": "skills/productivity/writing-for-agents",
+  "license": "MIT",
+  "description": "Writing documents for agents. Use when creating or editing skills, or modifying AGENTS.md or CLAUDE.md.",
+  "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/productivity/writing-for-agents",
+  "incomplete": false
  }
 ]

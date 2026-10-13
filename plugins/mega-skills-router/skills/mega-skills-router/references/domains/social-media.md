@@ -161,7 +161,7 @@ Skills: 260
 - `instagram-content-generator` → `references/skills/instagram-content-generator/INSTRUCTIONS.md`
 - `instagram-dm-export-reader` → `references/skills/instagram-dm-export-reader/INSTRUCTIONS.md`
 - `instagram-post-visual-kit` → `references/skills/instagram-post-visual-kit/INSTRUCTIONS.md`
-- `iterate-pr` → `references/skills/iterate-pr/INSTRUCTIONS.md`
+- `iterate-pr` → `references/skills/iterate-pr/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `jewelry-comment-reporter` → `references/skills/jewelry-comment-reporter/INSTRUCTIONS.md`
 - `jewelry-reels-library` → `references/skills/jewelry-reels-library/INSTRUCTIONS.md`
 - `link-in-bio-structure` → `references/skills/link-in-bio-structure/INSTRUCTIONS.md`

@@ -3,11 +3,11 @@
 Skills: 117
 
 - `academy-watermark-planner` → `psk/data/skills/academy-watermark-planner/SKILL.md`
-- `ai-image-generation-studio` → `library/github-skills/ai-image-generation-studio/SKILL.md`
+- `ai-image-generation-studio` → `library/github-skills/ai-image-generation-studio/SKILL.md` [incomplete: excluded from default routing]
 - `ai-image-prompt-builder` → `psk/data/skills/ai-image-prompt-builder/SKILL.md`
 - `background-remover-batch` → `psk/data/skills/background-remover-batch/SKILL.md`
 - `badge-patch-designer` → `psk/data/skills/badge-patch-designer/SKILL.md`
-- `beatra-ai-video-studio` → `library/github-skills/beatra-ai-video-studio/SKILL.md`
+- `beatra-ai-video-studio` → `library/github-skills/beatra-ai-video-studio/SKILL.md` [incomplete: excluded from default routing]
 - `before-after-collage-maker` → `psk/data/skills/before-after-collage-maker/SKILL.md`
 - `bookstore-infographic-assistant` → `psk/data/skills/bookstore-infographic-assistant/SKILL.md`
 - `bookstore-mockup-assistant` → `psk/data/skills/bookstore-mockup-assistant/SKILL.md`
@@ -37,9 +37,9 @@ Skills: 117
 - `drone-photography-legal-prompts` → `psk/data/skills/drone-photography-legal-prompts/SKILL.md`
 - `ecolodge-flatlay-autopilot` → `psk/data/skills/ecolodge-flatlay-autopilot/SKILL.md`
 - `ecolodge-flatlay-planner` → `psk/data/skills/ecolodge-flatlay-planner/SKILL.md`
-- `ecommerce-listing-image-set` → `library/github-skills/ecommerce-listing-image-set/SKILL.md`
+- `ecommerce-listing-image-set` → `library/github-skills/ecommerce-listing-image-set/SKILL.md` [incomplete: excluded from default routing]
 - `ecommerce-packshot-kit` → `psk/data/skills/ecommerce-packshot-kit/SKILL.md`
-- `etsy-shop-catalog` → `library/github-skills/etsy-shop-catalog/SKILL.md`
+- `etsy-shop-catalog` → `library/github-skills/etsy-shop-catalog/SKILL.md` [incomplete: excluded from default routing]
 - `event-palette-analyzer` → `psk/data/skills/event-palette-analyzer/SKILL.md`
 - `exif-metadata-cleaner` → `psk/data/skills/exif-metadata-cleaner/SKILL.md`
 - `fashion-ghost-mannequin` → `psk/data/skills/fashion-ghost-mannequin/SKILL.md`
@@ -88,7 +88,7 @@ Skills: 117
 - `pitch-deck-diagrams` → `psk/data/skills/pitch-deck-diagrams/SKILL.md`
 - `portrait-retouch-guide` → `psk/data/skills/portrait-retouch-guide/SKILL.md`
 - `product-photo-prompt-kit` → `psk/data/skills/product-photo-prompt-kit/SKILL.md`
-- `product-photo-studio` → `library/github-skills/product-photo-studio/SKILL.md`
+- `product-photo-studio` → `library/github-skills/product-photo-studio/SKILL.md` [incomplete: excluded from default routing]
 - `qr-art-generator` → `psk/data/skills/qr-art-generator/SKILL.md`
 - `real-estate-photo-kit` → `psk/data/skills/real-estate-photo-kit/SKILL.md`
 - `realestate-flatlay-pack` → `psk/data/skills/realestate-flatlay-pack/SKILL.md`

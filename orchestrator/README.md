@@ -17,3 +17,27 @@ See [the unified project register](docs/MEGA_SKILLS_3000_UNIFICATION.md) for exa
 ## Safety
 
 Run `python scripts/audit/check_repository_contract.py` before committing changes. Keep laptop originals until complete SHA-256 checked backups, source reconciliation, and an iPhone-only live test succeed.
+
+
+## GitHub admin gateway — owner-only
+
+`verify_jwt = true` is necessary but not sufficient: public anon JWTs are not administrator
+identities. The handler resolves the bearer session using Supabase Auth and checks its returned
+user UUID against `GITHUB_ADMIN_USER_IDS` (comma-separated). Set that allowlist plus
+`SUPABASE_URL`, `SUPABASE_ANON_KEY`, and `GITHUB_ADMIN_TOKEN` in the server's environment, not Git.
+An absent/malformed allowlist fails closed with 503; non-owners get 403 and anon/invalid sessions
+get 401. Client-supplied metadata/roles never grant access. The live function must be redeployed
+before these source changes protect it.
+
+Regression tests (mocked Auth/GitHub, no external writes):
+`node --test supabase/functions/github-admin-gateway/*.test.mjs`.
+
+## Complete test discovery and historical artifacts
+
+Run `python -m pytest -q -ra tests`. Three installation checks need the external artifacts listed
+in `skills/registry/BASELINE_ARTIFACTS.json`; a completely unmaterialized checkout reports them
+as explicit skips. Partial or damaged installs are **not** skipped. After materialization, use
+`python -m pytest -q --require-materialized-skills tests` as the mandatory strict gate. Skips
+are not evidence of a completed skill installation.
+
+Monorepo hardening/rollout notes: [REPO_HARDENING.md](../docs/REPO_HARDENING.md).

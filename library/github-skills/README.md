@@ -25,6 +25,14 @@ Remaining skills were deduplicated by name (highest score kept) and ranked by `l
 - `INDEX.json`: name, repository, path, license, score, description and URL for every skill.
 
 ## Incomplete skills (281)
-These reference files that are not in their folder (usually shared scripts at the upstream repo root, or files missing upstream). They stay in the router index, but the steps that need those files will fail. Each is marked `"incomplete": true` in `INDEX.json` and has an `INCOMPLETE:` line in its `SOURCE.md`; remove its entry from the router index to exclude it.
+These reference files that are not in their folder (usually shared scripts at the upstream repo root, or files missing upstream). They are retained for provenance but excluded from default Python and Hermes routing. Each is marked `"incomplete": true` in `INDEX.json` and has an `INCOMPLETE:` line in its `SOURCE.md`. The generator propagates this flag into both router indexes; `--include-incomplete` is an explicit Python-only opt-in for manual review, not a claim that missing files work. After verifying a repaired skill, update the canonical flag and run `python3 scripts/sync_skill_library.py`.
 
 The automated filter does not replace a human review: read a skill before activating it.
+
+
+## Portable copies
+
+`library/` and `psk/data/` are canonical. Run `python3 scripts/sync_skill_library.py` to regenerate
+portable plugin instructions, companions, domain indexes and upstream license notices. CI runs
+`--check` to detect byte drift. The self-contained copies are intentional; never edit them as a
+second source of truth. No imported script is executed by this generator.

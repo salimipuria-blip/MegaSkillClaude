@@ -1,10 +1,11 @@
 // node --test hermes/  (Node 20+, no dependencies)
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import worker, { webhookSecret, appKey, chunks, MODELS, CF_MODELS } from './worker.mjs';
+import worker, { webhookSecret, appKey, setupKey, chunks, MODELS, CF_MODELS } from './worker.mjs';
 import { imageRequest, IMAGE_MODEL } from './image.mjs';
 import { hashPassword } from './auth.mjs';
 import { USERS } from './users.mjs';
+import { loadLog, loadNotes, addNote, appendTurn, archiveAndClear, clearNotes } from './memory.mjs';
 
 const OWNER = '123456789';
 const baseEnv = () => ({ FREE_TEXT: 'off', TELEGRAM_BOT_TOKEN: '1:abc', GEMINI_API_KEY: 'g', ALLOWED_USER_ID: OWNER, MEMORY: kv() });
@@ -46,7 +47,7 @@ async function post(env, update, secret) {
   return res;
 }
 
-const message = (text, from = OWNER) => ({ message: { chat: { id: 42 }, from: { id: Number(from) }, text } });
+const message = (text, from = OWNER) => ({ message: { chat: { id: Number(from), type: 'private' }, from: { id: Number(from) }, text } });
 const sent = (calls) => calls.filter((c) => c.url.endsWith('/sendMessage')).map((c) => c.body.text);
 
 test('rejects webhook calls without the secret header', async () => {
@@ -68,7 +69,7 @@ test('owner message is answered and stored in memory', async () => {
   const calls = mockFetch();
   await post(env, message('سلام'));
   assert.deepEqual(sent(calls), ['سلام پوریا']);
-  const history = JSON.parse(env.MEMORY.store.get('history:42'));
+  const history = JSON.parse(env.MEMORY.store.get(`history:${OWNER}`));
   assert.deepEqual(history.map((m) => m.role), ['user', 'model']);
   const gem = calls.find((c) => c.url.includes('generativelanguage'));
   assert.equal(JSON.stringify(gem).includes('1:abc'), false, 'bot token must not reach Gemini');
@@ -99,10 +100,10 @@ test('a model whose free quota is full hands over to the next Gemini model, not 
 
 test('/reset clears history', async () => {
   const env = baseEnv();
-  env.MEMORY.store.set('history:42', '[]');
+  env.MEMORY.store.set(`history:${OWNER}`, '[]');
   mockFetch();
   await post(env, message('/reset'));
-  assert.equal(env.MEMORY.store.has('history:42'), false);
+  assert.equal(env.MEMORY.store.has(`history:${OWNER}`), false);
 });
 
 test('works without a MEMORY binding', async () => {
@@ -115,7 +116,7 @@ test('works without a MEMORY binding', async () => {
 test('setup registers the webhook with the derived secret', async () => {
   const env = baseEnv();
   const calls = mockFetch();
-  const res = await worker.fetch(new Request('https://hermes.example.workers.dev/setup'), env, {});
+  const res = await worker.fetch(new Request('https://hermes.example.workers.dev/setup', { method: 'POST', headers: { authorization: `Bearer ${await setupKey(env)}` } }), env, {});
   assert.equal(res.status, 200);
   const hook = calls.find((c) => c.url.endsWith('/setWebhook'));
   assert.equal(hook.body.url, 'https://hermes.example.workers.dev/telegram');
@@ -123,33 +124,23 @@ test('setup registers the webhook with the derived secret', async () => {
   assert.equal((await res.text()).includes('1:abc'), false);
 });
 
-test('home page registers the webhook once, then only reports status', async () => {
-  const env = baseEnv();
-  let calls = mockFetch();
-  await worker.fetch(new Request('https://hermes.example.workers.dev/'), env, {});
-  assert.ok(calls.some((c) => c.url.endsWith('/setWebhook')));
-  globalThis.fetch = async (url) => {
-    if (String(url).endsWith('/getWebhookInfo')) {
-      return new Response(JSON.stringify({ ok: true, result: { url: 'https://hermes.example.workers.dev/telegram', allowed_updates: ['message', 'callback_query'] } }));
-    }
-    throw new Error(`unexpected call ${url}`);
-  };
-  const res = await worker.fetch(new Request('https://hermes.example.workers.dev/'), env, {});
-  assert.match(await res.text(), /connected/);
-  // An older webhook without button presses (callback_query) is re-registered.
-  calls = mockFetch();
-  globalThis.fetch = ((inner) => async (url, init) => String(url).endsWith('/getWebhookInfo')
-    ? new Response(JSON.stringify({ ok: true, result: { url: 'https://hermes.example.workers.dev/telegram', allowed_updates: ['message'] } }))
-    : inner(url, init))(globalThis.fetch);
-  await worker.fetch(new Request('https://hermes.example.workers.dev/'), env, {});
-  assert.deepEqual(calls.find((c) => c.url.endsWith('/setWebhook')).body.allowed_updates, ['message', 'callback_query']);
+test('public home is read-only and makes no Telegram calls', async () => {
+  const calls = mockFetch();
+  for (let i = 0; i < 2; i++) {
+    const res = await worker.fetch(new Request('https://hermes.example.workers.dev/'), baseEnv(), {});
+    assert.equal(res.status, 200);
+    assert.match(await res.text(), /running/);
+  }
+  assert.equal(calls.length, 0);
 });
 
-test('setup lists missing secrets by name only', async () => {
-  mockFetch();
-  const res = await worker.fetch(new Request('https://x.workers.dev/setup'), { GEMINI_API_KEY: 'g' }, {});
+test('authorized setup lists missing model configuration by name only', async () => {
+  const calls = mockFetch();
+  const env = { ...baseEnv(), GEMINI_API_KEY: undefined };
+  const res = await worker.fetch(new Request('https://hermes.example.workers.dev/setup', { method: 'POST', headers: { authorization: `Bearer ${await setupKey(env)}` } }), env, {});
   assert.equal(res.status, 400);
-  assert.match(await res.text(), /TELEGRAM_BOT_TOKEN, ALLOWED_USER_ID/);
+  assert.match(await res.text(), /GEMINI_API_KEY/);
+  assert.equal(calls.length, 0);
 });
 
 function fakeAI(reply = 'سلام از کلادفلر') {
@@ -188,7 +179,7 @@ test('Workers AI falls through to the next model when the first one fails', asyn
 test('setup accepts the AI binding instead of a Gemini key', async () => {
   const env = { ...baseEnv(), GEMINI_API_KEY: undefined, AI: fakeAI() };
   mockFetch();
-  const res = await worker.fetch(new Request('https://hermes.example.workers.dev/setup'), env, {});
+  const res = await worker.fetch(new Request('https://hermes.example.workers.dev/setup', { method: 'POST', headers: { authorization: `Bearer ${await setupKey(env)}` } }), env, {});
   assert.equal(res.status, 200);
   assert.match(await res.text(), /Workers AI/);
 });
@@ -333,10 +324,10 @@ test('locked abilities are refused before the AI is called; the owner has no loc
 test('memory keeps every message; the AI sees only recent ones, without extra fields', async () => {
   const env = baseEnv();
   const old = Array.from({ length: 60 }, (_, i) => ({ role: i % 2 ? 'model' : 'user', parts: [{ text: `m${i}` }], t: i }));
-  env.MEMORY.store.set('history:42', JSON.stringify(old));
+  env.MEMORY.store.set(`history:${OWNER}`, JSON.stringify(old));
   const calls = mockFetch();
   await post(env, message('سلام'));
-  const stored = JSON.parse(env.MEMORY.store.get('history:42'));
+  const stored = JSON.parse(env.MEMORY.store.get(`history:${OWNER}`));
   assert.equal(stored.length, 62);
   assert.equal(stored[0].parts[0].text, 'm0');
   const sentContents = calls.find((c) => c.url.includes('generativelanguage')).body.contents;
@@ -347,11 +338,11 @@ test('memory keeps every message; the AI sees only recent ones, without extra fi
 
 test('/reset archives the conversation instead of deleting it', async () => {
   const env = baseEnv();
-  env.MEMORY.store.set('history:42', JSON.stringify([{ role: 'user', parts: [{ text: 'کهنه' }] }]));
+  env.MEMORY.store.set(`history:${OWNER}`, JSON.stringify([{ role: 'user', parts: [{ text: 'کهنه' }] }]));
   const calls = mockFetch();
   await post(env, message('/reset'));
-  assert.equal(env.MEMORY.store.has('history:42'), false);
-  const archived = [...env.MEMORY.store.keys()].filter((k) => k.startsWith('archive:history:42:'));
+  assert.equal(env.MEMORY.store.has(`history:${OWNER}`), false);
+  const archived = [...env.MEMORY.store.keys()].filter((k) => k.startsWith(`archive:history:${OWNER}:`));
   assert.equal(archived.length, 1);
   assert.match(env.MEMORY.store.get(archived[0]), /کهنه/);
   assert.match(sent(calls)[0], /بایگانی/);
@@ -361,7 +352,7 @@ test('"یادت باشه" saves a long-term note that reaches later prompts; /no
   const env = baseEnv();
   let calls = mockFetch();
   await post(env, message('یادت باشه: تور بعدی ۲۵ آبان به دماوند است'));
-  assert.deepEqual(JSON.parse(env.MEMORY.store.get('notes:history:42')), ['تور بعدی ۲۵ آبان به دماوند است']);
+  assert.deepEqual(JSON.parse(env.MEMORY.store.get(`notes:history:${OWNER}`)), ['تور بعدی ۲۵ آبان به دماوند است']);
   calls = mockFetch();
   await post(env, message('تور بعدی کی است؟'));
   const sys = calls.find((c) => c.url.includes('generativelanguage')).body.systemInstruction.parts[0].text;
@@ -370,7 +361,7 @@ test('"یادت باشه" saves a long-term note that reaches later prompts; /no
   await post(env, message('/notes'));
   assert.match(sent(calls)[0], /دماوند/);
   await post(env, message('/forget'));
-  assert.equal(env.MEMORY.store.has('notes:history:42'), false);
+  assert.equal(env.MEMORY.store.has(`notes:history:${OWNER}`), false);
 });
 
 test('web notes endpoints and archived reset work for team members too', async () => {
@@ -432,6 +423,111 @@ test('skill routing failures never break chat', async () => {
   assert.deepEqual(sent(calls), ['سلام پوریا']);
 });
 
+// Security regressions: never publish owner credentials or private replies outside a DM.
+test('group/channel messages, including /app and /notes, are ignored without outbound calls', async () => {
+  for (const type of ['group', 'supergroup', 'channel']) {
+    for (const text of ['/app', '/notes', 'یادت باشه: خصوصی', 'سلام']) {
+      const env = baseEnv(), calls = mockFetch();
+      const update = message(text);
+      update.message.chat = { id: -100123, type };
+      await post(env, update);
+      assert.equal(calls.length, 0);
+      assert.equal(env.MEMORY.store.size, 0);
+    }
+  }
+});
+
+test('a private chat id that does not belong to the verified sender is ignored', async () => {
+  const env = baseEnv(), calls = mockFetch(), update = message('/app');
+  update.message.chat.id = 999;
+  await post(env, update);
+  assert.equal(calls.length, 0);
+});
+
+test('previous owner links are revoked by the v2 key derivation', async () => {
+  const env = baseEnv();
+  const old = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`app:${env.TELEGRAM_BOT_TOKEN}`));
+  const oldKey = [...new Uint8Array(old)].map((b) => b.toString(16).padStart(2, '0')).join('').slice(0, 40);
+  assert.notEqual(oldKey, await appKey(env));
+  assert.equal((await callApi(env, '/api/history', undefined, oldKey)).status, 401);
+});
+
+test('two concurrent legacy/local turns do not overwrite each other', async () => {
+  const env = baseEnv();
+  mockFetch();
+  const results = await Promise.all([
+    callApi(env, '/api/chat', { message: 'first' }), callApi(env, '/api/chat', { message: 'second' }),
+  ]);
+  assert.ok(results.every((r) => r.status === 200));
+  assert.equal(JSON.parse(env.MEMORY.store.get(`history:${OWNER}`)).length, 4);
+});
+
+test('configured deployments fail closed for every memory operation if the binding is absent', async () => {
+  const env = { ...baseEnv(), REQUIRE_CONVERSATIONS: 'true' };
+  const key = `history:${OWNER}`;
+  env.MEMORY.store.set(key, JSON.stringify([{ role: 'user', parts: [{ text: 'preserve me' }] }]));
+  env.MEMORY.store.set(`notes:${key}`, JSON.stringify(['preserve my note']));
+  const before = [...env.MEMORY.store.entries()];
+  const calls = mockFetch();
+  for (const required of ['true', true]) {
+    env.REQUIRE_CONVERSATIONS = required;
+    for (const [path, body] of [['/api/chat', { message: 'hello' }], ['/api/history'], ['/api/reset', {}], ['/api/notes'], ['/api/notes/clear', {}]]) {
+      const res = await callApi(env, path, body);
+      assert.equal(res.status, 503);
+      assert.match(res.body.error, /CONVERSATIONS/);
+    }
+    for (const operation of [() => loadLog(env, key), () => loadNotes(env, key), () => addNote(env, key, 'new'),
+      () => appendTurn(env, key, [], 'hello', 'reply'), () => archiveAndClear(env, key), () => clearNotes(env, key)]) {
+      await assert.rejects(operation, /CONVERSATIONS/);
+    }
+  }
+  assert.equal(calls.length, 0);
+  assert.deepEqual([...env.MEMORY.store.entries()], before);
+});
+
+
+test('incomplete skills are packaged but never appear in runtime token postings', () => {
+  const shards = buildPostings([
+    { name: 'safe-guide', triggers: ['safe guide'] },
+    { name: 'broken-guide', triggers: ['broken guide'], incomplete: true },
+  ]);
+  const postings = shards.flatMap((shard) => Object.values(shard));
+  assert.ok(postings.some((ids) => ids.includes(0)));
+  assert.ok(postings.every((ids) => !ids.includes(1)));
+});
+
+
+test('setup rejects unauthenticated, app and webhook credentials before any upstream call', async () => {
+  const env = baseEnv();
+  const calls = mockFetch();
+  for (const credential of ['', 'Bearer wrong', `Bearer ${await appKey(env)}`, `Bearer ${await webhookSecret(env)}`, `Bearer ${await setupKey({ ...env, ALLOWED_USER_ID: 'another-owner' })}`]) {
+    const res = await worker.fetch(new Request('https://hermes.example.workers.dev/setup', { method: 'POST', headers: { authorization: credential } }), env, {});
+    assert.equal(res.status, 403);
+  }
+  assert.equal(calls.length, 0);
+});
+
+test('setup is POST-only even for an authorized owner', async () => {
+  const env = baseEnv();
+  const calls = mockFetch();
+  for (const method of ['GET', 'PUT', 'DELETE']) {
+    const res = await worker.fetch(new Request('https://hermes.example.workers.dev/setup', { method, headers: { authorization: `Bearer ${await setupKey(env)}` } }), env, {});
+    assert.equal(res.status, 405);
+    assert.equal(res.headers.get('allow'), 'POST');
+  }
+  assert.equal(calls.length, 0);
+});
+
+test('setup fails closed when owner configuration is absent', async () => {
+  const calls = mockFetch();
+  for (const env of [{}, { TELEGRAM_BOT_TOKEN: 'fixture-secret' }, { ALLOWED_USER_ID: OWNER }]) {
+    const res = await worker.fetch(new Request('https://hermes.example.workers.dev/setup', { method: 'POST' }), env, {});
+    assert.equal(res.status, 503);
+    assert.equal(await res.text(), 'not configured');
+  }
+  assert.equal(calls.length, 0);
+});
+
 // Image generation: FLUX on Workers AI, prompt rewritten to English by the text brain.
 function imageAI() {
   const calls = [];
@@ -457,11 +553,11 @@ test('Telegram: «عکس بساز» sends a generated photo and keeps the prompt
   await post(env, message('عکس بساز: کمپ کنار دریاچه در جنگل'));
   const photo = calls.find((c) => c.url.endsWith('/sendPhoto'));
   assert.ok(photo, 'sendPhoto called');
-  assert.equal(photo.body.get('chat_id'), '42');
+  assert.equal(photo.body.get('chat_id'), OWNER);
   assert.equal(photo.body.get('caption'), 'misty forest lake, ultra realistic');
   const img = env.AI.calls.find((c) => c.model === IMAGE_MODEL);
   assert.equal(img.input.prompt, 'misty forest lake, ultra realistic');
-  const log = JSON.parse(env.MEMORY.store.get('history:42'));
+  const log = JSON.parse(env.MEMORY.store.get(`history:${OWNER}`));
   assert.match(log[1].parts[0].text, /عکس ساخته شد/);
 });
 
@@ -583,19 +679,19 @@ const gem = (calls) => calls.filter((c) => c.url.includes('generativelanguage'))
 test('Telegram voice is transcribed and answered, transcript shown first', async () => {
   const env = baseEnv();
   const calls = mediaFetch();
-  await post(env, { message: { chat: { id: 42 }, from: { id: Number(OWNER) }, voice: { file_id: 'v1', mime_type: 'audio/ogg' } } });
+  await post(env, { message: { chat: { id: Number(OWNER), type: 'private' }, from: { id: Number(OWNER) }, voice: { file_id: 'v1', mime_type: 'audio/ogg' } } });
   const audio = gem(calls)[0].body.contents[0].parts[0].inlineData;
   assert.equal(audio.mimeType, 'audio/ogg');
   assert.equal(gem(calls)[0].body.tools, undefined, 'no search for transcription');
   assert.deepEqual(sent(calls), ['🎙️ «فردا هوا چطوره»\n\nجواب هرمس']);
-  assert.equal(JSON.parse(env.MEMORY.store.get('history:42'))[0].parts[0].text, 'فردا هوا چطوره');
+  assert.equal(JSON.parse(env.MEMORY.store.get(`history:${OWNER}`))[0].parts[0].text, 'فردا هوا چطوره');
 });
 
 test('voice falls back to Whisper on Workers AI without Gemini', async () => {
   const env = { ...baseEnv(), GEMINI_API_KEY: undefined, AI: { calls: [], async run(model, input) {
     this.calls.push({ model, input }); return model.includes('whisper') ? { text: 'سلام' } : { response: 'سلام از کلادفلر' }; } } };
   const calls = mediaFetch();
-  await post(env, { message: { chat: { id: 42 }, from: { id: Number(OWNER) }, voice: { file_id: 'v1' } } });
+  await post(env, { message: { chat: { id: Number(OWNER), type: 'private' }, from: { id: Number(OWNER) }, voice: { file_id: 'v1' } } });
   assert.equal(env.AI.calls[0].model, '@cf/openai/whisper-large-v3-turbo');
   assert.deepEqual(sent(calls), ['🎙️ «سلام»\n\nسلام از کلادفلر']);
 });
@@ -603,14 +699,14 @@ test('voice falls back to Whisper on Workers AI without Gemini', async () => {
 test('Telegram photo is shown to Gemini with its caption and kept in memory as text', async () => {
   const env = baseEnv();
   const calls = mediaFetch({ gemini: 'یک جیپ در جنگل' });
-  await post(env, { message: { chat: { id: 42 }, from: { id: Number(OWNER) }, caption: 'کپشن بنویس',
+  await post(env, { message: { chat: { id: Number(OWNER), type: 'private' }, from: { id: Number(OWNER) }, caption: 'کپشن بنویس',
     photo: [{ file_id: 'p-small' }, { file_id: 'p-big' }] } });
   assert.equal(calls.find((c) => c.url.endsWith('/getFile')).body.file_id, 'p-big');
   const parts = gem(calls)[0].body.contents.at(-1).parts;
   assert.equal(parts[0].inlineData.mimeType, 'image/jpeg');
   assert.equal(parts[1].text, 'کپشن بنویس');
   assert.deepEqual(sent(calls), ['یک جیپ در جنگل']);
-  const log = JSON.parse(env.MEMORY.store.get('history:42'));
+  const log = JSON.parse(env.MEMORY.store.get(`history:${OWNER}`));
   assert.equal(log[0].parts[0].text, '[عکس] کپشن بنویس');
   assert.equal(JSON.stringify(log).includes('inlineData'), false);
 });
@@ -619,7 +715,7 @@ test('photo without Gemini: Workers AI describes it, then the text brain answers
   const env = { ...baseEnv(), GEMINI_API_KEY: undefined, AI: { calls: [], async run(model, input) {
     this.calls.push({ model, input }); return model.includes('llava') ? { description: 'a jeep in a forest' } : { response: 'جیپ در جنگل' }; } } };
   const calls = mediaFetch();
-  await post(env, { message: { chat: { id: 42 }, from: { id: Number(OWNER) }, photo: [{ file_id: 'p1' }] } });
+  await post(env, { message: { chat: { id: Number(OWNER), type: 'private' }, from: { id: Number(OWNER) }, photo: [{ file_id: 'p1' }] } });
   assert.equal(env.AI.calls[0].model, '@cf/llava-hf/llava-1.5-7b-hf');
   assert.match(env.AI.calls[1].input.messages.at(-1).content, /a jeep in a forest/);
   assert.deepEqual(sent(calls), ['جیپ در جنگل']);
@@ -910,7 +1006,7 @@ test('a too-large prompt is trimmed and retried shorter; every failing model is 
     }
     return new Response(JSON.stringify({ ok: true, result: {} }));
   };
-  for (let i = 0; i < 12; i++) env.MEMORY.store.set('history:42', JSON.stringify([...JSON.parse(env.MEMORY.store.get('history:42') || '[]'),
+  for (let i = 0; i < 12; i++) env.MEMORY.store.set(`history:${OWNER}`, JSON.stringify([...JSON.parse(env.MEMORY.store.get(`history:${OWNER}`) || '[]'),
     { role: 'user', parts: [{ text: 'س'.repeat(1500) }] }, { role: 'model', parts: [{ text: 'ج'.repeat(1500) }] }]));
   await post(env, message('سلام'));
   assert.deepEqual(sent(calls).slice(-1), ['جواب کوتاه‌شده']);
@@ -947,9 +1043,9 @@ test('GitHub Models: busy models hand over to the next one, then to more models 
 test('booking manager registers by sharing their own matching phone; then bookings go only to them', async () => {
   const env = { ...baseEnv(), BOOKING_ADMIN_IDS: '555' };
   const calls = bookingFetch();
-  const contact = (phone, userId = 777) => ({ message: { chat: { id: 777 }, from: { id: 777, first_name: 'Ali' }, contact: { phone_number: phone, user_id: userId } } });
+  const contact = (phone, userId = 777) => ({ message: { chat: { id: 777, type: 'private' }, from: { id: 777, first_name: 'Ali' }, contact: { phone_number: phone, user_id: userId } } });
   await post(env, message('سلام', 777));
-  const ask = calls.find((c) => c.url.endsWith('/sendMessage') && c.body.chat_id === 42);
+  const ask = calls.find((c) => c.url.endsWith('/sendMessage') && c.body.chat_id === 777);
   assert.equal(ask.body.reply_markup.keyboard[0][0].request_contact, true);
   await post(env, contact('+98 912 000 0000'));
   assert.equal(env.MEMORY.store.get('booking:recipient'), undefined, 'other numbers are refused');
@@ -1023,4 +1119,26 @@ test('images: Hugging Face falls back to routed providers, and a total failure l
   const env = { HF_TOKEN: 'hf', AI: { run: async () => { throw new Error('4006: daily free allocation used up'); } } };
   await assert.rejects(makeImage(env, 'a jeep'), (err) => /Cloudflare: 4006/.test(err.message) &&
     /Hugging Face: FLUX\.1-schnell 404/.test(err.message) && /together 404/.test(err.message) && /Pollinations: 402/.test(err.message));
+});
+
+
+test('private-chat safeguards also cover the new voice, photo and contact handlers', async () => {
+  const payloads = [{ voice: { file_id: 'fixture-voice' } }, { photo: [{ file_id: 'fixture-photo' }] },
+    { contact: { user_id: Number(OWNER), phone_number: 'fixture-phone' } }];
+  for (const type of ['group', 'supergroup', 'channel', undefined, 'private']) {
+    for (const payload of payloads) {
+      const env = baseEnv(), calls = mockFetch();
+      await post(env, { message: { chat: { id: -100123, type }, from: { id: Number(OWNER) }, ...payload } });
+      assert.equal(calls.length, 0);
+      assert.equal(env.MEMORY.store.size, 0);
+    }
+  }
+});
+
+test('generated-image turns fail closed before any model call when the required actor is absent', async () => {
+  const { picture } = await import('./worker.mjs');
+  const env = { ...baseEnv(), REQUIRE_CONVERSATIONS: true }, calls = mockFetch();
+  await assert.rejects(picture(env, `history:${OWNER}`, '/img a jeep', 'a jeep'), /CONVERSATIONS/);
+  assert.equal(calls.length, 0);
+  assert.equal(env.MEMORY.store.size, 0);
 });

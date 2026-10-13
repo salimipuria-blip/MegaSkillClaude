@@ -75,7 +75,7 @@ Skills: 144
 - `itil-expert` → `references/skills/itil-expert/INSTRUCTIONS.md`
 - `journey-map-camper` → `references/skills/journey-map-camper/INSTRUCTIONS.md`
 - `julia-pro` → `references/skills/julia-pro/INSTRUCTIONS.md`
-- `jurisdiction-format` → `references/skills/jurisdiction-format/INSTRUCTIONS.md`
+- `jurisdiction-format` → `references/skills/jurisdiction-format/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `leiloeiro-ia` → `references/skills/leiloeiro-ia/INSTRUCTIONS.md`
 - `logistics-exception-management` → `references/skills/logistics-exception-management/INSTRUCTIONS.md`
 - `loyalty-ui-kit` → `references/skills/loyalty-ui-kit/INSTRUCTIONS.md`
@@ -128,7 +128,7 @@ Skills: 144
 - `stepper-progress-kit` → `references/skills/stepper-progress-kit/INSTRUCTIONS.md`
 - `strategic-alignment` → `references/skills/strategic-alignment/INSTRUCTIONS.md`
 - `table-mobile-patterns` → `references/skills/table-mobile-patterns/INSTRUCTIONS.md`
-- `taobao-shop-catalog` → `references/skills/taobao-shop-catalog/INSTRUCTIONS.md`
+- `taobao-shop-catalog` → `references/skills/taobao-shop-catalog/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `toast-alert-patterns` → `references/skills/toast-alert-patterns/INSTRUCTIONS.md`
 - `tour-a11y-monitor` → `references/skills/tour-a11y-monitor/INSTRUCTIONS.md`
 - `tour-empty-state-assistant` → `references/skills/tour-empty-state-assistant/INSTRUCTIONS.md`

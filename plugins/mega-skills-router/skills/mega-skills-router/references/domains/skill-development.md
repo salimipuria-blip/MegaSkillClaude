@@ -32,7 +32,7 @@ Skills: 249
 - `camp-trigger-generator` → `references/skills/camp-trigger-generator/INSTRUCTIONS.md`
 - `camp-worktree-assistant` → `references/skills/camp-worktree-assistant/INSTRUCTIONS.md`
 - `cc-skill-continuous-learning` → `references/skills/cc-skill-continuous-learning/INSTRUCTIONS.md`
-- `claims-drafting` → `references/skills/claims-drafting/INSTRUCTIONS.md`
+- `claims-drafting` → `references/skills/claims-drafting/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `claude-code-templates-marketplace` → `references/skills/claude-code-templates-marketplace/INSTRUCTIONS.md`
 - `claude-md-context-scaffolder` → `references/skills/claude-md-context-scaffolder/INSTRUCTIONS.md`
 - `claude-md-memory-rules` → `references/skills/claude-md-memory-rules/INSTRUCTIONS.md`

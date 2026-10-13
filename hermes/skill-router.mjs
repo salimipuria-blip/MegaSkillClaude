@@ -66,6 +66,7 @@ export function shardOf(token) {
 export function buildPostings(skills) {
   const shards = Array.from({ length: SHARDS }, () => ({}));
   skills.forEach((s, id) => {
+    if (s.incomplete) return; // Keep packaged instructions, but do not route to missing dependencies.
     const toks = new Set([...tokens(s.name.replace(/-/g, ' ')), ...s.triggers.flatMap((t) => [...tokens(t)])]);
     for (const t of toks) { const sh = shards[shardOf(t)]; (Object.hasOwn(sh, t) ? sh[t] : (sh[t] = [])).push(id); }
   });

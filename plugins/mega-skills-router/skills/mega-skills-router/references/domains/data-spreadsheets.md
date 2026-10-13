@@ -9,7 +9,7 @@ Skills: 297
 - `academy-macro-auditor` → `references/skills/academy-macro-auditor/INSTRUCTIONS.md`
 - `academy-rfm-library` → `references/skills/academy-rfm-library/INSTRUCTIONS.md`
 - `accesslint-diff` → `references/skills/accesslint-diff/INSTRUCTIONS.md`
-- `airbnb-search-listing` → `references/skills/airbnb-search-listing/INSTRUCTIONS.md`
+- `airbnb-search-listing` → `references/skills/airbnb-search-listing/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `analytics` → `references/skills/analytics/INSTRUCTIONS.md`
 - `analytics-product` → `references/skills/analytics-product/INSTRUCTIONS.md`
 - `analytics-tracking` → `references/skills/analytics-tracking/INSTRUCTIONS.md`
@@ -30,7 +30,7 @@ Skills: 297
 - `break-even-analyzer` → `references/skills/break-even-analyzer/INSTRUCTIONS.md`
 - `brendangregg-use-tsa` → `references/skills/brendangregg-use-tsa/INSTRUCTIONS.md`
 - `budget-vs-actual-fa` → `references/skills/budget-vs-actual-fa/INSTRUCTIONS.md`
-- `bulk-rnaseq` → `references/skills/bulk-rnaseq/INSTRUCTIONS.md`
+- `bulk-rnaseq` → `references/skills/bulk-rnaseq/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `cafe-dashboard-assistant` → `references/skills/cafe-dashboard-assistant/INSTRUCTIONS.md`
 - `cafe-formula-planner` → `references/skills/cafe-formula-planner/INSTRUCTIONS.md`
 - `cafe-invoice-library` → `references/skills/cafe-invoice-library/INSTRUCTIONS.md`
@@ -61,9 +61,9 @@ Skills: 297
 - `content-marketer` → `references/skills/content-marketer/INSTRUCTIONS.md`
 - `cosmetics-inventory-monitor` → `references/skills/cosmetics-inventory-monitor/INSTRUCTIONS.md`
 - `cpo-advisor` → `references/skills/cpo-advisor/INSTRUCTIONS.md`
-- `create-canvas-extension` → `references/skills/create-canvas-extension/INSTRUCTIONS.md`
+- `create-canvas-extension` → `references/skills/create-canvas-extension/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `crm-export-cleaner` → `references/skills/crm-export-cleaner/INSTRUCTIONS.md`
-- `csv-manual-export` → `references/skills/csv-manual-export/INSTRUCTIONS.md`
+- `csv-manual-export` → `references/skills/csv-manual-export/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `csv-xlsx-converter-cli` → `references/skills/csv-xlsx-converter-cli/INSTRUCTIONS.md`
 - `cto-advisor` → `references/skills/cto-advisor/INSTRUCTIONS.md`
 - `daily-news-report` → `references/skills/daily-news-report/INSTRUCTIONS.md`
@@ -86,13 +86,13 @@ Skills: 297
 - `dental-roster-analyzer` → `references/skills/dental-roster-analyzer/INSTRUCTIONS.md`
 - `detect-ai-text` → `references/skills/detect-ai-text/INSTRUCTIONS.md`
 - `diagnosing-bugs` → `references/skills/diagnosing-bugs/INSTRUCTIONS.md`
-- `douyin-video-search` → `references/skills/douyin-video-search/INSTRUCTIONS.md`
+- `douyin-video-search` → `references/skills/douyin-video-search/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `ecolodge-kpi-workflow` → `references/skills/ecolodge-kpi-workflow/INSTRUCTIONS.md`
 - `ecolodge-rfm-assistant` → `references/skills/ecolodge-rfm-assistant/INSTRUCTIONS.md`
 - `embedded-iot-mentor` → `references/skills/embedded-iot-mentor/INSTRUCTIONS.md`
 - `energy-procurement` → `references/skills/energy-procurement/INSTRUCTIONS.md`
-- `etsy-keyword-search` → `references/skills/etsy-keyword-search/INSTRUCTIONS.md`
-- `etsy-product-detail` → `references/skills/etsy-product-detail/INSTRUCTIONS.md`
+- `etsy-keyword-search` → `references/skills/etsy-keyword-search/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `etsy-product-detail` → `references/skills/etsy-product-detail/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `event-invoice-reporter` → `references/skills/event-invoice-reporter/INSTRUCTIONS.md`
 - `event-rfm-generator` → `references/skills/event-rfm-generator/INSTRUCTIONS.md`
 - `evm-token-decimals` → `references/skills/evm-token-decimals/INSTRUCTIONS.md`
@@ -131,8 +131,8 @@ Skills: 297
 - `geo-report` → `references/skills/geo-report/INSTRUCTIONS.md`
 - `geo-schema` → `references/skills/geo-schema/INSTRUCTIONS.md`
 - `goal-seek-scenario-kit` → `references/skills/goal-seek-scenario-kit/INSTRUCTIONS.md`
-- `goofish-item-detail` → `references/skills/goofish-item-detail/INSTRUCTIONS.md`
-- `goofish-search-list` → `references/skills/goofish-search-list/INSTRUCTIONS.md`
+- `goofish-item-detail` → `references/skills/goofish-item-detail/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `goofish-search-list` → `references/skills/goofish-search-list/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `gradebook-template` → `references/skills/gradebook-template/INSTRUCTIONS.md`
 - `grafana-dashboards` → `references/skills/grafana-dashboards/INSTRUCTIONS.md`
 - `grants` → `references/skills/grants/INSTRUCTIONS.md`
@@ -150,7 +150,7 @@ Skills: 297
 - `incident-postmortem` → `references/skills/incident-postmortem/INSTRUCTIONS.md`
 - `infographics` → `references/skills/infographics/INSTRUCTIONS.md`
 - `ingest-youtube` → `references/skills/ingest-youtube/INSTRUCTIONS.md`
-- `integrity-forensics` → `references/skills/integrity-forensics/INSTRUCTIONS.md`
+- `integrity-forensics` → `references/skills/integrity-forensics/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `inventory-tracker-xlsx` → `references/skills/inventory-tracker-xlsx/INSTRUCTIONS.md`
 - `invoice-generator-xlsx-fa` → `references/skills/invoice-generator-xlsx-fa/INSTRUCTIONS.md`
 - `ios-developer` → `references/skills/ios-developer/INSTRUCTIONS.md`
@@ -167,7 +167,7 @@ Skills: 297
 - `kpi-definer-workshop` → `references/skills/kpi-definer-workshop/INSTRUCTIONS.md`
 - `kpi-tracker` → `references/skills/kpi-tracker/INSTRUCTIONS.md`
 - `lemmaly` → `references/skills/lemmaly/INSTRUCTIONS.md`
-- `longbridge-fundamentals` → `references/skills/longbridge-fundamentals/INSTRUCTIONS.md`
+- `longbridge-fundamentals` → `references/skills/longbridge-fundamentals/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `macro-recorder-guide` → `references/skills/macro-recorder-guide/INSTRUCTIONS.md`
 - `market-research` → `references/skills/market-research/INSTRUCTIONS.md`
 - `market-research-reports` → `references/skills/market-research-reports/INSTRUCTIONS.md`
@@ -212,7 +212,7 @@ Skills: 297
 - `product-strategy` → `references/skills/product-strategy/INSTRUCTIONS.md`
 - `production-audit` → `references/skills/production-audit/INSTRUCTIONS.md`
 - `programmatic-seo` → `references/skills/programmatic-seo/INSTRUCTIONS.md`
-- `prometheus-configuration` → `references/skills/prometheus-configuration/INSTRUCTIONS.md`
+- `prometheus-configuration` → `references/skills/prometheus-configuration/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `prometheus-grafana` → `references/skills/prometheus-grafana/INSTRUCTIONS.md`
 - `pydicom` → `references/skills/pydicom/INSTRUCTIONS.md`
 - `pymatgen` → `references/skills/pymatgen/INSTRUCTIONS.md`
@@ -258,13 +258,13 @@ Skills: 297
 - `survey-results-analyzer` → `references/skills/survey-results-analyzer/INSTRUCTIONS.md`
 - `swiftui-ui-patterns` → `references/skills/swiftui-ui-patterns/INSTRUCTIONS.md`
 - `swiftui-view-refactor` → `references/skills/swiftui-view-refactor/INSTRUCTIONS.md`
-- `taobao-product-reviews` → `references/skills/taobao-product-reviews/INSTRUCTIONS.md`
+- `taobao-product-reviews` → `references/skills/taobao-product-reviews/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `team-communications` → `references/skills/team-communications/INSTRUCTIONS.md`
 - `text-to-columns-tricks` → `references/skills/text-to-columns-tricks/INSTRUCTIONS.md`
-- `threads-keyword-search` → `references/skills/threads-keyword-search/INSTRUCTIONS.md`
-- `threads-profile-search` → `references/skills/threads-profile-search/INSTRUCTIONS.md`
-- `threads-user-posts` → `references/skills/threads-user-posts/INSTRUCTIONS.md`
-- `tiktok-video-detail` → `references/skills/tiktok-video-detail/INSTRUCTIONS.md`
+- `threads-keyword-search` → `references/skills/threads-keyword-search/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `threads-profile-search` → `references/skills/threads-profile-search/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `threads-user-posts` → `references/skills/threads-user-posts/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `tiktok-video-detail` → `references/skills/tiktok-video-detail/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `tour-dashboard-reporter` → `references/skills/tour-dashboard-reporter/INSTRUCTIONS.md`
 - `tour-inventory-autopilot` → `references/skills/tour-inventory-autopilot/INSTRUCTIONS.md`
 - `tour-invoice-reporter` → `references/skills/tour-invoice-reporter/INSTRUCTIONS.md`
@@ -280,7 +280,7 @@ Skills: 297
 - `vba-to-python-migrator` → `references/skills/vba-to-python-migrator/INSTRUCTIONS.md`
 - `verify-citations` → `references/skills/verify-citations/INSTRUCTIONS.md`
 - `vpe-review` → `references/skills/vpe-review/INSTRUCTIONS.md`
-- `walmart-product-reviews` → `references/skills/walmart-product-reviews/INSTRUCTIONS.md`
+- `walmart-product-reviews` → `references/skills/walmart-product-reviews/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `warehouse` → `references/skills/warehouse/INSTRUCTIONS.md`
 - `weather-data-lifecycle-management` → `references/skills/weather-data-lifecycle-management/INSTRUCTIONS.md`
 - `weather-data-reproducibility` → `references/skills/weather-data-reproducibility/INSTRUCTIONS.md`
@@ -292,9 +292,9 @@ Skills: 297
 - `wellally-tech` → `references/skills/wellally-tech/INSTRUCTIONS.md`
 - `wiki-lint` → `references/skills/wiki-lint/INSTRUCTIONS.md`
 - `wordpress-centric-high-seo-optimized-blogwriting-skill` → `references/skills/wordpress-centric-high-seo-optimized-blogwriting-skill/INSTRUCTIONS.md`
-- `xiaohongshu-note-detail` → `references/skills/xiaohongshu-note-detail/INSTRUCTIONS.md`
-- `xiaohongshu-search` → `references/skills/xiaohongshu-search/INSTRUCTIONS.md`
-- `xiaohongshu-user-profile` → `references/skills/xiaohongshu-user-profile/INSTRUCTIONS.md`
+- `xiaohongshu-note-detail` → `references/skills/xiaohongshu-note-detail/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `xiaohongshu-search` → `references/skills/xiaohongshu-search/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `xiaohongshu-user-profile` → `references/skills/xiaohongshu-user-profile/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `xlookup-lookup-builder` → `references/skills/xlookup-lookup-builder/INSTRUCTIONS.md`
 - `xlsx-form-designer` → `references/skills/xlsx-form-designer/INSTRUCTIONS.md`
 - `yoga-dashboard-optimizer` → `references/skills/yoga-dashboard-optimizer/INSTRUCTIONS.md`

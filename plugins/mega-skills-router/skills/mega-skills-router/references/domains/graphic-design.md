@@ -5,9 +5,9 @@ Skills: 229
 - `academy-brochure-reporter` → `references/skills/academy-brochure-reporter/INSTRUCTIONS.md`
 - `academy-grid-reporter` → `references/skills/academy-grid-reporter/INSTRUCTIONS.md`
 - `academy-typepair-library` → `references/skills/academy-typepair-library/INSTRUCTIONS.md`
-- `ai-logo-maker` → `references/skills/ai-logo-maker/INSTRUCTIONS.md`
+- `ai-logo-maker` → `references/skills/ai-logo-maker/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `ai-loop` → `references/skills/ai-loop/INSTRUCTIONS.md`
-- `ai-photo-restyler` → `references/skills/ai-photo-restyler/INSTRUCTIONS.md`
+- `ai-photo-restyler` → `references/skills/ai-photo-restyler/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `audit-preparation` → `references/skills/audit-preparation/INSTRUCTIONS.md`
 - `binary-diff` → `references/skills/binary-diff/INSTRUCTIONS.md`
 - `bleed-margin-checklist` → `references/skills/bleed-margin-checklist/INSTRUCTIONS.md`
@@ -55,7 +55,7 @@ Skills: 229
 - `developer-advocacy` → `references/skills/developer-advocacy/INSTRUCTIONS.md`
 - `developer-sandbox` → `references/skills/developer-sandbox/INSTRUCTIONS.md`
 - `dl-flyer-spec-kit` → `references/skills/dl-flyer-spec-kit/INSTRUCTIONS.md`
-- `dse-loop` → `references/skills/dse-loop/INSTRUCTIONS.md`
+- `dse-loop` → `references/skills/dse-loop/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `duotone-retro-kit` → `references/skills/duotone-retro-kit/INSTRUCTIONS.md`
 - `ebook-layout-designer` → `references/skills/ebook-layout-designer/INSTRUCTIONS.md`
 - `ecolodge-brochure-assistant` → `references/skills/ecolodge-brochure-assistant/INSTRUCTIONS.md`
@@ -141,9 +141,9 @@ Skills: 229
 - `persian-miniature-remix` → `references/skills/persian-miniature-remix/INSTRUCTIONS.md`
 - `persian-typography-rules` → `references/skills/persian-typography-rules/INSTRUCTIONS.md`
 - `planning-and-task-breakdown` → `references/skills/planning-and-task-breakdown/INSTRUCTIONS.md`
-- `platform-engineering` → `references/skills/platform-engineering/INSTRUCTIONS.md`
+- `platform-engineering` → `references/skills/platform-engineering/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `poster-composition-kit` → `references/skills/poster-composition-kit/INSTRUCTIONS.md`
-- `poster-design-studio` → `references/skills/poster-design-studio/INSTRUCTIONS.md`
+- `poster-design-studio` → `references/skills/poster-design-studio/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `poster-generator-skill` → `references/skills/poster-generator-skill/INSTRUCTIONS.md`
 - `presentation-master-kit` → `references/skills/presentation-master-kit/INSTRUCTIONS.md`
 - `primer-design` → `references/skills/primer-design/INSTRUCTIONS.md`
@@ -155,7 +155,7 @@ Skills: 229
 - `qiime2-amplicon` → `references/skills/qiime2-amplicon/INSTRUCTIONS.md`
 - `qiskit` → `references/skills/qiskit/INSTRUCTIONS.md`
 - `quarkus-tdd` → `references/skills/quarkus-tdd/INSTRUCTIONS.md`
-- `radare2` → `references/skills/radare2/INSTRUCTIONS.md`
+- `radare2` → `references/skills/radare2/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `realestate-grid-assistant` → `references/skills/realestate-grid-assistant/INSTRUCTIONS.md`
 - `realestate-pattern-workflow` → `references/skills/realestate-pattern-workflow/INSTRUCTIONS.md`
 - `realestate-poster-monitor` → `references/skills/realestate-poster-monitor/INSTRUCTIONS.md`

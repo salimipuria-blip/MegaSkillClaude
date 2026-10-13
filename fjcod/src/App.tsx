@@ -5,6 +5,7 @@ import {
 import { can, changeOwnPassword, currentUser, licenseState, logout, useStore, MIN_PASSWORD, type Permission } from './core/store';
 import { ROLES } from './core/permissions';
 import { Login } from './pages/Login';
+import { LocalOnlyNotice } from './components/LocalOnlyNotice';
 import { Avatar, Emblem, Field, Modal, Toasts, run, toast } from './components/ui';
 import { Dashboard } from './pages/Dashboard';
 import { POS } from './pages/POS';
@@ -174,6 +175,7 @@ export default function App() {
       </aside>
 
       <div className="main">
+        <LocalOnlyNotice />
         {lic.state !== 'active' && (can(user.role, 'settings.store') || lic.state === 'expired') && (
           <div className={`banner ${lic.state === 'expiring' ? 'warn' : 'bad'}`} role="alert">
             <AlertTriangle size={16} />

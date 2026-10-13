@@ -10,7 +10,7 @@ Skills: 248
 - `alerting-oncall` → `references/skills/alerting-oncall/INSTRUCTIONS.md`
 - `algorithmic-art` → `references/skills/algorithmic-art/INSTRUCTIONS.md`
 - `audit-logging` → `references/skills/audit-logging/INSTRUCTIONS.md`
-- `beatra` → `references/skills/beatra/INSTRUCTIONS.md`
+- `beatra` → `references/skills/beatra/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `board-governance` → `references/skills/board-governance/INSTRUCTIONS.md`
 - `bookstore-parser-analyzer` → `references/skills/bookstore-parser-analyzer/INSTRUCTIONS.md`
 - `bookstore-reporter-optimizer` → `references/skills/bookstore-reporter-optimizer/INSTRUCTIONS.md`
@@ -45,7 +45,7 @@ Skills: 248
 - `crossframe` → `references/skills/crossframe/INSTRUCTIONS.md`
 - `daily` → `references/skills/daily/INSTRUCTIONS.md`
 - `day-book` → `references/skills/day-book/INSTRUCTIONS.md`
-- `debug-buttercup` → `references/skills/debug-buttercup/INSTRUCTIONS.md`
+- `debug-buttercup` → `references/skills/debug-buttercup/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `decision-log-rebuilder` → `references/skills/decision-log-rebuilder/INSTRUCTIONS.md`
 - `dental-intent-reporter` → `references/skills/dental-intent-reporter/INSTRUCTIONS.md`
 - `dental-purge-monitor` → `references/skills/dental-purge-monitor/INSTRUCTIONS.md`
@@ -60,7 +60,7 @@ Skills: 248
 - `ecolodge-actions-assistant` → `references/skills/ecolodge-actions-assistant/INSTRUCTIONS.md`
 - `ecolodge-privacy-library` → `references/skills/ecolodge-privacy-library/INSTRUCTIONS.md`
 - `ecolodge-reporter-reporter` → `references/skills/ecolodge-reporter-reporter/INSTRUCTIONS.md`
-- `emergency-card` → `references/skills/emergency-card/INSTRUCTIONS.md`
+- `emergency-card` → `references/skills/emergency-card/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `employee-suggestion-hub` → `references/skills/employee-suggestion-hub/INSTRUCTIONS.md`
 - `enterprise-vpn-attack` → `references/skills/enterprise-vpn-attack/INSTRUCTIONS.md`
 - `escalation-trigger-rules` → `references/skills/escalation-trigger-rules/INSTRUCTIONS.md`
@@ -89,6 +89,8 @@ Skills: 248
 - `geo-proposal` → `references/skills/geo-proposal/INSTRUCTIONS.md`
 - `git-commit` → `references/skills/git-commit/INSTRUCTIONS.md`
 - `gmail-mbox-thread-rebuilder` → `references/skills/gmail-mbox-thread-rebuilder/INSTRUCTIONS.md`
+- `grill-me` → `references/skills/grill-me/INSTRUCTIONS.md`
+- `grilling` → `references/skills/grilling/INSTRUCTIONS.md`
 - `gym-cluster-analyzer` → `references/skills/gym-cluster-analyzer/INSTRUCTIONS.md`
 - `gym-privacy-optimizer` → `references/skills/gym-privacy-optimizer/INSTRUCTIONS.md`
 - `gym-privacy-workflow` → `references/skills/gym-privacy-workflow/INSTRUCTIONS.md`
@@ -97,6 +99,7 @@ Skills: 248
 - `gym-reporter-reporter` → `references/skills/gym-reporter-reporter/INSTRUCTIONS.md`
 - `gym-sentiment-workflow` → `references/skills/gym-sentiment-workflow/INSTRUCTIONS.md`
 - `hallucination-incident-log` → `references/skills/hallucination-incident-log/INSTRUCTIONS.md`
+- `handoff` → `references/skills/handoff/INSTRUCTIONS.md`
 - `hashicorp-vault` → `references/skills/hashicorp-vault/INSTRUCTIONS.md`
 - `health-wellness` → `references/skills/health-wellness/INSTRUCTIONS.md`
 - `homelab-network-setup` → `references/skills/homelab-network-setup/INSTRUCTIONS.md`
@@ -109,7 +112,7 @@ Skills: 248
 - `intent-cluster-embeddings` → `references/skills/intent-cluster-embeddings/INSTRUCTIONS.md`
 - `intern-program` → `references/skills/intern-program/INSTRUCTIONS.md`
 - `internal-communication` → `references/skills/internal-communication/INSTRUCTIONS.md`
-- `invention-structuring` → `references/skills/invention-structuring/INSTRUCTIONS.md`
+- `invention-structuring` → `references/skills/invention-structuring/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `inventory-demand-planning` → `references/skills/inventory-demand-planning/INSTRUCTIONS.md`
 - `inventory-stock-reconciliation` → `references/skills/inventory-stock-reconciliation/INSTRUCTIONS.md`
 - `ios-redteam-pipeline` → `references/skills/ios-redteam-pipeline/INSTRUCTIONS.md`
@@ -129,7 +132,7 @@ Skills: 248
 - `leiloeiro-juridico` → `references/skills/leiloeiro-juridico/INSTRUCTIONS.md`
 - `lm-eval-benchmark-pack` → `references/skills/lm-eval-benchmark-pack/INSTRUCTIONS.md`
 - `load-balancing` → `references/skills/load-balancing/INSTRUCTIONS.md`
-- `logic-review` → `references/skills/logic-review/INSTRUCTIONS.md`
+- `logic-review` → `references/skills/logic-review/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `loki-logging` → `references/skills/loki-logging/INSTRUCTIONS.md`
 - `m365-entra-attack` → `references/skills/m365-entra-attack/INSTRUCTIONS.md`
 - `makepad-widgets` → `references/skills/makepad-widgets/INSTRUCTIONS.md`
@@ -140,7 +143,8 @@ Skills: 248
 - `meeting-summarizer` → `references/skills/meeting-summarizer/INSTRUCTIONS.md`
 - `memory-write-policy-audit` → `references/skills/memory-write-policy-audit/INSTRUCTIONS.md`
 - `mid-engagement-ir-detection` → `references/skills/mid-engagement-ir-detection/INSTRUCTIONS.md`
-- `monte-carlo-performance-diagnosis` → `references/skills/monte-carlo-performance-diagnosis/INSTRUCTIONS.md`
+- `monte-carlo-performance-diagnosis` → `references/skills/monte-carlo-performance-diagnosis/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `mp-teach` → `references/skills/mp-teach/INSTRUCTIONS.md`
 - `multi-session-thread-linker` → `references/skills/multi-session-thread-linker/INSTRUCTIONS.md`
 - `notification-reminder-hub` → `references/skills/notification-reminder-hub/INSTRUCTIONS.md`
 - `nuts-cluster-autopilot` → `references/skills/nuts-cluster-autopilot/INSTRUCTIONS.md`
@@ -218,12 +222,13 @@ Skills: 248
 - `sred-project-organizer` → `references/skills/sred-project-organizer/INSTRUCTIONS.md`
 - `ssl-tls-management` → `references/skills/ssl-tls-management/INSTRUCTIONS.md`
 - `storyboard-generator` → `references/skills/storyboard-generator/INSTRUCTIONS.md`
-- `suno-lyrics-to-song` → `references/skills/suno-lyrics-to-song/INSTRUCTIONS.md`
+- `suno-lyrics-to-song` → `references/skills/suno-lyrics-to-song/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `supabase` → `references/skills/supabase/INSTRUCTIONS.md`
 - `systemd-services` → `references/skills/systemd-services/INSTRUCTIONS.md`
 - `team-calendar` → `references/skills/team-calendar/INSTRUCTIONS.md`
 - `tech-matrix` → `references/skills/tech-matrix/INSTRUCTIONS.md`
 - `telegram-json-normalizer` → `references/skills/telegram-json-normalizer/INSTRUCTIONS.md`
+- `to-questionnaire` → `references/skills/to-questionnaire/INSTRUCTIONS.md`
 - `token-cost-per-conversation` → `references/skills/token-cost-per-conversation/INSTRUCTIONS.md`
 - `traderspy-technical-analysis` → `references/skills/traderspy-technical-analysis/INSTRUCTIONS.md`
 - `treatment-plans` → `references/skills/treatment-plans/INSTRUCTIONS.md`
@@ -233,20 +238,15 @@ Skills: 248
 - `unmet-need-miner` → `references/skills/unmet-need-miner/INSTRUCTIONS.md`
 - `vendor-contractor-management` → `references/skills/vendor-contractor-management/INSTRUCTIONS.md`
 - `vocabulary-fingerprint` → `references/skills/vocabulary-fingerprint/INSTRUCTIONS.md`
+- `wait-what` → `references/skills/wait-what/INSTRUCTIONS.md`
 - `weather-go-nogo-matrix` → `references/skills/weather-go-nogo-matrix/INSTRUCTIONS.md`
 - `wedding-purge-generator` → `references/skills/wedding-purge-generator/INSTRUCTIONS.md`
 - `wedding-reporter-auditor` → `references/skills/wedding-reporter-auditor/INSTRUCTIONS.md`
 - `weekly-self-review-agent` → `references/skills/weekly-self-review-agent/INSTRUCTIONS.md`
 - `whatsapp-chat-parser-fa` → `references/skills/whatsapp-chat-parser-fa/INSTRUCTIONS.md`
 - `workshop-create` → `references/skills/workshop-create/INSTRUCTIONS.md`
+- `writing-for-agents` → `references/skills/writing-for-agents/INSTRUCTIONS.md`
 - `x-article-publisher` → `references/skills/x-article-publisher/INSTRUCTIONS.md`
 - `yes-md` → `references/skills/yes-md/INSTRUCTIONS.md`
 - `yoga-intent-analyzer` → `references/skills/yoga-intent-analyzer/INSTRUCTIONS.md`
 - `yoga-reporter-optimizer` → `references/skills/yoga-reporter-optimizer/INSTRUCTIONS.md`
-- `grill-me` → `references/skills/grill-me/INSTRUCTIONS.md`
-- `grilling` → `references/skills/grilling/INSTRUCTIONS.md`
-- `handoff` → `references/skills/handoff/INSTRUCTIONS.md`
-- `mp-teach` → `references/skills/mp-teach/INSTRUCTIONS.md`
-- `to-questionnaire` → `references/skills/to-questionnaire/INSTRUCTIONS.md`
-- `wait-what` → `references/skills/wait-what/INSTRUCTIONS.md`
-- `writing-for-agents` → `references/skills/writing-for-agents/INSTRUCTIONS.md`

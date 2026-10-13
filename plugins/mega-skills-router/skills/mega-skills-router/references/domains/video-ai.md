@@ -68,7 +68,7 @@ Skills: 123
 - `longform-youtube-structure` → `references/skills/longform-youtube-structure/INSTRUCTIONS.md`
 - `lower-thirds-fa-kit` → `references/skills/lower-thirds-fa-kit/INSTRUCTIONS.md`
 - `motion-graphics-presets` → `references/skills/motion-graphics-presets/INSTRUCTIONS.md`
-- `music-generation-studio` → `references/skills/music-generation-studio/INSTRUCTIONS.md`
+- `music-generation-studio` → `references/skills/music-generation-studio/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `music-sfx-picker` → `references/skills/music-sfx-picker/INSTRUCTIONS.md`
 - `nature-asmr-clip-plan` → `references/skills/nature-asmr-clip-plan/INSTRUCTIONS.md`
 - `nuts-chapters-monitor` → `references/skills/nuts-chapters-monitor/INSTRUCTIONS.md`
@@ -100,7 +100,7 @@ Skills: 123
 - `storyboard-ai-generator` → `references/skills/storyboard-ai-generator/INSTRUCTIONS.md`
 - `subtitle-style-guide-fa` → `references/skills/subtitle-style-guide-fa/INSTRUCTIONS.md`
 - `talking-avatar-guide` → `references/skills/talking-avatar-guide/INSTRUCTIONS.md`
-- `talking-avatar-video` → `references/skills/talking-avatar-video/INSTRUCTIONS.md`
+- `talking-avatar-video` → `references/skills/talking-avatar-video/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `talking-head-setup-guide` → `references/skills/talking-head-setup-guide/INSTRUCTIONS.md`
 - `testimonial-video-kit` → `references/skills/testimonial-video-kit/INSTRUCTIONS.md`
 - `tour-broll-optimizer` → `references/skills/tour-broll-optimizer/INSTRUCTIONS.md`
@@ -115,8 +115,8 @@ Skills: 123
 - `video-description-writer-fa` → `references/skills/video-description-writer-fa/INSTRUCTIONS.md`
 - `video-editor` → `references/skills/video-editor/INSTRUCTIONS.md`
 - `video-router` → `references/skills/video-router/INSTRUCTIONS.md`
-- `viral-video-teardown-remake` → `references/skills/viral-video-teardown-remake/INSTRUCTIONS.md`
-- `voice-cloning-studio` → `references/skills/voice-cloning-studio/INSTRUCTIONS.md`
+- `viral-video-teardown-remake` → `references/skills/viral-video-teardown-remake/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `voice-cloning-studio` → `references/skills/voice-cloning-studio/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `voiceover-script-fa` → `references/skills/voiceover-script-fa/INSTRUCTIONS.md`
 - `watermark-burner-video` → `references/skills/watermark-burner-video/INSTRUCTIONS.md`
 - `wedding-compression-planner` → `references/skills/wedding-compression-planner/INSTRUCTIONS.md`
