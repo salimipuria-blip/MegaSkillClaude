@@ -1,4 +1,4 @@
-// Mega Skills for Hermes: the repo's full skill library (5,986 skills) without blowing the Workers CPU budget.
+// Mega Skills for Hermes: the repo's full skill library (6,017 skills) without blowing the Workers CPU budget.
 // build-skills.mjs turns the router index into static assets at deploy time:
 //   skills/t/<shard>.json  token → [skill ids]   (inverted index, sharded so each request parses only a few KB)
 //   skills/s/<id>.md       the skill's instructions (trimmed)
