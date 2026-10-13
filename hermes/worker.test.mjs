@@ -474,9 +474,9 @@ test('web app: image request returns a data URL; empty request asks for a descri
   assert.equal((await callApi(env, '/api/chat', { message: 'عکس بساز' })).status, 400);
 });
 
-test('without Gemini and the AI binding, image requests fail with a clear message', async () => {
+test('without Gemini, the AI binding and the free image service, image requests fail with a clear message', async () => {
   mockFetch();
-  const res = await callApi({ ...baseEnv(), GEMINI_API_KEY: undefined }, '/api/chat', { message: 'عکس بساز: دریاچه' });
+  const res = await callApi({ ...baseEnv(), GEMINI_API_KEY: undefined, FREE_IMAGES: 'off' }, '/api/chat', { message: 'عکس بساز: دریاچه' });
   assert.equal(res.status, 502);
   assert.match(res.body.error, /Workers AI/);
 });
@@ -960,4 +960,24 @@ test('booking manager registers by sharing their own matching phone; then bookin
   calls.length = 0;
   assert.equal((await book(env, okBody)).status, 200);
   assert.deepEqual(calls.filter((c) => c.url.endsWith('/sendMessage')).map((c) => String(c.body.chat_id)), ['777']);
+});
+
+test('images: when Workers AI quota and Gemini both fail, the free no-key image service is used', async () => {
+  const { makeImage } = await import('./image.mjs');
+  const env = { GEMINI_API_KEY: 'bad', AI: { run: async () => { throw new Error('4006: daily free allocation used up'); } } };
+  const urls = [];
+  globalThis.fetch = async (url) => {
+    const u = String(url);
+    urls.push(u);
+    if (u.includes('generativelanguage')) return new Response(JSON.stringify({ error: { message: 'API key not valid' } }), { status: 400 });
+    if (u.startsWith('https://image.pollinations.ai/prompt/')) return new Response(new Uint8Array(5000).fill(7), { headers: { 'content-type': 'image/jpeg' } });
+    return new Response('{}', { status: 404 });
+  };
+  const out = await makeImage(env, 'a red jeep on a dune', { width: 1024, height: 1280 });
+  assert.equal(out.mime, 'image/jpeg');
+  assert.match(out.model, /Pollinations/);
+  assert.ok(out.image.length > 6000);
+  const free = urls.find((u) => u.includes('pollinations'));
+  assert.match(free, /a%20red%20jeep%20on%20a%20dune\?width=1024&height=1280/);
+  await assert.rejects(makeImage({ ...env, FREE_IMAGES: 'off' }, 'x'), /سهمیهٔ رایگان/);
 });
