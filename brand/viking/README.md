@@ -7,6 +7,7 @@
 | `post.html` | پست اسلایدی ۳ صفحه، ۱۰۸۰×۱۳۵۰ (۴:۵) |
 | `story.html` | استوری ۱۰۸۰×۱۹۲۰ (۹:۱۶) |
 | `render.mjs` | ساخت PNG: `node brand/viking/render.mjs post` یا `story` |
+| `story-visit.html` + `render_visit.py` | استوری اطلاعیهٔ «با هماهنگی قبلی» ۱۰۸۰×۱۹۲۰؛ رندر PIL بدون نیاز به Chromium: `python3 brand/viking/render_visit.py` |
 
 ## قواعد سبک (ثابت)
 
