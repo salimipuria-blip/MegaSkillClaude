@@ -854,3 +854,42 @@ test('when every Gemini model is out of quota, the next free provider answers (b
   assert.equal(groq.body.messages[0].role, 'system');
   assert.equal(groq.body.messages.at(-1).content, 'سلام');
 });
+
+test('stale provider model names: the provider catalog is read and a live model is used and remembered', async () => {
+  const env = { ...baseEnv(), GEMINI_API_KEY: undefined, GROQ_API_KEY: 'k' };
+  const calls = [];
+  globalThis.fetch = async (url, init) => {
+    const u = String(url);
+    const body = init && typeof init.body === 'string' ? JSON.parse(init.body) : null;
+    calls.push({ url: u, body });
+    if (u.endsWith('/openai/v1/models')) return new Response(JSON.stringify({ data: [{ id: 'whisper-large-v3' }, { id: 'llama-4-scout' }, { id: 'openai/gpt-oss-120b-new' }] }));
+    if (u.includes('api.groq.com')) {
+      return body.model === 'openai/gpt-oss-120b-new'
+        ? new Response(JSON.stringify({ choices: [{ message: { content: 'جواب از مدل جدید' } }] }))
+        : new Response('{}', { status: 404 });
+    }
+    return new Response(JSON.stringify({ ok: true, result: {} }));
+  };
+  await post(env, message('سلام'));
+  assert.deepEqual(sent(calls), ['جواب از مدل جدید']);
+  assert.equal(env.MEMORY.store.get('provider-model:Groq'), 'openai/gpt-oss-120b-new');
+  assert.equal(calls.some((c) => c.body && c.body.model === 'whisper-large-v3'), false, 'non-chat models are skipped');
+});
+
+test('Gemini 400 shows Google\'s own reason and every free provider\'s reason is reported', async () => {
+  const env = { ...baseEnv(), GITHUB_MODELS_TOKEN: 'bad', GROQ_API_KEY: 'k' };
+  const calls = [];
+  globalThis.fetch = async (url, init) => {
+    const u = String(url);
+    calls.push({ url: u, body: init && typeof init.body === 'string' ? JSON.parse(init.body) : null });
+    if (u.includes('generativelanguage')) return new Response(JSON.stringify({ error: { message: 'User location is not supported for the API use.' } }), { status: 400 });
+    if (u.includes('models.github.ai')) return new Response('{}', { status: 401 });
+    if (u.includes('api.groq.com')) return new Response('{}', { status: 429 });
+    return new Response(JSON.stringify({ ok: true, result: {} }));
+  };
+  await post(env, message('سلام'));
+  const text = sent(calls).at(-1);
+  assert.match(text, /User location is not supported/);
+  assert.match(text, /GitHub Models: کلید پذیرفته نشد \(401\)/);
+  assert.match(text, /Groq: .*429/);
+});
