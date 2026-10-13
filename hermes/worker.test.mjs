@@ -893,3 +893,30 @@ test('Gemini 400 shows Google\'s own reason and every free provider\'s reason is
   assert.match(text, /GitHub Models: کلید پذیرفته نشد \(401\)/);
   assert.match(text, /Groq: .*429/);
 });
+
+test('a too-large prompt is trimmed and retried shorter; every failing model is listed', async () => {
+  const env = { ...baseEnv(), GEMINI_API_KEY: undefined, GITHUB_MODELS_TOKEN: 't', GROQ_API_KEY: 'k' };
+  const calls = [];
+  globalThis.fetch = async (url, init) => {
+    const u = String(url);
+    const body = init && typeof init.body === 'string' ? JSON.parse(init.body) : null;
+    calls.push({ url: u, body });
+    const size = body && body.messages ? JSON.stringify(body.messages).length : 0;
+    if (u.includes('models.github.ai')) return new Response(JSON.stringify({ error: { code: 'unavailable_model', message: 'Unknown model' } }), { status: 400 });
+    if (u.includes('api.groq.com')) {
+      return size > 9000
+        ? new Response(JSON.stringify({ error: { message: 'Request too large: tokens per minute' } }), { status: 413 })
+        : new Response(JSON.stringify({ choices: [{ message: { content: 'جواب کوتاه‌شده' } }] }));
+    }
+    return new Response(JSON.stringify({ ok: true, result: {} }));
+  };
+  for (let i = 0; i < 12; i++) env.MEMORY.store.set('history:42', JSON.stringify([...JSON.parse(env.MEMORY.store.get('history:42') || '[]'),
+    { role: 'user', parts: [{ text: 'س'.repeat(1500) }] }, { role: 'model', parts: [{ text: 'ج'.repeat(1500) }] }]));
+  await post(env, message('سلام'));
+  assert.deepEqual(sent(calls).slice(-1), ['جواب کوتاه‌شده']);
+  const groq = calls.filter((c) => c.url.includes('api.groq.com/openai/v1/chat'));
+  assert.ok(JSON.stringify(groq[0].body.messages).length <= 16000, 'first try already fits the Groq budget');
+  assert.ok(groq.length >= 2, 'retried after 413');
+  assert.equal(groq.at(-1).body.messages.at(-1).content, 'سلام');
+  assert.equal(groq.at(-1).body.messages[1].role, 'user');
+});
