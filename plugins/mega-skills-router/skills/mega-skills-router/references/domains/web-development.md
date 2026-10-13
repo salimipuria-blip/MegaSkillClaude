@@ -1,6 +1,6 @@
 # web-development
 
-Skills: 1808
+Skills: 1832
 
 - `1688-product-detail` → `references/skills/1688-product-detail/INSTRUCTIONS.md`
 - `2slides-ppt-generator` → `references/skills/2slides-ppt-generator/INSTRUCTIONS.md`
@@ -1810,3 +1810,27 @@ Skills: 1808
 - `zhihu-search-api-skill` → `references/skills/zhihu-search-api-skill/INSTRUCTIONS.md`
 - `zod-validation-expert` → `references/skills/zod-validation-expert/INSTRUCTIONS.md`
 - `zoom-automation` → `references/skills/zoom-automation/INSTRUCTIONS.md`
+- `ask-matt` → `references/skills/ask-matt/INSTRUCTIONS.md`
+- `mp-code-review` → `references/skills/mp-code-review/INSTRUCTIONS.md`
+- `mp-codebase-design` → `references/skills/mp-codebase-design/INSTRUCTIONS.md`
+- `mp-diagnosing-bugs` → `references/skills/mp-diagnosing-bugs/INSTRUCTIONS.md`
+- `mp-domain-modeling` → `references/skills/mp-domain-modeling/INSTRUCTIONS.md`
+- `mp-grill-with-docs` → `references/skills/mp-grill-with-docs/INSTRUCTIONS.md`
+- `implement-spec` → `references/skills/implement-spec/INSTRUCTIONS.md`
+- `implement` → `references/skills/implement/INSTRUCTIONS.md`
+- `mp-improve-codebase-architecture` → `references/skills/mp-improve-codebase-architecture/INSTRUCTIONS.md`
+- `pr` → `references/skills/pr/INSTRUCTIONS.md`
+- `prototype` → `references/skills/prototype/INSTRUCTIONS.md`
+- `mp-research` → `references/skills/mp-research/INSTRUCTIONS.md`
+- `retro` → `references/skills/retro/INSTRUCTIONS.md`
+- `mp-setup-matt-pocock-skills` → `references/skills/mp-setup-matt-pocock-skills/INSTRUCTIONS.md`
+- `tdd` → `references/skills/tdd/INSTRUCTIONS.md`
+- `to-spec` → `references/skills/to-spec/INSTRUCTIONS.md`
+- `to-tickets` → `references/skills/to-tickets/INSTRUCTIONS.md`
+- `mp-triage` → `references/skills/mp-triage/INSTRUCTIONS.md`
+- `wayfinder` → `references/skills/wayfinder/INSTRUCTIONS.md`
+- `wizard` → `references/skills/wizard/INSTRUCTIONS.md`
+- `git-guardrails-claude-code` → `references/skills/git-guardrails-claude-code/INSTRUCTIONS.md`
+- `migrate-to-shoehorn` → `references/skills/migrate-to-shoehorn/INSTRUCTIONS.md`
+- `scaffold-exercises` → `references/skills/scaffold-exercises/INSTRUCTIONS.md`
+- `setup-pre-commit` → `references/skills/setup-pre-commit/INSTRUCTIONS.md`

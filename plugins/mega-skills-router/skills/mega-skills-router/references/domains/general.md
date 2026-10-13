@@ -1,6 +1,6 @@
 # general
 
-Skills: 241
+Skills: 248
 
 - `academy-parser-pack` → `references/skills/academy-parser-pack/INSTRUCTIONS.md`
 - `access-review` → `references/skills/access-review/INSTRUCTIONS.md`
@@ -243,3 +243,10 @@ Skills: 241
 - `yes-md` → `references/skills/yes-md/INSTRUCTIONS.md`
 - `yoga-intent-analyzer` → `references/skills/yoga-intent-analyzer/INSTRUCTIONS.md`
 - `yoga-reporter-optimizer` → `references/skills/yoga-reporter-optimizer/INSTRUCTIONS.md`
+- `grill-me` → `references/skills/grill-me/INSTRUCTIONS.md`
+- `grilling` → `references/skills/grilling/INSTRUCTIONS.md`
+- `handoff` → `references/skills/handoff/INSTRUCTIONS.md`
+- `mp-teach` → `references/skills/mp-teach/INSTRUCTIONS.md`
+- `to-questionnaire` → `references/skills/to-questionnaire/INSTRUCTIONS.md`
+- `wait-what` → `references/skills/wait-what/INSTRUCTIONS.md`
+- `writing-for-agents` → `references/skills/writing-for-agents/INSTRUCTIONS.md`
