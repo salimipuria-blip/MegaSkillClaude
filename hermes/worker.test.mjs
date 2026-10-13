@@ -920,3 +920,26 @@ test('a too-large prompt is trimmed and retried shorter; every failing model is 
   assert.equal(groq.at(-1).body.messages.at(-1).content, 'سلام');
   assert.equal(groq.at(-1).body.messages[1].role, 'user');
 });
+
+test('GitHub Models: busy models hand over to the next one, then to more models from the catalog', async () => {
+  const env = { ...baseEnv(), GEMINI_API_KEY: undefined, GITHUB_MODELS_TOKEN: 't' };
+  const calls = [];
+  globalThis.fetch = async (url, init) => {
+    const u = String(url);
+    const body = init && typeof init.body === 'string' ? JSON.parse(init.body) : null;
+    calls.push({ url: u, body });
+    if (u.endsWith('/catalog/models')) return new Response(JSON.stringify([{ id: 'openai/o3' }, { id: 'openai/text-embedding-3-large' }, { id: 'ai21-labs/AI21-Jamba-1.5-Large' }]));
+    if (u.includes('models.github.ai')) {
+      return body.model === 'ai21-labs/AI21-Jamba-1.5-Large'
+        ? new Response(JSON.stringify({ choices: [{ message: { content: 'جواب از مدل کاتالوگ' } }] }))
+        : new Response(JSON.stringify({ error: { message: 'Rate limit of 50 per 86400s exceeded' } }), { status: 429 });
+    }
+    return new Response(JSON.stringify({ ok: true, result: {} }));
+  };
+  await post(env, message('سلام'));
+  assert.deepEqual(sent(calls).slice(-1), ['جواب از مدل کاتالوگ']);
+  const models = calls.filter((c) => c.url.includes('/inference/')).map((c) => c.body.model);
+  assert.ok(models.length <= 16, 'never more than 16 calls');
+  assert.equal(models.includes('openai/o3'), false, 'o-series reasoning models are skipped');
+  assert.equal(models.some((m) => /embedding/.test(m)), false);
+});
