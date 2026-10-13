@@ -782,26 +782,26 @@ test('trip page is public and has the booking form', async () => {
   assert.match(html, /ig\.me\/m\/viking\.offroad/);
 });
 
-test('booking goes to the team Telegram with approve/reject buttons; bad input is refused', async () => {
-  const env = { ...baseEnv(), BOOKING_CHAT_ID: '-100777' };
+test('booking is sent privately to every team member, with no payment info; bad input is refused', async () => {
+  const env = { ...baseEnv(), BOOKING_ADMIN_IDS: '555, 42' };
   const calls = bookingFetch();
   assert.equal((await book(env, { ...okBody, agree: false })).status, 400);
   assert.equal((await book(env, { ...okBody, phone: '12' })).status, 400);
   const noCar = await book(env, { ...okBody, car: '' });
   assert.equal(noCar.status, 200, 'car choice is optional');
+  calls.length = 0;
   const res = await book(env, okBody);
   assert.equal(res.status, 200);
   const data = await res.json();
   assert.match(data.id, /^[a-z2-9]{6}$/);
-  assert.equal(data.bot, 'Pouragent_bot');
-  const msg = calls.filter((c) => c.url.endsWith('/sendMessage')).at(-1).body;
-  assert.equal(msg.chat_id, '-100777');
-  assert.match(msg.text, /سارا[\s\S]*09123456789[\s\S]*2 نفر/);
-  assert.equal(msg.reply_markup.inline_keyboard[0][0].callback_data, `bk:ok:${data.id}`);
-  const saved = JSON.parse(env.MEMORY.store.get(`booking:${data.id}`));
-  assert.equal(saved.status, 'pending');
-  const status = await worker.fetch(new Request(`https://h.workers.dev${data.status}`), env, {});
-  assert.match(await status.text(), /در حال بررسی/);
+  const msgs = calls.filter((c) => c.url.endsWith('/sendMessage')).map((c) => c.body);
+  assert.deepEqual(msgs.map((m) => String(m.chat_id)).sort(), ['42', '555', String(env.ALLOWED_USER_ID).trim()].sort());
+  for (const m of msgs) {
+    assert.match(m.text, /سارا[\s\S]*09123456789[\s\S]*2 نفر[\s\S]*خودروی شخصی/);
+    assert.doesNotMatch(m.text, /پرداخت/);
+    assert.equal(m.reply_markup, undefined, 'no approve/payment buttons');
+  }
+  assert.ok(env.MEMORY.store.get(`booking:${data.id}`));
 });
 
 test('booking rate limit: 5 per hour per IP', async () => {
@@ -810,25 +810,6 @@ test('booking rate limit: 5 per hour per IP', async () => {
   for (let i = 0; i < 5; i++) assert.equal((await book(env, okBody, '9.9.9.9')).status, 200);
   assert.equal((await book(env, okBody, '9.9.9.9')).status, 429);
   assert.equal((await book(env, okBody, '8.8.8.8')).status, 200);
-});
-
-test('team approves: traveller who tapped the Telegram link gets payment info; strangers cannot approve', async () => {
-  const env = { ...baseEnv(), PAYMENT_INFO: 'کارت ۶۰۳۷-xxxx به نام وایکینگ', BOOKING_ADMIN_IDS: '555' };
-  const calls = bookingFetch();
-  const { id } = await (await book(env, okBody)).json();
-  await post(env, { message: { chat: { id: 9001 }, from: { id: 9001 }, text: `/start bk_${id}` } });
-  assert.match(sent(calls).at(-1), /ثبت شده/);
-  assert.equal(JSON.parse(env.MEMORY.store.get(`booking:${id}`)).chat, 9001);
-  const press = (from) => post(env, { callback_query: { id: 'cq1', from: { id: from, first_name: 'Mahyar' }, data: `bk:ok:${id}`, message: { chat: { id: -100 }, message_id: 7 } } });
-  await press(4242);
-  assert.equal(JSON.parse(env.MEMORY.store.get(`booking:${id}`)).status, 'pending', 'stranger cannot approve');
-  await press(555);
-  assert.equal(JSON.parse(env.MEMORY.store.get(`booking:${id}`)).status, 'approved');
-  const toTraveller = calls.filter((c) => c.url.endsWith('/sendMessage') && c.body.chat_id === 9001).at(-1).body.text;
-  assert.match(toTraveller, /تأیید شد[\s\S]*۶۰۳۷[\s\S]*برگشت وجه/);
-  assert.match(calls.find((c) => c.url.endsWith('/editMessageText')).body.text, /✅ تأیید شد[\s\S]*Mahyar/);
-  const page = await worker.fetch(new Request(`https://h.workers.dev/trip/s/${id}`), env, {});
-  assert.match(await page.text(), /۶۰۳۷/);
 });
 
 test('owner /trip command returns the public page link', async () => {

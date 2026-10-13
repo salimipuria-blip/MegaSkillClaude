@@ -13,7 +13,7 @@ import { relevantSkills, skillsBlock } from './skill-router.mjs';
 import { loadLog, toContents, appendTurn, archiveAndClear, noteFrom, loadNotes, addNote, clearNotes } from './memory.mjs';
 import { imageRequest, imagePrompt, makeImage, sizeFor, base64ToBytes } from './image.mjs';
 import { transcribe, describeImage, telegramFile, parseDataUrl } from './media.mjs';
-import { tripPage, statusPage, createBooking, onCallback, onTravellerStart } from './booking.mjs';
+import { tripPage, createBooking } from './booking.mjs';
 import { googleConfigured, googleConnected, googleTools, connectUrl, finishConnect, disconnect } from './google.mjs';
 
 export const MODELS = ['gemini-3.8-flash', 'gemini-3.7-flash', 'gemini-3.5-flash-lite', 'gemini-2.5-flash'];
@@ -44,10 +44,6 @@ export default {
     if (request.method === 'GET' && url.pathname === '/manifest.webmanifest') return page(MANIFEST, 'application/manifest+json');
     if (request.method === 'GET' && url.pathname === '/icon.svg') return page(ICON, 'image/svg+xml');
     if (request.method === 'GET' && url.pathname === '/trip') return page(tripPage(), 'text/html');
-    if (request.method === 'GET' && url.pathname.startsWith('/trip/s/')) {
-      const res = await statusPage(env, url.pathname.slice(8));
-      return new Response(res.html, { status: res.status, headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' } });
-    }
     if (url.pathname.startsWith('/api/')) return api(request, url, env);
     if (request.method === 'GET' && url.pathname === '/connect/google') return googleStart(url, env);
     if (request.method === 'GET' && url.pathname === '/connect/google/callback') return googleCallback(url, env);
@@ -57,10 +53,6 @@ export default {
       return new Response('forbidden', { status: 403 });
     }
     const update = await request.json().catch(() => null);
-    if (update && update.callback_query) {
-      ctx.waitUntil(onCallback(env, tg, update.callback_query).catch((err) => console.error('[Hermes]', err.message)));
-      return new Response('ok');
-    }
     const msg = update && update.message;
     if (msg && (typeof msg.text === 'string' || msg.voice || msg.audio || (msg.photo && msg.photo.length))) {
       ctx.waitUntil(handle(msg, env, url.origin).catch((err) => console.error('[Hermes]', err.message)));
@@ -248,7 +240,6 @@ async function setup(url, env) {
 async function handle(msg, env, origin) {
   const chatId = msg.chat.id;
   const userId = msg.from && msg.from.id;
-  if (typeof msg.text === 'string' && await onTravellerStart(env, tg, msg)) return;
   if (String(userId) !== String(env.ALLOWED_USER_ID).trim()) {
     await send(env, chatId, `این بات خصوصی است. شناسهٔ شما: ${userId}`);
     return;
@@ -292,7 +283,7 @@ async function handle(msg, env, origin) {
     return send(env, chatId, `اپ چت هرمس (لینک خصوصی، برای کسی نفرست):\n${origin}/app#k=${await appKey(env)}\n\nدر سافاری باز کن و Share ← Add to Home Screen را بزن تا مثل اپ نصب شود.`);
   }
   if (input === '/trip') {
-    return send(env, chatId, `صفحهٔ عمومی سفر و رزرو (برای لینک بیو):\n${origin}/trip\n\nدرخواست‌ها با دکمهٔ ✅/❌ همین‌جا می‌آیند${env.BOOKING_CHAT_ID ? ' (در گروه رزرو)' : ''}. اطلاعات پرداخت از PAYMENT_INFO خوانده می‌شود.`);
+    return send(env, chatId, `صفحهٔ عمومی سفر و رزرو (برای لینک بیو):\n${origin}/trip\n\nاطلاعات هر رزرو به‌صورت خصوصی برای تو و هر کس در BOOKING_ADMIN_IDS فرستاده می‌شود (هر نفر یک بار باید بات را استارت کند).`);
   }
   if (input === '/google') {
     if (!googleConfigured(env)) return send(env, chatId, 'اول GOOGLE_CLIENT_ID و GOOGLE_CLIENT_SECRET را در Secrets کلادفلر بگذار، بعد دوباره /google را بزن.');
