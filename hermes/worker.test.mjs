@@ -817,3 +817,12 @@ test('owner /trip command returns the public page link', async () => {
   await post(baseEnv(), message('/trip'));
   assert.match(sent(calls)[0], /https:\/\/hermes\.example\.workers\.dev\/trip/);
 });
+
+test('image prompt: Persian request never reaches the image model raw; vague asks become a Viking scene', async () => {
+  const { imagePrompt, BRAND_SCENE } = await import('./image.mjs');
+  const fails = async () => { throw new Error('down'); };
+  assert.equal(await imagePrompt(fails, {}, 'یه پست واسه اینستاگرام بساز'), BRAND_SCENE);
+  assert.equal(await imagePrompt(async () => '(no model)', {}, 'پست اینستا'), BRAND_SCENE);
+  assert.equal(await imagePrompt(async () => 'a red jeep on a dune', {}, 'جیپ قرمز'), 'a red jeep on a dune');
+  assert.equal(await imagePrompt(fails, {}, 'a red jeep'), 'a red jeep');
+});

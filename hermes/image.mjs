@@ -5,8 +5,13 @@ export const IMAGE_MODEL = '@cf/black-forest-labs/flux-1-schnell';
 const GEMINI_API = 'https://generativelanguage.googleapis.com/v1beta';
 const DAY = 86400;
 const IMAGE_RE = /^(?:\/img(?:@\w+)?|\/image|(?:یه|یک)?\s*(?:عکس|تصویر|پوستر|طرح)\s*(?:بساز|بکش|درست\s*کن)|بساز\s*(?:یه|یک)?\s*(?:عکس|تصویر)|draw|generate\s+(?:an?\s+)?image(?:\s+of)?)\s*[:：،,.\-]?\s*/i;
+// The owner runs Viking Offroad, so a vague request ("a post for Instagram") means a Viking scene, never a random subject.
+export const BRAND_SCENE = 'cinematic photo of a Viking Offroad adventure in northern Iran: 4x4 offroad vehicles beside a misty forest lake, ' +
+  'people paddleboarding, tents and a glowing campfire, mountains, golden hour light, warm orange tones, wide angle, ultra realistic, high detail';
 const PROMPT_SYSTEM = 'You write prompts for a photorealistic text-to-image model. Rewrite the request as ONE vivid English prompt ' +
   '(subject, setting, light, mood, camera/composition, "ultra realistic, high detail"). Keep every concrete detail the user gave. ' +
+  'The user runs Viking Offroad (offroad tours, camping, lake paddleboarding, campfire nights in Iranian nature). If the request names no ' +
+  `clear subject (e.g. "an Instagram post", "a story", "a cover"), build the scene from this brand: ${BRAND_SCENE}. ` +
   'No text, letters or logos in the image unless asked. Output only the prompt, at most 80 words.';
 
 // Natural requests anywhere in the sentence: «یه عکس از جنگل پاییزی بساز/بده/بکش», «generate an image of ...».
@@ -30,10 +35,10 @@ export function imageRequest(input) {
 export async function imagePrompt(ask, env, request) {
   try {
     const out = (await ask(env, [{ role: 'user', parts: [{ text: request }] }], PROMPT_SYSTEM, false)).trim().replace(/^["'`]+|["'`]+$/g, '');
-    return out ? out.slice(0, 2000) : request;
-  } catch {
-    return request;
-  }
+    if (out && /[a-z]{3}/i.test(out) && !out.startsWith('(')) return out.slice(0, 2000);
+  } catch { /* fall through */ }
+  // No usable rewrite: image models don't understand Persian, so never send it raw — use the brand scene instead.
+  return /[a-z]{3}/i.test(request) ? request : BRAND_SCENE;
 }
 
 // Free models on Cloudflare Workers AI, best first; all share the free 10,000 neurons/day, so when the budget
