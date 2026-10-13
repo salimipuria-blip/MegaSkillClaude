@@ -17,19 +17,28 @@ export const PROVIDERS = [
     budget: 14000, catalog: 'https://api.groq.com/openai/v1/models', models: ['llama-3.3-70b-versatile', 'openai/gpt-oss-120b', 'qwen/qwen3-32b'] },
   { name: 'Cerebras', key: 'CEREBRAS_API_KEY', list: 'CEREBRAS_MODELS', url: 'https://api.cerebras.ai/v1/chat/completions',
     catalog: 'https://api.cerebras.ai/v1/models', models: ['llama-3.3-70b', 'gpt-oss-120b', 'qwen-3-32b'] },
+  { name: 'Mistral', key: 'MISTRAL_API_KEY', list: 'MISTRAL_MODELS', url: 'https://api.mistral.ai/v1/chat/completions',
+    catalog: 'https://api.mistral.ai/v1/models', models: ['mistral-large-latest', 'mistral-medium-latest', 'mistral-small-latest'] },
+  { name: 'Hugging Face', key: 'HF_TOKEN', list: 'HF_MODELS', url: 'https://router.huggingface.co/v1/chat/completions',
+    catalog: 'https://router.huggingface.co/v1/models', models: ['deepseek-ai/DeepSeek-V3-0324', 'meta-llama/Llama-3.3-70B-Instruct', 'Qwen/Qwen3-32B'] },
   { name: 'OpenRouter', key: 'OPENROUTER_API_KEY', list: 'OPENROUTER_MODELS', url: 'https://openrouter.ai/api/v1/chat/completions',
     catalog: 'https://openrouter.ai/api/v1/models', models: ['deepseek/deepseek-chat-v3-0324:free', 'meta-llama/llama-3.3-70b-instruct:free'] },
+  // No key needed: Pollinations' free public text API (set FREE_TEXT=off to disable). Last, as it is slower and public.
+  { name: 'Pollinations', key: null, off: 'FREE_TEXT', list: 'POLLINATIONS_MODELS', url: 'https://text.pollinations.ai/openai',
+    budget: 9000, models: ['openai', 'mistral', 'deepseek'] },
 ];
 
 // Preferred families when discovering, best first; chat models only.
 const PREFER = [/gpt-4\.1(?!-nano)/i, /gpt-4o(?!-mini)/i, /gpt-oss-120b/i, /deepseek.*(v3|chat)/i, /llama-?3\.3-70b|llama-4/i, /qwen-?3/i, /gpt|llama|qwen|mistral|gemma/i];
 const NOT_CHAT = /whisper|tts|embed|guard|vision-preview|audio|image|moderation|(^|\/)o\d/i;
 
-export const configuredProviders = (env) => PROVIDERS.filter((p) => env[p.key]);
+export const configuredProviders = (env) => PROVIDERS.filter((p) => (p.key ? env[p.key] : env[p.off] !== 'off'));
+const authHeader = (env, p) => (p.key ? { authorization: `Bearer ${String(env[p.key]).trim()}` } : {});
 
 const FULL_BUDGET = 24000;
 const SMALL_BUDGET = 5000;
 const MAX_CALLS = 16;
+const MAX_TOTAL = 34; // all providers together, leaving room for Gemini, Telegram and KV under the limit of 50
 
 const modelsOf = (env, p) => (env[p.list] ? String(env[p.list]).split(',').map((s) => s.trim()).filter(Boolean) : p.models);
 
@@ -45,7 +54,7 @@ export function toMessages(contents, system) {
 
 // Picks up to three live chat models from the provider's catalog, best family first.
 export async function discoverModels(env, p) {
-  const res = await fetch(p.catalog, { headers: { authorization: `Bearer ${String(env[p.key]).trim()}` } });
+  const res = await fetch(p.catalog, { headers: authHeader(env, p) });
   if (!res.ok) return [];
   const data = await res.json().catch(() => null);
   const list = Array.isArray(data) ? data : (data && data.data) || [];
@@ -80,7 +89,7 @@ const tooLarge = (r) => r.status === 413 || (r.status === 400 && /token|too larg
 async function callModel(env, p, model, messages) {
   const res = await fetch(p.url, {
     method: 'POST',
-    headers: { 'content-type': 'application/json', authorization: `Bearer ${String(env[p.key]).trim()}` },
+    headers: { 'content-type': 'application/json', ...authHeader(env, p) },
     body: JSON.stringify({ model, messages, max_tokens: 2048 }),
   });
   if (!res.ok) {
@@ -100,7 +109,9 @@ async function callModel(env, p, model, messages) {
 export async function askProviders(env, contents, system) {
   const all = toMessages(contents, system);
   const errors = [];
+  let total = 0;
   for (const p of configuredProviders(env)) {
+    if (total >= MAX_TOTAL) { errors.push(`${p.name}: نوبت نرسید`); continue; }
     const cacheKey = `provider-model:${p.name}`;
     const cached = env.MEMORY ? await env.MEMORY.get(cacheKey) : null;
     const full = fitContext(all, p.budget || FULL_BUDGET);
@@ -111,12 +122,12 @@ export async function askProviders(env, contents, system) {
     const attempt = async (models) => {
       for (const model of models) {
         if (tried.has(model)) continue;
-        if (calls >= MAX_CALLS) break; // stay well under the Workers limit of 50 outbound requests per message
+        if (calls >= MAX_CALLS || total >= MAX_TOTAL) break; // stay well under the Workers limit of 50 outbound requests per message
         tried.add(model);
         try {
-          calls++;
+          calls++; total++;
           let r = await callModel(env, p, model, full);
-          if (tooLarge(r)) { calls++; r = await callModel(env, p, model, small); }
+          if (tooLarge(r)) { calls++; total++; r = await callModel(env, p, model, small); }
           if (r.status === 401 || r.status === 403) { reasons.push(`کلید پذیرفته نشد (${r.status})`); allMissing = false; return 'stop'; }
           if (r.status !== 200) {
             reasons.push(`${model}: ${r.status}${r.why ? ` ${r.why}` : ''}`);
