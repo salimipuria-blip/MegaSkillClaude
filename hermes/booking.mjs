@@ -1,9 +1,6 @@
-// Public trip page + bookings. Flow:
-// 1. Traveller fills the form on /trip → POST /api/booking → saved in KV and posted to the team's Telegram
-//    (BOOKING_CHAT_ID, else the owner) with ✅/❌ buttons.
-// 2. Optional: the traveller taps "خبرم کن" → t.me/<bot>?start=bk_<id> → the bot remembers their chat.
-// 3. The team approves → the traveller's status page (/trip/s/<id>) and their Telegram show the payment info
-//    (PAYMENT_INFO). Payment happens only after approval; after payment there is no cancellation.
+// Public trip page + bookings. The traveller fills the form on /trip → POST /api/booking → saved in KV and
+// the booking details are sent privately to every team member (ALLOWED_USER_ID + BOOKING_ADMIN_IDS).
+// No payment info goes out from here: the team contacts the traveller. After payment there is no cancellation.
 
 import { TRIP_HERO, TRIP_LOGO } from './trip-media.mjs';
 
@@ -14,7 +11,7 @@ export const TRIP = {
 };
 export const CARS = ['خودروی شخصی', 'خودروی گروه'];
 const TTL = 90 * 86400;
-const NO_REFUND = 'پرداخت فقط بعد از تأیید رزرو توسط تیم وایکینگ انجام می‌شه. بعد از پرداخت، امکان کنسلی و برگشت وجه وجود نداره.';
+const NO_REFUND = 'بعد از پرداخت، امکان کنسلی و برگشت وجه وجود نداره.';
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const toLatin = (s) => String(s || '').replace(/[۰-۹]/g, (d) => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g, (d) => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
 const newId = () => [...crypto.getRandomValues(new Uint8Array(6))].map((b) => 'abcdefghjkmnpqrstuvwxyz23456789'[b % 31]).join('');
@@ -34,17 +31,12 @@ export function validate(body) {
   return { booking: { name, phone, count, car, note: String(b.note || '').trim().slice(0, 400) } };
 }
 
-const teamChat = (env) => String(env.BOOKING_CHAT_ID || env.ALLOWED_USER_ID || '').trim();
-const admins = (env) => [env.ALLOWED_USER_ID, ...String(env.BOOKING_ADMIN_IDS || '').split(',')].map((s) => String(s || '').trim()).filter(Boolean);
+// Every team member, deduped; each must have started the bot once (Telegram can't message a phone number).
+export const team = (env) => [...new Set([env.ALLOWED_USER_ID, ...String(env.BOOKING_ADMIN_IDS || '').split(',')]
+  .map((s) => String(s || '').trim()).filter(Boolean))];
 
-function teamText(id, k, status) {
-  const head = status === 'approved' ? '✅ تأیید شد' : status === 'rejected' ? '❌ رد شد' : '🆕 درخواست رزرو جدید';
-  return `${head} · کد ${id}\n${TRIP.title} (${TRIP.dates})\n\n` +
-    `نام: ${k.name}\nشماره: ${k.phone}\nتعداد: ${k.count} نفر\nرفت‌وآمد: ${k.car}` +
-    (k.note ? `\nتوضیح: ${k.note}` : '') + (k.chat ? '\n📲 خبر تأیید در تلگرام به مسافر می‌رسد.' : '') +
-    (k.by ? `\n\nبررسی: ${k.by}` : '');
-}
-const buttons = (id) => ({ inline_keyboard: [[{ text: '✅ تأیید و ارسال اطلاعات پرداخت', callback_data: `bk:ok:${id}` }], [{ text: '❌ رد', callback_data: `bk:no:${id}` }]] });
+const teamText = (id, k) => `🆕 رزرو جدید · کد ${id}\n${TRIP.title} (${TRIP.dates})\n\n` +
+  `نام: ${k.name}\nشماره: ${k.phone}\nتعداد: ${k.count} نفر\nرفت‌وآمد: ${k.car}` + (k.note ? `\nتوضیح: ${k.note}` : '');
 
 // POST /api/booking
 export async function createBooking(env, tg, request, body) {
@@ -58,68 +50,13 @@ export async function createBooking(env, tg, request, body) {
   if (error === 'spam') return { status: 200, data: { id: 'ok' } };
   if (error) return { status: 400, data: { error } };
   const id = newId();
-  const record = { ...booking, id, status: 'pending', t: Date.now() };
-  const sent = await tg(env, 'sendMessage', { chat_id: teamChat(env), text: teamText(id, record), reply_markup: buttons(id) });
-  if (sent && sent.ok) record.msg = { chat: sent.result.chat.id, id: sent.result.message_id };
+  const record = { ...booking, id, t: Date.now() };
   await env.MEMORY.put(`booking:${id}`, JSON.stringify(record), { expirationTtl: TTL });
-  return { status: 200, data: { id, status: `/trip/s/${id}`, bot: await botName(env, tg) } };
+  const text = teamText(id, record);
+  const sent = await Promise.all(team(env).map((chat_id) => tg(env, 'sendMessage', { chat_id, text }).catch(() => null)));
+  if (!sent.some((r) => r && r.ok)) console.error('[Hermes] booking', id, 'reached no team chat');
+  return { status: 200, data: { id } };
 }
-
-async function botName(env, tg) {
-  const cached = await env.MEMORY.get('bot:username');
-  if (cached) return cached;
-  const me = await tg(env, 'getMe', {});
-  const name = me && me.ok ? me.result.username : '';
-  if (name) await env.MEMORY.put('bot:username', name, { expirationTtl: 86400 * 7 });
-  return name;
-}
-
-const load = async (env, id) => (/^[a-z2-9]{6}$/.test(id || '') ? env.MEMORY.get(`booking:${id}`, 'json') : null);
-const save = (env, k) => env.MEMORY.put(`booking:${k.id}`, JSON.stringify(k), { expirationTtl: TTL });
-
-export const paymentText = (env) => `💳 اطلاعات پرداخت:\n${env.PAYMENT_INFO || 'تیم وایکینگ به‌زودی اطلاعات پرداخت رو برات می‌فرسته.'}\n\n⚠️ ${NO_REFUND}`;
-
-// Telegram ✅/❌ from the team.
-export async function onCallback(env, tg, cq) {
-  const m = /^bk:(ok|no):([a-z2-9]{6})$/.exec(cq.data || '');
-  if (!m) return false;
-  if (!admins(env).includes(String(cq.from && cq.from.id))) {
-    await tg(env, 'answerCallbackQuery', { callback_query_id: cq.id, text: 'فقط تیم وایکینگ می‌تواند رزرو را بررسی کند.', show_alert: true });
-    return true;
-  }
-  const k = await load(env, m[2]);
-  if (!k) { await tg(env, 'answerCallbackQuery', { callback_query_id: cq.id, text: 'این رزرو پیدا نشد یا منقضی شده.' }); return true; }
-  if (k.status === 'pending') {
-    k.status = m[1] === 'ok' ? 'approved' : 'rejected';
-    k.by = [cq.from.first_name, cq.from.last_name].filter(Boolean).join(' ') || String(cq.from.id);
-    await save(env, k);
-    if (k.chat) {
-      await tg(env, 'sendMessage', { chat_id: k.chat, text: k.status === 'approved'
-        ? `🎉 رزروت برای «${TRIP.title}» تأیید شد! (کد ${k.id})\n\n${paymentText(env)}`
-        : `رزرو ${k.id} برای «${TRIP.title}» این بار تأیید نشد. برای سفرهای بعدی خوشحال می‌شیم همراهمون باشی 🙏` });
-    }
-  }
-  if (cq.message) {
-    await tg(env, 'editMessageText', { chat_id: cq.message.chat.id, message_id: cq.message.message_id, text: teamText(k.id, k, k.status) });
-  }
-  await tg(env, 'answerCallbackQuery', { callback_query_id: cq.id, text: k.status === 'approved' ? 'تأیید شد ✅' : 'رد شد' });
-  return true;
-}
-
-// /start bk_<id> from the traveller: remember their chat so the decision reaches them.
-export async function onTravellerStart(env, tg, msg) {
-  const m = /^\/start bk_([a-z2-9]{6})$/.exec((msg.text || '').trim());
-  if (!m) return false;
-  const k = await load(env, m[1]);
-  if (!k) { await tg(env, 'sendMessage', { chat_id: msg.chat.id, text: 'این کد رزرو پیدا نشد.' }); return true; }
-  k.chat = msg.chat.id;
-  await save(env, k);
-  const text = k.status === 'approved' ? `رزروت تأیید شده ✅\n\n${paymentText(env)}`
-    : k.status === 'rejected' ? 'این رزرو تأیید نشد.' : `✅ درخواستت (کد ${k.id}) ثبت شده. به‌محض بررسی، همین‌جا خبرت می‌کنیم.`;
-  await tg(env, 'sendMessage', { chat_id: msg.chat.id, text });
-  return true;
-}
-
 const shell = (title, body) => `<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>${title}</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lalezar&family=Vazirmatn:wght@400;600;800&display=swap">
 <style>:root{--bg:#0d0f10;--surface:#16191b;--line:#2a2f32;--fg:#f3eee6;--muted:#a59f95;--orange:#f39a2b;--ink:#141414;--ok:#7bc47f;--bad:#ff8a7a;
@@ -170,7 +107,7 @@ export function tripPage() {
 <div class="p main"><span>🚙 خودروی شخصی</span><span class="v">۷ میلیون</span><span class="n">تومان · فول‌برد</span></div>
 <div class="p"><span>🚐 خودروی گروه</span><span class="v">۳٫۵ میلیون</span><span class="n">تومان اضافه</span></div></div></section>
 <section class="box warn"><h2 style="margin:0">قبل از رزرو بدون</h2>
-<p class="muted" style="color:var(--fg)">۱. اول فرم رو پر می‌کنی و تیم وایکینگ رزروت رو بررسی می‌کنه.<br>۲. بعد از تأیید، اطلاعات پرداخت برات فرستاده می‌شه.<br>۳. ${NO_REFUND}</p></section>
+<p class="muted" style="color:var(--fg)">۱. فرم رو پر کن تا رزروت ثبت بشه.<br>۲. تیم وایکینگ برای هماهنگی باهات تماس می‌گیره.<br>۳. ${NO_REFUND}</p></section>
 <section id="reserve"><h2>رزرو</h2><form class="box" id="f" novalidate>
 <div class="row"><label for="name">نام<input id="name" autocomplete="name" placeholder="مثلاً سارا" required></label>
 <label for="phone">شمارهٔ تماس<input id="phone" inputmode="tel" autocomplete="tel" dir="ltr" placeholder="0912…" required></label></div>
@@ -180,31 +117,15 @@ export function tripPage() {
 ${CARS.map((c, i) => `<label class="car"><input type="radio" name="car" value="${c}"><span class="ic">${i ? '🚐' : '🚙'}</span><b>${c}</b><small>${i ? '۳٫۵ میلیون اضافه' : 'با ماشین خودت'}</small></label>`).join('')}</fieldset>
 <label for="note">توضیح (اختیاری)<textarea id="note" rows="2" placeholder="سؤال یا درخواست خاص"></textarea></label>
 <input class="hp" id="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-<label class="check" for="agree"><input id="agree" type="checkbox"> قبول دارم که پرداخت بعد از تأیید انجام می‌شه و بعد از پرداخت کنسلی و برگشت وجه نداره.</label>
+<label class="check" for="agree"><input id="agree" type="checkbox"> قبول دارم که بعد از پرداخت کنسلی و برگشت وجه نداره.</label>
 <p class="msg err" id="err" hidden></p><button class="btn" id="go" type="submit">ثبت درخواست رزرو</button></form>
-<div class="box" id="done" hidden><p class="msg ok">✅ درخواستت ثبت شد. کد پیگیری: <b id="code"></b></p>
-<p class="muted">تیم وایکینگ بررسیش می‌کنه و بعد از تأیید، اطلاعات پرداخت رو می‌بینی.</p>
-<a class="btn tg" id="tg" target="_blank" rel="noopener" hidden>📲 خبر تأیید رو در تلگرام بگیر</a>
-<a class="btn ghost" id="st">مشاهدهٔ وضعیت رزرو</a></div>
+<div class="box" id="done" hidden><p class="msg ok">✅ رزروت ثبت شد. کد پیگیری: <b id="code"></b></p>
+<p class="muted">تیم وایکینگ به‌زودی برای هماهنگی باهات تماس می‌گیره.</p></div>
 <a class="btn ghost" href="https://ig.me/m/viking.offroad" target="_blank" rel="noopener" style="margin-top:12px">سؤال داری؟ دایرکت اینستاگرام وایکینگ</a></section>
 <footer>🪪 با مجوز رسمی · @viking.offroad</footer>
 <script>(()=>{const $=(i)=>document.getElementById(i);document.querySelectorAll('.car input').forEach((r)=>{r.closest('.car').addEventListener('pointerdown',()=>{r.dataset.was=r.checked});r.addEventListener('click',()=>{if(r.dataset.was==='true')r.checked=false;r.dataset.was=''})});$('f').addEventListener('submit',async(e)=>{e.preventDefault();$('err').hidden=true;$('go').disabled=true;
 try{const r=await fetch('/api/booking',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({name:$('name').value,phone:$('phone').value,count:$('count').value,car:(document.querySelector('input[name=car]:checked')||{}).value||'',note:$('note').value,website:$('website').value,agree:$('agree').checked})});
 const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||'خطا در ثبت؛ دوباره امتحان کن.');
-$('f').hidden=true;$('done').hidden=false;$('code').textContent=d.id;$('st').href=d.status;try{localStorage.setItem('viking-booking',d.status)}catch{}
-if(d.bot){$('tg').href='https://t.me/'+d.bot+'?start=bk_'+d.id;$('tg').hidden=false}$('done').scrollIntoView({behavior:'smooth'});}
+$('f').hidden=true;$('done').hidden=false;$('code').textContent=d.id;$('done').scrollIntoView({behavior:'smooth'});}
 catch(x){$('err').textContent=x.message;$('err').hidden=false}finally{$('go').disabled=false}});})();</script>`);
-}
-
-export async function statusPage(env, id) {
-  const k = await load(env, id);
-  if (!k) return { status: 404, html: shell('رزرو پیدا نشد', '<section class="box" style="margin-top:40px"><p class="msg err">این کد رزرو پیدا نشد.</p><a class="btn" href="/trip">صفحهٔ سفر</a></section>') };
-  const body = k.status === 'approved'
-    ? `<p class="msg ok">🎉 رزروت تأیید شد!</p><div class="pre">${esc(paymentText(env))}</div>`
-    : k.status === 'rejected'
-      ? '<p class="msg err">این رزرو این بار تأیید نشد. برای سفرهای بعدی خوشحال می‌شیم همراهمون باشی.</p>'
-      : '<p class="msg">⏳ درخواستت در حال بررسیه. این صفحه خودش هر ۳۰ ثانیه به‌روز می‌شه.</p>';
-  const refresh = k.status === 'pending' ? '<meta http-equiv="refresh" content="30">' : '';
-  return { status: 200, html: shell('وضعیت رزرو', `${refresh}<section class="box" style="margin-top:40px"><h2>وضعیت رزرو ${esc(k.id)}</h2>
-<p class="muted">${esc(TRIP.title)} · ${esc(TRIP.dates)}<br>${esc(k.name)} · ${esc(k.count)} نفر · ${esc(k.car)}</p>${body}</section><a class="btn ghost" href="/trip">صفحهٔ سفر</a>`) };
 }
