@@ -1,0 +1,546 @@
+{
+ "schema": 1,
+ "description": "Fixed routing corpus for benchmark and contract tests (no network). Do not edit casually: changing it invalidates routing-golden.json.",
+ "cases": [
+  {
+   "id": "fa-01",
+   "lang": "fa",
+   "query": "سه استوری برای اینستاگرام طراحی کن"
+  },
+  {
+   "id": "fa-02",
+   "lang": "fa",
+   "query": "پوستر اینستاگرام برای کافه"
+  },
+  {
+   "id": "fa-03",
+   "lang": "fa",
+   "query": "یک کپشن جذاب برای پست فروش کفش بنویس"
+  },
+  {
+   "id": "fa-04",
+   "lang": "fa",
+   "query": "برنامهٔ انتشار ریلز برای هفته آینده"
+  },
+  {
+   "id": "fa-05",
+   "lang": "fa",
+   "query": "ساخت لندینگ پیج برای فروشگاه عسل"
+  },
+  {
+   "id": "fa-06",
+   "lang": "fa",
+   "query": "طراحی لوگو برای برند کافه با رنگ قهوه‌ای"
+  },
+  {
+   "id": "fa-07",
+   "lang": "fa",
+   "query": "جدول اکسل فروش ماهانه بساز"
+  },
+  {
+   "id": "fa-08",
+   "lang": "fa",
+   "query": "داشبورد گزارش مشتری ها"
+  },
+  {
+   "id": "fa-09",
+   "lang": "fa",
+   "query": "تحقیق بازار برای رقبای کافه در تهران"
+  },
+  {
+   "id": "fa-10",
+   "lang": "fa",
+   "query": "ایمیل خبرنامه برای مشتریان قدیمی"
+  },
+  {
+   "id": "fa-11",
+   "lang": "fa",
+   "query": "سناریوی ویدیو کوتاه برای یوتیوب"
+  },
+  {
+   "id": "fa-12",
+   "lang": "fa",
+   "query": "تایپوگرافی فارسی برای بنر تبلیغاتی"
+  },
+  {
+   "id": "fa-13",
+   "lang": "fa",
+   "query": "خلاصه مقاله تحقیقاتی درباره هوش مصنوعی"
+  },
+  {
+   "id": "fa-14",
+   "lang": "fa",
+   "query": "ترجمه این متن به انگلیسی"
+  },
+  {
+   "id": "fa-15",
+   "lang": "fa",
+   "query": "سفر سه روزه به کویر مرکزی ایران برنامه بده"
+  },
+  {
+   "id": "fa-16",
+   "lang": "fa",
+   "query": "برنامه کمپ آفرود برای آخر هفته"
+  },
+  {
+   "id": "fa-17",
+   "lang": "fa",
+   "query": "منوی رستوران با قیمت ها"
+  },
+  {
+   "id": "fa-18",
+   "lang": "fa",
+   "query": "صفحه ۴۰۴ خلاقانه برای وب‌سایت"
+  },
+  {
+   "id": "fa-19",
+   "lang": "fa",
+   "query": "تقویم محتوای ماهانه برای اینستاگرام"
+  },
+  {
+   "id": "fa-20",
+   "lang": "fa",
+   "query": "پرامپت تصویر برای لوگو یک کافه مینیمال"
+  },
+  {
+   "id": "fa-21",
+   "lang": "fa",
+   "query": "نقشه راه ۹۰ روزه برای استارتاپ"
+  },
+  {
+   "id": "fa-22",
+   "lang": "fa",
+   "query": "فروش آنلاین محصولات دست‌ساز"
+  },
+  {
+   "id": "fa-23",
+   "lang": "fa",
+   "query": "سئو وبلاگ شرکت آموزشی"
+  },
+  {
+   "id": "fa-24",
+   "lang": "fa",
+   "query": "اسلاید ارائه برای سرمایه‌گذاران"
+  },
+  {
+   "id": "fa-25",
+   "lang": "fa",
+   "query": "تحلیل داده‌های فروش فروشگاه"
+  },
+  {
+   "id": "fa-26",
+   "lang": "fa",
+   "query": "ایجنت پشتیبانی مشتری برای تلگرام"
+  },
+  {
+   "id": "fa-27",
+   "lang": "fa",
+   "query": "اتوماسیون پاسخ به دایرکت اینستاگرام"
+  },
+  {
+   "id": "fa-28",
+   "lang": "fa",
+   "query": "آگهی فروش خودرو بنویس"
+  },
+  {
+   "id": "fa-29",
+   "lang": "fa",
+   "query": "کارت ویزیت برای دندانپزشک"
+  },
+  {
+   "id": "fa-30",
+   "lang": "fa",
+   "query": "کمپین تبلیغاتی نوروز"
+  },
+  {
+   "id": "fa-31",
+   "lang": "fa",
+   "query": "بررسی کیفیت تصویر و فشرده‌سازی عکس"
+  },
+  {
+   "id": "fa-32",
+   "lang": "fa",
+   "query": "ویرایش صدا و حذف نویز پادکست"
+  },
+  {
+   "id": "fa-33",
+   "lang": "fa",
+   "query": "سوالات متداول برای سایت فروشگاهی"
+  },
+  {
+   "id": "fa-34",
+   "lang": "fa",
+   "query": "ساختن یک کد پایتون برای تحلیل اکسل"
+  },
+  {
+   "id": "fa-35",
+   "lang": "fa",
+   "query": "قیمت گذاری محصول جدید"
+  },
+  {
+   "id": "fa-36",
+   "lang": "fa",
+   "query": "هویت بصری برای هتل کوچک"
+  },
+  {
+   "id": "fa-37",
+   "lang": "fa",
+   "query": "پست لینکدین درباره تجربه کاری"
+  },
+  {
+   "id": "fa-38",
+   "lang": "fa",
+   "query": "کاروسل آموزشی برای اینستاگرام"
+  },
+  {
+   "id": "fa-39",
+   "lang": "fa",
+   "query": "تامنیل یوتیوب برای ویدیوی آموزشی"
+  },
+  {
+   "id": "fa-40",
+   "lang": "fa",
+   "query": "جزئیات پیاده‌روی و کوهنوردی در البرز"
+  },
+  {
+   "id": "en-01",
+   "lang": "en",
+   "query": "create three instagram stories for a coffee shop"
+  },
+  {
+   "id": "en-02",
+   "lang": "en",
+   "query": "design a poster for a summer sale"
+  },
+  {
+   "id": "en-03",
+   "lang": "en",
+   "query": "write a caption for a product launch post"
+  },
+  {
+   "id": "en-04",
+   "lang": "en",
+   "query": "plan a reels publishing schedule for next week"
+  },
+  {
+   "id": "en-05",
+   "lang": "en",
+   "query": "build a landing page for a skincare brand"
+  },
+  {
+   "id": "en-06",
+   "lang": "en",
+   "query": "make a logo concept for a bakery"
+  },
+  {
+   "id": "en-07",
+   "lang": "en",
+   "query": "create an excel budget spreadsheet"
+  },
+  {
+   "id": "en-08",
+   "lang": "en",
+   "query": "analyze sales data and build a dashboard"
+  },
+  {
+   "id": "en-09",
+   "lang": "en",
+   "query": "market research on competitors in the fitness industry"
+  },
+  {
+   "id": "en-10",
+   "lang": "en",
+   "query": "write a newsletter email for subscribers"
+  },
+  {
+   "id": "en-11",
+   "lang": "en",
+   "query": "video script for a youtube tutorial"
+  },
+  {
+   "id": "en-12",
+   "lang": "en",
+   "query": "typography pairing for a web banner"
+  },
+  {
+   "id": "en-13",
+   "lang": "en",
+   "query": "summarize this research article about climate"
+  },
+  {
+   "id": "en-14",
+   "lang": "en",
+   "query": "translate this paragraph into persian"
+  },
+  {
+   "id": "en-15",
+   "lang": "en",
+   "query": "plan a three day trip to the desert"
+  },
+  {
+   "id": "en-16",
+   "lang": "en",
+   "query": "off road camp checklist for the weekend"
+  },
+  {
+   "id": "en-17",
+   "lang": "en",
+   "query": "restaurant menu design with prices"
+  },
+  {
+   "id": "en-18",
+   "lang": "en",
+   "query": "custom 404 page ideas for a website"
+  },
+  {
+   "id": "en-19",
+   "lang": "en",
+   "query": "monthly content calendar for social media"
+  },
+  {
+   "id": "en-20",
+   "lang": "en",
+   "query": "ai image prompt for a minimal logo"
+  },
+  {
+   "id": "en-21",
+   "lang": "en",
+   "query": "90 day roadmap for a startup"
+  },
+  {
+   "id": "en-22",
+   "lang": "en",
+   "query": "online sales funnel for handmade products"
+  },
+  {
+   "id": "en-23",
+   "lang": "en",
+   "query": "seo blog strategy for an education company"
+  },
+  {
+   "id": "en-24",
+   "lang": "en",
+   "query": "presentation slides for investors"
+  },
+  {
+   "id": "en-25",
+   "lang": "en",
+   "query": "customer support agent for telegram"
+  },
+  {
+   "id": "en-26",
+   "lang": "en",
+   "query": "automate instagram dm replies"
+  },
+  {
+   "id": "en-27",
+   "lang": "en",
+   "query": "write an ad for a used car"
+  },
+  {
+   "id": "en-28",
+   "lang": "en",
+   "query": "business card design for a dentist"
+  },
+  {
+   "id": "en-29",
+   "lang": "en",
+   "query": "ramadan campaign ideas"
+  },
+  {
+   "id": "en-30",
+   "lang": "en",
+   "query": "compress image for web without losing quality"
+  },
+  {
+   "id": "en-31",
+   "lang": "en",
+   "query": "clean up podcast audio noise"
+  },
+  {
+   "id": "en-32",
+   "lang": "en",
+   "query": "faq section for an ecommerce site"
+  },
+  {
+   "id": "en-33",
+   "lang": "en",
+   "query": "write a python script to analyze excel files"
+  },
+  {
+   "id": "en-34",
+   "lang": "en",
+   "query": "product pricing strategy for a new item"
+  },
+  {
+   "id": "en-35",
+   "lang": "en",
+   "query": "brand identity for a boutique hotel"
+  },
+  {
+   "id": "en-36",
+   "lang": "en",
+   "query": "linkedin post about a career lesson"
+  },
+  {
+   "id": "en-37",
+   "lang": "en",
+   "query": "educational instagram carousel"
+  },
+  {
+   "id": "en-38",
+   "lang": "en",
+   "query": "youtube thumbnail for a tutorial video"
+  },
+  {
+   "id": "en-39",
+   "lang": "en",
+   "query": "hiking and camping plan in the alborz mountains"
+  },
+  {
+   "id": "en-40",
+   "lang": "en",
+   "query": "best way to organize a team meeting agenda"
+  },
+  {
+   "id": "mx-01",
+   "lang": "mixed",
+   "query": "poster برای اینستاگرام با تایپوگرافی فارسی"
+  },
+  {
+   "id": "mx-02",
+   "lang": "mixed",
+   "query": "landing page فروشگاه کفش با رنگ نارنجی"
+  },
+  {
+   "id": "mx-03",
+   "lang": "mixed",
+   "query": "excel جدول فروش برای مشتری های عمده"
+  },
+  {
+   "id": "mx-04",
+   "lang": "mixed",
+   "query": "کپشن instagram برای کافه"
+  },
+  {
+   "id": "mx-05",
+   "lang": "mixed",
+   "query": "reels برای youtube shorts بساز"
+  },
+  {
+   "id": "mx-06",
+   "lang": "mixed",
+   "query": "طراحی logo برای startup فارسی"
+  },
+  {
+   "id": "mx-07",
+   "lang": "mixed",
+   "query": "سناریوی story برای عروسی"
+  },
+  {
+   "id": "mx-08",
+   "lang": "mixed",
+   "query": "research درباره competitors کافه"
+  },
+  {
+   "id": "mx-09",
+   "lang": "mixed",
+   "query": "create یک سایت برای کلینیک"
+  },
+  {
+   "id": "mx-10",
+   "lang": "mixed",
+   "query": "اتوماسیون email مشتریان با CRM"
+  },
+  {
+   "id": "mx-11",
+   "lang": "mixed",
+   "query": "۳ ایده برای پست tiktok"
+  },
+  {
+   "id": "mx-12",
+   "lang": "mixed",
+   "query": "dashboard فروش برای مدیر"
+  },
+  {
+   "id": "mx-13",
+   "lang": "mixed",
+   "query": "design یک منو برای restaurant"
+  },
+  {
+   "id": "mx-14",
+   "lang": "mixed",
+   "query": "ترجمه english به فارسی"
+  },
+  {
+   "id": "mx-15",
+   "lang": "mixed",
+   "query": "blog post درباره سفر به ایران"
+  },
+  {
+   "id": "mx-16",
+   "lang": "mixed",
+   "query": "prompt برای ساخت تصویر poster"
+  },
+  {
+   "id": "mx-17",
+   "lang": "mixed",
+   "query": "مهارت های agent برای automation"
+  },
+  {
+   "id": "mx-18",
+   "lang": "mixed",
+   "query": "analytics وبسایت و گزارش هفتگی"
+  },
+  {
+   "id": "mx-19",
+   "lang": "mixed",
+   "query": "make a video پیش‌نمایش محصول"
+  },
+  {
+   "id": "mx-20",
+   "lang": "mixed",
+   "query": "طراحی banner for facebook ads"
+  },
+  {
+   "id": "edge-01",
+   "lang": "edge",
+   "query": "و این یک"
+  },
+  {
+   "id": "edge-02",
+   "lang": "edge",
+   "query": "the and a"
+  },
+  {
+   "id": "edge-03",
+   "lang": "edge",
+   "query": "؟!?"
+  },
+  {
+   "id": "edge-04",
+   "lang": "edge",
+   "query": "۱۲۳ 456"
+  },
+  {
+   "id": "edge-05",
+   "lang": "edge",
+   "query": " "
+  },
+  {
+   "id": "edge-06",
+   "lang": "edge",
+   "query": "   \t  "
+  },
+  {
+   "id": "edge-07",
+   "lang": "edge",
+   "query": "x"
+  },
+  {
+   "id": "edge-08",
+   "lang": "edge",
+   "query": "سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام سلام "
+  }
+ ]
+}

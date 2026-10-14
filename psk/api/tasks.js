@@ -1,6 +1,7 @@
 import crypto from 'node:crypto';
 import {guard,reply,route,inputCheck,planOf,skills,answerMessages,chat} from './_core.mjs';
-export default async function handler(req,res){if(!guard(req,res,'POST'))return;
+import {instrument} from '../engine/telemetry.mjs';
+export default instrument('tasks',async function handler(req,res,ctx){if(!guard(req,res,'POST'))return;
  let d=req.body;
  if(typeof d==='string'){try{d=JSON.parse(d)}catch{return reply(res,400,{error:'Invalid JSON'});}}
  if(!d||typeof d!=='object'||Array.isArray(d)||Buffer.byteLength(JSON.stringify(d))>12000)return reply(res,413,{error:'Invalid or oversized request body'});
@@ -8,9 +9,9 @@ export default async function handler(req,res){if(!guard(req,res,'POST'))return;
  if(!['plan','answer'].includes(d.mode))return reply(res,400,{error:'mode must be plan or answer'});
  const createdAt=new Date().toISOString(),id=crypto.randomUUID(),events=[];
  const event=(type,extra={})=>events.push({id:events.length+1,taskId:id,type,at:new Date().toISOString(),...extra});
- const input=d.input.trim();
+ const input=d.input.trim();ctx.mode=d.mode;
  event('queued',{mode:d.mode});event('routing',{state:'running'});
- const routed=route(input,8);event('routed',{matchedSkillCount:routed.matches,selectedSkills:routed.selected});
+ const routed=route(input,8);ctx.results=routed.selected.length;event('routed',{matchedSkillCount:routed.matches,selectedSkills:routed.selected});
  const picked=routed.selected.slice(0,3);const content=skills(picked);
  event('skills_checked',{loaded:content.loaded.length,missing:content.missing.length,rejected:content.rejected});
  const task={id,status:'completed',createdAt,mode:d.mode,route:routed,result:null,error:null,events};
@@ -35,4 +36,4 @@ export default async function handler(req,res){if(!guard(req,res,'POST'))return;
  event(task.status,{...(task.status==='failed'?{error:task.error}:{resultKind:task.result.kind})});
  // Complete within this invocation. There is intentionally no ephemeral task map or background promise.
  return reply(res,200,task);
-}
+});
