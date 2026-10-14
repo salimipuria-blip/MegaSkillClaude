@@ -10,12 +10,29 @@ CI واحد (`.github/workflows/ci.yml`) روی هر PR تست و بیلد هم�
 | `fjcod/` | CHAM Store OS: سامانهٔ فروشگاه چام | React 19 + TypeScript + Vite | `npm ci && npm run check` | Vercel `cham-store-os` |
 | `viking-team/` | Viking Experience Command: مرکز فرمان تیم | HTML ایستا + Supabase Auth/RLS | `python3 -m unittest discover -s tests` | Vercel |
 | `bison-brand-book/` | BISON Brand Book | Vite + GSAP + Lenis | `npm ci && npm run build` | GitHub Pages + Vercel `bison.brandbook.site.2026` |
-| `hermes/` | هرمس: دستیار ۲۴/۷ در تلگرام (لایت روی Cloudflare، کامل روی اوراکل) | Cloudflare Worker + Gemini، اسکریپت bash | `npm test && npm run test:integration` و `bash -n setup.sh` | Cloudflare Workers `hermes` |
+| `hermes/` | هرمس: دستیار ۲۴/۷ در تلگرام — چت، ویس، دیدن عکس، **ویرایش حرفه‌ای عکس (بریف→ویرایش→بازبینی→«قبل/بعد»)**، ساخت عکس، اسکرول و رزرو (لایت روی Cloudflare، کامل روی اوراکل) | Cloudflare Worker + Gemini، اسکریپت bash | `npm test && npm run test:integration` و `bash -n setup.sh` | Cloudflare Workers `hermes` |
 | `orchestrator/` | Omni LLM Orchestrator (تاریخی) | توابع Supabase Edge + پایتون | `python scripts/audit/check_repository_contract.py` و `python -m pytest -q -ra tests` | Supabase |
 | `.claude/skills/mega-skills-router/`، `plugins/`، `library/` | مسیریاب و کتابخانهٔ مهارت‌ها | پایتون | `python -m unittest discover -s tests` (از ریشه) | — |
 | `brands/viking-offroad/` | استیکرها و دارایی‌های برند وایکینگ آفرود | PNG + سورس | — | — |
 
 وضعیت دقیق هر پروژه و کارهای بعدی: [ROADMAP.md](ROADMAP.md).
+
+## بررسی و دیباگ هر پروژه با یک فرمان
+
+`node scripts/doctor.mjs` همان چیزی است که CI اجرا می‌کند، به‌علاوهٔ بررسی‌های عمیق‌تر
+(دقت مسیریاب، اسنپ‌شات golden، `npm audit`، تازگی ایندکس و هم‌گامی کتابخانهٔ مهارت‌ها):
+
+```bash
+node scripts/doctor.mjs                # همهٔ پروژه‌ها
+node scripts/doctor.mjs psk lithos     # فقط پروژه‌های نام‌برده‌شده
+node scripts/doctor.mjs --list         # فهرست گام‌های هر پروژه
+node scripts/doctor.mjs --json         # خروجی ماشینی برای CI/گزارش
+```
+
+هر پروژه یک **دفتر جریان** دارد (`<project>/PROGRESS.md`) که وضعیت، دستور دقیق، دیباگ‌های
+انجام‌شده و کارهای باز را نگه می‌دارد و هر دور کاری به‌روزرسانی می‌شود:
+`psk/`, `lithos/`, `fjcod/`, `viking-team/`, `bison-brand-book/`, `hermes/`,
+`orchestrator/`, `plugins/mega-skills-router/`, `mobile/`, `brands/viking-offroad/`.
 
 اصلاحات امنیتی، تفاوت تست محلی با انتشار زنده، و مراحل فعال‌سازی: [گزارش سخت‌سازی](docs/REPO_HARDENING.md). CHAM هنوز بک‌اند امن ندارد؛ محافظت نشست آن موقت است.
 
