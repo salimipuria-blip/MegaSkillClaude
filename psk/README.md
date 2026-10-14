@@ -26,3 +26,7 @@ All require `Authorization: Bearer <ENGINE_TOKEN>`; without a token on Vercel th
 
 ## Checks
 `npm run check && npm test` · local preview: `ENGINE_TOKEN=... npm run dev` (port 3000).
+
+Routing contract: `npm test` compares every routing output for the fixed 108-case corpus with `tests/fixtures/routing-golden.json`. Offline benchmark: `npm run bench:routing -- --label=<name>` (JSON to stdout). Results and decisions: [docs/ROUTING_EVALUATION.md](docs/ROUTING_EVALUATION.md).
+
+Optional telemetry: `PSK_TELEMETRY=1` (off by default, server-side logs only). See [docs/TELEMETRY.md](docs/TELEMETRY.md).

@@ -48,6 +48,9 @@ export function loadRegistry(filename,{skillsRoot=null,repairedFile=null}={}) {
    const ts=[r.name,r.domain,...r.triggers];
    const tk=new Set([...ts,record.description].flatMap(tokens));
    record.terms=tk;record.phrases=ts.map(normalize);
+   // Name-derived values are constant per skill (phrases[0] is normalize(name)); computing them once
+   // at load instead of per candidate per request keeps the routing output identical.
+   record.nameNorm=record.phrases[0];record.nameTokens=new Set(tokens(r.name));
    const n=records.push(record)-1;
    for(const term of tk){if(!index.has(term))index.set(term,[]);index.get(term).push(n);}
  }
@@ -95,8 +98,8 @@ export function routeSkills(registry,query,{limit=8}={}){
    if(!hits)continue;
    let score=1.4*weight/queryWeight + hits/Math.max(r.terms.size,5)*0.65;
    if(r.phrases.some(p=>p.length>6&&norm.includes(p)))score+=2;
-   if(norm.includes(normalize(r.name)))score+=1;
-   const nameTokens=new Set(tokens(r.name));for(const token of tk)if(nameTokens.has(token))score+=0.12+0.08*idf(token);
+   if(norm.includes(r.nameNorm))score+=1;
+   for(const token of tk)if(r.nameTokens.has(token))score+=0.12+0.08*idf(token);
    for(const [domain,bonus] of domainSignals)if(domain===r.domain)score+=bonus;
    if(wantsPlan&&/planner|generator|design|scripting|sequence|ideas|copy|frontend/.test(r.name))score+=0.19;
    if(wantsPlan&&!wantsPublish&&/repost|publisher|auto-publisher|monitor|scheduler|auditor|dm-export/.test(r.name))score-=0.26;
