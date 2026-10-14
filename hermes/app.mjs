@@ -170,7 +170,16 @@ export const APP_HTML = String.raw`<!doctype html>
   .md pre code { background: none; color: #d6e6ee; padding: 0; font: 13px/1.6 var(--mono); }
   .md a { color: var(--cyan); text-decoration: none; border-bottom: 1px solid rgba(0,229,255,.35); }
   .md b { color: #fff; }
-  .pic { display: block; position: relative; margin: 2px 0 10px; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,.14); white-space: normal; }
+  .picbox { margin: 2px 0 10px; }
+  .pic { display: block; position: relative; margin: 0; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,.14); white-space: normal; }
+  .pick { display: block; width: 100%; margin: 6px 0 0; padding: 7px 10px; border-radius: 9px; background: rgba(245,166,35,.14); border: 1px solid rgba(245,166,35,.45); color: var(--gold-hi); font: 600 12.5px/1.5 var(--fa); cursor: pointer; }
+  .pick:active { background: rgba(245,166,35,.24); }
+  .pick[disabled] { opacity: .6; cursor: default; }
+  canvas.pic { width: 100%; height: auto; }
+  .pick.small { display: inline-block; width: auto; margin: 6px 4px 0 0; padding: 6px 11px; background: rgba(0,229,255,.10); border-color: rgba(0,229,255,.4); color: var(--cyan-hi); }
+  .pick.small.on { background: rgba(0,229,255,.26); border-color: var(--cyan); }
+  .lhint { margin-top: 6px; color: var(--minor); font: 500 11.5px/1.7 var(--fa); }
+  .lrow { display: flex; flex-wrap: wrap; align-items: center; }
   .pic img { display: block; width: 100%; height: auto; }
   .pic span { position: absolute; left: 8px; bottom: 8px; padding: 3px 9px; border-radius: 99px; background: rgba(0,0,0,.65); color: var(--gold); font: 600 11px/1.6 ui-monospace, monospace; letter-spacing: .08em; }
   .caret { display: inline-block; width: 7px; height: 1.05em; vertical-align: -3px; margin-right: 2px; background: var(--gold); box-shadow: 0 0 10px var(--gold); animation: blink .7s infinite; }
@@ -417,7 +426,14 @@ export const APP_HTML = String.raw`<!doctype html>
     ['voice', 'Voice', 'skill', 118, 356, true, 'l', 6, 'پیام صوتی', 'online',
       ['ویس تلگرام را می‌فهمد', 'در اپ: دکمهٔ میکروفون، بزن و حرف بزن'], []],
     ['vision', 'Vision', 'skill', 256, 388, true, 't', 5.5, 'دیدن عکس', 'online',
-      ['عکس را تحلیل می‌کند', 'برای عکس کپشن می‌نویسد', 'در اپ: دکمهٔ دوربین کنار پیام'], []],
+      ['عکس را تحلیل می‌کند و توضیح می‌دهد', 'برای عکس کپشن می‌نویسد', 'در اپ: دکمهٔ دوربین کنار پیام'], []],
+    ['photolab', 'Photo Lab', 'core', 150, 418, true, 'l', 6.5, 'ویرایش حرفه‌ای عکس', 'online',
+      ['عکس خودت را بفرست و بگو چه تغییری می‌خواهی؛ قبل از خروج، عکس را یک ریتوشِر بازبینی می‌کند',
+       'متن هم می‌شود: «روی عکس بنویس: …» — با فونت واقعی وزیرمتن می‌نشیند و بالا/وسط/پایین و ذخیره دارد',
+       'همان متن با پیام هم می‌چرخد: «بالاتر ببر»، «سفیدش کن»، «درشت‌ترش کن»، «بدون نوار»، «متن رو عوض کن…»، «متن رو بردار»',
+       'ریتوش پرتره، پس‌زمینهٔ جدید، نورپردازی، گرید سینمایی، بازسازی عکس قدیمی، افزایش کیفیت، حذف شیء، عکس محصول استودیویی',
+       'هویت و چهره دست‌نخورده می‌ماند؛ متن را مدل تصویر نمی‌کشد (فارسی را خراب می‌کند) — فونت واقعی روی عکس می‌نشیند'],
+      ['این عکس رو ریتوش کن', 'این عکس قدیمی رو بازسازی کن', 'بالاتر ببر']],
     ['remind', 'Reminders', 'soon', 414, 392, true, 't', 5.5, 'یادآور و خلاصهٔ صبح', 'queued',
       ['یادآوری سر ساعت در تلگرام', 'هر صبح خلاصهٔ روز'], []],
     ['calendar', 'Calendar', 'soon', 560, 356, true, 'r', 5.5, 'تقویم و رزرو تور', 'planned',
@@ -535,7 +551,8 @@ export const APP_HTML = String.raw`<!doctype html>
   function consultFor(text) {
     const t = text.toLowerCase(), ids = ['brain', 'memory'];
     const rules = [['captions', /کپشن|هشتگ|caption/], ['content', /محتوا|پست|ریلز|استوری|اینستا/], ['planner', /برنامه|کار|چک|لیست|امروز|فردا/],
-      ['viking', /وایکینگ|تور|آفرود|مشتری|viking/], ['translate', /ترجمه|انگلیسی|translate/], ['editor', /روان|ویرایش|متن|غلط/],
+      ['viking', /وایکینگ|تور|آفرود|مشتری|viking/], ['translate', /ترجمه|انگلیسی|translate/], ['editor', /روان|متن|غلط|املا|کلمه/],
+      ['photolab', /ریتوش|رتوش|ادیت|ویرایش(?:\s*عکس)?|پس\s*زمینه|بک\s*گراند|بازسازی|کیفیت عکس|وضوح|حذف کن|retouch|upscale|restore|background|edit/],
       ['research', /تحلیل|بازار|رقبا|بررسی|مقایسه|چیست|چرا/], ['search', /خبر|امروز|الان|قیمت|هوا|جدید|آخرین|news|latest/],
       ['vision', /عکس|تصویر|photo|image/]];
     rules.forEach(([id, re]) => { if (re.test(t)) ids.push(id); });
@@ -819,20 +836,124 @@ export const APP_HTML = String.raw`<!doctype html>
     });
   }
 
-  // A generated image with a save link (long-press also works on iPhone).
-  function picture(src) {
+  // A generated image with a save link (long-press also works on iPhone). A variations take also
+  // carries a button that asks the studio to refine that exact version.
+  function picture(src, pick) {
+    const box = document.createElement('div'); box.className = 'picbox';
     const a = document.createElement('a'); a.className = 'pic'; a.href = src; a.download = 'hermes-' + Date.now() + '.jpg';
-    const img = document.createElement('img'); img.src = src; img.alt = 'generated image';
+    const img = document.createElement('img'); img.src = src; img.alt = pick ? 'نسخهٔ ' + pick.take : 'generated image';
     const s = document.createElement('span'); s.textContent = 'SAVE ↓';
     a.append(img, s);
-    return a;
+    box.append(a);
+    if (pick) {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'pick';
+      b.textContent = 'همین را انتخاب کن' + (pick.label ? ' (' + pick.label + ')' : '');
+      b.onclick = () => pickThis(pick.take, b);
+      box.append(b);
+    }
+    return box;
+  }
+
+  // ── The text layer: a real font on a canvas, exactly what the server planned ──
+  // The server sends lines, geometry and style (displayList); this draws them with Vazirmatn, which
+  // shapes Persian properly. The user can move the words up/middle/down and save the PNG.
+  function drawLayerText(g, l, position, W, H) {
+    const scale = W / (l.width || W);
+    const centre = l.positions[position] || l.positions.bottom;
+    const top = centre - ((l.lines.length - 1) * l.lineHeight) / 2;
+    g.save();
+    g.textAlign = l.align || 'center';
+    g.direction = l.direction || 'rtl';
+    g.textBaseline = 'middle';
+    g.font = (l.weight || 600) + ' ' + (l.fontSize * scale) + 'px ' + l.font;
+    if (l.bar) {
+      g.fillStyle = l.barFill;
+      g.fillRect(0, centre - (l.barHeight * scale) / 2, W, l.barHeight * scale);
+    }
+    l.lines.forEach((line, i) => {
+      const y = top + i * l.lineHeight * scale;
+      g.lineWidth = Math.max(1, l.strokeWidth * scale);
+      g.strokeStyle = l.stroke;
+      g.shadowColor = l.shadow.color;
+      g.shadowBlur = l.shadow.blur * scale;
+      g.shadowOffsetY = l.shadow.dy * scale;
+      g.strokeText(line, l.x * scale, y);
+      g.shadowColor = 'transparent';
+      g.fillStyle = l.fill;
+      g.fillText(line, l.x * scale, y);
+    });
+    g.restore();
+  }
+
+  const LAYER_POSITIONS = ['top', 'middle', 'bottom'];
+  const LAYER_LABEL = { top: 'بالا', middle: 'وسط', bottom: 'پایین' };
+
+  // An editable picture: the server's layer is drawn on a canvas, with save + position buttons.
+  function layeredPicture(src, layer) {
+    const box = document.createElement('div'); box.className = 'picbox';
+    const canvas = document.createElement('canvas');
+    canvas.className = 'pic';
+    const title = document.createElement('div'); title.className = 'lhint';
+    title.textContent = '✍️ متن را بگذار روی عکس:';
+    const tune = document.createElement('div'); tune.className = 'lhint';
+    tune.textContent = 'با پیام هم می‌چرخد: «بالاتر ببر» · «کمی پایین‌تر» · «سفیدش کن» · «بدون نوار» · «متن رو بردار»';
+    const note = document.createElement('div'); note.className = 'lhint';
+    const bar = document.createElement('div'); bar.className = 'lrow';
+    const save = document.createElement('a'); save.className = 'pick'; save.textContent = 'ذخیرهٔ عکس با متن ↓';
+    let position = layer.position || 'bottom';
+    const im = new Image();
+    const paint = () => {
+      const W = im.naturalWidth || 1024, H = im.naturalHeight || 1024;
+      canvas.width = W; canvas.height = H;
+      const g = canvas.getContext('2d');
+      g.drawImage(im, 0, 0, W, H);
+      drawLayerText(g, layer, position, W, H);
+      save.href = canvas.toDataURL('image/png');
+      save.download = 'hermes-text-' + Date.now() + '.png';
+      note.textContent = 'متن: «' + layer.text + '» · ' + (LAYER_LABEL[position] || '');
+    };
+    const buttons = LAYER_POSITIONS.map((p) => {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'pick small';
+      b.textContent = LAYER_LABEL[p];
+      b.onclick = () => { position = p; paint(); buttons.forEach((x) => x.classList.remove('on')); b.classList.add('on'); };
+      bar.append(b); return b;
+    });
+    bar.append(save);
+    im.onload = () => { buttons[LAYER_POSITIONS.indexOf(position)]?.classList.add('on'); paint(); };
+    im.onerror = () => { note.textContent = 'این عکس باز نشد.'; };
+    im.src = src;
+    box.append(canvas, title, tune, bar, note);
+    return box;
+  }
+
+  // Ask the studio to continue the chosen take; the refined picture replaces the pick buttons.
+  async function pickThis(take, btn) {
+    if (busy) return;
+    busy = true; btn.disabled = true; btn.textContent = 'در حال دقیق‌تر کردن…';
+    setState('thinking', ['photolab']); eqLevel(true); showReply('thinking');
+    try {
+      const { reply: answer, image } = await api('/api/pick', { take });
+      messages.push({ role: 'assistant', text: answer, image, textLayer });
+      showReply('reply', '', hhmm());
+      setState('speaking');
+      await reveal(answer);
+      if (image) { rbody.prepend(picture(image)); layout(); }
+      replyText = answer;
+    } catch (err) {
+      showReply('error', err.message);
+      btn.disabled = false; btn.textContent = 'همین را انتخاب کن';
+    } finally {
+      busy = false; eqLevel(false);
+    }
   }
   function renderLog() {
     const lb = $('lbody'); lb.innerHTML = '';
     messages.forEach((m) => {
       const d = document.createElement('div'); d.className = 'm ' + (m.role === 'user' ? 'me' : 'bot md');
       if (m.role === 'user') d.textContent = m.text; else d.innerHTML = md(m.text);
-      if (m.image) d.prepend(picture(m.image));
+      if (m.textLayer && m.image) d.prepend(layeredPicture(m.image, m.textLayer));
+      else if (m.images && m.images.length) m.images.slice().reverse().forEach((src) => d.prepend(picture(src)));
+      else if (m.image) d.prepend(picture(m.image));
       lb.append(d);
     });
     $('lcount').textContent = messages.length ? messages.length + ' MSG' : '';
@@ -878,12 +999,20 @@ export const APP_HTML = String.raw`<!doctype html>
     setState('thinking', consultFor(text)); eqLevel(true);
     showReply('thinking');
     try {
-      const { reply: answer, image } = await api('/api/chat', photo ? { message: text, image: photo } : { message: text });
+      const { reply: answer, image, images, picks, textLayer } = await api('/api/chat', photo ? { message: text, image: photo } : { message: text });
       messages.push({ role: 'assistant', text: answer, image });
       showReply('reply', '', hhmm());
       setState('speaking');
       await reveal(answer);
-      if (image) { rbody.prepend(picture(image)); layout(); }
+      // A text layer gets the canvas tools (move up/middle/down, save the PNG).
+      if (textLayer && image) { rbody.prepend(layeredPicture(image, textLayer)); layout(); }
+      // An edit sends the best version; a variations turn sends the whole studio set with pick buttons.
+      else if (images && images.length) {
+        const labels = (picks && picks.length) ? picks : images.map((_, i) => 'نسخهٔ ' + (i + 1));
+        const frag = document.createDocumentFragment();
+        images.forEach((src, i) => frag.prepend(picture(src, { take: i + 1, label: labels[i] })));
+        rbody.prepend(frag); layout();
+      } else if (image) { rbody.prepend(picture(image)); layout(); }
       replyText = answer;
     } catch (err) {
       showReply('error', err.message);
@@ -899,7 +1028,7 @@ export const APP_HTML = String.raw`<!doctype html>
   let pendingImage = null;
   function setImage(src) {
     pendingImage = src; $('attach').classList.toggle('on', !!src);
-    input.placeholder = src ? 'عکس آماده است؛ سؤالت را بنویس یا بفرست…' : 'به هرمس بگو…'; resize();
+    input.placeholder = src ? 'عکس آماده است — چه تغییری می‌خواهی؟ (ریتوش، پس‌زمینه، نور، یا «روی عکس بنویس: …»)' : 'به هرمس بگو…'; resize();
   }
   $('attach').onclick = () => { if (pendingImage) setImage(null); else $('file').click(); };
   $('file').onchange = () => {

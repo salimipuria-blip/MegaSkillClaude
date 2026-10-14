@@ -130,7 +130,7 @@
       "id": "sha256:dcb8f879078195be62f25831335de0f9ebcaed1ef903875ce5af7e46df73ad68",
       "name": "poster-composition-kit",
       "domain": "graphic-design",
-      "score": 1.482,
+      "score": 1.632,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -139,7 +139,7 @@
       "id": "sha256:b1a3f0dcb48dece0f235988f6e322dd228b923471978d86e9090427318968a05",
       "name": "minimal-swiss-poster",
       "domain": "graphic-design",
-      "score": 1.472,
+      "score": 1.622,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -148,7 +148,7 @@
       "id": "sha256:c10c438a94812edd53334633ab2cbd5f5493bac31b98e6dfcc26b2d4c5051d47",
       "name": "yalda-poster-kit",
       "domain": "graphic-design",
-      "score": 1.472,
+      "score": 1.622,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -157,7 +157,7 @@
       "id": "sha256:ca29ac635c5778cf44a7c76315f84d85059277f8665df8cb5ca8dd241e1a25ed",
       "name": "poster-generator-skill",
       "domain": "graphic-design",
-      "score": 1.436,
+      "score": 1.586,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -166,7 +166,7 @@
       "id": "sha256:de48a2a975bc5f7b4913c788b54d1af67efd1bb48a8d0c690a51de14a13bd032",
       "name": "vintage-poster-style-kit",
       "domain": "graphic-design",
-      "score": 1.432,
+      "score": 1.582,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -237,7 +237,7 @@
       "id": "sha256:dab3a38d20c1f115a6009aa1b92870d581554d03d93499ccf7c37c41a7790dd6",
       "name": "sales-deck-builder-fa",
       "domain": "business-sales",
-      "score": 1.015,
+      "score": 1.02,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -463,7 +463,7 @@
       "id": "sha256:7770913aa9f90904f99c438eb1b3b4bb481c4ca74105f3c7d0dab0685923118d",
       "name": "brand-book-generator",
       "domain": "graphic-design",
-      "score": 2.025,
+      "score": 2.175,
       "triggerHits": 7,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -472,7 +472,7 @@
       "id": "sha256:271894f12c578fad4c90995ca226c2b10b4474945b37bb3c92855482482d1ca9",
       "name": "cafe-menu-board-design",
       "domain": "graphic-design",
-      "score": 1.671,
+      "score": 1.821,
       "triggerHits": 4,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -481,7 +481,7 @@
       "id": "sha256:ac736b9708caa18435cb76da509527bab5acc4861d4e7cbbbff532bbc385356a",
       "name": "ecolodge-logo-planner",
       "domain": "graphic-design",
-      "score": 1.618,
+      "score": 1.768,
       "triggerHits": 5,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -490,7 +490,7 @@
       "id": "sha256:01268d6d353e205d94317863156596bd310bd0c15c076b6d8f271b3603c582b2",
       "name": "brand-kit-generator",
       "domain": "graphic-design",
-      "score": 1.565,
+      "score": 1.715,
       "triggerHits": 6,
       "skillLoaded": true,
       "contentStatus": "repaired"
@@ -499,7 +499,7 @@
       "id": "sha256:66d5ed44baeeec59c4769d710f77d8c197e1d68c646d78209154c1722c0575b7",
       "name": "nuts-logo-library",
       "domain": "graphic-design",
-      "score": 1.428,
+      "score": 1.578,
       "triggerHits": 5,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -508,7 +508,7 @@
       "id": "sha256:f8e6a2ab64ce4313af91caa4d04af08350cc10c0d69c09deb61c6feee1af0dcb",
       "name": "wedding-logo-pack",
       "domain": "graphic-design",
-      "score": 1.418,
+      "score": 1.568,
       "triggerHits": 5,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -517,7 +517,7 @@
       "id": "sha256:0f13abb6f1ce89062cb1bc8e4be26a5b7f3e5aa038f78696a20c2c20b166d3a3",
       "name": "logo-grid-construction",
       "domain": "graphic-design",
-      "score": 1.416,
+      "score": 1.566,
       "triggerHits": 4,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -526,7 +526,7 @@
       "id": "sha256:77af4ea3268797d875b423303c712f4fffae566c78bcef77d58db163d506bf1d",
       "name": "cafe-typepair-workflow",
       "domain": "graphic-design",
-      "score": 1.384,
+      "score": 1.534,
       "triggerHits": 6,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -922,7 +922,7 @@
       "id": "sha256:b53a6a1b215f6d57e33ab641e04f87a543f3c75ef00a03bd087b15ec6f1b84c2",
       "name": "short-video-script-writer-fa",
       "domain": "video-ai",
-      "score": 1.468,
+      "score": 1.476,
       "triggerHits": 4,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -1013,7 +1013,7 @@
       "id": "sha256:3376f90213d868bfacdeccfe5db3a638ffa638b41e8a677971a0507aede0dbe4",
       "name": "typography-poster-fa",
       "domain": "graphic-design",
-      "score": 1.447,
+      "score": 1.597,
       "triggerHits": 5,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -1022,8 +1022,17 @@
       "id": "sha256:d922d2b8d32683f5941cc80550ae390b70d71b73c0757412b399534f99c5a1f9",
       "name": "outdoor-banner-specs",
       "domain": "graphic-design",
-      "score": 1.011,
+      "score": 1.161,
       "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:5a7ddeef873c5a0983d895ea80be31d273e2fd375b9d569bedce94f73d8f5b71",
+      "name": "persian-typography-rules",
+      "domain": "graphic-design",
+      "score": 0.994,
+      "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
      },
@@ -1033,15 +1042,6 @@
       "domain": "image-ai",
       "score": 0.979,
       "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:5a7ddeef873c5a0983d895ea80be31d273e2fd375b9d569bedce94f73d8f5b71",
-      "name": "persian-typography-rules",
-      "domain": "graphic-design",
-      "score": 0.844,
-      "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
      },
@@ -1064,19 +1064,19 @@
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:72777a6e2c92ea75e9674fd581cccf110cb785e4cadcd1e7b610a15627f6609b",
-      "name": "cookie-consent-setup",
-      "domain": "web-development",
-      "score": 0.348,
+      "id": "sha256:a5041d3e55652fc73c6625f56f05b21d6f0f4e7fae5661e7bc4a8e65e543f58c",
+      "name": "book-cover-fa-design",
+      "domain": "graphic-design",
+      "score": 0.414,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:f75ea8897f425a705eaf9d597c06113022581cb47cd9fa6e20c842bce7c0e3f9",
-      "name": "mockup-generator-kit",
-      "domain": "image-ai",
-      "score": 0.34,
+      "id": "sha256:0faa80fb166478815ebc1920705d4285328da654d0ded042b14a07af98f1d7b0",
+      "name": "trifold-brochure-fa",
+      "domain": "graphic-design",
+      "score": 0.414,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -1199,8 +1199,44 @@
       "id": "sha256:5178ee949f2c602b52aaf7c8be37e7ad52d6ffb39ffcbb4042e698379f86f22e",
       "name": "translation-intent-preserver",
       "domain": "prompt-requirements",
-      "score": 0.743,
+      "score": 1.243,
       "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:4dfa90bdf387514c435e739ad4d531f96fab6ad63074867c52c956a85eedb37e",
+      "name": "meeting-intent-classifier",
+      "domain": "prompt-requirements",
+      "score": 0.753,
+      "triggerHits": 1,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:a25dbdfeb4c4663cb9ef9e8b8f4f510384417bb89edac45b981fb6ca801b1f26",
+      "name": "rtl-prompt-quirks-fa",
+      "domain": "prompt-requirements",
+      "score": 0.75,
+      "triggerHits": 1,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:48916a54f8eec729d4ab1433f8dd2e7a8e995085256efd7cc5ce6a7cde0592ac",
+      "name": "urgency-detector",
+      "domain": "prompt-requirements",
+      "score": 0.75,
+      "triggerHits": 1,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:7a3dd341941be59ce25a7450e6719495c3d5827bcabb33ecffe2b56398dcbcb2",
+      "name": "multimodal-intake-kit",
+      "domain": "prompt-requirements",
+      "score": 0.746,
+      "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
      },
@@ -1230,42 +1266,6 @@
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:d810bfeab45f5f3553a25a4e87938a08871be95f8b62e105fe5cb65ff1bfd1a7",
-      "name": "easyocr-fa-en-pack",
-      "domain": "knowledge-research",
-      "score": 0.591,
-      "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:fbabdaac42de8b0be08e1e88a97109ca6621c82d251353326e46f070a1f4e19f",
-      "name": "i18n-workflow-fa-site",
-      "domain": "skill-development",
-      "score": 0.591,
-      "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:f047612d0ab56a980d71d56d27a52ff08c1622ac008374eb36aae0ce74fdff9c",
-      "name": "warranty-doc-fa",
-      "domain": "business-sales",
-      "score": 0.264,
-      "triggerHits": 1,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:edf49f84f8ded7eb6d2448ff6ad48dff333345df1d5d69826eecf6730c4bab8f",
-      "name": "voiceover-script-fa",
-      "domain": "video-ai",
-      "score": 0.256,
-      "triggerHits": 1,
-      "skillLoaded": true,
-      "contentStatus": "verified"
      }
     ],
     "matches": 25,
@@ -1284,6 +1284,60 @@
    "output": {
     "selected": [
      {
+      "id": "sha256:c391770758b45034b45b52ec26570692a5b6880ac3c5d418f50b7614fd543e09",
+      "name": "lut-desert-tour-planner",
+      "domain": "travel-outdoors",
+      "score": 1.315,
+      "triggerHits": 3,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:5f7bec4680b57df96e688cff94820b1199ed30ce73976aca23736acd85d258a0",
+      "name": "muharram-travel-notes",
+      "domain": "travel-outdoors",
+      "score": 1.146,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:7f1c1c2dcee805b0107c662540b843b729169c21b72ed014908a939434386b45",
+      "name": "ramadan-travel-etiquette",
+      "domain": "travel-outdoors",
+      "score": 1.141,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:80f6a3ad6fb8fce77429184bc9eb8f0957153c1cb15fe0d59d6e125e11a6b6e3",
+      "name": "travel-insurance-checklist-fa",
+      "domain": "travel-outdoors",
+      "score": 1.068,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:ffbea0f6ca685744857ad68df614348fe4258ed556ce0309eb5a933e059de723",
+      "name": "school-camp-program-designer",
+      "domain": "travel-outdoors",
+      "score": 1.031,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:5a41bf1c5c345f7e187f3c6672272b7c0bdfb2c49d19acb371a25cf27f57d547",
+      "name": "sizdah-bedar-planner",
+      "domain": "travel-outdoors",
+      "score": 1.031,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
       "id": "sha256:cb19adc5005f11d59b22de5ad1b5e078f7319ded7cec3df8629c4713cbc3f67e",
       "name": "travel-planner-agent-iran",
       "domain": "agents-automation",
@@ -1293,64 +1347,10 @@
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:c391770758b45034b45b52ec26570692a5b6880ac3c5d418f50b7614fd543e09",
-      "name": "lut-desert-tour-planner",
-      "domain": "travel-outdoors",
-      "score": 0.815,
-      "triggerHits": 3,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:5f7bec4680b57df96e688cff94820b1199ed30ce73976aca23736acd85d258a0",
-      "name": "muharram-travel-notes",
-      "domain": "travel-outdoors",
-      "score": 0.646,
-      "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:7f1c1c2dcee805b0107c662540b843b729169c21b72ed014908a939434386b45",
-      "name": "ramadan-travel-etiquette",
-      "domain": "travel-outdoors",
-      "score": 0.641,
-      "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:80f6a3ad6fb8fce77429184bc9eb8f0957153c1cb15fe0d59d6e125e11a6b6e3",
-      "name": "travel-insurance-checklist-fa",
-      "domain": "travel-outdoors",
-      "score": 0.568,
-      "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:ffbea0f6ca685744857ad68df614348fe4258ed556ce0309eb5a933e059de723",
-      "name": "school-camp-program-designer",
-      "domain": "travel-outdoors",
-      "score": 0.531,
-      "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:5a41bf1c5c345f7e187f3c6672272b7c0bdfb2c49d19acb371a25cf27f57d547",
-      "name": "sizdah-bedar-planner",
-      "domain": "travel-outdoors",
-      "score": 0.531,
-      "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
       "id": "sha256:39b5f05f12eb0290f2b3b45efc878cf9b1054916fc7a49fa22963163d91f6dd8",
       "name": "iran-itinerary-builder",
       "domain": "travel-outdoors",
-      "score": 0.483,
+      "score": 0.983,
       "triggerHits": 3,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -1376,37 +1376,10 @@
    "output": {
     "selected": [
      {
-      "id": "sha256:52e822a784a20cbe905507353df8287a9f88d4d9ce0a05d239c57ddb42dfd4ed",
-      "name": "golden-hour-photo-plan",
-      "domain": "image-ai",
-      "score": 0.534,
-      "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:b835088275eb406f97269c6362540bdf304906952e31196f8461f1df414bf801",
-      "name": "account-warmup-planner",
-      "domain": "social-media",
-      "score": 0.522,
-      "triggerHits": 1,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:1fd38dd154a7ec7fb3228064660ade08afe3a4192d557dfbc2f49b2f151cabe5",
-      "name": "broadcast-channel-planner",
-      "domain": "social-media",
-      "score": 0.522,
-      "triggerHits": 1,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
       "id": "sha256:c391770758b45034b45b52ec26570692a5b6880ac3c5d418f50b7614fd543e09",
       "name": "lut-desert-tour-planner",
       "domain": "travel-outdoors",
-      "score": 0.522,
+      "score": 1.022,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -1415,7 +1388,7 @@
       "id": "sha256:ffbea0f6ca685744857ad68df614348fe4258ed556ce0309eb5a933e059de723",
       "name": "school-camp-program-designer",
       "domain": "travel-outdoors",
-      "score": 0.522,
+      "score": 1.022,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -1424,25 +1397,52 @@
       "id": "sha256:5a41bf1c5c345f7e187f3c6672272b7c0bdfb2c49d19acb371a25cf27f57d547",
       "name": "sizdah-bedar-planner",
       "domain": "travel-outdoors",
-      "score": 0.522,
+      "score": 1.022,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:25a26906db5393a41a5f00dfd265a6b3343888688948c9a17943d38cea25d92b",
-      "name": "posting-cadence-planner",
-      "domain": "social-media",
-      "score": 0.52,
+      "id": "sha256:44f7b9da04f0d23b9ef77e2e62ae66777eaa4a50a9616ccb548df7afcce17ecc",
+      "name": "camp-survey-planner",
+      "domain": "travel-outdoors",
+      "score": 0.914,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:3164b0b2fb752da747f7ac9c1277c63cebe12191809f0a89e6ef59bb3cab61e4",
-      "name": "reel-series-planner",
-      "domain": "social-media",
-      "score": 0.518,
+      "id": "sha256:0d54e4d52e7f9fbc4eb7b0b49b85b9d1a9ca9bfa79d8e261b898b49f2c0f7e10",
+      "name": "camp-addon-planner",
+      "domain": "travel-outdoors",
+      "score": 0.911,
+      "triggerHits": 1,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:814e5321cadf37716af00db10afa6d4f700fd6bd68a86da4fd61f437f038f837",
+      "name": "corporate-offsite-designer",
+      "domain": "travel-outdoors",
+      "score": 0.911,
+      "triggerHits": 1,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:ee12ed4786283d9d6d5b467aac3bb31fe56fb54490d4c801afacf6aa32de21de",
+      "name": "tour-weather-generator",
+      "domain": "travel-outdoors",
+      "score": 0.911,
+      "triggerHits": 1,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:87648787c05f4ea851818c0898642f9df388f741cb5cdce5b61f6bd6472c4e17",
+      "name": "clinic-roster-planner",
+      "domain": "travel-outdoors",
+      "score": 0.908,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -1467,7 +1467,34 @@
       "id": "sha256:a5cbf66e0f4ea8493f6bbc1e3ee735c105801ef9e10ee48dfd31f36c5d4a887e",
       "name": "price-display-psychology",
       "domain": "business-sales",
-      "score": 1.239,
+      "score": 1.559,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:39182d9a4dcb1b4d51b42af0aaeec7365fc23bba941fea2a87e5ccf4b10e3fdb",
+      "name": "restaurant-pipeline-planner",
+      "domain": "business-sales",
+      "score": 1.237,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:399ec18ef355bb773961c1954d46ef3e221a456e7089bbb2210614f302941455",
+      "name": "restaurant-proposal-optimizer",
+      "domain": "business-sales",
+      "score": 1.237,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:a71611871c86378dc2f64774cc6a9eeb887db633fd248735e2b57cdd611be74f",
+      "name": "restaurant-referral-reporter",
+      "domain": "business-sales",
+      "score": 1.237,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -1482,55 +1509,28 @@
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:4d94e4650eabb0173e342818d057944023939685ca14a0cd133f61286d8c872b",
-      "name": "menu-photo-structurer",
-      "domain": "image-ai",
-      "score": 1.086,
-      "triggerHits": 3,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:39182d9a4dcb1b4d51b42af0aaeec7365fc23bba941fea2a87e5ccf4b10e3fdb",
-      "name": "restaurant-pipeline-planner",
+      "id": "sha256:d9d67a17eb3f763757ff0d0bfaedf8bccd062bc09a37e9944e856ae8c633ba20",
+      "name": "restaurant-icp-library",
       "domain": "business-sales",
-      "score": 0.917,
+      "score": 1.231,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:399ec18ef355bb773961c1954d46ef3e221a456e7089bbb2210614f302941455",
-      "name": "restaurant-proposal-optimizer",
+      "id": "sha256:d57405fe2fb94953f411ce19eb30abfb5c451b59ce33440e7e2b23bd73c4351d",
+      "name": "restaurant-upsell-autopilot",
       "domain": "business-sales",
-      "score": 0.917,
+      "score": 1.231,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:a71611871c86378dc2f64774cc6a9eeb887db633fd248735e2b57cdd611be74f",
-      "name": "restaurant-referral-reporter",
+      "id": "sha256:91209d7abb16e76b73050560bf10d673444db9a8dec62f6fc73e162f1bbadadd",
+      "name": "restaurant-shipping-auditor",
       "domain": "business-sales",
-      "score": 0.917,
-      "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:22dc64d21749e75ad847f31fd8cef485827269f566ac0b1662ebe26732511b4b",
-      "name": "restaurant-table-generator",
-      "domain": "product-design",
-      "score": 0.917,
-      "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:4d92c39e642ddc46be9e337a7f4b442fa138d3ec3e0c938549353dca38196f76",
-      "name": "restaurant-checkpoint-monitor",
-      "domain": "agents-automation",
-      "score": 0.911,
+      "score": 1.226,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -1556,7 +1556,7 @@
       "id": "sha256:7b8e50a232bfe87dd6c59aa6d4e1fdc25201956cf376c55d7f9e75b5b076ec96",
       "name": "404-page-ideas-fa",
       "domain": "web-development",
-      "score": 2.265,
+      "score": 2.272,
       "triggerHits": 3,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -1628,7 +1628,6 @@
     "matches": 134,
     "queryTokens": [
      "صفحه",
-     "۴۰۴",
      "خلاقانه",
      "وبسایت",
      "website"
@@ -1731,6 +1730,15 @@
    "output": {
     "selected": [
      {
+      "id": "sha256:0f13abb6f1ce89062cb1bc8e4be26a5b7f3e5aa038f78696a20c2c20b166d3a3",
+      "name": "logo-grid-construction",
+      "domain": "graphic-design",
+      "score": 1.405,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
       "id": "sha256:f2b6996d7e57c33b82658f3eeaba1be04c3ac810c69381bbccdf20393ba60f1d",
       "name": "ai-image-prompt-builder",
       "domain": "image-ai",
@@ -1758,15 +1766,6 @@
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:0f13abb6f1ce89062cb1bc8e4be26a5b7f3e5aa038f78696a20c2c20b166d3a3",
-      "name": "logo-grid-construction",
-      "domain": "graphic-design",
-      "score": 1.255,
-      "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
       "id": "sha256:56bd246b9bca3aa751dd63542249258622d7de6586580c6c6379f0e49f22d382",
       "name": "cafe-palette-reporter",
       "domain": "image-ai",
@@ -1776,28 +1775,28 @@
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:0aeee4bfd72e021a3b11ba2f466c537af3ea6a85c6fc149d354b7dd6c07dcf2e",
-      "name": "image-to-video-prompt-kit",
-      "domain": "video-ai",
-      "score": 1.119,
-      "triggerHits": 3,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:b86b200b2682d5da00a2d9b35384f58ec3cbd3cce7269d4270dcd3142710c1ef",
-      "name": "logo-stinger-maker",
-      "domain": "video-ai",
-      "score": 1.077,
-      "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
       "id": "sha256:ac736b9708caa18435cb76da509527bab5acc4861d4e7cbbbff532bbc385356a",
       "name": "ecolodge-logo-planner",
       "domain": "graphic-design",
-      "score": 0.975,
+      "score": 1.125,
+      "triggerHits": 1,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:66d5ed44baeeec59c4769d710f77d8c197e1d68c646d78209154c1722c0575b7",
+      "name": "nuts-logo-library",
+      "domain": "graphic-design",
+      "score": 1.125,
+      "triggerHits": 1,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:f8e6a2ab64ce4313af91caa4d04af08350cc10c0d69c09deb61c6feee1af0dcb",
+      "name": "wedding-logo-pack",
+      "domain": "graphic-design",
+      "score": 1.123,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -1899,7 +1898,6 @@
     "queryTokens": [
      "نقشه",
      "راه",
-     "۹۰",
      "روزه",
      "استارتاپ"
     ]
@@ -1959,7 +1957,7 @@
       "id": "sha256:dab3a38d20c1f115a6009aa1b92870d581554d03d93499ccf7c37c41a7790dd6",
       "name": "sales-deck-builder-fa",
       "domain": "business-sales",
-      "score": 1.274,
+      "score": 1.279,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -2101,7 +2099,7 @@
       "id": "sha256:dab3a38d20c1f115a6009aa1b92870d581554d03d93499ccf7c37c41a7790dd6",
       "name": "sales-deck-builder-fa",
       "domain": "business-sales",
-      "score": 0.983,
+      "score": 0.989,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -2452,7 +2450,7 @@
       "id": "sha256:dab3a38d20c1f115a6009aa1b92870d581554d03d93499ccf7c37c41a7790dd6",
       "name": "sales-deck-builder-fa",
       "domain": "business-sales",
-      "score": 2.199,
+      "score": 2.205,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -2512,7 +2510,7 @@
       "id": "sha256:8aeb84553dd4d8ae36ea0e4d936c625d5f1a7a91de8053be728e8528d190829b",
       "name": "business-card-fa-standard",
       "domain": "graphic-design",
-      "score": 1.18,
+      "score": 1.33,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -2521,7 +2519,16 @@
       "id": "sha256:e3f18024d1d8461d8e638a9597904e0453bddf18dcc4f68382d48afb47186e81",
       "name": "iftar-invitation-card",
       "domain": "graphic-design",
-      "score": 0.502,
+      "score": 0.652,
+      "triggerHits": 1,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:64357adc6917f74a9e1cf2ef31c720720cfc7174026ff19126293e6900098e42",
+      "name": "nowruz-card-designer",
+      "domain": "graphic-design",
+      "score": 0.643,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -2554,15 +2561,6 @@
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:64357adc6917f74a9e1cf2ef31c720720cfc7174026ff19126293e6900098e42",
-      "name": "nowruz-card-designer",
-      "domain": "graphic-design",
-      "score": 0.493,
-      "triggerHits": 1,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
       "id": "sha256:e6fd3a7417e3b73a29408bb81abc1a7222e7adefc90c94f0c463e7a21e254c50",
       "name": "table-mobile-patterns",
       "domain": "product-design",
@@ -2572,10 +2570,10 @@
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:7c81440d4bb2f3a6dbadfcd47dec060a7c9a8e5b7e54075d5db4afbc2d9efdb6",
-      "name": "competitor-battlecard-kit",
-      "domain": "business-sales",
-      "score": 0.489,
+      "id": "sha256:25e7e589110cf91da8b601a99053020a577b212adf00ea06a8e40fec95a584ef",
+      "name": "dental-brochure-workflow",
+      "domain": "graphic-design",
+      "score": 0.492,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -2779,7 +2777,7 @@
       "id": "sha256:9a933ff399e4970a80f08f0efd664eb4934b1c703587c984c0d4b2f1fe172572",
       "name": "podcast-script-fa",
       "domain": "video-ai",
-      "score": 0.41,
+      "score": 0.71,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -2788,7 +2786,7 @@
       "id": "sha256:98386ff48eadd9c94f7cb8e259f1a8839826280a9fda20778a18e2fcf2cefde4",
       "name": "podcast-to-shorts-splitter",
       "domain": "video-ai",
-      "score": 0.41,
+      "score": 0.71,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -2797,7 +2795,7 @@
       "id": "sha256:6a7c988e8f74ebc797f778e02fa9109bc88ca5aba362a0b10d510de4cc5534a8",
       "name": "audio-loudnorm-video",
       "domain": "video-ai",
-      "score": 0.402,
+      "score": 0.706,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -2806,7 +2804,7 @@
       "id": "sha256:c0a628e406a21b47bdf6e863de4b15eed0ee6af6bb7336e664998abd45246a33",
       "name": "behind-scenes-edit-plan",
       "domain": "video-ai",
-      "score": 0.402,
+      "score": 0.702,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -2815,7 +2813,16 @@
       "id": "sha256:61e4002b2d8f1df186f1c07122ddefbde7477baedab0bd34976460e0a4d6132c",
       "name": "podcast-rss-bulk-ingest",
       "domain": "video-ai",
-      "score": 0.399,
+      "score": 0.699,
+      "triggerHits": 1,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:76aa2caad68ee04021a868ec2633d998b2ad735907463660aab12f10cd49d3ec",
+      "name": "talking-head-setup-guide",
+      "domain": "video-ai",
+      "score": 0.692,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -2825,15 +2832,6 @@
       "name": "skill-regression-runner",
       "domain": "skill-development",
       "score": 0.395,
-      "triggerHits": 1,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:76aa2caad68ee04021a868ec2633d998b2ad735907463660aab12f10cd49d3ec",
-      "name": "talking-head-setup-guide",
-      "domain": "video-ai",
-      "score": 0.392,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -3049,7 +3047,7 @@
       "id": "sha256:a5cbf66e0f4ea8493f6bbc1e3ee735c105801ef9e10ee48dfd31f36c5d4a887e",
       "name": "price-display-psychology",
       "domain": "business-sales",
-      "score": 1.732,
+      "score": 2.052,
       "triggerHits": 3,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -3067,16 +3065,7 @@
       "id": "sha256:4c06a06eb5934372fc91fc7ef4029421d02335333d93afc364a07d0a8c1cbe4d",
       "name": "price-comparison-feed-tools",
       "domain": "business-sales",
-      "score": 0.919,
-      "triggerHits": 1,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:f5e5dc689c9baca09de5852620646b733c274a601dc01c4f1c9567625b966217",
-      "name": "influencer-price-estimator",
-      "domain": "social-media",
-      "score": 0.909,
+      "score": 1.239,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -3085,7 +3074,7 @@
       "id": "sha256:b05e395e7430910d8051c9f25d96ad9f78af3f69f43a11932ccb94bbb207aedc",
       "name": "pricing-objection-playbook",
       "domain": "business-sales",
-      "score": 0.78,
+      "score": 1.1,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -3094,16 +3083,7 @@
       "id": "sha256:0ecb7b52e8a1e50ca015600bb7e9d572e583dcd57abb269677d3c2a80c8ed46f",
       "name": "quote-generator-sheet",
       "domain": "business-sales",
-      "score": 0.78,
-      "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:cbc4a97dba27903433d78ac8887aac2522ab47e6a35aa965a1160f1c561d65bf",
-      "name": "pricing-page-ux-kit",
-      "domain": "product-design",
-      "score": 0.773,
+      "score": 1.1,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -3112,7 +3092,25 @@
       "id": "sha256:dc699a67b11bb63b320f975ad9a24765c07e374be544f1d227c8f2abc143fe13",
       "name": "pricing-psychology-pack",
       "domain": "business-sales",
-      "score": 0.766,
+      "score": 1.086,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:d3dcaf5f0f306a4b8abe63735ca08a7864d6b1edc79beb577fe4c6b883991e0f",
+      "name": "roi-embed-calculator",
+      "domain": "business-sales",
+      "score": 1.086,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:192ce12bf4116162da1a181306986b72ed38ea3dc8078fbb8311307ec9f9a9bb",
+      "name": "bottoms-up-model-sheet",
+      "domain": "business-sales",
+      "score": 1.076,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -3498,7 +3496,7 @@
       "id": "sha256:cd08a689e6d59d50a0ad7b1ab92917082be51e0c59b75f5ac5779a34a4b619ea",
       "name": "alborz-traverse-planner",
       "domain": "travel-outdoors",
-      "score": 0.53,
+      "score": 1.03,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -3507,7 +3505,7 @@
       "id": "sha256:48ae30c3702d23abc467321d5ae20914cf4b21bde48f6b290b20e8867d070c9c",
       "name": "carpool-etiquette-climber",
       "domain": "travel-outdoors",
-      "score": 0.527,
+      "score": 1.027,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -3645,6 +3643,33 @@
    "output": {
     "selected": [
      {
+      "id": "sha256:ca29ac635c5778cf44a7c76315f84d85059277f8665df8cb5ca8dd241e1a25ed",
+      "name": "poster-generator-skill",
+      "domain": "graphic-design",
+      "score": 1.82,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:48127ef213564bbfeaf4370542f285e6a13a231d68dc37ab7e0b59b911c3f63b",
+      "name": "event-poster-generator",
+      "domain": "graphic-design",
+      "score": 1.816,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:c58072b3346b9baf685ea1c11e6d6589fac5c9e3220736301933fbc563846b2b",
+      "name": "bookstore-poster-generator",
+      "domain": "graphic-design",
+      "score": 1.812,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
       "id": "sha256:cd8e327d56c96ecb9e9874907f622f012249c1d4e78f7dcd19fb0567d14d298e",
       "name": "after-sale-care-sequence",
       "domain": "business-sales",
@@ -3654,37 +3679,10 @@
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:ca29ac635c5778cf44a7c76315f84d85059277f8665df8cb5ca8dd241e1a25ed",
-      "name": "poster-generator-skill",
-      "domain": "graphic-design",
-      "score": 1.67,
-      "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:48127ef213564bbfeaf4370542f285e6a13a231d68dc37ab7e0b59b911c3f63b",
-      "name": "event-poster-generator",
-      "domain": "graphic-design",
-      "score": 1.666,
-      "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:c58072b3346b9baf685ea1c11e6d6589fac5c9e3220736301933fbc563846b2b",
-      "name": "bookstore-poster-generator",
-      "domain": "graphic-design",
-      "score": 1.662,
-      "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
       "id": "sha256:dcb8f879078195be62f25831335de0f9ebcaed1ef903875ce5af7e46df73ad68",
       "name": "poster-composition-kit",
       "domain": "graphic-design",
-      "score": 1.526,
+      "score": 1.676,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -3693,7 +3691,7 @@
       "id": "sha256:b1a3f0dcb48dece0f235988f6e322dd228b923471978d86e9090427318968a05",
       "name": "minimal-swiss-poster",
       "domain": "graphic-design",
-      "score": 1.516,
+      "score": 1.666,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -3702,7 +3700,7 @@
       "id": "sha256:c10c438a94812edd53334633ab2cbd5f5493bac31b98e6dfcc26b2d4c5051d47",
       "name": "yalda-poster-kit",
       "domain": "graphic-design",
-      "score": 1.516,
+      "score": 1.666,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -3711,7 +3709,7 @@
       "id": "sha256:232746d6cf4c07580323a7027fa77e0b055d9f1f93dc931bea9f01142aaecfbd",
       "name": "nuts-poster-analyzer",
       "domain": "graphic-design",
-      "score": 1.484,
+      "score": 1.634,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -3948,7 +3946,7 @@
       "id": "sha256:7b8e50a232bfe87dd6c59aa6d4e1fdc25201956cf376c55d7f9e75b5b076ec96",
       "name": "404-page-ideas-fa",
       "domain": "web-development",
-      "score": 1.874,
+      "score": 1.876,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -4009,7 +4007,7 @@
       "id": "sha256:ac736b9708caa18435cb76da509527bab5acc4861d4e7cbbbff532bbc385356a",
       "name": "ecolodge-logo-planner",
       "domain": "graphic-design",
-      "score": 1.542,
+      "score": 1.692,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -4018,7 +4016,7 @@
       "id": "sha256:0f13abb6f1ce89062cb1bc8e4be26a5b7f3e5aa038f78696a20c2c20b166d3a3",
       "name": "logo-grid-construction",
       "domain": "graphic-design",
-      "score": 1.366,
+      "score": 1.516,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -4027,7 +4025,7 @@
       "id": "sha256:66d5ed44baeeec59c4769d710f77d8c197e1d68c646d78209154c1722c0575b7",
       "name": "nuts-logo-library",
       "domain": "graphic-design",
-      "score": 1.352,
+      "score": 1.502,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -4036,7 +4034,7 @@
       "id": "sha256:f8e6a2ab64ce4313af91caa4d04af08350cc10c0d69c09deb61c6feee1af0dcb",
       "name": "wedding-logo-pack",
       "domain": "graphic-design",
-      "score": 1.35,
+      "score": 1.5,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -4063,7 +4061,7 @@
       "id": "sha256:7770913aa9f90904f99c438eb1b3b4bb481c4ca74105f3c7d0dab0685923118d",
       "name": "brand-book-generator",
       "domain": "graphic-design",
-      "score": 0.98,
+      "score": 1.13,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -4453,7 +4451,7 @@
       "id": "sha256:b53a6a1b215f6d57e33ab641e04f87a543f3c75ef00a03bd087b15ec6f1b84c2",
       "name": "short-video-script-writer-fa",
       "domain": "video-ai",
-      "score": 1.689,
+      "score": 1.693,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -4519,37 +4517,10 @@
    "output": {
     "selected": [
      {
-      "id": "sha256:72777a6e2c92ea75e9674fd581cccf110cb785e4cadcd1e7b610a15627f6609b",
-      "name": "cookie-consent-setup",
-      "domain": "web-development",
-      "score": 1.379,
-      "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:5e01ad75288d2c6c4d80ee0325767c5f7aac5a7ed127b6f974844fbfe48866ff",
-      "name": "accessibility-pass-web",
-      "domain": "web-development",
-      "score": 1.344,
-      "triggerHits": 1,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:407e2d4341ff30a86acccf21f5be490e9889061a28db1275a30b28f50047b66d",
-      "name": "core-web-vitals-fixer",
-      "domain": "web-development",
-      "score": 1.342,
-      "triggerHits": 1,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
       "id": "sha256:931a2bd01b1b083ffe36b6b07f6ca08c9c167944ec1cd939a967c079ca81a80f",
       "name": "type-pairing-fa-latin",
       "domain": "graphic-design",
-      "score": 1.265,
+      "score": 1.415,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -4558,7 +4529,7 @@
       "id": "sha256:5a7ddeef873c5a0983d895ea80be31d273e2fd375b9d569bedce94f73d8f5b71",
       "name": "persian-typography-rules",
       "domain": "graphic-design",
-      "score": 1.087,
+      "score": 1.237,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -4567,7 +4538,7 @@
       "id": "sha256:3376f90213d868bfacdeccfe5db3a638ffa638b41e8a677971a0507aede0dbe4",
       "name": "typography-poster-fa",
       "domain": "graphic-design",
-      "score": 1.066,
+      "score": 1.216,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -4576,7 +4547,7 @@
       "id": "sha256:d922d2b8d32683f5941cc80550ae390b70d71b73c0757412b399534f99c5a1f9",
       "name": "outdoor-banner-specs",
       "domain": "graphic-design",
-      "score": 1.057,
+      "score": 1.207,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -4586,6 +4557,33 @@
       "name": "seasonal-banner-generator",
       "domain": "image-ai",
       "score": 1.041,
+      "triggerHits": 1,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:72777a6e2c92ea75e9674fd581cccf110cb785e4cadcd1e7b610a15627f6609b",
+      "name": "cookie-consent-setup",
+      "domain": "web-development",
+      "score": 0.629,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:73bf80eec728ce763d3d6577553cb41e762c40a93ce6f3cdd85ef980aef37738",
+      "name": "umami-privacy-web-analytics",
+      "domain": "business-sales",
+      "score": 0.604,
+      "triggerHits": 1,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:2d8a02bf972f52cd1adc4d12c44e3d6bcdaf0315b8a853beb3901a46232ca0bf",
+      "name": "web-scraper-agent",
+      "domain": "agents-automation",
+      "score": 0.604,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -4695,6 +4693,24 @@
    "output": {
     "selected": [
      {
+      "id": "sha256:adb1c4c5d49220500c09cb0859202d5229f02a2f33f1a9664b0ec4cb5ca67ded",
+      "name": "persian-prompt-library",
+      "domain": "prompt-requirements",
+      "score": 1.266,
+      "triggerHits": 1,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:5178ee949f2c602b52aaf7c8be37e7ad52d6ffb39ffcbb4042e698379f86f22e",
+      "name": "translation-intent-preserver",
+      "domain": "prompt-requirements",
+      "score": 1.147,
+      "triggerHits": 1,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
       "id": "sha256:4f3dc1cae102fadc715f3e2e805c946981e7876c60acc6099504aabd16e86261",
       "name": "persian-miniature-remix",
       "domain": "graphic-design",
@@ -4716,15 +4732,6 @@
       "id": "sha256:efd25b7fd90d161315022a19dc88419ad27af27bb2b806248f09e28362a125cb",
       "name": "persian-miniature-guide",
       "domain": "travel-outdoors",
-      "score": 0.766,
-      "triggerHits": 1,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:adb1c4c5d49220500c09cb0859202d5229f02a2f33f1a9664b0ec4cb5ca67ded",
-      "name": "persian-prompt-library",
-      "domain": "prompt-requirements",
       "score": 0.766,
       "triggerHits": 1,
       "skillLoaded": true,
@@ -4756,15 +4763,6 @@
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:dea865a2b9376ad6098e516a0579e2601ac0ab89724cb1dee4b500058fa7995e",
-      "name": "rtl-charts-persian",
-      "domain": "web-development",
-      "score": 0.763,
-      "triggerHits": 1,
-      "skillLoaded": true,
-      "contentStatus": "verified"
      }
     ],
     "matches": 69,
@@ -4786,16 +4784,7 @@
       "id": "sha256:c391770758b45034b45b52ec26570692a5b6880ac3c5d418f50b7614fd543e09",
       "name": "lut-desert-tour-planner",
       "domain": "travel-outdoors",
-      "score": 1.377,
-      "triggerHits": 1,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:5d744a79b48ba273be651c51c330e747f60b281e9a90a76d5628a68aabb24afe",
-      "name": "strategy-workshop-one-day",
-      "domain": "business-sales",
-      "score": 1.235,
+      "score": 1.877,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -4804,7 +4793,7 @@
       "id": "sha256:f619c6a1ffa34e9e249b481bd844706f7a0913424de92564c35a66b2e10b1c30",
       "name": "tehran-day-tours-catalog",
       "domain": "travel-outdoors",
-      "score": 1.232,
+      "score": 1.732,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -4813,7 +4802,7 @@
       "id": "sha256:331f5b9ed682472ca69cd00121b832c9e417f470864f68396a8cfc68749bcac9",
       "name": "heatstroke-desert-guide",
       "domain": "travel-outdoors",
-      "score": 1.193,
+      "score": 1.693,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -4822,7 +4811,7 @@
       "id": "sha256:fa521224745430c1e1ff705c89793f7ae53a989e7ef79d0a4da63fccb5f29f09",
       "name": "desert-camp-playbook",
       "domain": "travel-outdoors",
-      "score": 1.19,
+      "score": 1.69,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -4831,25 +4820,34 @@
       "id": "sha256:c9d57ede655e6c04b0f7a5eacea3f01b854148902bffcf68f15c9aa38c0ec821",
       "name": "lut-desert-survival-kit",
       "domain": "travel-outdoors",
-      "score": 1.183,
+      "score": 1.683,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:c0a628e406a21b47bdf6e863de4b15eed0ee6af6bb7336e664998abd45246a33",
-      "name": "behind-scenes-edit-plan",
-      "domain": "video-ai",
-      "score": 0.964,
+      "id": "sha256:c092ec66b5cdfc359d1f67eef70dd00629ab1bc2bcf704baafc991305de9dc67",
+      "name": "senior-pacing-tour-plan",
+      "domain": "travel-outdoors",
+      "score": 1.461,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:16077c7d347d73d5acbc4d4539dacfb0a89a75e13f5cb438c1dd68f5897bc2fd",
-      "name": "prototype-test-plan",
-      "domain": "product-design",
-      "score": 0.964,
+      "id": "sha256:f699ab24385bd03678ec18fed1528cbb42ec04224819e9179622667c7cb057f4",
+      "name": "weather-alternative-plan",
+      "domain": "travel-outdoors",
+      "score": 1.461,
+      "triggerHits": 1,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:5c1505effa8cd88a753d69abab65ebaef640879f210a0fe8c9f07fd6d93a547c",
+      "name": "camp-lighting-plan",
+      "domain": "travel-outdoors",
+      "score": 1.458,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -4962,7 +4960,7 @@
       "id": "sha256:271894f12c578fad4c90995ca226c2b10b4474945b37bb3c92855482482d1ca9",
       "name": "cafe-menu-board-design",
       "domain": "graphic-design",
-      "score": 2.276,
+      "score": 2.426,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -4972,6 +4970,42 @@
       "name": "restaurant-menu-analyzer",
       "domain": "travel-outdoors",
       "score": 2.16,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:c35e83935c3ba8f1cfdee9713e38d5d8e576d01da60f2ed6f9843c6c5df34ebd",
+      "name": "restaurant-grid-assistant",
+      "domain": "graphic-design",
+      "score": 1.554,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:5fce8d4768afeb95142f2e0be14d3ef592d34271eb8783d37a0514f4357b4173",
+      "name": "restaurant-pattern-reporter",
+      "domain": "graphic-design",
+      "score": 1.554,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:8cdcf525205124066aaaeb3f2d6e9a3d3b017e8d3414dc2f7844d01537e6d13a",
+      "name": "restaurant-grid-workflow",
+      "domain": "graphic-design",
+      "score": 1.549,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:7b12ededfaac5fa0a9adcb1f01b700710d7ed899fd685724affaa03dd6343cac",
+      "name": "restaurant-packaging-workflow",
+      "domain": "graphic-design",
+      "score": 1.549,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -4991,42 +5025,6 @@
       "domain": "travel-outdoors",
       "score": 1.441,
       "triggerHits": 1,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:22dc64d21749e75ad847f31fd8cef485827269f566ac0b1662ebe26732511b4b",
-      "name": "restaurant-table-generator",
-      "domain": "product-design",
-      "score": 1.436,
-      "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:c35e83935c3ba8f1cfdee9713e38d5d8e576d01da60f2ed6f9843c6c5df34ebd",
-      "name": "restaurant-grid-assistant",
-      "domain": "graphic-design",
-      "score": 1.404,
-      "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:5fce8d4768afeb95142f2e0be14d3ef592d34271eb8783d37a0514f4357b4173",
-      "name": "restaurant-pattern-reporter",
-      "domain": "graphic-design",
-      "score": 1.404,
-      "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:8cdcf525205124066aaaeb3f2d6e9a3d3b017e8d3414dc2f7844d01537e6d13a",
-      "name": "restaurant-grid-workflow",
-      "domain": "graphic-design",
-      "score": 1.399,
-      "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
      }
@@ -5049,8 +5047,8 @@
       "id": "sha256:7b8e50a232bfe87dd6c59aa6d4e1fdc25201956cf376c55d7f9e75b5b076ec96",
       "name": "404-page-ideas-fa",
       "domain": "web-development",
-      "score": 3.883,
-      "triggerHits": 4,
+      "score": 2.971,
+      "triggerHits": 3,
       "skillLoaded": true,
       "contentStatus": "verified"
      },
@@ -5058,7 +5056,7 @@
       "id": "sha256:337f105338479a31d88d2bc31201d8f1ab3a750af0a26de1a3e65cdcc70af73e",
       "name": "landing-page-generator",
       "domain": "web-development",
-      "score": 2.036,
+      "score": 2.192,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -5067,7 +5065,7 @@
       "id": "sha256:87fefed5bf61c5ef6b61f6cf08f759ddb964f0a307ecb14bd27386b7f509a5fa",
       "name": "status-page-maker",
       "domain": "web-development",
-      "score": 1.791,
+      "score": 1.947,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -5076,7 +5074,7 @@
       "id": "sha256:31df9450949c857a8d93ea3f502d635ae8b4fe1a9b1a0461fd09d98a1d2a8591",
       "name": "lead-magnet-page-builder",
       "domain": "web-development",
-      "score": 1.786,
+      "score": 1.942,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -5085,7 +5083,7 @@
       "id": "sha256:0d12e00aac053e8e3087905cba6cc31e25b114ad833cc618a93608c8c73b6c59",
       "name": "waitlist-page-builder",
       "domain": "web-development",
-      "score": 1.786,
+      "score": 1.942,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -5094,7 +5092,7 @@
       "id": "sha256:563cbd4137c4f59c5cc322a4a6b98d24f44c0c32727908658866483c6e78aef5",
       "name": "event-countdown-page",
       "domain": "web-development",
-      "score": 1.781,
+      "score": 1.937,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -5103,7 +5101,7 @@
       "id": "sha256:cac7cf43724d80282165285d67fa5c88a271a5f0dc9860c75a2048fe3646f503",
       "name": "category-page-seo-kit",
       "domain": "web-development",
-      "score": 1.59,
+      "score": 1.687,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -5112,7 +5110,7 @@
       "id": "sha256:ffdaf2c969fdf97829b8fab6a8c9732b23a0a43f59926f09f66b7b66fa2091bb",
       "name": "seo-audit",
       "domain": "web-development",
-      "score": 1.207,
+      "score": 1.363,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "repaired"
@@ -5121,7 +5119,6 @@
     "matches": 143,
     "queryTokens": [
      "custom",
-     "404",
      "page",
      "ideas",
      "website"
@@ -5249,28 +5246,10 @@
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:f170aaff3f1e9dec659a259829899acc4e7bb35a745540af6383f1ee2f75a0ee",
-      "name": "watermark-and-logo-detector",
-      "domain": "knowledge-research",
-      "score": 1.371,
-      "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:b86b200b2682d5da00a2d9b35384f58ec3cbd3cce7269d4270dcd3142710c1ef",
-      "name": "logo-stinger-maker",
-      "domain": "video-ai",
-      "score": 1.324,
-      "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
       "id": "sha256:0f13abb6f1ce89062cb1bc8e4be26a5b7f3e5aa038f78696a20c2c20b166d3a3",
       "name": "logo-grid-construction",
       "domain": "graphic-design",
-      "score": 1.261,
+      "score": 1.411,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -5279,7 +5258,7 @@
       "id": "sha256:ac736b9708caa18435cb76da509527bab5acc4861d4e7cbbbff532bbc385356a",
       "name": "ecolodge-logo-planner",
       "domain": "graphic-design",
-      "score": 1.247,
+      "score": 1.397,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -5288,8 +5267,26 @@
       "id": "sha256:66d5ed44baeeec59c4769d710f77d8c197e1d68c646d78209154c1722c0575b7",
       "name": "nuts-logo-library",
       "domain": "graphic-design",
-      "score": 1.247,
+      "score": 1.397,
       "triggerHits": 1,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:f8e6a2ab64ce4313af91caa4d04af08350cc10c0d69c09deb61c6feee1af0dcb",
+      "name": "wedding-logo-pack",
+      "domain": "graphic-design",
+      "score": 1.395,
+      "triggerHits": 1,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:f170aaff3f1e9dec659a259829899acc4e7bb35a745540af6383f1ee2f75a0ee",
+      "name": "watermark-and-logo-detector",
+      "domain": "knowledge-research",
+      "score": 1.371,
+      "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
      }
@@ -5310,19 +5307,10 @@
    "output": {
     "selected": [
      {
-      "id": "sha256:fe155057ae526ff98b978ef3291a1800110b3553afb2f7df83836741c92f1b3d",
-      "name": "surya-ocr-90-langs",
-      "domain": "knowledge-research",
-      "score": 1.55,
-      "triggerHits": 1,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
       "id": "sha256:5d744a79b48ba273be651c51c330e747f60b281e9a90a76d5628a68aabb24afe",
       "name": "strategy-workshop-one-day",
       "domain": "business-sales",
-      "score": 1.365,
+      "score": 2.116,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -5331,7 +5319,7 @@
       "id": "sha256:f619c6a1ffa34e9e249b481bd844706f7a0913424de92564c35a66b2e10b1c30",
       "name": "tehran-day-tours-catalog",
       "domain": "travel-outdoors",
-      "score": 1.362,
+      "score": 2.113,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -5340,15 +5328,14 @@
       "id": "sha256:39b5f05f12eb0290f2b3b45efc878cf9b1054916fc7a49fa22963163d91f6dd8",
       "name": "iran-itinerary-builder",
       "domain": "travel-outdoors",
-      "score": 0.673,
+      "score": 1.425,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
      }
     ],
-    "matches": 4,
+    "matches": 3,
     "queryTokens": [
-     "90",
      "day",
      "roadmap",
      "startup"
@@ -5558,7 +5545,7 @@
       "id": "sha256:dab3a38d20c1f115a6009aa1b92870d581554d03d93499ccf7c37c41a7790dd6",
       "name": "sales-deck-builder-fa",
       "domain": "business-sales",
-      "score": 0.706,
+      "score": 0.709,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -5860,7 +5847,7 @@
       "id": "sha256:8aeb84553dd4d8ae36ea0e4d936c625d5f1a7a91de8053be728e8528d190829b",
       "name": "business-card-fa-standard",
       "domain": "graphic-design",
-      "score": 2.604,
+      "score": 2.754,
       "triggerHits": 3,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -5869,7 +5856,16 @@
       "id": "sha256:64357adc6917f74a9e1cf2ef31c720720cfc7174026ff19126293e6900098e42",
       "name": "nowruz-card-designer",
       "domain": "graphic-design",
-      "score": 2.171,
+      "score": 2.321,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:e3f18024d1d8461d8e638a9597904e0453bddf18dcc4f68382d48afb47186e81",
+      "name": "iftar-invitation-card",
+      "domain": "graphic-design",
+      "score": 2.149,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -5879,15 +5875,6 @@
       "name": "business-card-to-crm",
       "domain": "business-sales",
       "score": 2.087,
-      "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:e3f18024d1d8461d8e638a9597904e0453bddf18dcc4f68382d48afb47186e81",
-      "name": "iftar-invitation-card",
-      "domain": "graphic-design",
-      "score": 1.999,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -5980,19 +5967,19 @@
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:81e84ccebdfabd76687f0d52d8562060e4b491d7cfbcef9443c226108cbc74b4",
-      "name": "behind-the-scenes-ideas",
-      "domain": "social-media",
+      "id": "sha256:7b8e50a232bfe87dd6c59aa6d4e1fdc25201956cf376c55d7f9e75b5b076ec96",
+      "name": "404-page-ideas-fa",
+      "domain": "web-development",
       "score": 1.033,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:7b8e50a232bfe87dd6c59aa6d4e1fdc25201956cf376c55d7f9e75b5b076ec96",
-      "name": "404-page-ideas-fa",
-      "domain": "web-development",
-      "score": 1.031,
+      "id": "sha256:81e84ccebdfabd76687f0d52d8562060e4b491d7cfbcef9443c226108cbc74b4",
+      "name": "behind-the-scenes-ideas",
+      "domain": "social-media",
+      "score": 1.033,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -6119,10 +6106,55 @@
    "output": {
     "selected": [
      {
+      "id": "sha256:9a933ff399e4970a80f08f0efd664eb4934b1c703587c984c0d4b2f1fe172572",
+      "name": "podcast-script-fa",
+      "domain": "video-ai",
+      "score": 1.337,
+      "triggerHits": 1,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:98386ff48eadd9c94f7cb8e259f1a8839826280a9fda20778a18e2fcf2cefde4",
+      "name": "podcast-to-shorts-splitter",
+      "domain": "video-ai",
+      "score": 1.337,
+      "triggerHits": 1,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:61e4002b2d8f1df186f1c07122ddefbde7477baedab0bd34976460e0a4d6132c",
+      "name": "podcast-rss-bulk-ingest",
+      "domain": "video-ai",
+      "score": 1.326,
+      "triggerHits": 1,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:e5c4b6daea12c30e58c873e2d66ace2ff21656536ca17655ed8e95fcb7425115",
+      "name": "podcast-producer",
+      "domain": "video-ai",
+      "score": 1.322,
+      "triggerHits": 1,
+      "skillLoaded": true,
+      "contentStatus": "repaired"
+     },
+     {
       "id": "sha256:05cc6e18de814137ded2b5ca2b4baf9cb6c560c340e2c6990a35d28002106d37",
       "name": "leave-camp-clean-protocol",
       "domain": "travel-outdoors",
       "score": 1.217,
+      "triggerHits": 1,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:6a7c988e8f74ebc797f778e02fa9109bc88ca5aba362a0b10d510de4cc5534a8",
+      "name": "audio-loudnorm-video",
+      "domain": "video-ai",
+      "score": 1.192,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -6141,51 +6173,6 @@
       "name": "bottoms-up-model-sheet",
       "domain": "business-sales",
       "score": 1.069,
-      "triggerHits": 1,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:9a933ff399e4970a80f08f0efd664eb4934b1c703587c984c0d4b2f1fe172572",
-      "name": "podcast-script-fa",
-      "domain": "video-ai",
-      "score": 1.037,
-      "triggerHits": 1,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:98386ff48eadd9c94f7cb8e259f1a8839826280a9fda20778a18e2fcf2cefde4",
-      "name": "podcast-to-shorts-splitter",
-      "domain": "video-ai",
-      "score": 1.037,
-      "triggerHits": 1,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:61e4002b2d8f1df186f1c07122ddefbde7477baedab0bd34976460e0a4d6132c",
-      "name": "podcast-rss-bulk-ingest",
-      "domain": "video-ai",
-      "score": 1.026,
-      "triggerHits": 1,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:e5c4b6daea12c30e58c873e2d66ace2ff21656536ca17655ed8e95fcb7425115",
-      "name": "podcast-producer",
-      "domain": "video-ai",
-      "score": 1.022,
-      "triggerHits": 1,
-      "skillLoaded": true,
-      "contentStatus": "repaired"
-     },
-     {
-      "id": "sha256:6a7c988e8f74ebc797f778e02fa9109bc88ca5aba362a0b10d510de4cc5534a8",
-      "name": "audio-loudnorm-video",
-      "domain": "video-ai",
-      "score": 0.888,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -6383,55 +6370,10 @@
    "output": {
     "selected": [
      {
-      "id": "sha256:dc563bb9bad3872e6a61d630d7241a3cacc3638d368875853eeee2c66d231b5f",
-      "name": "new-follower-thanker",
-      "domain": "social-media",
-      "score": 1.142,
-      "triggerHits": 1,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:b24bb3cb5ed62888c81cd8effff347d8edc26dee413b7e1ccd2c627bb34cd306",
-      "name": "og-image-per-item",
-      "domain": "knowledge-research",
-      "score": 1.14,
-      "triggerHits": 1,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:6ce1b17a3bbc4127d2fe8f185e54e95c216584f0cb7cf0363adb761c043dd4e9",
-      "name": "onboarding-kit-new-dev",
-      "domain": "skill-development",
-      "score": 1.14,
-      "triggerHits": 1,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:f96990aa69e0f4caed71403b1e71571e1f0ad55057f57211b3098b0f522a81b9",
-      "name": "action-item-miner",
-      "domain": "general",
-      "score": 1.094,
-      "triggerHits": 1,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:cbc4a97dba27903433d78ac8887aac2522ab47e6a35aa965a1160f1c561d65bf",
-      "name": "pricing-page-ux-kit",
-      "domain": "product-design",
-      "score": 1.053,
-      "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
       "id": "sha256:6df4d6ca5c09521c662300e5ceda33f2b2d707af7847f9ced69ad887aa36fab7",
       "name": "seasonal-pricing-optimizer",
       "domain": "business-sales",
-      "score": 1.032,
+      "score": 1.352,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -6440,7 +6382,7 @@
       "id": "sha256:dc699a67b11bb63b320f975ad9a24765c07e374be544f1d227c8f2abc143fe13",
       "name": "pricing-psychology-pack",
       "domain": "business-sales",
-      "score": 1.025,
+      "score": 1.345,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -6449,8 +6391,53 @@
       "id": "sha256:8662770cc9119563820b96c234e75a323bcc56cea20111b226e87ec43f6bf4db",
       "name": "dental-pricing-assistant",
       "domain": "business-sales",
-      "score": 1.011,
+      "score": 1.331,
       "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:2febf3812bc72df172f6073f33f97781da3c9c0db593d4b693062a25bbed1947",
+      "name": "bookstore-pricing-optimizer",
+      "domain": "business-sales",
+      "score": 1.327,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:fdfe101cadf135b9dcdba33f47eefee302af63fa043d1ff9667e90289b877590",
+      "name": "jewelry-pricing-pack",
+      "domain": "business-sales",
+      "score": 1.327,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:a1a19f2f7fb92192a05dee155e9a7b21aef83c8c26bbf9d1c3cdcfabcdb7e0e5",
+      "name": "bundle-pricing-tours",
+      "domain": "business-sales",
+      "score": 1.156,
+      "triggerHits": 1,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:b05e395e7430910d8051c9f25d96ad9f78af3f69f43a11932ccb94bbb207aedc",
+      "name": "pricing-objection-playbook",
+      "domain": "business-sales",
+      "score": 1.152,
+      "triggerHits": 1,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:52749800d7cfa38dc5df82957678edddf061b66a0984e690b02a113fe0dbdf04",
+      "name": "variant-pricing-kit",
+      "domain": "business-sales",
+      "score": 1.152,
+      "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
      }
@@ -6735,7 +6722,7 @@
       "id": "sha256:2260d21e2975007dc19df4f3ee5c6f8a46563c566793ae681e2d262ba1555ead",
       "name": "youtube-thumbnail",
       "domain": "graphic-design",
-      "score": 5.031,
+      "score": 5.181,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -6745,6 +6732,15 @@
       "name": "longform-youtube-structure",
       "domain": "video-ai",
       "score": 1.514,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:14de8b3f1651e17ea88f142b2872662d687da03df1678d0cf7e330a783b67063",
+      "name": "thumbnail-title-pairer",
+      "domain": "graphic-design",
+      "score": 1.392,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -6768,15 +6764,6 @@
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:14de8b3f1651e17ea88f142b2872662d687da03df1678d0cf7e330a783b67063",
-      "name": "thumbnail-title-pairer",
-      "domain": "graphic-design",
-      "score": 1.242,
-      "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
       "id": "sha256:35083efbb82659299111ecb9e3720527cd83b99c04f0d775af9a2af43af3ade6",
       "name": "howto-tutorial-writer",
       "domain": "content-writing",
@@ -6795,10 +6782,10 @@
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:6ce4c5951b4a6a9d10e26c05c33b5ab4144db8a4888aa8898d0eab5d311198fe",
-      "name": "youtube-script-structure",
-      "domain": "content-writing",
-      "score": 1.073,
+      "id": "sha256:37fb2a76a6b633eecf11b695b6c825106b82582c7cb30ab0fe83f9cd89c320db",
+      "name": "thumbnail-ctr-designer",
+      "domain": "graphic-design",
+      "score": 1.145,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -6822,7 +6809,7 @@
       "id": "sha256:cd08a689e6d59d50a0ad7b1ab92917082be51e0c59b75f5ac5779a34a4b619ea",
       "name": "alborz-traverse-planner",
       "domain": "travel-outdoors",
-      "score": 1.832,
+      "score": 2.332,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -6831,7 +6818,7 @@
       "id": "sha256:5c1505effa8cd88a753d69abab65ebaef640879f210a0fe8c9f07fd6d93a547c",
       "name": "camp-lighting-plan",
       "domain": "travel-outdoors",
-      "score": 1.216,
+      "score": 1.716,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -6840,8 +6827,35 @@
       "id": "sha256:687eb94936d29ff8c931bf740b8dcb707d5de91171ae6ef274f49dd869552ef3",
       "name": "astronomy-night-plan",
       "domain": "travel-outdoors",
-      "score": 1.21,
+      "score": 1.71,
       "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:c092ec66b5cdfc359d1f67eef70dd00629ab1bc2bcf704baafc991305de9dc67",
+      "name": "senior-pacing-tour-plan",
+      "domain": "travel-outdoors",
+      "score": 1.438,
+      "triggerHits": 1,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:f699ab24385bd03678ec18fed1528cbb42ec04224819e9179622667c7cb057f4",
+      "name": "weather-alternative-plan",
+      "domain": "travel-outdoors",
+      "score": 1.438,
+      "triggerHits": 1,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:fdba056f7ded4667fa543572f95a0d16054aa7b44ea29fdf3df0dca7aebe80f2",
+      "name": "damavand-alamkuh-expedition-plan",
+      "domain": "travel-outdoors",
+      "score": 1.435,
+      "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
      },
@@ -6855,37 +6869,10 @@
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:c0a628e406a21b47bdf6e863de4b15eed0ee6af6bb7336e664998abd45246a33",
-      "name": "behind-scenes-edit-plan",
-      "domain": "video-ai",
-      "score": 0.941,
-      "triggerHits": 1,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:16077c7d347d73d5acbc4d4539dacfb0a89a75e13f5cb438c1dd68f5897bc2fd",
-      "name": "prototype-test-plan",
-      "domain": "product-design",
-      "score": 0.941,
-      "triggerHits": 1,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:946d68a60088025b0e9eeb854e18291a45cee08704344fff50996969eaa88331",
-      "name": "ux-research-plan-kit",
-      "domain": "product-design",
-      "score": 0.941,
-      "triggerHits": 1,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:c092ec66b5cdfc359d1f67eef70dd00629ab1bc2bcf704baafc991305de9dc67",
-      "name": "senior-pacing-tour-plan",
+      "id": "sha256:44f7b9da04f0d23b9ef77e2e62ae66777eaa4a50a9616ccb548df7afcce17ecc",
+      "name": "camp-survey-planner",
       "domain": "travel-outdoors",
-      "score": 0.938,
+      "score": 0.974,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -6999,7 +6986,7 @@
       "id": "sha256:3376f90213d868bfacdeccfe5db3a638ffa638b41e8a677971a0507aede0dbe4",
       "name": "typography-poster-fa",
       "domain": "graphic-design",
-      "score": 2.765,
+      "score": 2.915,
       "triggerHits": 6,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -7010,6 +6997,15 @@
       "domain": "social-media",
       "score": 1.264,
       "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:5a7ddeef873c5a0983d895ea80be31d273e2fd375b9d569bedce94f73d8f5b71",
+      "name": "persian-typography-rules",
+      "domain": "graphic-design",
+      "score": 1.249,
+      "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
      },
@@ -7041,29 +7037,20 @@
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:e76af1195f9c3cafa45f1c0dce3c507746248994e889ddfda5210713605797e2",
-      "name": "caption-hook-writer-fa",
-      "domain": "social-media",
-      "score": 1.104,
-      "triggerHits": 3,
+      "id": "sha256:dcb8f879078195be62f25831335de0f9ebcaed1ef903875ce5af7e46df73ad68",
+      "name": "poster-composition-kit",
+      "domain": "graphic-design",
+      "score": 1.111,
+      "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:a7137d3d6f6304f918006799c5e6d458713a5e671c80003b841246a03168f36b",
-      "name": "hashtag-research-analyzer",
-      "domain": "social-media",
-      "score": 1.104,
-      "triggerHits": 3,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:b44721ebbbd622d487be439ef5e3e167909e2e3608057214fefa6bc751795a68",
-      "name": "ig-reels-auto-captioner",
-      "domain": "social-media",
-      "score": 1.104,
-      "triggerHits": 3,
+      "id": "sha256:b1a3f0dcb48dece0f235988f6e322dd228b923471978d86e9090427318968a05",
+      "name": "minimal-swiss-poster",
+      "domain": "graphic-design",
+      "score": 1.106,
+      "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
      }
@@ -7450,7 +7437,7 @@
       "id": "sha256:ac736b9708caa18435cb76da509527bab5acc4861d4e7cbbbff532bbc385356a",
       "name": "ecolodge-logo-planner",
       "domain": "graphic-design",
-      "score": 2.017,
+      "score": 2.167,
       "triggerHits": 4,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -7459,7 +7446,7 @@
       "id": "sha256:66d5ed44baeeec59c4769d710f77d8c197e1d68c646d78209154c1722c0575b7",
       "name": "nuts-logo-library",
       "domain": "graphic-design",
-      "score": 1.827,
+      "score": 1.977,
       "triggerHits": 4,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -7468,7 +7455,7 @@
       "id": "sha256:f8e6a2ab64ce4313af91caa4d04af08350cc10c0d69c09deb61c6feee1af0dcb",
       "name": "wedding-logo-pack",
       "domain": "graphic-design",
-      "score": 1.819,
+      "score": 1.969,
       "triggerHits": 4,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -7477,8 +7464,35 @@
       "id": "sha256:a5041d3e55652fc73c6625f56f05b21d6f0f4e7fae5661e7bc4a8e65e543f58c",
       "name": "book-cover-fa-design",
       "domain": "graphic-design",
-      "score": 1.435,
+      "score": 1.585,
       "triggerHits": 3,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:01268d6d353e205d94317863156596bd310bd0c15c076b6d8f271b3603c582b2",
+      "name": "brand-kit-generator",
+      "domain": "graphic-design",
+      "score": 1.566,
+      "triggerHits": 4,
+      "skillLoaded": true,
+      "contentStatus": "repaired"
+     },
+     {
+      "id": "sha256:5d568ee258323e2f41c02c2e4d8797f6911af2ef1de7c1168df58bd82ca3713e",
+      "name": "canvas-design",
+      "domain": "graphic-design",
+      "score": 1.487,
+      "triggerHits": 3,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:0f13abb6f1ce89062cb1bc8e4be26a5b7f3e5aa038f78696a20c2c20b166d3a3",
+      "name": "logo-grid-construction",
+      "domain": "graphic-design",
+      "score": 1.486,
+      "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
      },
@@ -7488,33 +7502,6 @@
       "domain": "content-writing",
       "score": 1.421,
       "triggerHits": 5,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:01268d6d353e205d94317863156596bd310bd0c15c076b6d8f271b3603c582b2",
-      "name": "brand-kit-generator",
-      "domain": "graphic-design",
-      "score": 1.416,
-      "triggerHits": 4,
-      "skillLoaded": true,
-      "contentStatus": "repaired"
-     },
-     {
-      "id": "sha256:5d568ee258323e2f41c02c2e4d8797f6911af2ef1de7c1168df58bd82ca3713e",
-      "name": "canvas-design",
-      "domain": "graphic-design",
-      "score": 1.337,
-      "triggerHits": 3,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:0f13abb6f1ce89062cb1bc8e4be26a5b7f3e5aa038f78696a20c2c20b166d3a3",
-      "name": "logo-grid-construction",
-      "domain": "graphic-design",
-      "score": 1.336,
-      "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
      }
@@ -8007,7 +7994,7 @@
       "id": "sha256:dab3a38d20c1f115a6009aa1b92870d581554d03d93499ccf7c37c41a7790dd6",
       "name": "sales-deck-builder-fa",
       "domain": "business-sales",
-      "score": 1.226,
+      "score": 1.232,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -8067,7 +8054,7 @@
       "id": "sha256:271894f12c578fad4c90995ca226c2b10b4474945b37bb3c92855482482d1ca9",
       "name": "cafe-menu-board-design",
       "domain": "graphic-design",
-      "score": 1.884,
+      "score": 2.034,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -8091,37 +8078,10 @@
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:a7e5461cbf67a1eec599b74c47dae486a8b877e2df0f283214d11e836131da96",
-      "name": "trek-nutrition-planner",
-      "domain": "travel-outdoors",
-      "score": 1.232,
-      "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:3443d955ddd0906202a6b62b7b70e09158a9c1703389255d73e37ba1a8b61604",
-      "name": "camp-kitchen-menu-planner",
-      "domain": "travel-outdoors",
-      "score": 1.168,
-      "triggerHits": 1,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:22dc64d21749e75ad847f31fd8cef485827269f566ac0b1662ebe26732511b4b",
-      "name": "restaurant-table-generator",
-      "domain": "product-design",
-      "score": 1.13,
-      "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
       "id": "sha256:c35e83935c3ba8f1cfdee9713e38d5d8e576d01da60f2ed6f9843c6c5df34ebd",
       "name": "restaurant-grid-assistant",
       "domain": "graphic-design",
-      "score": 1.099,
+      "score": 1.249,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -8130,7 +8090,34 @@
       "id": "sha256:5fce8d4768afeb95142f2e0be14d3ef592d34271eb8783d37a0514f4357b4173",
       "name": "restaurant-pattern-reporter",
       "domain": "graphic-design",
-      "score": 1.099,
+      "score": 1.249,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:8cdcf525205124066aaaeb3f2d6e9a3d3b017e8d3414dc2f7844d01537e6d13a",
+      "name": "restaurant-grid-workflow",
+      "domain": "graphic-design",
+      "score": 1.244,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:7b12ededfaac5fa0a9adcb1f01b700710d7ed899fd685724affaa03dd6343cac",
+      "name": "restaurant-packaging-workflow",
+      "domain": "graphic-design",
+      "score": 1.244,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:a7e5461cbf67a1eec599b74c47dae486a8b877e2df0f283214d11e836131da96",
+      "name": "trek-nutrition-planner",
+      "domain": "travel-outdoors",
+      "score": 1.232,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -8154,7 +8141,61 @@
       "id": "sha256:5178ee949f2c602b52aaf7c8be37e7ad52d6ffb39ffcbb4042e698379f86f22e",
       "name": "translation-intent-preserver",
       "domain": "prompt-requirements",
-      "score": 1.042,
+      "score": 1.542,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:adb1c4c5d49220500c09cb0859202d5229f02a2f33f1a9664b0ec4cb5ca67ded",
+      "name": "persian-prompt-library",
+      "domain": "prompt-requirements",
+      "score": 1.026,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:13ca9d4757fec150c17aab584fe1b201064a20c0be6f3b8712965af784f1d6bf",
+      "name": "multilingual-prompt-fa-guide",
+      "domain": "prompt-requirements",
+      "score": 1.021,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:b61651544110e9ea4772c79fa68abb9764fd256afa6a25847c8dbeda592bfc9d",
+      "name": "discovery-call-script-fa",
+      "domain": "prompt-requirements",
+      "score": 1.016,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:602d43224dde6a823137fce3f11a21667993f99d8eddd9ba7072018f6598f5d8",
+      "name": "domain-glossary-builder-fa",
+      "domain": "prompt-requirements",
+      "score": 1.012,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:cb95c1ceed9507a426ddc48dcd40af978c8a8c19a4d3c3adef8b356357fe1f90",
+      "name": "voice-note-transcriber-fa",
+      "domain": "prompt-requirements",
+      "score": 1.012,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:c6aac5ef192ecb58341d1c41a2404f03f76d767fc7f822424bfd8fbe18f9d73e",
+      "name": "legacy-doc-parser-fa",
+      "domain": "prompt-requirements",
+      "score": 1.008,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -8164,60 +8205,6 @@
       "name": "book-cover-fa-design",
       "domain": "graphic-design",
       "score": 0.548,
-      "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:0faa80fb166478815ebc1920705d4285328da654d0ded042b14a07af98f1d7b0",
-      "name": "trifold-brochure-fa",
-      "domain": "graphic-design",
-      "score": 0.548,
-      "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:5109a7e22a7e71ad5c542fe44c5897df3e3a31a35b73ce8a1e85dbd2a5a2b60a",
-      "name": "proposal-template-fa",
-      "domain": "business-sales",
-      "score": 0.539,
-      "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:30aa520ce432bb3d1f48f678088ed0909c2da8d88e32f1240fff3047488d48f4",
-      "name": "sales-chatbot-fa-builder",
-      "domain": "business-sales",
-      "score": 0.539,
-      "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:9e17fb59f970cda88c6b46278b95f0dbcff5d925bd2fdf9943098552bfc3b273",
-      "name": "sla-doc-template-fa",
-      "domain": "business-sales",
-      "score": 0.539,
-      "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:d327b6a7aa840c6b4323a41a121cad75a741b5b86094ef50b3a5fd38b6fb4852",
-      "name": "stepper-progress-kit",
-      "domain": "product-design",
-      "score": 0.539,
-      "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:956b832d6e7bd7f9509b243c1746949dbf32eb913b2857232805bedd780658ff",
-      "name": "cold-email-sequence-fa",
-      "domain": "business-sales",
-      "score": 0.532,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -8331,7 +8318,7 @@
       "id": "sha256:48127ef213564bbfeaf4370542f285e6a13a231d68dc37ab7e0b59b911c3f63b",
       "name": "event-poster-generator",
       "domain": "graphic-design",
-      "score": 1.957,
+      "score": 2.107,
       "triggerHits": 3,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -8340,7 +8327,7 @@
       "id": "sha256:c58072b3346b9baf685ea1c11e6d6589fac5c9e3220736301933fbc563846b2b",
       "name": "bookstore-poster-generator",
       "domain": "graphic-design",
-      "score": 1.952,
+      "score": 2.102,
       "triggerHits": 3,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -8349,7 +8336,7 @@
       "id": "sha256:f8453800aa04caa4dd615b8deadb9468b055a6b26a8188fad8696ec27d857600",
       "name": "camp-poster-assistant",
       "domain": "graphic-design",
-      "score": 1.773,
+      "score": 1.923,
       "triggerHits": 3,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -8358,7 +8345,7 @@
       "id": "sha256:0db7524c0fb9bb4c0814aff8366149267f2a514bd73b9f9c089bc382e86bcb7d",
       "name": "realestate-poster-monitor",
       "domain": "graphic-design",
-      "score": 1.767,
+      "score": 1.917,
       "triggerHits": 3,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -8367,7 +8354,7 @@
       "id": "sha256:c47686f20860041470e6803f588d1a820299f3a014c3310c09a0029279808c9f",
       "name": "fashion-poster-autopilot",
       "domain": "graphic-design",
-      "score": 1.762,
+      "score": 1.912,
       "triggerHits": 3,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -8376,17 +8363,8 @@
       "id": "sha256:ca29ac635c5778cf44a7c76315f84d85059277f8665df8cb5ca8dd241e1a25ed",
       "name": "poster-generator-skill",
       "domain": "graphic-design",
-      "score": 1.639,
+      "score": 1.789,
       "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:f2b6996d7e57c33b82658f3eeaba1be04c3ac810c69381bbccdf20393ba60f1d",
-      "name": "ai-image-prompt-builder",
-      "domain": "image-ai",
-      "score": 1.59,
-      "triggerHits": 3,
       "skillLoaded": true,
       "contentStatus": "verified"
      },
@@ -8394,7 +8372,16 @@
       "id": "sha256:de48a2a975bc5f7b4913c788b54d1af67efd1bb48a8d0c690a51de14a13bd032",
       "name": "vintage-poster-style-kit",
       "domain": "graphic-design",
-      "score": 1.445,
+      "score": 1.595,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:f6e752158bb885f1687105f3ecf67a12c2d6c35d4c4c8574d445e566655b43ac",
+      "name": "tour-poster-templates",
+      "domain": "graphic-design",
+      "score": 1.591,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -8597,7 +8584,7 @@
       "id": "sha256:a7dc0bda2971be3d8b4bc9987582798dcc88a5168a5e8d0c0c63f44e1e34916b",
       "name": "product-teaser-template",
       "domain": "video-ai",
-      "score": 1.681,
+      "score": 1.687,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -8624,7 +8611,7 @@
       "id": "sha256:6a7c988e8f74ebc797f778e02fa9109bc88ca5aba362a0b10d510de4cc5534a8",
       "name": "audio-loudnorm-video",
       "domain": "video-ai",
-      "score": 1.141,
+      "score": 1.145,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -8683,8 +8670,17 @@
       "id": "sha256:d922d2b8d32683f5941cc80550ae390b70d71b73c0757412b399534f99c5a1f9",
       "name": "outdoor-banner-specs",
       "domain": "graphic-design",
-      "score": 1.438,
+      "score": 1.588,
       "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:5d568ee258323e2f41c02c2e4d8797f6911af2ef1de7c1168df58bd82ca3713e",
+      "name": "canvas-design",
+      "domain": "graphic-design",
+      "score": 1.467,
+      "triggerHits": 3,
       "skillLoaded": true,
       "contentStatus": "verified"
      },
@@ -8698,15 +8694,6 @@
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:5d568ee258323e2f41c02c2e4d8797f6911af2ef1de7c1168df58bd82ca3713e",
-      "name": "canvas-design",
-      "domain": "graphic-design",
-      "score": 1.317,
-      "triggerHits": 3,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
       "id": "sha256:71d356dc231643744d2f4c8969a921cc1743c15b2fe0f0d2860222a8f58e5b40",
       "name": "conversion-centered-design",
       "domain": "product-design",
@@ -8716,37 +8703,37 @@
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:621a6805755dc7fdb631f6e3466b466c074ffdf731575e47dc5906f6a0e7b5f3",
-      "name": "design-brief-template",
-      "domain": "prompt-requirements",
-      "score": 1.194,
-      "triggerHits": 3,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:486158306164c06297c32076b3895e4fbd84cd09054cdfe2f799223a4f6a1b2f",
-      "name": "design-system-builder",
-      "domain": "product-design",
-      "score": 1.161,
-      "triggerHits": 3,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:b8dde7ac1d0fc2cb0802a9cba8f03cc1c51f7a25fc47e412294adf54bf012f48",
-      "name": "nothing-design",
-      "domain": "product-design",
-      "score": 1.153,
-      "triggerHits": 3,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
       "id": "sha256:f9a5ea4721e07b713e2e0f68cb58aca75581738db59b7a15fccf8bc8246bd4c1",
       "name": "fintech-badge-planner",
       "domain": "graphic-design",
-      "score": 1.048,
+      "score": 1.198,
+      "triggerHits": 3,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:acd7489b8e30a9c781acbf8559908dd9cf63d2c4bf804012502a2cd21606a61d",
+      "name": "hotel-packaging-generator",
+      "domain": "graphic-design",
+      "score": 1.198,
+      "triggerHits": 3,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:11c08e26a0f10b5cead817c9ea427a93764757c498aa37ae9b07c6fd6ecd3d74",
+      "name": "realestate-vectorize-planner",
+      "domain": "graphic-design",
+      "score": 1.198,
+      "triggerHits": 3,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:9e8c69e76f347bac520f76333e58454caf6ebfdd570a6b32066f948af7a8ad54",
+      "name": "school-brochure-planner",
+      "domain": "graphic-design",
+      "score": 1.198,
       "triggerHits": 3,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -8796,10 +8783,7 @@
    "output": {
     "selected": [],
     "matches": 0,
-    "queryTokens": [
-     "۱۲۳",
-     "456"
-    ]
+    "queryTokens": []
    }
   },
   {

@@ -59,7 +59,9 @@ load_env_file() {
       printf 'ignoring unknown env key: %s\n' "$key" >&2; continue
     fi
     printf -v "$key" '%s' "$value"
-    export "$key"
+    # Dynamic name: "${key?}" is the unambiguous form ShellCheck wants (SC2163) and exports the very
+    # variable we just set - `export "$key"` exports whatever the value names, which is not the point.
+    export "${key?}"
   done < "$file"
 }
 
@@ -71,10 +73,12 @@ load_mounted_secrets() {
     [ -f "$f" ] || continue
     name=$(printf '%s' "${f##*/}" | tr '[:lower:]' '[:upper:]' | tr '-' '_')
     hermes_is_known_key "$name" || continue
-    IFS= read -r value < "$f" || value=''
+    # A mounted secret file often has no trailing newline: `read` then returns 1 at EOF but has
+    # already filled `value`, so resetting on failure would silently drop the secret.
+    IFS= read -r value < "$f" || :
     [ -n "$value" ] || continue
     printf -v "$name" '%s' "$value"
-    export "$name"
+    export "${name?}"
   done
 }
 

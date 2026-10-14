@@ -43,7 +43,15 @@ export default async function handler(req,res){
     // TODO(verify): exact Buffer GraphQL query and response shape.
     const data=await gql(bufferKey,'query { account { channels { id name metrics { type value } } } }');
     const channel=data?.account?.channels?.[0]||{};
-    const metrics=channel.metrics||[];
+    const metrics=Array.isArray(channel.metrics)?channel.metrics:[];
+    // A generated dashboard must never show invented numbers. When the (still unverified) query
+    // returns no channel or no metrics, writing the snapshot would store zeros and mark the source
+    // 'connected' - indistinguishable from a real drop to zero. Refuse and keep the error visible.
+    if(!channel.id||!metrics.length){
+      const detail='Buffer returned no channel metrics; the GraphQL query or token scope is unverified';
+      await markError(detail);
+      return res.status(502).json({error:detail,code:'BUFFER_SHAPE_UNVERIFIED',received:{channels:Array.isArray(data?.account?.channels)?data.account.channels.length:0}});
+    }
     const payload={
       captured_at:new Date().toISOString(),
       channel_id:channel.id??null,
