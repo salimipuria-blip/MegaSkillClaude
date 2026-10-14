@@ -11,6 +11,7 @@
   "check": "node --check api/_core.mjs && node --check api/health.js && node --check api/skills.js && node --check api/tasks.js && node --check engine/router.mjs && node --check engine/providers.mjs && node --check engine/telemetry.mjs && node --check scripts/routing-golden.mjs && node --check scripts/test_routing.mjs && node --check scripts/bench-routing.mjs && node --check scripts/dev-shim.mjs && node --check public/engine-ui.js && node --check public/about.js && node --check public/puria/puria.js",
   "dev": "node scripts/dev-server.mjs",
   "bench:routing": "node scripts/bench-routing.mjs",
-  "routing:golden": "node scripts/routing-golden.mjs --check"
+  "routing:golden": "node scripts/routing-golden.mjs --check",
+  "routing:accuracy": "node scripts/routing-accuracy.mjs"
  }
 }
