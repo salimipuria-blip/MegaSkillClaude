@@ -141,26 +141,26 @@ test('the img2img dialect describes the RESULT image and spells out the negative
   assert.ok(out.length <= 1200);
 });
 
-test('a text-only request gets an explanation, never a mangled picture', async () => {
+test('a text-only request does no image edit at all: the caller sets the font layer', async () => {
   assert.match('متن بذار روی عکس', TEXT_ASK);
   assert.equal(TEXT_ASK.test('رنگش رو متناسب کن'), false, 'متناسب must not look like متن');
-  const out = await polishPhoto(baseEnv(), null, PNG_160x120, 'image/png', 'روی این عکس متن بذار: وایکینگ آفرود');
-  assert.equal(out.kind, 'text-refused');
-  assert.equal(out.image, null);
-  assert.match(out.message, /نوشتن متن/);
-  assert.match((await handlePhotoEdit(baseEnv(), null, PNG_160x120, 'image/png', 'فونت قشنگ‌تری روی عکس بذار')).caption, /متن\/لوگو روی عکس/);
+  const calls = geminiFetch();
+  const out = await handlePhotoEdit(baseEnv(), null, PNG_160x120, 'image/png', 'روی این عکس متن بذار: وایکینگ آفرود');
+  assert.equal(out.kind, 'text-only');
+  assert.equal(out.image, null, 'no model ever draws the text');
+  assert.equal(calls.length, 0, 'not a single model call for words on a photo');
 });
 
-test('a mixed request (edit + text) edits the photo and says the text was left out', async () => {
+test('a mixed request edits the photo and hands the words to the font layer', async () => {
   const env = baseEnv();
   const calls = geminiFetch({ answers: [{ parts: [{ text: 'no brief' }] }, { parts: [{ inlineData: { mimeType: 'image/png', data: EDIT_PNG } }] }] });
   const out = await handlePhotoEdit(env, null, PNG_160x120, 'image/png', 'این عکس رو ریتوش کن و رویش بنویس وایکینگ آفرود');
   assert.equal(out.op, 'retouch');
   assert.equal(out.image, EDIT_PNG);
   assert.match(out.caption, /ویرایش انجام شد/);
-  assert.match(out.caption, /متن\/لوگو روی عکس اضافه نشد/);
+  assert.match(out.caption, /متن با فونت واقعی روی عکس نوشته می‌شود/);
   const editCall = calls.filter((c) => c.url.includes(':generateContent')).at(-1);
-  assert.match(editCall.body.contents[0].parts[1].text, /do not add any text/);
+  assert.match(editCall.body.contents[0].parts[1].text, /do not add any text/, 'the model is still told not to draw text');
 });
 
 // ---------------------------------------------------------------------------------------
@@ -795,14 +795,19 @@ test('Telegram: «ملایم‌تر» after an edit reuses the remembered photo'
   assert.ok(turn.find((c) => c.url.endsWith('/sendMediaGroup')), 'the softened version is delivered');
 });
 
-test('Telegram: a photo with a text request gets the honest refusal, not a broken image', async () => {
+test('Telegram: a text wish without the words asks for them; with words the layer is set', async () => {
   const env = baseEnv();
   const calls = editMock();
-  await post(env, photoMsg('روی این عکس متن بذار: ویِکینگ'));
-  assert.equal(calls.some((c) => c.url.endsWith('/sendPhoto') || c.url.endsWith('/sendMediaGroup')), false);
+  await post(env, photoMsg('روی این عکس متن بذار'));
+  assert.equal(calls.some((c) => c.url.endsWith('/sendMediaGroup')), false);
   const msgs = calls.filter((c) => c.url.endsWith('/sendMessage')).map((c) => c.body.text);
   assert.equal(msgs.length, 1);
-  assert.match(msgs[0], /نوشتن متن/);
+  assert.match(msgs[0], /چه متنی بنویسم/);
+  const afterAsk = calls.length;
+  await post(env, photoMsg('روی این عکس متن بذار: ویِکینگ آفرود'));
+  const album = calls.slice(afterAsk).find((c) => c.url.endsWith('/sendMediaGroup'));
+  assert.ok(album, 'with the words the picture comes back');
+  assert.match(JSON.parse(album.body.get('media'))[0].caption, /«ویِکینگ آفرود»/);
 });
 
 test('Telegram: a photo with no edit instruction still goes to the vision brain unchanged', async () => {

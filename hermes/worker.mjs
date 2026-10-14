@@ -18,6 +18,8 @@ export { ask, askGemini, askWorkersAI, MODELS, CF_MODELS } from './brain.mjs';
 import { imageRequest, base64ToBytes } from './image.mjs';
 import { handlePhotoEdit, editRequest, continueEdit, recallEdit, rememberEdit, followUpRequest, faDigits,
   refineTake, pickRequest, rememberVariations, recallVariations } from './photo-edit.mjs';
+import { textRequest, designSpec, textLayout, renderTextLayer, layerCaption } from './textlayer.mjs';
+import { imageInfo, base64Bytes } from './image-bytes.mjs';
 import { ask } from './brain.mjs';
 import { transcribe, telegramFile, parseDataUrl } from './media.mjs';
 import { tripPage, createBooking, onContact } from './booking.mjs';
@@ -30,9 +32,55 @@ export { liveness, readiness, fullHealth } from './health.mjs';
 const TG_LIMIT = 4000;
 /** The app offers at most this many versions to pick from (the studio set is three). */
 const MAX_PICKS = 4;
+const ASK_FOR_TEXT = 'چه متنی بنویسم؟ مثال:\n«روی عکس بنویس: کمپ وایکینگ»\n«متن بذار پایین عکس «تور آفرود دو روزه» با فونت طلایی»\n' +
+  '(متن با فونت واقعی روی عکس می‌نشیند، پس فارسی سالم می‌ماند.)';
+
+/**
+ * The text-layer turn, shared by Telegram and the app: run the edit if one was asked for, then
+ * build the typographic layer for the resulting picture and (when Browser Rendering is available)
+ * compose it server-side. Returns { base, layer, html?, caption, composed }.
+ */
+export async function textLayerTurn(env, ask, image, mime, request, info = null) {
+  const wants = textRequest(request);
+  const plan = editRequest(request);
+  const pureText = wants && (!plan || plan.op === 'text');
+  const edited = pureText ? null : await handlePhotoEdit(env, ask, image, mime, request);
+  if (!wants) return edited ? { edited, base: { data: edited.image, mime: edited.mime }, layer: null, caption: edited.caption } : null;
+  const info2 = info || imageInfo(base64Bytes(pureText ? image : (edited && edited.image) || image));
+  const layer = textLayout(designSpec({
+    text: wants.text, width: (info2 && info2.width) || 1024, height: (info2 && info2.height) || 1024,
+    position: wants.position, style: wants.style, size: wants.size, bar: wants.bar,
+    tone: (edited && edited.brief && edited.brief.regionTone) || 'mixed',
+  }));
+  const base = { data: pureText ? image : edited.image, mime: pureText ? mime : edited.mime, info: info2 };
+  let composed = false;
+  let html = null;
+  try {
+    const rendered = await renderTextLayer(env, base.data, base.mime, layer);
+    if (rendered) { base.data = rendered.image; base.mime = rendered.mime; base.info = rendered.info; composed = true; }
+  } catch (err) {
+    console.error('[Hermes] text layer render failed:', err.message);
+  }
+  const layerInfo = layerCaption(layer, { composed });
+  const caption = [edited && edited.kind !== 'text-only' ? edited.caption : '', layerInfo].filter(Boolean).join('\n\n');
+  return { edited, base, layer, composed, caption, textOnly: pureText };
+}
 
 // The edited photo goes back as a before/after pair, so the improvement is visible at a glance.
 // Falls back to a single photo when Telegram refuses the album (odd size or exotic format).
+/** The layer as the page needs it: lines, geometry and style, but no server-only fields. */
+export function layerForApp(layer) {
+  if (!layer) return null;
+  return {
+    text: layer.text, lines: layer.lines, fontSize: layer.fontSize, lineHeight: layer.lineHeight,
+    positions: layer.positions, x: layer.x, align: layer.align, direction: layer.direction,
+    font: layer.font, weight: layer.weight, fill: layer.fill, stroke: layer.stroke,
+    strokeWidth: layer.strokeWidth, shadow: layer.shadow, bar: layer.bar, barFill: layer.bar_fill,
+    barHeight: layer.bar ? layer.barBox.height : 0, width: layer.width, height: layer.height,
+    position: layer.position,
+  };
+}
+
 export async function sendEdited(env, chatId, before, edited) {
   const api = (method) => `https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/${method}`;
   // A variations turn sends the original plus every take; a normal edit sends the best take.
@@ -211,12 +259,32 @@ async function api(request, url, env) {
     try {
       // A photo plus an edit instruction is an editing turn: brief, plan, candidates, review, deliver.
       const key = historyKey(env, who);
-      if (photo && editRequest(message)) {
+      const plan = photo ? editRequest(message) : null;
+      const wantsText = photo ? textRequest(message) : null;
+      // Text alone: no image model is involved, only the typographic layer.
+      if (photo && wantsText && (!plan || plan.op === 'text')) {
+        const turn = await textLayerTurn(env, ask, photo.data, photo.mime, message);
+        return json({ reply: turn.caption, image: `data:${turn.base.mime};base64,${turn.base.data}`,
+          textLayer: layerForApp(turn.layer) });
+      }
+      if (photo && plan && plan.op === 'text' && !wantsText) return json({ error: ASK_FOR_TEXT }, 400);
+      if (photo && plan && plan.op !== 'text') {
         const edited = await handlePhotoEdit(env, ask, photo.data, photo.mime, message);
         if (edited) {
           if (edited.image) await rememberEdit(env, key, { original: photo.data, mime: photo.mime, request: message,
             op: edited.op, strength: edited.strength });
           if (edited.variations) await rememberVariations(env, key, { ...edited, request: message });
+          if (wantsText && !edited.variations) {
+            // An edit plus words: deliver the edited picture and the layer for the canvas.
+            const spec = textLayout(designSpec({ text: wantsText.text, width: (edited.info && edited.info.width) || 1024,
+              height: (edited.info && edited.info.height) || 1024, position: wantsText.position, style: wantsText.style,
+              size: wantsText.size, bar: wantsText.bar, tone: (edited.brief && edited.brief.regionTone) || 'mixed' }));
+            return json({ reply: [edited.caption, layerCaption(spec)].join('\n\n'),
+              image: `data:${edited.mime};base64,${edited.image}`,
+              score: edited.review && edited.review.derived ? edited.score : undefined,
+              upscaled: edited.upscale && edited.upscale.image ? { width: edited.upscale.info.width, height: edited.upscale.info.height } : undefined,
+              textLayer: layerForApp(spec) });
+          }
           return json({ reply: edited.caption, image: edited.image ? `data:${edited.mime};base64,${edited.image}` : undefined,
             images: edited.variations ? edited.variations.map((v) => `data:${v.mime};base64,${v.image}`) : undefined,
             picks: edited.variations ? edited.variations.map((v) => v.variantLabel) : undefined,
@@ -366,6 +434,7 @@ async function handle(msg, env, origin) {
       'عکس بفرست و بنویس چه تغییری می‌خواهی («این عکس رو ریتوش کن»، «پس‌زمینه رو عوض کن»، «کیفیتش رو بالا ببر»، «چند نسخه») تا حرفه‌ای ویرایشش کنم و قبل/بعد را با هم بفرستم.\n' +
       'بعد از هر ویرایش می‌توانی بگویی «ملایم‌تر» یا «قوی‌تر» — همان عکس را دوباره لازم نیست بفرستی.\n' +
       'با «چند نسخه» سه نسخه می‌گیری؛ بعد بنویس «نسخهٔ ۲» تا همان را دقیق‌تر کنم.\n' +
+      'متن روی عکس هم می‌شود: «روی عکس بنویس: کمپ وایکینگ» — با فونت واقعی می‌نشیند، پس فارسی سالم می‌ماند.\n' +
       'ویس بفرست تا گوش بدهم، عکس بفرست تا ببینم؛ برای خبرها و چیزهای روز در گوگل جست‌وجو می‌کنم.\n' +
       '/google اتصال جیمیل، تقویم، درایو و شیت\n' +
       '/reset گفتگوی جدید (قبلی بایگانی می‌شود)\n/notes یادداشت‌های حافظه\n/forget پاک کردن یادداشت‌ها\n/app لینک اپ');
@@ -425,17 +494,28 @@ async function handle(msg, env, origin) {
     }
   }
 
-  // Photo + editing instruction: run the professional edit pipeline and send the result back.
-  if (images.length && editRequest(input)) {
+  // Photo + (edit instruction and/or a text layer): run the studio, then set the words in a real font.
+  const textWish = images.length ? textRequest(input) : null;
+  if (images.length && (editRequest(input) || textWish)) {
     await tg(env, 'sendChatAction', { chat_id: chatId, action: 'upload_photo' });
     try {
-      const edited = await handlePhotoEdit(env, ask, images[0].data, images[0].mime, input);
-      if (edited && edited.image) {
+      // "put text on it" without the words: ask for the words instead of guessing.
+      if (!textWish && editRequest(input).op === 'text') return send(env, chatId, ASK_FOR_TEXT);
+      const turn = await textLayerTurn(env, ask, images[0].data, images[0].mime, input);
+      if (turn && turn.edited && turn.edited.image) {
         await rememberEdit(env, key, { original: images[0].data, mime: images[0].mime, request: input,
-          op: edited.op, strength: edited.strength });
-        if (edited.variations) await rememberVariations(env, key, { ...edited, request: input });
-        await sendEdited(env, chatId, images[0], edited);
-      } else if (edited) await send(env, chatId, edited.caption);
+          op: turn.edited.op, strength: turn.edited.strength });
+        if (turn.edited.variations) await rememberVariations(env, key, { ...turn.edited, request: input });
+      }
+      if (turn && turn.edited && turn.edited.variations && !turn.layer) {
+        await sendEdited(env, chatId, images[0], turn.edited);
+      } else if (turn && turn.base && (turn.layer || (turn.edited && turn.edited.image))) {
+        await sendEdited(env, chatId, images[0], {
+          image: turn.base.data, mime: turn.base.mime, caption: turn.caption, variations: null,
+          info: turn.base.info,
+        });
+      } else if (turn && turn.edited) await send(env, chatId, turn.edited.caption);
+      else await send(env, chatId, ASK_FOR_TEXT);
     } catch (err) {
       await send(env, chatId, `ویرایش انجام نشد: ${err.message}`);
     }

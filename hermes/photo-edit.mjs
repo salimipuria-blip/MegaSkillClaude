@@ -102,9 +102,9 @@ export const TEXT_ASK = new RegExp(
   '(?<![\\p{L}])(?:متن|نوشته|نوشتن|فونت|کپشن|تیتر|شعار|بنویس|بنویسی|واترمارک)(?![\\p{L}])' +
   '|(?<![a-z])(?:text|caption|watermark|typography|logo)(?![a-z])', 'iu');
 
-const TEXT_REFUSAL = 'نوشتن متن/لوگو روی عکس را انجام نمی‌دهم: مدل‌های تصویر متن فارسی را ناخوانا و خراب می‌کنند و نتیجه بی‌کیفیت می‌شود. ' +
-  'اگر بخواهی، همین عکس را بدون متن ویرایش می‌کنم («عکس بساز: ...» هم برای ساخت تصویر بدون متن هست) یا متن را جدا و تایپ‌شده تحویل می‌گیری — بگو کدام.';
-const TEXT_NOTE = 'متن/لوگو روی عکس اضافه نشد (مدل تصویر متن را خراب می‌کند)؛ بقیهٔ ویرایش انجام شد.';
+// Text is NOT drawn by the image model (it mangles Persian script) - it is set as a real font layer
+// by textlayer.mjs after the edit. A request for a logo/graphic stays unsupported.
+const TEXT_NOTE = 'متن با فونت واقعی روی عکس نوشته می‌شود (نه با مدل تصویر)؛ لوگو/گرافیک رسم نمی‌شود.';
 
 /** Base strength per operation: how much freedom the model gets to travel from the original. */
 export const OP_STRENGTH = { restyle: 0.6, swap: 0.52, background: 0.55, erase: 0.55, expand: 0.45, color: 0.32,
@@ -153,7 +153,7 @@ export function editRequest(text) {
  */
 export const EDIT_OPS = {
   text: {
-    fa: 'افزودن متن (انجام نمی‌شود)',
+    fa: 'لایهٔ متن (با فونت واقعی)',
     direct: 'improve the photograph professionally, keep every existing detail, and do NOT draw any new text, letters, numbers or logos',
     keep: ['everything already in the frame', 'existing text pixels'],
     avoid: ['drawing new text', 'garbled letters', 'watermark-like marks'],
@@ -317,7 +317,8 @@ const BRIEF_SYSTEM = 'You are a senior photo retoucher preparing an edit plan fo
   '{"subject":"what the photo is really about","subject_type":"person|product|scene|animal|document|other",' +
   '"must_keep":["identity","key objects","text that already exists"],"problems":["concrete flaws worth fixing, at most 4"],' +
   '"lighting":"one short line","color":"one short line","aspect":"current framing","region":"where the change belongs",' +
-  '"change_scale":"small|medium|large","has_text":true|false,"risks":["what could go wrong"]}\n' +
+  '"change_scale":"small|medium|large","has_text":true|false,"region_tone":"light|dark|mixed",' +
+  '"risks":["what could go wrong"]}\n' +
   'Rules: never plan to change a person\'s identity, age, ethnicity or body; never plan to add text or logos; ' +
   'keep every concrete detail the user asked for; be specific and physical, no marketing words.';
 
@@ -330,7 +331,7 @@ function extractJson(text) {
 }
 
 export const emptyBrief = () => ({ subject: '', subjectType: 'other', mustKeep: [], problems: [], lighting: '',
-  color: '', aspect: '', region: '', changeScale: 0, hasText: false, risks: [], derived: false });
+  color: '', aspect: '', region: '', changeScale: 0, hasText: false, regionTone: 'mixed', risks: [], derived: false });
 
 /**
  * Study the photo and write the brief. Never throws: if the vision model is unavailable or answers
@@ -357,6 +358,8 @@ export async function photoBrief(env, ask, image, mime, instruction, op = DEFAUL
       region: String(parsed.region || '').slice(0, 120),
       changeScale: scale,
       hasText: parsed.has_text === true,
+      regionTone: ['light', 'dark', 'mixed'].includes(String(parsed.region_tone || '').toLowerCase())
+        ? String(parsed.region_tone).toLowerCase() : 'mixed',
       risks: arr(parsed.risks),
       derived: true,
     };
@@ -598,7 +601,10 @@ export async function polishPhoto(env, ask, image, mime, request, { op = null, c
     variants: false, delta: 0, aspect: '', textAsk: false, explicit: false };
   if (delta !== null) plan0.delta = delta;
   if (image && image.length > EDIT_MAX_BYTES * 4 / 3) throw new Error('عکس خیلی بزرگ است (حداکثر ۸ مگابایت).');
-  if (plan0.op === 'text') return { kind: 'text-refused', op: 'text', opLabel: EDIT_OPS.text.fa, model: null, image: null, message: TEXT_REFUSAL };
+  // op 'text' means: there is nothing to edit - the caller sets the text layer (textlayer.mjs).
+  if (plan0.op === 'text' && !(plan0.also || []).length) {
+    return { kind: 'text-only', op: 'text', opLabel: EDIT_OPS.text.fa, model: null, image: null, brief: emptyBrief(), attempts: [] };
+  }
   const textNote = TEXT_ASK.test(normalizeFa(request || '')) ? TEXT_NOTE : '';
 
   const brief = await photoBrief(env, ask, image, mime, plan0.instruction, plan0.op);
@@ -836,8 +842,7 @@ export async function continueEdit(env, ask, recalled, input) {
     op: (recalled.plan && recalled.plan.op) || null, delta,
     candidates: follow && follow.variants ? MAX_CANDIDATES : 2,
   });
-  const caption = result.kind === 'text-refused' ? result.message
-    : result.kind === 'variations' ? variationsCaption(result) : editCaption(result);
+  const caption = result.kind === 'variations' ? variationsCaption(result) : editCaption(result);
   return { ...result, caption, followUp: true };
 }
 
@@ -866,7 +871,6 @@ export async function handlePhotoEdit(env, ask, image, mime, request) {
   const configured = Number(env.EDIT_CANDIDATES) > 0 ? Math.min(MAX_CANDIDATES, Number(env.EDIT_CANDIDATES)) : 2;
   const result = await polishPhoto(env, ask, image, mime, request, { op: plan.op, delta: plan.delta,
     candidates: plan.variants ? MAX_CANDIDATES : configured });
-  const caption = result.kind === 'text-refused' ? result.message
-    : result.kind === 'variations' ? variationsCaption(result) : editCaption(result);
+  const caption = result.kind === 'variations' ? variationsCaption(result) : editCaption(result);
   return { ...result, caption };
 }
