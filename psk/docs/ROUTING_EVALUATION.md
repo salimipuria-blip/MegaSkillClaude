@@ -20,7 +20,7 @@
 
 - اسکریپت: `psk/scripts/bench-routing.mjs` (بدون شبکه، بدون نوشتن فایل، خروجی JSON).
 - اجرا: `npm run bench:routing -- --label=<برچسب>`
-- محیط: Node **v22.22.3**، Linux x64، Intel Xeon 2.60 GHz، ۲ هسته، ۳.۸ GiB RAM (sandbox). Node 20 آزمایش نشده است.
+- محیط: Node **v22.22.3** (و در تکرار جدا Node **v20.20.2** از `engines >=20`)، Linux x64، Intel Xeon 2.60 GHz، ۲ هسته، ۳.۸ GiB RAM (sandbox).
 - ورودی ثابت: `tests/fixtures/routing-corpus.json` با **۱۰۸ درخواست** (۴۰ فارسی، ۴۰ انگلیسی، ۲۰ ترکیبی، ۸ لبه‌ای).
 - بارگذاری: ۳ گرم‌کردن + ۱۵ اندازه‌گیری.
 - مسیریابی: ۳ گرم‌کردن + ۵۰ دور؛ هر فراخوانی جداگانه با `process.hrtime.bigint` زمان‌سنجی می‌شود.
@@ -64,7 +64,12 @@
 
 - benchmark روی sandbox اجرا شده و نتیجهٔ production نیست. زمان واقعی Vercel (CPU، memory و شبکه) متفاوت است و اندازه‌گیری نشده است.
 - هزینهٔ cold start از ~۳۷۰ ms به ~۴۰۰ ms رفته است. هنوز زیر سقف ۶۰ ثانیه‌ای تابع است.
-- Node 22 آزمایش شد؛ `engines` پروژه `>=20` است و Node 20 تست نشده است.
+- Node 22 و Node 20 هر دو آزمایش شدند (`npm run check`، `npm test` ۴۱/۴۱، golden، benchmark). نتایج Node 20 (p50، baseline در برابر شاخهٔ کاری):
+  - مسیریابی یک دور (۱۰۸ درخواست): ~152 ms در برابر ~48–52 ms
+  - هر فراخوانی: ~1072 µs در برابر ~340–380 µs؛ p95 ~3895 µs در برابر ~1413 µs
+  - بارگذاری (cold start): ~416 ms در برابر ~434–440 ms (+≈20–25 ms)
+  - handler `GET /api/skills`: ~3.6 ms در برابر ~1.0 ms
+  - `outputDigest`: یکسان (`sha256:3745f143…`)
 
 ## ۷. بازگشت به نسخهٔ قبل (rollback)
 
