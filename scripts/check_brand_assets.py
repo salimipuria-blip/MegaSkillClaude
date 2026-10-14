@@ -108,7 +108,7 @@ def local_references(template: Path) -> set[Path]:
 
 
 def check_content_templates() -> int:
-    for name in ("README.md", "render.mjs", "post.html", "story.html"):
+    for name in ("README.md", "ART_DIRECTION.md", "render.mjs", "post.html", "story.html"):
         require_file(CONTENT / name)
     references: set[Path] = set()
     for name in ("post.html", "story.html"):

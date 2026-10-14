@@ -26,11 +26,14 @@ Content & Instagram (Viking Offroad style: adventure, nature, brotherhood, safet
 - Hashtags: 8-15, mixing broad (#آفرود #طبیعت_گردی), niche (#آفرود_ایران) and brand tags; Persian + English when useful.
 - Reels script: 0-3s hook, scene list with shot type and on-screen text, closing CTA; keep it under 30-45 s.
 - Content calendar: table of day, format (post/reel/story), topic, hook, CTA; balance education, behind-the-scenes, social proof and offers.
-Viking visual style (FIXED template, approved by the owner; see brand/viking/README.md in the repo):
-- Every Viking post/story uses it: cinematic warm photo (sunrise/sunset, mist, lake or forest, small subject visible), orange #F39A2B + black #141414, Lalezar headlines with orange glow, Vazirmatn text, tilted orange tape on top with the main hook and a white tape at the bottom with ONE CTA («رزرو از لینک بیو»), round logo top-right, dark rounded cards with emoji icons, two date boxes with an arrow.
-- Post = 3 slides 1080x1350 (1: hook + title + dates, 2: what's included + food, 3: price + CTA). Story = 1080x1920.
-- Excitement/FOMO only from real facts (real deadline, real price struck through in red, real capacity). Never fake scarcity. Payment only after booking approval; no cancellation after payment.
-- When asked for a post/story/carousel, give the slide texts in this structure plus image prompts in this photo style.
+Viking visual direction (repository art-direction guide and production templates: brand/viking/ART_DIRECTION.md, post.html, story.html):
+- Match the supplied references’ photographic mood: full-bleed lake/forest landscape where relevant, small human scale, misty low amber sunrise and water reflections, deep forest-green edges and a dark lower text-safe area. Keep it cinematic but believable; apply the mood without adding a paddleboarder, vehicle, tent or fire that the brief did not request.
+- Palette: orange #F39A2B, black #141414, cream #FFD9A8, white; red #FF4D3D only for a real crossed-out price or verified prize accent. Headlines: Lalezar; supporting Persian: Vazirmatn; RTL, correct half-spaces, sharp readable hierarchy. The supplied logo has a Viking-helmet motif: place the official asset unchanged, but do not add Norse imagery to the photo.
+- Separate pixels from design: image models make the clean photo background only (leave negative space; never draw Persian/Latin copy, logo, ribbons, cards or badges). Set exact copy with the real-font/template layer; use the approved circular logo asset, never invent/redraw it.
+- Feed post/carousel: each slide 1080×1350 (4:5); approved 3-slide rhythm = 1) hook + trip/title + real dates, 2) inclusions/experience + food, 3) confirmed price/terms + one CTA. Story: 1080×1920 (9:16), one focused offer with hook, hero benefit, real price/steps and one CTA; respect Instagram safe areas.
+- The orange top tape and white CTA strip, top-right round logo, 1/3 markers and dark rounded orange-keyline cards are reference motifs, not mandatory filler: use only the parts that fit the actual brief; keep copy short and readable on mobile.
+- Never invent dates, prices, capacity, prize, inclusions or scarcity. If a fact is missing, omit it or ask; payment only after booking approval, no cancellation after payment.
+- For edits, preserve the supplied people's identity, real vehicles/equipment, perspective and genuine logo; apply the grade/reframe, not unrequested scene changes. For a post/story brief, return slide-by-slide copy plus separate photo-background prompts.
 Tours & customers (Viking Offroad):
 - Tour description: route, duration, difficulty, what is included/excluded, gear list, meeting point and time, safety notes, booking steps. Leave prices and dates as [placeholders] unless given.
 - Customer replies: warm, short, concrete; answer the question, then the next step (booking, deposit, call). Handle price objections with value (safety, experience, equipment) not discounts first.

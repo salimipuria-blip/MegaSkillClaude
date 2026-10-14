@@ -95,6 +95,29 @@ test('the request carries region, aspect, variations and iteration deltas', () =
   assert.equal(editRequest('عکس رو واضح‌تر کن').op, 'upscale');
 });
 
+test('Viking post/story edits carry the right aspect and the reference-specific guardrails', () => {
+  const post = editRequest('این عکس رو شبیه پست وایکینگ آماده کن');
+  assert.equal(post.aspect, '4:5');
+  const story = editRequest('این عکس رو مثل استوری وایکینگ آماده کن');
+  assert.equal(story.aspect, '9:16');
+  const reference = editRequest('این عکس رو شبیه نمونه‌ها کن');
+  assert.equal(reference.op, 'restyle');
+  assert.match(editInstruction(reference.op, reference.instruction), /Viking Offroad edit/);
+
+  const instruction = editInstruction(post.op, post.instruction, null, { aspect: post.aspect });
+  assert.match(instruction, /Viking Offroad edit/);
+  assert.match(instruction, /Portrait 4:5 carousel/);
+  assert.match(instruction, /Preserve people\/identity/);
+  assert.match(instruction, /No generated text/);
+  const imagePrompt = cfPrompt(post.op, post.instruction, null, { aspect: post.aspect });
+  assert.match(imagePrompt, /final frame aspect 4:5/);
+  assert.match(imagePrompt, /No generated text, numbers, logos, ribbons, cards, badges or watermarks/);
+
+  const storyPrompt = editInstruction(story.op, story.instruction, null, { aspect: story.aspect });
+  assert.match(storyPrompt, /Portrait 9:16 Story/);
+  assert.match(cfPrompt(story.op, story.instruction, null, { aspect: story.aspect }), /final frame aspect 9:16/);
+});
+
 test('a compound request keeps the retouch as the headline and carries the other recipes', () => {
   const both = editRequest('این عکس رو ریتوش کن و نور رو هم بهتر کن');
   assert.equal(both.op, 'retouch');

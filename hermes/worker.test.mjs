@@ -2,7 +2,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import worker, { webhookSecret, appKey, setupKey, chunks, MODELS, CF_MODELS } from './worker.mjs';
-import { imageRequest, IMAGE_MODEL } from './image.mjs';
+import { imageRequest, sizeFor, IMAGE_MODEL } from './image.mjs';
 import { hashPassword } from './auth.mjs';
 import { USERS } from './users.mjs';
 import { loadLog, loadNotes, addNote, appendTurn, archiveAndClear, clearNotes } from './memory.mjs';
@@ -554,9 +554,13 @@ test('Telegram: «عکس بساز» sends a generated photo and keeps the prompt
   const photo = calls.find((c) => c.url.endsWith('/sendPhoto'));
   assert.ok(photo, 'sendPhoto called');
   assert.equal(photo.body.get('chat_id'), OWNER);
-  assert.equal(photo.body.get('caption'), 'misty forest lake, ultra realistic');
+  assert.match(photo.body.get('caption'), /^misty forest lake, ultra realistic/);
+  assert.match(photo.body.get('caption'), /Viking Offroad/);
+  assert.match(photo.body.get('caption'), /no text, letters, numbers, logo/);
   const img = env.AI.calls.find((c) => c.model === IMAGE_MODEL);
-  assert.equal(img.input.prompt, 'misty forest lake, ultra realistic');
+  assert.match(img.input.prompt, /^misty forest lake, ultra realistic/);
+  assert.match(img.input.prompt, /Portrait-friendly composition/);
+  assert.match(img.input.prompt, /no text, letters, numbers, logo/);
   const log = JSON.parse(env.MEMORY.store.get(`history:${OWNER}`));
   assert.match(log[1].parts[0].text, /عکس ساخته شد/);
 });
@@ -925,13 +929,38 @@ test('owner /trip command returns the public page link', async () => {
   assert.match(sent(calls)[0], /https:\/\/hermes\.example\.workers\.dev\/trip/);
 });
 
-test('image prompt: Persian request never reaches the image model raw; vague asks become a Viking scene', async () => {
+test('Viking image prompts preserve post/story formats and keep exact text out of the image model', async () => {
   const { imagePrompt, BRAND_SCENE } = await import('./image.mjs');
   const fails = async () => { throw new Error('down'); };
-  assert.equal(await imagePrompt(fails, {}, 'یه پست واسه اینستاگرام بساز'), BRAND_SCENE);
-  assert.equal(await imagePrompt(async () => '(no model)', {}, 'پست اینستا'), BRAND_SCENE);
+  const fallback = await imagePrompt(fails, {}, 'یه پست واسه اینستاگرام بساز');
+  assert.match(BRAND_SCENE, /single paddleboarder|lone paddleboarder/);
+  assert.doesNotMatch(BRAND_SCENE, /4x4|vehicle/i);
+  assert.ok(fallback.startsWith(BRAND_SCENE));
+  assert.match(fallback, /4:5 carousel/);
+  assert.match(fallback, /no text, letters, numbers, logo/);
+  const fallbackStory = await imagePrompt(async () => '(no model)', {}, 'Instagram Story 9:16 for Viking Offroad');
+  assert.match(fallbackStory, /^Instagram Story 9:16 for Viking Offroad/);
+  assert.match(fallbackStory, /9:16 Story/);
+  assert.match(fallbackStory, /no text/);
   assert.equal(await imagePrompt(async () => 'a red jeep on a dune', {}, 'جیپ قرمز'), 'a red jeep on a dune');
   assert.equal(await imagePrompt(fails, {}, 'a red jeep'), 'a red jeep');
+
+  let system = '';
+  const built = await imagePrompt(async (_env, _contents, promptSystem) => {
+    system = promptSystem;
+    return 'misty mountain lake at golden hour';
+  }, {}, 'Instagram Story 9:16 for Viking Offroad, paddleboarder in mist');
+  assert.match(system, /VIKING REFERENCE ART DIRECTION/);
+  assert.match(system, /central 84%/);
+  assert.match(built, /Portrait 9:16 Story/);
+  assert.match(built, /no text/);
+  assert.deepEqual(sizeFor('Instagram Story 9:16'), { width: 720, height: 1280 });
+  assert.deepEqual(sizeFor('پست اینستاگرام ۴:۵'), { width: 1024, height: 1280 });
+});
+
+test('story/post command prefixes keep the format after the verb is removed', () => {
+  assert.equal(imageRequest('استوری بساز: کمپ کنار دریاچه'), 'Instagram Story 9:16: کمپ کنار دریاچه');
+  assert.equal(imageRequest('پست بساز: تور جنگلی وایکینگ'), 'Instagram feed post 4:5: تور جنگلی وایکینگ');
 });
 
 test('when every Gemini model is out of quota, the next free provider answers (bad keys are skipped)', async () => {

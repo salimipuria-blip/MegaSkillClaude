@@ -36,6 +36,7 @@
 //   * Quality is only ever stated when the reviewer actually scored the delivered image.
 
 import { imageInfo, frameDrift, faDigits, mimeOf, bytesToBase64, EDIT_MAX_BYTES, base64Bytes as decode64 } from './image-bytes.mjs';
+import { isVikingStyleEdit, vikingEditDirection } from './viking-style.mjs';
 import { upscaleImage, worthUpscaling } from './upscale.mjs';
 
 const GEMINI_API = 'https://generativelanguage.googleapis.com/v1beta';
@@ -67,8 +68,9 @@ export const normalizeFa = (s) => String(s || '')
 const EDIT_VERB = '(?:ویرایش|ادیت|اصلاح|ریتوش|رتوش|retouch|edit|اصلاح\\s*کن|درست\\s*کن|بهبود\\s*بده|بهتر\\s*کن|قشنگ\\s*تر\\s*کن|حرفه\\s*ای\\s*تر|بازسازی|زنده\\s*کن|قوی\\s*تر|شارپ\\s*تر|واضح\\s*تر)';
 const EDIT_NOUN = '(?:عکس|تصویر|این|اون|همین|photo|picture|image|it|this)';
 const EDIT_INTENT_FA = new RegExp(`${EDIT_NOUN}[^.!؟?\\n]{0,40}?${EDIT_VERB}`, 'i');
-// "آماده کن / بده" on a photo (a frame change, a variation set) is an edit request as well.
-const EDIT_DELIVER = /(?:(?:آماده|اماده|درست|جور|اوکی)\s*کن|(?<![\p{L}])بده(?![\p{L}])|(?<![a-z])ready(?![a-z])|(?<![a-z])make(?![a-z]))/iu;
+// Preparing/converting a sent photo to a post/story frame is an edit request as well.
+const EDIT_DELIVER = /(?:(?:آماده|اماده|درست|جور|اوکی)\s*کن|تبدیل(?:ش)?\s*(?:کن|بکن)|در(?:ش)?\s*بیار|(?<![\p{L}])بده(?![\p{L}])|(?<![a-z])ready(?![a-z])|(?<![a-z])make(?![a-z]))/iu;
+const STYLE_ACTION = /(?:بکن|کن|بساز|آماده|آماده\s*کن|edit|make|turn|convert|style)/iu;
 const EDIT_EXPLICIT = /^\/(?:edit|polish|retouch)(?:@\w+)?\b/i;
 // Changes that are unambiguously edits even without the word "edit".
 const EDIT_OPERATIONS = [
@@ -94,9 +96,10 @@ const VARIANTS = /(?:چند\s*(?:نسخه|حالت|فقط\s*نسخه)|سه\s*(?:
 // Iteration deltas: "ملایمترش کن" / "بیشتر" adjust the strength instead of inventing a new edit.
 const DELTA_SOFT = /(?:ملایم|کمتر|سبک|آرام|subtle|gentle|softer|less)/i;
 const DELTA_BOLD = /(?:بیشتر|قوی\s*تر|شدید|حسابی|جسور|bold|stronger|more\s+intense|heavier)/i;
-// Output frames the user asks for.
-const ASPECTS = [[/9\s*[:x×]\s*16|استوری|story|ریلز|reels?|عمودی/i, '9:16'], [/1\s*[:x×]\s*1|مربع|square/i, '1:1'],
-  [/4\s*[:x×]\s*5|پست\s*اینستا|instagram\s*post/i, '4:5'], [/16\s*[:x×]\s*9|بنر|banner|افقی|lan(d)?scape|wide/i, '16:9']];
+// Output frames the user asks for; post/story phrasing matches the approved Viking templates.
+const ASPECTS = [[/9\s*[:x×/]\s*16|استوری|story|ریلز|reels?/i, '9:16'], [/1\s*[:x×/]\s*1|مربع|square/i, '1:1'],
+  [/4\s*[:x×/]\s*5|پست(?:\s*(?:اینستا(?:گرام)?|فید))?|کاروسل|instagram\s*(?:feed\s*)?post|carousel/i, '4:5'],
+  [/16\s*[:x×/]\s*9|بنر|banner|افقی|lan(d)?scape|wide/i, '16:9']];
 
 export const TEXT_ASK = new RegExp(
   '(?<![\\p{L}])(?:متن|نوشته|نوشتن|فونت|کپشن|تیتر|شعار|بنویس|بنویسی|واترمارک)(?![\\p{L}])' +
@@ -128,10 +131,11 @@ export function editRequest(text) {
   const aspect = (ASPECTS.find(([re]) => re.test(t)) || ['', ''])[1];
   const variants = VARIANTS.test(t);
   const frameOrSet = photoWord && (aspect || variants) && EDIT_DELIVER.test(t);
-  if (!(explicit || ops.length || EDIT_INTENT_FA.test(t) || (textAsk && photoWord) || frameOrSet)) return null;
+  const referenceStyleEdit = photoWord && isVikingStyleEdit(t) && STYLE_ACTION.test(t);
+  if (!(explicit || ops.length || EDIT_INTENT_FA.test(t) || (textAsk && photoWord) || frameOrSet || referenceStyleEdit)) return null;
   const clean = raw.replace(EDIT_EXPLICIT, '').replace(/^[\s:：،,.\-]+/, '').trim();
   // Text with no visual operation of its own is its own case: explained, not drawn.
-  let op = ops.length ? ops[0][0] : textAsk ? 'text' : aspect ? 'expand' : 'retouch';
+  let op = ops.length ? ops[0][0] : textAsk ? 'text' : aspect ? 'expand' : referenceStyleEdit ? 'restyle' : 'retouch';
   // A request can hold several jobs ("retouch the face AND light it better"): the retouch stays the
   // headline and the other recipes travel with it, so one edit answers the whole sentence.
   if (op !== 'text' && ops.some(([name]) => name === 'retouch')) op = 'retouch';
@@ -260,6 +264,7 @@ export function editInstruction(op, instruction, brief = null, { region = '', as
     brief && brief.lighting ? `Lighting: ${brief.lighting}.` : '',
     brief && brief.color ? `Colour: ${brief.color}.` : '',
     aspect ? `Final frame: ${aspect} (crop or extend as needed, never distort faces).` : (brief && brief.aspect ? `Frame: ${brief.aspect}.` : ''),
+    vikingEditDirection(instruction),
     also.length ? `The same edit must also do: ${also.map((o) => (EDIT_OPS[o] || {}).direct).filter(Boolean).join('; ')}.` : '',
     region ? `Change ONLY this area: ${region}. Everything outside that area must stay pixel-identical.` : '',
     `Do not change: ${[...recipe.keep, ...((brief && brief.mustKeep) || [])].slice(0, 8).join(', ')}.`,
@@ -277,7 +282,7 @@ export function editInstruction(op, instruction, brief = null, { region = '', as
  * describes the RESULT image (skill library: image-studio prompt structure) with the negatives
  * spelled out at the end.
  */
-export function cfPrompt(op, instruction, brief = null, { region = '', also = [] } = {}) {
+export function cfPrompt(op, instruction, brief = null, { region = '', aspect = '', also = [] } = {}) {
   const recipe = EDIT_OPS[op] || EDIT_OPS[DEFAULT_OP];
   const subject = (brief && brief.subject) || (instruction ? instruction.slice(0, 120) : 'the same subject');
   const look = {
@@ -301,6 +306,8 @@ export function cfPrompt(op, instruction, brief = null, { region = '', also = []
     `professional ${recipe.fa && op === 'product' ? 'e-commerce' : 'photographic'} edit of ${subject}`,
     instruction ? `showing ${instruction.slice(0, 140)}` : '',
     look, ...alsoLooks,
+    aspect ? `final frame aspect ${aspect}; extend or crop naturally, never stretch` : '',
+    vikingEditDirection(instruction),
     region ? `change only ${region}, the rest of the frame stays exactly the same` : 'same composition, same framing, same subject',
     'photorealistic, sharp focus, high detail, correct proportions, natural skin texture',
     'no text, no letters, no watermark, no logo, no extra people, no extra limbs, no blur, no distortion, no oversaturation',
