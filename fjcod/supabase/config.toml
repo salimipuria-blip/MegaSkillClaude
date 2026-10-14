@@ -1,0 +1,10 @@
+# Local Supabase project configuration for CHAM.
+# This local identifier does not link to or authorize access to a remote project.
+project_id = "cham-store-os"
+
+[api]
+enabled = true
+# Keep cham_private out of PostgREST/Data API exposure.
+schemas = ["public", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000

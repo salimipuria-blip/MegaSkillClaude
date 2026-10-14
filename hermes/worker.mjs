@@ -80,13 +80,13 @@ async function caller(request, env) {
 }
 
 async function api(request, url, env) {
-  const json = (body, status = 200) => new Response(JSON.stringify(body), {
-    status, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' },
+  const json = (body, status = 200, extraHeaders = {}) => new Response(JSON.stringify(body), {
+    status, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store', ...extraHeaders },
   });
   if (request.method === 'POST' && url.pathname === '/api/booking') {
     if (!env.TELEGRAM_BOT_TOKEN) return json({ error: 'رزرو موقتاً در دسترس نیست.' }, 503);
     const res = await createBooking(env, tg, request, await request.json().catch(() => ({})));
-    return json(res.data, res.status);
+    return json(res.data, res.status, res.headers);
   }
   if (request.method === 'POST' && url.pathname === '/api/login') {
     if (!env.TELEGRAM_BOT_TOKEN) return json({ error: 'not configured' }, 503);
