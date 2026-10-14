@@ -26,3 +26,12 @@ CI واحد (`.github/workflows/ci.yml`) روی هر PR تست و بیلد هم�
 1. **Vercel** (`cham-store-os` و پروژهٔ Viking): Settings ← Git ← اتصال به `MegaSkillClaude`، و در Build & Deployment مقدار **Root Directory** را نام پوشه بگذار (`fjcod` یا `viking-team`).
 2. **BISON** (Vercel `bison.brandbook.site.2026`): همان کار مرحلهٔ ۱ با Root Directory = `bison-brand-book`. بعد GitHub Pages مخزن قدیمی را خاموش کن تا فقط یک نسخهٔ زنده بماند.
 3. وقتی هر سه از اینجا منتشر شدند، مخزن‌های قدیمی (`FJCod`، `viking-experience-command`، `bison-brand-book`، `porya-omni-llm-orchestrator`، `Viking`) را **Archive** کن. حذفشان نکن.
+
+## بررسی سلامت و روال مشارکت
+
+`bash scripts/repo_health_check.sh` بررسی سبک و بدون نصب وابستگی است؛ شکست‌ها را
+با خروجی غیرصفر گزارش می‌دهد و جایگزین تست‌ها و بیلدهای کامل CI نیست.
+تنظیمات نمونه در [`.env.example`](.env.example) است؛ مقادیر واقعی را وارد Git نکنید.
+[روال مدیریت پروژه و تست‌ها](.github/PROJECT_MANAGEMENT.md)،
+[چک‌لیست انتشار](.github/RELEASE_CHECKLIST.md) و
+[پیشنهاد نقشهٔ راه ۹۰روزه](docs/ROADMAP_90D.md) را ببینید.

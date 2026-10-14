@@ -1,0 +1,28 @@
+version: 2
+updates:
+  # Only actual application manifests, not vendored skill examples.
+  # No root npm manifest or orchestrator pip manifest exists yet.
+  - package-ecosystem: "npm"
+    directory: "/psk"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "npm"
+    directory: "/lithos"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "npm"
+    directory: "/fjcod"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "npm"
+    directory: "/bison-brand-book"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "npm"
+    directory: "/hermes"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"

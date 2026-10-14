@@ -1,66 +1,76 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# repo_health_check.sh
-# Quick health check script for MegaSkillClaude.
-# - Runs available test & build commands for each subproject if present
-# - Performs lightweight checks for obvious secrets/patterns
-# - Verifies presence of key files referenced in README/docs
-
-ROOT=$(pwd)
+# Lightweight, dependency-free checks, safe to run from any working directory.
+# Never installs packages, runs lifecycle hooks, loads .env, or dumps file contents.
+# Full tests/builds belong to the dedicated project jobs in ci.yml.
+ROOT=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
+cd -- "$ROOT"
 errors=0
 
-function run_if_dir {
-  local dir=$1; shift
-  if [ -d "$dir" ]; then
-    echo "\n==> Entering $dir"
-    (cd "$dir" && bash -lc "$*") || { echo "[FAIL] $dir: '$*' failed"; errors=$((errors+1)); }
+fail() {
+  printf '[FAIL] %s\n' "$1" >&2
+  errors=$((errors + 1))
+}
+
+run_check() {
+  local dir=$1
+  shift
+  printf '\n==> %s: %s\n' "$dir" "$*"
+  # Preserve argv; do not reinterpret commands via eval or a login shell.
+  if (cd -- "$dir" && "$@"); then
+    return 0
   else
-    echo "(skip) $dir not present"
+    fail "$dir check failed"
   fi
 }
 
-echo "Repository quick health check: $(date)"
-
-# Basic checks
-echo "\n-- Basic repo checks --"
-[ -f README.md ] || { echo "Missing README.md"; errors=$((errors+1)); }
-[ -f .github/workflows/ci.yml ] || { echo "Missing CI workflow .github/workflows/ci.yml"; errors=$((errors+1)); }
-
-# Node / npm checks (if available)
-which node >/dev/null 2>&1 || echo "(info) node not found in PATH — skip Node checks"
-which python3 >/dev/null 2>&1 || echo "(info) python3 not found in PATH — skip Python checks"
-
-# Run subproject checks only if each folder exists.
-run_if_dir "psk" "npm run check --silent || npm run check"
-run_if_dir "psk" "npm test --silent || npm test"
-run_if_dir "lithos" "npm install --no-audit --no-fund --silent || true; npm test --silent || true; npm run build --silent || true"
-run_if_dir "fjcod" "npm ci --no-audit --no-fund --silent || true; npm run check --silent || true"
-run_if_dir "bison-brand-book" "npm ci --no-audit --no-fund --silent || true; npm run build --silent || true"
-run_if_dir "viking-team" "node --test tests/*.test.mjs --silent || true; python3 -m unittest discover -s tests -v || true"
-run_if_dir "orchestrator" "python3 -m pip install --upgrade pip pytest >/dev/null 2>&1 || true; python scripts/audit/check_repository_contract.py || true; python -m pytest -q -ra tests || true"
-run_if_dir "hermes" "bash -n hermes/setup.sh || true; npm ci --prefix hermes --ignore-scripts --no-audit --no-fund --silent || true; npm run check --prefix hermes || true"
-
-# Lightweight secrets scan (grep-based)
-echo "\n-- Lightweight secrets scan --"
-patterns=("ENGINE_TOKEN" "API_KEY" "SECRET" "PASSWORD" "passwd" "service_role" "sb_secret" "private_key")
-for p in "${patterns[@]}"; do
-  if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-    git --no-pager grep -n --break --heading -I -E "$p" || true
-  else
-    grep -RIn --exclude-dir=node_modules --exclude-dir=.git -E "$p" . || true
-  fi
+printf 'Repository quick health check (no dependency installation)\n'
+for file in README.md .env.example .github/workflows/ci.yml \
+  .github/dependabot.yml .github/CODEOWNERS .github/RELEASE_CHECKLIST.md \
+  .github/ISSUE_TEMPLATE/bug_report.md .github/ISSUE_TEMPLATE/feature_request.md \
+  .github/ISSUE_TEMPLATE/tasks.md .github/ISSUE_TEMPLATE/config.yml \
+  .github/PROJECT_MANAGEMENT.md docs/ROADMAP_90D.md \
+  psk/package.json lithos/package.json fjcod/package.json \
+  fjcod/package-lock.json bison-brand-book/package.json \
+  bison-brand-book/package-lock.json hermes/package.json hermes/package-lock.json \
+  hermes/setup.sh orchestrator/scripts/audit/check_repository_contract.py \
+  viking-team/team/index.html viking-team/team/styles.css viking-team/team/app.js; do
+  [ -s "$file" ] || fail "Missing or empty required file: $file"
 done
 
-# Check README mentions vs actual folders
-echo "\n-- README vs filesystem --"
-if grep -q "psk/" README.md 2>/dev/null && [ ! -d "psk" ]; then echo "README mentions psk/ but folder missing"; errors=$((errors+1)); fi
-
-# Summary
+# Missing required tools are failures, never false-green skips.
+for tool in git node npm python3; do
+  command -v "$tool" >/dev/null 2>&1 || fail "Required tool not found: $tool"
+done
 if [ "$errors" -ne 0 ]; then
-  echo "\nHealth check completed with $errors problem(s) found."
+  printf '\nHealth check prerequisites failed: %s problem(s).\n' "$errors" >&2
   exit 2
-else
-  echo "\nHealth check completed: no obvious blocking problems found (non-exhaustive)."
-  exit 0
 fi
+
+run_check psk npm --ignore-scripts run check
+run_check lithos node --check api/buffer-sync.js
+run_check hermes bash -n setup.sh
+run_check hermes npm --ignore-scripts run check
+run_check viking-team node --check --input-type=module < viking-team/team/app.js
+run_check orchestrator python3 scripts/audit/check_repository_contract.py
+
+# Inspect tracked dotenv NAMES only. Never print matching lines or secret values,
+# and never recursively scan ignored/untracked local files. This is not a secret scanner.
+printf '\n-- Tracked environment-file hygiene --\n'
+if tracked_env=$(git ls-files -- '.env' '.env.*' '**/.env' '**/.env.*'); then
+  while IFS= read -r file; do
+    case "$file" in
+      ''|.env.example|*/.env.example) ;;
+      *) fail 'Non-example environment file is tracked; remove it from Git and rotate any exposed credentials.' ;;
+    esac
+  done <<< "$tracked_env"
+else
+  fail 'Unable to inspect Git-tracked environment files'
+fi
+
+if [ "$errors" -ne 0 ]; then
+  printf '\nHealth check completed with %s problem(s).\n' "$errors" >&2
+  exit 2
+fi
+printf '\nLightweight health checks passed; full tests/builds run in project CI jobs.\n'

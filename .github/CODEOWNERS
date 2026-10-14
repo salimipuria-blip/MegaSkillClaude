@@ -1,0 +1,12 @@
+# Require reviews from owner for changes in core directories
+/psk/ @salimipuria-blip
+/fjcod/ @salimipuria-blip
+/orchestrator/ @salimipuria-blip
+/hermes/ @salimipuria-blip
+
+# Review the repository's safety controls as well.
+/.github/ @salimipuria-blip
+/scripts/repo_health_check.sh @salimipuria-blip
+/tests/test_repo_normalization.py @salimipuria-blip
+/.env.example @salimipuria-blip
+/.gitignore @salimipuria-blip
