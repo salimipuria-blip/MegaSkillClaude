@@ -1,0 +1,109 @@
+{
+ "schema": 1,
+ "note": "هر عدد، تاریخ، قیمت یا ادعای کمیت/جایزه در قالب‌ها باید اینجا باشد. مقدار پیش‌فرض همان متنی است که امروز در post.html/story.html چاپ می‌شود؛ تا وقتی verified=false نباشد، render.mjs از رندر خودداری می‌کند. مقدار را فقط از بریف واقعی کمپین پر کن و source را بنویس.",
+ "campaign": "کمپ دریاچه و پدل‌سواری — جنگل هیرکانی",
+ "verified": false,
+ "claims": [
+  {
+   "key": "capacity",
+   "label": "ادعای محدودیت ظرفیت",
+   "in": [
+    "post"
+   ],
+   "value": "ظرفیت محدوده",
+   "source": ""
+  },
+  {
+   "key": "departureDate",
+   "label": "تاریخ حرکت",
+   "in": [
+    "post",
+    "story"
+   ],
+   "value": "۳۰ مهر",
+   "source": ""
+  },
+  {
+   "key": "returnDate",
+   "label": "تاریخ برگشت",
+   "in": [
+    "post"
+   ],
+   "value": "۱ آبان",
+   "source": ""
+  },
+  {
+   "key": "priceSelf",
+   "label": "قیمت با خودروی شخصی",
+   "in": [
+    "post",
+    "story"
+   ],
+   "value": "۷ میلیون",
+   "source": ""
+  },
+  {
+   "key": "priceGroupExtra",
+   "label": "هزینهٔ افزودهٔ خودروی گروه",
+   "in": [
+    "post"
+   ],
+   "value": "۳٫۵ میلیون",
+   "source": ""
+  },
+  {
+   "key": "priceClaim",
+   "label": "ادعای قیمت (استثنایی/فول‌برد)",
+   "in": [
+    "post"
+   ],
+   "value": "قیمت استثنایی",
+   "source": ""
+  },
+  {
+   "key": "bookingDeadline",
+   "label": "مهلت رزرو",
+   "in": [
+    "post"
+   ],
+   "value": "قبل از پر شدن ظرفیت",
+   "source": ""
+  },
+  {
+   "key": "giveawayDraw",
+   "label": "تاریخ قرعه‌کشی",
+   "in": [
+    "story"
+   ],
+   "value": "۲۶ مهر",
+   "source": ""
+  },
+  {
+   "key": "giveawayPrize",
+   "label": "جایزهٔ قرعه‌کشی",
+   "in": [
+    "story"
+   ],
+   "value": "برای برنده: رایگان",
+   "source": ""
+  },
+  {
+   "key": "giveawayFree",
+   "label": "ادعای رایگان بودن",
+   "in": [
+    "story"
+   ],
+   "value": "رایگان!",
+   "source": ""
+  },
+  {
+   "key": "giveawayTags",
+   "label": "شرط شرکت در قرعه‌کشی",
+   "in": [
+    "story"
+   ],
+   "value": "۵ نفر رو تگ کن",
+   "source": ""
+  }
+ ]
+}

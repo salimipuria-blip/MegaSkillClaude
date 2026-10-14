@@ -650,7 +650,7 @@
       "id": "sha256:328a450b655832e39ee8200c51f2a8537239298ef0b3ac3469b24cd820809f3a",
       "name": "customer-ltv-maximizer",
       "domain": "business-sales",
-      "score": 1.71,
+      "score": 1.93,
       "triggerHits": 3,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -659,26 +659,8 @@
       "id": "sha256:af2019ccb57582a95c0e54858dc3e1a6a27a35c4e7d59954a9b0cba0a54042f4",
       "name": "ga4-funnel-report-builder",
       "domain": "business-sales",
-      "score": 1.409,
+      "score": 1.629,
       "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:4b2ab257196ee6f7ebc67c4f5e0bc1bfd890ebb9d8b636905d8ec4f752ef4409",
-      "name": "customer-support-agent-fa",
-      "domain": "agents-automation",
-      "score": 1.262,
-      "triggerHits": 3,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:b0794173201448b308471c274fd9e414db2b7a695aaa64a9ee494dbedea9d1c8",
-      "name": "followers-to-customer-funnel",
-      "domain": "social-media",
-      "score": 1.243,
-      "triggerHits": 3,
       "skillLoaded": true,
       "contentStatus": "verified"
      },
@@ -686,7 +668,7 @@
       "id": "sha256:493f1a736dc3f3dd01592a685ced3ee2a47079b62eb2ae24d3ccacb7cd861864",
       "name": "sales-objection-roleplay",
       "domain": "business-sales",
-      "score": 1.146,
+      "score": 1.366,
       "triggerHits": 3,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -695,7 +677,7 @@
       "id": "sha256:d3d5b202a5911924c65518642fce623dcd4a0ef72554cc581f94b16f8c3d0a47",
       "name": "case-study-selling-model",
       "domain": "business-sales",
-      "score": 1.138,
+      "score": 1.358,
       "triggerHits": 3,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -704,8 +686,17 @@
       "id": "sha256:9ad6a7e309cc8ba558738eb199ad81c4ede824bf76108dedf841b6f30ced9781",
       "name": "icp-builder-iran-market",
       "domain": "business-sales",
-      "score": 1.138,
+      "score": 1.358,
       "triggerHits": 3,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:49fe8d951d2cd4264ef39ad1dceb245e5a158fa1d69a95a0f58a3b194519293f",
+      "name": "dashboard-designer-xlsx",
+      "domain": "data-spreadsheets",
+      "score": 1.351,
+      "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
      },
@@ -713,7 +704,16 @@
       "id": "sha256:5658a4fa5dc44c7788cfaa09d3016023634b032433bed3b5cc96642d93f8dfca",
       "name": "value-prop-canvas-fit",
       "domain": "business-sales",
-      "score": 1.13,
+      "score": 1.35,
+      "triggerHits": 3,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:0ccb8e9517a766c88fff87b55e1a826cbdde442a01085377d497504f1bdcee06",
+      "name": "cohort-retention-analyzer",
+      "domain": "business-sales",
+      "score": 1.344,
       "triggerHits": 3,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -1121,20 +1121,20 @@
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:87f3fa17368e779270ce9341e458d176e1b2c1b2a7193e199c09a3e9f4377e67",
-      "name": "x-article-publisher",
-      "domain": "general",
-      "score": 0.906,
-      "triggerHits": 1,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
       "id": "sha256:eec6906c2b993b0fa6f906d833f21dadaeeac5faa005a2fee3be40a3d58fb9bd",
       "name": "video-keyframe-briefer",
       "domain": "knowledge-research",
       "score": 0.888,
       "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:87f3fa17368e779270ce9341e458d176e1b2c1b2a7193e199c09a3e9f4377e67",
+      "name": "x-article-publisher",
+      "domain": "general",
+      "score": 0.776,
+      "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
      },
@@ -1822,73 +1822,73 @@
    "output": {
     "selected": [
      {
-      "id": "sha256:80bfe8db6773624264521a3b3289b562a2b0f0e35e0d331e35a1d9b60dcf1108",
-      "name": "sandbox-permission-map",
-      "domain": "agents-automation",
-      "score": 0.839,
+      "id": "sha256:06a582bdbeecc7931799bdd380d111fbc7e00a7cd76e8a4aeff0a6e2a7388d07",
+      "name": "upsell-mapper",
+      "domain": "business-sales",
+      "score": 1.283,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:16bacf639e156898dddbe43bccc8d62ee881a153e07bbd44e532dc857af49918",
-      "name": "user-flow-mapper",
-      "domain": "product-design",
-      "score": 0.839,
+      "id": "sha256:9089ceee91d2687608e7c7ec1b4099600816e50570db2c3f17e0440e85bf51ed",
+      "name": "saas-icp-monitor",
+      "domain": "business-sales",
+      "score": 1.098,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:0c6b10b524b3c8e8c4495e29bea74f5abe11aaf9bf4b4b7b5d8146f85a57f3b4",
-      "name": "assumption-mapper",
-      "domain": "prompt-requirements",
-      "score": 0.836,
+      "id": "sha256:276eb0ba1d7d5c2cfc11414d6bb74e150b753b2dd2132516e8c7484652c33793",
+      "name": "saas-icp-reporter",
+      "domain": "business-sales",
+      "score": 1.098,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:cac47fdb821b1b8230a6737fac5e3e86392d07ebc66f36fd7c98405588decab0",
-      "name": "competitor-landscape-preread",
-      "domain": "prompt-requirements",
-      "score": 0.836,
+      "id": "sha256:0704e5ceac86fd60276a68d4ea19250f4a7d9e4981dc258e1be2a5e3c1a8687d",
+      "name": "saas-bundle-assistant",
+      "domain": "business-sales",
+      "score": 1.094,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:80bc0f1627bd82d1463533ab66f8ff40d3ebf6d6b88262a665bc6e9254996f9f",
-      "name": "skill-dependency-grapher",
-      "domain": "skill-development",
-      "score": 0.836,
+      "id": "sha256:7985b3420766e0d53840634eab996bd10ef802f58c7c4796755f4ba6e9cac0ca",
+      "name": "saas-invoice-generator",
+      "domain": "business-sales",
+      "score": 1.094,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:cf5e0a86325dd7341c9b70b6c107820bece4271131bc7598a4a173da3368df3e",
-      "name": "catalog-sitemap-xml",
-      "domain": "knowledge-research",
-      "score": 0.833,
+      "id": "sha256:39928c157b82bb831d0fba4d66f2a1297da096d466ea9e3e8591b0a1b31c26a5",
+      "name": "saas-waitlist-auditor",
+      "domain": "business-sales",
+      "score": 1.094,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:ae813dd7d81b0e2d2a61b9fdf195fe22a709494db108edb9ecd5e7814c4264b3",
-      "name": "flood-seasons-map-iran",
-      "domain": "travel-outdoors",
-      "score": 0.833,
+      "id": "sha256:c713aadad12647225efdea6b67301597a58f17e38123b230fe19616a6f0edff0",
+      "name": "saas-benchmark-reporter",
+      "domain": "business-sales",
+      "score": 1.092,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:a9fe13105b361395f89579bbed2a2f752a1303c74d34fc92919a70ce8bad174e",
-      "name": "niche-positioning-map",
-      "domain": "social-media",
-      "score": 0.833,
+      "id": "sha256:d70ee70611018f6650f9d6418ab8f2a4975b0a959b1e3f66344f9b49b2637e85",
+      "name": "saas-funnel-planner",
+      "domain": "business-sales",
+      "score": 1.092,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -2126,7 +2126,7 @@
       "id": "sha256:87f3fa17368e779270ce9341e458d176e1b2c1b2a7193e199c09a3e9f4377e67",
       "name": "x-article-publisher",
       "domain": "general",
-      "score": 0.476,
+      "score": 0.346,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -2151,7 +2151,7 @@
       "id": "sha256:461c0e48e53180a8b3252ff5da87c98912a72f5a9b75ee12439b9b221bd3f726",
       "name": "matomo-full-analytics",
       "domain": "business-sales",
-      "score": 1.571,
+      "score": 1.791,
       "triggerHits": 3,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -2160,7 +2160,7 @@
       "id": "sha256:5541fef880aae71f371b369482c86e87245bdf19566c439f9df8b721e212a2cd",
       "name": "yalda-campaign-shop",
       "domain": "business-sales",
-      "score": 1.414,
+      "score": 1.634,
       "triggerHits": 3,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -2169,7 +2169,7 @@
       "id": "sha256:de126d53c9cf5210d6073222d88504855e442e54e939777fb892afaa4d9b79ea",
       "name": "shop-setup-checklist-fa",
       "domain": "business-sales",
-      "score": 1.382,
+      "score": 1.602,
       "triggerHits": 3,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -2178,7 +2178,7 @@
       "id": "sha256:73bf80eec728ce763d3d6577553cb41e762c40a93ce6f3cdd85ef980aef37738",
       "name": "umami-privacy-web-analytics",
       "domain": "business-sales",
-      "score": 1.316,
+      "score": 1.536,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -2187,7 +2187,7 @@
       "id": "sha256:50ec56c9f4309156a71e9dabfaac9c7bc616ef30238c65a855bd2bc9e8e54889",
       "name": "marketplace-vs-own-shop-strategy",
       "domain": "business-sales",
-      "score": 1.163,
+      "score": 1.383,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -2196,7 +2196,7 @@
       "id": "sha256:e7406a5eff9089ba3956258b8c85bbb1bd5ed8c27642df16247fb737dd647ddb",
       "name": "nps-survey-fa",
       "domain": "business-sales",
-      "score": 1.086,
+      "score": 1.306,
       "triggerHits": 3,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -2205,7 +2205,7 @@
       "id": "sha256:e61e743ddd1f5d1d2b485e71cb20bd274cfa72a2a7f84d8784d53f7e8bd870e8",
       "name": "sales-forecast-sheet",
       "domain": "business-sales",
-      "score": 1.078,
+      "score": 1.298,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -2214,7 +2214,7 @@
       "id": "sha256:30aa520ce432bb3d1f48f678088ed0909c2da8d88e32f1240fff3047488d48f4",
       "name": "sales-chatbot-fa-builder",
       "domain": "business-sales",
-      "score": 1.07,
+      "score": 1.29,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -2596,7 +2596,7 @@
       "id": "sha256:606ed2b2f5152c79c3d99436a9468bf6f7905d798481d92228038befc8e399a6",
       "name": "seasonal-campaign-fa",
       "domain": "social-media",
-      "score": 1.435,
+      "score": 1.785,
       "triggerHits": 3,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -2605,7 +2605,16 @@
       "id": "sha256:5541fef880aae71f371b369482c86e87245bdf19566c439f9df8b721e212a2cd",
       "name": "yalda-campaign-shop",
       "domain": "business-sales",
-      "score": 1.223,
+      "score": 1.373,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:cb7a091fdb1b8620777dfd61c7ebdca08e19a0fd587d9ad97012d67ba3dcffaa",
+      "name": "influencer-outreach-lister",
+      "domain": "social-media",
+      "score": 0.868,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -2620,11 +2629,11 @@
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:cb7a091fdb1b8620777dfd61c7ebdca08e19a0fd587d9ad97012d67ba3dcffaa",
-      "name": "influencer-outreach-lister",
-      "domain": "social-media",
-      "score": 0.518,
-      "triggerHits": 2,
+      "id": "sha256:2a4d411cf0a27939581b97bb87ab52589af817a9b13352906225cdd5175d2289",
+      "name": "nowruz-store-reset-kit",
+      "domain": "business-sales",
+      "score": 0.408,
+      "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
      },
@@ -2633,15 +2642,6 @@
       "name": "nowruz-card-designer",
       "domain": "graphic-design",
       "score": 0.262,
-      "triggerHits": 1,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:2a4d411cf0a27939581b97bb87ab52589af817a9b13352906225cdd5175d2289",
-      "name": "nowruz-store-reset-kit",
-      "domain": "business-sales",
-      "score": 0.258,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -2659,7 +2659,7 @@
       "id": "sha256:ff6e816252f4b95d74b415833d60f5467355e96291ff9353fbf102fac6e8f47b",
       "name": "storyboard-generator",
       "domain": "general",
-      "score": 0.209,
+      "score": 0.079,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -2956,7 +2956,7 @@
       "id": "sha256:b753e4fb3eb24dd185cb3309337800b406dcb11a14828a83273762a1482050a9",
       "name": "dashboard-ui-designer",
       "domain": "data-spreadsheets",
-      "score": 1.485,
+      "score": 1.785,
       "triggerHits": 3,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -2965,7 +2965,7 @@
       "id": "sha256:678531e8522488a80e6f46c4a9de5dac5882a30bcf5a492444dc506b6e297cd5",
       "name": "marketing-skills",
       "domain": "data-spreadsheets",
-      "score": 1.454,
+      "score": 1.754,
       "triggerHits": 4,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -2974,7 +2974,7 @@
       "id": "sha256:cf26c0b6bc172c855d81363544c6f016fa8810e94f10798294f3c8cad626aaaa",
       "name": "excel-gantt-chart",
       "domain": "data-spreadsheets",
-      "score": 1.387,
+      "score": 1.687,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -2983,7 +2983,7 @@
       "id": "sha256:c813da5a266775958d51abf85ce54d3307f50e27e906cff20430d588eb50f89a",
       "name": "pandas-excel-recipes",
       "domain": "data-spreadsheets",
-      "score": 1.374,
+      "score": 1.674,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -2992,7 +2992,7 @@
       "id": "sha256:8a29b147b7ff6182911af7fedfdae55ee8d9b03a69e5288716487c798a3ae443",
       "name": "openpyxl-automation-pack",
       "domain": "data-spreadsheets",
-      "score": 1.369,
+      "score": 1.669,
       "triggerHits": 3,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -3001,7 +3001,7 @@
       "id": "sha256:7417d1545111f5f719aa8470ed17e46e11a60089e14c27eeb18b813d34b26138",
       "name": "excel-regexp-patterns",
       "domain": "data-spreadsheets",
-      "score": 1.368,
+      "score": 1.668,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -3010,7 +3010,7 @@
       "id": "sha256:e47b7b3bee5343830155db103efd0730b9bdbdd7a3d8677957ca7e7938ff0db4",
       "name": "break-even-analyzer",
       "domain": "data-spreadsheets",
-      "score": 1.309,
+      "score": 1.609,
       "triggerHits": 3,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -3019,7 +3019,7 @@
       "id": "sha256:d28713167f47eeaddf557aa3dc1cfbe1aaa1272da3ef99d2d54308ece633ce2e",
       "name": "survey-results-analyzer",
       "domain": "data-spreadsheets",
-      "score": 1.302,
+      "score": 1.602,
       "triggerHits": 3,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -4170,7 +4170,7 @@
       "id": "sha256:49fe8d951d2cd4264ef39ad1dceb245e5a158fa1d69a95a0f58a3b194519293f",
       "name": "dashboard-designer-xlsx",
       "domain": "data-spreadsheets",
-      "score": 1.27,
+      "score": 1.57,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -4179,7 +4179,7 @@
       "id": "sha256:b753e4fb3eb24dd185cb3309337800b406dcb11a14828a83273762a1482050a9",
       "name": "dashboard-ui-designer",
       "domain": "data-spreadsheets",
-      "score": 1.256,
+      "score": 1.556,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -4188,7 +4188,7 @@
       "id": "sha256:dfb0521a8da08314acf6d3e0f1a040536a8cd5c4b37d16f6682e4b412b83eee2",
       "name": "dental-dashboard-generator",
       "domain": "data-spreadsheets",
-      "score": 1.252,
+      "score": 1.552,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -4197,7 +4197,7 @@
       "id": "sha256:1a909ad392657a169c72b9aeabdd9d5d33ae7d457d6453de52863c23211609db",
       "name": "cafe-dashboard-assistant",
       "domain": "data-spreadsheets",
-      "score": 1.08,
+      "score": 1.38,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -4206,7 +4206,7 @@
       "id": "sha256:b1fcc9796f9370c7a3aa10234adbff9b89ef1192e26a6a8d31480f09709e665f",
       "name": "realestate-dashboard-optimizer",
       "domain": "data-spreadsheets",
-      "score": 1.075,
+      "score": 1.375,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -4215,7 +4215,7 @@
       "id": "sha256:09331ebd2b9c943ee688d251da786796671b5ca470bf70b695e0fdfb9a3aa66c",
       "name": "fintech-dashboard-autopilot",
       "domain": "data-spreadsheets",
-      "score": 1.07,
+      "score": 1.37,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -4224,7 +4224,7 @@
       "id": "sha256:907ed528b2c8ced2c4072c67d275707addef9f50e2d0baaabb7f6830e2372cb2",
       "name": "florist-dashboard-optimizer",
       "domain": "data-spreadsheets",
-      "score": 1.07,
+      "score": 1.37,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -4233,7 +4233,7 @@
       "id": "sha256:398b0199b86b338bdb9df9cee996eb2a7dac85f65fb4bc9e73664a92691b8861",
       "name": "bookstore-dashboard-autopilot",
       "domain": "data-spreadsheets",
-      "score": 1.066,
+      "score": 1.366,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -4388,15 +4388,6 @@
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:9b1f9b874d9cf9b981ceb3af2978b79a0b08bc3899b61677ba5d8198858e40d1",
-      "name": "memory-write-policy-audit",
-      "domain": "general",
-      "score": 1.057,
-      "triggerHits": 1,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
       "id": "sha256:205e38ea92e9e008a907246ce016d2981211a3d94c05b8c540a71745357e108d",
       "name": "after-sales-upsell-email",
       "domain": "business-sales",
@@ -4408,6 +4399,15 @@
      {
       "id": "sha256:956b832d6e7bd7f9509b243c1746949dbf32eb913b2857232805bedd780658ff",
       "name": "cold-email-sequence-fa",
+      "domain": "business-sales",
+      "score": 1.045,
+      "triggerHits": 1,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:a1d3d2353304eeab3605fcb93e0cabfc74669f3a75131803702b8191baf7e071",
+      "name": "retention-email-flows-fa",
       "domain": "business-sales",
       "score": 1.045,
       "triggerHits": 1,
@@ -4625,7 +4625,7 @@
       "id": "sha256:87f3fa17368e779270ce9341e458d176e1b2c1b2a7193e199c09a3e9f4377e67",
       "name": "x-article-publisher",
       "domain": "general",
-      "score": 1.167,
+      "score": 1.037,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -5310,7 +5310,7 @@
       "id": "sha256:5d744a79b48ba273be651c51c330e747f60b281e9a90a76d5628a68aabb24afe",
       "name": "strategy-workshop-one-day",
       "domain": "business-sales",
-      "score": 2.116,
+      "score": 2.566,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -5533,15 +5533,6 @@
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:87f3fa17368e779270ce9341e458d176e1b2c1b2a7193e199c09a3e9f4377e67",
-      "name": "x-article-publisher",
-      "domain": "general",
-      "score": 0.713,
-      "triggerHits": 1,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
       "id": "sha256:dab3a38d20c1f115a6009aa1b92870d581554d03d93499ccf7c37c41a7790dd6",
       "name": "sales-deck-builder-fa",
       "domain": "business-sales",
@@ -5564,6 +5555,15 @@
       "name": "slide-deck-visual-kit",
       "domain": "image-ai",
       "score": 0.701,
+      "triggerHits": 1,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:87f3fa17368e779270ce9341e458d176e1b2c1b2a7193e199c09a3e9f4377e67",
+      "name": "x-article-publisher",
+      "domain": "general",
+      "score": 0.583,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -5637,19 +5637,19 @@
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:4e68474cd4bea693ad95d050bfa674e202fb529caa6a09831431d4d56fc1f45d",
-      "name": "telegram-json-normalizer",
-      "domain": "general",
-      "score": 1.037,
+      "id": "sha256:53f2ed54d57b4e7d6fdad75a08d04c609accc7d17472a2b096c4703174ad055f",
+      "name": "cross-agent-compat-matrix",
+      "domain": "business-sales",
+      "score": 0.947,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:53f2ed54d57b4e7d6fdad75a08d04c609accc7d17472a2b096c4703174ad055f",
-      "name": "cross-agent-compat-matrix",
-      "domain": "business-sales",
-      "score": 0.947,
+      "id": "sha256:b0794173201448b308471c274fd9e414db2b7a695aaa64a9ee494dbedea9d1c8",
+      "name": "followers-to-customer-funnel",
+      "domain": "social-media",
+      "score": 0.922,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -5778,7 +5778,7 @@
       "id": "sha256:9b1f9b874d9cf9b981ceb3af2978b79a0b08bc3899b61677ba5d8198858e40d1",
       "name": "memory-write-policy-audit",
       "domain": "general",
-      "score": 1.262,
+      "score": 1.132,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -5931,28 +5931,10 @@
    "output": {
     "selected": [
      {
-      "id": "sha256:7f1c1c2dcee805b0107c662540b843b729169c21b72ed014908a939434386b45",
-      "name": "ramadan-travel-etiquette",
-      "domain": "travel-outdoors",
-      "score": 1.339,
-      "triggerHits": 1,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:5541fef880aae71f371b369482c86e87245bdf19566c439f9df8b721e212a2cd",
-      "name": "yalda-campaign-shop",
-      "domain": "business-sales",
-      "score": 1.191,
-      "triggerHits": 1,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
       "id": "sha256:606ed2b2f5152c79c3d99436a9468bf6f7905d798481d92228038befc8e399a6",
       "name": "seasonal-campaign-fa",
       "domain": "social-media",
-      "score": 1.173,
+      "score": 1.523,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -5961,16 +5943,7 @@
       "id": "sha256:a84fc000252cc2fa44ce6dc60242028fad0f3a76ad51aa6deaad3258a5aa5a82",
       "name": "notes-feature-ideas",
       "domain": "social-media",
-      "score": 1.036,
-      "triggerHits": 1,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:7b8e50a232bfe87dd6c59aa6d4e1fdc25201956cf376c55d7f9e75b5b076ec96",
-      "name": "404-page-ideas-fa",
-      "domain": "web-development",
-      "score": 1.033,
+      "score": 1.386,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -5979,7 +5952,7 @@
       "id": "sha256:81e84ccebdfabd76687f0d52d8562060e4b491d7cfbcef9443c226108cbc74b4",
       "name": "behind-the-scenes-ideas",
       "domain": "social-media",
-      "score": 1.033,
+      "score": 1.383,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -5988,7 +5961,7 @@
       "id": "sha256:be20cf0a7cfcdd4605393308548eb72778ddc30630b3b11038f49122deab38c2",
       "name": "comment-mining-ideas",
       "domain": "social-media",
-      "score": 1.031,
+      "score": 1.381,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -5997,7 +5970,34 @@
       "id": "sha256:d1c669e7b2fc95fadea2ed3d09e3ef05223ae5cc925629e261535762b673cf5e",
       "name": "ugc-prompt-ideas",
       "domain": "social-media",
-      "score": 1.031,
+      "score": 1.381,
+      "triggerHits": 1,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:856a8cb809c19a5d8205cf78fbb049f1c958d588433e4b133ed0137bb5818af2",
+      "name": "story-engagement-ideas",
+      "domain": "social-media",
+      "score": 1.377,
+      "triggerHits": 1,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:5541fef880aae71f371b369482c86e87245bdf19566c439f9df8b721e212a2cd",
+      "name": "yalda-campaign-shop",
+      "domain": "business-sales",
+      "score": 1.341,
+      "triggerHits": 1,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:7f1c1c2dcee805b0107c662540b843b729169c21b72ed014908a939434386b45",
+      "name": "ramadan-travel-etiquette",
+      "domain": "travel-outdoors",
+      "score": 1.339,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -6458,6 +6458,33 @@
    "output": {
     "selected": [
      {
+      "id": "sha256:01268d6d353e205d94317863156596bd310bd0c15c076b6d8f271b3603c582b2",
+      "name": "brand-kit-generator",
+      "domain": "graphic-design",
+      "score": 1.844,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "repaired"
+     },
+     {
+      "id": "sha256:acd7489b8e30a9c781acbf8559908dd9cf63d2c4bf804012502a2cd21606a61d",
+      "name": "hotel-packaging-generator",
+      "domain": "graphic-design",
+      "score": 1.601,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:f11a2c629ea1e86a5fb1c8ad9ace4245f54d0beb3f714772c5108003e4c6114c",
+      "name": "hotel-typepair-reporter",
+      "domain": "graphic-design",
+      "score": 1.601,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
       "id": "sha256:9c2f44b3832210b3385198f93dbf391fe0dc4a642a660dc8a351d4adf90feddc",
       "name": "personal-brand-voice-sheet",
       "domain": "social-media",
@@ -6467,29 +6494,11 @@
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:01268d6d353e205d94317863156596bd310bd0c15c076b6d8f271b3603c582b2",
-      "name": "brand-kit-generator",
+      "id": "sha256:7770913aa9f90904f99c438eb1b3b4bb481c4ca74105f3c7d0dab0685923118d",
+      "name": "brand-book-generator",
       "domain": "graphic-design",
-      "score": 1.444,
-      "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "repaired"
-     },
-     {
-      "id": "sha256:acd7489b8e30a9c781acbf8559908dd9cf63d2c4bf804012502a2cd21606a61d",
-      "name": "hotel-packaging-generator",
-      "domain": "graphic-design",
-      "score": 1.201,
-      "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:f11a2c629ea1e86a5fb1c8ad9ace4245f54d0beb3f714772c5108003e4c6114c",
-      "name": "hotel-typepair-reporter",
-      "domain": "graphic-design",
-      "score": 1.201,
-      "triggerHits": 2,
+      "score": 1.132,
+      "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
      },
@@ -6497,7 +6506,7 @@
       "id": "sha256:47a5e51351200dc798edcee0686b3a740669a770a58c170d335961941cae4cb4",
       "name": "hotel-darkmode-assistant",
       "domain": "product-design",
-      "score": 0.851,
+      "score": 0.951,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -6506,7 +6515,7 @@
       "id": "sha256:07d31a8312af40561f2ae0ef8363d6591addf4c1cd94098dcd4f788843f21451",
       "name": "hotel-table-assistant",
       "domain": "product-design",
-      "score": 0.851,
+      "score": 0.951,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -6515,16 +6524,7 @@
       "id": "sha256:30f87bb43ecf5c8f076bc02221847873b8ada3e2c9940dbc73831d10dbcaa417",
       "name": "hotel-checkout-autopilot",
       "domain": "product-design",
-      "score": 0.848,
-      "triggerHits": 1,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:5561a9c009064e78aa567b6fed011e80b666f5e7c67237144ead30ca30fbdb84",
-      "name": "hotel-darkmode-workflow",
-      "domain": "product-design",
-      "score": 0.848,
+      "score": 0.948,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -7347,15 +7347,6 @@
    "output": {
     "selected": [
      {
-      "id": "sha256:0e321a9f809f21b440c22d7fadb1d06cfa786ecce66a001e3706f95f6af0f124",
-      "name": "reels-scripting",
-      "domain": "general",
-      "score": 1.614,
-      "triggerHits": 2,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
       "id": "sha256:fe1cf67b54496fb7f2b90265bb76ef3b70c8c3f13804aa2b64c0ef0f71f37417",
       "name": "shorts-scheduler-plan",
       "domain": "video-ai",
@@ -7406,6 +7397,15 @@
       "domain": "social-media",
       "score": 1.581,
       "triggerHits": 1,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:0e321a9f809f21b440c22d7fadb1d06cfa786ecce66a001e3706f95f6af0f124",
+      "name": "reels-scripting",
+      "domain": "general",
+      "score": 1.484,
+      "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
      },
@@ -7967,7 +7967,7 @@
       "id": "sha256:e61e743ddd1f5d1d2b485e71cb20bd274cfa72a2a7f84d8784d53f7e8bd870e8",
       "name": "sales-forecast-sheet",
       "domain": "business-sales",
-      "score": 1.253,
+      "score": 1.473,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -7976,7 +7976,7 @@
       "id": "sha256:30aa520ce432bb3d1f48f678088ed0909c2da8d88e32f1240fff3047488d48f4",
       "name": "sales-chatbot-fa-builder",
       "domain": "business-sales",
-      "score": 1.245,
+      "score": 1.465,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -7985,7 +7985,7 @@
       "id": "sha256:7fef8555192c4127f77f2413b75078609e8a4b6bf8eefe389954f27b24179a7a",
       "name": "open-sales-deck-framework",
       "domain": "business-sales",
-      "score": 1.238,
+      "score": 1.458,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -7994,7 +7994,7 @@
       "id": "sha256:dab3a38d20c1f115a6009aa1b92870d581554d03d93499ccf7c37c41a7790dd6",
       "name": "sales-deck-builder-fa",
       "domain": "business-sales",
-      "score": 1.232,
+      "score": 1.452,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -8003,7 +8003,7 @@
       "id": "sha256:0e98126947f57f9b75346c826fa87bb258123eaeb2bfe4dd0ad6f524ad4a9dce",
       "name": "whatsapp-sales-script-fa",
       "domain": "business-sales",
-      "score": 1.195,
+      "score": 1.415,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -8012,7 +8012,7 @@
       "id": "sha256:5f6e53cc16a5546ac66944426f4fa36acbb3b24a54b82d3a151f692fbc17af67",
       "name": "plausible-lite-insight",
       "domain": "business-sales",
-      "score": 1.053,
+      "score": 1.273,
       "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -8021,7 +8021,7 @@
       "id": "sha256:1a909ad392657a169c72b9aeabdd9d5d33ae7d457d6453de52863c23211609db",
       "name": "cafe-dashboard-assistant",
       "domain": "data-spreadsheets",
-      "score": 0.96,
+      "score": 1.26,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -8030,7 +8030,7 @@
       "id": "sha256:49fe8d951d2cd4264ef39ad1dceb245e5a158fa1d69a95a0f58a3b194519293f",
       "name": "dashboard-designer-xlsx",
       "domain": "data-spreadsheets",
-      "score": 0.96,
+      "score": 1.26,
       "triggerHits": 1,
       "skillLoaded": true,
       "contentStatus": "verified"
@@ -8491,24 +8491,6 @@
    "output": {
     "selected": [
      {
-      "id": "sha256:0e6be961ee688cd0b4d4cf7f73bdb4422a36fcc34490395f23d8878256f0727c",
-      "name": "ig-analytics-reporter",
-      "domain": "social-media",
-      "score": 1.956,
-      "triggerHits": 5,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:e1f67072c146924ee6a7d71bb9303ac3ea782100448922d94756af6970eda5d3",
-      "name": "weekly-growth-report-mailer",
-      "domain": "social-media",
-      "score": 1.718,
-      "triggerHits": 4,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
       "id": "sha256:39a2452318314db2581b9dc1ea5373e3b16b2b4ef93c661d900afdb7f8908332",
       "name": "analytics-ga4-setup-fa",
       "domain": "web-development",
@@ -8518,11 +8500,38 @@
       "contentStatus": "verified"
      },
      {
-      "id": "sha256:3370de46000858d4000b4da04309b4b1d798518ed2a9a74a2f5f21d3d7108022",
-      "name": "analytics-to-action",
+      "id": "sha256:e1f67072c146924ee6a7d71bb9303ac3ea782100448922d94756af6970eda5d3",
+      "name": "weekly-growth-report-mailer",
       "domain": "social-media",
-      "score": 1.259,
-      "triggerHits": 3,
+      "score": 1.568,
+      "triggerHits": 4,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:413e962481cf6d808d9aaa4c3721033de45a43bd84eaefc1b156a8df184cd761",
+      "name": "funnel-report-builder",
+      "domain": "data-spreadsheets",
+      "score": 1.346,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:af2019ccb57582a95c0e54858dc3e1a6a27a35c4e7d59954a9b0cba0a54042f4",
+      "name": "ga4-funnel-report-builder",
+      "domain": "business-sales",
+      "score": 1.278,
+      "triggerHits": 2,
+      "skillLoaded": true,
+      "contentStatus": "verified"
+     },
+     {
+      "id": "sha256:0e6be961ee688cd0b4d4cf7f73bdb4422a36fcc34490395f23d8878256f0727c",
+      "name": "ig-analytics-reporter",
+      "domain": "social-media",
+      "score": 1.256,
+      "triggerHits": 5,
       "skillLoaded": true,
       "contentStatus": "verified"
      },
@@ -8550,15 +8559,6 @@
       "domain": "web-development",
       "score": 1.161,
       "triggerHits": 1,
-      "skillLoaded": true,
-      "contentStatus": "verified"
-     },
-     {
-      "id": "sha256:594db3f0014ff11ffc45de3cb5a133c1a25197b29d7b340c0a8d7890f25d39de",
-      "name": "annual-report-narrative",
-      "domain": "content-writing",
-      "score": 1.058,
-      "triggerHits": 2,
       "skillLoaded": true,
       "contentStatus": "verified"
      }

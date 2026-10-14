@@ -5,18 +5,18 @@
 | # | پروژه | پوشه/مرز | دستور | اولویت فعلی |
 |---|---|---|---|---|
 | 0 | مونوریپو و CI مشترک | ریشه | [00-monorepo.md](00-monorepo.md) | یک منبع حقیقت برای انتشار/CI |
-| 1 | MEGA SKILLS 3000 | `psk/` | [01-psk-mega-skills.md](01-psk-mega-skills.md) | Answer Mode با کلید رایگان و verified |
-| 2 | Hermes | `hermes/`, `tasks/`, `observability/` | [02-hermes.md](02-hermes.md) | انتشار کنترل‌شده + W1 تاب‌آوری |
-| 3 | CHAM Store OS | `fjcod/` | [03-fjcod-cham.md](03-fjcod-cham.md) | **P0: بک‌اند/Auth/RLS واقعی** |
-| 4 | Lithos | `lithos/` | [04-lithos.md](04-lithos.md) | راستی‌آزمایی واقعی Buffer API |
-| 5 | Viking Experience Command | `viking-team/` | [05-viking-team.md](05-viking-team.md) | RLS زنده و آپلود HEIC آیفون |
-| 6 | BISON Brand Book | `bison-brand-book/` | [06-bison-brand-book.md](06-bison-brand-book.md) | تست smoke و یکپارچه‌سازی انتشار |
-| 7 | Omni LLM Orchestrator | `orchestrator/` | [07-orchestrator.md](07-orchestrator.md) | فقط نگه‌داری/بازنشستگی تاریخی |
-| 8 | Skill library/router | `.claude/skills/`, `library/`, `plugins/` | [08-skills-library-router.md](08-skills-library-router.md) | یک منبع حقیقت و بدون drift |
-| 9 | استیکرهای وایکینگ | `brands/viking-offroad/` | [09-viking-brand-assets.md](09-viking-brand-assets.md) | manifest قطعی و بازبینی بصری |
-| 10 | قالب محتوای وایکینگ | `brand/viking/` | [10-viking-content-renderer.md](10-viking-content-renderer.md) | smoke render واقعی با Chromium |
-| 11 | کنسول آیفون مگااسکیل | `mobile/` | [11-mobile-console.md](11-mobile-console.md) | آزمون واقعی Safari/iOS و وزن ایندکس |
-| 12 | Viking Cinematic Motion Study | `viking-team/motion/` | [12-viking-motion-study.md](12-viking-motion-study.md) | lockfile، typecheck و preview کنترل‌شده |
+| 1 | MEGA SKILLS 3000 | `psk/` | [01-psk-mega-skills.md](01-psk-mega-skills.md) | برچسبِ انسانی برای مجموعهٔ طلایی سخت‌گیرانه شود (top-1 هم‌اکنون ۱۰۰٪ روی مجموعهٔ ماشینی) |
+| 2 | Hermes | `hermes/`, `tasks/`, `observability/` | [02-hermes.md](02-hermes.md) | انتشار کنترل‌شده + W1 تاب‌آوری (پوشش ۳۰/۳۰ ماژول بسته شد) |
+| 3 | CHAM Store OS | `fjcod/` | [03-fjcod-cham.md](03-fjcod-cham.md) | **P0: بک‌اند/Auth/RLS واقعی** (حسابِ مرجوعی اصلاح شد؛ E2E در CI) |
+| 4 | Lithos | `lithos/` | [04-lithos.md](04-lithos.md) | راستی‌آزمایی واقعی Buffer API (رفتارِ خطا در UI دیگر خاموش نیست) |
+| 5 | Viking Experience Command | `viking-team/` | [05-viking-team.md](05-viking-team.md) | اعمال sql/ روی staging و تست RLS زنده (قرارداد SQL ایستا بسته شد) |
+| 6 | BISON Brand Book | `bison-brand-book/` | [06-bison-brand-book.md](06-bison-brand-book.md) | یکپارچه‌سازی انتشار (قرارداد ایستا بسته شد؛ بازبینی بصری باز است) |
+| 7 | Omni LLM Orchestrator | `orchestrator/` | [07-orchestrator.md](07-orchestrator.md) | فقط نگه‌داری/بازنشستگی تاریخی (skip/fail در doctor یکسان شد) |
+| 8 | Skill library/router | `.claude/skills/`, `library/`, `plugins/` | [08-skills-library-router.md](08-skills-library-router.md) | یک منبع حقیقت و بدون drift (ارجاع‌های package.json گیت شد) |
+| 9 | استیکرهای وایکینگ | `brands/viking-offroad/` | [09-viking-brand-assets.md](09-viking-brand-assets.md) | بازبینی بصریِ نمونه از هر پک (manifest قطعی بسته شد) |
+| 10 | قالب محتوای وایکینگ | `brand/viking/` | [10-viking-content-renderer.md](10-viking-content-renderer.md) | پر کردنِ source برای ۱۱ ادعای کمپین در brief.json (رندر واقعی بسته شد) |
+| 11 | کنسول آیفون مگااسکیل | `mobile/` | [11-mobile-console.md](11-mobile-console.md) | آزمون Safari/iOS فیزیکی (بودجهٔ وزن و smoke مرورگری بسته شد) |
+| 12 | Viking Cinematic Motion Study | `viking-team/motion/` | [12-viking-motion-study.md](12-viking-motion-study.md) | تصمیم ادغام + reduced-motion/poster (قفل مشخصات بسته شد) |
 
 برای تغییرات مشترکِ CI، `doctor` و فهرست پروژه‌ها از [دفتر جریان ریشه](../../PROGRESS.md) استفاده کن؛ دفتر محصول را برای تاریخچهٔ تغییر بین‌پروژه‌ای به‌جای آن بازنویسی نکن.
 

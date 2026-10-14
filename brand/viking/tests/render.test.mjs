@@ -50,7 +50,9 @@ async function runRender(directory, format, { failScreenshot = false } = {}) {
   const trace = path.join(directory, "trace.log");
   const fakePlaywright = await makeFakePlaywright(directory);
   const output = path.join(directory, `output-${format}`);
-  const result = spawnSync(process.execPath, [RENDERER, format, output], {
+  // These fixtures exercise layout, not a campaign: the brief is unverified by default, so the
+  // renderer's fail-closed gate has to be released explicitly.
+  const result = spawnSync(process.execPath, [RENDERER, format, output, "--allow-unverified-claims"], {
     cwd: directory,
     encoding: "utf8",
     timeout: 30_000,

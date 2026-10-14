@@ -2,7 +2,7 @@
 // Playwright and Chromium are runtime prerequisites; set PLAYWRIGHT_PATH or
 // CHROMIUM_PATH only when the local installations are not auto-discoverable.
 import { createRequire } from "node:module";
-import { existsSync, mkdirSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync } from "node:fs";
 import { dirname, isAbsolute, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
@@ -40,10 +40,43 @@ function loadPlaywright() {
   );
 }
 
+/**
+ * Campaign claims (price, date, capacity, giveaway) live in brief.json, never implicitly in the
+ * artwork. Rendering a template whose claims are not marked verified would publish numbers nobody
+ * signed off on, so the renderer fails closed unless --allow-unverified-claims is passed.
+ */
+function assertBrief(templatePath, {allowUnverified = false} = {}) {
+  const briefPath = join(here, "brief.json");
+  if (!existsSync(briefPath)) throw new Error("brief.json is missing; campaign claims must be tracked");
+  const brief = JSON.parse(readFileSync(briefPath, "utf8"));
+  if (brief.schema !== 1) throw new Error(`unsupported brief schema: ${brief.schema}`);
+  const html = readFileSync(templatePath, "utf8");
+  const kind = templatePath.endsWith("story.html") ? "story" : "post";
+  const applicable = (brief.claims || []).filter((claim) => (claim.in || ["post", "story"]).includes(kind));
+  const missing = applicable.filter((claim) => !html.includes(claim.value));
+  if (missing.length) {
+    // A claim that is no longer in the artwork means the brief drifted from the design.
+    throw new Error(
+      `brief.json lists ${missing.length} claim(s) that ${templatePath.split("/").pop()} does not ` +
+        `contain: ${missing.map((c) => c.key).join(", ")}. Update the brief or the template.`,
+    );
+  }
+  if (brief.verified !== true && !allowUnverified) {
+    const unverified = applicable.filter((c) => !c.source);
+    throw new Error(
+      "brief.json is not verified: the campaign numbers have no recorded source. Fill `source` for " +
+        `each claim (${unverified.map((c) => c.key).join(", ") || "none"}), set verified=true, or re-run ` +
+        "with --allow-unverified-claims for a layout draft that you will not publish.",
+    );
+  }
+  return brief;
+}
+
 function resolveRenderTarget() {
-  const [format = "post", outputArgument] = process.argv.slice(2);
+  const argv = process.argv.slice(2).filter((a) => !a.startsWith("--"));
+  const [format = "post", outputArgument] = argv;
   if (format !== "post" && format !== "story") {
-    throw new Error("usage: node brand/viking/render.mjs [post|story] [output-directory]");
+    throw new Error("usage: node brand/viking/render.mjs [post|story] [output-directory] [--allow-unverified-claims]");
   }
   const template = join(here, format === "story" ? "story.html" : "post.html");
   const outputDirectory = outputArgument ? resolve(outputArgument) : join(here, "out");
@@ -53,6 +86,7 @@ function resolveRenderTarget() {
 async function render() {
   const { format, template, outputDirectory } = resolveRenderTarget();
   if (!existsSync(template)) throw new Error(`template not found: ${template}`);
+  const brief = assertBrief(template, {allowUnverified: process.argv.includes("--allow-unverified-claims")});
   mkdirSync(outputDirectory, { recursive: true });
 
   const { chromium } = loadPlaywright();
@@ -102,7 +136,10 @@ async function render() {
     }
 
     if (pageErrors.length) throw new Error(`template runtime error: ${pageErrors.join("; ")}`);
-    console.log(`rendered ${format} → ${outputDirectory}`);
+    console.log(
+      `rendered ${format} → ${outputDirectory}` +
+        (brief.verified === true ? " (brief verified)" : " (UNVERIFIED brief — layout draft only)"),
+    );
   } finally {
     // Chromium must be released even if navigation or a screenshot fails.
     if (browser) await browser.close();

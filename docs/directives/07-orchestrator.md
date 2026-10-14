@@ -30,3 +30,20 @@ node --test supabase/functions/github-admin-gateway/*.test.mjs   # + deno check/
 
 ## Definition of Done
 قرارداد مخزن + pytest سبز (skipها مستند)، Gateway در هر دو runtime سبز، هیچ قابلیت محصولی جدیدی اینجا اضافه نشده، وضعیت بازنشستگی در README به‌روز.
+
+## پروندهٔ این دور (۲۰۲۶-۱۰-۱۴) — نبودِ ابزار ≠ شکستِ پروژه
+
+تا این دور، گامِ `pytest` در هر محیط بدون pytest با `No module named pytest` و وضعیتِ **fail** بیرون می‌زد، در حالی که `deno-gateway` در نبودِ Deno به‌درستی **skip** می‌شد. پیامدِ عملی: «full doctor» در هر ماشینِ تازه قرمز می‌شد و این قرمزی با یک رگرسیونِ واقعی اشتباه گرفته می‌شد — همان خطای تشخیصی که در پزشکی به آن مثبتِ کاذب می‌گویند.
+
+**رفع:** `scripts/doctor.mjs` گزینهٔ `needsModule` گرفت. نبودِ ماژولِ پایتون حالا skip با دستورِ نصب است:
+```
+– pytest   python module 'pytest' is missing; install: python3 -m pip install --user pytest
+```
+و در خروجیِ نهایی زیرِ `skipped (missing tool/deps)` فهرست می‌شود. **skip هرگز pass نیست** و خروجیِ کلِ doctor را سبز نمی‌کند؛ فقط از «شکست» جدا می‌شود.
+
+**پروتکلِ دیباگِ این پروژه (تاریخی):**
+1. اول `python3 scripts/audit/check_repository_contract.py` — سبزشدنِ قرارداد ارزان است و خیلی چیزها را جدا می‌کند.
+2. برای pytest: `python3 -m pip install --user pytest` و بعد `python3 -m pytest -q -ra tests`. انتظار: **۱۶ pass + ۳ skip**.
+3. آن ۳ اسکیپ **آگاهانه**اند: artifactِ تاریخیِ مهارت‌ها در این checkout materialize نشده. پیامِ skip دقیقاً می‌گوید کدام artifact لازم است و فلگِ سخت‌گیرانه (`--require-materialized-skills`) چیست. آن‌ها را با تستِ جعلی سبز نکن — این تنها موردی است که «skip» در این مخزن از روی عمد informational است.
+4. Deno: `deno check --no-remote` و `deno test --no-remote --no-prompt`. `--no-remote` برای تعیین‌ناپذیریِ شبکه الزامی است.
+5. در CI هر دو ابزار نصب‌اند، پس هیچ‌کدام از این گام‌ها آنجا skip نمی‌شوند؛ اگر در CI skip دیدی، تنظیمِ runner را بررسی کن، نه کد را.
