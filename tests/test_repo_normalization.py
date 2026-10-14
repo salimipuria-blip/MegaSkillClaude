@@ -178,10 +178,10 @@ class NormalizationConfigTests(unittest.TestCase):
             r'- package-ecosystem: "([^"]+)"\s+directory: "([^"]+)"'
             r'\s+schedule:\s+interval: "weekly"', config,
         )
-        npm_dirs = {'/psk', '/lithos', '/fjcod', '/bison-brand-book', '/hermes'}
+        npm_dirs = {'/psk', '/lithos', '/fjcod', '/bison-brand-book', '/hermes', '/viking-team/motion'}
         self.assertEqual(set(entries), {('npm', d) for d in npm_dirs} | {('github-actions', '/')})
         self.assertEqual(len(entries), config.count('- package-ecosystem:'))
-        self.assertEqual(len(entries), 6)
+        self.assertEqual(len(entries), 7)
         for ecosystem, directory in entries:
             if ecosystem == 'npm':
                 json.loads((ROOT / directory.lstrip('/') / 'package.json').read_text())
@@ -217,7 +217,8 @@ class NormalizationConfigTests(unittest.TestCase):
         ci = CI.read_text()
         jobs = set(re.findall(r'^  ([\w-]+):\n    runs-on:', ci, re.MULTILINE))
         self.assertEqual(jobs, {'repo-health', 'psk', 'lithos', 'router', 'fjcod',
-                                'bison-brand-book', 'viking-team', 'orchestrator', 'hermes'})
+                                'bison-brand-book', 'viking-team', 'viking-motion',
+                                'orchestrator', 'hermes'})
         health = ci.split('\n  repo-health:\n')[1].split('\n  psk:\n')[0]
         self.assertIn('bash scripts/repo_health_check.sh', health)
         self.assertNotIn('secrets.', health)
@@ -226,6 +227,10 @@ class NormalizationConfigTests(unittest.TestCase):
         self.assertIn('npm ci --prefix hermes --ignore-scripts', hermes)
         self.assertNotIn('working-directory:', hermes)
         self.assertIn('bash -n hermes/setup.sh', hermes)
+        self.assertIn('node --test mobile/search.test.mjs', ci)
+        self.assertIn('python3 scripts/check_brand_assets.py', ci)
+        self.assertIn('node --test tests/doctor.test.mjs', health)
+        self.assertIn('npm ci --prefix viking-team/motion --ignore-scripts', ci)
 
     def test_example_contains_only_empty_values(self):
         values = dict(line.split('=', 1) for line in (ROOT / '.env.example').read_text().splitlines()

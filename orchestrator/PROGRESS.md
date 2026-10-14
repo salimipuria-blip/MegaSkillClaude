@@ -28,7 +28,8 @@ deno test --no-remote --no-prompt supabase/functions/github-admin-gateway/handle
 | `pytest -q -ra tests` | ✅ **۱۶ pass، ۳ skip** |
 | علت skip | اسنپ‌شات تاریخی مهارت‌های Mega Skills در این checkout materialize نشده
   (`skills/registry/BASELINE_ARTIFACTS.json`)؛ گیت سخت‌گیرانه: `--require-materialized-skills` |
-| `deno check/test` | – در این محیط نصب نیست (در CI با `denoland/setup-deno@v2` اجرا می‌شود) |
+| `deno check` | ✅ `github-admin-gateway/index.ts` با Deno 2.9.6 و `--no-remote` بررسی شد |
+| `deno test` | ✅ **۷/۷** روی `handler.test.mjs` با `--no-remote --no-prompt`؛ تست‌ها mock هستند و اثبات دسترسی live Supabase/GitHub نیستند |
 
 ## ۴) این دور چه دیده شد
 - اسکیپ‌ها «مستند» و آگاهانه‌اند، نه پنهان: پیام skip مستقیماً می‌گوید کدام artifact لازم است و
@@ -45,3 +46,5 @@ deno test --no-remote --no-prompt supabase/functions/github-admin-gateway/handle
 ## ۶) لاگ جریان (فقط اضافه می‌شود)
 - **۲۰۲۶-۱۰-۱۴** — اجرای قرارداد و pytest (۱۶ pass/۳ skip مستند)؛ deno در محیط محلی نبود و
   در `scripts/doctor.mjs` به‌درستی skip شد.
+- **۲۰۲۶-۱۰-۱۴ (گیت کامل monorepo)** — `node scripts/doctor.mjs orchestrator` با pytest نصب‌شده در venv موقت: قرارداد OK، **۱۶ pass/۳ skip**؛ `deno-gateway` به‌دلیل نبودن Deno محلی skip شد، نه fail. در CI، Deno نصب و گیت‌های gateway اجرا می‌شوند.
+- **۲۰۲۶-۱۰-۱۴ (تأیید Deno)** — Deno 2.9.6 به‌طور موقت از بستهٔ npm در `/tmp` در دسترس شد؛ `deno check --no-remote` سبز و `deno test --no-remote --no-prompt .../handler.test.mjs` **۷/۷**. full doctor نیز پس از فراهم‌شدن `pytest` و Deno، contract/pytest/Deno check را بدون شکست اجرا کرد؛ ۳ skip مربوط به artifact تاریخی مهارت‌ها همچنان intentional است.

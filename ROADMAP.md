@@ -1,78 +1,65 @@
-# 🗺 نقشهٔ راه بک‌اند و فرانت‌اند — همهٔ پروژه‌ها
+# نقشهٔ راه فنی و محصولی MegaSkillClaude
 
-> تاریخ: ۱۴۰۵/۰۷/۱۹ · مبنا: اجرای واقعی تست و بیلد همهٔ پروژه‌ها در همین مخزن.
-> سیاست ثابت: بودجهٔ صفر دلار، بدون رفتن خودکار به مسیر پولی؛ هیچ کلید یا رمزی در Git.
-> **همهٔ پروژه‌ها حالا در همین مخزن‌اند** (با تاریخچهٔ کامل). نقشهٔ پوشه‌ها: [README.md](README.md).
+> **آخرین بازبینی مستندات: ۲۰۲۶-۱۰-۱۴.** وضعیت کد/تست محلی از دفتر هر پروژه گرفته شده؛ داشتن تست سبز به‌معنی اتصال deployment، اعمال migration یا تأیید سرویس زنده نیست. سیاست ثابت: بودجهٔ صفر، عدم fallback پولی خودکار و صفر secret در Git.
 
-## 📋 فهرست پروژه‌ها و وضعیت فعلی
+این مخزن چند محصول و زیرپروژهٔ مستقل دارد؛ شناسهٔ تست هرکدام در [README](README.md) و [فهرست دستورالعمل‌ها](docs/directives/README.md) آمده است. این جدول خلاصه است؛ **دفتر جریان همان پوشه مرجع جزئیات و آخرین شواهد است.**
 
-| # | پروژه | پوشه | فرانت‌اند | بک‌اند | انتشار | وضعیت |
-|---|---|---|---|---|---|---|
-| ۱ | **MEGA SKILLS 3000** (سایت + موتور ۳۰۰۰ مهارت) | `psk/` | HTML/CSS/JS ایستا | ۳ تابع Vercel، مسیریاب، ۳۰۰۰ SKILL.md با SHA-256 | Vercel `psk-3000` (از همین مخزن) | 🟢 تست ۱۶/۱۶؛ کلید مدل رایگان هنوز اضافه نشده |
-| ۲ | **Lithos Live Intelligence** | `lithos/` | Vite 6.4 | Supabase (فقط مالک) | Vercel `lithos-live-intelligence-vercel-fixed` (از همین مخزن) | 🟢 تست ۳/۳ و بیلد سبز |
-| ۳ | **CHAM Store OS** (FJCOD) | `fjcod/` | React 19 + TypeScript + Vite | ندارد؛ داده در مرورگر | Vercel `cham-store-os` (هنوز از مخزن قدیمی `FJCod`) | 🟡 تست ۲۷/۲۷ و بیلد سبز؛ ورود و داده فقط سمت مرورگر |
-| ۴ | **Viking Experience Command** | `viking-team/` | HTML ایستا + PWA | Supabase Auth + RLS + باکت خصوصی | Vercel (هنوز از مخزن قدیمی) | 🟢 ورود واقعی Supabase برگشته (PR #3 مخزن قدیمی)؛ RLS و فرار HTML بررسی شد |
-| ۵ | **BISON Brand Book** | `bison-brand-book/` | Vite، اسکرول سینمایی | ندارد | GitHub Pages + Vercel `bison.brandbook.site.2026` (هنوز از مخزن قدیمی) | 🟢 بیلد درست شد (نشانگر ادغام نیمه‌کاره در `index.html` بیلد را می‌شکست) |
-| ۶ | **Omni LLM Orchestrator** | `orchestrator/` | — | ۱۰ تابع Supabase Edge | Supabase | 🟡 ۱۳ تست قرارداد سبز؛ هم‌پوشانی با موتور MEGA SKILLS 3000؛ تاریخی |
+## ۱) وضعیت فعلی بر اساس مرز پروژه
 
-مخزن `Viking` فقط یک README خالی داشت و چیزی برای انتقال نداشت. مخزن‌های `POORS` و `Bison-Z-Weekly-*` در فهرست مخزن‌های قابل‌دسترسی نیستند.
-
-## 🚨 فاز ۰ — فوری (این هفته)
-
-| اولویت | کار | پروژه | چرا |
+| پروژه | پوشه | وضعیت مهندسی | شکاف مهم / مرز تأیید |
 |---|---|---|---|
-| P0 | تصمیم دربارهٔ دیتابیس CHAM (شاخهٔ ادغام‌نشدهٔ `claude/cham-supabase-schema` در مخزن قدیمی هست) | CHAM | داده فقط در مرورگر هر دستگاه است؛ پاک شدن حافظهٔ مرورگر = از دست رفتن فروش |
-| P0 | وصل کردن Vercel/Pages پروژه‌های ۳ تا ۵ به همین مخزن (Root Directory = نام پوشه)، بعد بایگانی مخزن‌های قدیمی | CHAM، Viking، BISON | یک منبع حقیقت؛ تغییرات اینجا هنوز روی سایت‌های زنده نمی‌روند |
-| P1 | افزودن یک کلید مدل رایگان (Groq یا Google AI Studio) در Vercel | MEGA SKILLS 3000 | حالت «پاسخ» موتور فعال شود |
-| ~~P2~~ | ~~`npm audit fix` برای `source-map-js`~~ | BISON | در اجرای ۲۰۲۶-۱۰-۱۴ هر دو `npm audit` و `npm audit --omit=dev` صفر آسیب‌پذیری دادند؛ این آیتم منقضی است |
+| **MEGA SKILLS 3000** | `psk/` | موتور مهارت، API، سنجهٔ کیفیت و golden suite فعال؛ ۴۷ تست و دقت top-1 ۹۵٪ طبق `psk/PROGRESS.md` | Answer Mode به کلید/پیکربندی provider رایگان مالک نیاز دارد؛ `NO_PROVIDER_CONFIGURED` بدون کلید رفتار درست است؛ تست live فقط با deployment و کلید واقعی |
+| **Hermes** | `hermes/`, `tasks/`, `observability/` | Worker، SQLite Durable Object، استودیوی تصویر/متن، تست واحد و integration محلی | انتشار Worker با migration و bindingهای فعلی هنوز جداگانه باید تأیید شود؛ برنامه‌ریز تسک read-only است |
+| **CHAM Store OS** | `fjcod/` | React 19 + TypeScript + Vite؛ ۳۳ تست واحد و E2E اختیاری | **برای دادهٔ مالی/حساس production-safe نیست:** backend/Auth/RLS سروری هنوز اعمال نشده؛ دادهٔ مرورگر و رمزهای اولیه ریسک‌اند |
+| **Lithos Live Intelligence** | `lithos/` | تست handler و build؛ رد پاسخ Buffer خالی به‌جای snapshot صفر | GraphQL/metricهای Buffer راستی‌آزمایی زنده نشده‌اند؛ `api/buffer-sync.js` بخشی بازسازی شده است |
+| **Viking Experience Command** | `viking-team/` | چک‌های static، Node و Python؛ Auth/RLS و private bucket در کد/SQL | migration، پنج حساب، RLS و upload HEIC روی Supabase/iPhone زنده تأیید نشده؛ انتشار هنوز ممکن است از مخزن قدیمی باشد |
+| **Viking Motion Study** | `viking-team/motion/` | نمونهٔ جداگانهٔ Remotion؛ dependency lock و typecheck strict اضافه شده | prototype است، در `/team/` ادغام نشده؛ typecheck به‌معنی رندر MP4 یا تأیید UX نیست |
+| **BISON Brand Book** | `bison-brand-book/` | Vite/GSAP/Lenis build و audit طبق دفتر پروژه | smoke/accessibility خودکار محدود است؛ Pages/Vercel قدیمی باید به یک منبع انتشار تبدیل شود |
+| **Omni LLM Orchestrator** | `orchestrator/` | وضعیت تاریخی؛ قرارداد و pytest با ۳ skip مستند | قابلیت محصولی جدید نساز؛ ابتدا تاریخچه/تابع‌های تکراری را با تست قرارداد بازنشسته کن |
+| **Skill library/router** | `.claude/skills/`, `library/`, `plugins/` | canonical source و sync check؛ مصرف‌کننده‌ها PSK، Hermes، plugin و mobile هستند | indexهای مشتق‌شده را دستی تغییر نده؛ countهای هر package ممکن است به‌خاطر scope/مهارت‌های ناقص متفاوت باشد |
+| **کنسول آیفون مگااسکیل** | `mobile/` | ۵٬۷۳۸ مهارت، جست‌وجوی local، HTML escaping، fingerprint نسخه‌دار PWA و تست‌های Node/Python | Safari/iOS واقعی و زمان بارگذاری ۲٫۲MB خام هنوز روی دستگاه تأیید نشده؛ VS Code وب ترمینال نیست |
+| **استیکرهای وایکینگ** | `brands/viking-offroad/` | validator ایستای ۱۲ پک/۳۶۰ فایل ۵۱۲×۵۱۲ RGBA + ۱۲ preview و cover | validator طراحی/کیفیت هر پیکسل را نمی‌سنجد؛ بازبینی تصویری release لازم است |
+| **قالب محتوای وایکینگ** | `brand/viking/` | validator محلی و نحو renderer؛ مسیرهای hard-code مرورگر برداشته شده | رندر واقعی Chromium و بازبینی خروجی این محیط تأیید نشده؛ پالت این قالب از پالت استیکر جدا است |
 
-## 🧱 فاز ۱ — زیرساخت مشترک (هفتهٔ ۱ تا ۴)
+## ۲) اولویت‌های اجرایی
 
-### بک‌اند
-- **یک Supabase مشترک** برای احراز هویت، پایگاه داده و فایل؛ هر پروژه اسکیمای جدا (`psk_*`، `cham_*`، `viking_*`) با RLS.
-- **یک موتور واحد:** مسیر درخواست در توابع Vercel پروژهٔ MEGA SKILLS 3000 بماند؛ توابع تکراری Supabase در Orchestrator (`skill-router`، `free-llm-router`، `skill-orchestrator`) پس از تست قرارداد بازنشسته شوند. Orchestrator فقط مخزن مهاجرت و مستندات بماند.
-- **مدیریت کلیدها:** فقط در Vercel/Supabase Secrets؛ چرخش دوره‌ای.
-- **CI واحد:** `.github/workflows/ci.yml` تست و بیلد هر هفت پروژه را روی هر PR اجرا می‌کند. ✅
+### P0 — ریسک داده و انتشار
+1. **CHAM:** از دادهٔ هر دستگاه backup بگیر؛ تصمیم backend/auth بگیر؛ migration schema/RLS را فقط پس از review روی staging اجرا کن؛ RPC فروش/کسر موجودی باید اتمیک و idempotent باشد؛ رمزهای اولیهٔ منتشرشده را حذف/rotate کن. تا وقتی این گیت‌ها پاس نشده‌اند، دادهٔ واقعی حساس وارد نشود.
+2. **اتصال انتشار:** Vercel/Pages پروژه‌های CHAM، Viking و BISON را با Root Directory پوشهٔ همان پروژه به این مخزن وصل کن؛ deployment واقعی را بررسی کن؛ بعد مخزن قدیمی را Archive کن، نه حذف.
+3. **Viking:** migration/RLS، حساب‌های آزمایشی و policy باکت را روی staging ثابت کن؛ سپس ورود/آپلود از iPhone را به‌عنوان آزمون جدا ثبت کن.
+4. **Lithos:** کوئری Buffer و metricها را با پاسخ واقعی و پنل Buffer تطبیق بده؛ تا آن زمان دادهٔ خالی را به صفر واقعی تبدیل نکن.
 
-### فرانت‌اند
-- **سیستم طراحی مشترک:** توکن‌های رنگ/فاصله برای هر برند (MEGA SKILLS 3000 آبی، نمونه‌کار کاغذی/قرمز، BISON آهن/طلا، CHAM کرم/سرمه‌ای) در یک فایل `tokens.css` در هر مخزن.
-- **فونت فارسی آزاد:** Vazirmatn یا IBM Plex Sans Arabic (مجوز OFL) جایگزین فونت‌های بدون مجوز.
-- **استاندارد مشترک:** راست‌به‌چپ، اعداد فارسی، تاریخ شمسی، حالت کاهش حرکت، کنتراست AA، بدون اسکرول افقی در ۳۲۰px.
+### P1 — کیفیت، release و observability
+- **PSK:** کلید رایگان provider را فقط مالک در secret manager پیکربندی کند؛ تست Answer Mode و نرخ/سهمیه را بدون افشای secret ثبت کند. مجموعهٔ routing gold را با بازبینی انسانی رشد بده.
+- **Hermes:** اجرای W1 از `tasks/README.md` با تست‌های failure/retry؛ پس از انتشار کنترل‌شده، health، SQLite migration و webhook را از چت خصوصی راستی‌آزمایی کن.
+- **BISON:** smoke test لینک/تصویر و reduced-motion؛ performance و دسترس‌پذیری موبایل را اندازه بگیر.
+- **Mobile:** Safari iOS offline → reconnect → update واقعی؛ سپس اگر bottleneck اندازه‌گیری شد، ایندکس domain-split یا فشرده‌سازی را بررسی کن.
+- **برند:** CI به‌طور ایستا ساختار/مسیرها را می‌سنجد؛ برای استیکر و template renderer، preview تصویری به‌صورت artifact موقت تولید و انسانی بازبینی شود.
+- **Motion:** تأیید dependency lockfile/typecheck؛ رندر ۱۸۰ فریم و reduced-motion قبل از هر ادغام محصولی.
 
-## 🚀 فاز ۲ — قابلیت‌های محصول (ماه ۲ تا ۳)
+### P2 — مقیاس (پس از پایداری)
+- CHAM: صف آفلاین/outbox و حل تعارض تنها پس از backend و تراکنش امن؛ سپس import کالا و گزارش اختلاف صندوق.
+- PSK: نشست HttpOnly، تاریخچهٔ تسک با RLS و اجرای ابزار مستقل؛ فقط با threat model و محدودیت هزینه.
+- Viking: رسانهٔ بیشتر و داشبورد سلامت پس از اثبات authorization و سقف اعضا.
+- Orchestrator: بازنشستگی تدریجی توابع Supabase تکراری پس از پوشش قرارداد در PSK.
 
-| پروژه | بک‌اند | فرانت‌اند | معیار موفقیت |
-|---|---|---|---|
-| **MEGA SKILLS 3000** | نشست کوکی به‌جای چسباندن کلید؛ تاریخچهٔ وظایف در Supabase | بازسازی روایت ۳۰ فریمی؛ PWA قابل نصب؛ نصب ۳۰۰۰ مهارت در Claude Code | ✅ ارزیابی مسیریاب با مجموعهٔ طلایی در CI اضافه شد (`npm run routing:accuracy`، آستانهٔ ۸۰٪). اندازه‌گیری ۲۰۲۶-۱۰-۱۴: **top-1 ۹۵٪ · top-3 ۱۰۰٪**؛ باقی‌مانده: پاسخ واقعی مدل رایگان |
-| **CHAM** | انتقال داده به Supabase با ورود سمت سرور؛ همگام‌سازی صف مشاور؛ کار آفلاین | ورود گروهی کالا از اکسل؛ چاپ برچسب بارکد | اختلاف صندوق < ۰٫۵٪؛ دو دستگاه هم‌زمان |
-| **Viking** | تست خودکار RLS و سقف ۵ عضو؛ دعوت ۴ عضو | فعال‌سازی دوبارهٔ رسانه؛ تست آپلود HEIC از آیفون | ۵ حساب فعال؛ آپلود موفق از آیفون |
-| **نمونه‌کار** | فرم تماس → Supabase + اعلان | بخش نمونه‌کار واقعی با تصاویر مجاز | لید ماهانه از سایت |
-| **Bison Z** | جدول تقویم محتوای هفتگی در Supabase | یکی کردن دو نسخهٔ HTML در یک مخزن | یک مخزن مرجع |
+## ۳) اصول مشترک معماری و release
 
-## 📈 فاز ۳ — مقیاس (ماه ۳ تا ۶)
-- **CHAM → محصول FJCOD:** چندمستأجری، کنسول اشتراک، سامانهٔ مؤدیان، کارتخوان.
-- **MEGA SKILLS 3000:** اجرای ابزار (MCP) با صف کار مستقل؛ پنل مدیریت مهارت‌ها.
-- **نظارت:** لاگ خطای Vercel، هشدار سهمیهٔ رایگان و توقف امن در صورت اتمام سهمیه.
+- یک منبع canonical برای هر داده: مهارت‌ها از router؛ ایندکس موبایل با `mobile/build-index.py`; هیچ خروجی generated دستی اصلاح نشود.
+- Supabase هر محصول باید schema/RLS جدا و secretهای محدود داشته باشد؛ anon/publishable کلید عمومی است و جای RLS نیست.
+- هیچ migration روی دیتابیس واقعی بدون backup، review، rollback و staging test اجرا نشود.
+- CI فقط کد موجود در checkout را می‌سنجد. تست mocked/static را با تست live Auth, RLS, provider, browser یا deployment یکی ندان.
+- معیار رابط مشترک: فارسی/RTL، کنتراست مناسب، حرکت قابل‌کاهش، بدون overflow در ۳۲۰px، و نمایش خطاهای شبکه بدون جعل داده.
+- برای تاریخچهٔ تغییرات، همان نوبت `PROGRESS.md` پروژه را با فرمان، خروجی، محدودیت و اقدام بعدی به‌روز کن؛ [روال ثبت جریان](docs/directives/README.md) الزام است.
 
-## 📊 شاخص‌های کلیدی
+## ۴) معیارهای موفقیت
 
-| شاخص | هدف |
+| شاخص | هدف/گیت |
 |---|---|
-| بیلد سبز روی `main` همهٔ پروژه‌ها | ۱۰۰٪ |
-| کلید/رمز در Git | ۰ |
-| هزینهٔ ماهانهٔ زیرساخت | ۰ تومان (سطح رایگان) |
-| زمان بارگذاری صفحهٔ اول روی موبایل (LCP) | < ۲٫۵ ثانیه |
-| پوشش تست هر PR | `check` + `test` اجباری |
-
-## ❓ موارد نامشخص (نیازمند پاسخ)
-- CHAM واقعاً در فروشگاه استفاده می‌شود؟ (تعیین‌کنندهٔ فوریت دیتابیس)
-
-
-## به‌روزرسانی سخت‌سازی — 2026-10-12
-
-اصلاحات امنیت Gateway و هرمس، حافظهٔ SQLite توزیع‌شده، رسانهٔ وایکینگ، نشست موقت CHAM،
-وابستگی BISON و مسیریابی مهارت‌های ناقص در کد این شاخه آماده و محلی تست شده‌اند.
-**انتشار زنده انجام نشده و مهاجرت واقعی CHAM به بک‌اند هنوز باز است.**
-تست نصب تاریخی Orchestrator بدون artifacts بیرونی به‌صورت روشن skip می‌شود؛ گیت سخت‌گیرانه
-`--require-materialized-skills` پس از materialization لازم است. جزئیات و مراحل فعال‌سازی:
-[REPO_HARDENING.md](docs/REPO_HARDENING.md).
+| CI پروژهٔ تغییرکرده | تمام jobهای مرتبط سبز؛ failure را با حدس/flaky نادیده نگیر |
+| secret در Git یا log | صفر؛ در صورت افشا rotate و incident ثبت شود |
+| CHAM برای دادهٔ حساس | ممنوع تا backend/Auth/RLS و restore واقعی تأیید شود |
+| routing | golden بدون regression؛ accuracy با gold label انسانی گزارش شود |
+| هزینهٔ provider | free-tier و fail-closed؛ fallback پولی خودکار ممنوع |
+| موبایل | اندازه‌گیری واقعی روی دستگاه؛ هدف اولیه LCP کمتر از ۲٫۵ ثانیه، بدون ادعای تست‌نشده |
+| دارایی بصری | validator ساختاری + بازبینی تصویری انسانی، هر دو لازم |

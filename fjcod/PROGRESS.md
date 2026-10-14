@@ -25,8 +25,8 @@ npm run build && npm run e2e   # اسموک مرورگر (نیازمند Chromiu
 | بررسی | نتیجه |
 |---|---|
 | `npm run check` (typecheck + test + build) | ✅ **۳۳/۳۳** تست، باندل `index.js` ۳۷۴kB (gzip ۱۱۴kB) |
-| `npm run e2e` بدون مرورگر | ✅ خروج ۰ با پیام «skip» (قبلاً کرش می‌کرد — بند ۴) |
-| `E2E_STRICT=1 npm run e2e` بدون مرورگر | ✅ خروج ۲ (شکست عمدی، برای CI) |
+| `npm run e2e` با Chromium headless 153 | ✅ **۱۹/۱۹** مرحله؛ ورود نقش‌ها، صندوق/سبد، شیفت، بدون console error؛ دسکتاپ و viewport موبایل 390×844 |
+| `npm run e2e` بدون مرورگر | ✅ خروج ۰ با پیام «skip»؛ `E2E_STRICT=1` خروج ۲ (قرارداد skip/fail-closed هم تأیید شد) |
 | `npm audit --omit=dev` | ✅ صفر آسیب‌پذیری |
 
 ## ۴) دیباگ این دور (مشکل واقعی و اصلاح‌شده)
@@ -57,3 +57,6 @@ npm run build && npm run e2e   # اسموک مرورگر (نیازمند Chromiu
 ## ۶) لاگ جریان (فقط اضافه می‌شود)
 - **۲۰۲۶-۱۰-۱۴** — رفع کرش `npm run e2e` (شناسایی چندمسیرهٔ مرورگر + skip با پیام دقیق +
   حالت `E2E_STRICT`)، تضمین بسته‌شدن پورت preview، مستندسازی رفتار اسکریپت. تست‌ها ۳۳/۳۳ سبز.
+- **۲۰۲۶-۱۰-۱۴ (گیت کامل monorepo)** — نصب تمیز `npm ci` و `node scripts/doctor.mjs fjcod` موفق؛ typecheck، **۳۳ تست Vitest** و build سبز. در همان مرحله Chromium system پیدا نشد و E2E skip شد.
+- **۲۰۲۶-۱۰-۱۴ (مرورگر موقت)** — Chromium headless از بستهٔ npm در `/tmp` استخراج و با `LD_LIBRARY_PATH` لازم اجرا شد؛ پس از build، `CHROMIUM_PATH=/tmp/chromium npm run e2e` واقعاً اجرا شد: **۱۹/۱۹ مرحله سبز**، بدون خطای console، شامل دسکتاپ، viewport موبایل 390×844، نقش‌ها، فروش و بستن شیفت. مرورگر/iOS Safari واقعی نیست؛ فایل‌های screenshot فقط در `e2e-shots/` نادیده‌گرفته‌شده‌اند.
+- **۲۰۲۶-۱۰-۱۴ (بازاجرای نهایی)** — `CHROMIUM_PATH=/tmp/chromium LD_LIBRARY_PATH=/tmp/al2023/lib npm run e2e`: **۱۹/۱۹** دوباره سبز؛ تأیید کرد که نتیجهٔ full doctor با binary صریح مرورگر نیز قابل تکرار است. Safari/iPhone واقعی همچنان خارج از این smoke است.

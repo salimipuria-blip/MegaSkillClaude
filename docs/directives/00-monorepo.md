@@ -4,9 +4,10 @@
 یک منبع حقیقت برای همهٔ پروژه‌ها: کد، تست، CI و انتشار از همین مخزن. هر پروژه پوشهٔ مستقل دارد و CI واحد (`.github/workflows/ci.yml`) روی هر PR همهٔ jobها را اجرا می‌کند.
 
 ## وضعیت فعلی (شواهد)
-- CI شامل jobهای `repo-health`, `psk`, `lithos`, `router`, `fjcod`, `bison-brand-book`, `viking-team`, `orchestrator`, `hermes` + CI اختصاصی path-filtered هرمس (`.github/workflows/ci-hermes.yml`) است.
-- **بدهی اصلی:** `fjcod/`، `viking-team/` و `bison-brand-book/` هنوز از مخزن‌های قدیمی منتشر می‌شوند؛ تغییرات اینجا روی سایت زنده نمی‌رود.
-- مجموع آخرین ممیزی محلی: ۱۵۱ تست یکتا سبز، ۳ skip مستند تاریخی (جزئیات: `docs/REPO_HARDENING.md`).
+- `.github/workflows/ci.yml` همهٔ jobهای monorepo را روی PR اجرا می‌کند: repo-health (شامل mobile/brand assets)، PSK، Lithos، Router، CHAM، BISON، Viking Team، Viking Motion، Orchestrator و Hermes؛ Hermes یک workflow path-filtered جدا هم دارد.
+- **بدهی انتشار:** `fjcod/`، `viking-team/` و `bison-brand-book/` هنوز از مخزن/اتصال‌های قدیمی منتشر می‌شوند؛ تغییر اینجا الزاماً روی سایت زنده نمی‌رود.
+- تعداد تست‌ها/skipها بین پروژه‌ها متفاوت و در `PROGRESS.md` ثبت می‌شود؛ اجرای دقیق همهٔ گیت‌ها: `node scripts/doctor.mjs`. جمع قدیمی `docs/REPO_HARDENING.md` تاریخچه است، نه شمارندهٔ امروز.
+- `doctor` آرگومان‌های quoted را بدون shell parse می‌کند؛ `tests/doctor.test.mjs` مانع false-green از unittest با صفر تست کشف‌شده می‌شود.
 
 ## دستورهای پایه
 ```bash

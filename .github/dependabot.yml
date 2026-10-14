@@ -1,7 +1,7 @@
 version: 2
 updates:
-  # Only actual application manifests, not vendored skill examples.
-  # No root npm manifest or orchestrator pip manifest exists yet.
+  # Actual runnable project manifests only; ignore vendored skill examples.
+  # No root npm manifest or orchestrator pip manifest exists.
   - package-ecosystem: "npm"
     directory: "/psk"
     schedule:
@@ -20,6 +20,10 @@ updates:
       interval: "weekly"
   - package-ecosystem: "npm"
     directory: "/hermes"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "npm"
+    directory: "/viking-team/motion"
     schedule:
       interval: "weekly"
   - package-ecosystem: "github-actions"
