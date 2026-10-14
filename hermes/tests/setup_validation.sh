@@ -38,8 +38,22 @@ EVIL=$(touch /tmp/hermes-pwned)
 LOG_LEVEL=debug
 EOF
 rm -f /tmp/hermes-pwned
+unset GEMINI_API_KEY   # so "loaded" below means the loader did it, not the ambient environment
 load_env_file "$tmp_env" 2>/dev/null
 [ "${GEMINI_API_KEY:-}" = "test-key-1234567890" ] && pass "env loader: allow-listed key loaded" || fail "env loader: allow-listed key loaded"
+# The loaded key must be *exported* (a child process has to see it): setting a shell variable only
+# would make the bot start without its keys.
+child_key=$(bash -c 'printf %s "${GEMINI_API_KEY:-}"')
+[ "$child_key" = "test-key-1234567890" ] && pass "env loader: key reaches child processes" || fail "env loader: key reaches child processes (got '$child_key')"
+# Same for the mounted-secrets path (K8s-style lowercase files).
+tmp_secrets=$(mktemp -d)
+printf '%s' 'mounted-key-1234567890' > "$tmp_secrets/gemini_api_key"
+unset GEMINI_API_KEY
+load_mounted_secrets "$tmp_secrets" 2>/dev/null
+child_mounted=$(bash -c 'printf %s "${GEMINI_API_KEY:-}"')
+[ "$child_mounted" = "mounted-key-1234567890" ] && pass "mounted secrets: key reaches child processes" || fail "mounted secrets: key reaches child processes (got '$child_mounted')"
+rm -rf "$tmp_secrets"
+load_env_file "$tmp_env" 2>/dev/null   # restore the env-file state for the checks below
 [ -z "${UNKNOWN_KEY:-}" ] && pass "env loader: unknown key ignored" || fail "env loader: unknown key ignored"
 [ ! -e /tmp/hermes-pwned ] && pass "env loader: no command execution" || fail "env loader: no command execution"
 rm -f "$tmp_env"
