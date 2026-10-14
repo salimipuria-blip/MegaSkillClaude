@@ -908,12 +908,15 @@ test('booking is sent privately only to the owner (not other admins), with no pa
   assert.ok(env.MEMORY.store.get(`booking:${data.id}`));
 });
 
-test('booking rate limit: 5 per hour per IP', async () => {
+test('booking rate limit: 5 per hour per IP, with retry timing and hashed KV keys', async () => {
   const env = baseEnv();
   bookingFetch();
   for (let i = 0; i < 5; i++) assert.equal((await book(env, okBody, '9.9.9.9')).status, 200);
-  assert.equal((await book(env, okBody, '9.9.9.9')).status, 429);
+  const limited = await book(env, okBody, '9.9.9.9');
+  assert.equal(limited.status, 429);
+  assert.ok(Number(limited.headers.get('retry-after')) > 0);
   assert.equal((await book(env, okBody, '8.8.8.8')).status, 200);
+  assert.equal([...env.MEMORY.store.keys()].some((key) => key.includes('9.9.9.9')), false);
 });
 
 test('owner /trip command returns the public page link', async () => {

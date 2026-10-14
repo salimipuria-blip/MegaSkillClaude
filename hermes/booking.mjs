@@ -5,6 +5,7 @@
 // No payment info goes out from here: the team contacts the traveller. After payment there is no cancellation.
 
 import { TRIP_HERO, TRIP_LOGO } from './trip-media.mjs';
+import { consumeFixedWindow } from './rate-limit.mjs';
 
 export const TRIP = {
   title: 'کمپ کنار دریاچه و پدل‌سواری',
@@ -76,10 +77,17 @@ const teamText = (id, k) => `🆕 رزرو جدید · کد ${id}\n${TRIP.title}
 export async function createBooking(env, tg, request, body) {
   if (!env.MEMORY) return { status: 503, data: { error: 'رزرو موقتاً در دسترس نیست.' } };
   const ip = request.headers.get('cf-connecting-ip') || 'unknown';
-  const rlKey = `bk:rl:${ip}`;
-  const used = Number(await env.MEMORY.get(rlKey)) || 0;
-  if (used >= 5) return { status: 429, data: { error: 'تعداد درخواست‌ها زیاد شد؛ یک ساعت دیگه دوباره امتحان کن.' } };
-  await env.MEMORY.put(rlKey, String(used + 1), { expirationTtl: 3600 });
+  const rate = await consumeFixedWindow(env.MEMORY, 'booking', ip, { limit: 5, windowSeconds: 3600 });
+  if (rate.status === 'unavailable') {
+    return { status: 503, data: { error: 'رزرو موقتاً در دسترس نیست.' } };
+  }
+  if (!rate.allowed) {
+    return {
+      status: 429,
+      data: { error: 'تعداد درخواست‌ها زیاد شد؛ کمی بعد دوباره امتحان کن.' },
+      headers: { 'retry-after': String(rate.retryAfterSeconds) },
+    };
+  }
   const { booking, error } = validate(body);
   if (error === 'spam') return { status: 200, data: { id: 'ok' } };
   if (error) return { status: 400, data: { error } };

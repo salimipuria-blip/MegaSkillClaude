@@ -40,4 +40,6 @@ as explicit skips. Partial or damaged installs are **not** skipped. After materi
 `python -m pytest -q --require-materialized-skills tests` as the mandatory strict gate. Skips
 are not evidence of a completed skill installation.
 
+Security controls and release gates: [SECURITY_NOTES.md](docs/SECURITY_NOTES.md).
+
 Monorepo hardening/rollout notes: [REPO_HARDENING.md](../docs/REPO_HARDENING.md).
