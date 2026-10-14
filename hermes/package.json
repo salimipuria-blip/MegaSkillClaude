@@ -6,7 +6,7 @@
     "postinstall": "node build-skills.mjs && node sync-secrets.mjs",
     "test": "node --test worker.test.mjs webhook-setup.test.mjs rate-limit.test.mjs health.test.mjs photo-edit.test.mjs",
     "test:integration": "node --test conversation.test.mjs",
-    "check": "node --check worker.mjs && node --check photo-edit.mjs && node --check entry.mjs && node --check brain.mjs && node --check conversation.mjs && node --check memory.mjs && node --check security.mjs && node --check rate-limit.mjs && node --check webhook-setup.mjs && node --check health.mjs && node --check resilience.mjs && node --check metrics.mjs",
+    "check": "node --check worker.mjs && node --check photo-edit.mjs && node --check upscale.mjs && node --check image-bytes.mjs && node --check entry.mjs && node --check brain.mjs && node --check conversation.mjs && node --check memory.mjs && node --check security.mjs && node --check rate-limit.mjs && node --check webhook-setup.mjs && node --check health.mjs && node --check resilience.mjs && node --check metrics.mjs",
     "setup:webhook": "node webhook-setup.mjs",
     "test:shell": "bash tests/setup_validation.sh",
     "lint:shell": "bash -n setup.sh config.sh logger.sh tests/setup_validation.sh"

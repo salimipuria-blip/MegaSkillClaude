@@ -8,7 +8,9 @@ import {
   runEdit, reviewEdit, scoreParts, rubricWeights, polishPhoto, editCaption, variationsCaption,
   handlePhotoEdit, continueEdit, followUpRequest, rememberEdit, recallEdit, imageInfo, frameDrift, faDigits,
   band, EDIT_OPS, CF_EDIT_MODELS, TEXT_ASK, QUALITY_BAR, MIN_DELIVER, LADDER, OP_STRENGTH,
+  pickRequest, rememberVariations, recallVariations, refineTake,
 } from './photo-edit.mjs';
+import { upscaleImage, worthUpscaling, UPSCALE_TARGET } from './upscale.mjs';
 import worker, { webhookSecret } from './worker.mjs';
 
 const OWNER = '123456789';
@@ -34,6 +36,8 @@ function pngB64(width, height, fill = 0) {
   return toB64(bytes);
 }
 const PNG_160x120 = pngB64(160, 120, 7);
+// A photo with the dimensions of a real phone picture (the bytes stay small, the header is honest).
+const PNG_BIG = pngB64(2400, 1600, 11);
 const PNG_1024 = pngB64(1024, 1024, 9);
 // A minimal JPEG whose APP0 segment length matches its payload, then a SOF0 frame header.
 const jpegBytes = (w, h) => [0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10, ...new Array(14).fill(0),
@@ -163,7 +167,7 @@ test('a mixed request (edit + text) edits the photo and says the text was left o
 // 2. Pixels we can prove
 // ---------------------------------------------------------------------------------------
 
-test('image dimensions are decoded from JPEG, PNG and WebP without any dependency', () => {
+test('image dimensions are decoded from JPEG, PNG and WebP without any dependency', async () => {
   assert.deepEqual(imageInfo(Uint8Array.from(jpegBytes(800, 600))), { mime: 'image/jpeg', width: 800, height: 600 });
   assert.deepEqual(imageInfo(Buffer.from(PNG_160x120, 'base64')), { mime: 'image/png', width: 160, height: 120 });
   const vp8 = new Uint8Array(40); vp8.set([0x52, 0x49, 0x46, 0x46]); vp8.set([0x57, 0x45, 0x42, 0x50], 8);
@@ -173,11 +177,18 @@ test('image dimensions are decoded from JPEG, PNG and WebP without any dependenc
   assert.equal(imageInfo(Buffer.from('definitely not an image, just text padding here', 'utf8')), null);
 });
 
-test('frame drift is measured, and digits are printed in Persian', () => {
+test('frame drift is measured, and digits are printed in Persian', async () => {
   assert.equal(frameDrift({ width: 1000, height: 1000 }, { width: 1000, height: 1000 }), 0);
   assert.ok(frameDrift({ width: 1000, height: 1000 }, { width: 1000, height: 500 }) > 90);
   assert.equal(frameDrift(null, { width: 10, height: 10 }), 0);
   assert.equal(faDigits('1024x768 (91/100)'), '۱۰۲۴x۷۶۸ (۹۱/۱۰۰)');
+  // the engine, the upscaler and the worker all share one decoder: photo-edit re-exports this module
+  const shared = await import('./image-bytes.mjs');
+  assert.equal(shared.imageInfo(jpegBytes(320, 240) && Uint8Array.from(jpegBytes(320, 240))).width, 320);
+  assert.equal(shared.faDigits(7), '۷');
+  assert.equal(shared.EDIT_MAX_BYTES, 8 * 1024 * 1024);
+  assert.equal(shared.mimeOf(Uint8Array.from([0x89, 0x50, 0x4e, 0x47])), 'image/png');
+  assert.equal(typeof shared.bytesToBase64(new Uint8Array([1, 2, 3])), 'string');
 });
 
 // ---------------------------------------------------------------------------------------
@@ -544,6 +555,172 @@ test('continueEdit applies the delta to the remembered plan', async () => {
 });
 
 // ---------------------------------------------------------------------------------------
+// 7b. Picking a delivered version, and the final quality pass
+// ---------------------------------------------------------------------------------------
+
+test('a pick can be written in Persian or English, with digits or ordinals', () => {
+  assert.equal(pickRequest('نسخهٔ ۲').take, 2);
+  assert.equal(pickRequest('نسخه 3 رو انتخاب می‌کنم').take, 3);
+  assert.equal(pickRequest('شمارهٔ ۱ بهتره').take, 1);
+  assert.equal(pickRequest('دومی').take, 2);
+  assert.equal(pickRequest('نسخهٔ سوم را ادامه بده').take, 3);
+  assert.equal(pickRequest('version 2 please').take, 2);
+  assert.equal(pickRequest('take 3').take, 3);
+  assert.equal(pickRequest('#2').take, 2);
+  assert.equal(pickRequest('سلام خوبی'), null);
+  assert.equal(pickRequest('x'.repeat(200)), null);
+});
+
+test('the variations set is remembered with its plan, within a size budget', async () => {
+  const env = baseEnv();
+  const takes = (img) => ({ variations: [{ image: img, mime: 'image/png', variant: 'safe', variantLabel: 'محافظه‌کارانه',
+    strength: 0.3, review: { derived: true, score: 85 } }, { image: img, mime: 'image/png', variant: 'balanced',
+    variantLabel: 'متعادل', strength: 0.4, review: { derived: true, score: 90 } }], op: 'color', request: 'سینمایی کن' });
+  assert.equal(await rememberVariations(env, 'k', takes(PNG_160x120)), true);
+  const set = await recallVariations(env, 'k');
+  assert.equal(set.takes.length, 2);
+  assert.equal(set.takes[1].variantLabel, 'متعادل');
+  assert.equal(set.takes[1].score, 90);
+  assert.equal(set.op, 'color');
+  // a set that cannot fit is simply not remembered (picking is then unavailable, nothing breaks)
+  const huge = takes('A'.repeat(7_000_000));
+  assert.equal(await rememberVariations(env, 'big', huge), true, 'one take still fits');
+  assert.equal((await recallVariations(env, 'big')).takes.length, 1);
+  assert.equal(await rememberVariations(env, 'none', { variations: [] }), false);
+  assert.equal(await recallVariations({}, 'k'), null);
+});
+
+test('refineTake continues the picked version at that version\'s own strength', async () => {
+  const env = baseEnv();
+  const { ask, prompts } = studio({ brief: briefJson() });
+  const recalled = { image: PNG_BIG, mime: 'image/png', request: 'سینمایی کن', op: 'color',
+    takes: [{ image: EDIT_PNG, mime: 'image/png', variant: 'safe', variantLabel: 'محافظه‌کارانه', strength: 0.2, score: 85 },
+      { image: EDIT_PNG, mime: 'image/png', variant: 'bold', variantLabel: 'جسورانه', strength: 0.6, score: 92 }] };
+  const out = await refineTake(env, ask, recalled, 2);
+  assert.equal(out.picked, 2);
+  assert.equal(out.op, 'color');
+  assert.match(out.caption, /نسخهٔ ۲ \(جسورانه\) انتخاب شد/);
+  assert.match(out.caption, /دقیق‌ترش کردم/);
+  assert.match(prompts[0], /continue the جسورانه take/);
+  assert.ok(out.strength > 0.5, 'the picked version\'s strength became the base');
+  // an index outside the set is handled by the caller (worker answers with a clear message)
+  assert.equal(await refineTake(env, ask, recalled, 9), null);
+});
+
+// ---- the final quality pass ----
+const stabilityFetch = ({ dims = [2048, 2048], status = 200, finish = 'SUCCESS', b64 = null } = {}) => {
+  const calls = [];
+  globalThis.fetch = async (url, init) => {
+    calls.push({ url: String(url), headers: init && init.headers, body: init && init.body });
+    if (status !== 200) return jsonRes({ errors: ['bad key'] }, status);
+    const data = b64 || pngB64(dims[0], dims[1], 3);
+    return jsonRes({ image: data, seed: 1, finish_reason: finish });
+  };
+  return calls;
+};
+
+test('the upscaler sends the picture to Stability and returns verified, bigger pixels', async () => {
+  const env = { STABILITY_API_KEY: 'sk-test' };
+  const calls = stabilityFetch({ dims: [2048, 2048] });
+  const out = await upscaleImage(env, PNG_1024, 'image/png', { prompt: 'a jeep at a lake' });
+  assert.equal(out.provider, 'stability');
+  assert.equal(out.info.width, 2048);
+  assert.ok(out.scale > 1.9);
+  assert.match(calls[0].url, /stable-image\/upscale\/fast/);
+  assert.equal(calls[0].headers.authorization, 'Bearer sk-test');
+  assert.equal(calls[0].headers.accept, 'application/json');
+  assert.ok(calls[0].body instanceof FormData);
+});
+
+test('the upscaler follows the documented endpoint when asked for the conservative mode', async () => {
+  // The fast endpoint is tried first; when it refuses, the conservative one (with a prompt) is used.
+  const env = { STABILITY_API_KEY: 'sk-test' };
+  let first = true;
+  globalThis.fetch = async (url) => {
+    if (String(url).endsWith('/fast')) { first = false; return jsonRes({ errors: ['unsupported'] }, 400); }
+    return jsonRes({ image: pngB64(4096, 4096, 5), finish_reason: 'SUCCESS' });
+  };
+  const out = await upscaleImage(env, PNG_1024, 'image/png', { prompt: 'portrait' });
+  assert.equal(first, false);
+  assert.equal(out.info.width, 4096);
+  assert.equal(out.model, 'Stability conservative');
+});
+
+test('the upscaler is skipped honestly without a key, and never claims an upgrade', async () => {
+  assert.equal(await upscaleImage({}, PNG_1024, 'image/png'), null);
+  const env = { STABILITY_API_KEY: 'sk-test' };
+  stabilityFetch({ dims: [512, 512] }); // smaller than the input: not an improvement
+  const out = await upscaleImage(env, PNG_1024, 'image/png');
+  assert.equal(out.failed, true);
+  assert.equal(out.image, null);
+  assert.match(out.errors.join(' '), /no resolution gain|empty|unusable/);
+  stabilityFetch({ status: 401 });
+  const bad = await upscaleImage(env, PNG_1024, 'image/png');
+  assert.equal(bad.failed, true);
+  stabilityFetch({ dims: [4096, 4096], b64: 'A'.repeat(12_000_000) }); // too big to carry
+  assert.equal((await upscaleImage(env, PNG_1024, 'image/png')).failed, true);
+});
+
+test('worthUpscaling: only small deliveries that lost resolution go through the pass', () => {
+  assert.equal(worthUpscaling({ width: 1024, height: 1024 }), true);
+  assert.equal(worthUpscaling({ width: UPSCALE_TARGET, height: UPSCALE_TARGET }), false);
+  assert.equal(worthUpscaling({ width: 2048, height: 1536 }), false);
+  assert.equal(worthUpscaling(null), false);
+  assert.equal(worthUpscaling({ width: 900, height: 900 }, { width: 800, height: 800 }), false, 'already better than the original');
+  assert.equal(worthUpscaling({ width: 900, height: 900 }, { width: 4000, height: 3000 }), true, 'a 4000px photo came back at 900px');
+});
+
+test('the pipeline uses the final pass on the winning take and says so in the caption', async () => {
+  const env = { ...baseEnv(), STABILITY_API_KEY: 'sk-test' };
+  const { ask } = studio({ brief: briefJson() });
+  const providerFetch = globalThis.fetch;
+  const calls = [];
+  globalThis.fetch = async (url, init) => {
+    if (String(url).includes('api.stability.ai')) { calls.push(String(url)); return jsonRes({ image: pngB64(2048, 2048, 7), finish_reason: 'SUCCESS' }); }
+    return providerFetch(url, init);
+  };
+  const out = await polishPhoto(env, ask, PNG_BIG, 'image/png', 'این عکس رو ریتوش کن');
+  assert.equal(out.upscale.image.length > 0, true);
+  assert.equal(out.upscale.before.width, 1024, 'the pass starts from the delivered take, not the phone photo');
+  assert.equal(out.info.width, 2048, 'the delivered pixels are the upscaled ones');
+  assert.match(editCaption(out), /کیفیت نهایی: ۲۰۴۸×۲۰۴۸/);
+  assert.equal(calls.length, 1);
+});
+
+test('a failed final pass never costs the user their picture', async () => {
+  const env = { ...baseEnv(), STABILITY_API_KEY: 'sk-test' };
+  const { ask } = studio({ brief: briefJson() });
+  const providerFetch = globalThis.fetch;
+  globalThis.fetch = async (url, init) => {
+    if (String(url).includes('api.stability.ai')) return jsonRes({ errors: ['quota'] }, 429);
+    return providerFetch(url, init);
+  };
+  const out = await polishPhoto(env, ask, PNG_BIG, 'image/png', 'این عکس رو ریتوش کن');
+  assert.equal(out.image, EDIT_PNG, 'the edited picture is delivered unchanged');
+  assert.equal(out.upscale.failed, true);
+  assert.match(editCaption(out), /بزرگ‌کردن نهایی انجام نشد/);
+});
+
+test('a variations turn is delivered as-is (no single-quality pass on a set)', async () => {
+  const env = { ...baseEnv(), STABILITY_API_KEY: 'sk-test' };
+  const { ask } = studio({ brief: briefJson(), scores: [
+    { instruction: 90, artifacts: 90, light: 90, frame: 90, keep: true, issues: [], fix: '' },
+    { instruction: 80, artifacts: 80, light: 80, frame: 80, keep: true, issues: [], fix: '' },
+    { instruction: 70, artifacts: 70, light: 70, frame: 70, keep: true, issues: [], fix: '' },
+  ] });
+  const providerFetch = globalThis.fetch;
+  let stability = 0;
+  globalThis.fetch = async (url, init) => {
+    if (String(url).includes('api.stability.ai')) { stability++; return jsonRes({ image: pngB64(2048, 2048, 1) }); }
+    return providerFetch(url, init);
+  };
+  const out = await polishPhoto(env, ask, PNG_BIG, 'image/png', 'چند نسخه بده: ریتوش کن');
+  assert.equal(out.kind, 'variations');
+  assert.equal(stability, 0, 'the set is not upscaled');
+  assert.equal(out.upscale, null);
+});
+
+// ---------------------------------------------------------------------------------------
 // 8. Real turns through the Worker
 // ---------------------------------------------------------------------------------------
 
@@ -668,6 +845,54 @@ test('web app: POST /api/chat with a photo and an edit instruction answers with 
   assert.equal(calls.filter((c) => c.url.includes('generativelanguage') && c.url.includes(':generateContent')).length >= 1, true);
 });
 
+test('Telegram: after a variations set, «نسخهٔ ۲» refines exactly that version', async () => {
+  const env = baseEnv();
+  const calls = editMock({ brief: briefJson(), scores: [
+    { instruction: 84, artifacts: 85, light: 85, frame: 85, keep: true, issues: [], fix: '' },
+    { instruction: 90, artifacts: 90, light: 90, frame: 90, keep: true, issues: [], fix: '' },
+    { instruction: 76, artifacts: 80, light: 80, frame: 80, keep: true, issues: [], fix: '' },
+  ] });
+  await post(env, photoMsg('چند نسخه بده: عکس رو سینمایی کن'));
+  const before = calls.length;
+  await post(env, { message: { chat: { id: Number(OWNER), type: 'private' }, from: { id: Number(OWNER) }, text: 'نسخهٔ ۲' } });
+  const turn = calls.slice(before);
+  assert.equal(turn.some((c) => c.url.endsWith('/getFile')), false, 'the remembered photo is reused');
+  const edit = turn.find((c) => c.url.includes(':generateContent') && /Edit this photograph/.test(JSON.stringify(c.body)));
+  // takes are ranked by score, so take 2 of this set is the conservative one
+  assert.match(edit.body.contents[0].parts[1].text, /continue the محافظه‌کارانه take/);
+  const album = turn.find((c) => c.url.endsWith('/sendMediaGroup'));
+  assert.ok(album, 'the refined version is delivered');
+  assert.match(JSON.parse(album.body.get('media'))[0].caption, /نسخهٔ ۲ \(محافظه‌کارانه\) انتخاب شد و دقیق‌ترش کردم/);
+});
+
+test('web app: /api/pick refines the chosen take and 404s when nothing was remembered', async () => {
+  const env = baseEnv();
+  const calls = editMock({ brief: briefJson(), scores: [
+    { instruction: 85, artifacts: 85, light: 85, frame: 85, keep: true, issues: [], fix: '' },
+    { instruction: 92, artifacts: 92, light: 92, frame: 92, keep: true, issues: [], fix: '' },
+    { instruction: 78, artifacts: 80, light: 80, frame: 80, keep: true, issues: [], fix: '' },
+  ] });
+  const auth = await appHeaders(env);
+  const res = await worker.fetch(new Request('https://hermes.example.workers.dev/api/chat', {
+    method: 'POST', headers: { 'content-type': 'application/json', ...auth },
+    body: JSON.stringify({ message: 'چند نسخه بده: ریتوش کن', image: `data:image/png;base64,${PNG_160x120}` }),
+  }), env, {}).then((r) => r.json());
+  assert.equal(res.images.length, 3);
+  assert.deepEqual(res.picks, ['متعادل', 'محافظه‌کارانه', 'جسورانه'], 'picks name the takes in ranked order');
+  const pick = await worker.fetch(new Request('https://hermes.example.workers.dev/api/pick', {
+    method: 'POST', headers: { 'content-type': 'application/json', ...auth }, body: JSON.stringify({ take: 2 }),
+  }), env, {});
+  assert.equal(pick.status, 200);
+  const body = await pick.json();
+  assert.equal(body.picked, 2);
+  assert.match(body.reply, /نسخهٔ ۲/);
+  assert.match(body.image, /^data:image\/png;base64,/);
+  const empty = await worker.fetch(new Request('https://hermes.example.workers.dev/api/pick', {
+    method: 'POST', headers: { 'content-type': 'application/json', ...auth }, body: JSON.stringify({ take: 2 }),
+  }), baseEnv(), {});
+  assert.equal(empty.status, 404);
+});
+
 test('the app page ships the Photo Lab ability and the photo-edit hint', async () => {
   const res = await worker.fetch(new Request('https://hermes.example.workers.dev/app'), baseEnv(), {});
   const html = await res.text();
@@ -675,6 +900,7 @@ test('the app page ships the Photo Lab ability and the photo-edit hint', async (
   assert.match(html, /ویرایش حرفه‌ای عکس/);
   assert.match(html, /چه تغییری می‌خواهی/);
   assert.match(html, /قبل از خروج، عکس را یک ریتوشِر بازبینی می‌کند/);
+  assert.match(html, /همین را انتخاب کن/, 'the per-version pick button is part of the app');
 });
 
 // The web API takes the app key as a bearer token, same as the real app.

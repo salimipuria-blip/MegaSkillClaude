@@ -170,7 +170,11 @@ export const APP_HTML = String.raw`<!doctype html>
   .md pre code { background: none; color: #d6e6ee; padding: 0; font: 13px/1.6 var(--mono); }
   .md a { color: var(--cyan); text-decoration: none; border-bottom: 1px solid rgba(0,229,255,.35); }
   .md b { color: #fff; }
-  .pic { display: block; position: relative; margin: 2px 0 10px; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,.14); white-space: normal; }
+  .picbox { margin: 2px 0 10px; }
+  .pic { display: block; position: relative; margin: 0; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,.14); white-space: normal; }
+  .pick { display: block; width: 100%; margin: 6px 0 0; padding: 7px 10px; border-radius: 9px; background: rgba(245,166,35,.14); border: 1px solid rgba(245,166,35,.45); color: var(--gold-hi); font: 600 12.5px/1.5 var(--fa); cursor: pointer; }
+  .pick:active { background: rgba(245,166,35,.24); }
+  .pick[disabled] { opacity: .6; cursor: default; }
   .pic img { display: block; width: 100%; height: auto; }
   .pic span { position: absolute; left: 8px; bottom: 8px; padding: 3px 9px; border-radius: 99px; background: rgba(0,0,0,.65); color: var(--gold); font: 600 11px/1.6 ui-monospace, monospace; letter-spacing: .08em; }
   .caret { display: inline-block; width: 7px; height: 1.05em; vertical-align: -3px; margin-right: 2px; background: var(--gold); box-shadow: 0 0 10px var(--gold); animation: blink .7s infinite; }
@@ -825,13 +829,43 @@ export const APP_HTML = String.raw`<!doctype html>
     });
   }
 
-  // A generated image with a save link (long-press also works on iPhone).
-  function picture(src) {
+  // A generated image with a save link (long-press also works on iPhone). A variations take also
+  // carries a button that asks the studio to refine that exact version.
+  function picture(src, pick) {
+    const box = document.createElement('div'); box.className = 'picbox';
     const a = document.createElement('a'); a.className = 'pic'; a.href = src; a.download = 'hermes-' + Date.now() + '.jpg';
-    const img = document.createElement('img'); img.src = src; img.alt = 'generated image';
+    const img = document.createElement('img'); img.src = src; img.alt = pick ? 'نسخهٔ ' + pick.take : 'generated image';
     const s = document.createElement('span'); s.textContent = 'SAVE ↓';
     a.append(img, s);
-    return a;
+    box.append(a);
+    if (pick) {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'pick';
+      b.textContent = 'همین را انتخاب کن' + (pick.label ? ' (' + pick.label + ')' : '');
+      b.onclick = () => pickThis(pick.take, b);
+      box.append(b);
+    }
+    return box;
+  }
+
+  // Ask the studio to continue the chosen take; the refined picture replaces the pick buttons.
+  async function pickThis(take, btn) {
+    if (busy) return;
+    busy = true; btn.disabled = true; btn.textContent = 'در حال دقیق‌تر کردن…';
+    setState('thinking', ['photolab']); eqLevel(true); showReply('thinking');
+    try {
+      const { reply: answer, image } = await api('/api/pick', { take });
+      messages.push({ role: 'assistant', text: answer, image });
+      showReply('reply', '', hhmm());
+      setState('speaking');
+      await reveal(answer);
+      if (image) { rbody.prepend(picture(image)); layout(); }
+      replyText = answer;
+    } catch (err) {
+      showReply('error', err.message);
+      btn.disabled = false; btn.textContent = 'همین را انتخاب کن';
+    } finally {
+      busy = false; eqLevel(false);
+    }
   }
   function renderLog() {
     const lb = $('lbody'); lb.innerHTML = '';
@@ -885,14 +919,18 @@ export const APP_HTML = String.raw`<!doctype html>
     setState('thinking', consultFor(text)); eqLevel(true);
     showReply('thinking');
     try {
-      const { reply: answer, image, images } = await api('/api/chat', photo ? { message: text, image: photo } : { message: text });
+      const { reply: answer, image, images, picks } = await api('/api/chat', photo ? { message: text, image: photo } : { message: text });
       messages.push({ role: 'assistant', text: answer, image });
       showReply('reply', '', hhmm());
       setState('speaking');
       await reveal(answer);
-      // An edit sends the best version; a variations turn sends the whole studio set.
-      if (images && images.length) { images.slice().reverse().forEach((src) => rbody.prepend(picture(src))); layout(); }
-      else if (image) { rbody.prepend(picture(image)); layout(); }
+      // An edit sends the best version; a variations turn sends the whole studio set with pick buttons.
+      if (images && images.length) {
+        const labels = (picks && picks.length) ? picks : images.map((_, i) => 'نسخهٔ ' + (i + 1));
+        const frag = document.createDocumentFragment();
+        images.forEach((src, i) => frag.prepend(picture(src, { take: i + 1, label: labels[i] })));
+        rbody.prepend(frag); layout();
+      } else if (image) { rbody.prepend(picture(image)); layout(); }
       replyText = answer;
     } catch (err) {
       showReply('error', err.message);

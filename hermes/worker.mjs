@@ -16,7 +16,8 @@ export { converse, picture } from './conversation.mjs';
 import { requireConversationBinding, loadLog, archiveAndClear, loadNotes, clearNotes } from './memory.mjs';
 export { ask, askGemini, askWorkersAI, MODELS, CF_MODELS } from './brain.mjs';
 import { imageRequest, base64ToBytes } from './image.mjs';
-import { handlePhotoEdit, editRequest, continueEdit, recallEdit, rememberEdit, followUpRequest, faDigits } from './photo-edit.mjs';
+import { handlePhotoEdit, editRequest, continueEdit, recallEdit, rememberEdit, followUpRequest, faDigits,
+  refineTake, pickRequest, rememberVariations, recallVariations } from './photo-edit.mjs';
 import { ask } from './brain.mjs';
 import { transcribe, telegramFile, parseDataUrl } from './media.mjs';
 import { tripPage, createBooking, onContact } from './booking.mjs';
@@ -27,6 +28,8 @@ import { recordRequest, snapshot as metricsSnapshot, prometheusText } from './me
 export { liveness, readiness, fullHealth } from './health.mjs';
 
 const TG_LIMIT = 4000;
+/** The app offers at most this many versions to pick from (the studio set is three). */
+const MAX_PICKS = 4;
 
 // The edited photo goes back as a before/after pair, so the improvement is visible at a glance.
 // Falls back to a single photo when Telegram refuses the album (odd size or exotic format).
@@ -182,6 +185,21 @@ async function api(request, url, env) {
       return json({ error: err.message }, 502);
     }
   }
+  // The app's per-version button: refine one of the takes that was just delivered.
+  if (request.method === 'POST' && url.pathname === '/api/pick') {
+    const body = await request.json().catch(() => ({}));
+    const take = Math.max(1, Math.min(MAX_PICKS, Number(body.take) || 0));
+    const key = historyKey(env, who);
+    const [last, set] = [await recallEdit(env, key), await recallVariations(env, key)];
+    if (!last || !set || !set.takes[take - 1]) return json({ error: 'این مجموعه دیگر در دسترس نیست؛ عکس را دوباره بفرست.' }, 404);
+    try {
+      const edited = await refineTake(env, ask, { ...set, image: last.image, mime: last.mime }, take);
+      if (!edited || !edited.image) return json({ error: 'این نسخه قابل ادامه نبود.' }, 502);
+      return json({ reply: edited.caption, image: `data:${edited.mime};base64,${edited.image}`, picked: take });
+    } catch (err) {
+      return json({ error: err.message }, 502);
+    }
+  }
   if (request.method === 'POST' && url.pathname === '/api/chat') {
     const body = await request.json().catch(() => ({}));
     const photo = body.image ? parseDataUrl(body.image, 'image') : null;
@@ -198,15 +216,24 @@ async function api(request, url, env) {
         if (edited) {
           if (edited.image) await rememberEdit(env, key, { original: photo.data, mime: photo.mime, request: message,
             op: edited.op, strength: edited.strength });
+          if (edited.variations) await rememberVariations(env, key, { ...edited, request: message });
           return json({ reply: edited.caption, image: edited.image ? `data:${edited.mime};base64,${edited.image}` : undefined,
             images: edited.variations ? edited.variations.map((v) => `data:${v.mime};base64,${v.image}`) : undefined,
-            score: edited.review && edited.review.derived ? edited.score : undefined });
+            picks: edited.variations ? edited.variations.map((v) => v.variantLabel) : undefined,
+            score: edited.review && edited.review.derived ? edited.score : undefined,
+            upscaled: edited.upscale && edited.upscale.image ? { width: edited.upscale.info.width, height: edited.upscale.info.height } : undefined });
         }
       }
-      // Photo-less follow-up («ملایم‌تر») on the last edited photo.
-      if (!photo && (editRequest(message) || followUpRequest(message))) {
+      // Photo-less follow-up («ملایم‌تر» / «نسخهٔ ۲») on the last edited photo.
+      if (!photo && (editRequest(message) || followUpRequest(message) || pickRequest(message))) {
         const last = await recallEdit(env, key);
         if (last) {
+          const pick = pickRequest(message);
+          const set = pick ? await recallVariations(env, key) : null;
+          if (pick && set && set.takes[pick.take - 1]) {
+            const edited = await refineTake(env, ask, { ...set, image: last.image, mime: last.mime }, pick.take);
+            if (edited) return json({ reply: edited.caption, image: `data:${edited.mime};base64,${edited.image}`, picked: pick.take });
+          }
           const edited = await continueEdit(env, ask, last, message);
           return json({ reply: edited.caption, image: edited.image ? `data:${edited.mime};base64,${edited.image}` : undefined,
             images: edited.variations ? edited.variations.map((v) => `data:${v.mime};base64,${v.image}`) : undefined });
@@ -338,6 +365,7 @@ async function handle(msg, env, origin) {
       'عکس بساز: ... یک عکس می‌سازم\n' +
       'عکس بفرست و بنویس چه تغییری می‌خواهی («این عکس رو ریتوش کن»، «پس‌زمینه رو عوض کن»، «کیفیتش رو بالا ببر»، «چند نسخه») تا حرفه‌ای ویرایشش کنم و قبل/بعد را با هم بفرستم.\n' +
       'بعد از هر ویرایش می‌توانی بگویی «ملایم‌تر» یا «قوی‌تر» — همان عکس را دوباره لازم نیست بفرستی.\n' +
+      'با «چند نسخه» سه نسخه می‌گیری؛ بعد بنویس «نسخهٔ ۲» تا همان را دقیق‌تر کنم.\n' +
       'ویس بفرست تا گوش بدهم، عکس بفرست تا ببینم؛ برای خبرها و چیزهای روز در گوگل جست‌وجو می‌کنم.\n' +
       '/google اتصال جیمیل، تقویم، درایو و شیت\n' +
       '/reset گفتگوی جدید (قبلی بایگانی می‌شود)\n/notes یادداشت‌های حافظه\n/forget پاک کردن یادداشت‌ها\n/app لینک اپ');
@@ -372,13 +400,21 @@ async function handle(msg, env, origin) {
     return send(env, chatId, 'گفتگوی جدید شروع شد. گفتگوی قبلی بایگانی شد و یادداشت‌ها سر جایشان هستند.');
   }
 
-  // A follow-up tweak («ملایم‌تر»، «قوی‌تر»، «چند نسخه») reuses the photo that was edited last,
-  // so the user never has to send it again inside the same hour.
-  if (!images.length && (editRequest(input) || followUpRequest(input))) {
+  // A follow-up turn («نسخهٔ ۲»، «ملایم‌تر»، «قوی‌تر»، «چند نسخه») reuses the photo that was edited
+  // last, so the user never has to send it again inside the same hour.
+  if (!images.length && (editRequest(input) || followUpRequest(input) || pickRequest(input))) {
     const last = await recallEdit(env, key);
     if (last) {
       await tg(env, 'sendChatAction', { chat_id: chatId, action: 'upload_photo' });
       try {
+        const pick = pickRequest(input);
+        const set = pick ? await recallVariations(env, key) : null;
+        if (pick && set && set.takes[pick.take - 1]) {
+          const edited = await refineTake(env, ask, { ...set, image: last.image, mime: last.mime }, pick.take, { request: '' });
+          if (edited && edited.image) await sendEdited(env, chatId, { data: last.image, mime: last.mime }, edited);
+          else await send(env, chatId, `نسخهٔ ${faDigits(pick.take)} در دسترس نیست.`);
+          return;
+        }
         const edited = await continueEdit(env, ask, last, input);
         if (edited.image) await sendEdited(env, chatId, { data: last.image, mime: last.mime }, edited);
         else await send(env, chatId, edited.caption);
@@ -397,6 +433,7 @@ async function handle(msg, env, origin) {
       if (edited && edited.image) {
         await rememberEdit(env, key, { original: images[0].data, mime: images[0].mime, request: input,
           op: edited.op, strength: edited.strength });
+        if (edited.variations) await rememberVariations(env, key, { ...edited, request: input });
         await sendEdited(env, chatId, images[0], edited);
       } else if (edited) await send(env, chatId, edited.caption);
     } catch (err) {

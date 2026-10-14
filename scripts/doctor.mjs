@@ -90,7 +90,7 @@ const PROJECTS = [
     steps: [
       {name: 'shell-syntax', cmd: 'bash -n hermes/setup.sh hermes/config.sh hermes/logger.sh', why: 'سینتکس نصب‌کننده'},
       {name: 'check', cmd: 'npm run check --prefix hermes', why: 'سینتکس همهٔ ماژول‌ها'},
-      {name: 'tests', cmd: 'npm test --prefix hermes', why: '۱۳۲ تست واحد (شامل استودیوی ویرایش عکس)'},
+      {name: 'tests', cmd: 'npm test --prefix hermes', why: '۱۴۴ تست واحد (شامل استودیوی ویرایش عکس)'},
       {name: 'integration', cmd: 'npm run test:integration --prefix hermes', why: '۹ رگرسیون روی workerd محلی'},
       {name: 'skills-build', cmd: 'node hermes/build-skills.mjs', optional: true, why: 'ساخت دارایی‌های مهارت'},
     ],

@@ -35,8 +35,11 @@
 //     text, so a request for text is refused with an explanation instead of a broken result.
 //   * Quality is only ever stated when the reviewer actually scored the delivered image.
 
+import { imageInfo, frameDrift, faDigits, mimeOf, bytesToBase64, EDIT_MAX_BYTES, base64Bytes as decode64 } from './image-bytes.mjs';
+import { upscaleImage, worthUpscaling } from './upscale.mjs';
+
 const GEMINI_API = 'https://generativelanguage.googleapis.com/v1beta';
-export const EDIT_MAX_BYTES = 8 * 1024 * 1024;
+export { EDIT_MAX_BYTES, imageInfo, frameDrift, faDigits, base64Bytes } from './image-bytes.mjs';
 /** A version that does not reach this score is retried or replaced before delivery. */
 export const QUALITY_BAR = 82;
 /** Below this a version is considered damaged and is never delivered while another one exists. */
@@ -48,58 +51,6 @@ const MAX_PROMPT = 1200;
 // 0. Reading the pixels we already have (zero dependency image forensics)
 // ---------------------------------------------------------------------------------------------
 
-const be32 = (b, i) => ((b[i] << 24) | (b[i + 1] << 16) | (b[i + 2] << 8) | b[i + 3]) >>> 0;
-/** JPEG dimensions from the SOFn frame header. Scanning stops at the image data. */
-function jpegInfo(b) {
-  const end = Math.min(b.length - 8, 1 << 20);
-  let i = 2;
-  while (i < end) {
-    if (b[i] !== 0xff) { i++; continue; }
-    const marker = b[i + 1];
-    if (marker === 0xff) { i++; continue; }
-    if (marker === 0x01 || (marker >= 0xd0 && marker <= 0xd9)) { i += 2; continue; }
-    if (marker === 0xda) break;
-    const len = (b[i + 2] << 8) | b[i + 3];
-    if (len < 2) break;
-    const isFrame = marker >= 0xc0 && marker <= 0xcf && marker !== 0xc4 && marker !== 0xc8 && marker !== 0xcc;
-    if (isFrame && i + 8 < b.length) return { mime: 'image/jpeg', height: (b[i + 5] << 8) | b[i + 6], width: (b[i + 7] << 8) | b[i + 8] };
-    i += 2 + len;
-  }
-  return { mime: 'image/jpeg', width: 0, height: 0 };
-}
-/** WebP dimensions for the three container flavours. */
-function webpInfo(b) {
-  const kind = String.fromCharCode(b[12], b[13], b[14], b[15]);
-  if (kind === 'VP8X') return { mime: 'image/webp', width: 1 + (b[24] | (b[25] << 8) | (b[26] << 16)), height: 1 + (b[27] | (b[28] << 8) | (b[29] << 16)) };
-  if (kind === 'VP8 ') return { mime: 'image/webp', width: ((b[26] | (b[27] << 8)) & 0x3fff), height: ((b[28] | (b[29] << 8)) & 0x3fff) };
-  if (kind === 'VP8L') { const bits = (b[21] | (b[22] << 8) | (b[23] << 16) | (b[24] << 24)) >>> 0;
-    return { mime: 'image/webp', width: (bits & 0x3fff) + 1, height: ((bits >> 14) & 0x3fff) + 1 }; }
-  return { mime: 'image/webp', width: 0, height: 0 };
-}
-/**
- * Real dimensions and format of an encoded image, or null when the bytes are not an image we know.
- * This is how the pipeline proves that a provider returned actual pixels of a sane size.
- */
-export function imageInfo(bytes) {
-  if (!bytes || bytes.length < 24) return null;
-  const b = bytes;
-  if (b[0] === 0x89 && b[1] === 0x50 && b[2] === 0x4e && b[3] === 0x47) {
-    const info = { mime: 'image/png', width: be32(b, 16), height: be32(b, 20) };
-    return info.width && info.height ? info : null;
-  }
-  if (b[0] === 0xff && b[1] === 0xd8) { const info = jpegInfo(b); return info.width ? info : null; }
-  if (b[0] === 0x52 && b[1] === 0x49 && b[2] === 0x46 && b[3] === 0x46 && b[8] === 0x57 && b[9] === 0x45 && b[10] === 0x42 && b[11] === 0x50) {
-    const info = webpInfo(b); return info.width ? info : null;
-  }
-  return null;
-}
-/** How far the delivered frame drifted from the original, in percent of aspect ratio. */
-export function frameDrift(before, after) {
-  if (!before || !after || !before.width || !after.width || !before.height || !after.height) return 0;
-  const a = before.width / before.height, b = after.width / after.height;
-  return Math.abs(a - b) / a * 100;
-}
-export const faDigits = (v) => String(v).replace(/[0-9]/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[d]);
 
 // ---------------------------------------------------------------------------------------------
 // 1. What did the user ask for?
@@ -431,30 +382,14 @@ export function planStrength(op, { delta = 0, changeScale = 0.55 } = {}) {
 // 5. Stage 3 - execution
 // ---------------------------------------------------------------------------------------------
 
-const sniff = (bytes) => {
-  const b = bytes;
-  if (b[0] === 0x89 && b[1] === 0x50) return 'image/png';
-  if (b[0] === 0x52 && b[1] === 0x49 && b[2] === 0x46) return 'image/webp';
-  return 'image/jpeg';
-};
-const toBase64 = (bytes) => {
-  let bin = '';
-  for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
-  return btoa(bin);
-};
-export const base64Bytes = (b64) => {
-  const bin = atob(b64);
-  const out = new Uint8Array(bin.length);
-  for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
-  return out;
-};
+const base64Bytes = decode64;
 /** Proven pixels or nothing: base64 -> bytes -> decoded dimensions. */
 function verified(imageB64, mime) {
   const bytes = base64Bytes(imageB64);
   const info = imageInfo(bytes);
   if (!info || info.width < 64 || info.height < 64) return null;
   if (bytes.length < 1000) return null;
-  return { image: imageB64, mime: info.mime || mime || sniff(bytes), info };
+  return { image: imageB64, mime: info.mime || mime || mimeOf(bytes), info };
 }
 
 /** Gemini image models: the only free chain that both understands an edit instruction and returns pixels. */
@@ -520,7 +455,7 @@ async function imageOut(out) {
   else if (out instanceof ArrayBuffer) bytes = new Uint8Array(out);
   else if (typeof out.getReader === 'function') bytes = new Uint8Array(await new Response(out).arrayBuffer());
   if (!bytes) return null;
-  return verified(toBase64(bytes), sniff(bytes));
+  return verified(bytesToBase64(bytes), mimeOf(bytes));
 }
 
 /**
@@ -654,7 +589,7 @@ export const LADDER = [
  * `ask` is the multimodal brain (brain.mjs `ask`). Returns a delivery object, never a false claim:
  * if no provider produces pixels the promise rejects with the collected reasons.
  */
-export async function polishPhoto(env, ask, image, mime, request, { op = null, candidates = null, delta = null } = {}) {
+export async function polishPhoto(env, ask, image, mime, request, { op = null, candidates = null, delta = null, baseStrength = null, upscale = null } = {}) {
   const seen = editRequest(request);
   const detected = op ? { ...(seen || {}), op, also: (seen && seen.also) || [], instruction: request, strength: OP_STRENGTH[op],
     region: (seen && seen.region) || '', variants: !!(seen && seen.variants), delta: (seen && seen.delta) || 0,
@@ -668,7 +603,8 @@ export async function polishPhoto(env, ask, image, mime, request, { op = null, c
 
   const brief = await photoBrief(env, ask, image, mime, plan0.instruction, plan0.op);
   const region = plan0.region || brief.region || '';
-  const base = planStrength(plan0.op, { delta: plan0.delta, changeScale: brief.changeScale });
+  const base = baseStrength ? Math.max(0.12, Math.min(0.75, baseStrength))
+    : planStrength(plan0.op, { delta: plan0.delta, changeScale: brief.changeScale });
   const order = plan0.variants ? LADDER : [LADDER[1], LADDER[2], LADDER[0]];
   const want = Math.max(1, Math.min(MAX_CANDIDATES, candidates || (plan0.variants ? order.length : 1)));
   const ladder = order.slice(0, want);
@@ -709,6 +645,17 @@ export async function polishPhoto(env, ask, image, mime, request, { op = null, c
 
   const ranked = [...attempts].sort((a, b) => b.review.score - a.review.score || LADDER.findIndex((l) => l.id === a.variant) - LADDER.findIndex((l) => l.id === b.variant));
   const best = ranked[0];
+  // Final quality pass: the free editors hand back ~1024px, so a bigger original deserves the
+  // upscaler. It is optional, best-effort, and never blocks the delivery.
+  let upscaleResult = null;
+  if (upscale !== false && worthUpscaling(best.info, before) && !plan0.variants) {
+    try {
+      upscaleResult = await upscaleImage(env, best.image, best.mime, { prompt: `professional photo edit of ${brief.subject || plan0.instruction}`.slice(0, 300) });
+      if (upscaleResult && upscaleResult.image) { best.image = upscaleResult.image; best.mime = upscaleResult.mime; best.info = upscaleResult.info; }
+    } catch (err) {
+      console.error('[Hermes] final upscale failed:', err.message);
+    }
+  }
   const repaired = attempts.length > 1 ? ranked[0] !== attempts[0] || !attempts[0].review.keep : false;
   const belowBar = best.review.derived && best.review.score < QUALITY_BAR;
   return {
@@ -718,7 +665,7 @@ export async function polishPhoto(env, ask, image, mime, request, { op = null, c
     before, drift: best.drift, strength: best.strength, variant: best.variant, variantLabel: best.variantLabel,
     brief, review: best.review, score: best.review.score, belowBar, repaired,
     variations: plan0.variants ? ranked.map((a, i) => ({ ...a, rank: i + 1 })) : null,
-    attempted: tried, textNote,
+    attempted: tried, textNote, upscale: upscaleResult,
   };
 }
 
@@ -741,8 +688,14 @@ export function editCaption(result) {
   if (result.repaired) lines.push('', '(نسخهٔ اول از بازبینی رد شد؛ نسخهٔ بهتر فرستاده شد.)');
   if (result.drift > 12 && result.op !== 'expand') lines.push('', `ℹ️ کادر حدود ${faDigits(Math.round(result.drift))}٪ تغییر کرده است.`);
   if (result.textNote) lines.push('', `ℹ️ ${result.textNote}`);
+  if (result.upscale && result.upscale.image) {
+    lines.push('', `🔎 کیفیت نهایی: ${faDigits(result.upscale.info.width)}×${faDigits(result.upscale.info.height)}` +
+      (result.upscale.scale > 1.05 ? ` (${faDigits(Math.round(result.upscale.scale * 100) / 100)}×)` : ''));
+  } else if (result.upscale && result.upscale.failed) {
+    lines.push('', 'ℹ️ بزرگ‌کردن نهایی انجام نشد (کیفیت اصلی دست‌نخورده ماند).');
+  }
   lines.push('', 'اگر بخواهی می‌توانم: ملایم‌تر/قوی‌تر، پس‌زمینهٔ دیگر، نسخهٔ استوری ۹:۱۶، ' +
-    '«چند نسخه» برای انتخاب، یا ریتوش سبک‌تر کنم — فقط بگو.');
+    '«چند نسخه» برای انتخاب، یا همان نسخه را دقیق‌تر کنم — فقط بگو.');
   return lines.join('\n');
 }
 
@@ -760,7 +713,7 @@ export function variationsCaption(result) {
     lines.push('', `🛡️ در همهٔ نسخه‌ها دست‌نخورده ماند: ${result.brief.mustKeep.slice(0, 3).join('، ')}`);
   }
   if (result.textNote) lines.push('', `ℹ️ ${result.textNote}`);
-  lines.push('', 'بگو کدام نسخه را انتخاب می‌کنی تا همان را دقیق‌تر کنم.');
+  lines.push('', 'بگو کدام نسخه را انتخاب می‌کنی («نسخهٔ ۲») یا در اپ روی «همین را انتخاب کن» بزن تا همان را دقیق‌تر کنم.');
   return lines.join('\n');
 }
 
@@ -770,6 +723,7 @@ export function variationsCaption(result) {
 
 const RECALL_TTL = 3600;
 const RECALL_MAX = 4_500_000; // base64 characters; larger originals are simply not remembered
+const VARS_MAX = 12_000_000;  // the whole variations set has to fit in one KV value
 
 /** Remember the original of the last edit so a follow-up tweak does not need the photo again. */
 export async function rememberEdit(env, key, { original, mime, request, op, strength }) {
@@ -815,6 +769,59 @@ export function followUpRequest(text) {
   return { instruction: t.slice(0, 300), delta, variants: VARIANTS.test(t) };
 }
 
+const FA_DIGIT = { '۱': 1, '۲': 2, '۳': 3, '۴': 4, '۵': 5, '۶': 6, '۷': 7, '۸': 8, '۹': 9 };
+const ORDINAL = { 'اول': 1, 'دوم': 2, 'سوم': 3, 'چهارم': 4, first: 1, second: 2, third: 3, fourth: 4 };
+
+/**
+ * «نسخهٔ ۲»، «شماره ۳»، «دومی»، «version 2» - the user choosing one of the delivered takes.
+ * Returns 1-based {@link take} or null.
+ */
+export function pickRequest(text) {
+  const t = normalizeFa(String(text || '').trim());
+  if (!t || t.length > 140) return null;
+  const m = t.match(/(?:نسخه|شماره|نمونه|تک|ورژن|version|take|case|number|#)\s*[ی]?\s*([۱-۹1-9])/i);
+  if (m) return { take: FA_DIGIT[m[1]] || Number(m[1]), instruction: t.slice(0, 200) };
+  const ord = t.match(/(?:نسخه|شماره|نمونه|تک|ورژن|the)?\s*(اول|دوم|سوم|چهارم|first|second|third|fourth)(?:ی|م)?/i);
+  if (ord) return { take: ORDINAL[ord[1].toLowerCase()] || ORDINAL[ord[1]], instruction: t.slice(0, 200) };
+  return null;
+}
+
+/**
+ * Remember a variations set (the ranked takes plus the plan behind them) so the user can pick one
+ * later — from the app button or by typing «نسخهٔ ۲». Capped in size: an oversized set is simply not
+ * offered for picking instead of eating the whole KV budget.
+ */
+export async function rememberVariations(env, key, result) {
+  if (!env.MEMORY || !key || !result || !result.variations || !result.variations.length) return false;
+  const payload = { request: String(result.request || '').slice(0, 400), op: result.op, takes: [] };
+  let size = 0;
+  for (const v of result.variations) {
+    if (!v.image || size + v.image.length > VARS_MAX) continue;
+    size += v.image.length;
+    payload.takes.push({ image: v.image, mime: v.mime, variant: v.variant, variantLabel: v.variantLabel,
+      strength: v.strength, score: v.review && v.review.derived ? v.review.score : 0 });
+  }
+  if (!payload.takes.length) return false;
+  try {
+    await env.MEMORY.put(`edit:takes:${key}`, JSON.stringify(payload), { expirationTtl: RECALL_TTL });
+    return true;
+  } catch (err) {
+    console.error('[Hermes] rememberVariations failed:', err.message);
+    return false;
+  }
+}
+
+/** The remembered variations set, or null. */
+export async function recallVariations(env, key) {
+  if (!env.MEMORY || !key) return null;
+  try {
+    const raw = await env.MEMORY.get(`edit:takes:${key}`);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    return parsed && Array.isArray(parsed.takes) && parsed.takes.length ? parsed : null;
+  } catch { return null; }
+}
+
 /**
  * The iteration loop: re-run the last plan on the remembered original with the user's tweak
  * («ملایم‌تر»، «قوی‌تر»، «چند نسخه»), so the user never has to send the photo again.
@@ -832,6 +839,24 @@ export async function continueEdit(env, ask, recalled, input) {
   const caption = result.kind === 'text-refused' ? result.message
     : result.kind === 'variations' ? variationsCaption(result) : editCaption(result);
   return { ...result, caption, followUp: true };
+}
+
+/**
+ * The user picked one take («نسخهٔ ۲» or the app button): keep that version's strength and refine it
+ * with a fresh set of candidates, so the promise is "this one, but done better".
+ */
+export async function refineTake(env, ask, recalled, take, { request = '' } = {}) {
+  const chosen = recalled.takes[Number(take) - 1];
+  if (!chosen) return null;
+  const asked = [recalled.request, request].filter(Boolean).join(' و ').slice(0, 400);
+  const result = await polishPhoto(env, ask, recalled.image, recalled.mime,
+    `${asked} (continue the ${chosen.variantLabel || 'chosen'} take, keep its look, refine it further)`,
+    { op: recalled.op, baseStrength: chosen.strength, candidates: 2 });
+  const caption = result.kind === 'variations' ? variationsCaption(result) : editCaption(result);
+  const head = `🎯 نسخهٔ ${faDigits(take)} (${chosen.variantLabel || 'انتخابی تو'}) انتخاب شد و دقیق‌ترش کردم.`;
+  const merged = { ...result, caption: `${head}\n\n${caption}`, picked: take };
+  if (env.MEMORY) await env.MEMORY.put(`edit:picked:${take}`, '1', { expirationTtl: RECALL_TTL }).catch(() => {});
+  return merged;
 }
 
 /** Everything the worker needs to answer a photo edit turn, in one call. */

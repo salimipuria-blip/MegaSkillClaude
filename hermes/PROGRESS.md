@@ -10,14 +10,14 @@
 
 ## ۲) دستور دقیق این پروژه
 ```bash
-node scripts/doctor.mjs hermes      # سینتکس shell + سینتکس ماژول‌ها + ۱۳۲ تست + ۹ رگرسیون + ساخت مهارت‌ها
+node scripts/doctor.mjs hermes      # سینتکس shell + سینتکس ماژول‌ها + ۱۴۴ تست + ۹ رگرسیون + ساخت مهارت‌ها
 ```
 معادل دستی (از ریشهٔ مخزن):
 ```bash
 bash -n hermes/setup.sh hermes/config.sh hermes/logger.sh
 npm ci --prefix hermes --ignore-scripts --no-audit --no-fund
 npm run check --prefix hermes
-npm test --prefix hermes               # ۱۳۲ تست (شامل ۴۰ تست استودیوی ویرایش عکس)
+npm test --prefix hermes               # ۱۴۴ تست (شامل ۵۲ تست استودیوی ویرایش عکس)
 npm run test:integration --prefix hermes   # ۹ رگرسیون روی workerd محلی، بدون شبکه
 node hermes/build-skills.mjs | grep -Eq "\] [0-9]{4,} skills"
 ```
@@ -26,14 +26,14 @@ node hermes/build-skills.mjs | grep -Eq "\] [0-9]{4,} skills"
 | بررسی | نتیجه |
 |---|---|
 | `bash -n` روی setup/config/logger | ✅ |
-| `npm run check --prefix hermes` | ✅ (۱۲ ماژول، شامل `photo-edit.mjs`) |
-| `npm test` | ✅ **۱۳۲/۱۳۲** (شامل ۴۰ تست استودیوی ویرایش عکس) |
+| `npm run check --prefix hermes` | ✅ (۱۴ ماژول، شامل `photo-edit.mjs`/`upscale.mjs`/`image-bytes.mjs`) |
+| `npm test` | ✅ **۱۴۴/۱۴۴** (شامل ۵۲ تست استودیوی ویرایش عکس) |
 | `npm run test:integration` | ✅ **۹/۹** (حافظهٔ توزیع‌شدهٔ SQLite روی workerd محلی، بدون شبکه؛ `photo-edit` به `workerModuleNames` اضافه شد) |
 | `npm run test:shell` + `npm run lint:shell` | ✅ بدون خطا |
 | `node build-skills.mjs` | ✅ خروجی شامل «… skills» با هزاران مهارت |
 
 ## ۴) این دور چه ساخته شد — استودیوی ویرایش عکس
-**فایل‌ها:** `photo-edit.mjs` (جدید، بدون وابستگی)، `photo-edit.test.mjs` (جدید، ۴۰ تست)،
+**فایل‌ها:** `photo-edit.mjs` + `upscale.mjs` + `image-bytes.mjs` (بدون وابستگی)، `photo-edit.test.mjs` (جدید، ۵۲ تست)،
 وصل‌شدن در `worker.mjs` (شاخهٔ وب `/api/chat` + شاخهٔ تلگرام + `sendEdited` + متن `/start`)،
 `brain.mjs` (STYLE)، `app.mjs` (گرهٔ **Photo Lab** + قاعدهٔ روشن‌شدن + راهنمای placeholder)،
 `package.json` (`check`/`test`)، `conversation.test.mjs` (`workerModuleNames`).
@@ -82,6 +82,18 @@ node hermes/build-skills.mjs | grep -Eq "\] [0-9]{4,} skills"
   بدون آن‌ها تلاش می‌شود، نه شکست کامل.
 - **حلقهٔ تکرار**: بعد از هر ویرایش، عکس اصلی و نقشهٔ ویرایش یک ساعت در KV می‌ماند
   (`edit:orig:`/`edit:plan:`) تا «ملایم‌تر»، «قوی‌تر» و «چند نسخه» بدون فرستادن دوبارهٔ عکس اجرا شود.
+- **انتخاب نسخه (`pickRequest` + `rememberVariations`/`recallVariations` + `refineTake`)**: مجموعهٔ
+  نسخه‌ها با نقشهٔ ویرایش یک ساعت در KV می‌ماند (سقف ۱۲MB base64)؛ «نسخهٔ ۲»/«دومی»/«version 2» در
+  تلگرام یا دکمهٔ «همین را انتخاب کن» در اپ (`POST /api/pick`) همان نسخه را با **شدت خودش** دقیق‌تر
+  بازسازی می‌کند؛ خروجی به‌عنوان «قبل/بعد» تازه می‌آید. انتخاب خارج از مجموعه صادقانه رد می‌شود.
+- **کیفیت نهایی (`upscale.mjs`)**: اگر عکس اصلی بزرگ‌تر از خروجی مدل باشد (مدل‌های رایگان ~۱۰۲۴px
+  می‌دهند) و `STABILITY_API_KEY` تنظیم باشد، خروجی از
+  `POST https://api.stability.ai/v2beta/stable-image/upscale/fast` و در صورت نبود آن `…/conservative`
+  (multipart، `Authorization: Bearer`، `Accept: application/json`) می‌گذرد، ابعاد واقعی دیکود می‌شود و
+  فقط اگر واقعاً بزرگ‌تر شد جایگزین می‌شود؛ در کپشن «🔎 کیفیت نهایی: W×H (N×)» می‌آید. بدون کلید یا
+  با شکست، این پله صادقانه رد می‌شود و عکس ویرایش‌شده دست‌نخورده تحویل می‌ماند.
+- **ماژول مشترک `image-bytes.mjs`**: `imageInfo`/`frameDrift`/`base64Bytes`/`bytesToBase64`/`mimeOf`/
+  `faDigits` و `EDIT_MAX_BYTES` جدا شدند تا موتور ویرایش و آپ‌اسکیلر حلقهٔ import نسازند.
 
 **قواعد سخت:** هویت/چهره/سن دست‌نخورده؛ هیچ متن/لوگو/واترمارکی ساخته نمی‌شود؛ اگر هیچ مدلی
 جواب ندهد خطای صادقانه (هرگز ادعای ویرایش نداشتن). **مبدأ مهارت‌ها:**
@@ -89,7 +101,8 @@ node hermes/build-skills.mjs | grep -Eq "\] [0-9]{4,} skills"
 
 ## ۵) کارهای باز / پیشنهاد بعدی
 - [ ] آزمون روی سرویس واقعی: یک عکس واقعی به بات بفرست و «قبل/بعد» و «چند نسخه» را ببین (اینجا فقط با upstream شبیه‌سازی‌شده تست شده).
-- [ ] مسیر «آپاسکیل نهایی» وقتی Gemini image در دسترس نیست (کیفیت Workers AI پایین‌تر است).
+- [ ] آزمون واقعی «کیفیت نهایی» با کلید Stability روی یک عکس واقعی (اینجا upstream شبیه‌سازی شده است).
+- [ ] نمایش برچسب نسخهٔ انتخاب‌شده در تاریخچهٔ اپ (الان فقط در پیام پاسخ دیده می‌شود).
 - [ ] لایهٔ متن روی عکس (canvas/SVG، جدا از مدل تصویر) — در `hermes/ROADMAP.md` صف شمارهٔ ۴.
 - [ ] اجرای `shellcheck -S warning` روی فایل‌های shell به‌صورت محلی در doctor
       (اکنون نصب نیست؛ در CI نصب و اجرا می‌شود) — افزودن به‌عنوان step اختیاری وقتی ابزار موجود بود.
@@ -110,3 +123,10 @@ node hermes/build-skills.mjs | grep -Eq "\] [0-9]{4,} skills"
   نبود همزه در نرمال‌سازی («گوشهٔ»)، کار نکردن `\b` در حروف فارسی، مشکل فیکسچر JPEG (طول APP0 و
   حداقل ۱KB)، ترتیب نردبان کاندیدها، گم‌شدن گزینه‌های تشخیصی وقتی worker عملیات را از قبل می‌داند،
   و رندر نشدن مجموعهٔ نسخه‌ها در اپ.
+- **۲۰۲۶-۱۰-۱۴ (انتخاب نسخه و کیفیت نهایی)** — «نسخهٔ ۲» در تلگرام + دکمهٔ «همین را انتخاب کن» در اپ
+  (`POST /api/pick`) روی همان نسخه و با همان شدت ادامه می‌دهد؛ پلهٔ «کیفیت نهایی» با upscaler واقعی
+  Stability (کلید اختیاری) خروجی ~۱۰۲۴px را به اندازهٔ حرفه‌ای برمی‌گرداند و اگر کلید نباشد صادقانه
+  رد می‌شود. برای شکستن حلقهٔ import، ماژول مشترک `image-bytes.mjs` ساخته شد و `workerModuleNames`
+  به‌روز شد. تست‌ها: ۵۲/۵۲ این ماژول، ۱۴۴/۱۴۴ کل واحد + ۹/۹ یکپارچگی + `test:shell`. در همین مسیر
+  رفع شد: حلقهٔ import (`EDIT_MAX_BYTES before initialization`)، clamp شدن ایندکس نسخهٔ ناموجود،
+  و شرط «ارزش آپ‌اسکیل» که با عکس کوچک اشتباه برمی‌گشت.
