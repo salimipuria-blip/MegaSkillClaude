@@ -1,6 +1,6 @@
 # agents-automation
 
-Skills: 764
+Skills: 765
 
 - `13c-metabolic-flux` → `library/github-skills/13c-metabolic-flux/SKILL.md`
 - `academy-eval-analyzer` → `psk/data/skills/academy-eval-analyzer/SKILL.md`
@@ -321,6 +321,7 @@ Skills: 764
 - `healthcare-cdss-patterns` → `library/github-skills/healthcare-cdss-patterns/SKILL.md`
 - `healthcare-emr-patterns` → `library/github-skills/healthcare-emr-patterns/SKILL.md`
 - `helpdesk-automation` → `library/github-skills/helpdesk-automation/SKILL.md`
+- `hermes-autonomous-self-improvement` → `library/skills/hermes-autonomous-self-improvement/SKILL.md`
 - `hermes-imports` → `library/github-skills/hermes-imports/SKILL.md`
 - `histolab` → `library/github-skills/histolab/SKILL.md`
 - `hooks-prepost-toolkit` → `psk/data/skills/hooks-prepost-toolkit/SKILL.md`
