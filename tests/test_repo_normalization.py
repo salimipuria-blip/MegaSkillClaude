@@ -138,6 +138,15 @@ fi
         subprocess.run(['git', '-C', str(self.root), 'add', '.env.example'], check=True)
         self.assertEqual(self.run_health().returncode, 0)
 
+    def test_tracked_suffixed_examples_are_allowed(self):
+        # رگرسیون: قالب‌هایی مثل hermes/.env.dev.example و .env.prod.example
+        # نمونه‌اند، نه فایل env واقعی؛ نباید health check را قرمز کنند.
+        for name in ('hermes/.env.dev.example', 'hermes/.env.prod.example'):
+            file = self.root / name
+            file.write_text('PLACEHOLDER=\n')
+            subprocess.run(['git', '-C', str(self.root), 'add', str(file)], check=True)
+        self.assertEqual(self.run_health().returncode, 0)
+
     def test_git_failure_is_not_silently_ignored(self):
         shutil.rmtree(self.root / '.git')
         result = self.run_health()

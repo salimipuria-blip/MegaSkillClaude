@@ -61,7 +61,7 @@ printf '\n-- Tracked environment-file hygiene --\n'
 if tracked_env=$(git ls-files -- '.env' '.env.*' '**/.env' '**/.env.*'); then
   while IFS= read -r file; do
     case "$file" in
-      ''|.env.example|*/.env.example) ;;
+      ''|*.example) ;;  # هر قالب نمونه (.env.example, .env.dev.example, .env.prod.example, ...) مجاز است؛ فایل env واقعی بدون پسوند .example خطاست
       *) fail 'Non-example environment file is tracked; remove it from Git and rotate any exposed credentials.' ;;
     esac
   done <<< "$tracked_env"

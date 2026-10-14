@@ -8,7 +8,10 @@ import { appKey } from './worker.mjs';
 
 const bindings = { TELEGRAM_BOT_TOKEN: 'fixture-token', ALLOWED_USER_ID: '12345', GEMINI_API_KEY: 'fixture-key', REQUIRE_CONVERSATIONS: 'true' };
 const historyKey = 'history:12345';
-const modules = ['entry', 'worker', 'security', 'app', 'auth', 'users', 'skills', 'skill-router', 'memory', 'brain', 'conversation', 'image', 'media', 'booking', 'trip-media', 'providers', 'google']
+// Keep this list equal to the transitive import graph of entry/worker —
+// a missing entry makes workerd fail with `No such module "<name>.mjs"`
+// (regression: health/metrics/rate-limit were imported but not bundled).
+const modules = ['entry', 'worker', 'security', 'app', 'auth', 'users', 'skills', 'skill-router', 'memory', 'brain', 'conversation', 'image', 'media', 'booking', 'trip-media', 'providers', 'google', 'health', 'metrics', 'rate-limit']
   .map((name) => ({ type: 'ESModule', path: fileURLToPath(new URL(`${name}.mjs`, import.meta.url)) }));
 
 async function fixture(t, brain, { extraBindings = {}, upstream } = {}) {
