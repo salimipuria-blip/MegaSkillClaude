@@ -1,8 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync, existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
 import { liveness, readiness, fullHealth } from './health.mjs';
 import { CircuitBreaker, retryWithBackoff, isTransientStatus } from './resilience.mjs';
 import { recordRequest, snapshot, prometheusText } from './metrics.mjs';
+
+const here = dirname(fileURLToPath(import.meta.url));
 
 test('liveness never depends on config', () => {
   assert.equal(liveness().status, 'ok');
@@ -52,3 +57,44 @@ test('metrics render as Prometheus text and JSON snapshot', () => {
   assert.ok(snap.requests_total >= 2 && snap.errors_total >= 1);
   assert.match(prometheusText(), /hermes_requests_total \d+/);
 });
+
+test('guard: all transitive local .mjs imports from entry/worker are bundled in conversation.test.mjs', () => {
+  const visited = new Set();
+  const queue = ['entry.mjs', 'worker.mjs'];
+  const importRegex = /(?:import|export)\s+(?:(?:(?:\*\s+as\s+\w+)|(?:\{[^}]*\})|(?:\w+))\s+from\s+)?['"](\.\/[^'"]+\.mjs)['"]/g;
+
+  while (queue.length > 0) {
+    const file = queue.shift();
+    if (visited.has(file)) continue;
+    visited.add(file);
+    const fullPath = join(here, file);
+    if (!existsSync(fullPath)) continue;
+    const content = readFileSync(fullPath, 'utf8');
+    let match;
+    while ((match = importRegex.exec(content)) !== null) {
+      const dep = match[1].replace('./', '');
+      if (!visited.has(dep)) {
+        queue.push(dep);
+      }
+    }
+  }
+
+  const conversationTestContent = readFileSync(join(here, 'conversation.test.mjs'), 'utf8');
+  const matchModules = conversationTestContent.match(/workerModuleNames\s*=\s*\[([\s\S]*?)\]/);
+  assert.ok(matchModules, 'workerModuleNames array must exist in conversation.test.mjs');
+  const declaredNames = new Set(
+    matchModules[1]
+      .split(',')
+      .map((s) => s.replace(/['"\s]/g, ''))
+      .filter(Boolean)
+  );
+
+  for (const dep of visited) {
+    const baseName = dep.replace(/\.mjs$/, '');
+    assert.ok(
+      declaredNames.has(baseName),
+      `Transitive dependency "${dep}" is imported by worker but missing from conversation.test.mjs workerModuleNames bundle!`
+    );
+  }
+});
+
