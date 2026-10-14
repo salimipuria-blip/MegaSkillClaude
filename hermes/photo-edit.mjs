@@ -1,18 +1,25 @@
 // Professional photo editing for Hermes: the user sends THEIR OWN photo with an instruction and
 // gets an edited picture back (Cloudflare Workers, no native image libraries needed).
 //
-// Four stages, the way a retoucher works:
-//   1. BRIEF   - a vision model studies the photo and the user's words and writes a strict edit
-//                brief (subject, must-keep list, problems, light, colour, crop, risks).
-//   2. EDIT    - image-to-image through the best free provider that answers: Gemini image models
-//                first (they follow instructions and keep the subject), then Workers AI img2img.
-//   3. REVIEW  - the result is compared with the original against the must-keep list; if the review
-//                rejects it, one corrective retry is made with the reviewer's fix note.
-//   4. DELIVER - a short Persian caption: what changed, what was protected, what to try next.
+// The pipeline is the retouching studio loop, not a single model call:
+//
+//   1. BRIEF    a vision model studies the photo and the words and writes a strict brief
+//               (subject + type, must-keep, concrete problems, light, colour, frame, region,
+//               how far the change should travel, whether text already exists, risks).
+//   2. PLAN     the operation recipe, the img2img strength and both prompt dialects are derived
+//               from that brief - a small correction stays small, a restyle is allowed to travel.
+//   3. CANDIDATES  up to N versions are generated along a conservative -> balanced -> bold ladder
+//               (N=1 by default, 3 when the user asks for variations), stopping early as soon as a
+//               version clears the quality bar, so quota is spent where quality is actually missing.
+//   4. REVIEW   every version is scored against a weighted rubric in front of the original
+//               (instruction fidelity, identity, artefacts, light, frame) with a dedicated
+//               identity check for people; the reviewer's note becomes the correction for the retry.
+//   5. DELIVER  the best version is measured for real (decoded width/height), then delivered as a
+//               before/after album with a Persian retoucher note.
 //
 // Craft rules encoded here come from the skill library in this repository:
 //   library/github-skills/image-studio      (operation matrix: img2img / inpaint / search-replace /
-//                                            erase / upscale / remove-bg, and when to use which)
+//                                            erase / upscale / remove-bg; when to use which)
 //   library/github-skills/stability-ai      (strength semantics for img2img edits)
 //   library/github-skills/generate-image    (photoreal prompt structure, negatives)
 //   library/github-skills/product-photo-studio + ecommerce-listing-image-set (studio product recipes)
@@ -20,15 +27,79 @@
 //   library/github-skills/prompt-master     (enrich the prompt, never change the concept)
 //
 // Hard rules (the same honesty rule as the rest of this repo):
-//   * No edited image is ever claimed unless real bytes came back from a provider.
+//   * No edited image is ever claimed unless real bytes came back from a provider, and the bytes
+//     are decoded to prove they are a real image of a sane size.
 //   * Identity is locked: faces, body shape, age and ethnicity are never altered unless the user
 //     explicitly asks for a restyle/artistic look.
 //   * No text, letters, logos or watermarks are drawn into the image: image models corrupt Persian
 //     text, so a request for text is refused with an explanation instead of a broken result.
-//   * Images are edited as sent; the original is never destroyed or overwritten on the user's side.
+//   * Quality is only ever stated when the reviewer actually scored the delivered image.
 
 const GEMINI_API = 'https://generativelanguage.googleapis.com/v1beta';
 export const EDIT_MAX_BYTES = 8 * 1024 * 1024;
+/** A version that does not reach this score is retried or replaced before delivery. */
+export const QUALITY_BAR = 82;
+/** Below this a version is considered damaged and is never delivered while another one exists. */
+export const MIN_DELIVER = 55;
+export const MAX_CANDIDATES = 3;
+const MAX_PROMPT = 1200;
+
+// ---------------------------------------------------------------------------------------------
+// 0. Reading the pixels we already have (zero dependency image forensics)
+// ---------------------------------------------------------------------------------------------
+
+const be32 = (b, i) => ((b[i] << 24) | (b[i + 1] << 16) | (b[i + 2] << 8) | b[i + 3]) >>> 0;
+/** JPEG dimensions from the SOFn frame header. Scanning stops at the image data. */
+function jpegInfo(b) {
+  const end = Math.min(b.length - 8, 1 << 20);
+  let i = 2;
+  while (i < end) {
+    if (b[i] !== 0xff) { i++; continue; }
+    const marker = b[i + 1];
+    if (marker === 0xff) { i++; continue; }
+    if (marker === 0x01 || (marker >= 0xd0 && marker <= 0xd9)) { i += 2; continue; }
+    if (marker === 0xda) break;
+    const len = (b[i + 2] << 8) | b[i + 3];
+    if (len < 2) break;
+    const isFrame = marker >= 0xc0 && marker <= 0xcf && marker !== 0xc4 && marker !== 0xc8 && marker !== 0xcc;
+    if (isFrame && i + 8 < b.length) return { mime: 'image/jpeg', height: (b[i + 5] << 8) | b[i + 6], width: (b[i + 7] << 8) | b[i + 8] };
+    i += 2 + len;
+  }
+  return { mime: 'image/jpeg', width: 0, height: 0 };
+}
+/** WebP dimensions for the three container flavours. */
+function webpInfo(b) {
+  const kind = String.fromCharCode(b[12], b[13], b[14], b[15]);
+  if (kind === 'VP8X') return { mime: 'image/webp', width: 1 + (b[24] | (b[25] << 8) | (b[26] << 16)), height: 1 + (b[27] | (b[28] << 8) | (b[29] << 16)) };
+  if (kind === 'VP8 ') return { mime: 'image/webp', width: ((b[26] | (b[27] << 8)) & 0x3fff), height: ((b[28] | (b[29] << 8)) & 0x3fff) };
+  if (kind === 'VP8L') { const bits = (b[21] | (b[22] << 8) | (b[23] << 16) | (b[24] << 24)) >>> 0;
+    return { mime: 'image/webp', width: (bits & 0x3fff) + 1, height: ((bits >> 14) & 0x3fff) + 1 }; }
+  return { mime: 'image/webp', width: 0, height: 0 };
+}
+/**
+ * Real dimensions and format of an encoded image, or null when the bytes are not an image we know.
+ * This is how the pipeline proves that a provider returned actual pixels of a sane size.
+ */
+export function imageInfo(bytes) {
+  if (!bytes || bytes.length < 24) return null;
+  const b = bytes;
+  if (b[0] === 0x89 && b[1] === 0x50 && b[2] === 0x4e && b[3] === 0x47) {
+    const info = { mime: 'image/png', width: be32(b, 16), height: be32(b, 20) };
+    return info.width && info.height ? info : null;
+  }
+  if (b[0] === 0xff && b[1] === 0xd8) { const info = jpegInfo(b); return info.width ? info : null; }
+  if (b[0] === 0x52 && b[1] === 0x49 && b[2] === 0x46 && b[3] === 0x46 && b[8] === 0x57 && b[9] === 0x45 && b[10] === 0x42 && b[11] === 0x50) {
+    const info = webpInfo(b); return info.width ? info : null;
+  }
+  return null;
+}
+/** How far the delivered frame drifted from the original, in percent of aspect ratio. */
+export function frameDrift(before, after) {
+  if (!before || !after || !before.width || !after.width || !before.height || !after.height) return 0;
+  const a = before.width / before.height, b = after.width / after.height;
+  return Math.abs(a - b) / a * 100;
+}
+export const faDigits = (v) => String(v).replace(/[0-9]/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[d]);
 
 // ---------------------------------------------------------------------------------------------
 // 1. What did the user ask for?
@@ -37,7 +108,7 @@ export const EDIT_MAX_BYTES = 8 * 1024 * 1024;
 /** Fold Persian spelling variants (ZWNJ, harakat, Arabic yeh/kaf) so every phrasing matches. */
 export const normalizeFa = (s) => String(s || '')
   .replace(/[\u200c\u200e\u200f\u2060]/g, ' ')
-  .replace(/[\u064b-\u0652\u0640]/g, '')
+  .replace(/[\u064b-\u0655\u0640]/g, '')
   .replace(/[\u064a\u0649]/g, '\u06cc').replace(/\u0643/g, '\u06a9')
   .replace(/\s+/g, ' ');
 
@@ -45,11 +116,13 @@ export const normalizeFa = (s) => String(s || '')
 const EDIT_VERB = '(?:ویرایش|ادیت|اصلاح|ریتوش|رتوش|retouch|edit|اصلاح\\s*کن|درست\\s*کن|بهبود\\s*بده|بهتر\\s*کن|قشنگ\\s*تر\\s*کن|حرفه\\s*ای\\s*تر|بازسازی|زنده\\s*کن|قوی\\s*تر|شارپ\\s*تر|واضح\\s*تر)';
 const EDIT_NOUN = '(?:عکس|تصویر|این|اون|همین|photo|picture|image|it|this)';
 const EDIT_INTENT_FA = new RegExp(`${EDIT_NOUN}[^.!؟?\\n]{0,40}?${EDIT_VERB}`, 'i');
+// "آماده کن / بده" on a photo (a frame change, a variation set) is an edit request as well.
+const EDIT_DELIVER = /(?:(?:آماده|اماده|درست|جور|اوکی)\s*کن|(?<![\p{L}])بده(?![\p{L}])|(?<![a-z])ready(?![a-z])|(?<![a-z])make(?![a-z]))/iu;
 const EDIT_EXPLICIT = /^\/(?:edit|polish|retouch)(?:@\w+)?\b/i;
 // Changes that are unambiguously edits even without the word "edit".
 const EDIT_OPERATIONS = [
   ['background', /(?:پس\s*زمینه|پشت\s*صحنه|بک\s*گراند|background|bg\s*remov|remove\s*bg|حذف\s*پس\s*زمینه|پسزمینه\s*رو\s*عوض|پسزمینه\s*عوض)/i],
-  ['relight', /(?:نور|روشنایی|روشن\s*تر|تاریک\s*تر|نورپردازی|golden\s*hour|lighting|relight|نور\s*طلایی|سایه|warm(?:er)?|cool(?:er)?|brighter|darker)/i],
+  ['relight', /(?:نور|روشنایی|روشن\s*تر|تاریک\s*تر|تاریک|تیره|نورپردازی|golden\s*hour|lighting|relight|نور\s*طلایی|سایه|warm(?:er)?|cool(?:er)?|brighter|darker)/i],
   ['color', /(?:رنگ|کالر|گرید|grade|color\s*grade|سینمایی|cinematic|فیلتر|filter|تن\s*رنگ|جذاب\s*تر\s*کن\s*رنگ)/i],
   ['restore', /(?:بازسازی|قدیمی|خراب|خش\s*افتاده|restore|scratch|denoise|نویز|تار\s*شده|blur|کیفیت\s*قدیم)/i],
   ['upscale', /(?:کیفیت|رزولوشن|دقت|شارپ|واضح|وضوح|upscale|sharpen|hd|4k|کیفیتش\s*رو\s*بالا)/i],
@@ -63,11 +136,33 @@ const EDIT_OPERATIONS = [
 const NOT_EDIT = /(?:عکس\s*بساز|تصویر\s*بساز|بساز\s*یه\s*عکس|generate\s+(?:an?\s+)?image|draw\s+(?:me\s+)?|چی\s*توشه|چی\s*هست|توضیح\s*بده|describe)/i;
 // "What does the text in this photo say" is reading, not editing.
 const TEXT_ONLY_READ = /(?:چیه|چی\s*نوشته|چه\s*(?:متن|چیزی|نوشته)|بخون|read\s+(?:the\s+)?text|transcribe|ocr)/i;
+// Where in the frame the change belongs. Captured so the model changes only that place.
+const REGION = /(?:گوشه(?:\s*ی)?\s*\S+|سمت\s*\S+|ناحیهٔ?\s*\S+|بخش\s*\S+|پشت\s*سر|دور\s*و\s*بر|بالا\s*\S*|پایین\s*\S*|وسط|راست|چپ|top|bottom|left|right|corner|center|foreground)/i;
+// "چند نسخه / سه حالت" = the studio variations set.
+const VARIANTS = /(?:چند\s*(?:نسخه|حالت|فقط\s*نسخه)|سه\s*(?:نسخه|حالت)|واریاسیون|گزینه\s*ها?|variation|versions?|options?|alternatives?|different\s+takes?)/i;
+// Iteration deltas: "ملایمترش کن" / "بیشتر" adjust the strength instead of inventing a new edit.
+const DELTA_SOFT = /(?:ملایم|کمتر|سبک|آرام|subtle|gentle|softer|less)/i;
+const DELTA_BOLD = /(?:بیشتر|قوی\s*تر|شدید|حسابی|جسور|bold|stronger|more\s+intense|heavier)/i;
+// Output frames the user asks for.
+const ASPECTS = [[/9\s*[:x×]\s*16|استوری|story|ریلز|reels?|عمودی/i, '9:16'], [/1\s*[:x×]\s*1|مربع|square/i, '1:1'],
+  [/4\s*[:x×]\s*5|پست\s*اینستا|instagram\s*post/i, '4:5'], [/16\s*[:x×]\s*9|بنر|banner|افقی|lan(d)?scape|wide/i, '16:9']];
+
+export const TEXT_ASK = new RegExp(
+  '(?<![\\p{L}])(?:متن|نوشته|نوشتن|فونت|کپشن|تیتر|شعار|بنویس|بنویسی|واترمارک)(?![\\p{L}])' +
+  '|(?<![a-z])(?:text|caption|watermark|typography|logo)(?![a-z])', 'iu');
+
+const TEXT_REFUSAL = 'نوشتن متن/لوگو روی عکس را انجام نمی‌دهم: مدل‌های تصویر متن فارسی را ناخوانا و خراب می‌کنند و نتیجه بی‌کیفیت می‌شود. ' +
+  'اگر بخواهی، همین عکس را بدون متن ویرایش می‌کنم («عکس بساز: ...» هم برای ساخت تصویر بدون متن هست) یا متن را جدا و تایپ‌شده تحویل می‌گیری — بگو کدام.';
+const TEXT_NOTE = 'متن/لوگو روی عکس اضافه نشد (مدل تصویر متن را خراب می‌کند)؛ بقیهٔ ویرایش انجام شد.';
+
+/** Base strength per operation: how much freedom the model gets to travel from the original. */
+export const OP_STRENGTH = { restyle: 0.6, swap: 0.52, background: 0.55, erase: 0.55, expand: 0.45, color: 0.32,
+  relight: 0.38, restore: 0.35, upscale: 0.22, product: 0.42, retouch: 0.28, text: 0.3 };
 
 /**
  * Detect an edit request for a photo the user just sent.
- * Returns { op, instruction, strength } or null when the text is not an edit request.
- * `strength` follows the skill library's img2img semantics: low keeps the original, high rebuilds it.
+ * Returns null when the text is not an edit request, else:
+ * { op, instruction, strength, region, variants, delta, aspect, textAsk, explicit }.
  */
 export function editRequest(text) {
   const raw = String(text || '').trim();
@@ -79,28 +174,26 @@ export function editRequest(text) {
   const textAsk = TEXT_ASK.test(t);
   const photoWord = /(?:عکس|تصویر|photo|picture|image)/i.test(t);
   const ops = EDIT_OPERATIONS.filter(([, re]) => re.test(t));
-  if (!(explicit || ops.length || EDIT_INTENT_FA.test(t) || (textAsk && photoWord))) return null;
+  const aspect = (ASPECTS.find(([re]) => re.test(t)) || ['', ''])[1];
+  const variants = VARIANTS.test(t);
+  const frameOrSet = photoWord && (aspect || variants) && EDIT_DELIVER.test(t);
+  if (!(explicit || ops.length || EDIT_INTENT_FA.test(t) || (textAsk && photoWord) || frameOrSet)) return null;
   const clean = raw.replace(EDIT_EXPLICIT, '').replace(/^[\s:：،,.\-]+/, '').trim();
   // Text with no visual operation of its own is its own case: explained, not drawn.
-  const op = ops.length ? ops[0][0] : textAsk ? 'text' : 'retouch';
-  // A restyle or a box that grows needs more freedom than a corrective retouch.
-  const strength = { restyle: 0.65, swap: 0.55, background: 0.6, erase: 0.6, expand: 0.5, color: 0.35,
-    relight: 0.4, restore: 0.35, upscale: 0.25, product: 0.45, retouch: 0.3, text: 0.3 }[op];
-  return { op, instruction: clean.slice(0, 600), strength, explicit };
+  let op = ops.length ? ops[0][0] : textAsk ? 'text' : aspect ? 'expand' : 'retouch';
+  // A request can hold several jobs ("retouch the face AND light it better"): the retouch stays the
+  // headline and the other recipes travel with it, so one edit answers the whole sentence.
+  if (op !== 'text' && ops.some(([name]) => name === 'retouch')) op = 'retouch';
+  const also = ops.map(([name]) => name).filter((name) => name !== op).slice(0, 2);
+  const region = (t.match(REGION) || [''])[0].trim().slice(0, 80);
+  const soft = DELTA_SOFT.test(t), bold = DELTA_BOLD.test(t);
+  const delta = soft && !bold ? -1 : bold && !soft ? 1 : 0;
+  return { op, also, instruction: clean.slice(0, 600), strength: OP_STRENGTH[op], region, variants, delta,
+    aspect, textAsk: textAsk && !ops.length, explicit };
 }
 
-// Text and logos cannot be drawn by an image model without being mangled (Persian script especially).
-export const TEXT_ASK = new RegExp(
-  '(?<![\\p{L}])(?:متن|نوشته|نوشتن|فونت|کپشن|تیتر|شعار|بنویس|بنویسی|واترمارک)(?![\\p{L}])' +
-  '|(?<![a-z])(?:text|caption|watermark|typography|logo)(?![a-z])', 'iu');
-
-// Words that cannot be drawn without ruining the photo; the honest answer to these is explained below.
-const TEXT_REFUSAL = 'نوشتن متن/لوگو روی عکس را انجام نمی‌دهم: مدل‌های تصویر متن فارسی را ناخوانا و خراب می‌کنند و نتیجه بی‌کیفیت می‌شود. ' +
-  'اگر بخواهی، همین عکس را بدون متن ویرایش می‌کنم («عکس بساز: ...» هم برای ساخت تصویر بدون متن هست) یا متن را جدا و تایپ‌شده تحویل می‌گیری — بگو کدام.';
-const TEXT_NOTE = 'متن/لوگو روی عکس اضافه نشد (مدل تصویر متن را خراب می‌کند)؛ بقیهٔ ویرایش انجام شد.';
-
 // ---------------------------------------------------------------------------------------------
-// 2. The brief
+// 2. The recipe book
 // ---------------------------------------------------------------------------------------------
 
 /**
@@ -202,8 +295,12 @@ export const EDIT_OPS = {
 
 export const DEFAULT_OP = 'retouch';
 
-/** The instruction handed to the image model: recipe + user's words + protection + bans. */
-export function editInstruction(op, instruction, brief = null) {
+// ---------------------------------------------------------------------------------------------
+// 3. Two prompt dialects (instruction models vs. image-description models)
+// ---------------------------------------------------------------------------------------------
+
+/** The instruction handed to an instruction-following image model (Gemini image family). */
+export function editInstruction(op, instruction, brief = null, { region = '', aspect = '', extra = '', also = [] } = {}) {
   const recipe = EDIT_OPS[op] || EDIT_OPS[DEFAULT_OP];
   const parts = [
     `Edit this photograph: ${recipe.direct}.`,
@@ -211,20 +308,65 @@ export function editInstruction(op, instruction, brief = null) {
     brief && brief.problems && brief.problems.length ? `Fix these specific problems: ${brief.problems.join('; ')}.` : '',
     brief && brief.lighting ? `Lighting: ${brief.lighting}.` : '',
     brief && brief.color ? `Colour: ${brief.color}.` : '',
-    brief && brief.aspect ? `Frame: ${brief.aspect}.` : '',
-    `Do not change: ${[...recipe.keep, ...((brief && brief.must_keep) || [])].slice(0, 8).join(', ')}.`,
+    aspect ? `Final frame: ${aspect} (crop or extend as needed, never distort faces).` : (brief && brief.aspect ? `Frame: ${brief.aspect}.` : ''),
+    also.length ? `The same edit must also do: ${also.map((o) => (EDIT_OPS[o] || {}).direct).filter(Boolean).join('; ')}.` : '',
+    region ? `Change ONLY this area: ${region}. Everything outside that area must stay pixel-identical.` : '',
+    `Do not change: ${[...recipe.keep, ...((brief && brief.mustKeep) || [])].slice(0, 8).join(', ')}.`,
     `Avoid: ${recipe.avoid.join(', ')}.`,
     'Keep it photorealistic and natural; do not add any text, letters, numbers, logos or watermarks.',
+    extra,
     brief && brief.fix ? `Extra correction from review: ${brief.fix}.` : '',
   ];
-  return parts.filter(Boolean).join(' ');
+  return parts.filter(Boolean).join(' ').slice(0, MAX_PROMPT * 2);
 }
+
+/**
+ * The same plan written for a prompt-driven img2img model (Stable Diffusion family on Workers AI):
+ * those models do not follow instructions, they paint what the prompt describes, so the prompt
+ * describes the RESULT image (skill library: image-studio prompt structure) with the negatives
+ * spelled out at the end.
+ */
+export function cfPrompt(op, instruction, brief = null, { region = '', also = [] } = {}) {
+  const recipe = EDIT_OPS[op] || EDIT_OPS[DEFAULT_OP];
+  const subject = (brief && brief.subject) || (instruction ? instruction.slice(0, 120) : 'the same subject');
+  const look = {
+    product: 'clean seamless studio background, large softbox light, soft contact shadow, catalogue product photograph',
+    background: 'new clean background, subject edges intact, matching light and perspective',
+    relight: 'warm golden-hour side light, soft shadows, gentle highlight roll-off',
+    color: 'cinematic colour grade, teal shadows, warm highlights, natural skin tones',
+    restore: 'restored vintage film photograph, clean and sharp, honest grain',
+    upscale: 'sharp, high detail, clean edges, natural texture',
+    erase: 'clean seamless area where the object was, matching texture and light',
+    swap: 'the requested object in place, matching scale, light and shadow',
+    expand: 'wider view of the same scene, seamless continuation',
+    restyle: 'consistent artistic styling across the whole frame',
+    retouch: 'natural retouched portrait, even skin with visible pores, soft light',
+  }[op] || 'professional retouched photograph';
+  const alsoLooks = also.map((o) => ({ relight: 'warm cinematic light', color: 'cinematic colour grade',
+    product: 'clean studio background and light', background: 'clean new background', restore: 'restored clean detail',
+    upscale: 'extra sharpness and detail', retouch: 'natural retouched skin', erase: 'clean seamless areas',
+    swap: 'the replaced object matching the light' }[o])).filter(Boolean);
+  const parts = [
+    `professional ${recipe.fa && op === 'product' ? 'e-commerce' : 'photographic'} edit of ${subject}`,
+    instruction ? `showing ${instruction.slice(0, 140)}` : '',
+    look, ...alsoLooks,
+    region ? `change only ${region}, the rest of the frame stays exactly the same` : 'same composition, same framing, same subject',
+    'photorealistic, sharp focus, high detail, correct proportions, natural skin texture',
+    'no text, no letters, no watermark, no logo, no extra people, no extra limbs, no blur, no distortion, no oversaturation',
+  ];
+  return parts.filter(Boolean).join(', ').slice(0, MAX_PROMPT);
+}
+
+// ---------------------------------------------------------------------------------------------
+// 4. Stage 1 - the brief
+// ---------------------------------------------------------------------------------------------
 
 const BRIEF_SYSTEM = 'You are a senior photo retoucher preparing an edit plan for another retoucher. ' +
   'Look at the photograph and the user\'s request. Answer with ONE JSON object and nothing else:\n' +
-  '{"subject":"what the photo is really about","must_keep":["identity","key objects","text already in the photo"],' +
-  '"problems":["concrete flaws worth fixing, at most 4"],"lighting":"one short line","color":"one short line",' +
-  '"aspect":"current framing and whether it should change","risks":["what could go wrong"]}\n' +
+  '{"subject":"what the photo is really about","subject_type":"person|product|scene|animal|document|other",' +
+  '"must_keep":["identity","key objects","text that already exists"],"problems":["concrete flaws worth fixing, at most 4"],' +
+  '"lighting":"one short line","color":"one short line","aspect":"current framing","region":"where the change belongs",' +
+  '"change_scale":"small|medium|large","has_text":true|false,"risks":["what could go wrong"]}\n' +
   'Rules: never plan to change a person\'s identity, age, ethnicity or body; never plan to add text or logos; ' +
   'keep every concrete detail the user asked for; be specific and physical, no marketing words.';
 
@@ -236,38 +378,57 @@ function extractJson(text) {
   try { return JSON.parse(raw.slice(start, end + 1)); } catch { return null; }
 }
 
+export const emptyBrief = () => ({ subject: '', subjectType: 'other', mustKeep: [], problems: [], lighting: '',
+  color: '', aspect: '', region: '', changeScale: 0, hasText: false, risks: [], derived: false });
+
 /**
- * Stage 1 - study the photo and write the brief. Never throws: if the vision model is unavailable
- * or answers rubbish, the recipe alone is used, so an edit can still be attempted.
+ * Study the photo and write the brief. Never throws: if the vision model is unavailable or answers
+ * rubbish, the recipe alone is used, so an edit can still be attempted.
  */
 export async function photoBrief(env, ask, image, mime, instruction, op = DEFAULT_OP) {
-  const fallback = { subject: '', must_keep: [], problems: [], lighting: '', color: '', aspect: '', risks: [], derived: false };
-  if (!ask) return fallback;
+  if (!ask) return emptyBrief();
   try {
     const user = `Retoucher request: ${instruction || EDIT_OPS[op].fa}. Planned operation: ${EDIT_OPS[op].fa}. ` +
       'Write the JSON brief for this photo.';
     const text = await ask(env, [{ role: 'user', parts: [{ inlineData: { mimeType: mime, data: image } }, { text: user }] }], BRIEF_SYSTEM, false);
     const parsed = extractJson(text);
-    if (!parsed || typeof parsed !== 'object') return fallback;
+    if (!parsed || typeof parsed !== 'object') return emptyBrief();
     const arr = (v) => (Array.isArray(v) ? v.filter((x) => typeof x === 'string' && x.trim()).slice(0, 6) : []);
+    const scale = { small: 0.25, medium: 0.55, large: 0.85 }[String(parsed.change_scale || '').toLowerCase()] ?? 0.55;
     return {
       subject: String(parsed.subject || '').slice(0, 200),
-      must_keep: arr(parsed.must_keep),
+      subjectType: String(parsed.subject_type || 'other').toLowerCase().slice(0, 20),
+      mustKeep: arr(parsed.must_keep),
       problems: arr(parsed.problems),
       lighting: String(parsed.lighting || '').slice(0, 160),
       color: String(parsed.color || '').slice(0, 160),
       aspect: String(parsed.aspect || '').slice(0, 120),
+      region: String(parsed.region || '').slice(0, 120),
+      changeScale: scale,
+      hasText: parsed.has_text === true,
       risks: arr(parsed.risks),
       derived: true,
     };
   } catch (err) {
     console.error('[Hermes] photo brief failed:', err.message);
-    return fallback;
+    return emptyBrief();
   }
 }
 
+/**
+ * Stage 2 - the plan: how far this edit may travel. A corrective retouch on a clean photo stays
+ * small; a restyle, or a brief that says the photo needs a lot of work, is allowed to travel.
+ */
+export function planStrength(op, { delta = 0, changeScale = 0.55 } = {}) {
+  const base = OP_STRENGTH[op] ?? 0.3;
+  // A problematic photo (quality 0..1 from the brief) may travel further, a clean one stays put.
+  const scale = 1 + (changeScale - 0.55) * 0.5;
+  const deltaFactor = delta < 0 ? 0.62 : delta > 0 ? 1.45 : 1;
+  return Math.max(0.12, Math.min(0.75, base * scale * deltaFactor));
+}
+
 // ---------------------------------------------------------------------------------------------
-// 3. Execution
+// 5. Stage 3 - execution
 // ---------------------------------------------------------------------------------------------
 
 const sniff = (bytes) => {
@@ -287,6 +448,14 @@ export const base64Bytes = (b64) => {
   for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
   return out;
 };
+/** Proven pixels or nothing: base64 -> bytes -> decoded dimensions. */
+function verified(imageB64, mime) {
+  const bytes = base64Bytes(imageB64);
+  const info = imageInfo(bytes);
+  if (!info || info.width < 64 || info.height < 64) return null;
+  if (bytes.length < 1000) return null;
+  return { image: imageB64, mime: info.mime || mime || sniff(bytes), info };
+}
 
 /** Gemini image models: the only free chain that both understands an edit instruction and returns pixels. */
 export async function geminiEdit(env, image, mime, instruction, models = []) {
@@ -307,8 +476,10 @@ export async function geminiEdit(env, image, mime, instruction, models = []) {
     const parts = (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts) || [];
     const img = parts.find((p) => p.inlineData && p.inlineData.data);
     if (!img) { last = new Error(`${model}: no image (probably refused the edit)`); continue; }
+    const out = verified(img.inlineData.data, img.inlineData.mimeType);
+    if (!out) { last = new Error(`${model}: unusable pixels`); continue; }
     if (env.MEMORY) await env.MEMORY.put('edit-model', model);
-    return { image: img.inlineData.data, mime: img.inlineData.mimeType || 'image/png', model: `Gemini ${model}` };
+    return { ...out, model: `Gemini ${model}`, provider: 'gemini' };
   }
   throw new Error(`هیچ مدل تصویر جمینی برای ویرایش جواب نداد${last ? ` (${last.message})` : ''}.`);
 }
@@ -335,90 +506,129 @@ export async function geminiImageList(env) {
 // Workers AI image-to-image models, best first. `strength` is how far the model may travel from the
 // original: low keeps it, high rebuilds it (skill library: img2img strength semantics).
 export const CF_EDIT_MODELS = [
-  { id: '@cf/black-forest-labs/flux-1-schnell', name: 'flux-1-schnell', key: 'image', guidanceKey: null },
-  { id: '@cf/runwayml/stable-diffusion-v1-5-img2img', name: 'sd-v1-5-img2img', key: 'image', guidanceKey: 'guidance' },
-  { id: '@cf/stabilityai/stable-diffusion-xl-base-1.0', name: 'sdxl-base', key: 'image', guidanceKey: 'guidance' },
+  { id: '@cf/black-forest-labs/flux-1-schnell', name: 'flux-1-schnell', steps: 4 },
+  { id: '@cf/runwayml/stable-diffusion-v1-5-img2img', name: 'sd-v1-5-img2img', guidance: 7.5, steps: 20 },
+  { id: '@cf/stabilityai/stable-diffusion-xl-base-1.0', name: 'sdxl-base', guidance: 7.5, steps: 20 },
 ];
 
-/** Free fallback: Workers AI image-to-image with the original pixels as input. */
-export async function cfEdit(env, bytes, instruction, strength = 0.4) {
+/** Workers AI answers as base64, a stream or raw bytes depending on the model. */
+async function imageOut(out) {
+  if (!out) return null;
+  if (typeof out.image === 'string' && out.image) return verified(out.image, null);
+  let bytes = null;
+  if (out instanceof Uint8Array) bytes = out;
+  else if (out instanceof ArrayBuffer) bytes = new Uint8Array(out);
+  else if (typeof out.getReader === 'function') bytes = new Uint8Array(await new Response(out).arrayBuffer());
+  if (!bytes) return null;
+  return verified(toBase64(bytes), sniff(bytes));
+}
+
+/**
+ * Free fallback: Workers AI image-to-image with the original pixels as input. The prompt is the
+ * result-description dialect. Advanced parameters are sent optimistically and dropped once if the
+ * model rejects them, so an unsupported knob degrades instead of failing the whole edit.
+ */
+export async function cfEdit(env, bytes, prompt, strength = 0.4) {
   if (!env.AI) throw new Error('no Workers AI binding');
   const errors = [];
   for (const m of CF_EDIT_MODELS) {
-    try {
-      const params = { prompt: String(instruction).slice(0, 1800), image: [...bytes], strength };
-      if (m.guidanceKey) params[m.guidanceKey] = 7.5;
-      const out = await env.AI.run(m.id, params);
-      const got = await imageOut(out);
-      if (got) return { ...got, model: m.name };
-      errors.push(`${m.name}: empty`);
-    } catch (err) {
-      errors.push(`${m.name}: ${String(err.message).slice(0, 80)}`);
+    const base = { prompt: String(prompt).slice(0, MAX_PROMPT), image: [...bytes], strength };
+    const extras = { ...(m.guidance ? { guidance: m.guidance } : {}), ...(m.steps ? { num_steps: m.steps } : {}),
+      negative_prompt: 'text, letters, watermark, logo, extra limbs, distorted face, blurry, low quality, oversaturated' };
+    for (const params of [{ ...base, ...extras }, base]) {
+      try {
+        const out = await imageOut(await env.AI.run(m.id, params));
+        if (out) return { ...out, model: m.name, provider: 'workers-ai' };
+        errors.push(`${m.name}: empty`);
+        break; // an empty answer is not a parameter problem - move to the next model
+      } catch (err) {
+        errors.push(`${m.name}: ${String(err.message).slice(0, 80)}`);
+      }
     }
   }
   throw new Error(`Workers AI img2img: ${errors.join('، ')}`);
 }
 
-// Workers AI answers as base64, a stream or raw bytes depending on the model.
-async function imageOut(out) {
-  if (!out) return null;
-  if (typeof out.image === 'string' && out.image) {
-    const bytes = base64Bytes(out.image);
-    if (bytes.length < 1000) return null;
-    return { image: out.image, mime: sniff(bytes) };
-  }
-  let bytes = null;
-  if (out instanceof Uint8Array) bytes = out;
-  else if (out instanceof ArrayBuffer) bytes = new Uint8Array(out);
-  else if (typeof out.getReader === 'function') bytes = new Uint8Array(await new Response(out).arrayBuffer());
-  if (!bytes || bytes.length < 1000) return null;
-  return { image: toBase64(bytes), mime: sniff(bytes) };
-}
-
-/** Provider chain for an edit: Gemini first (instruction-following), Workers AI second (free). */
-export async function runEdit(env, image, mime, instruction, strength) {
+/** Provider chain for one attempt: Gemini first (instruction-following), Workers AI second (free). */
+export async function runEdit(env, image, mime, { gemini, cf, strength }) {
   const errors = [];
   if (env.GEMINI_API_KEY) {
-    try { return { ...(await geminiEdit(env, image, mime, instruction)), provider: 'gemini' }; }
+    try { return await geminiEdit(env, image, mime, gemini); }
     catch (err) { errors.push(String(err.message)); console.error('[Hermes] Gemini edit failed:', err.message); }
   }
   if (env.AI) {
-    try { return { ...(await cfEdit(env, base64Bytes(image), instruction, strength)), provider: 'workers-ai' }; }
+    try { return await cfEdit(env, base64Bytes(image), cf || gemini, strength); }
     catch (err) { errors.push(String(err.message)); console.error('[Hermes] Workers AI edit failed:', err.message); }
   }
   throw new Error(`ویرایش انجام نشد؛ هیچ مدلی جواب نداد (${errors.join(' | ') || 'کلید جمینی یا Workers AI لازم است'})`);
 }
 
 // ---------------------------------------------------------------------------------------------
-// 4. Review - a retoucher checks their own work before delivery
+// 6. Stage 4 - review: the retoucher checks their own work against a rubric
 // ---------------------------------------------------------------------------------------------
 
+/** Weighted rubric. Identity only counts when there is a person to protect, and it gates delivery. */
+export const RUBRIC = {
+  instruction: { weight: 0.30, fa: 'انجام درخواست' },
+  identity: { weight: 0.25, fa: 'حفظ هویت' },
+  artifacts: { weight: 0.20, fa: 'نبود آرتیفکت' },
+  light: { weight: 0.15, fa: 'نور و رنگ' },
+  frame: { weight: 0.10, fa: 'کادر و ترکیب' },
+};
+export const IDENTITY_FLOOR = 60;
+
 const REVIEW_SYSTEM = 'You are the senior retoucher reviewing a colleague\'s edit. Compare the two images ' +
-  '(first = original, second = edit). Answer with ONE JSON object only: ' +
-  '{"keep":true|false,"score":0-100,"issues":["concrete problems, empty if none"],"fix":"one sentence instruction to repair the biggest issue"}. ' +
-  'Reject the edit (keep=false) when: the person\'s identity/features changed, the composition jumped, ' +
-  'text or logos became corrupted, the scene gained objects nobody asked for, or the edit is barely different ' +
-  'from the original when a real change was requested. Judge only what is visible.';
+  '(first = original, second = edit) and answer with ONE JSON object only: ' +
+  '{"instruction":0-100,"identity":0-100,"artifacts":0-100,"light":0-100,"frame":0-100,' +
+  '"keep":true|false,"issues":["concrete problems, empty if none"],"fix":"one sentence instruction to repair the biggest issue"} ' +
+  'Score meaning: instruction = how completely the request was done; identity = how exactly the person, ' +
+  'their features, age and body were preserved (100 when there is no person); artifacts = absence of ' +
+  'smudges, warped edges, duplicated or invented objects, corrupted text; light = coherent, believable ' +
+  'light and colour; frame = composition, crop and horizon quality. ' +
+  'Set keep=false when identity drops, the composition jumps, existing text is corrupted, the scene gained ' +
+  'objects nobody asked for, or the change is barely visible when a real change was requested. ' +
+  'Judge only what is visible.';
+
+/** Weight of each rubric part, renormalised: identity is skipped when no person is in the frame. */
+export function rubricWeights(subjectType) {
+  const keys = Object.keys(RUBRIC);
+  const used = subjectType === 'person' || subjectType === 'people' ? keys : keys.filter((k) => k !== 'identity');
+  const total = used.reduce((s, k) => s + RUBRIC[k].weight, 0);
+  return Object.fromEntries(used.map((k) => [k, RUBRIC[k].weight / total]));
+}
+
+export function scoreParts(parts, subjectType) {
+  const weights = rubricWeights(subjectType);
+  const num = Object.entries(weights).reduce((s, [k, w]) => s + w * (Number(parts[k]) || 0), 0);
+  return Math.round(Math.max(0, Math.min(100, num)));
+}
+export const band = (score) => (score >= 90 ? 'عالی' : score >= QUALITY_BAR ? 'حرفه‌ای' : score >= 70 ? 'خوب' : 'قابل‌قبول');
 
 /**
- * Compare before/after and decide whether to deliver or repair. Never throws: a review that cannot be
- * parsed accepts the edit (a broken reviewer must not block the user's picture).
+ * Compare before/after and decide whether to deliver or repair. Never throws: a review that cannot
+ * be parsed accepts the edit (a broken reviewer must not block the user's picture).
  */
-export async function reviewEdit(env, ask, before, beforeMime, after, afterMime, request = '') {
-  const fallback = { keep: true, score: 0, issues: [], fix: '', derived: false };
+export async function reviewEdit(env, ask, before, beforeMime, after, afterMime, request = '', { subjectType = 'other' } = {}) {
+  const fallback = { keep: true, score: 0, parts: {}, issues: [], fix: '', derived: false };
   if (!ask) return fallback;
   try {
     const parts = [
       { inlineData: { mimeType: beforeMime, data: before } },
       { inlineData: { mimeType: afterMime, data: after } },
-      { text: `The user asked for: ${request || 'a professional edit'}. Review the edit.` },
+      { text: `The user asked for: ${request || 'a professional edit'}.` +
+        (subjectType === 'person' ? ' This photo contains a person: check that the same person is recognisable, same features, same age, same body.' : '') +
+        ' Review the edit.' },
     ];
     const text = await ask(env, [{ role: 'user', parts }], REVIEW_SYSTEM, false);
     const parsed = extractJson(text);
     if (!parsed || typeof parsed !== 'object') return fallback;
     const issues = Array.isArray(parsed.issues) ? parsed.issues.filter((x) => typeof x === 'string').slice(0, 5) : [];
-    const score = Number.isFinite(Number(parsed.score)) ? Math.max(0, Math.min(100, Number(parsed.score))) : 0;
-    return { keep: parsed.keep !== false, score, issues, fix: String(parsed.fix || '').slice(0, 240), derived: true };
+    const nums = {};
+    for (const k of Object.keys(RUBRIC)) if (Number.isFinite(Number(parsed[k]))) nums[k] = Math.max(0, Math.min(100, Number(parsed[k])));
+    const score = scoreParts(nums, subjectType);
+    const identity = subjectType === 'person' && nums.identity !== undefined ? nums.identity : 100;
+    return { keep: parsed.keep !== false && score >= MIN_DELIVER && identity >= IDENTITY_FLOOR,
+      score, parts: nums, identity, issues, fix: String(parsed.fix || '').slice(0, 240), derived: true };
   } catch (err) {
     console.error('[Hermes] photo review failed:', err.message);
     return fallback;
@@ -426,66 +636,212 @@ export async function reviewEdit(env, ask, before, beforeMime, after, afterMime,
 }
 
 // ---------------------------------------------------------------------------------------------
-// 5. The whole pipeline
+// 7. Variations: the studio set (conservative → balanced → bold)
 // ---------------------------------------------------------------------------------------------
 
-export const MAX_ATTEMPTS = 2;
+export const LADDER = [
+  { id: 'safe', fa: 'محافظه‌کارانه', factor: 0.7, note: 'smallest safe change, everything else identical' },
+  { id: 'balanced', fa: 'متعادل', factor: 1, note: 'the requested change done clearly and naturally' },
+  { id: 'bold', fa: 'جسورانه', factor: 1.35, note: 'the same request, stronger and more visible' },
+];
+
+// ---------------------------------------------------------------------------------------------
+// 8. Stage 5 - the whole pipeline
+// ---------------------------------------------------------------------------------------------
 
 /**
- * BRIEF → EDIT → REVIEW (→ one corrective retry) → DELIVER.
+ * BRIEF → PLAN → CANDIDATES (ladder + quality bar) → BEST + REVIEW → DELIVERY.
  * `ask` is the multimodal brain (brain.mjs `ask`). Returns a delivery object, never a false claim:
  * if no provider produces pixels the promise rejects with the collected reasons.
  */
-export async function polishPhoto(env, ask, image, mime, request, { op = null, attempts = MAX_ATTEMPTS } = {}) {
-  const detected = op ? { op, instruction: request, strength: 0.4 } : editRequest(request);
-  const plan = detected || { op: DEFAULT_OP, instruction: request, strength: 0.35 };
+export async function polishPhoto(env, ask, image, mime, request, { op = null, candidates = null, delta = null } = {}) {
+  const seen = editRequest(request);
+  const detected = op ? { ...(seen || {}), op, also: (seen && seen.also) || [], instruction: request, strength: OP_STRENGTH[op],
+    region: (seen && seen.region) || '', variants: !!(seen && seen.variants), delta: (seen && seen.delta) || 0,
+    aspect: (seen && seen.aspect) || '', textAsk: false, explicit: true } : seen;
+  const plan0 = detected || { op: DEFAULT_OP, also: [], instruction: request, strength: OP_STRENGTH[DEFAULT_OP], region: '',
+    variants: false, delta: 0, aspect: '', textAsk: false, explicit: false };
+  if (delta !== null) plan0.delta = delta;
   if (image && image.length > EDIT_MAX_BYTES * 4 / 3) throw new Error('عکس خیلی بزرگ است (حداکثر ۸ مگابایت).');
-  if (plan.op === 'text') return { kind: 'text-refused', op: 'text', opLabel: EDIT_OPS.text.fa, model: null, image: null, message: TEXT_REFUSAL };
+  if (plan0.op === 'text') return { kind: 'text-refused', op: 'text', opLabel: EDIT_OPS.text.fa, model: null, image: null, message: TEXT_REFUSAL };
   const textNote = TEXT_ASK.test(normalizeFa(request || '')) ? TEXT_NOTE : '';
-  const brief = await photoBrief(env, ask, image, mime, plan.instruction, plan.op);
-  let instruction = editInstruction(plan.op, plan.instruction, brief);
+
+  const brief = await photoBrief(env, ask, image, mime, plan0.instruction, plan0.op);
+  const region = plan0.region || brief.region || '';
+  const base = planStrength(plan0.op, { delta: plan0.delta, changeScale: brief.changeScale });
+  const order = plan0.variants ? LADDER : [LADDER[1], LADDER[2], LADDER[0]];
+  const want = Math.max(1, Math.min(MAX_CANDIDATES, candidates || (plan0.variants ? order.length : 1)));
+  const ladder = order.slice(0, want);
+
+  const before = imageInfo(base64Bytes(image));
   const tried = [];
-  let current = null;
-  let review = null;
-  let repaired = false;
-  for (let attempt = 1; attempt <= attempts; attempt++) {
-    current = await runEdit(env, image, mime, instruction, plan.strength);
-    tried.push({ attempt, model: current.model, provider: current.provider });
-    review = await reviewEdit(env, ask, image, mime, current.image, current.mime, plan.instruction);
-    if (review.keep || attempt === attempts) break;
-    repaired = true;
-    // Repair pass: the reviewer's note becomes a binding correction for the next attempt.
-    instruction = editInstruction(plan.op, plan.instruction, { ...brief, fix: review.fix || 'keep the original composition and identity exactly' });
-    console.error('[Hermes] edit rejected by review, retrying:', review.issues.join('; '));
+  const attempts = [];
+  let repairNote = '';
+  let lastError = null;
+  for (const step of ladder) {
+    const strength = Math.max(0.12, Math.min(0.8, base * step.factor));
+    const opts = { region, aspect: plan0.aspect, also: plan0.also || [] };
+    const prompts = {
+      gemini: editInstruction(plan0.op, plan0.instruction, { ...brief, fix: repairNote }, opts),
+      cf: cfPrompt(plan0.op, plan0.instruction, brief, opts),
+    };
+    let current;
+    try {
+      current = await runEdit(env, image, mime, { ...prompts, strength });
+    } catch (err) {
+      tried.push({ variant: step.id, model: null, error: String(err.message).slice(0, 200) });
+      lastError = err;
+      continue;
+    }
+    const review = await reviewEdit(env, ask, image, mime, current.image, current.mime, plan0.instruction, { subjectType: brief.subjectType });
+    tried.push({ variant: step.id, model: current.model, provider: current.provider, score: review.score,
+      keep: review.keep, strength });
+    const attempt = { ...current, review, strength, variant: step.id, variantLabel: step.fa,
+      drift: frameDrift(before, current.info) };
+    attempts.push(attempt);
+    // The bar is met: no reason to spend more quota on this photo (except for a variations set,
+    // which is meant to show the whole range).
+    if (!plan0.variants && review.derived && review.score >= QUALITY_BAR) break;
+    // Not good enough: the reviewer's note becomes a binding correction for the next version.
+    if (!review.keep && review.fix) repairNote = review.fix;
   }
+  if (!attempts.length) throw (lastError || new Error('ویرایش انجام نشد.'));
+
+  const ranked = [...attempts].sort((a, b) => b.review.score - a.review.score || LADDER.findIndex((l) => l.id === a.variant) - LADDER.findIndex((l) => l.id === b.variant));
+  const best = ranked[0];
+  const repaired = attempts.length > 1 ? ranked[0] !== attempts[0] || !attempts[0].review.keep : false;
+  const belowBar = best.review.derived && best.review.score < QUALITY_BAR;
   return {
-    kind: repaired ? 'repaired' : 'edited',
-    op: plan.op, opLabel: EDIT_OPS[plan.op].fa,
-    image: current.image, mime: current.mime, model: current.model, provider: current.provider,
-    brief, review, attempted: tried, textNote,
+    kind: plan0.variants ? 'variations' : repaired ? 'repaired' : 'edited',
+    op: plan0.op, opLabel: EDIT_OPS[plan0.op].fa,
+    image: best.image, mime: best.mime, model: best.model, provider: best.provider, info: best.info,
+    before, drift: best.drift, strength: best.strength, variant: best.variant, variantLabel: best.variantLabel,
+    brief, review: best.review, score: best.review.score, belowBar, repaired,
+    variations: plan0.variants ? ranked.map((a, i) => ({ ...a, rank: i + 1 })) : null,
+    attempted: tried, textNote,
   };
 }
 
 /** Short Persian delivery caption: what changed, what was protected, what to try next. */
 export function editCaption(result) {
-  const lines = [`✅ ویرایش انجام شد — ${result.opLabel} (${result.model})`];
+  const res = result.info ? ` · ${faDigits(result.info.width)}×${faDigits(result.info.height)}` : '';
+  const v = result.variantLabel && result.variations ? ` · نسخهٔ ${result.variantLabel}` : '';
+  const lines = [`✅ ویرایش انجام شد — ${result.opLabel} (${result.model}${res}${v})`];
   if (result.brief && result.brief.problems && result.brief.problems.length) {
     lines.push('', '🔧 اصلاح‌ها:', ...result.brief.problems.slice(0, 4).map((p) => `• ${p}`));
   }
-  if (result.review && result.review.issues && result.review.issues.length) {
-    lines.push('', '🔍 نکتهٔ بازبینی:', ...result.review.issues.slice(0, 3).map((i) => `• ${i}`));
+  if (result.brief && result.brief.mustKeep && result.brief.mustKeep.length) {
+    lines.push('', `🛡️ دست‌نخورده ماند: ${result.brief.mustKeep.slice(0, 3).join('، ')}`);
   }
-  if (result.kind === 'repaired') lines.push('', '(یک بار دیگر با اصلاح بازبینی تلاش شد.)');
+  if (result.review && result.review.derived) {
+    lines.push('', `🔍 بازبینی ریتوشِر: ${faDigits(result.score)}/۱۰۰ (${band(result.score)})`);
+    if (result.review.issues && result.review.issues.length) lines.push(...result.review.issues.slice(0, 3).map((i) => `• ${i}`));
+    if (result.belowBar) lines.push('', '⚠️ هنوز حرف‌اول را نزده؛ اگر بگویی کدام قسمت مهم‌تر است، دقیق‌ترش می‌کنم.');
+  }
+  if (result.repaired) lines.push('', '(نسخهٔ اول از بازبینی رد شد؛ نسخهٔ بهتر فرستاده شد.)');
+  if (result.drift > 12 && result.op !== 'expand') lines.push('', `ℹ️ کادر حدود ${faDigits(Math.round(result.drift))}٪ تغییر کرده است.`);
   if (result.textNote) lines.push('', `ℹ️ ${result.textNote}`);
-  lines.push('', 'اگر بخواهی می‌توانم: روشن‌تر/تاریک‌تر، پس‌زمینهٔ دیگر، نسخهٔ پرتره یا استوری، ' +
-    'یا ریتوش سبک‌تر کنم — فقط بگو.');
+  lines.push('', 'اگر بخواهی می‌توانم: ملایم‌تر/قوی‌تر، پس‌زمینهٔ دیگر، نسخهٔ استوری ۹:۱۶، ' +
+    '«چند نسخه» برای انتخاب، یا ریتوش سبک‌تر کنم — فقط بگو.');
   return lines.join('\n');
+}
+
+/** Caption for the variations set: which version is which, and which one the studio recommends. */
+export function variationsCaption(result) {
+  const lines = [`🎨 ${faDigits(result.variations.length)} نسخهٔ حرفه‌ای آماده شد — ${result.opLabel}`];
+  for (const v of result.variations) {
+    const s = v.review.derived ? ` — کیفیت ${faDigits(v.review.score)}/۱۰۰` : '';
+    const size = v.info ? ` (${faDigits(v.info.width)}×${faDigits(v.info.height)})` : '';
+    lines.push(`• نسخهٔ ${faDigits(v.rank)}: ${v.variantLabel}${size}${s}`);
+  }
+  const top = result.variations[0];
+  lines.push('', `⭐️ پیشنهاد من: نسخهٔ ${faDigits(top.rank)} (${top.variantLabel})${top.review.derived ? ` با کیفیت ${faDigits(top.review.score)}/۱۰۰` : ''}.`);
+  if (result.brief && result.brief.mustKeep && result.brief.mustKeep.length) {
+    lines.push('', `🛡️ در همهٔ نسخه‌ها دست‌نخورده ماند: ${result.brief.mustKeep.slice(0, 3).join('، ')}`);
+  }
+  if (result.textNote) lines.push('', `ℹ️ ${result.textNote}`);
+  lines.push('', 'بگو کدام نسخه را انتخاب می‌کنی تا همان را دقیق‌تر کنم.');
+  return lines.join('\n');
+}
+
+// ---------------------------------------------------------------------------------------------
+// 9. Iteration memory: «کمی ملایم‌تر» works without re-sending the photo
+// ---------------------------------------------------------------------------------------------
+
+const RECALL_TTL = 3600;
+const RECALL_MAX = 4_500_000; // base64 characters; larger originals are simply not remembered
+
+/** Remember the original of the last edit so a follow-up tweak does not need the photo again. */
+export async function rememberEdit(env, key, { original, mime, request, op, strength }) {
+  if (!env.MEMORY || !key) return false;
+  const plan = JSON.stringify({ request: String(request || '').slice(0, 400), op, strength });
+  try {
+    await env.MEMORY.put(`edit:plan:${key}`, plan, { expirationTtl: RECALL_TTL });
+    if (original && original.length <= RECALL_MAX) {
+      await env.MEMORY.put(`edit:orig:${key}`, JSON.stringify({ image: original, mime }), { expirationTtl: RECALL_TTL });
+      return true;
+    }
+    return false;
+  } catch (err) {
+    console.error('[Hermes] rememberEdit failed:', err.message);
+    return false;
+  }
+}
+
+/** The remembered original of the last edit, or null. */
+export async function recallEdit(env, key) {
+  if (!env.MEMORY || !key) return null;
+  try {
+    const raw = await env.MEMORY.get(`edit:orig:${key}`);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed.image !== 'string') return null;
+    const plan = JSON.parse((await env.MEMORY.get(`edit:plan:${key}`)) || '{}');
+    return { image: parsed.image, mime: parsed.mime || 'image/jpeg', plan };
+  } catch { return null; }
+}
+
+/**
+ * A short follow-up like «کمی ملایم‌تر» / «قوی‌ترش کن» / «چند نسخه بده» on the photo that was just
+ * edited. Only meaningful together with the remembered original.
+ */
+export function followUpRequest(text) {
+  const t = normalizeFa(String(text || '').trim());
+  if (!t || t.length > 140) return null;
+  const soft = DELTA_SOFT.test(t), bold = DELTA_BOLD.test(t);
+  const delta = soft && !bold ? -1 : bold && !soft ? 1 : 0;
+  if (!delta && !VARIANTS.test(t)) return null;
+  if (!/(?:کن|بده|بساز|بکن|\bdo\b|\bmake\b|\bagain\b|please)/i.test(t) && t.split(/\s+/).length > 3) return null;
+  return { instruction: t.slice(0, 300), delta, variants: VARIANTS.test(t) };
+}
+
+/**
+ * The iteration loop: re-run the last plan on the remembered original with the user's tweak
+ * («ملایم‌تر»، «قوی‌تر»، «چند نسخه»), so the user never has to send the photo again.
+ */
+export async function continueEdit(env, ask, recalled, input) {
+  const follow = followUpRequest(input);
+  const request = [recalled.plan && recalled.plan.request, input].filter(Boolean).join(' و ');
+  const delta = follow ? follow.delta : 0;
+  const note = delta < 0 ? ' (apply more subtly than the previous attempt, keep everything else identical)'
+    : delta > 0 ? ' (apply more strongly and more visibly than the previous attempt)' : '';
+  const result = await polishPhoto(env, ask, recalled.image, recalled.mime, request + note, {
+    op: (recalled.plan && recalled.plan.op) || null, delta,
+    candidates: follow && follow.variants ? MAX_CANDIDATES : 2,
+  });
+  const caption = result.kind === 'text-refused' ? result.message
+    : result.kind === 'variations' ? variationsCaption(result) : editCaption(result);
+  return { ...result, caption, followUp: true };
 }
 
 /** Everything the worker needs to answer a photo edit turn, in one call. */
 export async function handlePhotoEdit(env, ask, image, mime, request) {
   const plan = editRequest(request);
   if (!plan) return null;
-  const result = await polishPhoto(env, ask, image, mime, request, { op: plan.op });
-  return { ...result, caption: result.kind === 'text-refused' ? result.message : editCaption(result) };
+  const configured = Number(env.EDIT_CANDIDATES) > 0 ? Math.min(MAX_CANDIDATES, Number(env.EDIT_CANDIDATES)) : 2;
+  const result = await polishPhoto(env, ask, image, mime, request, { op: plan.op, delta: plan.delta,
+    candidates: plan.variants ? MAX_CANDIDATES : configured });
+  const caption = result.kind === 'text-refused' ? result.message
+    : result.kind === 'variations' ? variationsCaption(result) : editCaption(result);
+  return { ...result, caption };
 }

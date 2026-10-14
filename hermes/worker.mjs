@@ -16,7 +16,7 @@ export { converse, picture } from './conversation.mjs';
 import { requireConversationBinding, loadLog, archiveAndClear, loadNotes, clearNotes } from './memory.mjs';
 export { ask, askGemini, askWorkersAI, MODELS, CF_MODELS } from './brain.mjs';
 import { imageRequest, base64ToBytes } from './image.mjs';
-import { handlePhotoEdit, editRequest } from './photo-edit.mjs';
+import { handlePhotoEdit, editRequest, continueEdit, recallEdit, rememberEdit, followUpRequest, faDigits } from './photo-edit.mjs';
 import { ask } from './brain.mjs';
 import { transcribe, telegramFile, parseDataUrl } from './media.mjs';
 import { tripPage, createBooking, onContact } from './booking.mjs';
@@ -32,23 +32,30 @@ const TG_LIMIT = 4000;
 // Falls back to a single photo when Telegram refuses the album (odd size or exotic format).
 export async function sendEdited(env, chatId, before, edited) {
   const api = (method) => `https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/${method}`;
-  const caption = `📸 قبل ← بعد\n${edited.caption}`.slice(0, 1000);
+  // A variations turn sends the original plus every take; a normal edit sends the best take.
+  const takes = edited.variations && edited.variations.length
+    ? edited.variations.map((v, i) => ({ ...v, slot: `v${i}` })) : [{ ...edited, slot: 'after' }];
+  const caption = (edited.variations ? `📸 اصل ← ${faDigits(takes.length)} نسخه\n` : '📸 قبل ← بعد\n') + edited.caption;
+  const media = [{ type: 'photo', media: 'attach://before', caption: caption.slice(0, 1000) },
+    ...takes.map((t) => ({ type: 'photo', media: `attach://${t.slot}` }))];
   const album = new FormData();
   album.append('chat_id', String(chatId));
-  album.append('media', JSON.stringify([
-    { type: 'photo', media: 'attach://before', caption },
-    { type: 'photo', media: 'attach://after' },
-  ]));
+  album.append('media', JSON.stringify(media));
   album.append('before', new Blob([base64ToBytes(before.data)], { type: before.mime }), 'before.jpg');
-  album.append('after', new Blob([base64ToBytes(edited.image)], { type: edited.mime }), edited.mime === 'image/png' ? 'after.png' : 'after.jpg');
+  for (const t of takes) {
+    const name = t.mime === 'image/png' ? `${t.slot}.png` : `${t.slot}.jpg`;
+    album.append(t.slot, new Blob([base64ToBytes(t.image)], { type: t.mime }), name);
+  }
   const out = await fetch(api('sendMediaGroup'), { method: 'POST', body: album }).then((r) => r.json()).catch(() => ({}));
   if (out && out.ok) return true;
+  // Fallback: one photo (the best take), or the caption text if even that is refused.
   const single = new FormData();
   single.append('chat_id', String(chatId));
-  single.append('caption', caption);
+  single.append('caption', caption.slice(0, 1000));
   single.append('photo', new Blob([base64ToBytes(edited.image)], { type: edited.mime }), edited.mime === 'image/png' ? 'hermes-edit.png' : 'hermes-edit.jpg');
   const one = await fetch(api('sendPhoto'), { method: 'POST', body: single }).then((r) => r.json()).catch(() => ({}));
-  return !!(one && one.ok);
+  if (one && one.ok) return true;
+  return send(env, chatId, caption);
 }
 // Abilities that can be locked per person (users.mjs `locks`). A locked topic is refused before the AI is called.
 export const ABILITIES = {
@@ -184,10 +191,26 @@ async function api(request, url, env) {
     const locked = lockedHit(who, message);
     if (locked) return json({ error: `دسترسی به «${ABILITIES[locked].name}» برای حساب تو بسته است.`, locked }, 403);
     try {
-      // A photo plus an edit instruction is an editing turn: brief, edit, review, deliver.
+      // A photo plus an edit instruction is an editing turn: brief, plan, candidates, review, deliver.
+      const key = historyKey(env, who);
       if (photo && editRequest(message)) {
         const edited = await handlePhotoEdit(env, ask, photo.data, photo.mime, message);
-        if (edited) return json({ reply: edited.caption, image: edited.image ? `data:${edited.mime};base64,${edited.image}` : undefined });
+        if (edited) {
+          if (edited.image) await rememberEdit(env, key, { original: photo.data, mime: photo.mime, request: message,
+            op: edited.op, strength: edited.strength });
+          return json({ reply: edited.caption, image: edited.image ? `data:${edited.mime};base64,${edited.image}` : undefined,
+            images: edited.variations ? edited.variations.map((v) => `data:${v.mime};base64,${v.image}`) : undefined,
+            score: edited.review && edited.review.derived ? edited.score : undefined });
+        }
+      }
+      // Photo-less follow-up («ملایم‌تر») on the last edited photo.
+      if (!photo && (editRequest(message) || followUpRequest(message))) {
+        const last = await recallEdit(env, key);
+        if (last) {
+          const edited = await continueEdit(env, ask, last, message);
+          return json({ reply: edited.caption, image: edited.image ? `data:${edited.mime};base64,${edited.image}` : undefined,
+            images: edited.variations ? edited.variations.map((v) => `data:${v.mime};base64,${v.image}`) : undefined });
+        }
       }
       const wanted = photo ? null : imageRequest(message);
       if (wanted !== null) {
@@ -313,7 +336,8 @@ async function handle(msg, env, origin) {
     return send(env, chatId, 'سلام! من هرمس هستم. هر چه می‌خواهی بپرس.\n' +
       'همهٔ گفتگوها ذخیره می‌ماند. با «یادت باشه ...» چیزی را برای همیشه به خاطر می‌سپارم.\n' +
       'عکس بساز: ... یک عکس می‌سازم\n' +
-      'عکس بفرست و بنویس چه تغییری می‌خواهی («این عکس رو ریتوش کن»، «پس‌زمینه رو عوض کن»، «کیفیتش رو بالا ببر») تا حرفه‌ای ویرایشش کنم و قبل/بعد را با هم بفرستم.\n' +
+      'عکس بفرست و بنویس چه تغییری می‌خواهی («این عکس رو ریتوش کن»، «پس‌زمینه رو عوض کن»، «کیفیتش رو بالا ببر»، «چند نسخه») تا حرفه‌ای ویرایشش کنم و قبل/بعد را با هم بفرستم.\n' +
+      'بعد از هر ویرایش می‌توانی بگویی «ملایم‌تر» یا «قوی‌تر» — همان عکس را دوباره لازم نیست بفرستی.\n' +
       'ویس بفرست تا گوش بدهم، عکس بفرست تا ببینم؛ برای خبرها و چیزهای روز در گوگل جست‌وجو می‌کنم.\n' +
       '/google اتصال جیمیل، تقویم، درایو و شیت\n' +
       '/reset گفتگوی جدید (قبلی بایگانی می‌شود)\n/notes یادداشت‌های حافظه\n/forget پاک کردن یادداشت‌ها\n/app لینک اپ');
@@ -348,13 +372,33 @@ async function handle(msg, env, origin) {
     return send(env, chatId, 'گفتگوی جدید شروع شد. گفتگوی قبلی بایگانی شد و یادداشت‌ها سر جایشان هستند.');
   }
 
+  // A follow-up tweak («ملایم‌تر»، «قوی‌تر»، «چند نسخه») reuses the photo that was edited last,
+  // so the user never has to send it again inside the same hour.
+  if (!images.length && (editRequest(input) || followUpRequest(input))) {
+    const last = await recallEdit(env, key);
+    if (last) {
+      await tg(env, 'sendChatAction', { chat_id: chatId, action: 'upload_photo' });
+      try {
+        const edited = await continueEdit(env, ask, last, input);
+        if (edited.image) await sendEdited(env, chatId, { data: last.image, mime: last.mime }, edited);
+        else await send(env, chatId, edited.caption);
+      } catch (err) {
+        await send(env, chatId, `ویرایش انجام نشد: ${err.message}`);
+      }
+      return;
+    }
+  }
+
   // Photo + editing instruction: run the professional edit pipeline and send the result back.
   if (images.length && editRequest(input)) {
     await tg(env, 'sendChatAction', { chat_id: chatId, action: 'upload_photo' });
     try {
       const edited = await handlePhotoEdit(env, ask, images[0].data, images[0].mime, input);
-      if (edited && edited.image) await sendEdited(env, chatId, images[0], edited);
-      else if (edited) await send(env, chatId, edited.caption);
+      if (edited && edited.image) {
+        await rememberEdit(env, key, { original: images[0].data, mime: images[0].mime, request: input,
+          op: edited.op, strength: edited.strength });
+        await sendEdited(env, chatId, images[0], edited);
+      } else if (edited) await send(env, chatId, edited.caption);
     } catch (err) {
       await send(env, chatId, `ویرایش انجام نشد: ${err.message}`);
     }

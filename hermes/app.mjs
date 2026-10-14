@@ -838,7 +838,8 @@ export const APP_HTML = String.raw`<!doctype html>
     messages.forEach((m) => {
       const d = document.createElement('div'); d.className = 'm ' + (m.role === 'user' ? 'me' : 'bot md');
       if (m.role === 'user') d.textContent = m.text; else d.innerHTML = md(m.text);
-      if (m.image) d.prepend(picture(m.image));
+      if (m.images && m.images.length) m.images.slice().reverse().forEach((src) => d.prepend(picture(src)));
+      else if (m.image) d.prepend(picture(m.image));
       lb.append(d);
     });
     $('lcount').textContent = messages.length ? messages.length + ' MSG' : '';
@@ -884,12 +885,14 @@ export const APP_HTML = String.raw`<!doctype html>
     setState('thinking', consultFor(text)); eqLevel(true);
     showReply('thinking');
     try {
-      const { reply: answer, image } = await api('/api/chat', photo ? { message: text, image: photo } : { message: text });
+      const { reply: answer, image, images } = await api('/api/chat', photo ? { message: text, image: photo } : { message: text });
       messages.push({ role: 'assistant', text: answer, image });
       showReply('reply', '', hhmm());
       setState('speaking');
       await reveal(answer);
-      if (image) { rbody.prepend(picture(image)); layout(); }
+      // An edit sends the best version; a variations turn sends the whole studio set.
+      if (images && images.length) { images.slice().reverse().forEach((src) => rbody.prepend(picture(src))); layout(); }
+      else if (image) { rbody.prepend(picture(image)); layout(); }
       replyText = answer;
     } catch (err) {
       showReply('error', err.message);
