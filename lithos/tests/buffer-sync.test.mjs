@@ -41,3 +41,22 @@ test('requests without a session or with the wrong method are refused',async t=>
   let r=res();await handler(post({}),r);assert.equal(r.statusCode,401);
   r=res();await handler({method:'GET',headers:{}},r);assert.equal(r.statusCode,405);
 });
+
+test('an empty Buffer response is refused instead of persisting a zero snapshot',async t=>{
+  const calls=[];
+  t.mock.method(globalThis,'fetch',async(url,o={})=>{
+    calls.push({url,body:o.body?JSON.parse(o.body):null});
+    if(url.endsWith('/auth/v1/user'))return new Response('{}',{status:200});
+    if(url==='https://api.buffer.com')return new Response(JSON.stringify({data:{account:{channels:[]}}}),{status:200});
+    if(url.includes('/rest/v1/rpc/'))return new Response('42',{status:200});
+    throw new Error('unexpected fetch '+url);
+  });
+  process.env.BUFFER_API_KEY='buffer-test';t.after(()=>{delete process.env.BUFFER_API_KEY});
+  const r=res();await handler(post(),r);
+  assert.equal(r.statusCode,502);
+  assert.equal(r.body.code,'BUFFER_SHAPE_UNVERIFIED');
+  const rpcs=calls.filter(c=>c.url.includes('/rpc/'));
+  assert.deepEqual(rpcs.map(c=>c.url.split('/rpc/')[1]),['lithos_set_buffer_sync_state']);
+  assert.equal(rpcs[0].body.p_status,'error');
+  assert.ok(!calls.some(c=>c.url.includes('lithos_ingest_buffer_snapshot')),'no snapshot may be written');
+});

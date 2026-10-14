@@ -1,25 +1,81 @@
 // End-to-end smoke test: every position logs in, the cashier sells, the consultant
 // queues a cart. Fails on any console error. Usage: npm run build && npm run e2e
-import { spawn } from 'node:child_process';
-import { mkdirSync, existsSync } from 'node:fs';
+//
+// The browser is NOT bundled: `playwright-core` ships no binary. The runner therefore
+//  1. locates an existing Chromium (CHROMIUM_PATH, PLAYWRIGHT_BROWSERS_PATH, the Playwright
+//     cache, /opt/pw-browsers, or a system Chrome/Chromium on PATH),
+//  2. and, when there is none, prints the one command that fixes it and exits 0 (skipped)
+//     so `npm run e2e` never fails a fresh checkout with an opaque Playwright banner.
+// Set E2E_STRICT=1 (or pass --strict) to turn a missing browser into a hard failure (code 2).
+import { spawn, execFileSync } from 'node:child_process';
+import { mkdirSync, existsSync, readdirSync } from 'node:fs';
+import { homedir } from 'node:os';
+import { join } from 'node:path';
 import { chromium } from 'playwright-core';
 
 const PORT = 4179;
 const BASE = `http://localhost:${PORT}`;
 const SHOTS = 'e2e-shots';
+const STRICT = process.env.E2E_STRICT === '1' || process.argv.includes('--strict');
 mkdirSync(SHOTS, { recursive: true });
 
-const candidates = [process.env.CHROMIUM_PATH, '/opt/pw-browsers/chromium-1194/chrome-linux/chrome'].filter(Boolean);
-const executablePath = candidates.find((p) => existsSync(p));
+const RELATIVE = ['chrome-linux/chrome', 'chrome-linux64/chrome', 'chrome-mac/Chromium.app/Contents/MacOS/Chromium', 'chrome-win/chrome.exe'];
+
+/** Every Chromium we can reasonably reuse, cheapest check first. */
+function findChromium() {
+  const roots = [process.env.PLAYWRIGHT_BROWSERS_PATH, join(homedir(), '.cache', 'ms-playwright'), '/opt/pw-browsers'].filter(Boolean);
+  const found = [];
+  if (process.env.CHROMIUM_PATH) found.push(process.env.CHROMIUM_PATH);
+  for (const root of roots) {
+    if (!existsSync(root)) continue;
+    for (const dir of readdirSync(root).filter((d) => d.startsWith('chromium')).sort().reverse()) {
+      for (const rel of RELATIVE) found.push(join(root, dir, rel));
+    }
+    for (const rel of RELATIVE) found.push(join(root, rel));
+  }
+  for (const bin of ['google-chrome', 'google-chrome-stable', 'chromium', 'chromium-browser', 'chrome']) {
+    try { found.push(execFileSync('which', [bin], { stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim()); } catch { /* not installed */ }
+  }
+  for (const p of ['/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+    '/Applications/Chromium.app/Contents/MacOS/Chromium',
+    'C:/Program Files/Google/Chrome/Application/chrome.exe',
+    'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe']) found.push(p);
+  return found.filter((p) => p && existsSync(p))[0] || null;
+}
+
+const executablePath = findChromium();
+if (!executablePath) {
+  const lines = [
+    'E2E skipped: no Chromium/Chrome binary found (playwright-core does not ship one).',
+    'Enable it with any of:',
+    '  npx playwright install chromium        # downloads into ~/.cache/ms-playwright',
+    '  CHROMIUM_PATH=/path/to/chrome npm run e2e',
+    '  E2E_STRICT=1 npm run e2e               # fail instead of skipping',
+  ];
+  console.log(lines.join('\n'));
+  process.exit(STRICT ? 2 : 0);
+}
+console.log(`E2E browser: ${executablePath}`);
 
 // Launch vite directly (not via npx) so server.kill() stops the real process.
 const server = spawn(process.execPath, ['node_modules/vite/bin/vite.js', 'preview', '--port', String(PORT), '--strictPort'], { stdio: 'pipe' });
-await new Promise((resolve, reject) => {
-  const t = setTimeout(() => reject(new Error('preview server timeout')), 20000);
-  server.stdout.on('data', (d) => String(d).includes(String(PORT)) && (clearTimeout(t), resolve()));
-});
+// Never leave the preview port occupied, whatever ends this script (exit, signal or throw).
+const stopServer = () => { try { server.kill('SIGTERM'); } catch { /* already gone */ } };
+process.on('exit', stopServer);
+for (const sig of ['SIGINT', 'SIGTERM']) process.on(sig, () => { stopServer(); process.exit(130); });
 
-const browser = await chromium.launch(executablePath ? { executablePath } : {});
+try {
+  await new Promise((resolve, reject) => {
+    const t = setTimeout(() => reject(new Error('preview server timeout')), 20000);
+    server.stdout.on('data', (d) => String(d).includes(String(PORT)) && (clearTimeout(t), resolve()));
+  });
+} catch (e) {
+  stopServer();
+  console.error(`E2E failed: ${e.message}. Run \`npm run build\` first, then retry.`);
+  process.exit(1);
+}
+
+const browser = await chromium.launch({ executablePath });
 const errors = [];
 let failed = false;
 const step = async (name, fn) => {
@@ -180,6 +236,6 @@ await step('no console errors', async () => {
 });
 
 await browser.close();
-server.kill();
+stopServer();
 console.log(failed ? '\nE2E FAILED' : '\nE2E PASSED');
 process.exit(failed ? 1 : 0);
