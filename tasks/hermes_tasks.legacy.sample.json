@@ -1,0 +1,26 @@
+{
+  "schema": "legacy/v1",
+  "note": "Cleaned conversion of the pasted 2-task snippet: HTML entities (&amp;) decoded and Markdown-link pollution in file paths (hermes/[setup.sh](http://setup.sh)) removed. Canonical 100-task manifest is tasks/hermes_tasks.json (hermes-tasks/v2).",
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Strict shell header & safety flags",
+      "summary": "Add strict shell safety flags to Hermes setup.",
+      "branch": "hermes/001-strict-shell-header",
+      "commit": "feat(hermes): strict shell header & safety flags — hermes/#001",
+      "pr_title": "[hermes/#001] Strict shell header & safety flags",
+      "pr_body": "### Summary\n- Add strict shell header and safety flags.\n\n### Acceptance\n- bash -n passes\n- shellcheck passes\n\n### Local checks\n- bash -n hermes/setup.sh\n- shellcheck hermes/setup.sh",
+      "files": ["hermes/setup.sh"]
+    },
+    {
+      "id": 2,
+      "title": "Config split and secure loader",
+      "summary": "Split env config and add secure loader.",
+      "branch": "hermes/002-split-config",
+      "commit": "feat(hermes): split env & secure loader — hermes/#002",
+      "pr_title": "[hermes/#002] Split config and add secure loader",
+      "pr_body": "### Summary\n- Split env config and secure loader.\n\n### Acceptance\n- config loads env safely\n- setup.sh reads env through loader\n\n### Local checks\n- bash hermes/setup.sh --non-interactive",
+      "files": ["hermes/config.sh", "hermes/.env.example", "hermes/setup.sh"]
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d1117">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="مگااسکیل">
+<title>کنسول آیفون مگااسکیل — VS Code و مهارت‌ها</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="logo">M</span><div><strong>کنسول مگااسکیل</strong><small>VS Code + ۵٬۷۳۶ مهارت، از آیفون</small></div></div>
+  <a class="top-action" id="openVscodeTop" href="#" target="_blank" rel="noopener">باز کردن VS Code</a>
+</header>
+
+<main>
+  <!-- پروژه‌ها -->
+  <section id="tab-projects" class="tab active">
+    <h1>پروژه‌ها</h1>
+    <p class="hint">هر پروژه را مستقیم در VS Code وب (روی آیفون) باز کن، فایل‌ها را ببین و ویرایش کن؛ برای اجرای دستورها از ترمینال ابری یا تب «عملیات» استفاده کن.</p>
+    <div id="projectList" class="cards"></div>
+  </section>
+
+  <!-- مهارت‌ها -->
+  <section id="tab-skills" class="tab">
+    <h1>جست‌وجوی مهارت‌ها</h1>
+    <p class="hint">به فارسی، فینگلیش یا انگلیسی بنویس؛ مثل «طراحی لوگو»، «اکسل فروش» یا react performance. ایندکس کامل آفلاین روی گوشی جست‌وجو می‌شود.</p>
+    <div class="searchbox">
+      <input id="skillSearch" type="search" inputmode="search" placeholder="چه کاری می‌خواهی انجام بدهی؟" autocomplete="off">
+      <div id="domainChips" class="chips"></div>
+    </div>
+    <p id="skillStatus" class="status">در حال بارگذاری ایندکس مهارت‌ها…</p>
+    <div id="skillResults" class="list"></div>
+  </section>
+
+  <!-- VS Code -->
+  <section id="tab-vscode" class="tab">
+    <h1>VS Code روی آیفون</h1>
+    <div class="panel">
+      <h2>۱) باز کردن ریپو در VS Code وب</h2>
+      <p>همان VS Code واقعی در مرورگر آیفون: اکسپلورر فایل، ویرایش، جست‌وجوی سراسری، گیت و افزونه‌ها.</p>
+      <a class="btn primary" id="openVscode" href="#" target="_blank" rel="noopener">باز کردن کل ریپو در vscode.dev</a>
+      <a class="btn" id="openGithubDev" href="#" target="_blank" rel="noopener">باز کردن در github.dev (کلید .)</a>
+    </div>
+    <div class="panel">
+      <h2>۲) مهارت خودکار برای هر همکار</h2>
+      <p>هر کس این ریپو را در VS Code یا Claude Code باز کند، مهارت <code>mega-skills-router</code> را خودکار دارد؛ چون در <code>.claude/skills/</code> داخل خود ریپوست و نیازی به نصب نیست. افزونه‌های پیشنهادی هم از <code>.vscode/extensions.json</code> پیشنهاد می‌شوند.</p>
+      <button class="btn" data-copy="code --install-extension anthropic.claude-code">کپی دستور نصب افزونهٔ Claude در VS Code</button>
+    </div>
+    <div class="panel">
+      <h2>۳) همین مهارت‌ها بیرون از این ریپو</h2>
+      <p>در هر پروژهٔ دیگر، پلاگین را یک‌بار نصب کن تا همان ۵٬۹۸۶ مهارت در دسترس باشد:</p>
+      <button class="btn" data-copy="/plugin marketplace add salimipuria-blip/MegaSkillClaude">کپی: افزودن مارکت‌پلیس</button>
+      <button class="btn" data-copy="/plugin install mega-skills-router@psk">کپی: نصب مسیریاب مهارت‌ها</button>
+      <button class="btn" data-copy="git clone https://github.com/salimipuria-blip/MegaSkillClaude.git">کپی دستور Clone ریپو</button>
+    </div>
+  </section>
+
+  <!-- عملیات -->
+  <section id="tab-ops" class="tab">
+    <h1>عملیات و تست‌ها</h1>
+    <p class="hint">دستور تست هر پروژه را کپی و در ترمینال (ابری/VS Code) اجرا کن. اجرای Workflowها و دیدن PRها از گیت‌هاب موبایل انجام می‌شود.</p>
+    <div id="opsList" class="list"></div>
+    <div class="panel">
+      <h2>گیت‌هاب</h2>
+      <a class="btn" href="https://github.com/salimipuria-blip/MegaSkillClaude/pulls" target="_blank" rel="noopener">Pull Requestها</a>
+      <a class="btn" href="https://github.com/salimipuria-blip/MegaSkillClaude/actions" target="_blank" rel="noopener">اجرای CI (Actions)</a>
+      <a class="btn" href="https://github.com/salimipuria-blip/MegaSkillClaude/actions/workflows/hermes-automation.yml" target="_blank" rel="noopener">اجرای دستی Hermes automation (فقط Plan)</a>
+    </div>
+  </section>
+</main>
+
+<!-- شیت جزئیات مهارت -->
+<div id="sheetBackdrop" class="backdrop hidden"></div>
+<aside id="skillSheet" class="sheet hidden" aria-live="polite"></aside>
+
+<div id="toast" class="toast hidden">کپی شد</div>
+
+<nav class="tabbar">
+  <button data-tab="projects" class="active"><span>▦</span>پروژه‌ها</button>
+  <button data-tab="skills"><span>✦</span>مهارت‌ها</button>
+  <button data-tab="vscode"><span>⌘</span>VS Code</button>
+  <button data-tab="ops"><span>▶</span>عملیات</button>
+</nav>
+
+<script src="app.js"></script>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{});}</script>
+</body>
+</html>

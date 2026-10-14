@@ -1,6 +1,6 @@
 # web-development
 
-Skills: 1832
+Skills: 1833
 
 - `1688-product-detail` → `library/github-skills/1688-product-detail/SKILL.md` [incomplete: excluded from default routing]
 - `2slides-ppt-generator` → `library/github-skills/2slides-ppt-generator/SKILL.md`
@@ -1196,6 +1196,7 @@ Skills: 1832
 - `omentir-linkedin-outreach` → `library/github-skills/omentir-linkedin-outreach/SKILL.md`
 - `omero-integration` → `library/github-skills/omero-integration/SKILL.md`
 - `onboard-context-matic` → `library/github-skills/onboard-context-matic/SKILL.md`
+- `online-vscode-mobile-coding` → `library/skills/online-vscode-mobile-coding/SKILL.md`
 - `ontoly-software-graph` → `library/github-skills/ontoly-software-graph/SKILL.md`
 - `open-notebook` → `library/github-skills/open-notebook/SKILL.md`
 - `openalex` → `library/github-skills/openalex/SKILL.md` [incomplete: excluded from default routing]

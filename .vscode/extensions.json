@@ -1,0 +1,10 @@
+{
+  // هر کس ریپو را در VS Code باز کند این افزونه‌ها به او پیشنهاد می‌شود؛
+  // مهارت mega-skills-router از .claude/skills/ خودکار فعال است و نصب نمی‌خواهد.
+  "recommendations": [
+    "anthropic.claude-code",
+    "ms-python.python",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode"
+  ]
+}

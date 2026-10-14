@@ -1,6 +1,6 @@
 # web-development
 
-Skills: 1832
+Skills: 1833
 
 - `1688-product-detail` → `references/skills/1688-product-detail/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `2slides-ppt-generator` → `references/skills/2slides-ppt-generator/INSTRUCTIONS.md`
@@ -1196,6 +1196,7 @@ Skills: 1832
 - `omentir-linkedin-outreach` → `references/skills/omentir-linkedin-outreach/INSTRUCTIONS.md`
 - `omero-integration` → `references/skills/omero-integration/INSTRUCTIONS.md`
 - `onboard-context-matic` → `references/skills/onboard-context-matic/INSTRUCTIONS.md`
+- `online-vscode-mobile-coding` → `references/skills/online-vscode-mobile-coding/INSTRUCTIONS.md`
 - `ontoly-software-graph` → `references/skills/ontoly-software-graph/INSTRUCTIONS.md`
 - `open-notebook` → `references/skills/open-notebook/INSTRUCTIONS.md`
 - `openalex` → `references/skills/openalex/INSTRUCTIONS.md` [incomplete: excluded from default routing]

@@ -1,11 +1,11 @@
 {
  "schema_version": 1,
  "counts": {
-  "skills": 6017,
-  "triggers": 30065,
+  "skills": 6018,
+  "triggers": 30071,
   "colliding_triggers": 0,
   "incomplete_skills": 281,
-  "routable_skills": 5736
+  "routable_skills": 5737
  },
  "domains": {
   "agents-automation": 764,
@@ -22,7 +22,7 @@
   "social-media": 260,
   "travel-outdoors": 439,
   "video-ai": 123,
-  "web-development": 1832
+  "web-development": 1833
  },
  "collisions": [],
  "skills": [
@@ -78507,6 +78507,20 @@
     "Writing documents for agents. Use when creating or editing skills, or modifying AGENTS.md or CLAUDE.md."
    ],
    "origin": "github"
+  },
+  {
+   "name": "online-vscode-mobile-coding",
+   "domain": "web-development",
+   "source_path": "library/skills/online-vscode-mobile-coding/SKILL.md",
+   "triggers": [
+    "online-vscode-mobile-coding",
+    "online vscode mobile coding",
+    "web-development online vscode mobile coding",
+    "کدنویسی آنلاین با VS Code از آیفون",
+    "کدنویسی آنلاین با VS Code از آیفون و موبایل، بدون لپ‌تاپ — وقتی کاربر می‌خواهد از گوشی وارد VS Code شود، این ریپو را ویرایش کند یا از کنسول آیفون مگااسکیل و مسیریاب مهارت‌ها استفاده کند.",
+    "code online ba vscode az iphone"
+   ],
+   "origin": "pack"
   }
  ]
 }

@@ -1,0 +1,45 @@
+name: Hermes automation (plan only)
+
+# Corrected version of the pasted workflow:
+#   * manual dispatch only, dry-run/validate only — it never writes skeleton
+#     files, never pushes 100 branches and never auto-merges;
+#   * least-privilege permissions (read-only);
+#   * gh is preinstalled on GitHub runners — no apt-get install step;
+#   * actions pinned to the same majors as the repo's existing CI.
+on:
+  workflow_dispatch:
+    inputs:
+      manifest:
+        description: "Manifest path"
+        required: true
+        default: "tasks/hermes_tasks.json"
+        type: choice
+        options: ["tasks/hermes_tasks.json", "tasks/hermes_tasks.legacy.sample.json"]
+      only:
+        description: "Optional task ids, e.g. 1,2 (empty = all in manifest)"
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hermes-automation
+  cancel-in-progress: false
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate manifest
+        run: python3 tasks/apply_hermes_tasks.py --manifest "${{ inputs.manifest }}" --validate-only
+      - name: Dry-run plan (no writes, no pushes, no PRs, no merges)
+        run: |
+          args=(--manifest "${{ inputs.manifest }}")
+          if [ -n "${{ inputs.only }}" ]; then args+=(--only "${{ inputs.only }}"); fi
+          python3 tasks/apply_hermes_tasks.py "${args[@]}"
