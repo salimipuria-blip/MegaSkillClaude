@@ -5,6 +5,7 @@ import assert from 'node:assert/strict';
 import {
   textRequest, designSpec, textLayout, displayList, svgOverlay, composeHtml, renderTextLayer,
   layerCaption, PALETTES, LAYER_POSITIONS, POSITION_LABEL, FONT_STACK, AVG_GLYPH,
+  layerTuneRequest, layerDesign, applyTune, tuneCaption, rememberTextLayer, recallTextLayer, forgetTextLayer,
 } from './textlayer.mjs';
 import { imageInfo } from './image-bytes.mjs';
 import worker, { webhookSecret } from './worker.mjs';
@@ -334,6 +335,289 @@ test('the app page ships the text-layer canvas tools', async () => {
   assert.match(html, /drawLayerText/);
   assert.match(html, /ctx\.strokeText|g\.strokeText/);
   assert.match(html, /LAYER_LABEL = \{ top: 'بالا', middle: 'وسط', bottom: 'پایین' \}/);
+});
+
+// ---------------------------------------------------------------------------------------
+// 5. The layer moves by message: «بالاتر ببر»، «سفیدش کن»، «متن رو عوض کن…»، «متن رو بردار»
+// ---------------------------------------------------------------------------------------
+
+test('the tune request reads a move, a nudge and a place', () => {
+  assert.deepEqual(layerTuneRequest('بالاتر ببر'), { move: 'up' });
+  assert.deepEqual(layerTuneRequest('ببرش پایین'), { move: 'down' });
+  assert.deepEqual(layerTuneRequest('کمی بالاتر'), { nudge: 'up' });
+  assert.deepEqual(layerTuneRequest('یه کم پایین‌تر'), { nudge: 'down' });
+  assert.deepEqual(layerTuneRequest('وسطش بذار'), { position: 'middle' });
+  assert.deepEqual(layerTuneRequest('متن رو ببر بالای عکس'), { position: 'top' });
+  assert.deepEqual(layerTuneRequest('متن رو بذار ته عکس'), { position: 'bottom' });
+  assert.deepEqual(layerTuneRequest('move the text up'), { move: 'up' });
+});
+
+test('the tune request reads a colour, a size, a bar and new words', () => {
+  assert.deepEqual(layerTuneRequest('سفیدش کن'), { style: 'white' });
+  assert.deepEqual(layerTuneRequest('رنگش طلایی کن'), { style: 'gold' });
+  assert.deepEqual(layerTuneRequest('متن روی عکس رو تیره کن'), { style: 'dark' });
+  assert.deepEqual(layerTuneRequest('درشت‌ترش کن'), { size: 1.15 });
+  assert.deepEqual(layerTuneRequest('کوچیکش کن'), { size: 0.85 });
+  assert.deepEqual(layerTuneRequest('نوار بذار پشتش'), { bar: true });
+  assert.deepEqual(layerTuneRequest('بدون نوار'), { bar: false });
+  assert.deepEqual(layerTuneRequest('متن رو عوض کن به «تخفیف ویژه»'), { text: 'تخفیف ویژه' });
+  assert.deepEqual(layerTuneRequest('متن رو بردار'), { remove: true });
+  // several changes in one message
+  const both = layerTuneRequest('بالاتر ببر و سفیدش کن، بدون نوار');
+  assert.equal(both.move, 'up');
+  assert.equal(both.style, 'white');
+  assert.equal(both.bar, false);
+  assert.equal(layerTuneRequest('پایین‌تر و درشت‌ترش کن').move, 'down');
+  assert.equal(layerTuneRequest('پایین‌تر و درشت‌ترش کن').size, 1.15);
+});
+
+test('a quality, crop or photo request is not a tune request', () => {
+  assert.equal(layerTuneRequest('کیفیتش رو بالا ببر'), null, 'the photo is the subject, not the words');
+  assert.equal(layerTuneRequest('وضوحش رو بیشتر کن'), null);
+  assert.equal(layerTuneRequest('پس‌زمینه رو عوض کن'), null);
+  assert.equal(layerTuneRequest('عکس رو بالاتر ببر'), null);
+  assert.equal(layerTuneRequest('این عکس چیه؟'), null);
+  assert.equal(layerTuneRequest('خوبی؟'), null);
+  assert.equal(layerTuneRequest(''), null);
+  assert.equal(layerTuneRequest('متن رو ' + 'ببر '.repeat(60)), null, 'not a short follow-up');
+});
+
+test('a hop walks the block up and down and stops at the frame edge', () => {
+  const lay = textLayout(designSpec({ text: 'کمپ وایکینگ', width: 1024, height: 1280 }));
+  assert.equal(lay.position, 'bottom');
+  const middle = applyTune(lay, layerTuneRequest('بالاتر ببر'));
+  assert.equal(middle.position, 'middle');
+  assert.ok(middle.positions.middle < lay.positions.bottom);
+  const top = applyTune(middle, layerTuneRequest('بالاتر ببر'));
+  assert.equal(top.position, 'top');
+  assert.ok(top.positions.top < middle.positions.middle);
+  // already at the top: it says so instead of pretending it moved
+  const edge = applyTune(top, layerTuneRequest('بالاتر ببر'));
+  assert.equal(edge.stuck, true);
+  assert.match(tuneCaption(top, edge, layerTuneRequest('بالاتر ببر'), {}), /لبهٔ کادر/);
+  // and back down two anchors
+  const back = applyTune(applyTune(top, layerTuneRequest('پایین‌تر ببر')), layerTuneRequest('پایین‌تر ببر'));
+  assert.equal(back.position, 'bottom');
+});
+
+test('a nudge moves the block a little and never leaves the safe area', () => {
+  const lay = textLayout(designSpec({ text: 'کمپ وایکینگ', width: 1024, height: 1280, position: 'middle' }));
+  const up = applyTune(lay, layerTuneRequest('کمی بالاتر'));
+  assert.equal(up.position, 'middle', 'a nudge keeps the anchor');
+  assert.ok(up.positions.middle < lay.positions.middle, 'but the block really moved up');
+  assert.ok(Math.abs(up.positions.middle - lay.positions.middle) > 1280 * 0.04, 'and visibly so');
+  assert.ok(Math.abs(layerDesign(up).offset - -0.06) < 0.001, 'the nudge is remembered as an offset');
+  // pushing past the edge is clamped, and the layer says it is stuck
+  const far = applyTune(applyTune(applyTune(up, layerTuneRequest('کمی بالاتر')), layerTuneRequest('کمی بالاتر')), layerTuneRequest('کمی بالاتر'));
+  assert.ok(far.positions.middle >= far.fontSize * 0.5, 'still inside the frame');
+  assert.equal(far.stuck, true);
+  assert.ok(far.positions.middle - far.blockHeight / 2 >= far.margin - 1, 'the block still sits inside the safe area');
+  // a recalled layer keeps its nudge, so the next nudge goes further
+  const back = applyTune(far, layerTuneRequest('کمی پایین‌تر'));
+  assert.ok(back.positions.middle > far.positions.middle, 'down works again right away');
+});
+
+test('a colour, size or bar tune replays the same design with one change', () => {
+  const lay = textLayout(designSpec({ text: 'کمپ وایکینگ', width: 1024, height: 1280, style: 'gold', position: 'top' }));
+  const white = applyTune(lay, layerTuneRequest('سفیدش کن'));
+  assert.equal(white.style, 'white');
+  assert.equal(white.fill, PALETTES.white.fill);
+  assert.equal(white.text, lay.text, 'the words are untouched');
+  assert.equal(white.position, 'top', 'so is the place');
+  assert.equal(white.bar, lay.bar);
+  const noBar = applyTune(applyTune(lay, layerTuneRequest('نوار بذار پشتش')), layerTuneRequest('بدون نوار'));
+  assert.equal(noBar.bar, false);
+  assert.equal(displayList(noBar).some((o) => o.op === 'bar'), false, 'the strip is really gone');
+  const bigger = applyTune(lay, layerTuneRequest('درشت‌ترش کن'));
+  assert.ok(bigger.fontSize > lay.fontSize);
+  assert.equal(bigger.style, 'gold', 'the rest of the design survives');
+  assert.equal(applyTune(lay, {}), lay, 'a tune that changes nothing leaves the layer alone');
+});
+
+test('new words keep the place, the colour and the size of the layer already on the photo', () => {
+  const lay = textLayout(designSpec({ text: 'کمپ وایکینگ', width: 1024, height: 1280, style: 'gold', bar: true, position: 'top' }));
+  const swapped = applyTune(lay, layerTuneRequest('متن رو عوض کن به «تور آفرود دو روزه»'));
+  assert.equal(swapped.text, 'تور آفرود دو روزه');
+  assert.equal(swapped.style, 'gold');
+  assert.equal(swapped.bar, true);
+  assert.equal(swapped.position, 'top');
+  assert.ok(swapped.positions.top > 0 && swapped.positions.top < 1280);
+  assert.deepEqual(swapped.design, { text: 'تور آفرود دو روزه', position: 'top', style: 'gold', size: 1, bar: true, offset: 0, tone: 'mixed', weight: 600 });
+});
+
+test('the tune caption says what changed and what the layer is now', () => {
+  const lay = textLayout(designSpec({ text: 'کمپ وایکینگ', width: 1024, height: 1280, style: 'gold' }));
+  const tune = layerTuneRequest('بالاتر ببر');
+  const moved = tuneCaption(lay, applyTune(lay, tune), tune, { composed: true });
+  assert.match(moved, /🔧 رفت بالاتر\./);
+  assert.match(moved, /«کمپ وایکینگ»/, 'the state of the layer is repeated');
+  assert.match(moved, /وسط عکس/);
+  assert.match(moved, /خروجی متن‌دار در همین پیام است/);
+  const words = layerTuneRequest('متن رو عوض کن به «تخفیف ویژه»');
+  assert.match(tuneCaption(lay, applyTune(lay, words), words, { composed: false }), /متن عوض شد به «تخفیف ویژه»/);
+  const drop = layerTuneRequest('متن رو بردار');
+  const gone = tuneCaption(lay, lay, drop, { composed: true });
+  assert.match(gone, /متن از روی عکس برداشته شد/);
+  assert.equal(/✍️/.test(gone), false, 'there is no layer left to describe');
+  assert.match(tuneCaption(lay, lay, layerTuneRequest('متن رو بردار'), { composed: false }), /در اپ/);
+});
+
+test('the layer and the picture under it are remembered for an hour', async () => {
+  const env = baseEnv();
+  const layer = textLayout(designSpec({ text: 'تور آفرود', width: 1024, height: 1280, position: 'bottom' }));
+  assert.equal(await rememberTextLayer(env, 'chat:1', { image: PNG, mime: 'image/png', layer }), true);
+  const back = await recallTextLayer(env, 'chat:1');
+  assert.equal(back.image, PNG);
+  assert.equal(back.mime, 'image/png');
+  assert.equal(back.layer.text, 'تور آفرود');
+  assert.equal(back.layer.position, 'bottom');
+  assert.ok(back.layer.lines.length >= 1);
+  assert.ok(applyTune(back.layer, layerTuneRequest('کمی بالاتر')).positions.bottom < back.layer.positions.bottom,
+    'a recalled layer can still be nudged');
+  assert.equal(await rememberTextLayer(env, 'chat:1', { image: 'A'.repeat(4_600_000), mime: 'image/png', layer }), false,
+    'a picture too big for KV is not remembered (and never half-remembered)');
+  assert.equal(await rememberTextLayer({}, 'chat:1', { image: PNG, mime: 'image/png', layer }), false, 'no KV: no memory');
+  assert.equal(await rememberTextLayer(env, 'chat:1', { image: PNG, mime: 'image/png', layer: null }), false);
+  await env.MEMORY.put('edit:text:chat:2', 'not json at all');
+  assert.equal(await recallTextLayer(env, 'chat:2'), null);
+  assert.equal(await recallTextLayer(env, 'chat:9'), null);
+  assert.equal(await forgetTextLayer(env, 'chat:1'), true);
+  assert.equal(await recallTextLayer(env, 'chat:1'), null);
+});
+
+const textMsg = (text) => ({ message: { chat: { id: Number(OWNER), type: 'private' }, from: { id: Number(OWNER) }, text } });
+const albums = (calls) => calls.filter((c) => c.url.endsWith('/sendMediaGroup'));
+const albumBytes = async (album, slot) => Buffer.from(await album.body.get(slot).arrayBuffer()).toString('base64');
+const albumCaption = (album) => JSON.parse(album.body.get('media'))[0].caption;
+
+test('Telegram: «بالاتر ببر» moves the words without the photo being sent again', async () => {
+  const composed = pngB64(1024, 1280, 4);
+  const { env, calls } = textMock();
+  const shots = [];
+  env.BROWSER = { async quickAction(action, opts) { shots.push(opts); return Uint8Array.from(Buffer.from(composed, 'base64')); } };
+  await post(env, photoMsg('روی این عکس بنویس: کمپ وایکینگ'));
+  assert.equal(shots.length, 1, 'the first layer was rendered server-side');
+  assert.ok(shots[0].html.includes(PNG), 'over the untouched picture');
+  await post(env, textMsg('بالاتر ببر'));
+  assert.equal(shots.length, 2, 'the follow-up was rendered again');
+  assert.ok(shots[1].html.includes(PNG), 'from the clean picture again - never from one with the words baked in');
+  assert.equal(albums(calls).length, 2, 'before/after for both turns');
+  const after = albums(calls)[1];
+  assert.match(albumCaption(after), /رفت بالاتر/);
+  assert.match(albumCaption(after), /وسط عکس/);
+  assert.equal(await albumBytes(after, 'after'), composed);
+  assert.equal(await albumBytes(after, 'before'), PNG, 'the base is the picture without words');
+  assert.equal(calls.some((c) => c.url.includes(':generateContent')), false, 'no image model was called');
+});
+
+test('Telegram: without a compositor the tune reports the change and points at the app', async () => {
+  const { env, calls } = textMock();
+  await post(env, photoMsg('روی این عکس بنویس: کمپ وایکینگ'));
+  const before = calls.length;
+  await post(env, textMsg('سفیدش کن و بدون نوار'));
+  const fresh = calls.slice(before);
+  assert.equal(albums(fresh).length, 0, 'no album when nothing can be drawn');
+  const msg = fresh.find((c) => c.url.endsWith('/sendMessage')).body.text;
+  assert.match(msg, /رنگش سفید شد/);
+  assert.match(msg, /نوار برداشته شد/);
+  assert.match(msg, /در اپ/);
+  // a second tune still works: the new state was remembered
+  const before2 = calls.length;
+  await post(env, textMsg('بالاتر ببر'));
+  assert.match(calls.slice(before2).find((c) => c.url.endsWith('/sendMessage')).body.text, /رفت بالاتر/);
+});
+
+test('Telegram: «متن رو بردار» puts the picture without words back', async () => {
+  const { env, calls } = textMock();
+  await post(env, photoMsg('روی این عکس بنویس: کمپ وایکینگ'));
+  const before = calls.length;
+  await post(env, textMsg('متن رو بردار'));
+  const fresh = calls.slice(before);
+  const one = fresh.find((c) => c.url.endsWith('/sendPhoto'));
+  assert.ok(one, 'a single picture comes back, not a before/after pair of the same shot');
+  assert.equal(Buffer.from(await one.body.get('photo').arrayBuffer()).toString('base64'), PNG);
+  assert.match(one.body.get('caption'), /متن از روی عکس برداشته شد/);
+  assert.match(one.body.get('caption'), /عکس بدون متن در همین پیام است/, 'the picture really is in the message');
+  // and the layer is gone: the next tune has nothing to move
+  const next = calls.length;
+  await post(env, textMsg('بالاتر ببر'));
+  assert.equal(albums(calls.slice(next)).length, 0);
+  assert.equal(calls.slice(next).some((c) => /رفت بالاتر/.test(String((c.body && c.body.text) || ''))), false);
+});
+
+test('Telegram: a tune never lands on a picture that was edited again', async () => {
+  const { env, calls } = textMock({ brief: JSON.stringify({ subject: 'a jeep', subject_type: 'scene', must_keep: ['the jeep'],
+    problems: ['harsh shadows'], lighting: 'harsh noon', color: 'cold', aspect: 'keep', region: 'bottom',
+    change_scale: 'medium', has_text: false, region_tone: 'dark', risks: [] }) });
+  await post(env, photoMsg('این عکس رو ریتوش کن'));
+  assert.equal(albums(calls).length >= 1, true, 'the edit was delivered');
+  const before = calls.length;
+  await post(env, textMsg('بالاتر ببر'));
+  assert.equal(albums(calls.slice(before)).length, 0, 'no stale layer is replayed over the new picture');
+  assert.equal(calls.slice(before).some((c) => /رفت بالاتر/.test(String((c.body && c.body.text) || ''))), false);
+});
+
+test('web app: a photo-less tune moves the words and hands back the clean picture', async () => {
+  const { env, calls } = textMock();
+  await post(env, photoMsg('روی این عکس بنویس: کمپ وایکینگ'));
+  const before = calls.filter((c) => c.url.includes(':generateContent')).length;
+  const res = await worker.fetch(new Request('https://hermes.example.workers.dev/api/chat', {
+    method: 'POST', headers: { 'content-type': 'application/json', ...(await appHeaders(env)) },
+    body: JSON.stringify({ message: 'بالاتر ببر' }),
+  }), env, { waitUntil: () => {} });
+  assert.equal(res.status, 200);
+  const body = await res.json();
+  assert.match(body.reply, /رفت بالاتر/);
+  assert.match(body.reply, /وسط عکس/);
+  assert.ok(body.textLayer, 'the canvas gets the moved layer');
+  assert.equal(body.textLayer.position, 'middle');
+  assert.deepEqual(body.textLayer.lines, ['کمپ وایکینگ']);
+  assert.equal(body.textLayer.style, undefined, 'geometry and style, not server-only fields');
+  assert.equal(body.image, `data:image/png;base64,${PNG}`, 'the picture itself is untouched');
+  assert.equal(calls.filter((c) => c.url.includes(':generateContent')).length, before, 'no model was called');
+  // a photo sent along with the words changes nothing about which picture the layer sits on - and says so
+  const withPhoto = await worker.fetch(new Request('https://hermes.example.workers.dev/api/chat', {
+    method: 'POST', headers: { 'content-type': 'application/json', ...(await appHeaders(env)) },
+    body: JSON.stringify({ message: 'سفیدش کن', image: `data:image/png;base64,${PNG}` }),
+  }), env, { waitUntil: () => {} });
+  const second = await withPhoto.json();
+  assert.match(second.reply, /رنگش سفید شد/);
+  assert.match(second.reply, /نیازی به فرستادن دوبارهٔ عکس نبود/);
+  assert.equal(second.image, `data:image/png;base64,${PNG}`);
+});
+
+test('web app: a tune without a remembered layer says so instead of guessing', async () => {
+  const { env, calls } = textMock();
+  const res = await worker.fetch(new Request('https://hermes.example.workers.dev/api/chat', {
+    method: 'POST', headers: { 'content-type': 'application/json', ...(await appHeaders(env)) },
+    body: JSON.stringify({ message: 'بالاتر ببر' }),
+  }), env, { waitUntil: () => {} });
+  assert.equal(res.status, 400);
+  assert.match((await res.json()).error, /لایهٔ متنی فعالی ندارم/);
+  assert.equal(calls.filter((c) => c.url.includes(':generateContent')).length, 0);
+});
+
+test('web app: the canvas is handed the clean picture, never one with the words already drawn', async () => {
+  const composed = pngB64(1024, 1280, 8);
+  const { env } = textMock();
+  env.BROWSER = { async quickAction() { return Uint8Array.from(Buffer.from(composed, 'base64')); } };
+  const res = await worker.fetch(new Request('https://hermes.example.workers.dev/api/chat', {
+    method: 'POST', headers: { 'content-type': 'application/json', ...(await appHeaders(env)) },
+    body: JSON.stringify({ message: 'روی این عکس بنویس: کمپ وایکینگ', image: `data:image/png;base64,${PNG}` }),
+  }), env, { waitUntil: () => {} });
+  const body = await res.json();
+  assert.match(body.reply, /خروجی متن‌دار در همین پیام است/, 'the server really did compose the layer');
+  assert.equal(body.image, `data:image/png;base64,${PNG}`, 'and the app still gets the clean one to draw on');
+  assert.ok(body.textLayer);
+});
+
+test('the app page says the layer can be moved by a message too', async () => {
+  const res = await worker.fetch(new Request('https://hermes.example.workers.dev/app'), baseEnv(), {});
+  const html = await res.text();
+  assert.match(html, /بالاتر ببر/);
+  assert.match(html, /کمی پایین‌تر/);
+  assert.match(html, /متن رو بردار/);
+  assert.match(html, /متن را بگذار/, 'the canvas tools are still there');
 });
 
 async function appHeaders(env) {

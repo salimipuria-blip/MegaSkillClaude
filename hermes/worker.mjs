@@ -18,7 +18,8 @@ export { ask, askGemini, askWorkersAI, MODELS, CF_MODELS } from './brain.mjs';
 import { imageRequest, base64ToBytes } from './image.mjs';
 import { handlePhotoEdit, editRequest, continueEdit, recallEdit, rememberEdit, followUpRequest, faDigits,
   refineTake, pickRequest, rememberVariations, recallVariations } from './photo-edit.mjs';
-import { textRequest, designSpec, textLayout, renderTextLayer, layerCaption } from './textlayer.mjs';
+import { textRequest, designSpec, textLayout, renderTextLayer, layerCaption,
+  layerTuneRequest, applyTune, tuneCaption, rememberTextLayer, recallTextLayer, forgetTextLayer } from './textlayer.mjs';
 import { imageInfo, base64Bytes } from './image-bytes.mjs';
 import { ask } from './brain.mjs';
 import { transcribe, telegramFile, parseDataUrl } from './media.mjs';
@@ -38,9 +39,9 @@ const ASK_FOR_TEXT = 'چه متنی بنویسم؟ مثال:\n«روی عکس ب
 /**
  * The text-layer turn, shared by Telegram and the app: run the edit if one was asked for, then
  * build the typographic layer for the resulting picture and (when Browser Rendering is available)
- * compose it server-side. Returns { base, layer, html?, caption, composed }.
+ * compose it server-side. Returns { base, clean, layer, caption, composed }.
  */
-export async function textLayerTurn(env, ask, image, mime, request, info = null) {
+export async function textLayerTurn(env, ask, image, mime, request, info = null, key = null) {
   const wants = textRequest(request);
   const plan = editRequest(request);
   const pureText = wants && (!plan || plan.op === 'text');
@@ -53,8 +54,12 @@ export async function textLayerTurn(env, ask, image, mime, request, info = null)
     tone: (edited && edited.brief && edited.brief.regionTone) || 'mixed',
   }));
   const base = { data: pureText ? image : edited.image, mime: pureText ? mime : edited.mime, info: info2 };
+  // The picture *under* the layer, kept un-composed: the app draws the words itself (so nobody sees
+  // them twice), and every later «بالاتر ببر» re-renders from this one instead of from a picture that
+  // already has the words baked in. Its mime comes from the bytes themselves: a Telegram download is
+  // labelled jpeg whatever it is, and whoever gets it back deserves the honest type.
+  const clean = { data: base.data, mime: (info2 && info2.mime) || base.mime, info: base.info };
   let composed = false;
-  let html = null;
   try {
     const rendered = await renderTextLayer(env, base.data, base.mime, layer);
     if (rendered) { base.data = rendered.image; base.mime = rendered.mime; base.info = rendered.info; composed = true; }
@@ -63,7 +68,34 @@ export async function textLayerTurn(env, ask, image, mime, request, info = null)
   }
   const layerInfo = layerCaption(layer, { composed });
   const caption = [edited && edited.kind !== 'text-only' ? edited.caption : '', layerInfo].filter(Boolean).join('\n\n');
-  return { edited, base, layer, composed, caption, textOnly: pureText };
+  if (key) await rememberTextLayer(env, key, { image: clean.data, mime: clean.mime, layer });
+  return { edited, base, clean, layer, composed, caption, textOnly: pureText };
+}
+
+/**
+ * A follow-up that only moves the words («بالاتر ببر»، «سفیدش کن»، «متن رو عوض کن…»، «متن رو بردار»):
+ * the remembered layer is replayed on the same picture, rendered again and remembered as the new
+ * state, so the user can keep tuning by chat - no photo to send, no image model to pay for.
+ */
+export async function tuneLayerTurn(env, key, tune, recalled) {
+  const layer = applyTune(recalled.layer, tune);
+  const clean = { data: recalled.image, mime: recalled.mime };
+  let base = { ...clean, info: { width: layer.width, height: layer.height } };
+  let composed = false;
+  if (!tune.remove) {
+    try {
+      const rendered = await renderTextLayer(env, clean.data, clean.mime, layer);
+      if (rendered) { base = { data: rendered.image, mime: rendered.mime, info: rendered.info }; composed = true; }
+    } catch (err) {
+      console.error('[Hermes] text layer render failed:', err.message);
+    }
+  }
+  // What the user gets *is* the current state: for a removal the picture is sent as-is (with no
+  // words on it), so the caption can say so instead of pointing at the app.
+  const caption = tuneCaption(recalled.layer, layer, tune, { composed: composed || !!tune.remove });
+  if (tune.remove) await forgetTextLayer(env, key);
+  else await rememberTextLayer(env, key, { image: clean.data, mime: clean.mime, layer });
+  return { clean, base, layer: tune.remove ? null : layer, composed, caption, tuned: true };
 }
 
 // The edited photo goes back as a before/after pair, so the improvement is visible at a glance.
@@ -79,6 +111,17 @@ export function layerForApp(layer) {
     barHeight: layer.bar ? layer.barBox.height : 0, width: layer.width, height: layer.height,
     position: layer.position,
   };
+}
+
+/** One picture with a caption (no before/after pair): used when there is nothing to compare. */
+export async function sendPicture(env, chatId, image, caption) {
+  const form = new FormData();
+  form.append('chat_id', String(chatId));
+  form.append('caption', String(caption || '').slice(0, 1000));
+  form.append('photo', new Blob([base64ToBytes(image.data)], { type: image.mime }),
+    image.mime === 'image/png' ? 'hermes-text.png' : 'hermes-text.jpg');
+  return fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendPhoto`, { method: 'POST', body: form })
+    .then((r) => r.json()).catch(() => ({}));
 }
 
 export async function sendEdited(env, chatId, before, edited) {
@@ -261,10 +304,25 @@ async function api(request, url, env) {
       const key = historyKey(env, who);
       const plan = photo ? editRequest(message) : null;
       const wantsText = photo ? textRequest(message) : null;
+      // A follow-up that only moves the words («بالاتر ببر»، «سفیدش کن»، «متن رو بردار»): the remembered
+      // layer is replayed and the app re-draws it, so nothing is sent again and no model is called.
+      const tune = layerTuneRequest(message);
+      if (tune) {
+        const saved = await recallTextLayer(env, key);
+        if (saved) {
+          const turn = await tuneLayerTurn(env, key, tune, saved);
+          const reply = photo ? `${turn.caption}\n(روی همان عکس قبلی نشست؛ نیازی به فرستادن دوبارهٔ عکس نبود.)` : turn.caption;
+          return json({ reply, image: `data:${turn.clean.mime};base64,${turn.clean.data}`,
+            textLayer: layerForApp(turn.layer) });
+        }
+        if (!photo) return json({ error: 'لایهٔ متنی فعالی ندارم. عکس را بفرست و بگو چه متنی بنویسم؛ بعد با «بالاتر ببر» یا «سفیدش کن» تغییرش بده.' }, 400);
+      }
       // Text alone: no image model is involved, only the typographic layer.
       if (photo && wantsText && (!plan || plan.op === 'text')) {
-        const turn = await textLayerTurn(env, ask, photo.data, photo.mime, message);
-        return json({ reply: turn.caption, image: `data:${turn.base.mime};base64,${turn.base.data}`,
+        const turn = await textLayerTurn(env, ask, photo.data, photo.mime, message, null, key);
+        // The canvas draws the layer itself, so it gets the clean picture: drawing the words over an
+        // already composed picture would put them there twice.
+        return json({ reply: turn.caption, image: `data:${turn.clean.mime};base64,${turn.clean.data}`,
           textLayer: layerForApp(turn.layer) });
       }
       if (photo && plan && plan.op === 'text' && !wantsText) return json({ error: ASK_FOR_TEXT }, 400);
@@ -274,11 +332,13 @@ async function api(request, url, env) {
           if (edited.image) await rememberEdit(env, key, { original: photo.data, mime: photo.mime, request: message,
             op: edited.op, strength: edited.strength });
           if (edited.variations) await rememberVariations(env, key, { ...edited, request: message });
+          if (!wantsText) await forgetTextLayer(env, key); // edited again: no layer sits on it now
           if (wantsText && !edited.variations) {
             // An edit plus words: deliver the edited picture and the layer for the canvas.
             const spec = textLayout(designSpec({ text: wantsText.text, width: (edited.info && edited.info.width) || 1024,
               height: (edited.info && edited.info.height) || 1024, position: wantsText.position, style: wantsText.style,
               size: wantsText.size, bar: wantsText.bar, tone: (edited.brief && edited.brief.regionTone) || 'mixed' }));
+            await rememberTextLayer(env, key, { image: edited.image, mime: edited.mime, layer: spec });
             return json({ reply: [edited.caption, layerCaption(spec)].join('\n\n'),
               image: `data:${edited.mime};base64,${edited.image}`,
               score: edited.review && edited.review.derived ? edited.score : undefined,
@@ -303,6 +363,7 @@ async function api(request, url, env) {
             if (edited) return json({ reply: edited.caption, image: `data:${edited.mime};base64,${edited.image}`, picked: pick.take });
           }
           const edited = await continueEdit(env, ask, last, message);
+          await forgetTextLayer(env, key);
           return json({ reply: edited.caption, image: edited.image ? `data:${edited.mime};base64,${edited.image}` : undefined,
             images: edited.variations ? edited.variations.map((v) => `data:${v.mime};base64,${v.image}`) : undefined });
         }
@@ -435,6 +496,7 @@ async function handle(msg, env, origin) {
       'بعد از هر ویرایش می‌توانی بگویی «ملایم‌تر» یا «قوی‌تر» — همان عکس را دوباره لازم نیست بفرستی.\n' +
       'با «چند نسخه» سه نسخه می‌گیری؛ بعد بنویس «نسخهٔ ۲» تا همان را دقیق‌تر کنم.\n' +
       'متن روی عکس هم می‌شود: «روی عکس بنویس: کمپ وایکینگ» — با فونت واقعی می‌نشیند، پس فارسی سالم می‌ماند.\n' +
+      'بعد از آن متن با پیام هم جابه‌جا می‌شود: «بالاتر ببر»، «کمی پایین‌تر»، «وسطش بذار»، «سفیدش کن»، «درشت‌ترش کن»، «بدون نوار»، «متن رو بردار».\n' +
       'ویس بفرست تا گوش بدهم، عکس بفرست تا ببینم؛ برای خبرها و چیزهای روز در گوگل جست‌وجو می‌کنم.\n' +
       '/google اتصال جیمیل، تقویم، درایو و شیت\n' +
       '/reset گفتگوی جدید (قبلی بایگانی می‌شود)\n/notes یادداشت‌های حافظه\n/forget پاک کردن یادداشت‌ها\n/app لینک اپ');
@@ -469,6 +531,31 @@ async function handle(msg, env, origin) {
     return send(env, chatId, 'گفتگوی جدید شروع شد. گفتگوی قبلی بایگانی شد و یادداشت‌ها سر جایشان هستند.');
   }
 
+  // A follow-up that only moves the words («بالاتر ببر»، «سفیدش کن»): the layer and the picture under
+  // it are remembered, so the new version is rendered right here. This is checked *before* the edit
+  // follow-up, because «متن رو عوض کن به «…»» and «متن رو بردار» also look like edit instructions.
+  {
+    const tune = layerTuneRequest(input);
+    if (tune) {
+      const saved = await recallTextLayer(env, key);
+      if (saved) {
+        await tg(env, 'sendChatAction', { chat_id: chatId, action: 'upload_photo' });
+        try {
+          const turn = await tuneLayerTurn(env, key, tune, saved);
+          // A photo may ride along with the words; the layer still belongs to the picture it was set on.
+          const caption = images.length ? `${turn.caption}\n(روی همان عکس قبلی نشست؛ نیازی به فرستادن دوبارهٔ عکس نبود.)` : turn.caption;
+          const before = { data: saved.image, mime: saved.mime };
+          if (turn.composed) await sendEdited(env, chatId, before, { image: turn.base.data, mime: turn.base.mime, caption });
+          else if (tune.remove) await sendPicture(env, chatId, turn.base, caption);
+          else await send(env, chatId, caption); // no Browser Rendering: the app draws it
+        } catch (err) {
+          await send(env, chatId, `تغییر متن انجام نشد: ${err.message}`);
+        }
+        return;
+      }
+    }
+  }
+
   // A follow-up turn («نسخهٔ ۲»، «ملایم‌تر»، «قوی‌تر»، «چند نسخه») reuses the photo that was edited
   // last, so the user never has to send it again inside the same hour.
   if (!images.length && (editRequest(input) || followUpRequest(input) || pickRequest(input))) {
@@ -485,6 +572,7 @@ async function handle(msg, env, origin) {
           return;
         }
         const edited = await continueEdit(env, ask, last, input);
+        await forgetTextLayer(env, key); // the picture changed: an older layer is not on it any more
         if (edited.image) await sendEdited(env, chatId, { data: last.image, mime: last.mime }, edited);
         else await send(env, chatId, edited.caption);
       } catch (err) {
@@ -501,7 +589,8 @@ async function handle(msg, env, origin) {
     try {
       // "put text on it" without the words: ask for the words instead of guessing.
       if (!textWish && editRequest(input).op === 'text') return send(env, chatId, ASK_FOR_TEXT);
-      const turn = await textLayerTurn(env, ask, images[0].data, images[0].mime, input);
+      const turn = await textLayerTurn(env, ask, images[0].data, images[0].mime, input, null, key);
+      if (turn && !turn.layer) await forgetTextLayer(env, key); // an edit without words: no layer to move
       if (turn && turn.edited && turn.edited.image) {
         await rememberEdit(env, key, { original: images[0].data, mime: images[0].mime, request: input,
           op: turn.edited.op, strength: turn.edited.strength });

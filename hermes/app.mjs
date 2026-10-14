@@ -430,9 +430,10 @@ export const APP_HTML = String.raw`<!doctype html>
     ['photolab', 'Photo Lab', 'core', 150, 418, true, 'l', 6.5, 'ویرایش حرفه‌ای عکس', 'online',
       ['عکس خودت را بفرست و بگو چه تغییری می‌خواهی؛ قبل از خروج، عکس را یک ریتوشِر بازبینی می‌کند',
        'متن هم می‌شود: «روی عکس بنویس: …» — با فونت واقعی وزیرمتن می‌نشیند و بالا/وسط/پایین و ذخیره دارد',
+       'همان متن با پیام هم می‌چرخد: «بالاتر ببر»، «سفیدش کن»، «درشت‌ترش کن»، «بدون نوار»، «متن رو عوض کن…»، «متن رو بردار»',
        'ریتوش پرتره، پس‌زمینهٔ جدید، نورپردازی، گرید سینمایی، بازسازی عکس قدیمی، افزایش کیفیت، حذف شیء، عکس محصول استودیویی',
-       'هویت و چهره دست‌نخورده می‌ماند؛ متن روی عکس ساخته نمی‌شود (مدل متن فارسی را خراب می‌کند)'],
-      ['این عکس رو ریتوش کن', 'این عکس قدیمی رو بازسازی کن']],
+       'هویت و چهره دست‌نخورده می‌ماند؛ متن را مدل تصویر نمی‌کشد (فارسی را خراب می‌کند) — فونت واقعی روی عکس می‌نشیند'],
+      ['این عکس رو ریتوش کن', 'این عکس قدیمی رو بازسازی کن', 'بالاتر ببر']],
     ['remind', 'Reminders', 'soon', 414, 392, true, 't', 5.5, 'یادآور و خلاصهٔ صبح', 'queued',
       ['یادآوری سر ساعت در تلگرام', 'هر صبح خلاصهٔ روز'], []],
     ['calendar', 'Calendar', 'soon', 560, 356, true, 'r', 5.5, 'تقویم و رزرو تور', 'planned',
@@ -894,6 +895,8 @@ export const APP_HTML = String.raw`<!doctype html>
     canvas.className = 'pic';
     const title = document.createElement('div'); title.className = 'lhint';
     title.textContent = '✍️ متن را بگذار روی عکس:';
+    const tune = document.createElement('div'); tune.className = 'lhint';
+    tune.textContent = 'با پیام هم می‌چرخد: «بالاتر ببر» · «کمی پایین‌تر» · «سفیدش کن» · «بدون نوار» · «متن رو بردار»';
     const note = document.createElement('div'); note.className = 'lhint';
     const bar = document.createElement('div'); bar.className = 'lrow';
     const save = document.createElement('a'); save.className = 'pick'; save.textContent = 'ذخیرهٔ عکس با متن ↓';
@@ -919,7 +922,7 @@ export const APP_HTML = String.raw`<!doctype html>
     im.onload = () => { buttons[LAYER_POSITIONS.indexOf(position)]?.classList.add('on'); paint(); };
     im.onerror = () => { note.textContent = 'این عکس باز نشد.'; };
     im.src = src;
-    box.append(canvas, title, bar, note);
+    box.append(canvas, title, tune, bar, note);
     return box;
   }
 
