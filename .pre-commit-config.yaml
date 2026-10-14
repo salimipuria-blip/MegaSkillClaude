@@ -1,0 +1,22 @@
+# Local-only hooks (hermes/#028, #065): no downloads, no network.
+# Install: pipx install pre-commit && pre-commit install
+repos:
+  - repo: local
+    hooks:
+      - id: no-env-files
+        name: Block committed .env files (examples only)
+        entry: >-
+          bash -c 'for f in "$@"; do case "$f" in *.example) ;; *) echo blocked-env-file >&2; exit 1;; esac; done' --
+        language: system
+        files: (^|/)\.env(\..*)?$
+      - id: hermes-shell-syntax
+        name: Hermes shell syntax
+        entry: bash -n hermes/setup.sh hermes/config.sh hermes/logger.sh
+        language: system
+        files: ^hermes/.*\.sh$
+        pass_filenames: false
+      - id: repository-contract
+        name: Repository contract (secret shapes)
+        entry: python3 orchestrator/scripts/audit/check_repository_contract.py
+        language: system
+        pass_filenames: false

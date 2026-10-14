@@ -143,6 +143,8 @@ node hermes/add-user.mjs <username> "<نام>" member
 تمام upstreamهای تست شبیه‌سازی شده‌اند؛ تست‌ها به بات/مدل/دادهٔ واقعی دست نمی‌زنند.
 مراحل انتشار و محدودیت‌ها: [گزارش سخت‌سازی](../docs/REPO_HARDENING.md).
 
+**سلامت و مشاهده‌پذیری (Lite):** `GET /health/live` (زنده‌بودن)، `/health/ready` (آمادگی؛ ۵۰۳ تا پیکربندی کامل شود)، `/health/full` و `/metrics` (Prometheus یا `?format=json`) — بدون افشای هیچ رازی. تست اسکریپت‌های نصب: `bash hermes/tests/setup_validation.sh`. نصب non-interactive، عیب‌یابی و runbook عملیات: [docs/hermes/INSTALL.md](../docs/hermes/INSTALL.md)، [docs/hermes/OPERATIONS.md](../docs/hermes/OPERATIONS.md)، [docs/hermes/observability.md](../docs/hermes/observability.md). برنامهٔ ۱۰۰ تسک و ابزار اجرای امن آن: [tasks/README.md](../tasks/README.md).
+
 ## هرمس کامل روی Oracle (فقط با کارت خارجی واقعی)
 
 اوراکل برای ساخت حساب کلاد کارت ویزا یا مستر به نام خودت و آدرس خارج از ایران می‌خواهد. با اطلاعات جعلی ثبت‌نام نکن، چون حساب و سرور بسته می‌شوند.

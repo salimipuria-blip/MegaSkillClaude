@@ -8,6 +8,12 @@ SECRET_PATTERNS = [
     re.compile(r"(?i)\b(service_role|service-role|github_admin_token)\b\s*[:=]\s*['\"][^'\"]{8,}"),
     re.compile(r'\bgh[pousr]_[A-Za-z0-9_]{20,}\b'),
     re.compile(r'\bsb_secret_[A-Za-z0-9_-]{20,}\b'),
+    # hermes/#027, #079: high-confidence shapes only, so test fixtures and
+    # documentation examples (which never match these lengths) stay green.
+    re.compile(r'\bAKIA[0-9A-Z]{16}\b'),
+    re.compile(r'-----BEGIN (?:RSA |EC |DSA |OPENSSH |PGP )?PRIVATE KEY-----'),
+    re.compile(r'\bAIza[0-9A-Za-z_-]{35}\b'),
+    re.compile(r'\b[0-9]{8,}:[A-Za-z0-9_-]{35}\b'),
 ]
 
 
