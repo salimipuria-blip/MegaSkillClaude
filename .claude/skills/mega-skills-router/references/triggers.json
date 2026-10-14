@@ -1,11 +1,11 @@
 {
  "schema_version": 1,
  "counts": {
-  "skills": 6018,
-  "triggers": 30071,
+  "skills": 6019,
+  "triggers": 30080,
   "colliding_triggers": 0,
   "incomplete_skills": 281,
-  "routable_skills": 5737
+  "routable_skills": 5738
  },
  "domains": {
   "agents-automation": 764,
@@ -78519,6 +78519,23 @@
     "کدنویسی آنلاین با VS Code از آیفون",
     "کدنویسی آنلاین با VS Code از آیفون و موبایل، بدون لپ‌تاپ — وقتی کاربر می‌خواهد از گوشی وارد VS Code شود، این ریپو را ویرایش کند یا از کنسول آیفون مگااسکیل و مسیریاب مهارت‌ها استفاده کند.",
     "code online ba vscode az iphone"
+   ],
+   "origin": "pack"
+  },
+  {
+   "name": "hermes-autonomous-self-improvement",
+   "domain": "agents-automation",
+   "source_path": "library/skills/hermes-autonomous-self-improvement/SKILL.md",
+   "triggers": [
+    "hermes-autonomous-self-improvement",
+    "hermes autonomous self improvement",
+    "agents-automation hermes autonomous self improvement",
+    "خود اصلاحی هرمس",
+    "ارتقای هرمس بر اساس مموری چت",
+    "یادگیری خودکار هرمس با تایید کلاد",
+    "hermes self improvement claude code karpathy",
+    "eslah va erteghaye hermes ba taiid claude",
+    "hermes skill evolution"
    ],
    "origin": "pack"
   }
