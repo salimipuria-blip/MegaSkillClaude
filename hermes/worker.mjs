@@ -20,6 +20,9 @@ import { transcribe, telegramFile, parseDataUrl } from './media.mjs';
 import { tripPage, createBooking, onContact } from './booking.mjs';
 import { configuredProviders } from './providers.mjs';
 import { googleConfigured, googleConnected, googleTools, connectUrl, finishConnect, disconnect } from './google.mjs';
+import { liveness, readiness, fullHealth } from './health.mjs';
+import { recordRequest, snapshot as metricsSnapshot, prometheusText } from './metrics.mjs';
+export { liveness, readiness, fullHealth } from './health.mjs';
 
 const TG_LIMIT = 4000;
 // Abilities that can be locked per person (users.mjs `locks`). A locked topic is refused before the AI is called.
@@ -35,6 +38,16 @@ const teamSystem = (who) => `You are Hermes, the AI assistant of the Viking Offr
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
+    // Health & metrics probes (hermes/#009, #013, #088, #089): no secrets, no
+    // external calls, no state changes. Readiness is 503 until minimally configured.
+    if (request.method === 'GET' && ['/health', '/health/live'].includes(url.pathname)) return jsonProbe(liveness(), 200);
+    if (request.method === 'GET' && url.pathname === '/health/ready') { const r = readiness(env); return jsonProbe(r, r.ready ? 200 : 503); }
+    if (request.method === 'GET' && url.pathname === '/health/full') { const f = fullHealth(env); return jsonProbe(f, f.ready ? 200 : 503); }
+    if (request.method === 'GET' && url.pathname === '/metrics') {
+      return url.searchParams.get('format') === 'json'
+        ? jsonProbe(metricsSnapshot(), 200)
+        : new Response(prometheusText(), { headers: { 'content-type': 'text/plain; version=0.0.4; charset=utf-8', 'cache-control': 'no-store' } });
+    }
     if (url.pathname === '/setup') {
       if (request.method !== 'POST') return new Response('method not allowed', { status: 405, headers: { allow: 'POST' } });
       if (!env.TELEGRAM_BOT_TOKEN || !String(env.ALLOWED_USER_ID || '').trim()) return text('not configured', 503);
@@ -197,6 +210,13 @@ async function googleCallback(url, env) {
   return page('<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">' +
     '<body style="font:18px/1.8 system-ui;background:#06101c;color:#eee;display:grid;place-items:center;height:100vh;margin:0;text-align:center">' +
     '<div>✅ گوگل به هرمس وصل شد<br><small>جیمیل، تقویم، درایو و شیت. حالا برگرد به تلگرام.</small></div>', 'text/html');
+}
+
+function jsonProbe(body, status) {
+  recordRequest(status >= 500);
+  return new Response(JSON.stringify(body), {
+    status, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' },
+  });
 }
 
 function page(body, type) {

@@ -1,0 +1,2732 @@
+{
+  "schema": "hermes-tasks/v2",
+  "generated": "2026-10-14",
+  "repo": "salimipuria-blip/MegaSkillClaude",
+  "architecture": {
+    "lite": "Cloudflare Worker (hermes/entry.mjs → worker.mjs)",
+    "full": "Oracle installer (hermes/setup.sh, single-file curl contract)"
+  },
+  "governance": {
+    "branch_per_task": true,
+    "auto_merge": false,
+    "skeleton_prs": false
+  },
+  "tasks": [
+    {
+      "id": 1,
+      "code": "hermes/001",
+      "title": "Strict shell header & safety flags",
+      "wave": "W0",
+      "disposition": "implemented",
+      "branch": "hermes/001-strict-shell-header-safety",
+      "commit": "feat(hermes): strict shell header & safety flags — hermes/#001",
+      "pr_title": "[hermes/#001] Strict shell header & safety flags",
+      "files": [
+        "hermes/setup.sh"
+      ],
+      "acceptance": [
+        "shebang + set -euo pipefail و bash -n/ShellCheck سبز",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 2,
+      "code": "hermes/002",
+      "title": "Split config & secure env loader",
+      "wave": "W0",
+      "disposition": "implemented",
+      "branch": "hermes/002-split-config-secure-env",
+      "commit": "feat(hermes): split config & secure env loader — hermes/#002",
+      "pr_title": "[hermes/#002] Split config & secure env loader",
+      "files": [
+        "hermes/config.sh",
+        "hermes/.env.example",
+        "hermes/setup.sh"
+      ],
+      "acceptance": [
+        "loader بدون eval، allow-list، رد کلید ناشناخته",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 3,
+      "code": "hermes/003",
+      "title": "Network connectivity pre-check",
+      "wave": "W0",
+      "disposition": "implemented",
+      "branch": "hermes/003-network-connectivity-pre-check",
+      "commit": "feat(hermes): network connectivity pre-check — hermes/#003",
+      "pr_title": "[hermes/#003] Network connectivity pre-check",
+      "files": [
+        "hermes/setup.sh"
+      ],
+      "acceptance": [
+        "قطع شبکه = خروج غیرصفر با پیام عملی، بدون ادامهٔ نصب",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 4,
+      "code": "hermes/004",
+      "title": "Gemini key validation (401/403/429)",
+      "wave": "W0",
+      "disposition": "implemented",
+      "branch": "hermes/004-gemini-key-validation-401",
+      "commit": "feat(hermes): gemini key validation (401/403/429) — hermes/#004",
+      "pr_title": "[hermes/#004] Gemini key validation (401/403/429)",
+      "files": [
+        "hermes/setup.sh"
+      ],
+      "acceptance": [
+        "تفکیک 401/403 از 429 و خطای شبکه در پیام",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 5,
+      "code": "hermes/005",
+      "title": "Shell validation tests (no bats dependency)",
+      "wave": "W0",
+      "disposition": "implemented",
+      "branch": "hermes/005-shell-validation-tests-no",
+      "commit": "feat(hermes): shell validation tests (no bats dependency) — hermes/#005",
+      "pr_title": "[hermes/#005] Shell validation tests (no bats dependency)",
+      "files": [
+        "hermes/tests/setup_validation.sh"
+      ],
+      "acceptance": [
+        "اجرا بدون شبکه/وابستگی با exit 0",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 6,
+      "code": "hermes/006",
+      "title": "Dockerized installer test",
+      "wave": "W2",
+      "disposition": "planned",
+      "branch": "hermes/006-dockerized-installer-test",
+      "commit": "feat(hermes): dockerized installer test — hermes/#006",
+      "pr_title": "[hermes/#006] Dockerized installer test",
+      "files": [
+        "hermes/Dockerfile"
+      ],
+      "acceptance": [
+        "docker build و --check-only داخل کانتینر؛ روی معماری تک‌فایلی setup.sh",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w2"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 7,
+      "code": "hermes/007",
+      "title": "systemd unit template",
+      "wave": "W0",
+      "disposition": "existing-verified",
+      "branch": "hermes/007-systemd-unit-template",
+      "commit": "feat(hermes): systemd unit template — hermes/#007",
+      "pr_title": "[hermes/#007] systemd unit template",
+      "files": [
+        "hermes/setup.sh"
+      ],
+      "acceptance": [
+        "نصب از مسیر رسمی hermes gateway install؛ قالب دستی جدا ساخته نمی‌شود",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 8,
+      "code": "hermes/008",
+      "title": "Structured JSON logging",
+      "wave": "W0",
+      "disposition": "implemented",
+      "branch": "hermes/008-structured-json-logging",
+      "commit": "feat(hermes): structured json logging — hermes/#008",
+      "pr_title": "[hermes/#008] Structured JSON logging",
+      "files": [
+        "hermes/logger.sh"
+      ],
+      "acceptance": [
+        "HERMES_LOG_FORMAT=json خروجی تک‌خطی JSON تولید کند",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 9,
+      "code": "hermes/009",
+      "title": "Health endpoint",
+      "wave": "W0",
+      "disposition": "implemented",
+      "branch": "hermes/009-health-endpoint",
+      "commit": "feat(hermes): health endpoint — hermes/#009",
+      "pr_title": "[hermes/#009] Health endpoint",
+      "files": [
+        "hermes/health.mjs",
+        "hermes/worker.mjs"
+      ],
+      "acceptance": [
+        "GET /health و /health/live ‏200 JSON بدون راز",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 10,
+      "code": "hermes/010",
+      "title": "Log rotation & retention",
+      "wave": "W2",
+      "disposition": "planned",
+      "branch": "hermes/010-log-rotation-retention",
+      "commit": "feat(hermes): log rotation & retention — hermes/#010",
+      "pr_title": "[hermes/#010] Log rotation & retention",
+      "files": [
+        "docs/hermes/OPERATIONS.md"
+      ],
+      "acceptance": [
+        "سیاست retention برای لاگ نصب و journal مستند و تست‌پذیر",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w2"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 11,
+      "code": "hermes/011",
+      "title": "Gemini retry/backoff (429/5xx)",
+      "wave": "W0",
+      "disposition": "implemented-primitive",
+      "branch": "hermes/011-gemini-retry-backoff-429",
+      "commit": "feat(hermes): gemini retry/backoff (429/5xx) — hermes/#011",
+      "pr_title": "[hermes/#011] Gemini retry/backoff (429/5xx)",
+      "files": [
+        "hermes/resilience.mjs"
+      ],
+      "acceptance": [
+        "retry فقط transient؛ 401/403 بدون retry؛ سقف backoff",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 12,
+      "code": "hermes/012",
+      "title": "Circuit breaker",
+      "wave": "W0",
+      "disposition": "implemented-primitive",
+      "branch": "hermes/012-circuit-breaker",
+      "commit": "feat(hermes): circuit breaker — hermes/#012",
+      "pr_title": "[hermes/#012] Circuit breaker",
+      "files": [
+        "hermes/resilience.mjs"
+      ],
+      "acceptance": [
+        "بازشدن پس از آستانه و half-open پس از cooldown با تست",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 13,
+      "code": "hermes/013",
+      "title": "Metrics endpoint (Prometheus)",
+      "wave": "W0",
+      "disposition": "implemented",
+      "branch": "hermes/013-metrics-endpoint-prometheus",
+      "commit": "feat(hermes): metrics endpoint (prometheus) — hermes/#013",
+      "pr_title": "[hermes/#013] Metrics endpoint (Prometheus)",
+      "files": [
+        "hermes/metrics.mjs",
+        "hermes/worker.mjs"
+      ],
+      "acceptance": [
+        "GET /metrics متن Prometheus؛ بدون لیبل شناسهٔ کاربر",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 14,
+      "code": "hermes/014",
+      "title": "Sentry integration",
+      "wave": "W3",
+      "disposition": "deferred-optional",
+      "branch": "hermes/014-sentry-integration",
+      "commit": "feat(hermes): sentry integration — hermes/#014",
+      "pr_title": "[hermes/#014] Sentry integration",
+      "files": [
+        "hermes/worker.mjs"
+      ],
+      "acceptance": [
+        "فقط با DSN و رضایت؛ جایگزین فعلی: لاگ ساخت‌یافتهٔ Worker",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w3"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 15,
+      "code": "hermes/015",
+      "title": "Production runtime Dockerfile",
+      "wave": "W3",
+      "disposition": "rejected-wrong-target",
+      "branch": "hermes/015-production-runtime-dockerfile",
+      "commit": "feat(hermes): production runtime dockerfile — hermes/#015",
+      "pr_title": "[hermes/#015] Production runtime Dockerfile",
+      "files": [
+        "hermes/Dockerfile.runtime"
+      ],
+      "acceptance": [
+        "هرمس‌لایت Worker است و ایمیج runtime ندارد؛ برای Full به docs اوراکل ارجاع شود",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w3"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 16,
+      "code": "hermes/016",
+      "title": "Dedicated Hermes CI",
+      "wave": "W0",
+      "disposition": "implemented",
+      "branch": "hermes/016-dedicated-hermes-ci",
+      "commit": "feat(hermes): dedicated hermes ci — hermes/#016",
+      "pr_title": "[hermes/#016] Dedicated Hermes CI",
+      "files": [
+        ".github/workflows/ci-hermes.yml"
+      ],
+      "acceptance": [
+        "path-filter + shell/node job با timeout",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 17,
+      "code": "hermes/017",
+      "title": "Pin & audit npm deps",
+      "wave": "W0",
+      "disposition": "existing-verified",
+      "branch": "hermes/017-pin-audit-npm-deps",
+      "commit": "feat(hermes): pin & audit npm deps — hermes/#017",
+      "pr_title": "[hermes/#017] Pin & audit npm deps",
+      "files": [
+        "hermes/package.json",
+        "hermes/package-lock.json"
+      ],
+      "acceptance": [
+        "package-lock موجود؛ npm ci در CI؛ audit دوره‌ای جدا",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 18,
+      "code": "hermes/018",
+      "title": "Semantic release",
+      "wave": "W3",
+      "disposition": "deferred",
+      "branch": "hermes/018-semantic-release",
+      "commit": "feat(hermes): semantic release — hermes/#018",
+      "pr_title": "[hermes/#018] Semantic release",
+      "files": [
+        ".github/workflows/release-hermes.yml"
+      ],
+      "acceptance": [
+        "انتشار فعلی از main/Cloudflare است؛ versioning جدا پس از نیاز واقعی",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w3"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 19,
+      "code": "hermes/019",
+      "title": "Telegram e2e with mocks",
+      "wave": "W1",
+      "disposition": "planned",
+      "branch": "hermes/019-telegram-e2e-with-mocks",
+      "commit": "feat(hermes): telegram e2e with mocks — hermes/#019",
+      "pr_title": "[hermes/#019] Telegram e2e with mocks",
+      "files": [
+        "hermes/worker.test.mjs"
+      ],
+      "acceptance": [
+        "سناریوهای فعلی mock گسترش یابد؛ بدون شبکهٔ واقعی",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w1"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 20,
+      "code": "hermes/020",
+      "title": "Mock Gemini server",
+      "wave": "W1",
+      "disposition": "adapted",
+      "branch": "hermes/020-mock-gemini-server",
+      "commit": "feat(hermes): mock gemini server — hermes/#020",
+      "pr_title": "[hermes/#020] Mock Gemini server",
+      "files": [
+        "hermes/tests/"
+      ],
+      "acceptance": [
+        "در Worker تست‌ها fetch جعلی کافی است؛ سرور mock جدا فقط برای تست setup.sh",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w1"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 21,
+      "code": "hermes/021",
+      "title": "INSTALL & operations docs",
+      "wave": "W0",
+      "disposition": "implemented",
+      "branch": "hermes/021-install-operations-docs",
+      "commit": "feat(hermes): install & operations docs — hermes/#021",
+      "pr_title": "[hermes/#021] INSTALL & operations docs",
+      "files": [
+        "docs/hermes/INSTALL.md",
+        "hermes/README.md"
+      ],
+      "acceptance": [
+        "مراحل Lite و Full جدا، non-interactive و عیب‌یابی",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 22,
+      "code": "hermes/022",
+      "title": "Env validation at startup",
+      "wave": "W0",
+      "disposition": "implemented",
+      "branch": "hermes/022-env-validation-at-startup",
+      "commit": "feat(hermes): env validation at startup — hermes/#022",
+      "pr_title": "[hermes/#022] Env validation at startup",
+      "files": [
+        "hermes/config.sh",
+        "hermes/health.mjs"
+      ],
+      "acceptance": [
+        "readiness نبود پیکربندی را بدون افشای مقدار نشان دهد",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 23,
+      "code": "hermes/023",
+      "title": "Non-interactive install mode",
+      "wave": "W0",
+      "disposition": "implemented",
+      "branch": "hermes/023-non-interactive-install-mode",
+      "commit": "feat(hermes): non-interactive install mode — hermes/#023",
+      "pr_title": "[hermes/#023] Non-interactive install mode",
+      "files": [
+        "hermes/setup.sh"
+      ],
+      "acceptance": [
+        "--non-interactive فقط از env راز می‌خواند، هرگز از argv",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 24,
+      "code": "hermes/024",
+      "title": "Token format validation",
+      "wave": "W0",
+      "disposition": "implemented",
+      "branch": "hermes/024-token-format-validation",
+      "commit": "feat(hermes): token format validation — hermes/#024",
+      "pr_title": "[hermes/#024] Token format validation",
+      "files": [
+        "hermes/config.sh",
+        "hermes/setup.sh"
+      ],
+      "acceptance": [
+        "فرمت تلگرام/کاربر و شکل حداقلی جمینی پیش از تماس شبکه",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 25,
+      "code": "hermes/025",
+      "title": "LOG_LEVEL support",
+      "wave": "W0",
+      "disposition": "implemented",
+      "branch": "hermes/025-log-level-support",
+      "commit": "feat(hermes): log_level support — hermes/#025",
+      "pr_title": "[hermes/#025] LOG_LEVEL support",
+      "files": [
+        "hermes/logger.sh",
+        "hermes/.env.example"
+      ],
+      "acceptance": [
+        "LOG_LEVEL سطح خروجی شل را کنترل کند",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 26,
+      "code": "hermes/026",
+      "title": "Graceful shutdown",
+      "wave": "W1",
+      "disposition": "adapted",
+      "branch": "hermes/026-graceful-shutdown",
+      "commit": "feat(hermes): graceful shutdown — hermes/#026",
+      "pr_title": "[hermes/#026] Graceful shutdown",
+      "files": [
+        "hermes/worker.mjs"
+      ],
+      "acceptance": [
+        "در Worker چرخهٔ عمر با پلتفرم است؛ برای Full در OPERATIONS مستند شود",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w1"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 27,
+      "code": "hermes/027",
+      "title": "Extend secret-scan patterns",
+      "wave": "W0",
+      "disposition": "implemented",
+      "branch": "hermes/027-extend-secret-scan-patterns",
+      "commit": "feat(hermes): extend secret-scan patterns — hermes/#027",
+      "pr_title": "[hermes/#027] Extend secret-scan patterns",
+      "files": [
+        "orchestrator/scripts/audit/check_repository_contract.py"
+      ],
+      "acceptance": [
+        "الگوهای AKIA/PrivateKey/Google/Telegram با contract سبز",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 28,
+      "code": "hermes/028",
+      "title": "Pre-commit secret guard",
+      "wave": "W0",
+      "disposition": "implemented",
+      "branch": "hermes/028-pre-commit-secret-guard",
+      "commit": "feat(hermes): pre-commit secret guard — hermes/#028",
+      "pr_title": "[hermes/#028] Pre-commit secret guard",
+      "files": [
+        ".pre-commit-config.yaml"
+      ],
+      "acceptance": [
+        "هوک local بدون دانلود؛ بلاک .env و اجرای contract",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 29,
+      "code": "hermes/029",
+      "title": "Container image scan (Trivy)",
+      "wave": "W3",
+      "disposition": "deferred-no-image",
+      "branch": "hermes/029-container-image-scan-trivy",
+      "commit": "feat(hermes): container image scan (trivy) — hermes/#029",
+      "pr_title": "[hermes/#029] Container image scan (Trivy)",
+      "files": [
+        ".github/workflows/security-scan.yml"
+      ],
+      "acceptance": [
+        "تا وقتی ایمیج تولیدی نیست، اسکن ایمیج موضوع ندارد",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w3"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 30,
+      "code": "hermes/030",
+      "title": "Oracle deploy guide",
+      "wave": "W0",
+      "disposition": "existing-verified",
+      "branch": "hermes/030-oracle-deploy-guide",
+      "commit": "feat(hermes): oracle deploy guide — hermes/#030",
+      "pr_title": "[hermes/#030] Oracle deploy guide",
+      "files": [
+        "hermes/README.md",
+        "docs/hermes/INSTALL.md"
+      ],
+      "acceptance": [
+        "مراحل Always Free موجود؛ Terraform جعلی ساخته نمی‌شود",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 31,
+      "code": "hermes/031",
+      "title": "systemd user installer",
+      "wave": "W0",
+      "disposition": "existing-verified",
+      "branch": "hermes/031-systemd-user-installer",
+      "commit": "feat(hermes): systemd user installer — hermes/#031",
+      "pr_title": "[hermes/#031] systemd user installer",
+      "files": [
+        "hermes/setup.sh"
+      ],
+      "acceptance": [
+        "مسیر رسمی gateway install استفاده می‌شود؛ اسکریپت موازی نه",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 32,
+      "code": "hermes/032",
+      "title": "Disk/port sanity checks",
+      "wave": "W0",
+      "disposition": "implemented-partial",
+      "branch": "hermes/032-disk-port-sanity-checks",
+      "commit": "feat(hermes): disk/port sanity checks — hermes/#032",
+      "pr_title": "[hermes/#032] Disk/port sanity checks",
+      "files": [
+        "hermes/setup.sh"
+      ],
+      "acceptance": [
+        "دیسک و شبکه در preflight؛ پورت برای Worker موضوع ندارد",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 33,
+      "code": "hermes/033",
+      "title": "Basic load test",
+      "wave": "W2",
+      "disposition": "planned",
+      "branch": "hermes/033-basic-load-test",
+      "commit": "feat(hermes): basic load test — hermes/#033",
+      "pr_title": "[hermes/#033] Basic load test",
+      "files": [
+        "hermes/tests/"
+      ],
+      "acceptance": [
+        "فقط علیه محیط تست خودت؛ سقف نرخ و مجوز صریح لازم است",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w2"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 34,
+      "code": "hermes/034",
+      "title": "Rate limiting",
+      "wave": "W0",
+      "disposition": "existing-verified",
+      "branch": "hermes/034-rate-limiting",
+      "commit": "feat(hermes): rate limiting — hermes/#034",
+      "pr_title": "[hermes/#034] Rate limiting",
+      "files": [
+        "hermes/rate-limit.mjs"
+      ],
+      "acceptance": [
+        "رزرو با KV محدود است و fail-closed؛ تعمیم نیازمند Durable Object",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 35,
+      "code": "hermes/035",
+      "title": "SQLite persistence",
+      "wave": "W0",
+      "disposition": "existing-verified",
+      "branch": "hermes/035-sqlite-persistence",
+      "commit": "feat(hermes): sqlite persistence — hermes/#035",
+      "pr_title": "[hermes/#035] SQLite persistence",
+      "files": [
+        "hermes/conversation.mjs"
+      ],
+      "acceptance": [
+        "حافظه با SQLite Durable Object موجود است؛ SQLite دوم ساخته نمی‌شود",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 36,
+      "code": "hermes/036",
+      "title": "Background job queue",
+      "wave": "W3",
+      "disposition": "rejected-wrong-target",
+      "branch": "hermes/036-background-job-queue",
+      "commit": "feat(hermes): background job queue — hermes/#036",
+      "pr_title": "[hermes/#036] Background job queue",
+      "files": [
+        "hermes/worker.mjs"
+      ],
+      "acceptance": [
+        "صف بیرونی (BullMQ) با Worker سازگار نیست؛ waitUntil/DO الگوی فعلی است",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w3"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 37,
+      "code": "hermes/037",
+      "title": "systemd NotifyReady",
+      "wave": "W2",
+      "disposition": "adapted",
+      "branch": "hermes/037-systemd-notifyready",
+      "commit": "feat(hermes): systemd notifyready — hermes/#037",
+      "pr_title": "[hermes/#037] systemd NotifyReady",
+      "files": [
+        "docs/hermes/OPERATIONS.md"
+      ],
+      "acceptance": [
+        "از قابلیت gateway بالادستی پیروی شود، نه notify دست‌ساز",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w2"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 38,
+      "code": "hermes/038",
+      "title": "Unit coverage ≥80%",
+      "wave": "W1",
+      "disposition": "planned",
+      "branch": "hermes/038-unit-coverage-80",
+      "commit": "feat(hermes): unit coverage ≥80% — hermes/#038",
+      "pr_title": "[hermes/#038] Unit coverage ≥80%",
+      "files": [
+        "hermes/*.test.mjs"
+      ],
+      "acceptance": [
+        "گزارش coverage واقعی از node؛ عدد بدون ابزار ادعا نشود",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w1"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 39,
+      "code": "hermes/039",
+      "title": "Coverage badge",
+      "wave": "W2",
+      "disposition": "deferred",
+      "branch": "hermes/039-coverage-badge",
+      "commit": "feat(hermes): coverage badge — hermes/#039",
+      "pr_title": "[hermes/#039] Coverage badge",
+      "files": [
+        "README.md"
+      ],
+      "acceptance": [
+        "پس از تثبیت coverage در CI",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w2"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 40,
+      "code": "hermes/040",
+      "title": "Local dev script",
+      "wave": "W1",
+      "disposition": "planned",
+      "branch": "hermes/040-local-dev-script",
+      "commit": "feat(hermes): local dev script — hermes/#040",
+      "pr_title": "[hermes/#040] Local dev script",
+      "files": [
+        "hermes/dev.sh"
+      ],
+      "acceptance": [
+        "باید Wrangler/Miniflare واقعی را بالا بیاورد، نه skeleton",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w1"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 41,
+      "code": "hermes/041",
+      "title": "Log Telegram updates (debug)",
+      "wave": "W3",
+      "disposition": "rejected-privacy",
+      "branch": "hermes/041-log-telegram-updates-debug",
+      "commit": "feat(hermes): log telegram updates (debug) — hermes/#041",
+      "pr_title": "[hermes/#041] Log Telegram updates (debug)",
+      "files": [
+        "hermes/worker.mjs"
+      ],
+      "acceptance": [
+        "ذخیرهٔ پیام کاربر روی دیسک ریسک حریم خصوصی دارد؛ لاگ رویدادیِ بدون متن",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w3"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 42,
+      "code": "hermes/042",
+      "title": "hermesctl CLI",
+      "wave": "W1",
+      "disposition": "adapted",
+      "branch": "hermes/042-hermesctl-cli",
+      "commit": "feat(hermes): hermesctl cli — hermes/#042",
+      "pr_title": "[hermes/#042] hermesctl CLI",
+      "files": [
+        "hermes/webhook-setup.mjs"
+      ],
+      "acceptance": [
+        "CLI موجود setup:webhook است؛ دستور موازی برای Worker معنا ندارد",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w1"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 43,
+      "code": "hermes/043",
+      "title": "Automated backups",
+      "wave": "W2",
+      "disposition": "planned",
+      "branch": "hermes/043-automated-backups",
+      "commit": "feat(hermes): automated backups — hermes/#043",
+      "pr_title": "[hermes/#043] Automated backups",
+      "files": [
+        "docs/hermes/OPERATIONS.md"
+      ],
+      "acceptance": [
+        "بکاپ‌گیری از KV/DO با wrangler و تست restore",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w2"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 44,
+      "code": "hermes/044",
+      "title": "DB migrations framework",
+      "wave": "W0",
+      "disposition": "existing-verified",
+      "branch": "hermes/044-db-migrations-framework",
+      "commit": "feat(hermes): db migrations framework — hermes/#044",
+      "pr_title": "[hermes/#044] DB migrations framework",
+      "files": [
+        "hermes/wrangler.toml",
+        "hermes/conversation.mjs"
+      ],
+      "acceptance": [
+        "migration نسخه‌دار conversation-sqlite-v1 موجود است",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 45,
+      "code": "hermes/045",
+      "title": "Secure file permissions",
+      "wave": "W0",
+      "disposition": "implemented",
+      "branch": "hermes/045-secure-file-permissions",
+      "commit": "feat(hermes): secure file permissions — hermes/#045",
+      "pr_title": "[hermes/#045] Secure file permissions",
+      "files": [
+        "hermes/setup.sh"
+      ],
+      "acceptance": [
+        "chmod 600 برای install.log و ~/.hermes/.env در صورت وجود",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 46,
+      "code": "hermes/046",
+      "title": "Supabase mocks",
+      "wave": "W3",
+      "disposition": "rejected-wrong-target",
+      "branch": "hermes/046-supabase-mocks",
+      "commit": "feat(hermes): supabase mocks — hermes/#046",
+      "pr_title": "[hermes/#046] Supabase mocks",
+      "files": [
+        "hermes/tests/"
+      ],
+      "acceptance": [
+        "هرمس‌لایت Supabase ندارد؛ تست‌ها روی KV/DO mock می‌شوند",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w3"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 47,
+      "code": "hermes/047",
+      "title": "PR & issue templates",
+      "wave": "W0",
+      "disposition": "implemented",
+      "branch": "hermes/047-pr-issue-templates",
+      "commit": "feat(hermes): pr & issue templates — hermes/#047",
+      "pr_title": "[hermes/#047] PR & issue templates",
+      "files": [
+        ".github/PULL_REQUEST_TEMPLATE/hermes.md",
+        ".github/ISSUE_TEMPLATE/bug_hermes.md"
+      ],
+      "acceptance": [
+        "قالب‌ها در GitHub قابل انتخاب باشند",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 48,
+      "code": "hermes/048",
+      "title": "CODEOWNERS for hermes",
+      "wave": "W0",
+      "disposition": "existing-verified",
+      "branch": "hermes/048-codeowners-for-hermes",
+      "commit": "feat(hermes): codeowners for hermes — hermes/#048",
+      "pr_title": "[hermes/#048] CODEOWNERS for hermes",
+      "files": [
+        ".github/CODEOWNERS"
+      ],
+      "acceptance": [
+        "ورودی /hermes از قبل موجود است",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 49,
+      "code": "hermes/049",
+      "title": "Node version matrix CI",
+      "wave": "W0",
+      "disposition": "implemented",
+      "branch": "hermes/049-node-version-matrix-ci",
+      "commit": "feat(hermes): node version matrix ci — hermes/#049",
+      "pr_title": "[hermes/#049] Node version matrix CI",
+      "files": [
+        ".github/workflows/ci-hermes.yml"
+      ],
+      "acceptance": [
+        "Node 20 و 22 در ماتریس",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 50,
+      "code": "hermes/050",
+      "title": "Release tarball + checksums",
+      "wave": "W3",
+      "disposition": "deferred",
+      "branch": "hermes/050-release-tarball-checksums",
+      "commit": "feat(hermes): release tarball + checksums — hermes/#050",
+      "pr_title": "[hermes/#050] Release tarball + checksums",
+      "files": [
+        ".github/workflows/release-hermes.yml"
+      ],
+      "acceptance": [
+        "انتشار Worker از Git است؛ آرتیفکت tarball لازم نیست",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w3"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 51,
+      "code": "hermes/051",
+      "title": "Separate dev/prod env examples",
+      "wave": "W0",
+      "disposition": "implemented",
+      "branch": "hermes/051-separate-dev-prod-env",
+      "commit": "feat(hermes): separate dev/prod env examples — hermes/#051",
+      "pr_title": "[hermes/#051] Separate dev/prod env examples",
+      "files": [
+        "hermes/.env.prod.example",
+        "hermes/.env.dev.example"
+      ],
+      "acceptance": [
+        "هر دو example بدون راز واقعی و قابل commit",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 52,
+      "code": "hermes/052",
+      "title": "Post-deploy smoke tests",
+      "wave": "W1",
+      "disposition": "planned",
+      "branch": "hermes/052-post-deploy-smoke-tests",
+      "commit": "feat(hermes): post-deploy smoke tests — hermes/#052",
+      "pr_title": "[hermes/#052] Post-deploy smoke tests",
+      "files": [
+        "hermes/tests/"
+      ],
+      "acceptance": [
+        "علیه URL استقرار با /health/ready و بدون راز در لاگ",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w1"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 53,
+      "code": "hermes/053",
+      "title": "Local TLS (mkcert) docs",
+      "wave": "W3",
+      "disposition": "deferred",
+      "branch": "hermes/053-local-tls-mkcert-docs",
+      "commit": "feat(hermes): local tls (mkcert) docs — hermes/#053",
+      "pr_title": "[hermes/#053] Local TLS (mkcert) docs",
+      "files": [
+        "docs/hermes/INSTALL.md"
+      ],
+      "acceptance": [
+        "توسعهٔ Worker با wrangler dev انجام می‌شود؛ TLS محلی اولویت نیست",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w3"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 54,
+      "code": "hermes/054",
+      "title": "Graceful restart strategies",
+      "wave": "W2",
+      "disposition": "planned",
+      "branch": "hermes/054-graceful-restart-strategies",
+      "commit": "feat(hermes): graceful restart strategies — hermes/#054",
+      "pr_title": "[hermes/#054] Graceful restart strategies",
+      "files": [
+        "docs/hermes/OPERATIONS.md"
+      ],
+      "acceptance": [
+        "مقایسهٔ systemd/Worker بر اساس مسیر استقرار واقعی",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w2"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 55,
+      "code": "hermes/055",
+      "title": "System hardening script",
+      "wave": "W3",
+      "disposition": "deferred-dangerous",
+      "branch": "hermes/055-system-hardening-script",
+      "commit": "feat(hermes): system hardening script — hermes/#055",
+      "pr_title": "[hermes/#055] System hardening script",
+      "files": [
+        "hermes/hardening.sh"
+      ],
+      "acceptance": [
+        "تغییر sysctl/ulimit بدون تست روی سرور کاربر اجرا نمی‌شود؛ فقط checklist",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w3"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 56,
+      "code": "hermes/056",
+      "title": "Encrypted env (sops/age) docs",
+      "wave": "W2",
+      "disposition": "planned",
+      "branch": "hermes/056-encrypted-env-sops-age",
+      "commit": "feat(hermes): encrypted env (sops/age) docs — hermes/#056",
+      "pr_title": "[hermes/#056] Encrypted env (sops/age) docs",
+      "files": [
+        "docs/hermes/OPERATIONS.md"
+      ],
+      "acceptance": [
+        "راهنمای sops/age بدون نگهداری کلید در repo",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w2"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 57,
+      "code": "hermes/057",
+      "title": "Message fixtures harness",
+      "wave": "W1",
+      "disposition": "planned",
+      "branch": "hermes/057-message-fixtures-harness",
+      "commit": "feat(hermes): message fixtures harness — hermes/#057",
+      "pr_title": "[hermes/#057] Message fixtures harness",
+      "files": [
+        "hermes/tests/"
+      ],
+      "acceptance": [
+        "فیクスچر پیام با دادهٔ مصنوعی و انتظار مشخص",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w1"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 58,
+      "code": "hermes/058",
+      "title": "Feature flags (env-based)",
+      "wave": "W2",
+      "disposition": "planned",
+      "branch": "hermes/058-feature-flags-env-based",
+      "commit": "feat(hermes): feature flags (env-based) — hermes/#058",
+      "pr_title": "[hermes/#058] Feature flags (env-based)",
+      "files": [
+        "hermes/worker.mjs"
+      ],
+      "acceptance": [
+        "پرچم‌ها باید allow-list و پیش‌فرض امن داشته باشند",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w2"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 59,
+      "code": "hermes/059",
+      "title": "Grafana/Prometheus example",
+      "wave": "W0",
+      "disposition": "implemented-partial",
+      "branch": "hermes/059-grafana-prometheus-example",
+      "commit": "feat(hermes): grafana/prometheus example — hermes/#059",
+      "pr_title": "[hermes/#059] Grafana/Prometheus example",
+      "files": [
+        "observability/grafana/hermes-dashboard.json",
+        "docs/hermes/observability.md"
+      ],
+      "acceptance": [
+        "داشبورد بر متریک per-isolate با هشدار اپیمرال‌بودن",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 60,
+      "code": "hermes/060",
+      "title": "Telemetry opt-out",
+      "wave": "W0",
+      "disposition": "implemented-doc",
+      "branch": "hermes/060-telemetry-opt-out",
+      "commit": "feat(hermes): telemetry opt-out — hermes/#060",
+      "pr_title": "[hermes/#060] Telemetry opt-out",
+      "files": [
+        "hermes/.env.example",
+        "docs/hermes/observability.md"
+      ],
+      "acceptance": [
+        "TELEMETRY_DISABLE مستند؛ هرمس تله‌متری پیش‌فرض ندارد",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 61,
+      "code": "hermes/061",
+      "title": "Build & push image to GHCR",
+      "wave": "W3",
+      "disposition": "rejected-no-image",
+      "branch": "hermes/061-build-push-image-to",
+      "commit": "feat(hermes): build & push image to ghcr — hermes/#061",
+      "pr_title": "[hermes/#061] Build & push image to GHCR",
+      "files": [
+        ".github/workflows/docker-build-hermes.yml"
+      ],
+      "acceptance": [
+        "ایمیج تولیدی وجود ندارد",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w3"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 62,
+      "code": "hermes/062",
+      "title": "Scaling guidance",
+      "wave": "W2",
+      "disposition": "planned",
+      "branch": "hermes/062-scaling-guidance",
+      "commit": "feat(hermes): scaling guidance — hermes/#062",
+      "pr_title": "[hermes/#062] Scaling guidance",
+      "files": [
+        "docs/hermes/observability.md"
+      ],
+      "acceptance": [
+        "محدودیت isolate/KV/DO و سقف‌های رایگان صریح باشد",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w2"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 63,
+      "code": "hermes/063",
+      "title": "Secure CORS defaults",
+      "wave": "W1",
+      "disposition": "planned",
+      "branch": "hermes/063-secure-cors-defaults",
+      "commit": "feat(hermes): secure cors defaults — hermes/#063",
+      "pr_title": "[hermes/#063] Secure CORS defaults",
+      "files": [
+        "hermes/worker.mjs"
+      ],
+      "acceptance": [
+        "بدون CORS باز؛ origin فقط از allow-list env",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w1"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 64,
+      "code": "hermes/064",
+      "title": "setup.sh arg-parsing tests",
+      "wave": "W0",
+      "disposition": "implemented",
+      "branch": "hermes/064-setup-sh-arg-parsing",
+      "commit": "feat(hermes): setup.sh arg-parsing tests — hermes/#064",
+      "pr_title": "[hermes/#064] setup.sh arg-parsing tests",
+      "files": [
+        "hermes/tests/setup_validation.sh"
+      ],
+      "acceptance": [
+        "--help، فلگ ناشناخته و source-guard پوشش داده شود",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 65,
+      "code": "hermes/065",
+      "title": "ESLint + JS hooks",
+      "wave": "W2",
+      "disposition": "deferred",
+      "branch": "hermes/065-eslint-js-hooks",
+      "commit": "feat(hermes): eslint + js hooks — hermes/#065",
+      "pr_title": "[hermes/#065] ESLint + JS hooks",
+      "files": [
+        "hermes/package.json"
+      ],
+      "acceptance": [
+        "تا تصمیم سبک repo؛ فعلاً node --check در CI کافی است",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w2"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 66,
+      "code": "hermes/066",
+      "title": "Docker logrotate",
+      "wave": "W3",
+      "disposition": "rejected-no-container",
+      "branch": "hermes/066-docker-logrotate",
+      "commit": "feat(hermes): docker logrotate — hermes/#066",
+      "pr_title": "[hermes/#066] Docker logrotate",
+      "files": [
+        "hermes/docker/logrotate.conf"
+      ],
+      "acceptance": [
+        "کانتینر production وجود ندارد",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w3"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 67,
+      "code": "hermes/067",
+      "title": "Debugging docs (journal/Worker logs)",
+      "wave": "W0",
+      "disposition": "implemented",
+      "branch": "hermes/067-debugging-docs-journal-worker",
+      "commit": "feat(hermes): debugging docs (journal/worker logs) — hermes/#067",
+      "pr_title": "[hermes/#067] Debugging docs (journal/Worker logs)",
+      "files": [
+        "docs/hermes/INSTALL.md"
+      ],
+      "acceptance": [
+        "هر دو مسیر Lite و Full پوشش داده شود",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 68,
+      "code": "hermes/068",
+      "title": "Config-change audit log",
+      "wave": "W3",
+      "disposition": "deferred",
+      "branch": "hermes/068-config-change-audit-log",
+      "commit": "feat(hermes): config-change audit log — hermes/#068",
+      "pr_title": "[hermes/#068] Config-change audit log",
+      "files": [
+        "hermes/"
+      ],
+      "acceptance": [
+        "بدون ذخیرهٔ مقدار راز؛ نیازمند طراحی رویداد",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w3"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 69,
+      "code": "hermes/069",
+      "title": "Renovate config",
+      "wave": "W2",
+      "disposition": "planned",
+      "branch": "hermes/069-renovate-config",
+      "commit": "feat(hermes): renovate config — hermes/#069",
+      "pr_title": "[hermes/#069] Renovate config",
+      "files": [
+        "renovate.json"
+      ],
+      "acceptance": [
+        "با .github/dependabot.yml فعلی تداخل نداشته باشد",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w2"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 70,
+      "code": "hermes/070",
+      "title": "Disaster recovery doc",
+      "wave": "W2",
+      "disposition": "planned",
+      "branch": "hermes/070-disaster-recovery-doc",
+      "commit": "feat(hermes): disaster recovery doc — hermes/#070",
+      "pr_title": "[hermes/#070] Disaster recovery doc",
+      "files": [
+        "docs/hermes/OPERATIONS.md"
+      ],
+      "acceptance": [
+        "restore و rotate راز با dry-run قابل راستی‌آزمایی",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w2"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 71,
+      "code": "hermes/071",
+      "title": "CI timeouts",
+      "wave": "W0",
+      "disposition": "implemented",
+      "branch": "hermes/071-ci-timeouts",
+      "commit": "feat(hermes): ci timeouts — hermes/#071",
+      "pr_title": "[hermes/#071] CI timeouts",
+      "files": [
+        ".github/workflows/ci-hermes.yml"
+      ],
+      "acceptance": [
+        "timeout-minutes برای همهٔ jobها",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 72,
+      "code": "hermes/072",
+      "title": "systemd check in CI",
+      "wave": "W2",
+      "disposition": "adapted",
+      "branch": "hermes/072-systemd-check-in-ci",
+      "commit": "feat(hermes): systemd check in ci — hermes/#072",
+      "pr_title": "[hermes/#072] systemd check in CI",
+      "files": [
+        "hermes/tests/"
+      ],
+      "acceptance": [
+        "اعتبارسنجی ایستا، نه اجرای systemd در runner",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w2"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 73,
+      "code": "hermes/073",
+      "title": "Install log + CI artifact",
+      "wave": "W0",
+      "disposition": "implemented",
+      "branch": "hermes/073-install-log-ci-artifact",
+      "commit": "feat(hermes): install log + ci artifact — hermes/#073",
+      "pr_title": "[hermes/#073] Install log + CI artifact",
+      "files": [
+        "hermes/setup.sh",
+        ".github/workflows/ci-hermes.yml"
+      ],
+      "acceptance": [
+        "install.log بدون راز؛ artifact فقط هنگام failure",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 74,
+      "code": "hermes/074",
+      "title": "Deploy via GH Actions secrets",
+      "wave": "W3",
+      "disposition": "deferred",
+      "branch": "hermes/074-deploy-via-gh-actions",
+      "commit": "feat(hermes): deploy via gh actions secrets — hermes/#074",
+      "pr_title": "[hermes/#074] Deploy via GH Actions secrets",
+      "files": [
+        ".github/workflows/"
+      ],
+      "acceptance": [
+        "استقرار فعلی Cloudflare Git integration است",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w3"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 75,
+      "code": "hermes/075",
+      "title": "Malformed Telegram update tests",
+      "wave": "W1",
+      "disposition": "planned",
+      "branch": "hermes/075-malformed-telegram-update-tests",
+      "commit": "feat(hermes): malformed telegram update tests — hermes/#075",
+      "pr_title": "[hermes/#075] Malformed Telegram update tests",
+      "files": [
+        "hermes/worker.test.mjs"
+      ],
+      "acceptance": [
+        "payload ناقص نباید crash یا پاسخ 5xx بدهد",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w1"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 76,
+      "code": "hermes/076",
+      "title": "Multi-bot support",
+      "wave": "W3",
+      "disposition": "deferred-breaking",
+      "branch": "hermes/076-multi-bot-support",
+      "commit": "feat(hermes): multi-bot support — hermes/#076",
+      "pr_title": "[hermes/#076] Multi-bot support",
+      "files": [
+        "hermes/worker.mjs"
+      ],
+      "acceptance": [
+        "با مدل تک‌بات و حافظهٔ فعلی ناسازگار؛ نیازمند طراحی جدا",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w3"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 77,
+      "code": "hermes/077",
+      "title": "Per-user quotas (persisted)",
+      "wave": "W1",
+      "disposition": "planned",
+      "branch": "hermes/077-per-user-quotas-persisted",
+      "commit": "feat(hermes): per-user quotas (persisted) — hermes/#077",
+      "pr_title": "[hermes/#077] Per-user quotas (persisted)",
+      "files": [
+        "hermes/rate-limit.mjs"
+      ],
+      "acceptance": [
+        "سهمیهٔ اتمیک فقط با Durable Object؛ KV کافی نیست",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w1"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 78,
+      "code": "hermes/078",
+      "title": "Persian i18n for errors",
+      "wave": "W1",
+      "disposition": "planned",
+      "branch": "hermes/078-persian-i18n-for-errors",
+      "commit": "feat(hermes): persian i18n for errors — hermes/#078",
+      "pr_title": "[hermes/#078] Persian i18n for errors",
+      "files": [
+        "hermes/worker.mjs"
+      ],
+      "acceptance": [
+        "پیام‌های کاربری فارسی موجود؛ استخراج i18n مرحله‌ای",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w1"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 79,
+      "code": "hermes/079",
+      "title": "Extend repo audit in CI",
+      "wave": "W0",
+      "disposition": "implemented",
+      "branch": "hermes/079-extend-repo-audit-in",
+      "commit": "feat(hermes): extend repo audit in ci — hermes/#079",
+      "pr_title": "[hermes/#079] Extend repo audit in CI",
+      "files": [
+        "orchestrator/scripts/audit/check_repository_contract.py"
+      ],
+      "acceptance": [
+        "همان اجرای W0/#027 در CI موجود repo",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 80,
+      "code": "hermes/080",
+      "title": "Storage upload mocks",
+      "wave": "W3",
+      "disposition": "rejected-wrong-target",
+      "branch": "hermes/080-storage-upload-mocks",
+      "commit": "feat(hermes): storage upload mocks — hermes/#080",
+      "pr_title": "[hermes/#080] Storage upload mocks",
+      "files": [
+        "hermes/tests/"
+      ],
+      "acceptance": [
+        "آپلود S3/Supabase در هرمس وجود ندارد",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w3"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 81,
+      "code": "hermes/081",
+      "title": "Rotate Telegram token procedure",
+      "wave": "W2",
+      "disposition": "planned",
+      "branch": "hermes/081-rotate-telegram-token-procedure",
+      "commit": "feat(hermes): rotate telegram token procedure — hermes/#081",
+      "pr_title": "[hermes/#081] Rotate Telegram token procedure",
+      "files": [
+        "docs/hermes/OPERATIONS.md"
+      ],
+      "acceptance": [
+        "چرخش توکن + setWebhook مجدد + تست",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w2"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 82,
+      "code": "hermes/082",
+      "title": "Installer progress & summary",
+      "wave": "W0",
+      "disposition": "implemented",
+      "branch": "hermes/082-installer-progress-summary",
+      "commit": "feat(hermes): installer progress & summary — hermes/#082",
+      "pr_title": "[hermes/#082] Installer progress & summary",
+      "files": [
+        "hermes/setup.sh"
+      ],
+      "acceptance": [
+        "گام‌های شماره‌دار و Summary پایانی بدون راز",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 83,
+      "code": "hermes/083",
+      "title": "Ownership/permissions policy",
+      "wave": "W2",
+      "disposition": "planned",
+      "branch": "hermes/083-ownership-permissions-policy",
+      "commit": "feat(hermes): ownership/permissions policy — hermes/#083",
+      "pr_title": "[hermes/#083] Ownership/permissions policy",
+      "files": [
+        "docs/hermes/OPERATIONS.md"
+      ],
+      "acceptance": [
+        "مالکیت فایل‌های سرور و حداقل دسترسی مستند شود",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w2"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 84,
+      "code": "hermes/084",
+      "title": "Lightweight status UI",
+      "wave": "W3",
+      "disposition": "deferred",
+      "branch": "hermes/084-lightweight-status-ui",
+      "commit": "feat(hermes): lightweight status ui — hermes/#084",
+      "pr_title": "[hermes/#084] Lightweight status UI",
+      "files": [
+        "hermes/app.mjs"
+      ],
+      "acceptance": [
+        "اپ موجود است؛ UI دوم ساخته نمی‌شود، /health کافی است",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w3"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 85,
+      "code": "hermes/085",
+      "title": "Remove hard-coded URLs",
+      "wave": "W0",
+      "disposition": "implemented-partial",
+      "branch": "hermes/085-remove-hard-coded-urls",
+      "commit": "feat(hermes): remove hard-coded urls — hermes/#085",
+      "pr_title": "[hermes/#085] Remove hard-coded URLs",
+      "files": [
+        "hermes/setup.sh"
+      ],
+      "acceptance": [
+        "GEMINI_API_BASE و TELEGRAM_API_BASE قابل override شدند",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 86,
+      "code": "hermes/086",
+      "title": "Regression tests from issues",
+      "wave": "W1",
+      "disposition": "planned",
+      "branch": "hermes/086-regression-tests-from-issues",
+      "commit": "feat(hermes): regression tests from issues — hermes/#086",
+      "pr_title": "[hermes/#086] Regression tests from issues",
+      "files": [
+        "hermes/*.test.mjs"
+      ],
+      "acceptance": [
+        "هر رگرشن به issue/PR واقعی لینک شود",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w1"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 87,
+      "code": "hermes/087",
+      "title": "Bug report template",
+      "wave": "W0",
+      "disposition": "implemented",
+      "branch": "hermes/087-bug-report-template",
+      "commit": "feat(hermes): bug report template — hermes/#087",
+      "pr_title": "[hermes/#087] Bug report template",
+      "files": [
+        ".github/ISSUE_TEMPLATE/bug_hermes.md"
+      ],
+      "acceptance": [
+        "فیلد لاگ و چک‌لیست پاک‌سازی راز الزامی است",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 88,
+      "code": "hermes/088",
+      "title": "Metrics JSON + Prometheus",
+      "wave": "W0",
+      "disposition": "implemented",
+      "branch": "hermes/088-metrics-json-prometheus",
+      "commit": "feat(hermes): metrics json + prometheus — hermes/#088",
+      "pr_title": "[hermes/#088] Metrics JSON + Prometheus",
+      "files": [
+        "hermes/worker.mjs"
+      ],
+      "acceptance": [
+        "/metrics پیش‌فرض Prometheus و ?format=json",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 89,
+      "code": "hermes/089",
+      "title": "Readiness/liveness/full health",
+      "wave": "W0",
+      "disposition": "implemented",
+      "branch": "hermes/089-readiness-liveness-full-health",
+      "commit": "feat(hermes): readiness/liveness/full health — hermes/#089",
+      "pr_title": "[hermes/#089] Readiness/liveness/full health",
+      "files": [
+        "hermes/health.mjs"
+      ],
+      "acceptance": [
+        "سه سطح با semantics مستند و تست",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 90,
+      "code": "hermes/090",
+      "title": "Docker Compose dev stack",
+      "wave": "W3",
+      "disposition": "rejected-wrong-target",
+      "branch": "hermes/090-docker-compose-dev-stack",
+      "commit": "feat(hermes): docker compose dev stack — hermes/#090",
+      "pr_title": "[hermes/#090] Docker Compose dev stack",
+      "files": [
+        "hermes/docker-compose.dev.yml"
+      ],
+      "acceptance": [
+        "توسعهٔ واقعی با Miniflare/Wrangler است",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w3"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 91,
+      "code": "hermes/091",
+      "title": "Developer bootstrap",
+      "wave": "W1",
+      "disposition": "planned",
+      "branch": "hermes/091-developer-bootstrap",
+      "commit": "feat(hermes): developer bootstrap — hermes/#091",
+      "pr_title": "[hermes/#091] Developer bootstrap",
+      "files": [
+        "docs/hermes/INSTALL.md"
+      ],
+      "acceptance": [
+        "bootstrap باید روی ماشین تازه واقعاً اجرا و تست شود",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w1"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 92,
+      "code": "hermes/092",
+      "title": "Trivy release stage",
+      "wave": "W3",
+      "disposition": "deferred-no-image",
+      "branch": "hermes/092-trivy-release-stage",
+      "commit": "feat(hermes): trivy release stage — hermes/#092",
+      "pr_title": "[hermes/#092] Trivy release stage",
+      "files": [
+        ".github/workflows/security-scan.yml"
+      ],
+      "acceptance": [
+        "بدون ایمیج، مرحله بی‌موضوع است",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w3"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 93,
+      "code": "hermes/093",
+      "title": "Production systemd example",
+      "wave": "W2",
+      "disposition": "planned",
+      "branch": "hermes/093-production-systemd-example",
+      "commit": "feat(hermes): production systemd example — hermes/#093",
+      "pr_title": "[hermes/#093] Production systemd example",
+      "files": [
+        "docs/hermes/OPERATIONS.md"
+      ],
+      "acceptance": [
+        "نمونه بر اساس خروجی واقعی gateway install",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w2"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 94,
+      "code": "hermes/094",
+      "title": "Release notes from CHANGELOG",
+      "wave": "W3",
+      "disposition": "deferred",
+      "branch": "hermes/094-release-notes-from-changelog",
+      "commit": "feat(hermes): release notes from changelog — hermes/#094",
+      "pr_title": "[hermes/#094] Release notes from CHANGELOG",
+      "files": [
+        "CHANGELOG.md"
+      ],
+      "acceptance": [
+        "تا اتخاذ سیاست release جدا",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w3"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 95,
+      "code": "hermes/095",
+      "title": "Mounted secrets (K8s-style)",
+      "wave": "W0",
+      "disposition": "implemented",
+      "branch": "hermes/095-mounted-secrets-k8s-style",
+      "commit": "feat(hermes): mounted secrets (k8s-style) — hermes/#095",
+      "pr_title": "[hermes/#095] Mounted secrets (K8s-style)",
+      "files": [
+        "hermes/config.sh"
+      ],
+      "acceptance": [
+        "HERMES_SECRETS_DIR با allow-list و تست‌پذیری",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 96,
+      "code": "hermes/096",
+      "title": "Upgrade & migration notes",
+      "wave": "W2",
+      "disposition": "planned",
+      "branch": "hermes/096-upgrade-migration-notes",
+      "commit": "feat(hermes): upgrade & migration notes — hermes/#096",
+      "pr_title": "[hermes/#096] Upgrade & migration notes",
+      "files": [
+        "docs/hermes/OPERATIONS.md"
+      ],
+      "acceptance": [
+        "مهاجرت DO و تغییر secret جدا مستند شود",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w2"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 97,
+      "code": "hermes/097",
+      "title": "Latency probe script",
+      "wave": "W2",
+      "disposition": "planned",
+      "branch": "hermes/097-latency-probe-script",
+      "commit": "feat(hermes): latency probe script — hermes/#097",
+      "pr_title": "[hermes/#097] Latency probe script",
+      "files": [
+        "hermes/tests/"
+      ],
+      "acceptance": [
+        "فقط علیه استقرار خودت، خروجی CSV/JSON",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w2"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 98,
+      "code": "hermes/098",
+      "title": "ShellCheck in CI",
+      "wave": "W0",
+      "disposition": "implemented",
+      "branch": "hermes/098-shellcheck-in-ci",
+      "commit": "feat(hermes): shellcheck in ci — hermes/#098",
+      "pr_title": "[hermes/#098] ShellCheck in CI",
+      "files": [
+        ".github/workflows/ci-hermes.yml"
+      ],
+      "acceptance": [
+        "ShellCheck warning روی اسکریپت‌های هرمس",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 99,
+      "code": "hermes/099",
+      "title": "Path-filtered Hermes CI",
+      "wave": "W0",
+      "disposition": "implemented",
+      "branch": "hermes/099-path-filtered-hermes-ci",
+      "commit": "feat(hermes): path-filtered hermes ci — hermes/#099",
+      "pr_title": "[hermes/#099] Path-filtered Hermes CI",
+      "files": [
+        ".github/workflows/ci-hermes.yml"
+      ],
+      "acceptance": [
+        "paths روی hermes/** و فایل‌های وابسته",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w0"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    },
+    {
+      "id": 100,
+      "code": "hermes/100",
+      "title": "On-call runbook",
+      "wave": "W2",
+      "disposition": "planned",
+      "branch": "hermes/100-on-call-runbook",
+      "commit": "feat(hermes): on-call runbook — hermes/#100",
+      "pr_title": "[hermes/#100] On-call runbook",
+      "files": [
+        "docs/hermes/OPERATIONS.md"
+      ],
+      "acceptance": [
+        "سناریوهای واقعی: سکوت بات، سهمیه، webhook، راز منقضی",
+        "هیچ راز واقعی در diff نیست",
+        "تست مرتبط محلی/CI سبز است"
+      ],
+      "labels": [
+        "hermes",
+        "w2"
+      ],
+      "automation": {
+        "skeleton_allowed": false,
+        "auto_merge": false,
+        "note": "Skeleton PR ممنوع است؛ هر تسک فقط با پیاده‌سازی واقعی و تست باز می‌شود."
+      }
+    }
+  ]
+}

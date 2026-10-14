@@ -1,0 +1,15 @@
+{
+  "title": "Hermes — isolate metrics (sample)",
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "30s",
+  "panels": [
+    {"type": "timeseries", "title": "Requests (per isolate)", "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+     "targets": [{"expr": "hermes_requests_total", "legendFormat": "requests"}]},
+    {"type": "timeseries", "title": "5xx errors (per isolate)", "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+     "targets": [{"expr": "hermes_errors_total", "legendFormat": "errors"}]},
+    {"type": "stat", "title": "Isolate uptime (s)", "datasource": {"type": "prometheus", "uid": "${DS_PROMETHEUS}"},
+     "targets": [{"expr": "hermes_uptime_seconds"}]}
+  ],
+  "templating": {"list": [{"name": "DS_PROMETHEUS", "type": "datasource", "query": "prometheus", "current": {}}]}
+}

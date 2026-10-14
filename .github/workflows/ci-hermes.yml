@@ -1,0 +1,55 @@
+name: CI · Hermes
+
+# hermes/#016, #049, #071, #098, #099 — path-filtered so unrelated projects
+# do not pay for Hermes jobs, with a Node matrix and hard timeouts.
+on:
+  push:
+    branches: [main]
+    paths: ["hermes/**", ".github/workflows/ci-hermes.yml", "orchestrator/scripts/audit/check_repository_contract.py"]
+  pull_request:
+    paths: ["hermes/**", ".github/workflows/ci-hermes.yml", "orchestrator/scripts/audit/check_repository_contract.py"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-hermes-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  shell:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Shell syntax + dependency-free shell tests
+        run: |
+          bash -n hermes/setup.sh hermes/config.sh hermes/logger.sh
+          bash hermes/tests/setup_validation.sh
+      - name: ShellCheck
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq shellcheck
+          shellcheck -S warning hermes/setup.sh hermes/config.sh hermes/logger.sh hermes/tests/setup_validation.sh
+
+  node:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci --prefix hermes --ignore-scripts --no-audit --no-fund
+      - run: npm run check --prefix hermes
+      - run: npm test --prefix hermes
+      - name: Upload install/test logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hermes-logs-node${{ matrix.node-version }}
+          path: hermes/*.log
+          if-no-files-found: ignore
