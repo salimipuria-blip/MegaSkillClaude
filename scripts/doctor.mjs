@@ -37,7 +37,6 @@ const PROJECTS = [
       {name: 'health', cmd: 'bash scripts/repo_health_check.sh', why: 'بررسی سبک بدون نصب وابستگی'},
       {name: 'common-tests', cmd: 'python3 -m unittest discover -s tests -p "test_*.py"', why: 'تست‌های مشترک ریشه'},
       {name: 'skill-library-sync', cmd: 'python3 scripts/sync_skill_library.py --check', why: 'کتابخانهٔ مهارت‌ها با منبعش یکسان است'},
-      {name: 'mobile-index', cmd: 'python3 mobile/build-index.py --check', why: 'ایندکس کنسول آیفون تازه است'},
     ],
   },
   {
@@ -96,6 +95,35 @@ const PROJECTS = [
     ],
   },
   {
+    id: 'mobile', folder: 'mobile', label: 'کنسول آیفون مگااسکیل',
+    steps: [
+      {name: 'index-cache', cmd: 'python3 mobile/build-index.py --check', why: 'ایندکس و اثرانگشت همهٔ assetهای PWA تازه است'},
+      {name: 'search-tests', cmd: 'node --test mobile/search.test.mjs', why: 'جست‌وجو، escape، schema و مسیرهای canonical'},
+      {name: 'syntax', cmd: 'node --check mobile/app.js && node --check mobile/sw.js && node --check mobile/search.mjs', shell: true, why: 'نحو ماژول UI، موتور جست‌وجو و Service Worker'},
+    ],
+  },
+  {
+    id: 'brand-stickers', folder: 'brands/viking-offroad', label: 'استیکرهای وایکینگ آفرود',
+    steps: [
+      {name: 'asset-contract', cmd: 'python3 scripts/check_brand_assets.py --stickers', why: '۱۲ پک، ۳۶۰ PNG شفاف ۵۱۲×۵۱۲، preview و cover'},
+    ],
+  },
+  {
+    id: 'brand-viking', folder: 'brand/viking', label: 'قالب محتوای وایکینگ',
+    steps: [
+      {name: 'asset-contract', cmd: 'python3 scripts/check_brand_assets.py --templates', why: 'قالب‌ها و assetهای محلی resolve می‌شوند'},
+      {name: 'renderer-syntax', cmd: 'node --check brand/viking/render.mjs', why: 'نحو رندرر ES module'},
+      {name: 'renderer-tests', cmd: 'node --test brand/viking/tests/render.test.mjs', why: 'رندرهای fake و بستن مرورگر در شکست'},
+    ],
+  },
+  {
+    id: 'viking-motion', folder: 'viking-team/motion', label: 'Viking Cinematic Motion Study (prototype)',
+    needs: ['viking-team/motion/node_modules'],
+    steps: [
+      {name: 'typecheck', cmd: 'npm run check', cwd: 'viking-team/motion', why: 'TypeScript strict/noEmit'},
+    ],
+  },
+  {
     id: 'orchestrator', folder: 'orchestrator', label: 'Omni LLM Orchestrator (تاریخی)',
     steps: [
       {name: 'contract', cmd: 'python3 scripts/audit/check_repository_contract.py', cwd: 'orchestrator', why: 'قرارداد مخزن'},
@@ -118,7 +146,53 @@ const NPM_INSTALL_HINT = {
   fjcod: 'npm ci --prefix fjcod',
   'bison-brand-book': 'npm ci --prefix bison-brand-book',
   hermes: 'npm ci --prefix hermes --ignore-scripts',
+  'viking-motion': 'npm ci --prefix viking-team/motion --ignore-scripts --no-audit --no-fund',
 };
+
+/** Split a command without invoking a shell; support quoted args and escapes. */
+function splitCommand(command) {
+  const args = [];
+  let token = '';
+  let quote = null;
+  let escaped = false;
+  let started = false;
+
+  for (const character of command) {
+    if (escaped) {
+      token += character;
+      escaped = false;
+      started = true;
+      continue;
+    }
+    if (character === '\\' && quote !== "'") {
+      escaped = true;
+      started = true;
+      continue;
+    }
+    if (quote) {
+      if (character === quote) quote = null;
+      else token += character;
+      continue;
+    }
+    if (character === "'" || character === '"') {
+      quote = character;
+      started = true;
+      continue;
+    }
+    if (/\s/.test(character)) {
+      if (started) args.push(token);
+      token = '';
+      started = false;
+      continue;
+    }
+    token += character;
+    started = true;
+  }
+
+  if (escaped || quote) return {executable: '', args: []};
+  if (started) args.push(token);
+  return {executable: args.shift() || '', args};
+}
 
 function runStep(project, step) {
   if (step.cwd && !has(step.cwd)) return {status: 'fail', note: `folder ${step.cwd} is missing`, output: ''};
@@ -128,14 +202,14 @@ function runStep(project, step) {
   }
   if (step.needsTool && !tool(step.needsTool)) return {status: 'skip', note: `${step.needsTool} is not installed`, output: ''};
   const cwd = path.join(root, step.cwd || '.');
+  const parsed = step.shell ? {executable: 'bash', args: ['-c', step.cmd]} : splitCommand(step.cmd);
+  if (!parsed.executable) return {status: 'fail', note: `invalid command: ${step.cmd}`, output: ''};
   const started = Date.now();
-  const res = step.shell
-    ? spawnSync('bash', ['-c', step.cmd], {cwd, timeout: TIMEOUT_MS, encoding: 'utf8'})
-    : spawnSync(step.cmd.split(' ')[0], step.cmd.split(' ').slice(1), {cwd, timeout: TIMEOUT_MS, encoding: 'utf8'});
+  const res = spawnSync(parsed.executable, parsed.args, {cwd, timeout: TIMEOUT_MS, encoding: 'utf8'});
   const ms = Date.now() - started;
   const output = `${res.stdout || ''}${res.stderr || ''}`.trim();
   if (res.error?.code === 'ETIMEDOUT') return {status: 'fail', ms, note: `timeout after ${TIMEOUT_MS / 1000}s`, output};
-  if (res.error) return {status: 'fail', ms, note: `${res.error.code}: ${step.cmd.split(' ')[0]} not runnable`, output};
+  if (res.error) return {status: 'fail', ms, note: `${res.error.code}: ${parsed.executable} not runnable`, output};
   if (res.status !== 0) return {status: 'fail', ms, note: `exit ${res.status}`, output};
   return {status: 'pass', ms, output};
 }

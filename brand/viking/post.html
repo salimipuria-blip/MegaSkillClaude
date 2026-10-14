@@ -4,7 +4,7 @@
 @font-face{font-family:Vazir;src:url(assets/Vazirmatn-Bold.woff2);font-weight:700}
 @font-face{font-family:Vazir;src:url(assets/Vazirmatn-Black.woff2);font-weight:900}
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#000;font-family:Vazir,'Noto Color Emoji';color:#fff}
+body{background:#000;font-family:Vazir,sans-serif;color:#fff}
 .sl{width:1080px;height:1350px;position:relative;overflow:hidden;margin-bottom:30px}
 .bg{position:absolute;inset:0;background:url(assets/lake.jpg) 50% 45%/cover;filter:saturate(1.25) contrast(1.08)}
 .sun{position:absolute;left:66%;top:28%;width:800px;height:800px;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(255,170,60,.5),rgba(255,120,30,.12) 40%,transparent 65%);mix-blend-mode:screen}
@@ -25,7 +25,7 @@ body{background:#000;font-family:Vazir,'Noto Color Emoji';color:#fff}
 .arrow{font:400 54px Lalezar;color:#f39a2b}
 .grid{position:absolute;top:400px;left:60px;right:60px;display:grid;grid-template-columns:1fr 1fr;gap:18px}
 .g{background:rgba(20,20,20,.82);border:2px solid rgba(243,154,43,.55);border-radius:28px;padding:22px 20px;display:flex;gap:18px;align-items:center}
-.g .i{font-size:56px;flex:none}
+.g .i{width:58px;height:58px;display:flex;align-items:center;justify-content:center;flex:none;border:2px solid #f39a2b;border-radius:18px;color:#f39a2b;font:400 32px/1 Lalezar}
 .g b{display:block;font:900 33px/1.3 Vazir}.g small{display:block;font:500 25px/1.4 Vazir;color:#d8cfc2}
 .food{position:absolute;top:1010px;left:60px;right:60px;background:#f39a2b;color:#141414;border-radius:28px;padding:20px 26px;font:900 32px/1.5 Vazir;text-align:center}
 .food small{display:block;font:700 26px Vazir}
@@ -41,43 +41,43 @@ body{background:#000;font-family:Vazir,'Noto Color Emoji';color:#fff}
 <section class="sl" id="p1">
   <div class="bg"></div><div class="sun"></div>
   <div class="sh" style="background:linear-gradient(180deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,0) 20%,rgba(0,0,0,0) 42%,rgba(0,0,0,.7) 58%,rgba(0,0,0,.95) 78%)"></div>
-  <div class="tape t1">🔥 ظرفیت محدوده 🔥 ظرفیت محدوده 🔥 ظرفیت محدوده 🔥</div>
+  <div class="tape t1">ظرفیت محدوده · ظرفیت محدوده · ظرفیت محدوده</div>
   <img class="logo" src="assets/logo.png" alt=""><span class="num">1/3</span>
   <div class="c" style="top:760px">
     <div class="big2" style="font-size:54px;color:#ffd9a8">دو روز طبیعت، ماجراجویی و رفاقت</div>
     <div class="big">کمپ دریاچه</div>
     <div class="big2">و پدل‌سواری در جنگل هیرکانی</div>
-    <div class="clock"><div class="ck"><span>📅 حرکت</span><b>۳۰ مهر</b></div><div class="arrow">←</div><div class="ck"><span>🏁 برگشت</span><b>۱ آبان</b></div></div>
+    <div class="clock"><div class="ck"><span>حرکت</span><b>۳۰ مهر</b></div><div class="arrow">←</div><div class="ck"><span>برگشت</span><b>۱ آبان</b></div></div>
   </div>
 </section>
 
 <section class="sl" id="p2">
   <div class="bg" style="background-position:50% 60%;transform:scale(1.25);filter:saturate(1.2) brightness(.45) blur(3px)"></div>
-  <div class="tape t1">🏕️ کمپ جنگلی فول‌برد · همه‌چی با ما</div>
+  <div class="tape t1">کمپ جنگلی فول‌برد · همه‌چی با ما</div>
   <span class="num" style="top:190px">2/3</span>
   <div class="grid">
-    <div class="g"><span class="i">🏄</span><div><b>پدل‌سواری</b><small>با تجهیزات کامل و مربی</small></div></div>
-    <div class="g"><span class="i">🏕️</span><div><b>کمپ جنگلی</b><small>کنار دریاچه، فول‌برد</small></div></div>
-    <div class="g"><span class="i">🔥</span><div><b>آتیش‌بازی</b><small>شب‌نشینی دور هم</small></div></div>
-    <div class="g"><span class="i">🎯</span><div><b>بازی‌های گروهی</b><small>یخ‌شکن و رقابت</small></div></div>
-    <div class="g"><span class="i">🎶</span><div><b>میز بارتندر</b><small>بدون الکل</small></div></div>
-    <div class="g"><span class="i">🤝</span><div><b>اکیپ پایه</b><small>تنها هم بیای، جات هست</small></div></div>
+    <div class="g"><span class="i">۰۱</span><div><b>پدل‌سواری</b><small>با تجهیزات کامل و مربی</small></div></div>
+    <div class="g"><span class="i">۰۲</span><div><b>کمپ جنگلی</b><small>کنار دریاچه، فول‌برد</small></div></div>
+    <div class="g"><span class="i">۰۳</span><div><b>آتیش‌بازی</b><small>شب‌نشینی دور هم</small></div></div>
+    <div class="g"><span class="i">۰۴</span><div><b>بازی‌های گروهی</b><small>یخ‌شکن و رقابت</small></div></div>
+    <div class="g"><span class="i">۰۵</span><div><b>میز بارتندر</b><small>بدون الکل</small></div></div>
+    <div class="g"><span class="i">۰۶</span><div><b>اکیپ پایه</b><small>تنها هم بیای، جات هست</small></div></div>
   </div>
-  <div class="food">🍽️ پذیرایی کامل
+  <div class="food">پذیرایی کامل
     <small>ناهار با مخلفات · شام · صبحانهٔ سرد و گرم سلف‌سرویس</small></div>
-  <div class="tape tb">اگه دنبال یه سفر معمولی نیستی… این یکیه ⚔️</div>
+  <div class="tape tb">اگه دنبال یه سفر معمولی نیستی… این یکیه</div>
 </section>
 
 <section class="sl" id="p3">
   <div class="bg" style="background-position:50% 40%"></div><div class="sun"></div>
   <div class="sh" style="background:linear-gradient(180deg,rgba(0,0,0,.6) 0%,rgba(0,0,0,.35) 30%,rgba(0,0,0,.8) 50%,rgba(0,0,0,.95) 75%)"></div>
-  <div class="tape t1">💰 قیمت استثنایی · فول‌برد</div>
+  <div class="tape t1">قیمت استثنایی · فول‌برد</div>
   <img class="logo" src="assets/logo.png" alt=""><span class="num">3/3</span>
   <div class="c" style="top:470px">
-    <div class="pr"><span class="lab">🚙 با خودروی شخصی</span><span class="val">۷ میلیون</span><span class="unit">تومان</span></div>
-    <div class="add">🚐 خودروی گروه: <b>۳٫۵ میلیون</b> اضافه</div>
-    <div class="note">شرکت با همهٔ خودروها امکان‌پذیره 🚙🚙<br>پرداخت بعد از تأیید رزرو توسط تیم وایکینگ</div>
+    <div class="pr"><span class="lab">با خودروی شخصی</span><span class="val">۷ میلیون</span><span class="unit">تومان</span></div>
+    <div class="add">خودروی گروه: <b>۳٫۵ میلیون</b> اضافه</div>
+    <div class="note">شرکت با همهٔ خودروها امکان‌پذیره<br>پرداخت بعد از تأیید رزرو توسط تیم وایکینگ</div>
   </div>
-  <div class="tape tb">👇 رزرو از لینک بیو · قبل از پر شدن ظرفیت</div>
+  <div class="tape tb">رزرو از لینک بیو · قبل از پر شدن ظرفیت</div>
 </section>
 </body></html>

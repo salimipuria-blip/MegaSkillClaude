@@ -1,6 +1,6 @@
-# GitHub Skills (2,980)
+# GitHub Skills (3,011 indexed)
 
-The 2,980 highest-ranked skills collected from 50 public GitHub skill repositories with 5,000+ stars (star counts as shown on GitHub topic pages, 2026-10-04).
+The current canonical `INDEX.json` contains 3,011 MIT-licensed skills collected from 50 public GitHub repositories; 281 entries are marked incomplete and excluded from default routing. The earlier 2,980 count below is the **2026-10-04 collection snapshot**, not the live repository total. Treat `INDEX.json` as the count source of truth; this page must be updated whenever the indexed corpus changes.
 
 **Available through the Mega Skills Router.** `.claude/skills/mega-skills-router` indexes every skill here; Claude reads a skill only when the router matches it to a request. To make one skill always loaded instead, copy its folder into `.claude/skills/`.
 
@@ -15,7 +15,7 @@ From 10,859 `SKILL.md` files (4,192 unique names after filtering):
 | Same name as one of the project's own 3,006 skills | 71 |
 | Too short or too long | 52 |
 
-Remaining skills were deduplicated by name (highest score kept) and ranked by `log10(repo stars)` plus description and content quality. The top 3,000 were taken (all MIT-licensed); their companion files were then fetched and scanned with the same patterns, and 20 skills whose companions matched were dropped, leaving 2,980.
+In the 2026-10-04 collection snapshot, remaining skills were deduplicated by name (highest score kept) and ranked by `log10(repo stars)` plus description and content quality. The top 3,000 were taken (all MIT-licensed); companion files were then fetched and scanned with the same patterns, and 20 skills whose companions matched were dropped, leaving 2,980 at that time. The current index contains 3,011; use its rows and metadata for today's totals rather than applying the historical selection arithmetic.
 
 ## Files
 - `<name>/SKILL.md`: the skill as published upstream.

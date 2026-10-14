@@ -191,3 +191,4 @@ export می‌شود** (چیزی که تست قبلی نمی‌سنجید). هم
   در مسیر env-file و مسیر secretهای مانت‌شده. همین تست نشان داد `load_mounted_secrets` فایل‌های بدون
   newline پایانی را بی‌صدا دور می‌ریزد (اشکال واقعی، رفع شد). تأیید: `shellcheck -S warning` روی چهار
   فایل صفر هشدار، ۲۱/۲۱ تست shell، `lint:shell`، و doctor هرمس سبز.
+- **۲۰۲۶-۱۰-۱۴ (گیت کامل monorepo)** — نصب تمیز `npm ci` موفق؛ doctor: syntax، **۱۷۹ تست واحد**، **۹ تست integration/workerd** و build مهارت‌ها سبز. فایل‌های تولیدی در `hermes/public/` نادیده‌گرفته می‌شوند و خارج از Git نگه داشته شدند.

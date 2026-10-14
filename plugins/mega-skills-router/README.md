@@ -1,6 +1,6 @@
 # Mega Skills Router — Claude Code plugin
 
-One skill that routes each request to the relevant skills among **5,986** (3,000 core skills, the 6-skill business pack and 2,980 curated MIT-licensed GitHub skills), using 15 domain indexes and ~30,000 Persian / Finglish / English triggers. Only the matched skills are read, so Claude's context stays small.
+One skill that routes each request to the relevant skills among **6,019** (3,000 core skills, 8 curated project skills and 3,011 MIT-licensed GitHub skills), using 15 domain indexes and 30,080 Persian / Finglish / English triggers. Only the matched skills are read, so Claude's context stays small.
 
 ## Install
 In Claude Code:
@@ -24,7 +24,7 @@ GitHub skills are third-party: review a skill before running any script it ships
 
 ## Generated library and incomplete workflows
 
-Of 5,986 packaged skills, 5,705 are routable by default; the 281 canonical `incomplete` entries
+Of 6,019 packaged skills, 5,738 are routable by default; the 281 canonical `incomplete` entries
 remain available for provenance/manual review but are not selected automatically. Python's
 `--include-incomplete` is an explicit review opt-in. Upstream license texts ship under
 `references/licenses/`.

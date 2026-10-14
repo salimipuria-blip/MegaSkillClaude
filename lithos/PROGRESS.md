@@ -63,3 +63,4 @@ npm run build        # vite build → dist/
 ## ۶) لاگ جریان (فقط اضافه می‌شود)
 - **۲۰۲۶-۱۰-۱۴** — رفع ثبت اسنپ‌شات صفر (نگهبان `BUFFER_SHAPE_UNVERIFIED`)،
   افزودن `.env.example`، تکمیل `vercel.json` (maxDuration + هدرهای امنیتی)، تست‌ها ۳→۴.
+- **۲۰۲۶-۱۰-۱۴ (گیت کامل monorepo)** — نصب تمیز `npm ci` موفق؛ `node scripts/doctor.mjs lithos`: syntax، **۴ تست** و build سبز. صحت قرارداد Buffer در برابر API زنده و RLS واقعی همچنان تأییدنشده است.

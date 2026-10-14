@@ -23,6 +23,20 @@ jobs:
         run: bash scripts/repo_health_check.sh
       - name: Repository normalization regressions
         run: python -m unittest discover -s tests -p "test_repo_normalization.py" -v
+      - name: Mobile PWA contracts and search tests
+        run: |
+          python3 mobile/build-index.py --check
+          node --check mobile/app.js
+          node --check mobile/sw.js
+          node --check mobile/search.mjs
+          node --test mobile/search.test.mjs
+      - name: Brand asset contracts and renderer syntax
+        run: |
+          python3 scripts/check_brand_assets.py
+          node --check brand/viking/render.mjs
+          node --test brand/viking/tests/render.test.mjs
+      - name: Verify the project doctor really discovers quoted Python test patterns
+        run: node --test tests/doctor.test.mjs
 
   psk:
     runs-on: ubuntu-latest
@@ -125,6 +139,19 @@ jobs:
           grep -q 'viking_trip_media' team/app.js
           grep -q 'viking_team_members' team/app.js
           ! grep -R -E 'service_role|sb_secret_' team
+
+  viking-motion:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install the isolated motion-study dependencies
+        run: npm ci --prefix viking-team/motion --ignore-scripts --no-audit --no-fund
+      - name: Typecheck Remotion composition
+        run: npm run check --prefix viking-team/motion
 
   # Ported from orchestrator/.github/workflows/baseline-ci.yml (kept there: its contract test reads it)
   orchestrator:
