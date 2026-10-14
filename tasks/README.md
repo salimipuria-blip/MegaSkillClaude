@@ -11,6 +11,9 @@
 
 - `hermes_tasks.json` — manifest نسخهٔ `hermes-tasks/v2`: هر تسک `wave` (W0 تا W3)، `disposition`، فایل‌های واقعی repo، معیار پذیرش و برچسب دارد.
 - `apply_tasks.py` — ابزار **برنامه‌ریزی و اعتبارسنجی** (نه تولید انبوه PR). پیش‌فرض dry-run و فقط‌خواندنی است.
+- `apply_hermes_tasks.py` — نسخهٔ پاک‌سازی‌شدهٔ همان قرارداد برای snippetهای قدیمی: موجودیت‌های HTML (`&amp;`) و آلودگی Markdown-link در مسیر فایل‌ها (`hermes/[setup.sh](http://setup.sh)`) را sanitize می‌کند، هر دو schema (`legacy/v1` و `hermes-tasks/v2`) را می‌پذیرد و حالت‌های `--apply`/`--auto-merge` را با خطای صریح رد می‌کند. اعتبارسنجی روی manifest کامل (قبل از فیلتر `--only`) انجام می‌شود.
+- `hermes_tasks.legacy.sample.json` — نمونهٔ تمیزشدهٔ snippet دوبخشی قدیمی (`legacy/v1`) برای تست sanitize/validate.
+- `.github/workflows/hermes-automation.yml` — اجرای دستی (workflow_dispatch) و فقط plan/validate با دسترسی read-only؛ هرگز فایل اسکلت، push یا merge نمی‌سازد.
 
 ## استفاده
 
@@ -21,6 +24,11 @@ python3 tasks/apply_tasks.py --manifest tasks/hermes_tasks.json --only 23,24
 
 # ساخت PR فقط وقتی روی شاخهٔ همان تسک، پیاده‌سازی واقعی و commit‌شده داری:
 python3 tasks/apply_tasks.py --manifest tasks/hermes_tasks.json --only 23 --apply-pr
+
+# نسخهٔ sanitizeکننده (هر دو manifest؛ تست‌ها: tests/test_hermes_task_planner.py):
+python3 tasks/apply_hermes_tasks.py --manifest tasks/hermes_tasks.json --validate-only
+python3 tasks/apply_hermes_tasks.py --manifest tasks/hermes_tasks.legacy.sample.json --validate-only
+python3 tasks/apply_hermes_tasks.py --manifest tasks/hermes_tasks.legacy.sample.json  # dry-run فقط‌خواندنی
 ```
 
 ## وضعیت موج W0 (همین PR)
