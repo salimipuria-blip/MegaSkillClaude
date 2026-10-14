@@ -417,7 +417,12 @@ export const APP_HTML = String.raw`<!doctype html>
     ['voice', 'Voice', 'skill', 118, 356, true, 'l', 6, 'پیام صوتی', 'online',
       ['ویس تلگرام را می‌فهمد', 'در اپ: دکمهٔ میکروفون، بزن و حرف بزن'], []],
     ['vision', 'Vision', 'skill', 256, 388, true, 't', 5.5, 'دیدن عکس', 'online',
-      ['عکس را تحلیل می‌کند', 'برای عکس کپشن می‌نویسد', 'در اپ: دکمهٔ دوربین کنار پیام'], []],
+      ['عکس را تحلیل می‌کند و توضیح می‌دهد', 'برای عکس کپشن می‌نویسد', 'در اپ: دکمهٔ دوربین کنار پیام'], []],
+    ['photolab', 'Photo Lab', 'core', 150, 418, true, 'l', 6.5, 'ویرایش حرفه‌ای عکس', 'online',
+      ['عکس خودت را بفرست و بگو چه تغییری می‌خواهی؛ قبل از خروج، عکس را یک ریتوشِر بازبینی می‌کند',
+       'ریتوش پرتره، پس‌زمینهٔ جدید، نورپردازی، گرید سینمایی، بازسازی عکس قدیمی، افزایش کیفیت، حذف شیء، عکس محصول استودیویی',
+       'هویت و چهره دست‌نخورده می‌ماند؛ متن روی عکس ساخته نمی‌شود (مدل متن فارسی را خراب می‌کند)'],
+      ['این عکس رو ریتوش کن', 'این عکس قدیمی رو بازسازی کن']],
     ['remind', 'Reminders', 'soon', 414, 392, true, 't', 5.5, 'یادآور و خلاصهٔ صبح', 'queued',
       ['یادآوری سر ساعت در تلگرام', 'هر صبح خلاصهٔ روز'], []],
     ['calendar', 'Calendar', 'soon', 560, 356, true, 'r', 5.5, 'تقویم و رزرو تور', 'planned',
@@ -535,7 +540,8 @@ export const APP_HTML = String.raw`<!doctype html>
   function consultFor(text) {
     const t = text.toLowerCase(), ids = ['brain', 'memory'];
     const rules = [['captions', /کپشن|هشتگ|caption/], ['content', /محتوا|پست|ریلز|استوری|اینستا/], ['planner', /برنامه|کار|چک|لیست|امروز|فردا/],
-      ['viking', /وایکینگ|تور|آفرود|مشتری|viking/], ['translate', /ترجمه|انگلیسی|translate/], ['editor', /روان|ویرایش|متن|غلط/],
+      ['viking', /وایکینگ|تور|آفرود|مشتری|viking/], ['translate', /ترجمه|انگلیسی|translate/], ['editor', /روان|متن|غلط|املا|کلمه/],
+      ['photolab', /ریتوش|رتوش|ادیت|ویرایش(?:\s*عکس)?|پس\s*زمینه|بک\s*گراند|بازسازی|کیفیت عکس|وضوح|حذف کن|retouch|upscale|restore|background|edit/],
       ['research', /تحلیل|بازار|رقبا|بررسی|مقایسه|چیست|چرا/], ['search', /خبر|امروز|الان|قیمت|هوا|جدید|آخرین|news|latest/],
       ['vision', /عکس|تصویر|photo|image/]];
     rules.forEach(([id, re]) => { if (re.test(t)) ids.push(id); });
@@ -899,7 +905,7 @@ export const APP_HTML = String.raw`<!doctype html>
   let pendingImage = null;
   function setImage(src) {
     pendingImage = src; $('attach').classList.toggle('on', !!src);
-    input.placeholder = src ? 'عکس آماده است؛ سؤالت را بنویس یا بفرست…' : 'به هرمس بگو…'; resize();
+    input.placeholder = src ? 'عکس آماده است — چه تغییری می‌خواهی؟ (ریتوش، پس‌زمینه، نور، کیفیت…)' : 'به هرمس بگو…'; resize();
   }
   $('attach').onclick = () => { if (pendingImage) setImage(null); else $('file').click(); };
   $('file').onchange = () => {

@@ -16,6 +16,8 @@ export { converse, picture } from './conversation.mjs';
 import { requireConversationBinding, loadLog, archiveAndClear, loadNotes, clearNotes } from './memory.mjs';
 export { ask, askGemini, askWorkersAI, MODELS, CF_MODELS } from './brain.mjs';
 import { imageRequest, base64ToBytes } from './image.mjs';
+import { handlePhotoEdit, editRequest } from './photo-edit.mjs';
+import { ask } from './brain.mjs';
 import { transcribe, telegramFile, parseDataUrl } from './media.mjs';
 import { tripPage, createBooking, onContact } from './booking.mjs';
 import { configuredProviders } from './providers.mjs';
@@ -25,6 +27,29 @@ import { recordRequest, snapshot as metricsSnapshot, prometheusText } from './me
 export { liveness, readiness, fullHealth } from './health.mjs';
 
 const TG_LIMIT = 4000;
+
+// The edited photo goes back as a before/after pair, so the improvement is visible at a glance.
+// Falls back to a single photo when Telegram refuses the album (odd size or exotic format).
+export async function sendEdited(env, chatId, before, edited) {
+  const api = (method) => `https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/${method}`;
+  const caption = `📸 قبل ← بعد\n${edited.caption}`.slice(0, 1000);
+  const album = new FormData();
+  album.append('chat_id', String(chatId));
+  album.append('media', JSON.stringify([
+    { type: 'photo', media: 'attach://before', caption },
+    { type: 'photo', media: 'attach://after' },
+  ]));
+  album.append('before', new Blob([base64ToBytes(before.data)], { type: before.mime }), 'before.jpg');
+  album.append('after', new Blob([base64ToBytes(edited.image)], { type: edited.mime }), edited.mime === 'image/png' ? 'after.png' : 'after.jpg');
+  const out = await fetch(api('sendMediaGroup'), { method: 'POST', body: album }).then((r) => r.json()).catch(() => ({}));
+  if (out && out.ok) return true;
+  const single = new FormData();
+  single.append('chat_id', String(chatId));
+  single.append('caption', caption);
+  single.append('photo', new Blob([base64ToBytes(edited.image)], { type: edited.mime }), edited.mime === 'image/png' ? 'hermes-edit.png' : 'hermes-edit.jpg');
+  const one = await fetch(api('sendPhoto'), { method: 'POST', body: single }).then((r) => r.json()).catch(() => ({}));
+  return !!(one && one.ok);
+}
 // Abilities that can be locked per person (users.mjs `locks`). A locked topic is refused before the AI is called.
 export const ABILITIES = {
   viking: { name: 'وایکینگ آفرود', topic: 'Viking Offroad business (tours, routes, customers, pricing, packages)',
@@ -159,6 +184,11 @@ async function api(request, url, env) {
     const locked = lockedHit(who, message);
     if (locked) return json({ error: `دسترسی به «${ABILITIES[locked].name}» برای حساب تو بسته است.`, locked }, 403);
     try {
+      // A photo plus an edit instruction is an editing turn: brief, edit, review, deliver.
+      if (photo && editRequest(message)) {
+        const edited = await handlePhotoEdit(env, ask, photo.data, photo.mime, message);
+        if (edited) return json({ reply: edited.caption, image: edited.image ? `data:${edited.mime};base64,${edited.image}` : undefined });
+      }
       const wanted = photo ? null : imageRequest(message);
       if (wanted !== null) {
         if (!wanted) return json({ error: 'بنویس چه عکسی می‌خواهی، مثلاً «عکس بساز: کمپ کنار دریاچه در جنگل پاییزی».' }, 400);
@@ -283,6 +313,7 @@ async function handle(msg, env, origin) {
     return send(env, chatId, 'سلام! من هرمس هستم. هر چه می‌خواهی بپرس.\n' +
       'همهٔ گفتگوها ذخیره می‌ماند. با «یادت باشه ...» چیزی را برای همیشه به خاطر می‌سپارم.\n' +
       'عکس بساز: ... یک عکس می‌سازم\n' +
+      'عکس بفرست و بنویس چه تغییری می‌خواهی («این عکس رو ریتوش کن»، «پس‌زمینه رو عوض کن»، «کیفیتش رو بالا ببر») تا حرفه‌ای ویرایشش کنم و قبل/بعد را با هم بفرستم.\n' +
       'ویس بفرست تا گوش بدهم، عکس بفرست تا ببینم؛ برای خبرها و چیزهای روز در گوگل جست‌وجو می‌کنم.\n' +
       '/google اتصال جیمیل، تقویم، درایو و شیت\n' +
       '/reset گفتگوی جدید (قبلی بایگانی می‌شود)\n/notes یادداشت‌های حافظه\n/forget پاک کردن یادداشت‌ها\n/app لینک اپ');
@@ -315,6 +346,19 @@ async function handle(msg, env, origin) {
   if (input === '/reset') {
     await archiveAndClear(env, key);
     return send(env, chatId, 'گفتگوی جدید شروع شد. گفتگوی قبلی بایگانی شد و یادداشت‌ها سر جایشان هستند.');
+  }
+
+  // Photo + editing instruction: run the professional edit pipeline and send the result back.
+  if (images.length && editRequest(input)) {
+    await tg(env, 'sendChatAction', { chat_id: chatId, action: 'upload_photo' });
+    try {
+      const edited = await handlePhotoEdit(env, ask, images[0].data, images[0].mime, input);
+      if (edited && edited.image) await sendEdited(env, chatId, images[0], edited);
+      else if (edited) await send(env, chatId, edited.caption);
+    } catch (err) {
+      await send(env, chatId, `ویرایش انجام نشد: ${err.message}`);
+    }
+    return;
   }
 
   const wanted = imageRequest(input);
