@@ -1,0 +1,49 @@
+name: Security and scheduled health
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '23 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: security-health-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tracked-secret-scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify scanner detection, redaction and failure behavior
+        run: python3 -m unittest discover -s tests -p test_secret_scan.py -v
+      - name: Scan tracked working-tree files (not Git history)
+        run: python3 scripts/scan_secrets.py
+
+  scheduled-health:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Offline repository health (no deployment or live probes)
+        run: bash scripts/repo_health_check.sh
