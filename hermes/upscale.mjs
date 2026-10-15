@@ -1,3 +1,4 @@
+import { fetchWithTimeout } from './resilience.mjs';
 // Final quality pass for Hermes photo editing: the models that edit also decide the resolution, and
 // the free ones hand back a 1024px picture even when the user sent a 4000px photo. This module puts
 // the delivered bytes back up to a professional size with a real upscaler, and refuses to pretend
@@ -31,7 +32,7 @@ async function stability(env, endpoint, image, mime, { prompt = '', creativity =
     form.append('prompt', String(prompt || 'photograph').slice(0, 10000));
     form.append('creativity', String(creativity));
   }
-  const res = await fetch(`${API}/${endpoint}`, {
+  const res = await fetchWithTimeout(`${API}/${endpoint}`, {
     method: 'POST',
     headers: { authorization: `Bearer ${env.STABILITY_API_KEY}`, accept: 'application/json' },
     body: form,

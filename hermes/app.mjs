@@ -239,6 +239,11 @@ export const APP_HTML = String.raw`<!doctype html>
   .notes .nt button:hover { color: #ff8a8a; }
   .notes div.n { font: 13.5px/1.8 var(--fa); color: rgba(240,237,232,.85); }
   .notes div.n::before { content: "◆ "; color: var(--cyan); font-size: 9px; }
+  .notes div.n.rmrow { display: flex; align-items: baseline; gap: 6px; }
+  .notes div.n.rmrow::before { content: "⏰"; font-size: 10px; }
+  .notes .rtxt { flex: 1; }
+  .notes .rdel { background: none; border: 0; color: var(--dorm); cursor: pointer; font: 12px/1 var(--mono); padding: 2px 4px; }
+  .notes .rdel:hover { color: #ff8a8a; }
   .notes .hint { font: 12px/1.7 var(--fa); color: var(--dorm); }
   .lbody:empty::after { content: "NO MESSAGES YET"; font: 10px/1 var(--mono); letter-spacing: .3em; color: var(--dorm); text-align: center; margin-top: 30vh; }
   .m { font: 15px/1.85 var(--fa); direction: rtl; white-space: pre-wrap; overflow-wrap: anywhere; }
@@ -959,6 +964,30 @@ export const APP_HTML = String.raw`<!doctype html>
     $('lcount').textContent = messages.length ? messages.length + ' MSG' : '';
     $('pill').textContent = (innerWidth < 500 ? 'Log' : 'Session log') + (messages.length ? ' · ' + messages.length : '') + ' ↗';
   }
+  async function renderReminders() {
+    let list = [];
+    try { list = (await api('/api/reminders')).reminders || []; } catch { return; }
+    const box = document.createElement('div'); box.className = 'notes';
+    const head = document.createElement('div'); head.className = 'nt';
+    head.textContent = 'REMINDERS · ' + list.length;
+    box.append(head);
+    list.forEach((r) => {
+      const row = document.createElement('div'); row.className = 'n rmrow';
+      const when = document.createElement('span');
+      when.textContent = new Date(r.due).toLocaleString('fa-IR', { timeZone: 'Asia/Tehran', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+      const txt = document.createElement('span'); txt.className = 'rtxt'; txt.textContent = ' ' + r.text;
+      const del = document.createElement('button'); del.textContent = '✕'; del.className = 'rdel';
+      del.onclick = async () => { try { await api('/api/reminders/delete', { id: r.id }); row.remove(); } catch (err) { alert(err.message); } };
+      row.append(when, txt, del);
+      box.append(row);
+    });
+    if (!list.length) {
+      const h = document.createElement('div'); h.className = 'hint';
+      h.textContent = 'یادآوری بگذار با «یادم بنداز ساعت ۹: ...» — هم در اپ، هم در تلگرام.';
+      box.append(h);
+    }
+    $('lbody').prepend(box);
+  }
   async function renderNotes() {
     let notes = [];
     try { notes = (await api('/api/notes')).notes || []; } catch { return; }
@@ -974,7 +1003,7 @@ export const APP_HTML = String.raw`<!doctype html>
     if (!notes.length) { const h = document.createElement('div'); h.className = 'hint'; h.textContent = 'بنویس «یادت باشه ...» تا برای همیشه به خاطر بسپارم.'; box.append(h); }
     $('lbody').prepend(box);
   }
-  const openLog = () => { renderLog(); renderNotes(); $('log').classList.add('show'); const lb = $('lbody'); lb.scrollTop = lb.scrollHeight; };
+  const openLog = () => { renderLog(); renderReminders(); renderNotes(); $('log').classList.add('show'); const lb = $('lbody'); lb.scrollTop = lb.scrollHeight; };
   $('pill').onclick = openLog; $('tLog').onclick = () => { toggleLamp(); openLog(); };
   $('lclose').onclick = () => $('log').classList.remove('show');
 

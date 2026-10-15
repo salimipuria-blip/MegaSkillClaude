@@ -1,3 +1,4 @@
+import { fetchWithTimeout } from './resilience.mjs';
 // Shared model adapters for the Worker and SQLite conversation actor.
 import { SKILLS } from './skills.mjs';
 import { askProviders, configuredProviders } from './providers.mjs';
@@ -85,7 +86,7 @@ export async function askGemini(env, contents, system = SYSTEM, search = true, t
   const order = cached ? [cached, ...MODELS.filter((m) => m !== cached)] : MODELS;
   const call = (model, convo, withSearch, withFns) => {
     const t = [...(withFns && tools ? [{ functionDeclarations: tools.declarations }] : []), ...(withSearch ? [{ google_search: {} }] : [])];
-    return fetch(`${GEMINI_API}/models/${model}:generateContent`, {
+    return fetchWithTimeout(`${GEMINI_API}/models/${model}:generateContent`, {
       method: 'POST',
       headers: { 'content-type': 'application/json', 'x-goog-api-key': env.GEMINI_API_KEY },
       body: JSON.stringify({ systemInstruction: { parts: [{ text: system }] }, contents: convo, ...(t.length ? { tools: t } : {}) }),

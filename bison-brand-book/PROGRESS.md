@@ -50,3 +50,6 @@ npm run dev            # پیش‌نمایش محلی روی 0.0.0.0:5173
   - **اعتبارسنجی با جهش:** برگرداندنِ همان ارجاع نسبی در یک کپیِ موقت، دقیقاً تستِ «root-absolute» را قرمز کرد.
   - به CI (`npm test` پیش از build) و به `scripts/doctor.mjs` (گام `contract`) وصل شد. بیلد بدون تغییر ماند: `index.html` ۲۳٫۶۲kB، JS ۱۳۹٫۶۷kB (gzip ۵۲٫۵۹kB)؛ `npm audit --omit=dev` صفر.
   - **محدودیت:** بازبینیِ بصریِ طراحی (رنگ/تایپوگرافی/انیمیشن) همچنان انجام نشده؛ این گیت فقط ساختار و قراردادها را نگه می‌دارد. بند P0 (اتصال Vercel به همین مخزن) همچنان باز است.
+
+## Professional guide
+See `PROFESSIONAL_GUIDE.md` in this folder for performance improvements, debugging playbook, and next steps. Update it whenever behavior changes.

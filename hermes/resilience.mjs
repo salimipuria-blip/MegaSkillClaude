@@ -47,3 +47,24 @@ export class CircuitBreaker {
     }
   }
 }
+
+// Fetch with a hard timeout so a hung upstream can never pin a Worker request. The default is
+// generous (20s) for model calls; callers on a tighter path pass their own limit. An AbortSignal
+// already present in `init` is preserved and combined with the timeout.
+export async function fetchWithTimeout(input, init = {}, timeoutMs = 30000) {
+  if (!Number.isFinite(timeoutMs) || timeoutMs <= 0) return fetch(input, init);
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(new Error(`fetch timed out after ${timeoutMs}ms`)), timeoutMs);
+  const upstream = init && init.signal;
+  const onAbort = () => controller.abort(upstream && upstream.reason);
+  if (upstream) {
+    if (upstream.aborted) controller.abort(upstream.reason);
+    else upstream.addEventListener('abort', onAbort, { once: true });
+  }
+  try {
+    return await fetch(input, { ...init, signal: controller.signal });
+  } finally {
+    clearTimeout(timer);
+    if (upstream) upstream.removeEventListener('abort', onAbort);
+  }
+}

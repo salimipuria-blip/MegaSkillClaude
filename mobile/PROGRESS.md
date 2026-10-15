@@ -59,3 +59,6 @@ python3 -m unittest discover -s tests -p test_mobile_console.py -v
   - **Smoke واقعی با Chromium و پروفایلِ iPhone 13** (عرض ۳۹۰، DPR ۳، لمسی، UA آیفون): عرضِ سند **۳۹۰ CSS px و بدون سرریزِ افقی**، ۱۳ کارتِ پروژه، شمارنده **۵٬۷۳۸**، `dir=rtl`، ثبتِ Service Worker، و **بارگذاریِ مجدد در حالت آفلاین که ۵٬۷۳۸ مدخل را از cache برگرداند**؛ صفر خطای page/console.
   - گامِ `search-tests` در doctor به‌روز شد تا هر دو فایلِ تست را اجرا کند؛ CI هم به‌روز شد.
   - **محدودیت:** همچنان Safari/iOS فیزیکی نیست — نصب به Home Screen، حالتِ هواپیمای واقعی، به‌روزرسانیِ واقعیِ Service Worker در Safari و اندازه‌گیریِ حافظه روی دستگاه، جداگانه باید آزمایش شوند.
+
+## Professional guide
+See `PROFESSIONAL_GUIDE.md` in this folder for performance improvements, debugging playbook, and next steps. Update it whenever behavior changes.

@@ -53,3 +53,6 @@ node scripts/doctor.mjs router                  # هر سه با هم
   - یک تستِ دوم جلوی پوسیدنِ استثنا را می‌گیرد: اگر روزی آن ارجاع‌ها درست شوند یا پکیج حذف شود، تست **قرمز** می‌شود تا استثنا حذف یا بازنگری شود. متنِ دلیل هم الزامی است.
   - **دستور تأیید:** `node scripts/doctor.mjs router` → هم‌گامی سه‌نما (۰ فایل متفاوت)، تست‌های پایتون (۵۶ تست ریشه + ۳ تست جدید) و `verify_skills.py --strict` سبز.
   - **محدودیت:** این گیت فقط «فایل وجود دارد» را می‌سنجد، نه «اسکریپت واقعاً کار می‌کند» را؛ اجرای واقعی همچنان به دسترسیِ محیطی نیاز دارد.
+
+## Professional guide
+See `PROFESSIONAL_GUIDE.md` in this folder for performance improvements, debugging playbook, and next steps. Update it whenever behavior changes.

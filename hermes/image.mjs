@@ -1,3 +1,4 @@
+import { fetchWithTimeout } from './resilience.mjs';
 // Image generation: the best free models on Cloudflare Workers AI (FLUX.2, Leonardo, FLUX.1), then Gemini image if paid.
 // Viking social creatives use the repository art direction; image models produce a clean photo layer,
 // while Persian type and the official logo are composed later with real fonts and approved brand assets.
@@ -161,7 +162,7 @@ export async function hfImage(env, prompt, size = { width: 1024, height: 1024 })
   const text = String(prompt).slice(0, 900);
   const reasons = [];
   for (const model of HF_IMAGE_MODELS) {
-    const res = await fetch(`https://router.huggingface.co/hf-inference/models/${model}`, {
+    const res = await fetchWithTimeout(`https://router.huggingface.co/hf-inference/models/${model}`, {
       method: 'POST',
       headers: { 'content-type': 'application/json', accept: 'image/jpeg', ...auth },
       body: JSON.stringify({ inputs: text, parameters: { width: size.width, height: size.height } }),
@@ -174,7 +175,7 @@ export async function hfImage(env, prompt, size = { width: 1024, height: 1024 })
   }
   // Same free credits, other inference providers behind the HF router (OpenAI-style images API).
   for (const [provider, model] of HF_ROUTED) {
-    const res = await fetch(`https://router.huggingface.co/${provider}/v1/images/generations`, {
+    const res = await fetchWithTimeout(`https://router.huggingface.co/${provider}/v1/images/generations`, {
       method: 'POST',
       headers: { 'content-type': 'application/json', ...auth },
       body: JSON.stringify({ model, prompt: text, n: 1, width: size.width, height: size.height, response_format: 'b64_json' }),
@@ -193,7 +194,7 @@ export const FREE_IMAGE_API = 'https://image.pollinations.ai/prompt/';
 export async function freeImage(prompt, size = { width: 1024, height: 1024 }, token = '') {
   const seed = crypto.getRandomValues(new Uint32Array(1))[0] % 1000000;
   const url = `${FREE_IMAGE_API}${encodeURIComponent(String(prompt).slice(0, 900))}?width=${size.width}&height=${size.height}&model=flux&nologo=true&seed=${seed}`;
-  const res = await fetch(url, token ? { headers: { authorization: `Bearer ${String(token).trim()}` } } : undefined);
+  const res = await fetchWithTimeout(url, token ? { headers: { authorization: `Bearer ${String(token).trim()}` } } : undefined);
   const mime = (res.headers.get('content-type') || '').split(';')[0];
   if (res.status === 402 || res.status === 401) throw new Error(`Pollinations: ${res.status} (رایگانِ بی‌کلید بسته است${token ? '' : '؛ POLLINATIONS_TOKEN لازم'})`);
   if (!res.ok || !mime.startsWith('image/')) throw new Error(`Pollinations: ${res.status}`);
@@ -208,7 +209,7 @@ export async function geminiImageModels(env) {
   const cached = env.MEMORY ? await env.MEMORY.get('image-models', 'json') : null;
   let models = cached;
   if (!models) {
-    const res = await fetch(`${GEMINI_API}/models?pageSize=1000`, { headers: { 'x-goog-api-key': env.GEMINI_API_KEY } });
+    const res = await fetchWithTimeout(`${GEMINI_API}/models?pageSize=1000`, { headers: { 'x-goog-api-key': env.GEMINI_API_KEY } });
     if (!res.ok) throw new Error(`فهرست مدل‌های جمینی در دسترس نیست (${res.status}).`);
     const data = await res.json();
     const version = (n) => parseFloat((n.match(/gemini-(\d+(?:\.\d+)?)/) || [0, 0])[1]);
@@ -228,7 +229,7 @@ export async function geminiImage(env, prompt) {
   if (!models.length) throw new Error('این کلید جمینی مدل تصویر ندارد.');
   let lastErr = null;
   for (const model of models) {
-    const res = await fetch(`${GEMINI_API}/models/${model}:generateContent`, {
+    const res = await fetchWithTimeout(`${GEMINI_API}/models/${model}:generateContent`, {
       method: 'POST',
       headers: { 'content-type': 'application/json', 'x-goog-api-key': env.GEMINI_API_KEY },
       body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: prompt }] }],

@@ -59,3 +59,6 @@ python3 -m unittest discover -s tests                     # یکپارچگی ا�
   - **اعتبارسنجیِ نگهبان با جهش (mutation test):** حذفِ یک خطِ RLS و تبدیلِ یک policy به `to anon, authenticated using (true)` در یک کپیِ موقت، دقیقاً ۲ تست را قرمز کرد — پس این گیت‌ها «سبزِ کاذب» نیستند.
   - شمار تست‌های پایتون **۵ → ۱۵**. **دستور تأیید:** `node scripts/doctor.mjs viking-team` → ۴ تست Node + **۱۵ تست پایتون** + سینتکسِ کلاینت + نگهبانِ نبود کلید سرویس، همگی سبز.
   - **محدودیت مهم:** این‌ها بررسیِ ایستای فایلِ `sql/` هستند، **نه** اثباتِ اینکه پروژهٔ staging واقعاً این اسکیما را دارد. برای آن باید `sql/*.sql` روی یک پروژهٔ آزمایشی اعمال و با نشستِ واقعی تست شود (دو بندِ بازِ بالا).
+
+## Professional guide
+See `PROFESSIONAL_GUIDE.md` in this folder for performance improvements, debugging playbook, and next steps. Update it whenever behavior changes.
