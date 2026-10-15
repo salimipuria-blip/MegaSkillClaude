@@ -2,31 +2,67 @@ version: 2
 updates:
   # Actual runnable project manifests only; ignore vendored skill examples.
   # No root npm manifest or orchestrator pip manifest exists.
+  #
+  # Each npm ecosystem groups its minor/patch bumps into one PR (less noise), while major
+  # bumps stay separate so breaking changes (e.g. TypeScript 7, Vite 8) get their own review.
+  # Packages that must move together are grouped explicitly: a split bump of
+  # `remotion` and `@remotion/cli` breaks the pin contract in viking-team/motion/tests.
   - package-ecosystem: "npm"
     directory: "/psk"
     schedule:
       interval: "weekly"
+    groups:
+      minor-and-patch:
+        update-types: ["minor", "patch"]
   - package-ecosystem: "npm"
     directory: "/lithos"
     schedule:
       interval: "weekly"
+    groups:
+      minor-and-patch:
+        update-types: ["minor", "patch"]
   - package-ecosystem: "npm"
     directory: "/fjcod"
     schedule:
       interval: "weekly"
+    groups:
+      minor-and-patch:
+        update-types: ["minor", "patch"]
   - package-ecosystem: "npm"
     directory: "/bison-brand-book"
     schedule:
       interval: "weekly"
+    groups:
+      minor-and-patch:
+        update-types: ["minor", "patch"]
   - package-ecosystem: "npm"
     directory: "/hermes"
     schedule:
       interval: "weekly"
+    groups:
+      minor-and-patch:
+        update-types: ["minor", "patch"]
   - package-ecosystem: "npm"
     directory: "/viking-team/motion"
     schedule:
       interval: "weekly"
+    groups:
+      remotion:
+        patterns:
+          - "remotion"
+          - "@remotion/*"
+      react:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@types/react"
+          - "@types/react-dom"
+      minor-and-patch:
+        update-types: ["minor", "patch"]
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      minor-and-patch:
+        update-types: ["minor", "patch"]

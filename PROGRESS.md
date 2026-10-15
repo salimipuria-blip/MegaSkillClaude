@@ -74,3 +74,16 @@ node scripts/doctor.mjs --json
 5. ادعاهای عددی/کمپینی از کد و هنر به یک **منبعِ قابلِ ردیابی** منتقل می‌شوند و تا تأیید نشوند، خروجی مسدود است.
 
 **محدودیت‌های سراسریِ اعلام‌شده:** هیچ‌کدام از این‌ها تأییدِ سرویسِ زنده نیستند — RLS/staging واقعی، انتشار Vercel، APIی زندهٔ Buffer، Safari/iOS فیزیکی و حساب‌های تلگرام/Cloudflare همچنان باید جداگانه آزمایش شوند. رندرها و مرورگرهای این دور ابزارهای موقت در `/tmp` هستند، نه وابستگیِ مخزن.
+
+## دور ۲۰۲۶-۱۰-۱۵ — Dependabot، بازبینی و بستن شکاف‌ها
+
+| بخش | تغییر | شاهد |
+|---|---|---|
+| CI/Dependabot | گروه‌بندی minor/patch برای همهٔ اکوسیستم‌های npm و GitHub Actions؛ `remotion` و `react` هر کدام در یک گروه | `tests/test_dependabot_config.py` (۳ تست؛ جهش حذف گروه قرمز شد)؛ YAML با PyYAML معتبر است |
+| Motion | تشخیص علت PRهای قرمز: bump جداگانهٔ `remotion` و `@remotion/cli` قرارداد پین را می‌شکند | در درخت `remotion-4.0.534`: `check` سبز، `npm test` ۵/۶ (تست پین قرمز) |
+| Hermes Bridge | P0 فقط‌خواندنی با محافظ مسیر، تست‌ها و بررسی ایستای «بدون نوشتن» | `npm run test:bridge` ۱۷/۱۷؛ `npm test` هرمس ۱۸۹ سبز |
+| Doctor | وضعیت کامل: ۳۸ گام pass، ۴ skip (pytest، deno، گام spec motion) و ۰ fail | `node scripts/doctor.mjs --json` |
+
+**یادداشت اصلاح‌شده:** پیش‌تر گفته بودم `psk` بدون lockfile ریسک بازتولید دارد. `psk` هیچ وابستگی runtime یا devDependency ندارد و CI آن `npm ci` را صدا نمی‌زند، پس lockfile ضروری نیست و تغییری داده نشد.
+
+**محدودیت‌ها:** PRهای Dependabot باز (جدا برای remotion و cli) هنوز بسته نشده‌اند؛ bumpهای major مثل TypeScript 7 و Vite 8 عمداً جدا می‌مانند و نیاز به بازبینی دارند. رندر MP4 و تست Chromium در این محیط تکرار نشد.
