@@ -23,18 +23,20 @@ jobs:
         run: bash scripts/repo_health_check.sh
       - name: Repository normalization regressions
         run: python -m unittest discover -s tests -p "test_repo_normalization.py" -v
-      - name: Mobile PWA contracts and search tests
+      - name: Mobile PWA contracts, weight budget and search tests
         run: |
           python3 mobile/build-index.py --check
           node --check mobile/app.js
           node --check mobile/sw.js
           node --check mobile/search.mjs
-          node --test mobile/search.test.mjs
-      - name: Brand asset contracts and renderer syntax
+          node --test mobile/search.test.mjs mobile/index.test.mjs
+      - name: Brand asset contracts, sticker manifest and renderer syntax
         run: |
           python3 scripts/check_brand_assets.py
+          python3 scripts/build_sticker_manifest.py --check
           node --check brand/viking/render.mjs
           node --test brand/viking/tests/render.test.mjs
+          node --test brand/viking/tests/content.test.mjs
       - name: Verify the project doctor really discovers quoted Python test patterns
         run: node --test tests/doctor.test.mjs
 
@@ -110,6 +112,8 @@ jobs:
         with:
           node-version: 22
       - run: npm ci --no-audit --no-fund
+      - name: Static contract (asset paths, anchors, ZIP, reduced motion)
+        run: npm test
       - run: npm run build
 
   # Ported from viking-team/.github/workflows/viking-team-static-check.yml
@@ -152,6 +156,29 @@ jobs:
         run: npm ci --prefix viking-team/motion --ignore-scripts --no-audit --no-fund
       - name: Typecheck Remotion composition
         run: npm run check --prefix viking-team/motion
+      - name: Composition spec lock (geometry, fps, palette, no CSS animation)
+        run: npm test --prefix viking-team/motion
+
+  # Real browser smoke of the store: login per role, a POS sale, closing a shift.
+  # E2E_STRICT=1 turns a missing browser into a failure instead of a silent skip.
+  fjcod-e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: fjcod
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci --no-audit --no-fund
+      - run: npx playwright install --with-deps chromium
+      - run: npm run build
+      - name: Browser smoke (desktop + 390x844 mobile viewport)
+        env:
+          E2E_STRICT: "1"
+        run: npm run e2e
 
   # Ported from orchestrator/.github/workflows/baseline-ci.yml (kept there: its contract test reads it)
   orchestrator:

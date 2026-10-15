@@ -216,7 +216,7 @@ class NormalizationConfigTests(unittest.TestCase):
     def test_health_job_and_existing_project_jobs_remain(self):
         ci = CI.read_text()
         jobs = set(re.findall(r'^  ([\w-]+):\n    runs-on:', ci, re.MULTILINE))
-        self.assertEqual(jobs, {'repo-health', 'psk', 'lithos', 'router', 'fjcod',
+        self.assertEqual(jobs, {'repo-health', 'psk', 'lithos', 'router', 'fjcod', 'fjcod-e2e',
                                 'bison-brand-book', 'viking-team', 'viking-motion',
                                 'orchestrator', 'hermes'})
         health = ci.split('\n  repo-health:\n')[1].split('\n  psk:\n')[0]
@@ -228,6 +228,10 @@ class NormalizationConfigTests(unittest.TestCase):
         self.assertNotIn('working-directory:', hermes)
         self.assertIn('bash -n hermes/setup.sh', hermes)
         self.assertIn('node --test mobile/search.test.mjs', ci)
+        # the browser smoke must be strict: a missing browser is a failure, not a silent skip
+        e2e = ci.split('\n  fjcod-e2e:\n')[1].split('\n  #')[0]
+        self.assertIn('npx playwright install --with-deps chromium', e2e)
+        self.assertIn('E2E_STRICT: "1"', e2e)
         self.assertIn('python3 scripts/check_brand_assets.py', ci)
         self.assertIn('node --test tests/doctor.test.mjs', health)
         self.assertIn('npm ci --prefix viking-team/motion --ignore-scripts', ci)

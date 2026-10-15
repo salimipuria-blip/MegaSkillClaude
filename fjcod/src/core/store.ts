@@ -434,8 +434,12 @@ export function expectedCash(d: DB, shift: Shift): number {
   for (const s of d.sales) {
     if (s.shiftId !== shift.id) continue;
     cash += s.payments.filter((p) => p.method === 'cash').reduce((a, p) => a + p.amount, 0);
+    // Refunds follow the SALE's shift, not the person who booked them: when a manager refunds a
+    // cashier's receipt, the money still leaves the cashier's drawer. Scoping refunds by `r.by`
+    // (the previous behaviour) silently dropped exactly that case from the reconciliation.
+    // A refund booked after the shift was closed belongs to the next reconciliation.
+    for (const r of s.refunds) if (shift.closedAt === null || r.at <= shift.closedAt) cash -= r.amount;
   }
-  for (const s of d.sales) for (const r of s.refunds) if (r.at >= shift.openedAt && r.by === shift.userId && (shift.closedAt === null || r.at <= shift.closedAt)) cash -= r.amount;
   return cash;
 }
 

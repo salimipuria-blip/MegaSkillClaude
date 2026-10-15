@@ -42,3 +42,32 @@ CHROMIUM_PATH=/path/to/chromium node render.js 0,2 --sheets
 
 ## Definition of Done
 `python3 scripts/check_brand_assets.py --stickers` سبز؛ هر پک ۳۰ PNG شفاف ۵۱۲×۵۱۲ دارد؛ ۱۲ preview و cover معتبرند؛ خروجی بازبینی چشمی شده؛ `brands/viking-offroad/PROGRESS.md` با نتیجه و کار باز به‌روز است.
+
+## پروندهٔ این دور (۲۰۲۶-۱۰-۱۴) — MANIFEST و کشفِ «سورسِ دوم»
+
+**سورس فقط `packs.js` نیست.** `src/stickers.html` هر پک را این‌طور می‌سازد:
+```js
+function packItems(pi) {
+  return [...PACKS[pi].items.map(...), ...DUOS[pi].map(...)];
+}
+```
+یعنی ۲۴ استیکرِ تک‌کاراکتره (`src/packs.js`) **به‌علاوه** ۶ صحنهٔ دوکاراکتره (`src/duos.js`) = ۳۰ فایل به‌ازای هر پک. اولین نسخهٔ سازندهٔ manifest فقط `packs.js` را می‌خواند و با خطای «منبع ۲۴ آیتم دارد، ۳۰ PNG روی دیسک است» متوقف شد — دقیقاً همان ناهماهنگی‌ای که قرار بود افشا کند.
+
+**عددِ جادویی حذف شد.** `render.js` حلقه را با `pack.items.length + 6` می‌راند؛ با تغییرِ `duos.js`، تعدادِ خروجی بی‌سر و صدا از سورس جدا می‌شد (و شش فایلِ آخر یا تکراری می‌شدند یا ناقص). اکنون `DUOS` در همان کانتکستِ `vm` بار می‌شود و تعداد از `pack.items.length + DUOS[i].length` مشتق می‌شود؛ پکِ خالی با پیام خطا رد می‌شود، نه با خروجیِ ناقص.
+
+**سازندهٔ manifest:**
+```bash
+python3 scripts/build_sticker_manifest.py            # می‌نویسد
+python3 scripts/build_sticker_manifest.py --check    # برای CI؛ خروجی ۱ یعنی قدیمی شده
+```
+برای هر پک: شناسه/نام/رنگ، تعدادِ captionها و duoها، SHA-256 و ابعاد و نوعِ رنگِ تک‌تکِ PNGها، preview و cover. عددِ امروز: ۱۲ پک، **۳۶۰ استیکر، ۳۰٬۶۰۳٬۵۳۹ بایت**.
+
+**دستورِ بازسازی (نیازمند Chromium):**
+```bash
+cd brands/viking-offroad/stickers/src && npm install --no-package-lock
+CHROMIUM_PATH=/path/to/chromium node render.js all          # شمارهٔ پک صفرمبناست
+CHROMIUM_PATH=/path/to/chromium node render.js 0,2 --sheets # فقط شیت‌های پیش‌نمایش
+python3 scripts/build_sticker_manifest.py                   # بعد از هر رندر، حتماً
+```
+
+**دیباگ:** اگر `--check` شکست خورد، یعنی یا PNGها عوض شده‌اند یا `packs.js`/`duos.js`. **هیچ‌وقت** manifest را دستی ویرایش نکن — خروجی است. اگر تعداد با سورس نمی‌خواند، اشتباه در سورس است یا در رندر، نه در manifest. و یادت باشد: SHA-256 تغییرِ پیکسل را نشان می‌دهد، **کیفیتِ بصری را نه** — بازبینیِ چشمی همچنان لازم است.

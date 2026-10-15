@@ -28,6 +28,11 @@ const SHOW_FIX = process.argv.includes('--fix');
 const has = (p) => existsSync(path.join(root, p));
 const nodeModules = (p) => existsSync(path.join(root, p, 'node_modules'));
 const tool = (name) => spawnSync('which', [name], {stdio: 'ignore'}).status === 0;
+// A missing interpreter or module is an environment gap, not a broken project: skip with the exact
+// install command instead of reporting a failure that looks like a code regression.
+const hasModule = (name) =>
+  spawnSync('python3', ['-c', `import ${name}`], {stdio: 'ignore'}).status === 0;
+const PYTHON_MODULE_HINT = {pytest: 'python3 -m pip install --user pytest'};
 
 /** Every project: id, folder, why it exists, and the exact ordered checks. */
 const PROJECTS = [
@@ -43,7 +48,7 @@ const PROJECTS = [
     id: 'psk', folder: 'psk', label: 'MEGA SKILLS 3000 (موتور مهارت‌ها)',
     steps: [
       {name: 'check', cmd: 'npm --ignore-scripts run check', cwd: 'psk', why: 'سینتکس همهٔ فایل‌های اجرایی'},
-      {name: 'tests', cmd: 'npm --ignore-scripts test', cwd: 'psk', why: '۴۷ تست شامل قرارداد مسیریابی'},
+      {name: 'tests', cmd: 'npm --ignore-scripts test', cwd: 'psk', why: '۵۳ تست شامل قرارداد مسیریابی و سیگنال‌های نیت'},
       {name: 'golden', cmd: 'node scripts/routing-golden.mjs --check', cwd: 'psk', why: 'خروجی مسیریاب عیناً تغییر نکرده'},
       {name: 'accuracy', cmd: 'node scripts/routing-accuracy.mjs', cwd: 'psk', why: 'دقت مسیریاب روی مجموعهٔ طلایی'},
       {name: 'bench', cmd: 'node scripts/bench-routing.mjs', cwd: 'psk', optional: true, why: 'کارایی مسیریابی (اختیاری)'},
@@ -54,7 +59,7 @@ const PROJECTS = [
     needs: ['lithos/node_modules'],
     steps: [
       {name: 'check', cmd: 'node --check api/buffer-sync.js', cwd: 'lithos', why: 'سینتکس تابع سرورلس'},
-      {name: 'tests', cmd: 'node --test tests/*.test.mjs', cwd: 'lithos', why: 'سنک Buffer با Supabase ماک‌شده'},
+      {name: 'tests', cmd: 'node --test tests/*.test.mjs', cwd: 'lithos', why: '۹ تست: سنک Buffer با Supabase ماک‌شده + قرارداد داشبورد'},
       {name: 'build', cmd: 'npm run build', cwd: 'lithos', why: 'بیلد Vite'},
     ],
   },
@@ -62,7 +67,7 @@ const PROJECTS = [
     id: 'fjcod', folder: 'fjcod', label: 'CHAM Store OS (فروشگاه چام)',
     needs: ['fjcod/node_modules'],
     steps: [
-      {name: 'check', cmd: 'npm run check', cwd: 'fjcod', why: 'typecheck + ۳۳ تست vitest + بیلد'},
+      {name: 'check', cmd: 'npm run check', cwd: 'fjcod', why: 'typecheck + ۴۱ تست vitest (شامل حساب مرجوعی) + بیلد'},
       {name: 'e2e', cmd: 'npm run e2e', cwd: 'fjcod', optional: true, why: 'اسموک مرورگر (اگر Chromium باشد)'},
     ],
   },
@@ -70,6 +75,7 @@ const PROJECTS = [
     id: 'bison-brand-book', folder: 'bison-brand-book', label: 'BISON Brand Book',
     needs: ['bison-brand-book/node_modules'],
     steps: [
+      {name: 'contract', cmd: 'npm test', cwd: 'bison-brand-book', why: 'قرارداد ایستا: مسیرهای asset، لنگرها، ZIP و reduced-motion'},
       {name: 'build', cmd: 'npm run build', cwd: 'bison-brand-book', why: 'بیلد Vite/GSAP'},
       {name: 'audit', cmd: 'npm audit --omit=dev', cwd: 'bison-brand-book', why: 'صفر آسیب‌پذیری در وابستگی‌های اجرا'},
     ],
@@ -79,7 +85,7 @@ const PROJECTS = [
     steps: [
       {name: 'node-tests', cmd: 'node --test tests/*.test.mjs', cwd: 'viking-team', why: 'رگرسیون رفتار رسانه'},
       {name: 'app-syntax', cmd: 'node --check --input-type=module < team/app.js', cwd: 'viking-team', shell: true, why: 'سینتکس کلاینت'},
-      {name: 'python-tests', cmd: 'python3 -m unittest discover -s tests', cwd: 'viking-team', why: 'یکپارچگی HTML/CSS/JS و نبود کلید سرویس'},
+      {name: 'python-tests', cmd: 'python3 -m unittest discover -s tests', cwd: 'viking-team', why: '۱۵ تست: یکپارچگی HTML/CSS/JS، قرارداد SQL/RLS و نبود کلید سرویس'},
       {name: 'no-secret-keys', cmd: "! grep -R -E 'service_role|sb_secret_' team", cwd: 'viking-team', shell: true, why: 'هیچ کلید مدیریتی در کلاینت نیست'},
     ],
   },
@@ -89,7 +95,7 @@ const PROJECTS = [
     steps: [
       {name: 'shell-syntax', cmd: 'bash -n hermes/setup.sh hermes/config.sh hermes/logger.sh', why: 'سینتکس نصب‌کننده'},
       {name: 'check', cmd: 'npm run check --prefix hermes', why: 'سینتکس همهٔ ماژول‌ها'},
-      {name: 'tests', cmd: 'npm test --prefix hermes', why: '۱۷۹ تست واحد (شامل استودیو، لایهٔ متن و چرخاندن آن با پیام)'},
+      {name: 'tests', cmd: 'npm test --prefix hermes', why: '۱۸۹ تست واحد (شامل استودیو، لایهٔ متن و چرخاندن آن با پیام)'},
       {name: 'integration', cmd: 'npm run test:integration --prefix hermes', why: '۹ رگرسیون روی workerd محلی'},
       {name: 'skills-build', cmd: 'node hermes/build-skills.mjs', optional: true, why: 'ساخت دارایی‌های مهارت'},
     ],
@@ -98,7 +104,7 @@ const PROJECTS = [
     id: 'mobile', folder: 'mobile', label: 'کنسول آیفون مگااسکیل',
     steps: [
       {name: 'index-cache', cmd: 'python3 mobile/build-index.py --check', why: 'ایندکس و اثرانگشت همهٔ assetهای PWA تازه است'},
-      {name: 'search-tests', cmd: 'node --test mobile/search.test.mjs', why: 'جست‌وجو، escape، schema و مسیرهای canonical'},
+      {name: 'search-tests', cmd: 'node --test mobile/search.test.mjs mobile/index.test.mjs', why: 'جست‌وجو، escape، schema، مسیرهای canonical و بودجهٔ وزن ایندکس'},
       {name: 'syntax', cmd: 'node --check mobile/app.js && node --check mobile/sw.js && node --check mobile/search.mjs', shell: true, why: 'نحو ماژول UI، موتور جست‌وجو و Service Worker'},
     ],
   },
@@ -106,6 +112,7 @@ const PROJECTS = [
     id: 'brand-stickers', folder: 'brands/viking-offroad', label: 'استیکرهای وایکینگ آفرود',
     steps: [
       {name: 'asset-contract', cmd: 'python3 scripts/check_brand_assets.py --stickers', why: '۱۲ پک، ۳۶۰ PNG شفاف ۵۱۲×۵۱۲، preview و cover'},
+      {name: 'manifest', cmd: 'python3 scripts/build_sticker_manifest.py --check', why: 'MANIFEST.json با سورس (packs.js + duos.js) و PNGها یکی است'},
     ],
   },
   {
@@ -114,6 +121,7 @@ const PROJECTS = [
       {name: 'asset-contract', cmd: 'python3 scripts/check_brand_assets.py --templates', why: 'قالب‌ها و assetهای محلی resolve می‌شوند'},
       {name: 'renderer-syntax', cmd: 'node --check brand/viking/render.mjs', why: 'نحو رندرر ES module'},
       {name: 'renderer-tests', cmd: 'node --test brand/viking/tests/render.test.mjs', why: 'رندرهای fake و بستن مرورگر در شکست'},
+      {name: 'content-contract', cmd: 'node --test brand/viking/tests/content.test.mjs', why: 'ادعاهای کمپین در brief.json هستند و assetها محلی‌اند'},
     ],
   },
   {
@@ -121,13 +129,14 @@ const PROJECTS = [
     needs: ['viking-team/motion/node_modules'],
     steps: [
       {name: 'typecheck', cmd: 'npm run check', cwd: 'viking-team/motion', why: 'TypeScript strict/noEmit'},
+      {name: 'spec', cmd: 'npm test', cwd: 'viking-team/motion', why: 'قفل مشخصات: ۱۰۸۰×۱۹۲۰، ۳۰fps، ۱۸۰ فریم، پالت و نبود انیمیشن CSS'},
     ],
   },
   {
     id: 'orchestrator', folder: 'orchestrator', label: 'Omni LLM Orchestrator (تاریخی)',
     steps: [
       {name: 'contract', cmd: 'python3 scripts/audit/check_repository_contract.py', cwd: 'orchestrator', why: 'قرارداد مخزن'},
-      {name: 'pytest', cmd: 'python3 -m pytest -q -ra tests', cwd: 'orchestrator', why: '۱۶ تست + ۳ اسکیپ مستند شده'},
+      {name: 'pytest', cmd: 'python3 -m pytest -q -ra tests', cwd: 'orchestrator', needsModule: 'pytest', why: '۱۶ تست + ۳ اسکیپ مستند شده'},
       {name: 'deno-gateway', cmd: 'deno check --no-remote supabase/functions/github-admin-gateway/index.ts', cwd: 'orchestrator', needsTool: 'deno', why: 'قابل‌استقرار بودن توابع Edge'},
     ],
   },
@@ -201,6 +210,9 @@ function runStep(project, step) {
     if (missing.length) return {status: 'skip', note: `install first: ${NPM_INSTALL_HINT[project.id] || 'npm ci'}`, output: ''};
   }
   if (step.needsTool && !tool(step.needsTool)) return {status: 'skip', note: `${step.needsTool} is not installed`, output: ''};
+  if (step.needsModule && !hasModule(step.needsModule)) {
+    return {status: 'skip', note: `python module '${step.needsModule}' is missing; install: ${PYTHON_MODULE_HINT[step.needsModule] || 'python3 -m pip install --user ' + step.needsModule}`, output: ''};
+  }
   const cwd = path.join(root, step.cwd || '.');
   const parsed = step.shell ? {executable: 'bash', args: ['-c', step.cmd]} : splitCommand(step.cmd);
   if (!parsed.executable) return {status: 'fail', note: `invalid command: ${step.cmd}`, output: ''};

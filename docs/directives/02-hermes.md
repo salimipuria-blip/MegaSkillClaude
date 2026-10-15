@@ -36,3 +36,30 @@ python3 tasks/apply_hermes_tasks.py --manifest tasks/hermes_tasks.json --validat
 
 ## Definition of Done
 هر تسک: شاخهٔ خودش (`hermes/NNN-*`)، پیاده‌سازی واقعی + تست، manifest به‌روز، CI هرمس سبز، PR جدا و بدون auto-merge، تیک در `hermes/ROADMAP.md`.
+
+## پروندهٔ واقعی این دور (۲۰۲۶-۱۰-۱۴) — ۱۳ ماژولِ چک‌نشده
+
+**کشف:** `scripts.check` فهرستی دستی است. با یک خط، ۳۰ ماژولِ `.mjs` ریشه با ۱۷ تایِ داخلِ فهرست مقایسه شد و ۱۳ تا (`add-user`, `app`, `auth`, `booking`, `build-skills`, `google`, `media`, `providers`, `skill-router`, `skills`, `sync-secrets`, `trip-media`, `users`) هرگز `node --check` نمی‌شدند. خطای سینتکسی در آن‌ها فقط هنگامِ bundle شدن یا در استقرار واقعی بیرون می‌زد — آن هم با پیامی که به ماژولِ اصلی اشاره نمی‌کرد.
+
+```bash
+cd hermes && node -e "
+const fs=require('fs');const pkg=JSON.parse(fs.readFileSync('package.json','utf8'));
+const checked=new Set((pkg.scripts.check.match(/([a-z0-9-]+\.mjs)/g)||[]));
+const all=fs.readdirSync('.').filter(f=>f.endsWith('.mjs')&&!f.endsWith('.test.mjs'));
+console.log('unchecked:',all.filter(f=>!checked.has(f)).join(' '));"
+```
+
+**رفعِ سه‌لایه:** (۱) فهرست کامل شد (۳۰/۳۰، همان لحظه همه سبز — پس بدهی بود نه باگِ فعال)؛ (۲) `coverage.test.mjs` اضافه شد تا دوباره چنین درزِ پوششی باز نشود؛ (۳) `scripts.test` به‌روز شد وگرنه تست اجرا نمی‌شد.
+
+**چهار نگهبانِ `coverage.test.mjs` (و دلیلِ هرکدام):**
+- هر `.mjs` ریشه باید در `check` باشد — جلوی همین درز را می‌گیرد.
+- هر `*.test.mjs` باید در `test` **یا** `test:integration` باشد — `conversation.test.mjs` کند است و آگاهانه در integration است؛ نگهبان باید این تمایز را بفهمد، نه اینکه همه را یک‌جا بخواهد.
+- هر `.sh` (ریشه و `tests/`) باید در `lint:shell` باشد — نصب‌کننده مسیرِ حساس است.
+- `postinstall` باید `build-skills.mjs` داشته باشد و هیچ فلگِ `--force/--write/--push` نداشته باشد — چون `npm ci --ignore-scripts` روی ماشینِ مشارکت‌کننده باید امن بماند و همگام‌سازیِ راز فقط در استقرار واقعی رخ دهد.
+
+**دیباگِ این پروژه — دستورِ ایزوله‌سازی:**
+```bash
+node --test --test-name-pattern="<نام دقیق>" worker.test.mjs   # یک تست، بدون نویز
+npm run test:integration --prefix hermes                        # کار جدا: workerd/SQLite واقعی
+```
+هشدار: خروجیِ لاگ‌هایی مثل «[Hermes] Gemini edit failed» در حین تست **طبیعی** است (مسیرهای degrade عمداً اعمال می‌شوند)؛ آن‌ها را خرابی نخوان. خرابی یعنی `# fail` در خلاصهٔ TAP.

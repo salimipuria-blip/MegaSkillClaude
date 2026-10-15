@@ -11,6 +11,7 @@ service-worker implementation (with its generated cache line normalized).
 """
 from __future__ import annotations
 
+import gzip
 import hashlib
 import json
 import re
@@ -40,6 +41,12 @@ PRECACHE_ASSETS = (
     "icon-512.png",
     "apple-touch-icon.png",
 )
+
+
+# The index is precached whole, so it is downloaded on every install-to-home-screen and parsed on
+# every cold start. 2.2 MB raw (~0.4 MB gzipped) is the measured size today; the budget is the point
+# at which it must be split by domain (or streamed) instead of growing silently on a phone.
+SIZE_BUDGET_BYTES = 3 * 1024 * 1024
 
 
 def build_index() -> bytes:
@@ -112,13 +119,22 @@ def check() -> int:
         errors.append("mobile/skills-index.json is stale")
     if not SERVICE_WORKER.exists() or SERVICE_WORKER.read_bytes() != service_worker_bytes:
         errors.append("mobile/sw.js cache fingerprint is stale")
+    if len(index_bytes) > SIZE_BUDGET_BYTES:
+        errors.append(
+            f"index is {len(index_bytes)} bytes, over the {SIZE_BUDGET_BYTES}-byte budget: "
+            "split it by domain or stream it instead of precaching one blob"
+        )
 
     if errors:
         print("ERROR: " + "; ".join(errors) + "; run python3 mobile/build-index.py", file=sys.stderr)
         return 2
 
     count = json.loads(index_bytes)["counts"]["routable_skills"]
-    print(f"mobile PWA: OK ({count} routable skills; cache {cache_name})")
+    gzipped = len(gzip.compress(index_bytes, 9))
+    print(
+        f"mobile PWA: OK ({count} routable skills; cache {cache_name}; "
+        f"{len(index_bytes)} bytes raw / {gzipped} bytes gzipped, budget {SIZE_BUDGET_BYTES})"
+    )
     return 0
 
 
@@ -135,7 +151,10 @@ def main() -> int:
         return 2
 
     count = json.loads(index_bytes)["counts"]["routable_skills"]
-    print(f"wrote {OUTPUT.relative_to(ROOT)} ({len(index_bytes)} bytes; {count} skills)")
+    gzipped = len(gzip.compress(index_bytes, 9))
+    print(
+        f"wrote {OUTPUT.relative_to(ROOT)} ({len(index_bytes)} bytes raw / {gzipped} gzipped; {count} skills)"
+    )
     print(f"updated mobile/sw.js cache fingerprint: {cache_name}")
     return 0
 

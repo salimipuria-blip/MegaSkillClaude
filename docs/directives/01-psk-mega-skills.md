@@ -34,3 +34,34 @@ curl -H "Authorization: Bearer $ENGINE_TOKEN" localhost:3000/api/health
 
 ## Definition of Done
 `npm run check && npm test` سبز، golden بدون تغییر ناخواسته، بنچمارک قبل/بعد در PR، هیچ کلیدی در کد/لاگ، `docs/FEATURE_STATUS.json` به‌روز.
+
+## پرونده‌های واقعی این دور (۲۰۲۶-۱۰-۱۴) — دقت top-1 از ۹۵٪ به ۱۰۰٪
+
+**روش (قابل تکرار):** همیشه اول اندازه بگیر، بعد حدس بزن. پنج خطای باقی‌مانده با این دستور استخراج شدند و تک‌تک بررسی شدند، نه به‌صورت کلی:
+
+```bash
+cd psk && node scripts/routing-accuracy.mjs          # خلاصه + تفکیک fa/en/mixed
+node -e "...gradeCase..."                            # فقط مواردِ !passTop1 را چاپ کن
+node -e "routeSkills(reg, query, {limit:6})"         # امتیازِ تک‌تکِ نامزدها برای همان پرسش
+```
+
+**۱. «ramadan campaign ideas» → travel-outdoors.** فقط واژهٔ «ramadan» مشترک بود و مهارتِ `ramadan-travel-etiquette` با تطابقِ نام می‌برد. رفع: سیگنالِ نیتِ کمپین (`campaign|کمپین` → social-media ۰٫۳۵ / business-sales ۰٫۱۵). درس: **نیت** باید از **موضوع** جدا شود؛ موضوع فقط کاندیدا می‌سازد، نیت رتبه را تعیین می‌کند.
+
+**۲. «brand identity for a boutique hotel» → social-media.** واژهٔ «brand» به `personal-brand-voice-sheet` می‌چسبید. رفع: سیگنال روی **عبارت** (`brand identity|هویت برند|brand kit|brand book`) نه روی تک‌واژه؛ واژهٔ تنهای brand عمداً بی‌طرف ماند تا برندِ شخصی همچنان social-media بماند. درس: سیگنال را به اندازهٔ کافی باریک بگیر که برچسبِ همسایه را تقویت نکند.
+
+**۳. «نقشه راه ۹۰ روزه برای استارتاپ» → مهارت‌های «map».** ریشه اینجا متفاوت بود: **هیچ** مهارتِ هسته‌ای واژهٔ roadmap/startup ندارد، پس پرسش به هرچه توکنِ «map» را داشت پخش می‌شد (`sandbox-permission-map`، `trail-map-illustrator`). رفع: سیگنالِ برنامه‌ریزیِ کسب‌وکار (`roadmap|نقشه راه|استارتاپ|startup|business plan` → business-sales ۰٫۴۵). درس: وقتی امتیازِ همهٔ نامزدها نزدیکِ هم و پایین است (≈۰٫۸۴)، مشکل وزن نیست — **نبودِ پوشش** است.
+
+**۴. «reels برای youtube shorts بساز» → دامنهٔ `general`.** `general/reels-scripting` با اختلافِ ۰٫۰۱ از `video-ai/shorts-scheduler-plan` جلو می‌زد. رفع: `general` دامنهٔ fallback است نه تخصص؛ جریمه از ۰٫۰۵ به **۰٫۱۸** رسید. درس: جریمهٔ دامنهٔ پیش‌فرض باید از «نویزِ امتیاز» بزرگ‌تر باشد وگرنه در تساوی‌ها می‌برد.
+
+**۵. «analytics وبسایت و گزارش هفتگی» → مهارتِ اینستاگرامی.** `ig-analytics-reporter` چون عبارتِ دقیقِ «گزارش هفتگی» در تریگرهایش بود، با پاداشِ عبارت (+۲) می‌برد — در حالی که پرسش «وبسایت» می‌گفت. رفعِ دو لایه: (الف) تضادِ سطح در سطح نام (`^ig-|instagram` وقتی پرسش سطحِ سایت را نام می‌برد و هیچ شبکه‌ای را نه: ۰٫۵۵−)؛ (ب) همان تضاد در سطح دامنه برای مهارت‌های خود-اظهارِ `social-media`: ۰٫۱۵−. درس: پاداشِ عبارت کور است؛ **سطح (surface)** را explicit مدل کن، همان‌طور که قبلاً «web banner» را مدل کرده بودیم.
+
+**پروتکلِ اجباری پس از هر تغییرِ مسیریاب:**
+```bash
+npm run bench:routing                 # قبل/بعد
+node scripts/routing-accuracy.mjs     # باید ≥ آستانه بماند
+node scripts/routing-golden.mjs --check
+# اگر snapshot فرق کرد: هر موردِ تغییرکرده را یکی‌یکی بخوان، بعد:
+node scripts/routing-golden.mjs --write
+npm test
+```
+این دور ۱۹ مورد از ۱۰۸ تغییر کرد: ۵ اصلاحِ top-1، ۷ عقب‌رفتنِ درستِ `general`، ۷ جابه‌جاییِ صرفاً امتیازی. **بدون خواندنِ تک‌تک‌شان، `--write` ممنوع.**
