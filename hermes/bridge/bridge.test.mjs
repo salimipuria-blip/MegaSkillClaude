@@ -205,7 +205,8 @@ test('bridge source contains no write-capable filesystem or shell API', () => {
   const sources = readdirSync(here)
     .filter((f) => f.endsWith('.mjs') && !f.endsWith('.test.mjs'))
     .map((f) => [f, readFileSync(path.join(here, f), 'utf8')]);
-  const forbidden = /\b(writeFile|writeFileSync|appendFile|appendFileSync|unlink|unlinkSync|rm|rmSync|rmdir|rename|renameSync|mkdir|mkdirSync|copyFile|copyFileSync|symlink|symlinkSync|chmod|truncate|createWriteStream|spawn|exec)\s*\(|shell:\s*true/;
+  // Bare calls only: a method such as regex.exec(...) is not a shell call, so a preceding '.' is allowed.
+  const forbidden = /(?<![.\w])(writeFile|writeFileSync|appendFile|appendFileSync|unlink|unlinkSync|rm|rmSync|rmdir|rename|renameSync|mkdir|mkdirSync|copyFile|copyFileSync|symlink|symlinkSync|chmod|truncate|createWriteStream|spawn|exec)\s*\(|shell:\s*true/;
   for (const [file, text] of sources) {
     assert.doesNotMatch(text, forbidden, `${file} must stay read-only in P0`);
   }
