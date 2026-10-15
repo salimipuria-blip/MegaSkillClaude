@@ -1,3 +1,4 @@
+import { fetchWithTimeout } from './resilience.mjs';
 // Professional photo editing for Hermes: the user sends THEIR OWN photo with an instruction and
 // gets an edited picture back (Cloudflare Workers, no native image libraries needed).
 //
@@ -408,7 +409,7 @@ export async function geminiEdit(env, image, mime, instruction, models = []) {
   const list = models.length ? models : (await geminiImageList(env));
   let last = null;
   for (const model of list) {
-    const res = await fetch(`${GEMINI_API}/models/${model}:generateContent`, {
+    const res = await fetchWithTimeout(`${GEMINI_API}/models/${model}:generateContent`, {
       method: 'POST',
       headers: { 'content-type': 'application/json', 'x-goog-api-key': env.GEMINI_API_KEY },
       body: JSON.stringify({
@@ -434,7 +435,7 @@ export async function geminiImageList(env) {
   const cacheKey = 'edit-image-models';
   let models = env.MEMORY ? await env.MEMORY.get(cacheKey, 'json') : null;
   if (!models) {
-    const res = await fetch(`${GEMINI_API}/models?pageSize=1000`, { headers: { 'x-goog-api-key': env.GEMINI_API_KEY } });
+    const res = await fetchWithTimeout(`${GEMINI_API}/models?pageSize=1000`, { headers: { 'x-goog-api-key': env.GEMINI_API_KEY } });
     if (!res.ok) throw new Error(`فهرست مدل‌های جمینی در دسترس نیست (${res.status}).`);
     const data = await res.json();
     const version = (n) => parseFloat((n.match(/gemini-(\d+(?:\.\d+)?)/) || [0, 0])[1]);

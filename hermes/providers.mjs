@@ -1,3 +1,4 @@
+import { fetchWithTimeout } from './resilience.mjs';
 // Free text brains with an OpenAI-compatible API. GitHub Models gives every model its own daily quota, so many models
 // are listed (and more are read from its catalog when those are busy) to get as many free answers a day as possible.
 // Each one is used only when its key is set as a Cloudflare
@@ -54,7 +55,7 @@ export function toMessages(contents, system) {
 
 // Picks up to three live chat models from the provider's catalog, best family first.
 export async function discoverModels(env, p) {
-  const res = await fetch(p.catalog, { headers: authHeader(env, p) });
+  const res = await fetchWithTimeout(p.catalog, { headers: authHeader(env, p) });
   if (!res.ok) return [];
   const data = await res.json().catch(() => null);
   const list = Array.isArray(data) ? data : (data && data.data) || [];
@@ -87,7 +88,7 @@ export function fitContext(messages, budget) {
 const tooLarge = (r) => r.status === 413 || (r.status === 400 && /token|too large|context|length/i.test(r.why || ''));
 
 async function callModel(env, p, model, messages) {
-  const res = await fetch(p.url, {
+  const res = await fetchWithTimeout(p.url, {
     method: 'POST',
     headers: { 'content-type': 'application/json', ...authHeader(env, p) },
     body: JSON.stringify({ model, messages, max_tokens: 2048 }),

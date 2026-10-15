@@ -56,3 +56,6 @@ PLAYWRIGHT_PATH=/path/to/playwright CHROMIUM_PATH=/path/to/chromium \
   - `tests/content.test.mjs` (۷ تست) اضافه شد: ساختارِ بریف و یکتاییِ کلیدها، حضورِ واقعیِ هر ادعا در قالبِ مربوط، `verified=false` تا وقتی منبع ثبت نشده، وجودِ دروازه در رندرر، محلی‌بودن و موجود‌بودنِ همه‌ی دارایی‌ها (هیچ URLِ شبکه‌ای)، `dir="rtl"` و `lang="fa"`، حضورِ پالتِ `#F39A2B/#141414/#FFD9A8/#FF4D3D`، و دقیقاً ۳ اسلاید برای post و یک هدفِ `#st` برای story. شمار تست‌ها **۳ → ۱۰**.
   - به `scripts/doctor.mjs` (گام `content-contract`) و CI وصل شد.
   - **محدودیت:** منبعِ ادعاها از پوریا نیاز دارد (`source` برای هرکدام)؛ تا آن زمان خروجی فقط پیش‌نویسِ چیدمان است و نباید منتشر شود.
+
+## Professional guide
+See `PROFESSIONAL_GUIDE.md` in this folder for performance improvements, debugging playbook, and next steps. Update it whenever behavior changes.

@@ -200,3 +200,6 @@ export می‌شود** (چیزی که تست قبلی نمی‌سنجید). هم
   - `scripts.test` به‌روز شد تا فایل نگهبان را اجرا کند. شمار تست‌ها **۱۸۵ → ۱۸۹** (برچسبِ «۱۷۹» در `scripts/doctor.mjs` هم عددی کهنه بود و اصلاح شد).
   - **دستور تأیید:** `node scripts/doctor.mjs hermes` → سینتکس شِل، **۱۸۹ تست واحد**، **۹ تست یکپارچه روی workerd محلی** و ساخت دارایی‌های مهارت همگی سبز.
   - **محدودیت:** تست‌ها mocked هستند؛ اتصال زنده به تلگرام/Cloudflare/Google در این محیط تأیید نشده است.
+
+## Professional guide
+See `PROFESSIONAL_GUIDE.md` in this folder for performance improvements, debugging playbook, and next steps. Update it whenever behavior changes.

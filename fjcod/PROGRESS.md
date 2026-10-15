@@ -67,3 +67,6 @@ npm run build && npm run e2e   # اسموک مرورگر (نیازمند Chromiu
   - **تأیید مرورگری واقعی:** `CHROMIUM_PATH=/tmp/chromium LD_LIBRARY_PATH=/tmp/al2023/lib E2E_STRICT=1 npm run e2e` → **۱۹/۱۹ مرحله سبز** (ورودِ پنج نقش، صف مشاور، فروش صندوق با بارکد، بستن شیفت، دارک‌مود، viewport موبایل ۳۹۰×۸۴۴، صفر خطای console).
   - **CI:** job جدید `fjcod-e2e` با `npx playwright install --with-deps chromium` و `E2E_STRICT=1` اضافه شد تا نبودِ مرورگر به‌جای skipِ خاموش، خطا بدهد.
   - **محدودیت:** داده همچنان فقط در مرورگر است (بک‌اند/RLS واقعی ندارد)؛ این تست‌ها درستیِ محاسبه را اثبات می‌کنند، نه ماندگاریِ داده روی چند دستگاه را.
+
+## Professional guide
+See `PROFESSIONAL_GUIDE.md` in this folder for performance improvements, debugging playbook, and next steps. Update it whenever behavior changes.

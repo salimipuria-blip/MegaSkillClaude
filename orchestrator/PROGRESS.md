@@ -53,3 +53,6 @@ deno test --no-remote --no-prompt supabase/functions/github-admin-gateway/handle
   - `scripts/doctor.mjs` گزینهٔ `needsModule` گرفت: اگر ماژولِ پایتون در دسترس نباشد، گام با وضعیت **skip** و پیامِ نصبِ دقیق (`python3 -m pip install --user pytest`) گزارش می‌شود. skip هرگز pass نیست و در خروجیِ نهاییِ doctor به‌طور جداگانه فهرست می‌شود.
   - اجرای شاهد در همین محیط: `node scripts/doctor.mjs orchestrator` → قرارداد مخزن **سبز**؛ pytest و deno-gateway به‌دلیل نبود ابزار **skip** (نه fail)، و در خروجی زیرِ «skipped (missing tool/deps)» فهرست شدند. در CI هر دو ابزار نصب‌اند (`setup-deno` و `pip install pytest`) و هر دو گام واقعاً اجرا می‌شوند.
   - **بند بازِ قدیمی همچنان باز است:** materialize کردنِ اسنپ‌شاتِ تاریخیِ مهارت‌ها (یا حذفِ مستندِ آن تست‌ها) تا ۳ اسکیپِ درونِ pytest به صفر برسد. این اسکیپ‌ها آگاهانه‌اند و نباید به تستِ جعلی تبدیل شوند.
+
+## Professional guide
+See `PROFESSIONAL_GUIDE.md` in this folder for performance improvements, debugging playbook, and next steps. Update it whenever behavior changes.

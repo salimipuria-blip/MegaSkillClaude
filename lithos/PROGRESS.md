@@ -70,3 +70,6 @@ npm run build        # vite build → dist/
   - `tests/dashboard.test.mjs` (۵ تست) اضافه شد: بررسیِ خطا برای هر چهار منبع، نگه‌داشتنِ زمانِ آخرین دادهٔ موفق، گرفتنِ rejection، نبودِ کلید سرویس در کلاینت (فقط `sb_publishable_`) و نبودِ `BUFFER_API_KEY` در سمت کلاینت. شمار تست‌ها **۴ → ۹**.
   - **دستور تأیید:** `node scripts/doctor.mjs lithos` → سینتکسِ تابع سرورلس، **۹ تست** و بیلد Vite (`dist/index.html` ۱۰٫۰۷kB، gzip ۴٫۰۹kB) سبز. سینتکسِ اسکریپتِ inline هم جداگانه با `node --check` روی بخشِ استخراج‌شده تأیید شد.
   - **محدودیت:** رفتارِ UI در مرورگر واقعی و RLSِ زنده تست نشده؛ قراردادِ کوئریِ Buffer همچنان `TODO(verify)` است و تا آن زمان پاسخِ خالی را با `502 BUFFER_SHAPE_UNVERIFIED` صریحاً رد می‌کند.
+
+## Professional guide
+See `PROFESSIONAL_GUIDE.md` in this folder for performance improvements, debugging playbook, and next steps. Update it whenever behavior changes.

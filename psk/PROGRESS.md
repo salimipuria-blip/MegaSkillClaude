@@ -92,3 +92,6 @@ npm run bench:routing
 - **تست‌های جدید:** `tests/routing-signals.test.mjs` (۶ تست) هر سیگنال را با نام و پرسشِ دقیق قفل می‌کند تا خرابیِ آینده مستقیماً به همان قانون اشاره کند. شمار تست‌ها **۴۷ → ۵۳**.
 - **دستور تأیید:** `node scripts/doctor.mjs psk` → سینتکس، **۵۳ تست**، golden، accuracy و بنچمارک همگی سبز. بنچمارک: p50 ≈ ۱٫۱۷۵ms.
 - **محدودیت:** مجموعهٔ طلاییِ ۱۰۰تایی همچنان ماشین‌ساخته است (برچسب‌های انسانیِ پوریا هنوز اضافه نشده)؛ دقتِ ۱۰۰٪ روی این مجموعه به‌معنای صحتِ مطلق در دنیای واقعی نیست.
+
+## Professional guide
+See `PROFESSIONAL_GUIDE.md` in this folder for performance improvements, debugging playbook, and next steps. Update it whenever behavior changes.

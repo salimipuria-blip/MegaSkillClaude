@@ -29,6 +29,9 @@ import { googleConfigured, googleConnected, googleTools, connectUrl, finishConne
 import { liveness, readiness, fullHealth } from './health.mjs';
 import { recordRequest, snapshot as metricsSnapshot, prometheusText } from './metrics.mjs';
 export { liveness, readiness, fullHealth } from './health.mjs';
+import { fetchWithTimeout } from './resilience.mjs';
+import { parseReminder, addReminder, listReminders, deleteReminder, formatReminder, allReminders, dueReminders, markSent, morningDigest } from './reminders.mjs';
+export { parseReminder } from './reminders.mjs';
 
 const TG_LIMIT = 4000;
 /** The app offers at most this many versions to pick from (the studio set is three). */
@@ -120,7 +123,7 @@ export async function sendPicture(env, chatId, image, caption) {
   form.append('caption', String(caption || '').slice(0, 1000));
   form.append('photo', new Blob([base64ToBytes(image.data)], { type: image.mime }),
     image.mime === 'image/png' ? 'hermes-text.png' : 'hermes-text.jpg');
-  return fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendPhoto`, { method: 'POST', body: form })
+  return fetchWithTimeout(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendPhoto`, { method: 'POST', body: form })
     .then((r) => r.json()).catch(() => ({}));
 }
 
@@ -140,14 +143,14 @@ export async function sendEdited(env, chatId, before, edited) {
     const name = t.mime === 'image/png' ? `${t.slot}.png` : `${t.slot}.jpg`;
     album.append(t.slot, new Blob([base64ToBytes(t.image)], { type: t.mime }), name);
   }
-  const out = await fetch(api('sendMediaGroup'), { method: 'POST', body: album }).then((r) => r.json()).catch(() => ({}));
+  const out = await fetchWithTimeout(api('sendMediaGroup'), { method: 'POST', body: album }).then((r) => r.json()).catch(() => ({}));
   if (out && out.ok) return true;
   // Fallback: one photo (the best take), or the caption text if even that is refused.
   const single = new FormData();
   single.append('chat_id', String(chatId));
   single.append('caption', caption.slice(0, 1000));
   single.append('photo', new Blob([base64ToBytes(edited.image)], { type: edited.mime }), edited.mime === 'image/png' ? 'hermes-edit.png' : 'hermes-edit.jpg');
-  const one = await fetch(api('sendPhoto'), { method: 'POST', body: single }).then((r) => r.json()).catch(() => ({}));
+  const one = await fetchWithTimeout(api('sendPhoto'), { method: 'POST', body: single }).then((r) => r.json()).catch(() => ({}));
   if (one && one.ok) return true;
   return send(env, chatId, caption);
 }
@@ -201,11 +204,20 @@ export default {
     }
     return new Response('ok');
   },
+
+  // Cron (see wrangler.toml [triggers]): fire reminders whose time has come, then hand each
+  // chat its morning digest. Failures are logged and never fail the cron invocation.
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(runReminders(env).catch((err) => console.error('[Hermes][cron]', err.message)));
+  },
 };
 
 // The owner's web app shares memory with their private Telegram chat (chat id == user id).
 // Team members each get their own private memory.
 const ownerKey = (env) => `history:${String(env.ALLOWED_USER_ID).trim()}`;
+// The identity reminders are filed under: the owner's Telegram chat id (the same id the
+// /reminders command uses), or a stable per-member key for signed-in teammates.
+const chatIdOf = (env, who) => (who.role === 'owner' ? String(env.ALLOWED_USER_ID).trim() : `app:${who.username}`);
 const historyKey = (env, who) => (who.role === 'owner' ? ownerKey(env) : `history:user:${who.username}`);
 
 // Who is calling: the owner (private /app key from Telegram) or a team member (login session).
@@ -219,9 +231,9 @@ async function caller(request, env) {
 }
 
 async function api(request, url, env) {
-  const json = (body, status = 200, extraHeaders = {}) => new Response(JSON.stringify(body), {
+  const json = (body, status = 200, extraHeaders = {}) => { recordRequest(status >= 500); return new Response(JSON.stringify(body), {
     status, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store', ...extraHeaders },
-  });
+  }); };
   if (request.method === 'POST' && url.pathname === '/api/booking') {
     if (!env.TELEGRAM_BOT_TOKEN) return json({ error: 'رزرو موقتاً در دسترس نیست.' }, 503);
     const res = await createBooking(env, tg, request, await request.json().catch(() => ({})));
@@ -261,6 +273,21 @@ async function api(request, url, env) {
     await archiveAndClear(env, historyKey(env, who));
     return json({ ok: true });
   }
+  if (request.method === 'GET' && url.pathname === '/api/reminders') return json({ reminders: await listReminders(env, chatIdOf(env, who)) });
+  if (request.method === 'POST' && url.pathname === '/api/reminders') {
+    const body = await request.json().catch(() => ({}));
+    const parsed = parseReminder(String(body.text || '').slice(0, 500));
+    if (!parsed) return json({ error: 'متنی برای یادآور پیدا نکردم. مثال: «یادم بنداز ساعت ۹: تماس با بانک»' }, 400);
+    try { return json({ reminder: await addReminder(env, chatIdOf(env, who), parsed) }); }
+    catch (err) { return json({ error: err.message }, 502); }
+  }
+  if (request.method === 'POST' && url.pathname === '/api/reminders/delete') {
+    const body = await request.json().catch(() => ({}));
+    const mine = await listReminders(env, chatIdOf(env, who));
+    if (!mine.some((r) => r.id === body.id)) return json({ error: 'یادآور پیدا نشد' }, 404);
+    await deleteReminder(env, body.id);
+    return json({ ok: true });
+  }
   if (request.method === 'GET' && url.pathname === '/api/notes') return json({ notes: await loadNotes(env, historyKey(env, who)) });
   if (request.method === 'POST' && url.pathname === '/api/notes/clear') {
     await clearNotes(env, historyKey(env, who));
@@ -281,7 +308,7 @@ async function api(request, url, env) {
     const body = await request.json().catch(() => ({}));
     const take = Math.max(1, Math.min(MAX_PICKS, Number(body.take) || 0));
     const key = historyKey(env, who);
-    const [last, set] = [await recallEdit(env, key), await recallVariations(env, key)];
+    const [last, set] = await Promise.all([recallEdit(env, key), recallVariations(env, key)]);
     if (!last || !set || !set.takes[take - 1]) return json({ error: 'این مجموعه دیگر در دسترس نیست؛ عکس را دوباره بفرست.' }, 404);
     try {
       const edited = await refineTake(env, ask, { ...set, image: last.image, mime: last.mime }, take);
@@ -329,9 +356,11 @@ async function api(request, url, env) {
       if (photo && plan && plan.op !== 'text') {
         const edited = await handlePhotoEdit(env, ask, photo.data, photo.mime, message);
         if (edited) {
-          if (edited.image) await rememberEdit(env, key, { original: photo.data, mime: photo.mime, request: message,
-            op: edited.op, strength: edited.strength });
-          if (edited.variations) await rememberVariations(env, key, { ...edited, request: message });
+          await Promise.all([
+            edited.image ? rememberEdit(env, key, { original: photo.data, mime: photo.mime, request: message,
+              op: edited.op, strength: edited.strength }) : Promise.resolve(),
+            edited.variations ? rememberVariations(env, key, { ...edited, request: message }) : Promise.resolve(),
+          ]);
           if (!wantsText) await forgetTextLayer(env, key); // edited again: no layer sits on it now
           if (wantsText && !edited.variations) {
             // An edit plus words: deliver the edited picture and the layer for the canvas.
@@ -384,6 +413,35 @@ async function api(request, url, env) {
   return json({ error: 'not found' }, 404);
 }
 
+/**
+ * Cron body: deliver every reminder whose time has come (once), then the morning digest.
+ * Kept exported and side-effect-free for unit tests with a fake env.
+ */
+export async function runReminders(env, now = new Date()) {
+  if (!env.TELEGRAM_BOT_TOKEN) return { delivered: 0, digests: 0 };
+  const due = await dueReminders(env, now);
+  let delivered = 0;
+  for (const r of due) {
+    try {
+      await send(env, r.chatId, `⏰ یادآور: ${r.text}`);
+      await markSent(env, r.id);
+      delivered += 1;
+    } catch (err) {
+      console.error('[Hermes][reminder]', r.id, err.message);
+    }
+  }
+  // The digest is the day's agenda: only fires once per day, at the 8am Tehran run.
+  let digests = 0;
+  const tehranHour = Number(new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Tehran', hour: 'numeric', hour12: false }).format(now));
+  if (tehranHour === 8) {
+    for (const d of morningDigest(await allReminders(env), now)) {
+      if (!d.text) continue;
+      try { await send(env, d.chatId, d.text); digests += 1; } catch (err) { console.error('[Hermes][digest]', err.message); }
+    }
+  }
+  return { delivered, digests };
+}
+
 // Weather for the app's HUD: the caller's city from Cloudflare's geo data, else Tehran. Keyless open-meteo.
 export async function weather(request) {
   const cf = request.cf || {};
@@ -391,7 +449,7 @@ export async function weather(request) {
   const here = Number.isFinite(lat) && Number.isFinite(lon) && cf.city;
   const [la, lo, city] = here ? [lat, lon, cf.city] : [35.69, 51.39, 'Tehran'];
   try {
-    const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${la}&longitude=${lo}&current=temperature_2m,weather_code`);
+    const res = await fetchWithTimeout(`https://api.open-meteo.com/v1/forecast?latitude=${la}&longitude=${lo}&current=temperature_2m,weather_code`);
     const data = await res.json();
     return { city, temp: data.current?.temperature_2m ?? null, code: data.current?.weather_code ?? null };
   } catch {
@@ -429,6 +487,7 @@ function jsonProbe(body, status) {
 }
 
 function page(body, type) {
+  recordRequest(false);
   return new Response(body, { headers: { 'content-type': `${type}; charset=utf-8`, 'cache-control': 'no-cache' } });
 }
 
@@ -498,6 +557,7 @@ async function handle(msg, env, origin) {
       'متن روی عکس هم می‌شود: «روی عکس بنویس: کمپ وایکینگ» — با فونت واقعی می‌نشیند، پس فارسی سالم می‌ماند.\n' +
       'بعد از آن متن با پیام هم جابه‌جا می‌شود: «بالاتر ببر»، «کمی پایین‌تر»، «وسطش بذار»، «سفیدش کن»، «درشت‌ترش کن»، «بدون نوار»، «متن رو بردار».\n' +
       'ویس بفرست تا گوش بدهم، عکس بفرست تا ببینم؛ برای خبرها و چیزهای روز در گوگل جست‌وجو می‌کنم.\n' +
+      'یادآور: بنویس «یادم بنداز ساعت ۹: تماس با بانک» یا «یادم بنداز فردا ۱۰: قرار دکتر» یا «remind me in 30 minutes: call Bob» — سر وقت بهت پیام می‌دم و هر صبح لیست روزت را می‌فرستم. لیست و حذف: /reminders\n' +
       '/google اتصال جیمیل، تقویم، درایو و شیت\n' +
       '/reset گفتگوی جدید (قبلی بایگانی می‌شود)\n/notes یادداشت‌های حافظه\n/forget پاک کردن یادداشت‌ها\n/app لینک اپ');
   }
@@ -529,6 +589,35 @@ async function handle(msg, env, origin) {
   if (input === '/reset') {
     await archiveAndClear(env, key);
     return send(env, chatId, 'گفتگوی جدید شروع شد. گفتگوی قبلی بایگانی شد و یادداشت‌ها سر جایشان هستند.');
+  }
+  if (input === '/reminders' || input === '/یادآورها') {
+    const list = await listReminders(env, chatId);
+    if (!list.length) return send(env, chatId, 'یادآوری فعالی نداری. بنویس مثلاً:\n«یادم بنداز ساعت ۹: تماس با بانک»\n«یادم بنداز فردا ۱۰: قرار دکتر»\n«remind me in 30 minutes: call Bob»');
+    return send(env, chatId, 'یادآورهای فعال:\n' + list.map((r, i) => `${i + 1}. ${formatReminder(r)}\n   حذف: /rem_del ${i + 1}`).join('\n'));
+  }
+  {
+    const del = input.match(/^\/(?:rem_del|reminder_del|یادآور_حذف)\s+(\d{1,2})$/i);
+    if (del) {
+      const list = await listReminders(env, chatId);
+      const n = Number(del[1]);
+      const target = list[n - 1];
+      if (!target) return send(env, chatId, `شمارهٔ ${n} در لیست نیست. لیست: /reminders`);
+      await deleteReminder(env, target.id);
+      return send(env, chatId, `حذف شد: ${formatReminder(target)}`);
+    }
+  }
+  // Natural-language reminders are handled before the chat path so «یادم بنداز ...» never
+  // reaches the model: it is a scheduling command, not a conversation.
+  {
+    const parsed = parseReminder(input);
+    if (parsed) {
+      try {
+        const entry = await addReminder(env, chatId, parsed);
+        return send(env, chatId, `⏰ ثبت شد: ${formatReminder(entry)}\n\nلیست: /reminders`);
+      } catch (err) {
+        return send(env, chatId, `ثبت یادآور انجام نشد: ${err.message}`);
+      }
+    }
   }
 
   // A follow-up that only moves the words («بالاتر ببر»، «سفیدش کن»): the layer and the picture under
@@ -621,7 +710,7 @@ async function handle(msg, env, origin) {
       form.append('chat_id', String(chatId));
       form.append('caption', prompt.slice(0, 1000));
       form.append('photo', new Blob([base64ToBytes(image)], { type: mime }), mime === 'image/png' ? 'hermes.png' : 'hermes.jpg');
-      await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendPhoto`, { method: 'POST', body: form });
+      await fetchWithTimeout(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendPhoto`, { method: 'POST', body: form });
     } catch (err) {
       await send(env, chatId, `خطا در ساخت عکس: ${err.message}`);
     }
@@ -649,7 +738,7 @@ async function send(env, chatId, body) {
 }
 
 async function tg(env, method, payload) {
-  const res = await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/${method}`, {
+  const res = await fetchWithTimeout(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/${method}`, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify(payload),
@@ -658,5 +747,6 @@ async function tg(env, method, payload) {
 }
 
 function text(body, status = 200) {
+  recordRequest(status >= 500);
   return new Response(body, { status, headers: { 'content-type': 'text/plain; charset=utf-8' } });
 }

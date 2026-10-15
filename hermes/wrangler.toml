@@ -20,6 +20,12 @@ new_sqlite_classes = ["HermesConversation"]
 binding = "MEMORY"
 id = "90fafb6bf15c4a1cb8b503668e070ab3"
 
+# Cron: fires the reminder queue (reminders.mjs) — delivers due reminders and, at 08:00
+# Asia/Tehran, the day's agenda digest. Uncomment after `wrangler deploy`; without a trigger
+# reminders are still stored and listed, they just never fire.
+# [triggers]
+# crons = ["*/5 * * * *"]
+
 # Cloudflare Workers AI: free daily quota, no API key. Used when Gemini is missing or fails.
 [ai]
 binding = "AI"

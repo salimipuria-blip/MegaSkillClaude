@@ -15,7 +15,8 @@ export const workerModuleNames = [
   'entry', 'worker', 'security', 'app', 'auth', 'users', 'skills',
   'skill-router', 'memory', 'brain', 'conversation', 'image', 'media',
   'booking', 'trip-media', 'providers', 'google', 'health', 'metrics',
-  'rate-limit', 'resilience', 'webhook-setup', 'photo-edit', 'upscale', 'image-bytes', 'textlayer', 'viking-style'
+  'rate-limit', 'resilience', 'webhook-setup', 'photo-edit', 'upscale', 'image-bytes', 'textlayer', 'viking-style',
+  'reminders'
 ];
 const modules = workerModuleNames
   .map((name) => ({ type: 'ESModule', path: fileURLToPath(new URL(`${name}.mjs`, import.meta.url)) }));
@@ -141,6 +142,26 @@ test('notes stay bounded and duplicate-free; clearing them does not delete messa
   await f.api('notes/clear', {});
   assert.deepEqual((await f.api('notes')).body.notes, []);
   assert.equal((await f.api('history')).body.messages.length, 2);
+});
+
+
+test('reminders can be created, listed and deleted from the app API', async (t) => {
+  const f = await fixture(t);
+  const ownerChat = String(bindings.ALLOWED_USER_ID).trim();
+  const created = await f.api('reminders', { text: 'یادم بنداز فردا 10: قرار دکتر' });
+  assert.equal(created.status, 200);
+  assert.equal(created.body.reminder.text, 'قرار دکتر');
+  assert.equal(created.body.reminder.chatId, ownerChat);
+
+  const bad = await f.api('reminders', { text: 'سلام چطوری' });
+  assert.equal(bad.status, 400);
+
+  const listed = (await f.api('reminders')).body.reminders;
+  assert.equal(listed.length, 1);
+  assert.equal(listed[0].id, created.body.reminder.id);
+
+  await f.api('reminders/delete', { id: created.body.reminder.id });
+  assert.deepEqual((await f.api('reminders')).body.reminders, []);
 });
 
 
