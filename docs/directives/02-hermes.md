@@ -10,7 +10,7 @@
 - ⚠️ انتشار زندهٔ سخت‌سازی روی Worker تأیید نشده؛ اولین انتشار باید در زمان بدون گفتگوی فعال انجام شود.
 
 ## معماری و فایل‌های کلیدی
-`worker.mjs` (هسته)، `brain.mjs`/`conversation.mjs`/`memory.mjs`، `rate-limit.mjs`، `health.mjs`/`metrics.mjs`، `setup.sh`+`config.sh`+`logger.sh` (نصب‌کننده)، `wrangler.toml` (binding `CONVERSATIONS`، migration `conversation-sqlite-v1`)، برنامه‌ریزی تسک‌ها در `tasks/` (فقط dry-run/validate؛ بدون skeleton PR و auto-merge).
+`worker.mjs` (هسته)، `workspaces.mjs` (مشتری‌های Business)، `brain.mjs`/`conversation.mjs`/`memory.mjs`، `rate-limit.mjs`، `health.mjs`/`metrics.mjs`، `setup.sh`+`config.sh`+`logger.sh` (نصب‌کننده)، `wrangler.toml` (binding `CONVERSATIONS`، migration `conversation-sqlite-v1`)، برنامه‌ریزی تسک‌ها در `tasks/` (فقط dry-run/validate؛ بدون skeleton PR و auto-merge).
 
 ## اجرا و تست
 ```bash
@@ -30,6 +30,7 @@ python3 tasks/apply_hermes_tasks.py --manifest tasks/hermes_tasks.json --validat
 - **دیباگ زنده:** اول `/api/health` و متریک‌ها؛ توکن بات/کلید Gemini را هرگز در دستور یا لاگ چاپ نکن (`set +x`، ریدکشن).
 
 ## گسترش (اولویت‌بندی)
+- **Business (فعال):** هر مشتری قراردادی = یک فضای کاری در `workspaces.mjs`. قانون‌ها: دادهٔ مالک (حافظه، گوگل، رزرو، /status، /app) هرگز به مسیر عضو نرسد؛ متن مشتری فقط داده در پرامپت؛ هر مسیر مدل برای عضو قبلش `spend()` بگیرد؛ هر دستور جدید مشتری تست انزوا داشته باشد (`workspaces.test.mjs`).
 - **P0:** انتشار کنترل‌شدهٔ Worker سخت‌سازی‌شده طبق چک‌لیست `docs/REPO_HARDENING.md` و تست `/app` در چت خصوصی.
 - **P1 (W1):** پوشش واحد ≥۸۰٪، سرور Mock Gemini، آپدیت‌های ناقص تلگرام، quota پایدار هر کاربر، i18n فارسی خطاها، تست post-deploy.
 - **P2 (W2/W3):** یادآور و خلاصهٔ صبح (Cron)، داشبورد مالک، بات عمومی مشتری وایکینگ — فقط با تصمیم محصول جدا.

@@ -25,6 +25,7 @@ import { ask } from './brain.mjs';
 import { transcribe, telegramFile, parseDataUrl } from './media.mjs';
 import { tripPage, createBooking, onContact } from './booking.mjs';
 import { configuredProviders } from './providers.mjs';
+import { historyKey as wsHistoryKey, membership, joinWorkspace, clientCommand, ownerCommand, businessSystem, getKnowledge, spend, IMAGE_UNITS } from './workspaces.mjs';
 import { googleConfigured, googleConnected, googleTools, connectUrl, finishConnect, disconnect } from './google.mjs';
 import { liveness, readiness, fullHealth } from './health.mjs';
 import { diagnose, formatDiagnosis } from './diagnose.mjs';
@@ -532,28 +533,34 @@ async function handle(msg, env, origin) {
     return;
   }
   if (String(userId) !== String(env.ALLOWED_USER_ID).trim()) {
-    await tg(env, 'sendMessage', { chat_id: chatId, text: `این بات خصوصی است. شناسهٔ شما: ${userId}\n\nمسئول رزرو وایکینگ هستی؟ دکمهٔ پایین رو بزن تا شماره‌ت ثبت بشه و گزارش رزروها برات بیاد.`,
+    // Hermes Business: a contracted company's people talk to their own isolated workspace.
+    if (env.MEMORY) {
+      const text = typeof msg.text === 'string' ? msg.text.trim() : '';
+      const join = text.match(/^\/join(?:@\w+)?\s+(\S+)/i);
+      const member = await membership(env, userId);
+      if (join && !member) {
+        const joined = await joinWorkspace(env, userId, join[1]);
+        if (joined.error) return send(env, chatId, joined.error);
+        await send(env, String(env.ALLOWED_USER_ID).trim(), `👤 ${[msg.from.first_name, msg.from.username && `@${msg.from.username}`].filter(Boolean).join(' ') || userId} به «${joined.ws.name}» پیوست (${joined.role}).`);
+        return send(env, chatId, `✅ به «${joined.ws.name}» خوش آمدی!\n\n${await clientCommand(env, userId, joined, '/help')}`);
+      }
+      if (member) return handleClient(msg, env, chatId, userId, member);
+    }
+    await tg(env, 'sendMessage', { chat_id: chatId, text: `این بات خصوصی است. شناسهٔ شما: ${userId}\n\nکسب‌وکارت با هرمس قرارداد دارد؟ کد عضویتی را که گرفتی این‌طور بفرست: /join کد\n\nمسئول رزرو وایکینگ هستی؟ دکمهٔ پایین رو بزن تا شماره‌ت ثبت بشه و گزارش رزروها برات بیاد.`,
       reply_markup: { keyboard: [[{ text: '📱 ارسال شمارهٔ من', request_contact: true }]], resize_keyboard: true, one_time_keyboard: true } });
     return;
   }
   const key = ownerKey(env);
-  let input = typeof msg.text === 'string' ? msg.text.trim() : '';
-  let images = [], heard = '';
-  if (!input) {
+  const read = await readInput(env, msg, chatId);
+  if (!read) return;
+  const { input, images, heard } = read;
+  if (env.MEMORY && /^\/client/.test(input)) {
     try {
-      const voice = msg.voice || msg.audio;
-      if (voice) {
-        await tg(env, 'sendChatAction', { chat_id: chatId, action: 'typing' });
-        const file = await telegramFile(env, voice.file_id, voice.mime_type || 'audio/ogg');
-        input = heard = await transcribe(env, askGemini, file.data, file.mime);
-      } else if (msg.photo && msg.photo.length) {
-        images = [await telegramFile(env, msg.photo[msg.photo.length - 1].file_id, 'image/jpeg')];
-        input = (msg.caption || '').trim() || 'این عکس رو ببین و بگو چی توشه.';
-      }
+      const reply = await ownerCommand(env, input);
+      if (reply) return send(env, chatId, reply);
     } catch (err) {
-      return send(env, chatId, `خطا: ${err.message}`);
+      return send(env, chatId, err.message);
     }
-    if (!input) return;
   }
   if (input === '/start') {
     return send(env, chatId, 'سلام! من هرمس هستم. هر چه می‌خواهی بپرس.\n' +
@@ -566,6 +573,7 @@ async function handle(msg, env, origin) {
       'بعد از آن متن با پیام هم جابه‌جا می‌شود: «بالاتر ببر»، «کمی پایین‌تر»، «وسطش بذار»، «سفیدش کن»، «درشت‌ترش کن»، «بدون نوار»، «متن رو بردار».\n' +
       'ویس بفرست تا گوش بدهم، عکس بفرست تا ببینم؛ برای خبرها و چیزهای روز در گوگل جست‌وجو می‌کنم.\n' +
       'یادآور: بنویس «یادم بنداز ساعت ۹: تماس با بانک» یا «یادم بنداز فردا ۱۰: قرار دکتر» یا «remind me in 30 minutes: call Bob» — سر وقت بهت پیام می‌دم و هر صبح لیست روزت را می‌فرستم. لیست و حذف: /reminders\n' +
+      'مشتری‌ها (Hermes Business): /client_new <نام کسب‌وکار> فضای کاری + کد عضویت مدیر؛ /clients فهرست و مصرف\n' +
       '/status وضعیت زندهٔ همهٔ مغزها و منبع‌های عکس (کدام کار می‌کند و چرا)\n' +
       '/google اتصال جیمیل، تقویم، درایو و شیت\n' +
       '/reset گفتگوی جدید (قبلی بایگانی می‌شود)\n/notes یادداشت‌های حافظه\n/forget پاک کردن یادداشت‌ها\n/app لینک اپ');
@@ -718,12 +726,7 @@ async function handle(msg, env, origin) {
     if (!wanted) return send(env, chatId, 'بنویس چه عکسی می‌خواهی، مثلاً:\nعکس بساز: کمپ کنار دریاچه در جنگل پاییزی');
     await tg(env, 'sendChatAction', { chat_id: chatId, action: 'upload_photo' });
     try {
-      const { image, mime, prompt } = await picture(env, key, input, wanted);
-      const form = new FormData();
-      form.append('chat_id', String(chatId));
-      form.append('caption', prompt.slice(0, 1000));
-      form.append('photo', new Blob([base64ToBytes(image)], { type: mime }), mime === 'image/png' ? 'hermes.png' : 'hermes.jpg');
-      await fetchWithTimeout(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendPhoto`, { method: 'POST', body: form });
+      await sendGenerated(env, chatId, await picture(env, key, input, wanted));
     } catch (err) {
       await send(env, chatId, `خطا در ساخت عکس: ${err.message}`);
     }
@@ -734,6 +737,75 @@ async function handle(msg, env, origin) {
   let reply;
   try {
     reply = await converse(env, key, input, SYSTEM, images, await googleTools(env));
+  } catch (err) {
+    return send(env, chatId, `خطا: ${err.message}`);
+  }
+  await send(env, chatId, heard ? `🎙️ «${heard}»\n\n${reply}` : reply);
+}
+
+// Text, voice (transcribed) or photo (+caption). Returns null when there is nothing to answer.
+async function readInput(env, msg, chatId) {
+  let input = typeof msg.text === 'string' ? msg.text.trim() : '';
+  let images = [], heard = '';
+  if (!input) {
+    try {
+      const voice = msg.voice || msg.audio;
+      if (voice) {
+        await tg(env, 'sendChatAction', { chat_id: chatId, action: 'typing' });
+        const file = await telegramFile(env, voice.file_id, voice.mime_type || 'audio/ogg');
+        input = heard = await transcribe(env, askGemini, file.data, file.mime);
+      } else if (msg.photo && msg.photo.length) {
+        images = [await telegramFile(env, msg.photo[msg.photo.length - 1].file_id, 'image/jpeg')];
+        input = (msg.caption || '').trim() || 'این عکس رو ببین و بگو چی توشه.';
+      }
+    } catch (err) {
+      await send(env, chatId, `خطا: ${err.message}`);
+      return null;
+    }
+    if (!input) return null;
+  }
+  return { input, images, heard };
+}
+
+async function sendGenerated(env, chatId, { image, mime, prompt }) {
+  const form = new FormData();
+  form.append('chat_id', String(chatId));
+  form.append('caption', prompt.slice(0, 1000));
+  form.append('photo', new Blob([base64ToBytes(image)], { type: mime }), mime === 'image/png' ? 'hermes.png' : 'hermes.jpg');
+  await fetchWithTimeout(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendPhoto`, { method: 'POST', body: form });
+}
+
+// A workspace member: own memory key, business prompt, daily quota; never the owner's tools or data.
+async function handleClient(msg, env, chatId, userId, member) {
+  const { ws, role } = member;
+  if (!ws.active) return send(env, chatId, `سرویس هرمس برای «${ws.name}» موقتاً متوقف است. با مدیر قرارداد تماس بگیر.`);
+  const read = await readInput(env, msg, chatId);
+  if (!read) return;
+  const { input, images, heard } = read;
+  try {
+    const reply = await clientCommand(env, userId, member, input);
+    if (reply) return send(env, chatId, reply);
+  } catch (err) {
+    return send(env, chatId, err.message);
+  }
+  const key = wsHistoryKey(ws.id, userId);
+  const wanted = imageRequest(input);
+  if (wanted === '') return send(env, chatId, 'بنویس چه عکسی می‌خواهی، مثلاً:\nعکس بساز: پست اینستاگرام برای تخفیف پاییزه');
+  const cost = await spend(env, ws, wanted ? IMAGE_UNITS : 1);
+  if (!cost.ok) return send(env, chatId, `سهمیهٔ امروز «${ws.name}» تمام شده (${cost.used} از ${ws.quota}). فردا دوباره در خدمتم؛ برای سقف بیشتر با مدیر قرارداد هماهنگ کن.`);
+  if (wanted) {
+    await tg(env, 'sendChatAction', { chat_id: chatId, action: 'upload_photo' });
+    try {
+      await sendGenerated(env, chatId, await picture(env, key, input, wanted));
+    } catch (err) {
+      await send(env, chatId, `خطا در ساخت عکس: ${err.message}`);
+    }
+    return;
+  }
+  await tg(env, 'sendChatAction', { chat_id: chatId, action: 'typing' });
+  let reply;
+  try {
+    reply = await converse(env, key, input, businessSystem(ws, await getKnowledge(env, ws.id), role), images, null);
   } catch (err) {
     return send(env, chatId, `خطا: ${err.message}`);
   }

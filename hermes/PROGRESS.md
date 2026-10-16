@@ -1,6 +1,6 @@
 # Hermes (دستیار ۲۴/۷ تلگرام) — دفتر جریان پروژه
 
-> توضیح زندهٔ پروژه؛ هر دور کاری همین‌جا اضافه می‌شود. آخرین به‌روزرسانی: **۲۰۲۶-۱۰-۱۴ (جهت هنری محتوای وایکینگ برای ساخت/ویرایش عکس)**.
+> توضیح زندهٔ پروژه؛ هر دور کاری همین‌جا اضافه می‌شود. آخرین به‌روزرسانی: **۲۰۲۶-۱۰-۱۶ (Hermes Business: فضای کاری مشتری‌های قراردادی)**.
 
 ## ۱) پروژه در یک نگاه
 - **پوشه:** `hermes/` · **فناوری:** Cloudflare Worker + Gemini + اسکریپت نصب bash (اوراکل Always Free)
@@ -209,6 +209,8 @@ export می‌شود** (چیزی که تست قبلی نمی‌سنجید). هم
   - `sync-secrets.mjs`: `HEALTH_KEY` هم کپی می‌شود.
   - **تأیید:** `npm run check` سبز (ماژول تازه در فهرست)، **۲۱۱/۲۱۱ تست واحد** (۵ تست تازهٔ `diagnose.test.mjs`)، **۱۰/۱۰ workerd** (`diagnose` به `workerModuleNames` اضافه شد).
   - **محدودیت:** فراخوانی‌های provider در تست mock هستند؛ وضعیت واقعی فقط با `/status` روی ربات زنده یا workflow معلوم می‌شود.
+
+- **۲۰۲۶-۱۰-۱۶ — Hermes Business.** `workspaces.mjs` (جدید) + سیم‌کشی در `handle()` تلگرام: مالک با `/client_new` فضای کاری و کد مدیر می‌سازد؛ مشتری با `/join` وارد می‌شود و هرمسی می‌گیرد که معرفی و دانسته‌های کسب‌وکار خودش را می‌شناسد، حافظهٔ جدا (`history:ws:<id>:<uid>`)، سهمیهٔ روزانه (پیش‌فرض ۲۰۰، ۰=نامحدود)، بدون ابزار گوگل و دادهٔ مالک. `readInput`/`sendGenerated` برای مسیر مالک و مشتری مشترک شد. تست: `workspaces.test.mjs` ۸/۸؛ کل `npm test` ۲۱۹/۲۱۹؛ integration ۱۰/۱۰.
 
 ## Professional guide
 See `PROFESSIONAL_GUIDE.md` in this folder for performance improvements, debugging playbook, and next steps. Update it whenever behavior changes.
