@@ -1,0 +1,38 @@
+{
+  // Any of the owner's Codespaces opens this monorepo ready to work: Node 22 + Python 3.12 + Deno
+  // (orchestrator gateway) + gh + the Claude Code CLI and VS Code extension. Dependencies for every
+  // project are installed once on create (post-create.sh); nothing here holds or prints a secret.
+  "name": "MegaSkillClaude",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm",
+  "features": {
+    "ghcr.io/devcontainers/features/python:1": { "version": "3.12" },
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/anthropics/devcontainer-features/claude-code:1": {}
+  },
+  "hostRequirements": { "cpus": 4, "memory": "8gb" },
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+  "forwardPorts": [5173, 4173, 8787, 3000],
+  "portsAttributes": {
+    "5173": { "label": "Vite dev (lithos / fjcod / bison)" },
+    "4173": { "label": "Vite preview" },
+    "8787": { "label": "Hermes (wrangler dev)" },
+    "3000": { "label": "psk" }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "anthropic.claude-code",
+        "ms-python.python",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "denoland.vscode-deno",
+        "github.vscode-github-actions",
+        "github.vscode-pull-request-github"
+      ],
+      "settings": {
+        "deno.enablePaths": ["orchestrator/supabase/functions"],
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
+    }
+  }
+}

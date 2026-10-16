@@ -70,3 +70,5 @@ npm run build && npm run e2e   # اسموک مرورگر (نیازمند Chromiu
 
 ## Professional guide
 See `PROFESSIONAL_GUIDE.md` in this folder for performance improvements, debugging playbook, and next steps. Update it whenever behavior changes.
+
+- **۲۰۲۶-۱۰-۱۶ (Vercel ignoreCommand)** — `vercel.json` پروژه `ignoreCommand: git diff --quiet "${VERCEL_GIT_PREVIOUS_SHA:-HEAD^}" HEAD -- .` گرفت: اگر این پوشه از آخرین استقرار موفق تغییر نکرده باشد Vercel ساخت را رد می‌کند (سهمیهٔ ۱۰۰ دیپلوی روزانه دیگر با PRهای پروژه‌های دیگر پر نمی‌شود)؛ اگر git نتواند مقایسه کند (sha ناشناخته/clone کم‌عمق) exit غیرصفر می‌دهد و ساخت طبق معمول انجام می‌شود. تأیید: اجرای محلی دستور (بدون تغییر → 0، sha ناشناخته → 128). استقرار واقعی Vercel در این محیط بررسی نشد.

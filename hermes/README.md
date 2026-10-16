@@ -45,6 +45,7 @@ Worker `hermes` ← Settings ← Variables and Secrets ← Add. هر سه را �
 | `GITHUB_MODELS_TOKEN` | (اختیاری، رایگان) توکن گیت‌هاب با دسترسی Models — مغز پشتیبان GPT-4.1 |
 | `GROQ_API_KEY` | (اختیاری، رایگان) کلید console.groq.com — مغز پشتیبان سریع |
 | `CEREBRAS_API_KEY` / `OPENROUTER_API_KEY` / `MISTRAL_API_KEY` | (اختیاری، رایگان) مغزهای پشتیبان بیشتر |
+| `HEALTH_KEY` | (اختیاری) یک رشتهٔ تصادفی طولانی برای `GET /health/deep` و workflow «Hermes live health»؛ همان مقدار در secretهای GitHub با نام `HEALTH_KEY` |
 | `HF_TOKEN` | (اختیاری، رایگان) توکن huggingface.co/settings/tokens — هم مغز (DeepSeek/Llama/Qwen) و هم ساخت عکس FLUX |
 | `STABILITY_API_KEY` | (اختیاری، رایگان) کلید platform.stability.ai — «کیفیت نهایی»: بزرگ‌کردن خروجی ویرایش با upscaler واقعی |
 | `ALLOWED_USER_ID` | شناسهٔ عددی تو |

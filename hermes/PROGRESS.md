@@ -201,5 +201,14 @@ export می‌شود** (چیزی که تست قبلی نمی‌سنجید). هم
   - **دستور تأیید:** `node scripts/doctor.mjs hermes` → سینتکس شِل، **۱۸۹ تست واحد**، **۹ تست یکپارچه روی workerd محلی** و ساخت دارایی‌های مهارت همگی سبز.
   - **محدودیت:** تست‌ها mocked هستند؛ اتصال زنده به تلگرام/Cloudflare/Google در این محیط تأیید نشده است.
 
+- **۲۰۲۶-۱۰-۱۶ (خودعیب‌یابی زنده + سبک‌سازی پرامپت)** — کاربر گزارش داد «عکس نمی‌دهد» بی‌آن‌که متن خطا در دسترس باشد؛ ریشهٔ گیر این بود که وضعیت هر منبع فقط از راه متن خطای تلگرام دیده می‌شد.
+  - `diagnose.mjs` (جدید): هر مغز و منبع عکس را با ارزان‌ترین درخواست واقعی می‌سنجد — فهرست مدل جمینی، catalog هر provider کلیددار، یک درخواست ۱-توکنی Pollinations متنی، یک اجرای ۱-توکنی Workers AI (نشان‌دهندهٔ ۴۰۰۶/سهمیه)، `whoami-v2` برای `HF_TOKEN` و یک عکس ۶۴px از Pollinations. کلیدهای تنظیم‌نشده skip می‌شوند، نه fail؛ هیچ کلیدی در خروجی نمی‌آید (تست دارد).
+  - تلگرام: `/status` یا «وضعیت» (فقط مالک) گزارش ✅/❌ هر منبع با دلیل و حکم نهایی «جواب متنی» و «ساخت عکس» را می‌فرستد؛ در راهنمای `/start` هم آمد.
+  - HTTP: `GET /health/deep` با `Authorization: Bearer <HEALTH_KEY>`؛ بدون `HEALTH_KEY` → 404، کلید غلط → 403، بدون مغز سالم → 503. workflow تازهٔ `.github/workflows/hermes-live-health.yml` بعد از هر push به `hermes/**` (۳ دقیقه صبر برای Workers Builds)، روزانه ۰۷:۴۷ تهران و دستی، نتیجه را جدول‌وار در summary می‌نویسد؛ بدون secretها فقط راهنما چاپ می‌کند و سبز می‌ماند.
+  - `skill-router.mjs`: هر مهارت در پرامپت به `PROMPT_SKILL_CHARS = 2000` نویسه بریده می‌شود (ذخیرهٔ ۶٬۰۰۰ دست‌نخورده)؛ سه مهارت کامل پیش‌تر ~۱۸k نویسه می‌شد و از سقف رایگان GitHub/Groq رد می‌شد.
+  - `sync-secrets.mjs`: `HEALTH_KEY` هم کپی می‌شود.
+  - **تأیید:** `npm run check` سبز (ماژول تازه در فهرست)، **۲۱۱/۲۱۱ تست واحد** (۵ تست تازهٔ `diagnose.test.mjs`)، **۱۰/۱۰ workerd** (`diagnose` به `workerModuleNames` اضافه شد).
+  - **محدودیت:** فراخوانی‌های provider در تست mock هستند؛ وضعیت واقعی فقط با `/status` روی ربات زنده یا workflow معلوم می‌شود.
+
 ## Professional guide
 See `PROFESSIONAL_GUIDE.md` in this folder for performance improvements, debugging playbook, and next steps. Update it whenever behavior changes.

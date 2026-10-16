@@ -16,7 +16,7 @@ export const workerModuleNames = [
   'skill-router', 'memory', 'brain', 'conversation', 'image', 'media',
   'booking', 'trip-media', 'providers', 'google', 'health', 'metrics',
   'rate-limit', 'resilience', 'webhook-setup', 'photo-edit', 'upscale', 'image-bytes', 'textlayer', 'viking-style',
-  'reminders'
+  'reminders', 'diagnose'
 ];
 const modules = workerModuleNames
   .map((name) => ({ type: 'ESModule', path: fileURLToPath(new URL(`${name}.mjs`, import.meta.url)) }));

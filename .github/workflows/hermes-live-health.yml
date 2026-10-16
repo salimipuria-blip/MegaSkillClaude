@@ -1,0 +1,78 @@
+name: Hermes live health
+
+# Calls the deployed Hermes' /health/deep (every brain and image source, tiny real requests) and
+# writes the result to the run summary, so anyone — including Claude, whose sandbox cannot reach
+# workers.dev — can read which provider is down and why without a Telegram round-trip.
+#
+# Needs two repository secrets (Settings → Secrets and variables → Actions):
+#   HERMES_URL  e.g. https://hermes.<subdomain>.workers.dev   (no trailing slash)
+#   HEALTH_KEY  the same random value set as the Worker secret HEALTH_KEY
+# Without them the job only prints how to set them up and passes.
+on:
+  push:
+    branches: [main]
+    paths: ["hermes/**"]
+  schedule:
+    - cron: "17 4 * * *" # 07:47 Tehran, after the Workers AI quota reset
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hermes-live-health
+  cancel-in-progress: true
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Wait for Workers Builds to deploy the push
+        if: github.event_name == 'push'
+        run: sleep 180
+      - name: Probe /health/deep
+        env:
+          HERMES_URL: ${{ secrets.HERMES_URL }}
+          HEALTH_KEY: ${{ secrets.HEALTH_KEY }}
+        run: |
+          if [ -z "$HERMES_URL" ] || [ -z "$HEALTH_KEY" ]; then
+            {
+              echo "### Hermes live health: not configured"
+              echo "Set the HERMES_URL and HEALTH_KEY repository secrets, and HEALTH_KEY as a Worker secret."
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          code=$(curl -sS -o body.json -w '%{http_code}' --max-time 60 \
+            -H "authorization: Bearer $HEALTH_KEY" "${HERMES_URL%/}/health/deep" || echo 000)
+          python3 - "$code" <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json, sys
+          code = sys.argv[1]
+          try:
+              d = json.load(open('body.json'))
+          except Exception:
+              print(f"### Hermes live health: HTTP {code}, no JSON body")
+              sys.exit(0)
+          print(f"### Hermes live health — {d.get('ts', '')} (HTTP {code})")
+          print()
+          print("| | source | detail |")
+          print("|---|---|---|")
+          for c in d.get('checks', []):
+              detail = str(c.get('detail', '')).replace('|', '/')
+              print(f"| {'✅' if c.get('ok') else '❌'} | {c.get('name')} | {detail} |")
+          print()
+          print(f"text: {'✅' if d.get('text') else '❌'} · image: {'✅' if d.get('image') else '❌'}")
+          PY
+          python3 - "$code" <<'PY'
+          import json, sys
+          try:
+              d = json.load(open('body.json'))
+          except Exception:
+              print(f"::error::Hermes /health/deep returned HTTP {sys.argv[1]} without JSON")
+              sys.exit(1)
+          if not d.get('image'):
+              print("::warning::Hermes has no working image source")
+          if not d.get('text'):
+              print("::error::Hermes has no working text brain")
+              sys.exit(1)
+          PY

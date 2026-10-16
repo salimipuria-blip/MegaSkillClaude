@@ -29,5 +29,6 @@
     }
    ]
   }
- ]
+ ],
+ "ignoreCommand": "git diff --quiet \"${VERCEL_GIT_PREVIOUS_SHA:-HEAD^}\" HEAD -- ."
 }

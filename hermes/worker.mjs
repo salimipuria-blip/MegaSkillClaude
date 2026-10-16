@@ -27,6 +27,7 @@ import { tripPage, createBooking, onContact } from './booking.mjs';
 import { configuredProviders } from './providers.mjs';
 import { googleConfigured, googleConnected, googleTools, connectUrl, finishConnect, disconnect } from './google.mjs';
 import { liveness, readiness, fullHealth } from './health.mjs';
+import { diagnose, formatDiagnosis } from './diagnose.mjs';
 import { recordRequest, snapshot as metricsSnapshot, prometheusText } from './metrics.mjs';
 export { liveness, readiness, fullHealth } from './health.mjs';
 import { fetchWithTimeout } from './resilience.mjs';
@@ -172,6 +173,13 @@ export default {
     if (request.method === 'GET' && ['/health', '/health/live'].includes(url.pathname)) return jsonProbe(liveness(), 200);
     if (request.method === 'GET' && url.pathname === '/health/ready') { const r = readiness(env); return jsonProbe(r, r.ready ? 200 : 503); }
     if (request.method === 'GET' && url.pathname === '/health/full') { const f = fullHealth(env); return jsonProbe(f, f.ready ? 200 : 503); }
+    // Live provider checks cost real (tiny) requests, so they stay behind a key: 404 until HEALTH_KEY is set.
+    if (request.method === 'GET' && url.pathname === '/health/deep') {
+      if (!env.HEALTH_KEY) return text('not found', 404);
+      if (request.headers.get('authorization') !== `Bearer ${String(env.HEALTH_KEY).trim()}`) return text('forbidden', 403);
+      const d = await diagnose(env);
+      return jsonProbe(d, d.text ? 200 : 503);
+    }
     if (request.method === 'GET' && url.pathname === '/metrics') {
       return url.searchParams.get('format') === 'json'
         ? jsonProbe(metricsSnapshot(), 200)
@@ -558,8 +566,13 @@ async function handle(msg, env, origin) {
       'بعد از آن متن با پیام هم جابه‌جا می‌شود: «بالاتر ببر»، «کمی پایین‌تر»، «وسطش بذار»، «سفیدش کن»، «درشت‌ترش کن»، «بدون نوار»، «متن رو بردار».\n' +
       'ویس بفرست تا گوش بدهم، عکس بفرست تا ببینم؛ برای خبرها و چیزهای روز در گوگل جست‌وجو می‌کنم.\n' +
       'یادآور: بنویس «یادم بنداز ساعت ۹: تماس با بانک» یا «یادم بنداز فردا ۱۰: قرار دکتر» یا «remind me in 30 minutes: call Bob» — سر وقت بهت پیام می‌دم و هر صبح لیست روزت را می‌فرستم. لیست و حذف: /reminders\n' +
+      '/status وضعیت زندهٔ همهٔ مغزها و منبع‌های عکس (کدام کار می‌کند و چرا)\n' +
       '/google اتصال جیمیل، تقویم، درایو و شیت\n' +
       '/reset گفتگوی جدید (قبلی بایگانی می‌شود)\n/notes یادداشت‌های حافظه\n/forget پاک کردن یادداشت‌ها\n/app لینک اپ');
+  }
+  if (input === '/status' || input === 'وضعیت') {
+    await tg(env, 'sendChatAction', { chat_id: chatId, action: 'typing' });
+    return send(env, chatId, formatDiagnosis(await diagnose(env)));
   }
   if (input === '/notes') {
     const notes = await loadNotes(env, key);
