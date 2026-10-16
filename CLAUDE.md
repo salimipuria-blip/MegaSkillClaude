@@ -42,3 +42,11 @@
 - `.claude/statusline/`: نوار وضعیت یک‌خطی (مدل | درصد کانتکست | آخرین کار ▸ | پیشرفت چک‌لیست | هزینه | پوشه)، بدون مصرف توکن. هوک PostToolUse آخرین ابزار را ثبت می‌کند؛ دستورها هرگز کامل نمایش داده نمی‌شوند. عرض با `ECC_STATUSLINE_MAX_WIDTH` محدود می‌شود.
 - **پیشرفت قابل‌دیدن:** برای کارهای ۳ مرحله‌ای به بالا یک چک‌لیست کوتاه (۳ تا ۷ مورد، با TaskCreate/TaskUpdate) نگه دار؛ هر بار فقط یک مورد در حال انجام، و هر مورد به‌محض تمام شدن تیک بخورد. چک‌لیست را در چت تکرار نکن؛ نوار وضعیت پیشرفت (`2/5`) را خودش نشان می‌دهد. برای کارهای تک‌مرحله‌ای لازم نیست.
 - `.claude/hooks/session-start.sh`: در جلسه‌های ابری وابستگی‌های `lithos` را نصب می‌کند.
+
+## یادداشت‌های عملیاتی (برای هر جلسهٔ تازه — اول این‌ها را بخوان)
+- **مخزن خصوصی است** (از ۱۴۰۵/۰۷/۲۴). دسترسی Claude از GitHub App است و برقرار است؛ فورک‌ها مستقل‌اند.
+- **روال PR:** شاخهٔ کاری → PR پیش‌نویس → CI سبز (۸ job در `ci.yml` + `ci-hermes.yml`) → ready → squash merge با `expectedHeadSha`. مخزن ECC قدیمی دیگر روی GitHub نیست؛ پلاگین‌هایش در `plugins/` همین مخزن‌اند.
+- **خطای Vercel روی PR** (`api-deployments-free-per-day`) سهمیهٔ روزانهٔ حساب Vercel است، نه کد. هر پروژه در `vercel.json` یک `ignoreCommand` دارد که اگر پوشهٔ خودش از آخرین استقرار تغییر نکرده باشد، ساخت را رد می‌کند (فقط exit 0 یا 1 مجاز است — هر کد دیگری استقرار را «Failed» می‌کند؛ پس اگر `VERCEL_GIT_PREVIOUS_SHA` خالی باشد یا در clone کم‌عمق Vercel نباشد، ساخت انجام می‌شود و فقط وقتی مطمئن است پوشه دست نخورده رد می‌کند).
+- **هرمس روی Cloudflare Workers** است (Workers Builds با هر push به main). `*.workers.dev` از sandbox ابری Claude بسته است مگر در Allowed domains محیط باز شود؛ برای دیدن وضعیت زنده: در تلگرام `/status`، یا workflow «Hermes live health» (نیازمند secretهای `HERMES_URL` و `HEALTH_KEY`).
+- **کلیدهای هرمس فقط در Cloudflare Secrets** (هرگز در چت/مخزن): `TELEGRAM_BOT_TOKEN`، `ALLOWED_USER_ID`، `GEMINI_API_KEY` (از ایران با AI Studio ساخته نمی‌شود)، `GITHUB_MODELS_TOKEN`، `GROQ_API_KEY`، `HF_TOKEN`، `MISTRAL_API_KEY`، `CEREBRAS_API_KEY`، `OPENROUTER_API_KEY`، `POLLINATIONS_TOKEN`، `HEALTH_KEY`.
+- **محیط کدنویسی:** هر Codespace این مخزن با `.devcontainer/` آماده باز می‌شود (Node 22، Python 3.12، Deno، gh، Claude Code CLI + افزونهٔ VS Code). برای دیدن کار Claude مثل همکار: در ترمینال Codespace `claude remote-control` را اجرا کن یا پنل Claude Code در VS Code را باز کن.

@@ -3,6 +3,7 @@
   "framework": "vite",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
+  "ignoreCommand": "P=\"$VERCEL_GIT_PREVIOUS_SHA\"; [ -n \"$P\" ] && git cat-file -e \"$P^{commit}\" 2>/dev/null && git diff --quiet \"$P\" HEAD -- . && exit 0; exit 1",
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }],
   "headers": [
     {

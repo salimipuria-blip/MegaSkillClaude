@@ -119,9 +119,15 @@ export async function relevantSkills(env, text) {
   }
 }
 
+// Stored skills keep up to SKILL_CHARS (6,000); in the prompt each is cut to PROMPT_SKILL_CHARS, since
+// three 6k skills pushed requests past the free tiers' size limits (GitHub ~8k tokens, Groq 6–12k
+// tokens/min) and spent quota on every message.
+export const PROMPT_SKILL_CHARS = 2000;
+const clip = (text) => (text.length > PROMPT_SKILL_CHARS ? `${text.slice(0, PROMPT_SKILL_CHARS).replace(/\s+\S*$/, '')} …` : text);
+
 export function skillsBlock(skills) {
   if (!skills.length) return '';
   return '\n\nSPECIALIZED SKILLS selected for this request from the Mega Skills library. Apply what helps; ignore parts that ' +
     'need tools, files or actions you do not have, and never claim to have run code or opened links.\n' +
-    skills.map((s) => `\n### ${s.name}\n${s.text}`).join('\n');
+    skills.map((s) => `\n### ${s.name}\n${clip(String(s.text || ''))}`).join('\n');
 }

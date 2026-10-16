@@ -36,6 +36,12 @@ node scripts/doctor.mjs --json
 - Viking Motion: رندر MP4 واقعی **۱۸۰/۱۸۰ فریم**؛ H.264، ۱۰۸۰×۱۹۲۰، ۳۰fps، حدود ۶٫۰۵۹s و ۷۸۲٬۱۵۷ بایت؛ خروجی محلی در `viking-team/motion/out/viking-intro.mp4`.
 - مسیرهای `/tmp/arena-deno`، `/tmp/arena-pytest` و Chromium/libraryها ابزارهای موقت همین محیط‌اند، نه وابستگی دائمی مخزن. E2E موبایل/Safari روی iPhone واقعی، live Supabase RLS، Buffer API و deployment واقعی هنوز تأیید نشده‌اند.
 
+## ۳.۵) ۲۰۲۶-۱۰-۱۶ — زیرساخت مشترک
+- **Vercel:** هر پنج پروژه (`psk`، `lithos`، `fjcod`/cham-store-os، `viking-team`، `bison-brand-book` — آخری `vercel.json` تازه) `ignoreCommand` گرفتند تا فقط پروژهٔ تغییرکرده ساخته شود؛ پیش‌تر هر PR ۵ دیپلوی می‌گرفت و سهمیهٔ ۱۰۰تایی روزانه پر می‌شد. نسخهٔ اول (`git diff` خالی) روی PR #81 استقرار cham-store-os و psk-3000 را با `fatal: bad object` (exit 128، چون clone کم‌عمق Vercel commit قبلی را ندارد) Failed کرد؛ Vercel فقط 0/1 می‌پذیرد. اصلاح: `[ -n "$P" ] && git cat-file -e "$P^{commit}" && git diff --quiet "$P" HEAD -- . && exit 0; exit 1` — پنج حالت محلی تست شد (همان sha → 0، تغییر → 1، sha ناموجود → 1، خالی → 1).
+- **Codespaces:** `.devcontainer/` (Node 22، Python 3.12، Deno، gh، Claude Code CLI + افزونه) و `post-create.sh` که نصب هر پروژه را مستقل و غیرمسدودکننده انجام می‌دهد.
+- **هرمس:** خودعیب‌یابی زنده (`/status`، `/health/deep`، workflow «Hermes live health») — جزئیات در `hermes/PROGRESS.md`.
+- **ECC:** مخزن fork حذف شده؛ پلاگین‌ها در `plugins/` همین مخزن‌اند.
+
 ## ۴) کارهای باز مشترک
 - [ ] پس از CI، jobهای doctor، regression parser، `fjcod-e2e`، `bison` contract، sticker manifest و `viking-motion` spec را در GitHub Actions تأیید کن.
 - [ ] برای کارهای staging/live از backup، حساب آزمایشی و secret manager استفاده کن؛ نتیجه را در دفتر همان محصول ثبت کن.
