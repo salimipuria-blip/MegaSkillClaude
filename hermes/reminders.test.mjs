@@ -136,3 +136,13 @@ test('parses a bare 24h time («ساعت» omitted)', () => {
 test('does not treat a shopping list as a time', () => {
   assert.equal(parseReminder('یادم بنداز 3 تخم مرغ بخرم', NOW), null);
 });
+
+// Without an active cron trigger the Worker never calls scheduled(), so reminders are stored
+// but never delivered. Guard the config, not just the handler.
+test('wrangler.toml enables the cron trigger that fires reminders', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const toml = await readFile(new URL('./wrangler.toml', import.meta.url), 'utf8');
+  const active = toml.split('\n').filter((l) => !l.trim().startsWith('#')).join('\n');
+  assert.match(active, /^\[triggers\]\s*$/m);
+  assert.match(active, /^crons\s*=\s*\[\s*"[^"]+"/m);
+});
