@@ -6,6 +6,8 @@ import { describeImage } from './media.mjs';
 
 export const MODELS = ['gemini-3.8-flash', 'gemini-3.7-flash', 'gemini-3.5-flash-lite', 'gemini-2.5-flash'];
 export const CF_MODELS = ['@cf/google/gemma-3-12b-it', '@cf/meta/llama-3.3-70b-instruct-fp8-fast'];
+// Coding mode tries Workers AI's code model first.
+export const CF_CODE_MODELS = ['@cf/moonshotai/kimi-k2.7-code', '@cf/qwen/qwen2.5-coder-32b-instruct', ...CF_MODELS];
 const GEMINI_API = 'https://generativelanguage.googleapis.com/v1beta';
 export const STYLE = "Reply in the user's language (usually Persian). Be direct and accurate; short by default, detailed when the task needs it. Say so when you are not sure.\n" +
   "You CAN hear and see: voice messages are transcribed for you, and photos the user sends are attached to their message. " +
@@ -30,7 +32,8 @@ export async function see(env, contents, system, images, input, tools = null) {
 }
 
 // Brains in order: Gemini (search + Google tools) → other free providers whose key is set → Workers AI.
-export async function ask(env, contents, system = SYSTEM, search = true, tools = null) {
+// opts.code = coding mode: code-specialist models first and room for longer answers.
+export async function ask(env, contents, system = SYSTEM, search = true, tools = null, opts = {}) {
   const errors = [];
   if (env.GEMINI_API_KEY) {
     try {
@@ -42,7 +45,7 @@ export async function ask(env, contents, system = SYSTEM, search = true, tools =
   }
   if (configuredProviders(env).length) {
     try {
-      return await askProviders(env, contents, system);
+      return await askProviders(env, contents, system, opts);
     } catch (err) {
       errors.push(err.message);
       console.error('[Hermes] free providers failed:', err.message);
@@ -50,7 +53,7 @@ export async function ask(env, contents, system = SYSTEM, search = true, tools =
   }
   if (env.AI) {
     try {
-      return await askWorkersAI(env, contents, system);
+      return await askWorkersAI(env, contents, system, opts);
     } catch (err) {
       errors.push(err.message);
     }
@@ -58,7 +61,7 @@ export async function ask(env, contents, system = SYSTEM, search = true, tools =
   throw new Error(errors.length ? errors.join(' | ') : 'هیچ مغزی تنظیم نشده (کلید جمینی یا یکی از کلیدهای رایگان دیگر).');
 }
 
-export async function askWorkersAI(env, contents, system = SYSTEM) {
+export async function askWorkersAI(env, contents, system = SYSTEM, { code = false } = {}) {
   const messages = [
     { role: 'system', content: system },
     ...contents.map((c) => ({
@@ -67,9 +70,9 @@ export async function askWorkersAI(env, contents, system = SYSTEM) {
     })),
   ];
   let lastError;
-  for (const model of CF_MODELS) {
+  for (const model of code ? CF_CODE_MODELS : CF_MODELS) {
     try {
-      const out = await env.AI.run(model, { messages, max_tokens: 1024 });
+      const out = await env.AI.run(model, { messages, max_tokens: code ? 2048 : 1024 });
       const reply = (out && (out.response ||
         (out.choices && out.choices[0] && out.choices[0].message && out.choices[0].message.content))) || '';
       if (String(reply).trim()) return String(reply).trim();

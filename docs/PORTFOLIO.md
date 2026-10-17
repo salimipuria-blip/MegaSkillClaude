@@ -13,7 +13,7 @@
 | ریپو | نقش | وضعیت |
 |---|---|---|
 | `MegaSkillClaude` (خصوصی) | **مخزن اصلی**: هرمس، پلاگین مگا اسکیل، psk، لیتوس، وایکینگ، بایسون، چام قدیمی، موبایل، برندها | فعال؛ Vercel و Cloudflare به همین وصل‌اند |
-| `POINT` (خصوصی) | چام نسخهٔ جدید و امن (`fjcod/`، Supabase + RLS) | تست‌شده، منتشر نشده |
+| `POINT` (خصوصی) | چام نسخهٔ جدید و امن (`fjcod/`، Supabase + RLS) | تست‌شده، منتشر نشده؛ نسخهٔ نهایی چام (قدیمی هیچ فروش واقعی ثبت نمی‌کند) |
 | `FJCod` (خصوصی) | چام نسخهٔ ۱ (دادهٔ مرورگر) | قدیمی؛ پس از انتقال Archive |
 | `viking-experience-command` (خصوصی) | نسخهٔ قدیمی وایکینگ | قدیمی؛ کد جدید در `MegaSkillClaude/viking-team` |
 | `Viking`، `PProject-i18n` | خالی | پیشنهاد Archive |
@@ -25,21 +25,20 @@
 ## پروژه‌ها
 | پروژه | محل | وضعیت | کار مانده |
 |---|---|---|---|
-| **هرمس** (دستیار تلگرام + اپ) | `MegaSkillClaude/hermes` | زنده روی Cloudflare Worker `hermes`؛ ۲۲۰+ تست سبز؛ یادآور با Cron فعال | `hermes/ROADMAP.md` |
+| **هرمس** (دستیار تلگرام + اپ) | `MegaSkillClaude/hermes` | زنده روی Cloudflare Worker `hermes`؛ ۲۴۵ تست سبز؛ یادآور با Cron، دانش پروژه‌ها، حالت کدنویسی حرفه‌ای و ابزار GitHub (`/ci` `/prs` `/file` `/review`) | `hermes/ROADMAP.md` |
 | **پلاگین مگا اسکیل** | `MegaSkillClaude/plugins/mega-skills-router` | نسخهٔ ۱.۲.۰، ۶٬۰۲۹ مهارت، ۷۰ تست سبز | مهارت تحویل اختصاصی هر پروژه |
 | **چام (فروشگاه)** | `POINT/fjcod` (جدید)، `MegaSkillClaude/fjcod` (قدیمی) | جدید: سرور، احراز هویت، RLS، مرجوعی، فاکتور، کارکنان، گزارش؛ قدیمی رمزهای متنی در کد دارد | انتشار (Supabase + Vercel)، سبد نگه‌داشته، داشبورد رشد، انتقال دادهٔ قدیمی |
 | **وایکینگ** (اپ تیم) | `MegaSkillClaude/viking-team` | ۱۹ تست سبز؛ Vercel وصل | اعمال SQL/RLS روی Supabase واقعی، آپلود از آیفون |
 | **لیتوس** (داشبورد) | `MegaSkillClaude/lithos` | ۹ تست سبز | تطبیق کوئری Buffer با API واقعی |
-| **MEGA SKILLS 3000** | `MegaSkillClaude/psk` | ۵۳ تست، دقت مسیریاب ۱۰۰٪ | secret `ENGINE_TOKEN` در GitHub (CI شاخهٔ اصلی بدون آن قرمز است)، کلید مدل رایگان |
+| **MEGA SKILLS 3000** | `MegaSkillClaude/psk` | ۵۳ تست، دقت مسیریاب ۱۰۰٪ | کلید مدل رایگان (`ENGINE_TOKEN` تنظیم شد ۲۰۲۶-۱۰-۱۷) |
 | **بایسون** (برندبوک) | `MegaSkillClaude/bison-brand-book` | ساخت و ۸ تست سبز | تست دسترس‌پذیری |
 | **کنسول موبایل** | `MegaSkillClaude/mobile` | ۱۰ تست سبز | تست روی آیفون واقعی |
 | **استیکر و قالب وایکینگ** | `MegaSkillClaude/brands`، `brand` | ساختار سالم | بازبینی تصویری |
 
 ## فوری‌ها
 1. رمزهای اولیهٔ چام قدیمی در کد (`MegaSkillClaude/fjcod/src/core/seed.ts`) و README ریپوی `FJCod` — باید پاک و رمز حساب‌های واقعی عوض شود.
-2. secret `ENGINE_TOKEN` در تنظیمات GitHub ریپوی MegaSkillClaude تعریف شود (فقط مالک).
-3. Codespaceهای اضافه از github.com/codespaces پاک شوند (سهمیهٔ ماهانه تمام شده بود).
-4. انتخاب نسخهٔ نهایی چام: پیشنهاد `POINT/fjcod`.
+2. Codespaceهای اضافه از github.com/codespaces پاک شوند (سهمیهٔ ماهانه تمام شده بود).
+3. انتشار چام جدید (`POINT/fjcod`): منتظر Project URL و anon key پروژهٔ Supabase از مالک.
 
 ## کاری که فقط مالک می‌تواند بکند
 - ساخت پروژهٔ Supabase و دادن Project URL و anon key (هرگز service_role).
