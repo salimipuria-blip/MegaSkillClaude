@@ -82,6 +82,41 @@ class RouterRankingTest(unittest.TestCase):
         self.assertEqual((ROOT / "library/github-skills/_licenses" / license_name).read_bytes(),
                          (COPIES["plugin"] / "references/licenses" / license_name).read_bytes())
 
+    def test_phrase_match_is_word_bounded(self):
+        """A short query used to substring-match unrelated triggers ("ai" in "maintain", "art" in "start")."""
+        for copy, directory in COPIES.items():
+            module = _load(directory)
+            path = directory / "references/triggers.json"
+            for query in ("ai", "art", "test"):
+                with self.subTest(copy=copy, query=query):
+                    results = module.search_index(path, query)
+                    self.assertTrue(results)
+                    for item in results:
+                        self.assertTrue(module._tokens(query) & module._tokens(item["matched_trigger"]), item)
+
+    def test_multiword_and_zwnj_aliases_fold(self):
+        for copy, directory in COPIES.items():
+            module = _load(directory)
+            with self.subTest(copy=copy):
+                self.assertEqual(module._tokens("برنامه‌نویسی"), {"code"})
+                self.assertEqual(module._tokens("برنامه نویسی"), {"code"})
+                self.assertEqual(module._tokens("کسب و کار"), {"business"})
+                self.assertEqual(module._tokens("کسب‌وکار"), {"business"})
+                self.assertEqual(module._tokens("اينستاگرام"), {"instagram"})
+
+    def test_cli_limits_output(self):
+        import contextlib
+        import io
+        for copy, directory in COPIES.items():
+            module = _load(directory)
+            with self.subTest(copy=copy):
+                out = io.StringIO()
+                with contextlib.redirect_stdout(out):
+                    module.main(["ai", "--limit", "3", "--index", str(directory / "references/triggers.json")])
+                self.assertEqual(len(json.loads(out.getvalue())), 3)
+                with self.assertRaises(SystemExit), contextlib.redirect_stderr(io.StringIO()):
+                    module.main(["ai", "--index", str(directory / "missing.json")])
+
     def test_indexed_paths_exist(self):
         project = _load(COPIES["project"])
         results = project.search_index(COPIES["project"] / "references" / "triggers.json", "code", min_score=0.0)

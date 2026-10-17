@@ -36,6 +36,9 @@ ALIASES = {
     "document": "document", "سند": "document",
     "presentation": "presentation", "ارائه": "presentation", "اسلاید": "presentation",
 }
+# Multi-word aliases ("کسب و کار", "برنامه‌نویسی" split at ZWNJ) are folded on the normalized text before tokenizing.
+PHRASE_ALIASES = {" ".join(re.findall(r"\w+", unicodedata.normalize("NFKC", key).casefold())): value for key, value in ALIASES.items() if len(re.findall(r"\w+", unicodedata.normalize("NFKC", key))) > 1}
+PHRASE_ALIAS_RE = re.compile(r"(?<!\w)(?:" + "|".join(re.escape(key) for key in sorted(PHRASE_ALIASES, key=len, reverse=True)) + r")(?!\w)") if PHRASE_ALIASES else None
 STOPWORDS = {"a", "an", "the", "for", "of", "to", "and", "va", "و", "در", "برای", "با", "از", "رو", "را"}
 def _repo_root() -> Path:
     """Repository that holds the indexed skills: MEGA_SKILLS_ROOT, the repo this script lives in, or the current directory."""
@@ -62,15 +65,31 @@ def _stem(token: str) -> str:
     return token
 
 
+def _normalize(value: str) -> str:
+    """NFKC + casefold, unify Arabic/Persian letter variants, treat ZWNJ as a word break, fold phrase aliases."""
+    text = unicodedata.normalize("NFKC", value).casefold().translate(ARABIC_VARIANTS)
+    text = " ".join(re.findall(r"\w+", text, flags=re.UNICODE))
+    return PHRASE_ALIAS_RE.sub(lambda match: PHRASE_ALIASES[match.group(0)], text) if PHRASE_ALIASES else text
+
+
+def _token_list(value: str) -> list[str]:
+    """Ordered, alias-folded and stemmed tokens; order is kept so phrase matches respect word boundaries."""
+    return [_stem(ALIASES.get(token, token)) for token in _normalize(value).split() if token not in STOPWORDS and len(token) > 1]
+
+
 def _tokens(value: str) -> set[str]:
-    normalized = unicodedata.normalize("NFKC", value).casefold().translate(ARABIC_VARIANTS)
-    raw = re.findall(r"[\w]+", normalized, flags=re.UNICODE)
-    return {_stem(ALIASES.get(token, token)) for token in raw if token not in STOPWORDS and len(token) > 1}
+    return set(_token_list(value))
+
+
+def _contains_phrase(haystack: list[str], needle: list[str]) -> bool:
+    size = len(needle)
+    return any(haystack[i:i + size] == needle for i in range(len(haystack) - size + 1))
 
 
 def search_index(index_path: Path, query: str, min_score: float = 0.50, *, include_incomplete: bool = False) -> list[dict[str, object]]:
     payload = json.loads(index_path.read_text(encoding="utf-8"))
-    query_tokens = _tokens(query)
+    query_sequence = _token_list(query)
+    query_tokens = set(query_sequence)
     if not query_tokens:
         return []
     ranked: list[tuple[tuple[object, ...], dict[str, object]]] = []
@@ -82,12 +101,14 @@ def search_index(index_path: Path, query: str, min_score: float = 0.50, *, inclu
         best_precision = 0.0
         matched_trigger = skill["name"] if name_hits else ""
         for trigger in skill["triggers"]:
-            trigger_tokens = _tokens(trigger)
+            trigger_sequence = _token_list(trigger)
+            trigger_tokens = set(trigger_sequence)
             if not trigger_tokens:
                 continue
             overlap = len(query_tokens & trigger_tokens)
             score = overlap / len(query_tokens)
-            if query.casefold().strip() in trigger.casefold():
+            # The whole query as a word-bounded phrase ("ai" must not match "maintain" or "art" "start").
+            if _contains_phrase(trigger_sequence, query_sequence):
                 score = max(score, 1.0)
             # Among equal coverage, prefer the trigger that is mostly about the query.
             precision = overlap / len(trigger_tokens)
@@ -107,9 +128,15 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--min-score", type=float, default=0.50)
     parser.add_argument("--index", type=Path)
     parser.add_argument("--include-incomplete", action="store_true", help="Include disabled, incomplete skills for manual review only")
+    parser.add_argument("--limit", type=int, default=30, help="Return at most this many best matches (0 = all)")
     args = parser.parse_args(argv)
+    if args.limit < 0:
+        parser.error("--limit must be 0 or greater")
     index = args.index or Path(__file__).resolve().parents[1] / "references" / "triggers.json"
-    print(json.dumps(search_index(index, args.query, args.min_score, include_incomplete=args.include_incomplete), ensure_ascii=False, indent=2))
+    if not index.is_file():
+        parser.error(f"index not found: {index}")
+    results = search_index(index, args.query, args.min_score, include_incomplete=args.include_incomplete)
+    print(json.dumps(results[:args.limit] if args.limit else results, ensure_ascii=False, indent=2))
     return 0
 
 
