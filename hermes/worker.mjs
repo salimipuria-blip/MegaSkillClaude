@@ -10,6 +10,8 @@ import { login, sessionUser, changePassword } from './auth.mjs';
 import { USERS } from './users.mjs';
 import { listAccounts, createAccount, setDisabled, resetPassword, accountCommand } from './accounts.mjs';
 import { projectKnowledge, portfolioText } from './knowledge.mjs';
+import { githubCommand } from './github.mjs';
+import { codeFiles } from './coding.mjs';
 import { STYLE, SYSTEM, askGemini } from './brain.mjs';
 import { appKey, webhookSecret, setupKey } from './security.mjs';
 export { appKey, webhookSecret, setupKey } from './security.mjs';
@@ -579,6 +581,24 @@ async function handle(msg, env, origin) {
       return send(env, chatId, err.message);
     }
   }
+  if (/^\/(ci|prs|file|review)\b/i.test(input)) {
+    let gh;
+    try {
+      gh = await githubCommand(env, input);
+    } catch (err) {
+      return send(env, chatId, err.message);
+    }
+    if (gh && gh.reply) return send(env, chatId, gh.reply);
+    if (gh && gh.file) return sendFile(env, chatId, gh.file.name, gh.file.text, gh.file.caption);
+    if (gh && gh.review) {
+      await tg(env, 'sendChatAction', { chat_id: chatId, action: 'typing' });
+      try {
+        return sendAnswer(env, chatId, await converse(env, key, gh.review, SYSTEM, [], null));
+      } catch (err) {
+        return send(env, chatId, `خطا: ${err.message}`);
+      }
+    }
+  }
   if (/^\/projects(?:@\w+)?$/i.test(input)) {
     const text = await portfolioText(env);
     return send(env, chatId, text ? text.slice(0, 4000) : 'نقشهٔ پروژه‌ها در این استقرار نیست (docs/PORTFOLIO.md).');
@@ -602,6 +622,7 @@ async function handle(msg, env, origin) {
       'بعد از آن متن با پیام هم جابه‌جا می‌شود: «بالاتر ببر»، «کمی پایین‌تر»، «وسطش بذار»، «سفیدش کن»، «درشت‌ترش کن»، «بدون نوار»، «متن رو بردار».\n' +
       'ویس بفرست تا گوش بدهم، عکس بفرست تا ببینم؛ برای خبرها و چیزهای روز در گوگل جست‌وجو می‌کنم.\n' +
       'یادآور: بنویس «یادم بنداز ساعت ۹: تماس با بانک» یا «یادم بنداز فردا ۱۰: قرار دکتر» یا «remind me in 30 minutes: call Bob» — سر وقت بهت پیام می‌دم و هر صبح لیست روزت را می‌فرستم. لیست و حذف: /reminders\n' +
+      'کدنویسی: هر سؤال کد، باگ یا ریویو را بفرست؛ کد کامل + تست + دستور اجرا می‌گیری و کد بلند به‌صورت فایل می‌آید. ریپو: /ci وضعیت CI · /prs PRهای باز · /file مسیر · /review مسیر (بازبینی حرفه‌ای فایل)\n' +
       'پروژه‌ها: /projects نقشهٔ همهٔ پروژه‌ها و ریپوها؛ دربارهٔ هر پروژه (هرمس، چام، وایکینگ، لیتوس…) بپرس تا از روی مستنداتش جواب بدهم\n' +
       'مشتری‌ها (Hermes Business): /client_new <نام کسب‌وکار> فضای کاری + کد عضویت مدیر؛ /clients فهرست و مصرف\n' +
       'حساب‌های تیم: /users فهرست؛ /user_add نام‌کاربری member نام؛ /user_off و /user_on؛ /user_reset رمز جدید\n' +
@@ -771,7 +792,7 @@ async function handle(msg, env, origin) {
   } catch (err) {
     return send(env, chatId, `خطا: ${err.message}`);
   }
-  await send(env, chatId, heard ? `🎙️ «${heard}»\n\n${reply}` : reply);
+  await sendAnswer(env, chatId, heard ? `🎙️ «${heard}»\n\n${reply}` : reply);
 }
 
 // Text, voice (transcribed) or photo (+caption). Returns null when there is nothing to answer.
@@ -840,7 +861,7 @@ async function handleClient(msg, env, chatId, userId, member) {
   } catch (err) {
     return send(env, chatId, `خطا: ${err.message}`);
   }
-  await send(env, chatId, heard ? `🎙️ «${heard}»\n\n${reply}` : reply);
+  await sendAnswer(env, chatId, heard ? `🎙️ «${heard}»\n\n${reply}` : reply);
 }
 
 export function chunks(str, size = TG_LIMIT) {
@@ -851,6 +872,21 @@ export function chunks(str, size = TG_LIMIT) {
 
 async function send(env, chatId, body) {
   for (const part of chunks(body)) await tg(env, 'sendMessage', { chat_id: chatId, text: part });
+}
+
+// A reply, plus its big code blocks as files: long messages are split by Telegram, which breaks copying code.
+async function sendAnswer(env, chatId, reply) {
+  await send(env, chatId, reply);
+  for (const f of codeFiles(reply)) await sendFile(env, chatId, f.name, f.text, `📄 ${f.name}`);
+}
+
+async function sendFile(env, chatId, name, body, caption = '') {
+  const form = new FormData();
+  form.append('chat_id', String(chatId));
+  if (caption) form.append('caption', caption.slice(0, 1000));
+  form.append('document', new Blob([body], { type: 'text/plain' }), name);
+  const res = await fetchWithTimeout(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendDocument`, { method: 'POST', body: form });
+  return res.json().catch(() => ({ ok: false }));
 }
 
 async function tg(env, method, payload) {

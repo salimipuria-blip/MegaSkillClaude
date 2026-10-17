@@ -5,6 +5,7 @@ import { fetchWithTimeout } from './resilience.mjs';
 // secret; they run in this order after Gemini and before Workers AI, so a full quota on one hands over to the next.
 // Model names go stale, so when none of the listed ones exist (404) the provider's own model list is read and the
 // best match is used (and remembered in KV). A comma-separated secret/var (e.g. GROQ_MODELS) overrides the list.
+// Coding mode tries each provider's code-specialist models (codeModels) first and allows longer answers.
 // Free tiers cap the request size (GitHub ~8k tokens, Groq 6–12k tokens/min), so the prompt is trimmed to `budget`
 // characters and retried much shorter when a provider still says it is too large (413).
 export const PROVIDERS = [
@@ -13,17 +14,22 @@ export const PROVIDERS = [
       'openai/gpt-4.1', 'openai/gpt-4o', 'deepseek/DeepSeek-V3-0324', 'xai/grok-3', 'meta/Llama-4-Maverick-17B-128E-Instruct-FP8',
       'mistral-ai/mistral-medium-2505', 'openai/gpt-4.1-mini', 'meta/Llama-3.3-70B-Instruct', 'openai/gpt-4o-mini',
       'xai/grok-3-mini', 'cohere/cohere-command-a',
-    ], discover: 8 },
+    ], codeModels: ['openai/gpt-4.1', 'deepseek/DeepSeek-V3-0324', 'mistral-ai/Codestral-2501'], discover: 8 },
   { name: 'Groq', key: 'GROQ_API_KEY', list: 'GROQ_MODELS', url: 'https://api.groq.com/openai/v1/chat/completions',
-    budget: 14000, catalog: 'https://api.groq.com/openai/v1/models', models: ['llama-3.3-70b-versatile', 'openai/gpt-oss-120b', 'qwen/qwen3-32b'] },
+    budget: 14000, catalog: 'https://api.groq.com/openai/v1/models', models: ['llama-3.3-70b-versatile', 'openai/gpt-oss-120b', 'qwen/qwen3-32b'],
+    codeModels: ['openai/gpt-oss-120b', 'qwen/qwen3-32b'] },
   { name: 'Cerebras', key: 'CEREBRAS_API_KEY', list: 'CEREBRAS_MODELS', url: 'https://api.cerebras.ai/v1/chat/completions',
-    catalog: 'https://api.cerebras.ai/v1/models', models: ['llama-3.3-70b', 'gpt-oss-120b', 'qwen-3-32b'] },
+    catalog: 'https://api.cerebras.ai/v1/models', models: ['llama-3.3-70b', 'gpt-oss-120b', 'qwen-3-32b'],
+    codeModels: ['qwen-3-coder-480b', 'gpt-oss-120b'] },
   { name: 'Mistral', key: 'MISTRAL_API_KEY', list: 'MISTRAL_MODELS', url: 'https://api.mistral.ai/v1/chat/completions',
-    catalog: 'https://api.mistral.ai/v1/models', models: ['mistral-large-latest', 'mistral-medium-latest', 'mistral-small-latest'] },
+    catalog: 'https://api.mistral.ai/v1/models', models: ['mistral-large-latest', 'mistral-medium-latest', 'mistral-small-latest'],
+    codeModels: ['codestral-latest', 'devstral-medium-latest'] },
   { name: 'Hugging Face', key: 'HF_TOKEN', list: 'HF_MODELS', url: 'https://router.huggingface.co/v1/chat/completions',
-    catalog: 'https://router.huggingface.co/v1/models', models: ['deepseek-ai/DeepSeek-V3-0324', 'meta-llama/Llama-3.3-70B-Instruct', 'Qwen/Qwen3-32B'] },
+    catalog: 'https://router.huggingface.co/v1/models', models: ['deepseek-ai/DeepSeek-V3-0324', 'meta-llama/Llama-3.3-70B-Instruct', 'Qwen/Qwen3-32B'],
+    codeModels: ['Qwen/Qwen3-Coder-480B-A35B-Instruct'] },
   { name: 'OpenRouter', key: 'OPENROUTER_API_KEY', list: 'OPENROUTER_MODELS', url: 'https://openrouter.ai/api/v1/chat/completions',
-    catalog: 'https://openrouter.ai/api/v1/models', models: ['deepseek/deepseek-chat-v3-0324:free', 'meta-llama/llama-3.3-70b-instruct:free'] },
+    catalog: 'https://openrouter.ai/api/v1/models', models: ['deepseek/deepseek-chat-v3-0324:free', 'meta-llama/llama-3.3-70b-instruct:free'],
+    codeModels: ['qwen/qwen3-coder:free'] },
   // No key needed: Pollinations' free public text API (set FREE_TEXT=off to disable). Last, as it is slower and public.
   { name: 'Pollinations', key: null, off: 'FREE_TEXT', list: 'POLLINATIONS_MODELS', url: 'https://text.pollinations.ai/openai',
     budget: 9000, models: ['openai', 'mistral', 'deepseek'] },
@@ -87,11 +93,11 @@ export function fitContext(messages, budget) {
 
 const tooLarge = (r) => r.status === 413 || (r.status === 400 && /token|too large|context|length/i.test(r.why || ''));
 
-async function callModel(env, p, model, messages) {
+async function callModel(env, p, model, messages, maxTokens = 2048) {
   const res = await fetchWithTimeout(p.url, {
     method: 'POST',
     headers: { 'content-type': 'application/json', ...authHeader(env, p) },
-    body: JSON.stringify({ model, messages, max_tokens: 2048 }),
+    body: JSON.stringify({ model, messages, max_tokens: maxTokens }),
   });
   if (!res.ok) {
     const data = await res.json().catch(() => null);
@@ -107,13 +113,13 @@ async function callModel(env, p, model, messages) {
 }
 
 // Tries every configured provider; returns the first non-empty answer, or throws with every model's reason.
-export async function askProviders(env, contents, system) {
+export async function askProviders(env, contents, system, { code = false } = {}) {
   const all = toMessages(contents, system);
   const errors = [];
   let total = 0;
   for (const p of configuredProviders(env)) {
     if (total >= MAX_TOTAL) { errors.push(`${p.name}: نوبت نرسید`); continue; }
-    const cacheKey = `provider-model:${p.name}`;
+    const cacheKey = `provider-model:${code ? 'code:' : ''}${p.name}`;
     const cached = env.MEMORY ? await env.MEMORY.get(cacheKey) : null;
     const full = fitContext(all, p.budget || FULL_BUDGET);
     const small = fitContext(all, SMALL_BUDGET);
@@ -127,8 +133,9 @@ export async function askProviders(env, contents, system) {
         tried.add(model);
         try {
           calls++; total++;
-          let r = await callModel(env, p, model, full);
-          if (tooLarge(r)) { calls++; total++; r = await callModel(env, p, model, small); }
+          const maxTokens = code ? 4096 : 2048;
+          let r = await callModel(env, p, model, full, maxTokens);
+          if (tooLarge(r)) { calls++; total++; r = await callModel(env, p, model, small, maxTokens); }
           if (r.status === 401 || r.status === 403) { reasons.push(`کلید پذیرفته نشد (${r.status})`); allMissing = false; return 'stop'; }
           if (r.status !== 200) {
             reasons.push(`${model}: ${r.status}${r.why ? ` ${r.why}` : ''}`);
@@ -146,7 +153,7 @@ export async function askProviders(env, contents, system) {
       }
       return null;
     };
-    let out = await attempt([...(cached ? [cached] : []), ...modelsOf(env, p)]);
+    let out = await attempt([...(cached ? [cached] : []), ...(code ? p.codeModels || [] : []), ...modelsOf(env, p)]);
     if (out === null && (allMissing || p.discover) && p.catalog) {
       try { out = await attempt(await discoverModels(env, p)); } catch { /* keep the earlier reasons */ }
     }

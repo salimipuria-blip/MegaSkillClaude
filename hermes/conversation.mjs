@@ -1,5 +1,6 @@
 import { ask, see, SYSTEM } from './brain.mjs';
 import { relevantSkills, skillsBlock } from './skill-router.mjs';
+import { isCodeRequest, codeSkills, CODE_PLAYBOOK } from './coding.mjs';
 import { imagePrompt, makeImage, sizeFor } from './image.mjs';
 import { googleTools } from './google.mjs';
 import { CONTEXT_MESSAGES, MAX_NOTES, requireConversationBinding, conversationCall, withLegacyMemoryLock, loadLog, loadNotes, addNote, appendTurn, noteFrom, toContents } from './memory.mjs';
@@ -15,14 +16,17 @@ async function respond(env, input, system, log, notes, { images = [], tools = nu
     const result = await makeImage(env, prompt, sizeFor(wanted));
     return { ...result, prompt, input, reply: `[عکس ساخته شد با ${result.model}] ${prompt}` };
   }
-  const skills = await relevantSkills(env, input);
+  // Coding mode: the matching Pro coding skills come first, then the library's best matches (3 in all).
+  const code = isCodeRequest(input);
+  const [pro, found] = await Promise.all([code ? codeSkills(env, input) : [], relevantSkills(env, input)]);
+  const skills = [...pro, ...found.filter((f) => !pro.some((p) => p.name === f.name))].slice(0, 3);
   const fullSystem = (notes.length
     ? `${system}\n\nLONG-TERM NOTES the user asked you to remember (always take them into account):\n- ${notes.join('\n- ')}`
-    : system) + skillsBlock(skills) + (tools ? TOOLS_NOTE : '');
+    : system) + (code ? CODE_PLAYBOOK : '') + skillsBlock(skills) + (tools ? TOOLS_NOTE : '');
   const parts = [...images.map((image) => ({ inlineData: { mimeType: image.mime, data: image.data } })), { text: input }];
   const contents = [...toContents(log), { role: 'user', parts }];
   const reply = images.length ? await see(env, contents, fullSystem, images, input, tools)
-    : await ask(env, contents, fullSystem, true, tools);
+    : await ask(env, contents, fullSystem, true, tools, { code });
   return { reply, input: images.length ? `[عکس] ${input}` : input };
 }
 
