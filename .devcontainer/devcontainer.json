@@ -9,7 +9,7 @@
     "ghcr.io/devcontainers/features/github-cli:1": {},
     "ghcr.io/anthropics/devcontainer-features/claude-code:1": {}
   },
-  "hostRequirements": { "cpus": 4, "memory": "8gb" },
+  "hostRequirements": { "cpus": 2 },
   "postCreateCommand": "bash .devcontainer/post-create.sh",
   "forwardPorts": [5173, 4173, 8787, 3000],
   "portsAttributes": {
