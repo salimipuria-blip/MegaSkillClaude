@@ -1,6 +1,6 @@
 # product-design
 
-Skills: 144
+Skills: 145
 
 - `academy-checkout-pack` → `psk/data/skills/academy-checkout-pack/SKILL.md`
 - `academy-empty-state-autopilot` → `psk/data/skills/academy-empty-state-autopilot/SKILL.md`
@@ -100,6 +100,7 @@ Skills: 144
 - `playwright-skill` → `library/github-skills/playwright-skill/SKILL.md`
 - `postmortem` → `library/github-skills/postmortem/SKILL.md`
 - `pricing-page-ux-kit` → `psk/data/skills/pricing-page-ux-kit/SKILL.md`
+- `pro-ux-design` → `library/skills/pro-ux-design/SKILL.md`
 - `production-scheduling` → `library/github-skills/production-scheduling/SKILL.md`
 - `promotion-upgrade-requests` → `library/github-skills/promotion-upgrade-requests/SKILL.md`
 - `prototype-test-plan` → `psk/data/skills/prototype-test-plan/SKILL.md`

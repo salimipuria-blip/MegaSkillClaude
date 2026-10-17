@@ -40,7 +40,24 @@ class RouterRankingTest(unittest.TestCase):
     def test_persian_query_routes(self):
         for copy in COPIES:
             with self.subTest(copy=copy):
-                self.assertEqual(self.search(copy, "طراحی لوگو")[0], "visual-design-brief")
+                # «لوگو» folds to "logo", so Persian and English logo skills compete on equal terms.
+                results = self.search(copy, "طراحی لوگو")
+                self.assertEqual(results[0], "pro-brand-identity")
+                self.assertIn("visual-design-brief", results[:10])
+
+    def test_pro_pack_routes_persian_and_english_intents(self):
+        expected = {
+            "بازبینی کد": "pro-code-review", "دیباگ": "pro-debugging", "write tests": "pro-testing-strategy",
+            "react typescript": "pro-frontend-engineering", "امنیت سایت": "pro-security-review",
+            "دیزاین سیستم": "pro-ui-design-system", "طراحی تجربه کاربری": "pro-ux-design",
+            "هویت بصری": "pro-brand-identity", "حل تعارض گیت": "pro-git-workflow",
+        }
+        for copy in COPIES:
+            for query, name in expected.items():
+                with self.subTest(copy=copy, query=query):
+                    self.assertEqual(self.search(copy, query)[0], name)
+        for name in set(expected.values()) | {"pro-backend-api-design"}:
+            self.assertTrue((ROOT / "library/skills" / name / "SKILL.md").is_file(), name)
 
     def test_copies_return_the_same_ranking(self):
         for query in ("instagram content", "excel dashboard", "تحلیل داده فروش"):
@@ -81,6 +98,70 @@ class RouterRankingTest(unittest.TestCase):
         license_name = "mattpocock__skills__LICENSE"
         self.assertEqual((ROOT / "library/github-skills/_licenses" / license_name).read_bytes(),
                          (COPIES["plugin"] / "references/licenses" / license_name).read_bytes())
+
+    def test_phrase_match_is_word_bounded(self):
+        """A short query used to substring-match unrelated triggers ("ai" in "maintain", "art" in "start")."""
+        for copy, directory in COPIES.items():
+            module = _load(directory)
+            path = directory / "references/triggers.json"
+            for query in ("ai", "art", "test"):
+                with self.subTest(copy=copy, query=query):
+                    results = module.search_index(path, query)
+                    self.assertTrue(results)
+                    for item in results:
+                        self.assertTrue(module._tokens(query) & module._tokens(item["matched_trigger"]), item)
+
+    def test_multiword_and_zwnj_aliases_fold(self):
+        for copy, directory in COPIES.items():
+            module = _load(directory)
+            with self.subTest(copy=copy):
+                self.assertEqual(module._tokens("برنامه‌نویسی"), {"code"})
+                self.assertEqual(module._tokens("برنامه نویسی"), {"code"})
+                self.assertEqual(module._tokens("کسب و کار"), {"business"})
+                self.assertEqual(module._tokens("کسب‌وکار"), {"business"})
+                self.assertEqual(module._tokens("اينستاگرام"), {"instagram"})
+
+    def test_rare_words_outweigh_generic_ones(self):
+        """In "سئو سایت" a skill that only matches the generic "site" must not pass as an SEO match."""
+        for copy, directory in COPIES.items():
+            module = _load(directory)
+            with self.subTest(copy=copy):
+                results = module.search_index(directory / "references/triggers.json", "سئو سایت")
+                self.assertEqual(results[0]["name"], "seo")
+                for item in results:
+                    matched = module._tokens(item["matched_trigger"]) | module._tokens(item["name"])
+                    self.assertIn("seo", matched, item)
+
+    def test_cli_falls_back_to_partial_matches(self):
+        import contextlib
+        import io
+        query = "کپشن اینستاگرام تور آفرود"
+        for copy, directory in COPIES.items():
+            module = _load(directory)
+            path = directory / "references/triggers.json"
+            with self.subTest(copy=copy):
+                self.assertEqual(module.search_index(path, query), [])
+                out = io.StringIO()
+                with contextlib.redirect_stdout(out):
+                    module.main([query, "--index", str(path)])
+                self.assertTrue(json.loads(out.getvalue()))
+                out = io.StringIO()
+                with contextlib.redirect_stdout(out):
+                    module.main([query, "--index", str(path), "--min-score", "0.5"])
+                self.assertEqual(json.loads(out.getvalue()), [])
+
+    def test_cli_limits_output(self):
+        import contextlib
+        import io
+        for copy, directory in COPIES.items():
+            module = _load(directory)
+            with self.subTest(copy=copy):
+                out = io.StringIO()
+                with contextlib.redirect_stdout(out):
+                    module.main(["ai", "--limit", "3", "--index", str(directory / "references/triggers.json")])
+                self.assertEqual(len(json.loads(out.getvalue())), 3)
+                with self.assertRaises(SystemExit), contextlib.redirect_stderr(io.StringIO()):
+                    module.main(["ai", "--index", str(directory / "missing.json")])
 
     def test_indexed_paths_exist(self):
         project = _load(COPIES["project"])

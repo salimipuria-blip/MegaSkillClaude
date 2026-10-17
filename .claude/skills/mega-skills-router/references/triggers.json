@@ -1,28 +1,28 @@
 {
  "schema_version": 1,
  "counts": {
-  "skills": 6019,
-  "triggers": 30080,
+  "skills": 6029,
+  "triggers": 30203,
   "colliding_triggers": 0,
   "incomplete_skills": 281,
-  "routable_skills": 5738
+  "routable_skills": 5748
  },
  "domains": {
-  "agents-automation": 764,
+  "agents-automation": 765,
   "business-sales": 487,
   "content-writing": 161,
   "data-spreadsheets": 297,
   "general": 248,
-  "graphic-design": 229,
+  "graphic-design": 231,
   "image-ai": 117,
   "knowledge-research": 329,
-  "product-design": 144,
+  "product-design": 145,
   "prompt-requirements": 338,
   "skill-development": 249,
   "social-media": 260,
   "travel-outdoors": 439,
   "video-ai": 123,
-  "web-development": 1833
+  "web-development": 1840
  },
  "collisions": [],
  "skills": [
@@ -78538,6 +78538,199 @@
     "hermes skill evolution"
    ],
    "origin": "pack"
+  },
+  {
+   "name": "pro-code-review",
+   "domain": "web-development",
+   "source_path": "library/skills/pro-code-review/SKILL.md",
+   "triggers": [
+    "pro-code-review",
+    "pro code review",
+    "web development pro code review",
+    "بازبینی حرفه‌ای کد (correctness، امنیت، کارایی، تست، خوانایی) با شدت‌بندی یافته‌ها و مسیر واقعی خرابی",
+    "بازبینی حرفه‌ای کد (correctness، امنیت، کارایی، تست، خوانایی) با شدت‌بندی یافته‌ها و مسیر واقعی خرابی — وقتی کاربر می‌خواهد یک diff، PR یا فایل را قبل از merge ",
+    "review pull request",
+    "بازبینی کد",
+    "ریویو کد",
+    "بررسی PR",
+    "کد ریویو"
+   ]
+  },
+  {
+   "name": "pro-debugging",
+   "domain": "web-development",
+   "source_path": "library/skills/pro-debugging/SKILL.md",
+   "triggers": [
+    "pro-debugging",
+    "pro debugging",
+    "web development pro debugging",
+    "دیباگ نظام‌مند و ریشه‌یابی باگ (بازتولید، فرضیه، bisect، اصلاح، تست regression) برای هر زبان و فریم‌ورکی",
+    "دیباگ نظام‌مند و ریشه‌یابی باگ (بازتولید، فرضیه، bisect، اصلاح، تست regression) برای هر زبان و فریم‌ورکی — وقتی کاربر می‌گوید چیزی کار نمی‌کند، خطا می‌دهد، کند ",
+    "debug",
+    "debugging",
+    "fix bug",
+    "root cause",
+    "دیباگ",
+    "رفع باگ",
+    "پیدا کردن باگ",
+    "خطا میده",
+    "کار نمیکنه"
+   ]
+  },
+  {
+   "name": "pro-testing-strategy",
+   "domain": "web-development",
+   "source_path": "library/skills/pro-testing-strategy/SKILL.md",
+   "triggers": [
+    "pro-testing-strategy",
+    "pro testing strategy",
+    "web development pro testing strategy",
+    "طراحی استراتژی تست حرفه‌ای (unit، integration، e2e، TDD، پوشش ریسک) با Vitest/Jest، Playwright و pytest",
+    "طراحی استراتژی تست حرفه‌ای (unit، integration، e2e، TDD، پوشش ریسک) با Vitest/Jest، Playwright و pytest — وقتی کاربر می‌خواهد تست بنویسد، پوشش تست را بالا ببرد ",
+    "test strategy",
+    "write tests",
+    "unit test",
+    "e2e test",
+    "تست نویسی",
+    "نوشتن تست",
+    "پوشش تست"
+   ]
+  },
+  {
+   "name": "pro-frontend-engineering",
+   "domain": "web-development",
+   "source_path": "library/skills/pro-frontend-engineering/SKILL.md",
+   "triggers": [
+    "pro-frontend-engineering",
+    "pro frontend engineering",
+    "web development pro frontend engineering",
+    "مهندسی فرانت‌اند حرفه‌ای با React و TypeScript (معماری کامپوننت، state، کارایی، دسترس‌پذیری، RTL و فونت فارسی)",
+    "مهندسی فرانت‌اند حرفه‌ای با React و TypeScript (معماری کامپوننت، state، کارایی، دسترس‌پذیری، RTL و فونت فارسی) — وقتی کاربر رابط کاربری وب می‌سازد، بازطراحی یا ",
+    "frontend",
+    "react typescript",
+    "react component",
+    "فرانت اند",
+    "رابط کاربری react",
+    "راست چین",
+    "rtl"
+   ]
+  },
+  {
+   "name": "pro-backend-api-design",
+   "domain": "web-development",
+   "source_path": "library/skills/pro-backend-api-design/SKILL.md",
+   "triggers": [
+    "pro-backend-api-design",
+    "pro backend api design",
+    "web development pro backend api design",
+    "طراحی بک‌اند و API حرفه‌ای (قرارداد REST، خطاها، اعتبارسنجی، احراز هویت و مجوز، idempotency، دیتابیس و migration)",
+    "طراحی بک‌اند و API حرفه‌ای (قرارداد REST، خطاها، اعتبارسنجی، احراز هویت و مجوز، idempotency، دیتابیس و migration) — وقتی کاربر سرویس، endpoint یا مدل داده می‌سا",
+    "backend",
+    "rest api",
+    "database schema",
+    "بک اند",
+    "طراحی api",
+    "دیتابیس",
+    "وب هوک"
+   ]
+  },
+  {
+   "name": "pro-security-review",
+   "domain": "web-development",
+   "source_path": "library/skills/pro-security-review/SKILL.md",
+   "triggers": [
+    "pro-security-review",
+    "pro security review",
+    "web development pro security review",
+    "بازبینی امنیتی حرفه‌ای اپ وب و API (OWASP Top 10، احراز هویت و مجوز، رازها، تزریق، وابستگی‌ها، داده‌ی شخصی)",
+    "بازبینی امنیتی حرفه‌ای اپ وب و API (OWASP Top 10، احراز هویت و مجوز، رازها، تزریق، وابستگی‌ها، داده‌ی شخصی) — وقتی کاربر قبل از انتشار، بعد از تغییر حساس یا برا",
+    "security review",
+    "owasp",
+    "امنیت",
+    "بررسی امنیتی",
+    "نشت کلید",
+    "امنیت سایت"
+   ]
+  },
+  {
+   "name": "pro-ui-design-system",
+   "domain": "graphic-design",
+   "source_path": "library/skills/pro-ui-design-system/SKILL.md",
+   "triggers": [
+    "pro-ui-design-system",
+    "pro ui design system",
+    "graphic design pro ui design system",
+    "ساخت دیزاین سیستم و رابط کاربری حرفه‌ای (توکن‌های رنگ، تایپوگرافی فارسی، فاصله‌گذاری، grid، کامپوننت‌ها، حالت تاریک، کنتراست)",
+    "ساخت دیزاین سیستم و رابط کاربری حرفه‌ای (توکن‌های رنگ، تایپوگرافی فارسی، فاصله‌گذاری، grid، کامپوننت‌ها، حالت تاریک، کنتراست) — وقتی کاربر رابط یا کیت UI یکدست ",
+    "ui design",
+    "ui kit",
+    "design tokens",
+    "دیزاین سیستم",
+    "طراحی رابط کاربری",
+    "طراحی ui",
+    "حالت تاریک"
+   ]
+  },
+  {
+   "name": "pro-ux-design",
+   "domain": "product-design",
+   "source_path": "library/skills/pro-ux-design/SKILL.md",
+   "triggers": [
+    "pro-ux-design",
+    "pro ux design",
+    "product design pro ux design",
+    "طراحی تجربهٔ کاربری حرفه‌ای (هدف کاربر، جریان کار، معماری اطلاعات، wireframe، ارزیابی هیوریستیک، متن رابط) برای وب، اپ و فروشگاه آنلاین",
+    "طراحی تجربهٔ کاربری حرفه‌ای (هدف کاربر، جریان کار، معماری اطلاعات، wireframe، ارزیابی هیوریستیک، متن رابط) برای وب، اپ و فروشگاه آنلاین — وقتی کاربر می‌خواهد مس",
+    "ux design",
+    "user experience",
+    "user flow",
+    "wireframe",
+    "usability",
+    "طراحی تجربه کاربری",
+    "یو ایکس",
+    "جریان کاربر",
+    "نرخ تبدیل"
+   ]
+  },
+  {
+   "name": "pro-brand-identity",
+   "domain": "graphic-design",
+   "source_path": "library/skills/pro-brand-identity/SKILL.md",
+   "triggers": [
+    "pro-brand-identity",
+    "pro brand identity",
+    "graphic design pro brand identity",
+    "طراحی هویت بصری و لوگوی حرفه‌ای (استراتژی برند، مفهوم لوگو، انواع لوگو، رنگ، تایپوگرافی، سیستم بصری و راهنمای برند)",
+    "طراحی هویت بصری و لوگوی حرفه‌ای (استراتژی برند، مفهوم لوگو، انواع لوگو، رنگ، تایپوگرافی، سیستم بصری و راهنمای برند) — وقتی کاربر لوگو، هویت برند یا بازطراحی برن",
+    "logo design",
+    "brand identity",
+    "visual identity",
+    "brand book",
+    "طراحی لوگو",
+    "هویت بصری",
+    "هویت برند",
+    "برندبوک"
+   ]
+  },
+  {
+   "name": "pro-git-workflow",
+   "domain": "web-development",
+   "source_path": "library/skills/pro-git-workflow/SKILL.md",
+   "triggers": [
+    "pro-git-workflow",
+    "pro git workflow",
+    "web development pro git workflow",
+    "گردش کار حرفه‌ای Git و انتشار (شاخه‌بندی، commit معنادار، PR کوچک، حل تعارض، CI سبز، نسخه‌دهی و rollback)",
+    "گردش کار حرفه‌ای Git و انتشار (شاخه‌بندی، commit معنادار، PR کوچک، حل تعارض، CI سبز، نسخه‌دهی و rollback) — وقتی کاربر می‌خواهد تغییر را تمیز ثبت کند، PR بسازد،",
+    "git",
+    "pull request",
+    "merge conflict",
+    "release",
+    "گیت",
+    "کامیت",
+    "حل تعارض",
+    "انتشار نسخه"
+   ]
   }
  ]
 }

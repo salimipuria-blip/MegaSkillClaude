@@ -22,7 +22,7 @@ node scripts/doctor.mjs router                  # هر سه با هم
 |---|---|
 | `sync_skill_library.py --check` | ✅ «۰ فایل متفاوت» — سه نما هم‌گام‌اند |
 | تست‌های ریشه (شامل مسیریاب) | ✅ **۵۶/۵۶** (یکی از آن‌ها: idempotent بودن تولید و دست‌نخورده‌ماندن فایل‌های ناشناخته) |
-| شمار canonical فعلی | ✅ **6,019 کل / 5,738 قابل‌مسیریابی / 281 ناقص**؛ شامل 3,000 هسته، 8 مهارت پروژه و 3,011 مهارت GitHub؛ 30,080 trigger |
+| شمار canonical فعلی | ✅ **6,029 کل / 5,748 قابل‌مسیریابی / 281 ناقص**؛ شامل 3,000 هسته، 18 مهارت پروژه و 3,011 مهارت GitHub؛ 30,203 trigger |
 | `verify_skills.py` | ✅ اجرا شد (گزارشی) |
 | ارجاع‌های شکسته در پلاگین | ✅ هیچ (اسکریپت audit مسیرها را بررسی کرد؛ تک‌موردهای `library/github-skills/archify/package.json`
   به `library/github-skills/scripts/*.mjs` ارجاع می‌دهند که در این چک‌اوت نیست — پایین را ببینید) |
@@ -53,6 +53,8 @@ node scripts/doctor.mjs router                  # هر سه با هم
   - یک تستِ دوم جلوی پوسیدنِ استثنا را می‌گیرد: اگر روزی آن ارجاع‌ها درست شوند یا پکیج حذف شود، تست **قرمز** می‌شود تا استثنا حذف یا بازنگری شود. متنِ دلیل هم الزامی است.
   - **دستور تأیید:** `node scripts/doctor.mjs router` → هم‌گامی سه‌نما (۰ فایل متفاوت)، تست‌های پایتون (۵۶ تست ریشه + ۳ تست جدید) و `verify_skills.py --strict` سبز.
   - **محدودیت:** این گیت فقط «فایل وجود دارد» را می‌سنجد، نه «اسکریپت واقعاً کار می‌کند» را؛ اجرای واقعی همچنان به دسترسیِ محیطی نیاز دارد.
+
+- **۲۰۲۶-۱۰-۱۷ (مسیریاب 1.2.0 و بستهٔ Pro)** — سه باگ مسیریاب رفع شد (تطبیق زیررشته‌ای که «ai» را با «maintain» جور می‌کرد، aliasهای چندکلمه‌ای/ZWNJ، خروجی بی‌سقف)؛ وزن‌دهی IDF، اولویت نام مهارت، aliasهای روزمره (سئو، لوگو، کپشن، ریلز، دیباگ…) و fallback خودکار 0.25 اضافه شد. ۱۰ مهارت عمیق `pro-*` (code review، debugging، testing، frontend، backend/API، security، UI design system، UX، brand identity، git) در `library/skills/`؛ شمار: 6,029 کل / 5,748 قابل‌مسیریابی / 281 ناقص / 30,203 trigger. ۷۰ تست ریشه سبز، doctor `router` سبز.
 
 ## Professional guide
 See `PROFESSIONAL_GUIDE.md` in this folder for performance improvements, debugging playbook, and next steps. Update it whenever behavior changes.

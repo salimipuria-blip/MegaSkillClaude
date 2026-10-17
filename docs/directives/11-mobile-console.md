@@ -8,7 +8,7 @@ PWA ایستا و فارسی برای بازکردن ریپوی MegaSkillClaude 
 - `mobile/search.mjs`: normalization، aliasهای فارسی/فینگلیش، رتبه‌بندی، اعتبارسنجی payload و HTML escaping.
 - `mobile/skills-index.json`: خروجی تولیدی از `.claude/skills/mega-skills-router/references/triggers.json`; دستی ویرایش نشود.
 - `mobile/sw.js`: shell آفلاین؛ cache key با اثرانگشت همهٔ assetهای پیش‌ذخیره و کد worker ساخته می‌شود.
-- نسخهٔ فعلی ایندکس: **۵٬۷۳۸ مهارت قابل‌مسیریابی** (عدد رابط/manifest باید با builder همگام بماند).
+- نسخهٔ فعلی ایندکس: **۵٬۷۴۸ مهارت قابل‌مسیریابی** (عدد رابط/manifest باید با builder همگام بماند).
 
 ## دستورهای اجرا و بررسی
 ```bash

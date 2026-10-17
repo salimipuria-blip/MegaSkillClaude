@@ -6,8 +6,8 @@
     {
       "name": "mega-skills-router",
       "source": "./plugins/mega-skills-router",
-      "description": "Mega Skills Router: one skill that routes requests to the relevant skills among 5,986.",
-      "version": "1.0.1",
+      "description": "Mega Skills Router: one skill that routes requests to the relevant skills among 6,029.",
+      "version": "1.2.0",
       "category": "productivity"
     }
   ]
