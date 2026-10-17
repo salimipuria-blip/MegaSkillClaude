@@ -1,6 +1,6 @@
 # web-development
 
-Skills: 1833
+Skills: 1840
 
 - `1688-product-detail` → `references/skills/1688-product-detail/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `2slides-ppt-generator` → `references/skills/2slides-ppt-generator/INSTRUCTIONS.md`
@@ -1285,6 +1285,13 @@ Skills: 1833
 - `pricing-section-patterns` → `references/skills/pricing-section-patterns/INSTRUCTIONS.md`
 - `prisma-expert` → `references/skills/prisma-expert/INSTRUCTIONS.md`
 - `prisma-patterns` → `references/skills/prisma-patterns/INSTRUCTIONS.md`
+- `pro-backend-api-design` → `references/skills/pro-backend-api-design/INSTRUCTIONS.md`
+- `pro-code-review` → `references/skills/pro-code-review/INSTRUCTIONS.md`
+- `pro-debugging` → `references/skills/pro-debugging/INSTRUCTIONS.md`
+- `pro-frontend-engineering` → `references/skills/pro-frontend-engineering/INSTRUCTIONS.md`
+- `pro-git-workflow` → `references/skills/pro-git-workflow/INSTRUCTIONS.md`
+- `pro-security-review` → `references/skills/pro-security-review/INSTRUCTIONS.md`
+- `pro-testing-strategy` → `references/skills/pro-testing-strategy/INSTRUCTIONS.md`
 - `process-mapper` → `references/skills/process-mapper/INSTRUCTIONS.md`
 - `product-copy-seo-fa` → `references/skills/product-copy-seo-fa/INSTRUCTIONS.md`
 - `product-lens` → `references/skills/product-lens/INSTRUCTIONS.md`

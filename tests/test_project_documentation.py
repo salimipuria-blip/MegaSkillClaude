@@ -91,7 +91,7 @@ class ProjectDocumentationTests(unittest.TestCase):
         self.assertEqual(counts["skills"], len(router_index["skills"]))
         self.assertEqual(counts["incomplete_skills"], 281)
         self.assertEqual(counts["routable_skills"], counts["skills"] - counts["incomplete_skills"])
-        self.assertEqual(len(project_skills), 8)
+        self.assertEqual(len(project_skills), 18)
         self.assertEqual(len(github_index), 3011)
 
         docs = {

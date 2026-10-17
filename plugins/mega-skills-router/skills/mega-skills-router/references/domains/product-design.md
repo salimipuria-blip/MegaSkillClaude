@@ -1,6 +1,6 @@
 # product-design
 
-Skills: 144
+Skills: 145
 
 - `academy-checkout-pack` → `references/skills/academy-checkout-pack/INSTRUCTIONS.md`
 - `academy-empty-state-autopilot` → `references/skills/academy-empty-state-autopilot/INSTRUCTIONS.md`
@@ -100,6 +100,7 @@ Skills: 144
 - `playwright-skill` → `references/skills/playwright-skill/INSTRUCTIONS.md`
 - `postmortem` → `references/skills/postmortem/INSTRUCTIONS.md`
 - `pricing-page-ux-kit` → `references/skills/pricing-page-ux-kit/INSTRUCTIONS.md`
+- `pro-ux-design` → `references/skills/pro-ux-design/INSTRUCTIONS.md`
 - `production-scheduling` → `references/skills/production-scheduling/INSTRUCTIONS.md`
 - `promotion-upgrade-requests` → `references/skills/promotion-upgrade-requests/INSTRUCTIONS.md`
 - `prototype-test-plan` → `references/skills/prototype-test-plan/INSTRUCTIONS.md`

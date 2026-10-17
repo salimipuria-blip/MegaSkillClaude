@@ -1,6 +1,6 @@
 # web-development
 
-Skills: 1833
+Skills: 1840
 
 - `1688-product-detail` → `library/github-skills/1688-product-detail/SKILL.md` [incomplete: excluded from default routing]
 - `2slides-ppt-generator` → `library/github-skills/2slides-ppt-generator/SKILL.md`
@@ -1285,6 +1285,13 @@ Skills: 1833
 - `pricing-section-patterns` → `psk/data/skills/pricing-section-patterns/SKILL.md`
 - `prisma-expert` → `library/github-skills/prisma-expert/SKILL.md`
 - `prisma-patterns` → `library/github-skills/prisma-patterns/SKILL.md`
+- `pro-backend-api-design` → `library/skills/pro-backend-api-design/SKILL.md`
+- `pro-code-review` → `library/skills/pro-code-review/SKILL.md`
+- `pro-debugging` → `library/skills/pro-debugging/SKILL.md`
+- `pro-frontend-engineering` → `library/skills/pro-frontend-engineering/SKILL.md`
+- `pro-git-workflow` → `library/skills/pro-git-workflow/SKILL.md`
+- `pro-security-review` → `library/skills/pro-security-review/SKILL.md`
+- `pro-testing-strategy` → `library/skills/pro-testing-strategy/SKILL.md`
 - `process-mapper` → `library/github-skills/process-mapper/SKILL.md`
 - `product-copy-seo-fa` → `psk/data/skills/product-copy-seo-fa/SKILL.md`
 - `product-lens` → `library/github-skills/product-lens/SKILL.md`

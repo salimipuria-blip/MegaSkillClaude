@@ -17,7 +17,7 @@
 | **BISON Brand Book** | `bison-brand-book/` | Vite/GSAP/Lenis build و audit طبق دفتر پروژه | smoke/accessibility خودکار محدود است؛ Pages/Vercel قدیمی باید به یک منبع انتشار تبدیل شود |
 | **Omni LLM Orchestrator** | `orchestrator/` | وضعیت تاریخی؛ قرارداد و pytest با ۳ skip مستند | قابلیت محصولی جدید نساز؛ ابتدا تاریخچه/تابع‌های تکراری را با تست قرارداد بازنشسته کن |
 | **Skill library/router** | `.claude/skills/`, `library/`, `plugins/` | canonical source و sync check؛ مصرف‌کننده‌ها PSK، Hermes، plugin و mobile هستند | indexهای مشتق‌شده را دستی تغییر نده؛ countهای هر package ممکن است به‌خاطر scope/مهارت‌های ناقص متفاوت باشد |
-| **کنسول آیفون مگااسکیل** | `mobile/` | ۵٬۷۳۸ مهارت، جست‌وجوی local، HTML escaping، fingerprint نسخه‌دار PWA و تست‌های Node/Python | Safari/iOS واقعی و زمان بارگذاری ۲٫۲MB خام هنوز روی دستگاه تأیید نشده؛ VS Code وب ترمینال نیست |
+| **کنسول آیفون مگااسکیل** | `mobile/` | ۵٬۷۴۸ مهارت، جست‌وجوی local، HTML escaping، fingerprint نسخه‌دار PWA و تست‌های Node/Python | Safari/iOS واقعی و زمان بارگذاری ۲٫۲MB خام هنوز روی دستگاه تأیید نشده؛ VS Code وب ترمینال نیست |
 | **استیکرهای وایکینگ** | `brands/viking-offroad/` | validator ایستای ۱۲ پک/۳۶۰ فایل ۵۱۲×۵۱۲ RGBA + ۱۲ preview و cover | validator طراحی/کیفیت هر پیکسل را نمی‌سنجد؛ بازبینی تصویری release لازم است |
 | **قالب محتوای وایکینگ** | `brand/viking/` | validator محلی و نحو renderer؛ مسیرهای hard-code مرورگر برداشته شده | رندر واقعی Chromium و بازبینی خروجی این محیط تأیید نشده؛ پالت این قالب از پالت استیکر جدا است |
 

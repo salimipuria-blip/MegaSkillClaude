@@ -5,7 +5,7 @@
 
 ## وضعیت فعلی (شواهد: `scripts/sync_skill_library.py`, `docs/REPO_HARDENING.md`)
 - ✅ `sync_skill_library.py` نمایه، دستورالعمل، فایل همراه و متن مجوز را از منبع اصلی به پلاگین قابل‌نصب (`plugins/mega-skills-router`) همگام می‌کند؛ `--check` در CI ناهماهنگی را fail می‌کند. فایل bootstrap `SKILL.md` خودش عضو index تولیدی نیست؛ metadata آن را در هر دو مسیر `.claude/skills/mega-skills-router/` و `plugins/mega-skills-router/skills/mega-skills-router/` هم‌زمان نگه دار و با تست شمارنده‌ها بررسی کن.
-- ✅ نمایهٔ canonical اکنون 6,019 مهارت دارد (3,000 هسته + 8 مهارت پروژه + 3,011 مهارت GitHub)؛ 5,738 قابل مسیریابی، 281 مورد ناقص از مسیر پیش‌فرض کنار گذاشته‌شده، و 30,080 trigger دارد (`--include-incomplete` فقط برای بررسی دستی). اعداد تاریخی READMEها با `triggers.json` و `library/github-skills/INDEX.json` همگام بمانند.
+- ✅ نمایهٔ canonical اکنون 6,029 مهارت دارد (3,000 هسته + 18 مهارت پروژه + 3,011 مهارت GitHub)؛ 5,748 قابل مسیریابی، 281 مورد ناقص از مسیر پیش‌فرض کنار گذاشته‌شده، و 30,203 trigger دارد (`--include-incomplete` فقط برای بررسی دستی). اعداد تاریخی READMEها با `triggers.json` و `library/github-skills/INDEX.json` همگام بمانند.
 - تست‌های ریشه: `test_mega_skills_router.py`, `test_skill_library_sync.py`, `test_statusline.py` + بنچمارک/golden مسیریابی در `psk/`.
 
 ## اجرا و تست

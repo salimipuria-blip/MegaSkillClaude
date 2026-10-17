@@ -1,6 +1,6 @@
 # graphic-design
 
-Skills: 229
+Skills: 231
 
 - `academy-brochure-reporter` → `psk/data/skills/academy-brochure-reporter/SKILL.md`
 - `academy-grid-reporter` → `psk/data/skills/academy-grid-reporter/SKILL.md`
@@ -149,6 +149,8 @@ Skills: 229
 - `primer-design` → `library/github-skills/primer-design/SKILL.md`
 - `print-house-handoff-pack` → `psk/data/skills/print-house-handoff-pack/SKILL.md`
 - `prioritization-frameworks` → `library/github-skills/prioritization-frameworks/SKILL.md`
+- `pro-brand-identity` → `library/skills/pro-brand-identity/SKILL.md`
+- `pro-ui-design-system` → `library/skills/pro-ui-design-system/SKILL.md`
 - `product-design` → `library/github-skills/product-design/SKILL.md`
 - `product-strategist` → `library/github-skills/product-strategist/SKILL.md`
 - `qdrant-vertical-scaling` → `library/github-skills/qdrant-vertical-scaling/SKILL.md`

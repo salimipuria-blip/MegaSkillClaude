@@ -42,8 +42,22 @@ class RouterRankingTest(unittest.TestCase):
             with self.subTest(copy=copy):
                 # «لوگو» folds to "logo", so Persian and English logo skills compete on equal terms.
                 results = self.search(copy, "طراحی لوگو")
-                self.assertIn("logo", results[0])
+                self.assertEqual(results[0], "pro-brand-identity")
                 self.assertIn("visual-design-brief", results[:10])
+
+    def test_pro_pack_routes_persian_and_english_intents(self):
+        expected = {
+            "بازبینی کد": "pro-code-review", "دیباگ": "pro-debugging", "write tests": "pro-testing-strategy",
+            "react typescript": "pro-frontend-engineering", "امنیت سایت": "pro-security-review",
+            "دیزاین سیستم": "pro-ui-design-system", "طراحی تجربه کاربری": "pro-ux-design",
+            "هویت بصری": "pro-brand-identity", "حل تعارض گیت": "pro-git-workflow",
+        }
+        for copy in COPIES:
+            for query, name in expected.items():
+                with self.subTest(copy=copy, query=query):
+                    self.assertEqual(self.search(copy, query)[0], name)
+        for name in set(expected.values()) | {"pro-backend-api-design"}:
+            self.assertTrue((ROOT / "library/skills" / name / "SKILL.md").is_file(), name)
 
     def test_copies_return_the_same_ranking(self):
         for query in ("instagram content", "excel dashboard", "تحلیل داده فروش"):

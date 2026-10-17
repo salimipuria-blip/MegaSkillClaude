@@ -1,6 +1,6 @@
 # graphic-design
 
-Skills: 229
+Skills: 231
 
 - `academy-brochure-reporter` → `references/skills/academy-brochure-reporter/INSTRUCTIONS.md`
 - `academy-grid-reporter` → `references/skills/academy-grid-reporter/INSTRUCTIONS.md`
@@ -149,6 +149,8 @@ Skills: 229
 - `primer-design` → `references/skills/primer-design/INSTRUCTIONS.md`
 - `print-house-handoff-pack` → `references/skills/print-house-handoff-pack/INSTRUCTIONS.md`
 - `prioritization-frameworks` → `references/skills/prioritization-frameworks/INSTRUCTIONS.md`
+- `pro-brand-identity` → `references/skills/pro-brand-identity/INSTRUCTIONS.md`
+- `pro-ui-design-system` → `references/skills/pro-ui-design-system/INSTRUCTIONS.md`
 - `product-design` → `references/skills/product-design/INSTRUCTIONS.md`
 - `product-strategist` → `references/skills/product-strategist/INSTRUCTIONS.md`
 - `qdrant-vertical-scaling` → `references/skills/qdrant-vertical-scaling/INSTRUCTIONS.md`

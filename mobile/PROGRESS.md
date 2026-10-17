@@ -22,7 +22,7 @@ python3 -m unittest discover -s tests -p test_mobile_console.py -v
 ## ۳) وضعیت تأییدشده (۲۰۲۶-۱۰-۱۴)
 | بررسی | نتیجه |
 |---|---|
-| `python3 mobile/build-index.py --check` | ✅ ۵٬۷۳۸ مهارت؛ fingerprint: `mega-mobile-v1-371dd38ad385ac69` |
+| `python3 mobile/build-index.py --check` | ✅ ۵٬۷۴۸ مهارت؛ fingerprint: `mega-mobile-v1-7bff70bc5794c7c0` |
 | syntax سه فایل JavaScript | ✅ `app.js`, `sw.js`, `search.mjs` |
 | `node --test mobile/search.test.mjs` | ✅ **۶/۶**: alias فارسی/فینگلیش، رتبه‌بندی، فیلتر، escaping، مسیر امن و payload schema |
 | `test_mobile_console.py` | ✅ **۸/۸**؛ شامل simulation که تغییر فایل precache باید cache fingerprint را عوض کند و هر doctor project در کنسول کارت دارد |
