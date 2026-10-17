@@ -12,7 +12,7 @@ const historyKey = 'history:12345';
 // a missing entry makes workerd fail with `No such module "<name>.mjs"`
 // (regression: health/metrics/rate-limit were imported but not bundled).
 export const workerModuleNames = [
-  'entry', 'worker', 'security', 'app', 'auth', 'users', 'skills',
+  'entry', 'worker', 'knowledge', 'security', 'app', 'auth', 'users', 'skills',
   'skill-router', 'memory', 'brain', 'conversation', 'image', 'media',
   'booking', 'trip-media', 'providers', 'google', 'health', 'metrics',
   'rate-limit', 'resilience', 'webhook-setup', 'photo-edit', 'upscale', 'image-bytes', 'textlayer', 'viking-style',

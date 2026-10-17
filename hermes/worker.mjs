@@ -9,6 +9,7 @@ import { APP_HTML, MANIFEST, ICON } from './app.mjs';
 import { login, sessionUser, changePassword } from './auth.mjs';
 import { USERS } from './users.mjs';
 import { listAccounts, createAccount, setDisabled, resetPassword, accountCommand } from './accounts.mjs';
+import { projectKnowledge, portfolioText } from './knowledge.mjs';
 import { STYLE, SYSTEM, askGemini } from './brain.mjs';
 import { appKey, webhookSecret, setupKey } from './security.mjs';
 export { appKey, webhookSecret, setupKey } from './security.mjs';
@@ -428,7 +429,7 @@ async function api(request, url, env) {
         const { image, mime, model, prompt } = await picture(env, historyKey(env, who), message, wanted);
         return json({ reply: `🖼️ ساخته شد (${model}).\n\n${prompt}`, image: `data:${mime};base64,${image}` });
       }
-      const system = who.role === 'owner' ? SYSTEM : teamSystem(who);
+      const system = who.role === 'owner' ? SYSTEM + await projectKnowledge(env, message) : teamSystem(who);
       const tools = who.role === 'owner' ? await googleTools(env) : null;
       return json({ reply: await converse(env, historyKey(env, who), message, system, photo ? [photo] : [], tools) });
     } catch (err) {
@@ -578,6 +579,10 @@ async function handle(msg, env, origin) {
       return send(env, chatId, err.message);
     }
   }
+  if (/^\/projects(?:@\w+)?$/i.test(input)) {
+    const text = await portfolioText(env);
+    return send(env, chatId, text ? text.slice(0, 4000) : 'نقشهٔ پروژه‌ها در این استقرار نیست (docs/PORTFOLIO.md).');
+  }
   if (env.MEMORY && /^\/client/.test(input)) {
     try {
       const reply = await ownerCommand(env, input);
@@ -597,6 +602,7 @@ async function handle(msg, env, origin) {
       'بعد از آن متن با پیام هم جابه‌جا می‌شود: «بالاتر ببر»، «کمی پایین‌تر»، «وسطش بذار»، «سفیدش کن»، «درشت‌ترش کن»، «بدون نوار»، «متن رو بردار».\n' +
       'ویس بفرست تا گوش بدهم، عکس بفرست تا ببینم؛ برای خبرها و چیزهای روز در گوگل جست‌وجو می‌کنم.\n' +
       'یادآور: بنویس «یادم بنداز ساعت ۹: تماس با بانک» یا «یادم بنداز فردا ۱۰: قرار دکتر» یا «remind me in 30 minutes: call Bob» — سر وقت بهت پیام می‌دم و هر صبح لیست روزت را می‌فرستم. لیست و حذف: /reminders\n' +
+      'پروژه‌ها: /projects نقشهٔ همهٔ پروژه‌ها و ریپوها؛ دربارهٔ هر پروژه (هرمس، چام، وایکینگ، لیتوس…) بپرس تا از روی مستنداتش جواب بدهم\n' +
       'مشتری‌ها (Hermes Business): /client_new <نام کسب‌وکار> فضای کاری + کد عضویت مدیر؛ /clients فهرست و مصرف\n' +
       'حساب‌های تیم: /users فهرست؛ /user_add نام‌کاربری member نام؛ /user_off و /user_on؛ /user_reset رمز جدید\n' +
       '/status وضعیت زندهٔ همهٔ مغزها و منبع‌های عکس (کدام کار می‌کند و چرا)\n' +
@@ -761,7 +767,7 @@ async function handle(msg, env, origin) {
   await tg(env, 'sendChatAction', { chat_id: chatId, action: 'typing' });
   let reply;
   try {
-    reply = await converse(env, key, input, SYSTEM, images, await googleTools(env));
+    reply = await converse(env, key, input, SYSTEM + await projectKnowledge(env, input), images, await googleTools(env));
   } catch (err) {
     return send(env, chatId, `خطا: ${err.message}`);
   }
