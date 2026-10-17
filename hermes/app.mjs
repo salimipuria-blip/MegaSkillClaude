@@ -325,6 +325,7 @@ export const APP_HTML = String.raw`<!doctype html>
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M21 4 3 11l6 2 2 6 3-4 5 4z"/><path d="m9 13 8-6"/></svg>هرمس در تلگرام</a>
     <button class="tile" id="tNew"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>گفتگوی جدید (قبلی بایگانی می‌شود)</button>
     <button class="tile" id="tLog"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>تاریخچهٔ گفتگو</button>
+    <button class="tile hide" id="tTeam"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/></svg>حساب‌های تیم</button>
     <button class="tile hide" id="tPass"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="8" cy="15" r="4"/><path d="m11 12 9-9M17 6l3 3"/></svg>تغییر رمز</button>
     <button class="tile" id="tForget"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M7 11V8a5 5 0 0 1 10 0v3M5 11h14v10H5z"/></svg>خروج از حساب</button>
   </div>
@@ -439,7 +440,7 @@ export const APP_HTML = String.raw`<!doctype html>
        'ریتوش پرتره، پس‌زمینهٔ جدید، نورپردازی، گرید سینمایی، بازسازی عکس قدیمی، افزایش کیفیت، حذف شیء، عکس محصول استودیویی',
        'هویت و چهره دست‌نخورده می‌ماند؛ متن را مدل تصویر نمی‌کشد (فارسی را خراب می‌کند) — فونت واقعی روی عکس می‌نشیند'],
       ['این عکس رو ریتوش کن', 'این عکس قدیمی رو بازسازی کن', 'بالاتر ببر']],
-    ['remind', 'Reminders', 'soon', 414, 392, true, 't', 5.5, 'یادآور و خلاصهٔ صبح', 'queued',
+    ['remind', 'Reminders', 'skill', 414, 392, true, 't', 5.5, 'یادآور و خلاصهٔ صبح', 'online',
       ['یادآوری سر ساعت در تلگرام', 'هر صبح خلاصهٔ روز'], []],
     ['calendar', 'Calendar', 'soon', 560, 356, true, 'r', 5.5, 'تقویم و رزرو تور', 'planned',
       ['ثبت رزرو تورها', 'یادآوری قبل از حرکت'], []],
@@ -1108,6 +1109,46 @@ export const APP_HTML = String.raw`<!doctype html>
     catch (err) { showReply('error', err.message); }
   };
   $('tForget').onclick = () => { if (confirm('از حساب خارج شوی؟')) { store.del('hermes-key'); store.del('hermes-session'); location.reload(); } };
+  // Owner only: team accounts (create, disable/enable, new password) — shown in the log panel.
+  async function renderTeam() {
+    let data;
+    try { data = await api('/api/admin/accounts'); } catch (err) { alert(err.message); return; }
+    const box = document.createElement('div'); box.className = 'notes';
+    const head = document.createElement('div'); head.className = 'nt'; head.textContent = 'TEAM · ' + data.accounts.length;
+    const add = document.createElement('button'); add.textContent = '+ NEW';
+    add.onclick = async () => {
+      const username = prompt('نام کاربری (انگلیسی کوچک، مثلاً sara):'); if (!username) return;
+      const name = prompt('نام نمایشی:'); if (!name) return;
+      const role = confirm('مدیر (admin) باشد؟ «Cancel» = عضو عادی') ? 'admin' : 'member';
+      try {
+        const r = (await api('/api/admin/accounts', { username, name, role })).account;
+        prompt('حساب ساخته شد. این رمز فقط یک بار نشان داده می‌شود؛ خصوصی به خودش بده:', r.password);
+        box.remove(); renderTeam();
+      } catch (err) { alert(err.message); }
+    };
+    head.prepend(add); box.append(head);
+    data.accounts.forEach((a) => {
+      const row = document.createElement('div'); row.className = 'n rmrow';
+      const txt = document.createElement('span'); txt.className = 'rtxt';
+      txt.textContent = (a.disabled ? '⛔ ' : '') + a.name + ' · ' + a.username + ' · ' + a.role + (a.locks.length ? ' 🔒' + a.locks.join(',') : '');
+      const reset = document.createElement('button'); reset.textContent = 'رمز'; reset.className = 'rdel';
+      reset.onclick = async () => {
+        if (!confirm('رمز تازه برای ' + a.name + '؟ از همهٔ دستگاه‌ها خارج می‌شود.')) return;
+        try { const r = await api('/api/admin/accounts/reset', { username: a.username }); prompt('رمز جدید (یک بار نشان داده می‌شود):', r.password); }
+        catch (err) { alert(err.message); }
+      };
+      const tog = document.createElement('button'); tog.textContent = a.disabled ? 'فعال' : 'غیرفعال'; tog.className = 'rdel';
+      tog.onclick = async () => {
+        if (!a.disabled && !confirm(a.name + ' غیرفعال شود؟')) return;
+        try { await api('/api/admin/accounts/disable', { username: a.username, disabled: !a.disabled }); box.remove(); renderTeam(); }
+        catch (err) { alert(err.message); }
+      };
+      row.append(txt, reset, tog); box.append(row);
+    });
+    $('lbody').prepend(box);
+  }
+  $('tTeam').onclick = () => { toggleLamp(); renderLog(); renderTeam(); $('log').classList.add('show'); };
+
   $('tPass').onclick = async () => {
     const old = prompt('رمز فعلی:'); if (!old) return;
     const next = prompt('رمز جدید (حداقل ۸ حرف):'); if (!next) return;
@@ -1135,6 +1176,7 @@ export const APP_HTML = String.raw`<!doctype html>
       const b = document.createElement('b'); b.textContent = me.role === 'owner' ? 'پوریا' : me.name; w.prepend(b);
       $('tTg').classList.toggle('hide', me.role !== 'owner');
       $('tPass').classList.toggle('hide', me.role === 'owner');
+      $('tTeam').classList.toggle('hide', me.role !== 'owner');
       locks = me.locks || [];
       locks.forEach((id) => { const n = nodes[id]; if (!n) return; n.g.classList.add('locked'); n.label.textContent = n.row[1] + ' 🔒'; });
     } catch {}

@@ -8,6 +8,7 @@
 import { APP_HTML, MANIFEST, ICON } from './app.mjs';
 import { login, sessionUser, changePassword } from './auth.mjs';
 import { USERS } from './users.mjs';
+import { listAccounts, createAccount, setDisabled, resetPassword, accountCommand } from './accounts.mjs';
 import { STYLE, SYSTEM, askGemini } from './brain.mjs';
 import { appKey, webhookSecret, setupKey } from './security.mjs';
 export { appKey, webhookSecret, setupKey } from './security.mjs';
@@ -262,7 +263,22 @@ async function api(request, url, env) {
   if (request.method === 'GET' && url.pathname === '/api/me') return json(who);
   if (request.method === 'GET' && url.pathname === '/api/team') {
     if (who.role !== 'owner' && who.role !== 'admin') return json({ error: 'forbidden' }, 403);
-    return json({ team: Object.entries(USERS).map(([username, u]) => ({ username, name: u.name, role: u.role })) });
+    const team = env.MEMORY ? await listAccounts(env) : Object.entries(USERS).map(([username, u]) => ({ username, name: u.name, role: u.role }));
+    return json({ team: team.filter((a) => !a.disabled).map(({ username, name, role }) => ({ username, name, role })) });
+  }
+  // Account management: the owner only (roadmap #6).
+  if (url.pathname.startsWith('/api/admin/accounts')) {
+    if (who.role !== 'owner') return json({ error: 'فقط مالک می‌تواند حساب‌ها را مدیریت کند.' }, 403);
+    try {
+      if (request.method === 'GET' && url.pathname === '/api/admin/accounts') return json({ accounts: await listAccounts(env), abilities: Object.keys(ABILITIES) });
+      const body = request.method === 'POST' ? await request.json().catch(() => ({})) : null;
+      if (body && url.pathname === '/api/admin/accounts') return json({ account: await createAccount(env, body, ABILITIES) });
+      if (body && url.pathname === '/api/admin/accounts/disable') return json(await setDisabled(env, body.username, body.disabled !== false));
+      if (body && url.pathname === '/api/admin/accounts/reset') return json(await resetPassword(env, body.username));
+    } catch (err) {
+      return json({ error: err.message }, 400);
+    }
+    return json({ error: 'not found' }, 404);
   }
   if (request.method === 'POST' && url.pathname === '/api/password') {
     if (who.role === 'owner') return json({ error: 'مالک با لینک تلگرام وارد می‌شود و رمز ندارد.' }, 400);
@@ -554,6 +570,14 @@ async function handle(msg, env, origin) {
   const read = await readInput(env, msg, chatId);
   if (!read) return;
   const { input, images, heard } = read;
+  if (env.MEMORY && /^\/(users|user_)/i.test(input)) {
+    try {
+      const reply = await accountCommand(env, input, ABILITIES);
+      if (reply) return send(env, chatId, reply);
+    } catch (err) {
+      return send(env, chatId, err.message);
+    }
+  }
   if (env.MEMORY && /^\/client/.test(input)) {
     try {
       const reply = await ownerCommand(env, input);
@@ -574,6 +598,7 @@ async function handle(msg, env, origin) {
       'ویس بفرست تا گوش بدهم، عکس بفرست تا ببینم؛ برای خبرها و چیزهای روز در گوگل جست‌وجو می‌کنم.\n' +
       'یادآور: بنویس «یادم بنداز ساعت ۹: تماس با بانک» یا «یادم بنداز فردا ۱۰: قرار دکتر» یا «remind me in 30 minutes: call Bob» — سر وقت بهت پیام می‌دم و هر صبح لیست روزت را می‌فرستم. لیست و حذف: /reminders\n' +
       'مشتری‌ها (Hermes Business): /client_new <نام کسب‌وکار> فضای کاری + کد عضویت مدیر؛ /clients فهرست و مصرف\n' +
+      'حساب‌های تیم: /users فهرست؛ /user_add نام‌کاربری member نام؛ /user_off و /user_on؛ /user_reset رمز جدید\n' +
       '/status وضعیت زندهٔ همهٔ مغزها و منبع‌های عکس (کدام کار می‌کند و چرا)\n' +
       '/google اتصال جیمیل، تقویم، درایو و شیت\n' +
       '/reset گفتگوی جدید (قبلی بایگانی می‌شود)\n/notes یادداشت‌های حافظه\n/forget پاک کردن یادداشت‌ها\n/app لینک اپ');
