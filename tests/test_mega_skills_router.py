@@ -40,7 +40,10 @@ class RouterRankingTest(unittest.TestCase):
     def test_persian_query_routes(self):
         for copy in COPIES:
             with self.subTest(copy=copy):
-                self.assertEqual(self.search(copy, "طراحی لوگو")[0], "visual-design-brief")
+                # «لوگو» folds to "logo", so Persian and English logo skills compete on equal terms.
+                results = self.search(copy, "طراحی لوگو")
+                self.assertIn("logo", results[0])
+                self.assertIn("visual-design-brief", results[:10])
 
     def test_copies_return_the_same_ranking(self):
         for query in ("instagram content", "excel dashboard", "تحلیل داده فروش"):
@@ -103,6 +106,35 @@ class RouterRankingTest(unittest.TestCase):
                 self.assertEqual(module._tokens("کسب و کار"), {"business"})
                 self.assertEqual(module._tokens("کسب‌وکار"), {"business"})
                 self.assertEqual(module._tokens("اينستاگرام"), {"instagram"})
+
+    def test_rare_words_outweigh_generic_ones(self):
+        """In "سئو سایت" a skill that only matches the generic "site" must not pass as an SEO match."""
+        for copy, directory in COPIES.items():
+            module = _load(directory)
+            with self.subTest(copy=copy):
+                results = module.search_index(directory / "references/triggers.json", "سئو سایت")
+                self.assertEqual(results[0]["name"], "seo")
+                for item in results:
+                    matched = module._tokens(item["matched_trigger"]) | module._tokens(item["name"])
+                    self.assertIn("seo", matched, item)
+
+    def test_cli_falls_back_to_partial_matches(self):
+        import contextlib
+        import io
+        query = "کپشن اینستاگرام تور آفرود"
+        for copy, directory in COPIES.items():
+            module = _load(directory)
+            path = directory / "references/triggers.json"
+            with self.subTest(copy=copy):
+                self.assertEqual(module.search_index(path, query), [])
+                out = io.StringIO()
+                with contextlib.redirect_stdout(out):
+                    module.main([query, "--index", str(path)])
+                self.assertTrue(json.loads(out.getvalue()))
+                out = io.StringIO()
+                with contextlib.redirect_stdout(out):
+                    module.main([query, "--index", str(path), "--min-score", "0.5"])
+                self.assertEqual(json.loads(out.getvalue()), [])
 
     def test_cli_limits_output(self):
         import contextlib

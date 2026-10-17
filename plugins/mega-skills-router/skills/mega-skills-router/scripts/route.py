@@ -4,8 +4,10 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import re
 import unicodedata
+from collections import Counter
 from pathlib import Path
 
 
@@ -35,12 +37,20 @@ ALIASES = {
     "travel": "travel", "سفر": "travel",
     "document": "document", "سند": "document",
     "presentation": "presentation", "ارائه": "presentation", "اسلاید": "presentation",
+    "seo": "seo", "سئو": "seo", "logo": "logo", "لوگو": "logo", "brand": "brand", "برند": "brand",
+    "caption": "caption", "کپشن": "caption", "story": "story", "استوری": "story", "reel": "reel", "ریلز": "reel", "ریل": "reel",
+    "اینستا": "instagram", "landing": "landing", "لندینگ": "landing", "debug": "debug", "دیباگ": "debug", "باگ": "bug",
+    "test": "test", "تست": "test", "tour": "tour", "تور": "tour", "camp": "camp", "کمپ": "camp", "آفرود": "offroad", "offroad": "offroad",
+    "shop": "shop", "فروشگاه": "shop", "ad": "ad", "تبلیغ": "ad", "تبلیغات": "ad", "advertising": "ad",
 }
 # Multi-word aliases ("کسب و کار", "برنامه‌نویسی" split at ZWNJ) are folded on the normalized text before tokenizing.
 PHRASE_ALIASES = {" ".join(re.findall(r"\w+", unicodedata.normalize("NFKC", key).casefold())): value for key, value in ALIASES.items() if len(re.findall(r"\w+", unicodedata.normalize("NFKC", key))) > 1}
 PHRASE_ALIAS_RE = re.compile(r"(?<!\w)(?:" + "|".join(re.escape(key) for key in sorted(PHRASE_ALIASES, key=len, reverse=True)) + r")(?!\w)") if PHRASE_ALIASES else None
 STOPWORDS = {"a", "an", "the", "for", "of", "to", "and", "va", "و", "در", "برای", "با", "از", "رو", "را"}
 SKILL_DIR = Path(__file__).resolve().parents[1]
+DEFAULT_MIN_SCORE = 0.50
+FALLBACK_MIN_SCORE = 0.25
+NAME_BOOST = 1.2
 ARABIC_VARIANTS = str.maketrans({"ي": "ی", "ى": "ی", "ك": "ک"})
 
 
@@ -82,21 +92,36 @@ def search_index(index_path: Path, query: str, min_score: float = 0.50, *, inclu
     query_tokens = set(query_sequence)
     if not query_tokens:
         return []
-    ranked: list[tuple[tuple[object, ...], dict[str, object]]] = []
+    prepared = []
+    document_frequency: Counter[str] = Counter()
     for skill in payload["skills"]:
         if skill.get("incomplete") and not include_incomplete:
             continue
-        name_hits = len(query_tokens & _tokens(skill["name"]))
-        best_score = name_hits / len(query_tokens)
-        best_precision = 0.0
+        name_tokens = _tokens(skill["name"])
+        triggers = [(trigger, _token_list(trigger)) for trigger in skill["triggers"]]
+        seen = name_tokens.union(*(sequence for _, sequence in triggers))
+        document_frequency.update(seen & query_tokens)
+        prepared.append((skill, name_tokens, triggers))
+    # Rare words carry the intent: in "سئو سایت" a skill that only says "site" must not tie with an SEO skill.
+    weight = {token: math.log(1 + len(prepared) / (1 + document_frequency[token])) for token in query_tokens}
+    total_weight = sum(weight.values())
+
+    def coverage(tokens: set[str]) -> float:
+        return sum(weight[token] for token in query_tokens & tokens) / total_weight
+
+    ranked: list[tuple[tuple[object, ...], dict[str, object]]] = []
+    for skill, name_tokens, triggers in prepared:
+        name_hits = len(query_tokens & name_tokens)
+        # A skill named after the request ("python-testing" for "write a python test") is the strongest signal.
+        best_score = min(1.0, NAME_BOOST * coverage(name_tokens))
+        best_precision = name_hits / len(name_tokens) if name_tokens else 0.0
         matched_trigger = skill["name"] if name_hits else ""
-        for trigger in skill["triggers"]:
-            trigger_sequence = _token_list(trigger)
+        for trigger, trigger_sequence in triggers:
             trigger_tokens = set(trigger_sequence)
             if not trigger_tokens:
                 continue
             overlap = len(query_tokens & trigger_tokens)
-            score = overlap / len(query_tokens)
+            score = coverage(trigger_tokens)
             # The whole query as a word-bounded phrase ("ai" must not match "maintain" or "art" "start").
             if _contains_phrase(trigger_sequence, query_sequence):
                 score = max(score, 1.0)
@@ -108,14 +133,14 @@ def search_index(index_path: Path, query: str, min_score: float = 0.50, *, inclu
                 matched_trigger = trigger
         if best_score >= min_score:
             result = {"name": skill["name"], "domain": skill["domain"], "source_path": skill["source_path"], "path": str(SKILL_DIR / skill["source_path"]), "score": round(best_score, 6), "matched_trigger": matched_trigger}
-            ranked.append(((-best_score, -name_hits, -best_precision, skill["domain"], skill["name"]), result))
+            ranked.append(((-best_score, -best_precision, -name_hits, skill["domain"], skill["name"]), result))
     return [result for _, result in sorted(ranked, key=lambda pair: pair[0])]
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="mega-skills-route")
     parser.add_argument("query")
-    parser.add_argument("--min-score", type=float, default=0.50)
+    parser.add_argument("--min-score", type=float, default=None, help="Minimum query coverage (default 0.50, relaxed to 0.25 when nothing matches)")
     parser.add_argument("--index", type=Path)
     parser.add_argument("--include-incomplete", action="store_true", help="Include disabled, incomplete skills for manual review only")
     parser.add_argument("--limit", type=int, default=30, help="Return at most this many best matches (0 = all)")
@@ -125,7 +150,10 @@ def main(argv: list[str] | None = None) -> int:
     index = args.index or Path(__file__).resolve().parents[1] / "references" / "triggers.json"
     if not index.is_file():
         parser.error(f"index not found: {index}")
-    results = search_index(index, args.query, args.min_score, include_incomplete=args.include_incomplete)
+    results = search_index(index, args.query, DEFAULT_MIN_SCORE if args.min_score is None else args.min_score, include_incomplete=args.include_incomplete)
+    if not results and args.min_score is None:
+        # Long, specific requests rarely sit in one trigger; fall back to partial matches instead of nothing.
+        results = search_index(index, args.query, FALLBACK_MIN_SCORE, include_incomplete=args.include_incomplete)
     print(json.dumps(results[:args.limit] if args.limit else results, ensure_ascii=False, indent=2))
     return 0
 
