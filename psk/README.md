@@ -12,7 +12,7 @@ iPhone-first Persian site plus a serverless engine on Vercel. Nothing here needs
 Task history/persistence, accounts, MCP/tool execution, image generation, the cinematic story rebuild of the V4 brief, and the 30-frame narrative map. See `docs/FEATURE_STATUS.json`.
 
 ## Deploy from iPhone
-1. Vercel → Add New → Project → import GitHub repo `salimipuria-blip/-`, **Root Directory `psk`**, framework **Other**.
+1. Vercel → Add New → Project → import GitHub repo `salimipuria-blip/MegaSkillClaude`, **Root Directory `psk`**, framework **Other**.
 2. Settings → Environment Variables: `ENGINE_TOKEN` (24+ random chars). Optional: one or more free keys from `.env.example`. Use provider accounts **without billing** attached.
 3. Redeploy. Open the site → «موتور ۳۰۰۰» → paste the token.
 
