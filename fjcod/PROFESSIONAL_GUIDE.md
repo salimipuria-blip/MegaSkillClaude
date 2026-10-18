@@ -1,29 +1,35 @@
-# Professional Guide — fjcod
+# Professional Guide — fjcod (چام، نسخهٔ قدیمی)
 
-> Auto-maintained. Update this file whenever performance, debugging, or architecture changes.
-> Last updated: 2026-10-15.
+> ممیزی فنی تاریخ‌دار. دستور کار: `CLAUDE.md` · گزارش جریان: `PROGRESS.md`.
+> آخرین ممیزی: **2026-10-18** — وضعیت: بازنشسته؛ جانشین `POINT/fjcod`.
 
-## Stack
-TypeScript + Vite + Supabase
+## خلاصهٔ ممیزی 2026-10-18
+| بخش | قبل | بعد |
+|---|---|---|
+| `npm run check` | ۴ فایل، ۴۱ تست، build سبز | ۵ فایل، **۴۵ تست**، build سبز |
+| `E2E_STRICT=1 npm run e2e` | — (اجرا نشد) | **۱۹/۱۹**، صفر خطای console (Chromium 1194) |
+| رمزهای اولیه | ۸ رمز متنی در `src/core/seed.ts` و جدول README | هیچ رمزی در کد/مستند؛ تصادفی و یک‌بارمصرف |
+| استقرار | `cham-store-os` از همین پوشه | `cham-store-os` از POINT؛ این پوشه منتشر نمی‌شود |
 
-## Quality gates
-- Test: `npm test (41 vitest) + npm run typecheck + npm run check`
-- Check: `npm run check + npm run typecheck`
+## یافته‌ها و اصلاح‌ها
+1. **P0 امنیت — رمزهای پیش‌فرض عمومی.** `DEFAULT_PASSWORDS` در کد و README بود؛ چون ورود فقط با رمز است، هرکس مخزن را دیده بود می‌توانست با هر نقشی (حتی مالک) وارد شود، اگر رمز هنوز عوض نشده بود.
+   - اصلاح: `src/core/initial-passwords.ts` — رمز ۸ رقمی تصادفی و یکتا برای هر حساب، فقط هش ذخیره می‌شود، متن رمز فقط در حافظه و یک بار روی صفحهٔ ورود (`[data-initial-password]`).
+   - salt حساب‌های تازه تصادفی است (قبلاً `${id}-salt` قابل پیش‌بینی).
+   - **چرخش خودکار:** `migrate()` هر حساب seed که هشش برابر هش یکی از پیش‌فرض‌های افشاشده است (با salt قدیمی) را با رمز یک‌بارمصرف عوض می‌کند، `mustChangePassword` را روشن و رویداد `auth.rotate-defaults` را ثبت می‌کند. فقط هش‌ها در کد هستند. روی import پشتیبان هم اجرا می‌شود. idempotent است.
+   - تست: `tests/initial-passwords.test.ts` (یکتایی و قالب، peek/forget، اسکن رگرسیون همهٔ متن‌ها، چرخش و دست‌نخوردن حساب تغییرکرده).
+2. **تست‌ها به رمز واقعی وابسته بودند.** حالا `tests/setup.ts` رمزهای ثابت `fx-*` را با `setInitialPasswordProvider` تزریق می‌کند. `auth-session.test.ts` بعد از `vi.resetModules()` دوباره setup را import می‌کند.
+3. **e2e رمزها را hard-code داشت.** حالا `open(page)` در اولین بازدید هر context رمزها را از صفحهٔ ورود می‌خواند و `login(page, accountId)` با شناسهٔ حساب کار می‌کند.
 
-## Performance improvements applied
-- Throttle auth (5 wrong passwords)
-- in-memory storage fallback
+## ریسک‌های باقی‌مانده (پذیرفته‌شده چون نسخه بازنشسته است)
+- همهٔ داده در `localStorage` یک مرورگر است؛ هرکس به دستگاه دسترسی دارد می‌تواند DB را ویرایش کند. راه‌حل واقعی همان POINT است (RLS + RPC).
+- رمز یک‌بارمصرف تا وقتی «یادداشت کردم» زده نشده یا صفحه رفرش نشده روی صفحهٔ ورود دیده می‌شود.
+- هش SHA-256 کشیده‌شده (۲۰۰۰ دور) برای رمز ۶ رقمی کاربر در برابر brute-force آفلاین ضعیف است.
 
-## Debugging playbook
-- vitest run for unit tests
-- Check supabase/ migrations
-- vercel.json
+## پیشنهادها (با معیار پذیرش)
+- ابزار `scripts/export-for-point.mjs` (جزئیات در `CLAUDE.md` › `data_migration`). معیار: SQL خروجی روی Postgres محلی با اسکیمای POINT بدون خطا و با شمار ردیف برابر اجرا شود.
+- بعد از انتقال: حذف jobهای fjcod از CI ریشه و Archive ریپوی FJCod.
 
-## Suggested next steps
-- Add fetch timeouts to Supabase client calls
-- Profile store flows
-
-## How to keep this file alive
-1. After any change, append a line under "Performance improvements applied" or "Debugging playbook".
-2. Run the quality gates above; record results in PROGRESS.md.
-3. If a new bottleneck is found, add it to "Suggested next steps" with a measurable target.
+## چک‌لیست هر دور
+1. `npm ci && npm run check` → عدد تست‌ها را ثبت کن.
+2. `npm run build && E2E_STRICT=1 npm run e2e` در صورت تغییر UI یا ورود.
+3. یافتهٔ تازه → همین فایل؛ نتیجه → `PROGRESS.md`.

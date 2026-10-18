@@ -124,7 +124,7 @@ describe('seed', () => {
     for (const r of ['owner', 'manager', 'deputy', 'cashier', 'consultant'] as const) expect(db.users.some((u) => u.role === r)).toBe(true);
     const owner = db.users.find((u) => u.role === 'owner')!;
     expect(owner.name).toBe('FJCOD');
-    expect(verifyPassword('fjcod1405', owner.salt, owner.passwordHash)).toBe(true);
+    expect(verifyPassword('fx-owner-0', owner.salt, owner.passwordHash)).toBe(true);
   });
   it('produces consistent sales and a growing trend', () => {
     expect(db.sales.length).toBeGreaterThan(500);

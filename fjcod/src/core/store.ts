@@ -3,7 +3,8 @@ import type { CartLine } from './sales';
 import { computeCart, paymentsBalance, refundedQty, unitPaid } from './sales';
 import type { Customer, DB, HeldCart, Payment, Product, RoleId, Sale, Settings, Shift, User } from './types';
 import { can, canManageRole, type Permission } from './permissions';
-import { DEFAULT_PASSWORDS, SCHEMA_VERSION, cleanStart, defaultSettings, seedDemo } from './seed';
+import { SCHEMA_VERSION, SEED_USER_IDS, cleanStart, defaultSettings, seedDemo } from './seed';
+import { issueInitialPasswords } from './initial-passwords';
 import { hashPassword, randomSalt, uid, verifyPassword } from '../lib/crypto';
 import { addDays } from '../lib/format';
 
@@ -63,14 +64,44 @@ export function isValidDB(x: unknown): x is DB {
   );
 }
 
+/**
+ * Hashes (salt `${id}-salt`) of the shared v2 default passwords that used to be committed in source and
+ * README. Only hashes are kept, to detect and rotate accounts still using them; never the passwords.
+ */
+const LEAKED_DEFAULT_HASHES: Record<string, string> = {
+  'u-owner': 'bfbdcf2fe43cdc13aa2d7787ce06c6a3f62c446621d4c6f675cefdf46a4435ce',
+  'u-manager': '24a96789d9bde0de72b53f7cb6988330c3a733e60c55aa26df715a3ca58f56f5',
+  'u-deputy': '4caadfa9e2af3959570458c83cf9b967756f259254c7f931c7e21d79f0b2fce9',
+  'u-cashier-1': '074834bc73b1f4f4faada84d31749a537174eca748ab47f7b2d30fa5a4507652',
+  'u-cashier-2': '2a81e0126547485724b059f8d4dca96118fcebf8e5baebc2b956dda40e6e7264',
+  'u-cons-1': '60d84bdf2c2967e3b6000e171fe64a98b962e1d9ddb880b974286ede5191dbbb',
+  'u-cons-2': 'ddc7c49455453f3a4b4dc895e4061ef22bd349b9918f48cff7eb37e5bc2d9849',
+  'u-cons-3': 'b569bf58d9391f55aec96fa6888453937bd9cb6d28cfa245833c15c1eaffabfa',
+};
+
 /** Fill any missing fields so older backups keep working after upgrades. */
 export function migrate(d: DB): DB {
   const base = defaultSettings();
   // v1 → v2: login became password-only, so shared role passwords had to become unique.
-  // Accounts that never left their default password get the new per-account default.
-  const users = (d.schema ?? 1) < 2
-    ? d.users.map((u) => (u.mustChangePassword && DEFAULT_PASSWORDS[u.id] ? { ...u, salt: `${u.id}-salt`, passwordHash: hashPassword(DEFAULT_PASSWORDS[u.id], `${u.id}-salt`) } : u))
-    : d.users;
+  // Seeded accounts still on a default that was once public get a fresh random one-time password,
+  // shown once on the login screen (see initial-passwords.ts): v1 accounts that never changed their
+  // shared default, and any account whose hash still equals a leaked v2 default (idempotent: the new
+  // salt is random, so a rotated account never matches again).
+  const stale = d.users
+    .filter((u) => (SEED_USER_IDS as readonly string[]).includes(u.id))
+    .filter((u) => ((d.schema ?? 1) < 2 && u.mustChangePassword)
+      || (u.salt === `${u.id}-salt` && u.passwordHash === LEAKED_DEFAULT_HASHES[u.id]))
+    .map((u) => u.id);
+  const fresh = stale.length ? issueInitialPasswords(stale) : {};
+  const users = d.users.map((u) => {
+    if (!fresh[u.id]) return u;
+    const salt = randomSalt();
+    return { ...u, salt, passwordHash: hashPassword(fresh[u.id], salt), mustChangePassword: true };
+  });
+  const auditLog = [...(d.audit ?? [])];
+  if (stale.length) {
+    auditLog.push({ id: uid('a-'), at: Date.now(), userId: null, action: 'auth.rotate-defaults', detail: `رمز پیش‌فرضِ افشاشدهٔ ${stale.length} حساب با رمز یک‌بارمصرف جایگزین شد` });
+  }
   return {
     ...d,
     schema: SCHEMA_VERSION,
@@ -78,7 +109,7 @@ export function migrate(d: DB): DB {
     heldCarts: d.heldCarts ?? [],
     shifts: d.shifts ?? [],
     stockMoves: d.stockMoves ?? [],
-    audit: d.audit ?? [],
+    audit: auditLog,
     saleCounter: d.saleCounter ?? 1000 + d.sales.length,
     users,
     authGuard: d.authGuard ?? { fails: 0, lockedUntil: 0 },
