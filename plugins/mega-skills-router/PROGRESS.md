@@ -56,5 +56,12 @@ node scripts/doctor.mjs router                  # هر سه با هم
 
 - **۲۰۲۶-۱۰-۱۷ (مسیریاب 1.2.0 و بستهٔ Pro)** — سه باگ مسیریاب رفع شد (تطبیق زیررشته‌ای که «ai» را با «maintain» جور می‌کرد، aliasهای چندکلمه‌ای/ZWNJ، خروجی بی‌سقف)؛ وزن‌دهی IDF، اولویت نام مهارت، aliasهای روزمره (سئو، لوگو، کپشن، ریلز، دیباگ…) و fallback خودکار 0.25 اضافه شد. ۱۰ مهارت عمیق `pro-*` (code review، debugging، testing، frontend، backend/API، security، UI design system، UX، brand identity، git) در `library/skills/`؛ شمار: 6,029 کل / 5,748 قابل‌مسیریابی / 281 ناقص / 30,203 trigger. ۷۰ تست ریشه سبز، doctor `router` سبز.
 
+- **۲۰۲۶-۱۰-۱۸ (بریف پروژه، دیباگ مسیریاب، کارایی)** — `CLAUDE.md` پروژه‌ای (دستور کار، yaml spec، قواعد، اشکال‌زدایی، صف کار با معیار پذیرش) ساخته شد و `PROFESSIONAL_GUIDE.md` به ممیزی تاریخ‌دار تبدیل شد.
+  - **باگ:** درخواست‌های فارسی پشتهٔ پروژه‌ها به مهارت بی‌ربط می‌رفتند (`تست واحد` → مدل مالی، `ربات تلگرام` → خروجی کانال، `برنامه‌نویسی پایتون` → openpyxl). aliasهای فارسی ابزار/پشته و alias عبارتی چندکلمه‌ای در هر دو `route.py` اضافه شد.
+  - **کارایی:** کش ایندکس توکن‌شده در حافظهٔ پروسه (با کلید mtime/size) و fallback تک‌پاس؛ CLI با fallback 2.2s → 0.75s، کل تست‌ها 73.3s → 15.1s.
+  - **نگهبان:** تست هم‌ارزی دو `route.py` (فقط خطوط حل مسیر مجاز به تفاوت).
+  - تست‌ها: **70 → 73 سبز**؛ `sync --check` 0 فایل متفاوت؛ `doctor router` سبز؛ `verify_skills --strict` HASHED 3020.
+  - باز (P0): مهارت تحویل هرمس/چام/وایکینگ — `تور آفرود` و `صندوق فروش pos` هنوز مهارت درستی ندارند.
+
 ## Professional guide
 See `PROFESSIONAL_GUIDE.md` in this folder for performance improvements, debugging playbook, and next steps. Update it whenever behavior changes.
