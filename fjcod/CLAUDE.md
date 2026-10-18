@@ -18,7 +18,9 @@ project:
     e2e: npm run build && E2E_STRICT=1 npm run e2e   # 19/19 steps, Chromium at /opt/pw-browsers
   deploy:
     vercel_project: cham-store-os         # since 2026-10-18 deploys POINT repo, rootDirectory fjcod
-    this_folder_deployed: false           # vercel.json here (ignoreCommand) is no longer wired to any project
+    this_folder_deployed: false           # cham-store-os is still git-linked to MegaSkillClaude (rootDirectory fjcod);
+                                          # vercel.json ignoreCommand here is `exit 0` so this folder never deploys.
+                                          # 2026-10-18: before that, merging PR #90 shipped this OLD app to production (fixed).
   successor:
     repo: salimipuria-blip/point
     path: fjcod/
