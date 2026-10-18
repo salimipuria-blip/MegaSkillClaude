@@ -222,3 +222,5 @@ export می‌شود** (چیزی که تست قبلی نمی‌سنجید). هم
 
 ## Professional guide
 See `PROFESSIONAL_GUIDE.md` in this folder for performance improvements, debugging playbook, and next steps. Update it whenever behavior changes.
+
+- **۲۰۲۶-۱۰-۱۸ (رفع «خنگ شدن» هرمس)** — شکایت مالک: هرمس مثل بات جواب می‌دهد. علت: پرامپت سیستم (۷٬۸۰۳ کاراکتر، با بستهٔ SKILLS) روی هر مغز غیر از جمینی از انتها بریده می‌شد (`fitContext`: ۴۵٪ بودجه = ۵٬۴۰۰ برای GitHub Models، ۶٬۳۰۰ Groq، ۴٬۰۵۰ Pollinations)، پس **یادداشت‌های حافظه، دانش پروژه‌ها، دستورکار کدنویسی و مهارت‌های مسیریابی‌شده در هر پیام حذف می‌شدند**. رفع: `fitSystem` در `providers.mjs` اول بستهٔ ثابت SKILLS را کوتاه می‌کند و هویت + بخش‌های هر نوبت را نگه می‌دارد؛ سهم پرامپت ۵۰٪. تست: `fitsystem.test.mjs` (۳ تست؛ روی کد قدیم یادداشت در ۵٬۴۰۰ حذف می‌شد). npm test ۲۵۲ → ۲۵۵، integration ۱۰/۱۰، worker ۷۹/۷۹.

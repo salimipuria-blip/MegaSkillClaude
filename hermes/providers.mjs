@@ -1,4 +1,5 @@
 import { fetchWithTimeout } from './resilience.mjs';
+import { SKILLS } from './skills.mjs';
 // Free text brains with an OpenAI-compatible API. GitHub Models gives every model its own daily quota, so many models
 // are listed (and more are read from its catalog when those are busy) to get as many free answers a day as possible.
 // Each one is used only when its key is set as a Cloudflare
@@ -72,14 +73,32 @@ export async function discoverModels(env, p) {
 }
 
 const cut = (text, max) => (text.length > max ? `${text.slice(0, Math.max(0, max - 1))}…` : text);
+const PERSONA_CHARS = 1500; // identity + style at the head of every system prompt
 
-// Keeps the system prompt (up to ~45% of the budget), the latest message, and as much recent history as fits.
+// Shrinks a system prompt without losing what makes Hermes Hermes. The static skill pack (SKILLS) sits in the
+// middle of the prompt, before the per-turn parts (memory notes, project knowledge, coding playbook, routed skills),
+// so a plain head cut dropped all of those on every small-budget provider. Here the skill pack gives way first;
+// if the rest is still too long, the persona head and the newest tail are kept.
+export function fitSystem(text, max) {
+  if (text.length <= max) return text;
+  const at = text.indexOf(SKILLS);
+  if (at >= 0) {
+    const core = text.slice(0, at) + text.slice(at + SKILLS.length);
+    if (core.length < max) return text.slice(0, at) + cut(SKILLS, max - core.length) + text.slice(at + SKILLS.length);
+    text = core;
+  }
+  if (text.length <= max) return text;
+  const head = Math.min(PERSONA_CHARS, Math.floor(max / 3));
+  return `${text.slice(0, head)}\n…\n${text.slice(text.length - (max - head - 3))}`;
+}
+
+// Keeps the system prompt (up to ~half the budget), the latest message, and as much recent history as fits.
 export function fitContext(messages, budget) {
   const [system, ...rest] = messages;
-  if (!rest.length) return [{ ...system, content: cut(system.content, budget) }];
+  if (!rest.length) return [{ ...system, content: fitSystem(system.content, budget) }];
   const last = rest.at(-1);
   const lastText = cut(last.content, Math.floor(budget * 0.4));
-  const sys = cut(system.content, Math.max(500, Math.floor(budget * 0.45)));
+  const sys = fitSystem(system.content, Math.max(500, Math.floor(budget * 0.5)));
   let left = budget - sys.length - lastText.length;
   const kept = [];
   for (let i = rest.length - 2; i >= 0 && left > 0; i--) {
