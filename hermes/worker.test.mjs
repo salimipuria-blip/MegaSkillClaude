@@ -240,6 +240,14 @@ test('long replies are split under the Telegram limit', () => {
   assert.ok(parts.every((p) => p.length <= 4000));
 });
 
+test('long replies never split an emoji in half', () => {
+  const str = 'x'.repeat(3999) + '😀' + 'y'.repeat(10); // the emoji straddles the 4000 cut
+  const parts = chunks(str);
+  assert.equal(parts.join(''), str);
+  assert.ok(parts.every((p) => p.length <= 4000 && !/[\ud800-\udbff]$/.test(p) && !/^[\udc00-\udfff]/.test(p)));
+  assert.deepEqual(chunks(''), ['']);
+});
+
 // ── Team accounts ──
 USERS.tester = { name: 'Tester', role: 'member', salt: 'salt-t', hash: await hashPassword('pass-1234', 'salt-t') };
 USERS.boss = { name: 'Boss', role: 'admin', salt: 'salt-b', hash: await hashPassword('boss-5678', 'salt-b') };

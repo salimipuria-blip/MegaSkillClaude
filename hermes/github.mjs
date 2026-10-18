@@ -63,6 +63,8 @@ export async function readFile(env, path) {
     return { path: p, dir: true, text: data.map((e) => `${e.type === 'dir' ? '📁' : '📄'} ${e.name}`).join('\n') };
   }
   if (data.type !== 'file' || typeof data.content !== 'string') throw new Error('این مسیر فایل متنی نیست.');
+  // Over 1 MB the contents API returns encoding "none" and an empty content: say so instead of an empty file.
+  if (data.encoding && data.encoding !== 'base64') throw new Error(`فایل بزرگ‌تر از ۱ مگابایت است (${Number(data.size || 0).toLocaleString('fa-IR')} بایت)؛ فقط فایل‌های کوچک‌تر خوانده می‌شوند.`);
   return { path: p, dir: false, text: decode(data.content) };
 }
 

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import functools
 import json
 import math
 import re
@@ -42,6 +43,14 @@ ALIASES = {
     "اینستا": "instagram", "landing": "landing", "لندینگ": "landing", "debug": "debug", "دیباگ": "debug", "باگ": "bug",
     "test": "test", "تست": "test", "tour": "tour", "تور": "tour", "camp": "camp", "کمپ": "camp", "آفرود": "offroad", "offroad": "offroad",
     "shop": "shop", "فروشگاه": "shop", "ad": "ad", "تبلیغ": "ad", "تبلیغات": "ad", "advertising": "ad",
+    # Persian names of tools and stacks the contract projects use (Hermes: Telegram bot; Cham: database; all: Python/JS).
+    "ربات": "bot", "بات": "bot", "تلگرام": "telegram", "واتساپ": "whatsapp", "یوتیوب": "youtube",
+    "پایتون": "python", "جاوااسکریپت": "javascript", "تایپ‌اسکریپت": "typescript", "تایپ اسکریپت": "typescript",
+    "دیتابیس": "database", "پایگاه داده": "database", "سرور": "server", "ایمیل": "email",
+    "سوپابیس": "supabase", "ورسل": "vercel", "کلادفلر": "cloudflare", "کلودفلر": "cloudflare", "ری‌اکت": "react", "ریکت": "react",
+    "مارکتینگ": "marketing",
+    # Phrase aliases may expand to several words: «تست واحد» is a unit test, not a unit of measure.
+    "تست واحد": "unit test", "یونیت تست": "unit test",
 }
 # Multi-word aliases ("کسب و کار", "برنامه‌نویسی" split at ZWNJ) are folded on the normalized text before tokenizing.
 PHRASE_ALIASES = {" ".join(re.findall(r"\w+", unicodedata.normalize("NFKC", key).casefold())): value for key, value in ALIASES.items() if len(re.findall(r"\w+", unicodedata.normalize("NFKC", key))) > 1}
@@ -86,20 +95,29 @@ def _contains_phrase(haystack: list[str], needle: list[str]) -> bool:
     return any(haystack[i:i + size] == needle for i in range(len(haystack) - size + 1))
 
 
+@functools.lru_cache(maxsize=4)
+def _prepared_index(index_path: str, _mtime_ns: int, _size: int) -> tuple[tuple[dict[str, object], set[str], list[tuple[str, list[str]]], set[str]], ...]:
+    """Tokenize the index once per process; the key includes mtime and size so an edited index is reloaded."""
+    payload = json.loads(Path(index_path).read_text(encoding="utf-8"))
+    prepared = []
+    for skill in payload["skills"]:
+        name_tokens = _tokens(skill["name"])
+        triggers = [(trigger, _token_list(trigger)) for trigger in skill["triggers"]]
+        prepared.append((skill, name_tokens, triggers, name_tokens.union(*(sequence for _, sequence in triggers))))
+    return tuple(prepared)
+
+
 def search_index(index_path: Path, query: str, min_score: float = 0.50, *, include_incomplete: bool = False) -> list[dict[str, object]]:
-    payload = json.loads(index_path.read_text(encoding="utf-8"))
     query_sequence = _token_list(query)
     query_tokens = set(query_sequence)
     if not query_tokens:
         return []
+    stat = Path(index_path).stat()
     prepared = []
     document_frequency: Counter[str] = Counter()
-    for skill in payload["skills"]:
+    for skill, name_tokens, triggers, seen in _prepared_index(str(Path(index_path).resolve()), stat.st_mtime_ns, stat.st_size):
         if skill.get("incomplete") and not include_incomplete:
             continue
-        name_tokens = _tokens(skill["name"])
-        triggers = [(trigger, _token_list(trigger)) for trigger in skill["triggers"]]
-        seen = name_tokens.union(*(sequence for _, sequence in triggers))
         document_frequency.update(seen & query_tokens)
         prepared.append((skill, name_tokens, triggers))
     # Rare words carry the intent: in "سئو سایت" a skill that only says "site" must not tie with an SEO skill.
@@ -150,10 +168,13 @@ def main(argv: list[str] | None = None) -> int:
     index = args.index or Path(__file__).resolve().parents[1] / "references" / "triggers.json"
     if not index.is_file():
         parser.error(f"index not found: {index}")
-    results = search_index(index, args.query, DEFAULT_MIN_SCORE if args.min_score is None else args.min_score, include_incomplete=args.include_incomplete)
-    if not results and args.min_score is None:
-        # Long, specific requests rarely sit in one trigger; fall back to partial matches instead of nothing.
+    if args.min_score is None:
+        # Long, specific requests rarely sit in one trigger: keep strong matches when there are any, otherwise
+        # fall back to partial ones. One pass at the lower threshold, filtered, gives the same ranking as two passes.
         results = search_index(index, args.query, FALLBACK_MIN_SCORE, include_incomplete=args.include_incomplete)
+        results = [item for item in results if float(item["score"]) >= DEFAULT_MIN_SCORE] or results
+    else:
+        results = search_index(index, args.query, args.min_score, include_incomplete=args.include_incomplete)
     print(json.dumps(results[:args.limit] if args.limit else results, ensure_ascii=False, indent=2))
     return 0
 

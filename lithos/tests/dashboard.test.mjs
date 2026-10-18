@@ -43,3 +43,23 @@ test('only the publishable Supabase key ships to the browser', () => {
 test('the API key is never referenced from the client', () => {
   assert.doesNotMatch(html, /BUFFER_API_KEY/);
 });
+
+test('supabase-js is pinned to an exact file with Subresource Integrity', () => {
+  // A floating `@2` tag lets the CDN serve new code to an owner-only dashboard; the hash was taken
+  // from the npm tarball of 2.58.0 (dist/umd/supabase.js), so a tampered CDN copy will not run.
+  const tag = /<script src="([^"]*supabase-js[^"]*)"([^>]*)>/.exec(html);
+  assert.ok(tag, 'supabase-js script tag missing');
+  assert.match(tag[1], /@supabase\/supabase-js@\d+\.\d+\.\d+\/dist\/umd\/supabase\.js$/);
+  assert.match(tag[2], /integrity="sha384-[A-Za-z0-9+/=]{64}"/);
+  assert.match(tag[2], /crossorigin="anonymous"/);
+});
+
+test('the lead count is a server-side count, not every lead id downloaded', () => {
+  assert.match(script, /from\('lithos_leads'\)\.select\('id',\{count:'exact',head:true\}\)/);
+  assert.match(script, /l\.count\?\?0/);
+});
+
+test('a failed sync request is reported, not left as an unhandled rejection', () => {
+  assert.match(script, /try\{r=await fetch\('\/api\/buffer-sync'/);
+  assert.match(script, /Sync network error/);
+});

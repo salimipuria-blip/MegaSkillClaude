@@ -5,8 +5,8 @@ import handler from '../api/buffer-sync.js';
 // Stand-ins for Supabase auth, the Buffer GraphQL API and Supabase RPC.
 function mockFetch(calls){
   return async(url,o={})=>{
-    calls.push({url,body:o.body?JSON.parse(o.body):null});
-    if(url.endsWith('/auth/v1/user'))return new Response('{}',{status:200});
+    calls.push({url,body:o.body?JSON.parse(o.body):null,signal:o.signal});
+    if(url.endsWith('/auth/v1/user'))return new Response(JSON.stringify({id:'u1',email:'Owner@Lithos.test'}),{status:200});
     if(url==='https://api.buffer.com')return new Response(JSON.stringify({data:{account:{channels:[{id:'c1',name:'ig',metrics:[{type:'followers',value:'1200.6'},{type:'reach',value:50}]}]}}}),{status:200});
     if(url.includes('/rest/v1/rpc/'))return new Response('42',{status:200});
     throw new Error('unexpected fetch '+url);
@@ -14,6 +14,8 @@ function mockFetch(calls){
 }
 const res=()=>({statusCode:0,body:null,status(n){this.statusCode=n;return this},json(v){this.body=v;return this}});
 const post=(headers={authorization:'Bearer session'})=>({method:'POST',headers});
+// Every test runs as the allowlisted owner unless it overrides LITHOS_OWNER_EMAILS itself.
+process.env.LITHOS_OWNER_EMAILS='someone@else.test, owner@lithos.test';
 
 test('sync persists through lithos_ingest_buffer_snapshot with integer counts',async t=>{
   const calls=[];t.mock.method(globalThis,'fetch',mockFetch(calls));
@@ -46,7 +48,7 @@ test('an empty Buffer response is refused instead of persisting a zero snapshot'
   const calls=[];
   t.mock.method(globalThis,'fetch',async(url,o={})=>{
     calls.push({url,body:o.body?JSON.parse(o.body):null});
-    if(url.endsWith('/auth/v1/user'))return new Response('{}',{status:200});
+    if(url.endsWith('/auth/v1/user'))return new Response(JSON.stringify({id:'u1',email:'owner@lithos.test'}),{status:200});
     if(url==='https://api.buffer.com')return new Response(JSON.stringify({data:{account:{channels:[]}}}),{status:200});
     if(url.includes('/rest/v1/rpc/'))return new Response('42',{status:200});
     throw new Error('unexpected fetch '+url);
@@ -59,4 +61,41 @@ test('an empty Buffer response is refused instead of persisting a zero snapshot'
   assert.deepEqual(rpcs.map(c=>c.url.split('/rpc/')[1]),['lithos_set_buffer_sync_state']);
   assert.equal(rpcs[0].body.p_status,'error');
   assert.ok(!calls.some(c=>c.url.includes('lithos_ingest_buffer_snapshot')),'no snapshot may be written');
+});
+
+test('a valid session that is not an owner never reaches Buffer or the RPCs',async t=>{
+  const calls=[];
+  t.mock.method(globalThis,'fetch',async(url,o={})=>{
+    calls.push(url);
+    if(url.endsWith('/auth/v1/user'))return new Response(JSON.stringify({id:'u2',email:'intruder@x.test'}),{status:200});
+    throw new Error('must not be called: '+url);
+  });
+  process.env.BUFFER_API_KEY='buffer-test';t.after(()=>{delete process.env.BUFFER_API_KEY});
+  const r=res();await handler(post(),r);
+  assert.equal(r.statusCode,403);assert.equal(r.body.error,'Not a Lithos owner');
+  assert.deepEqual(calls.map(u=>u.split('.co')[1]),['/auth/v1/user']);
+});
+
+test('without LITHOS_OWNER_EMAILS the endpoint fails closed',async t=>{
+  const calls=[];t.mock.method(globalThis,'fetch',mockFetch(calls));
+  const saved=process.env.LITHOS_OWNER_EMAILS;delete process.env.LITHOS_OWNER_EMAILS;
+  t.after(()=>{process.env.LITHOS_OWNER_EMAILS=saved});
+  const r=res();await handler(post(),r);
+  assert.equal(r.statusCode,403);assert.match(r.body.error,/LITHOS_OWNER_EMAILS/);
+  assert.ok(!calls.some(c=>c.url==='https://api.buffer.com'||c.url.includes('/rpc/')));
+});
+
+test('Supabase auth being unreachable is a 503, not a sign-in-again 401',async t=>{
+  t.mock.method(globalThis,'fetch',async()=>{throw new TypeError('fetch failed')});
+  const r=res();await handler(post(),r);
+  assert.equal(r.statusCode,503);assert.match(r.body.error,/unreachable/);
+});
+
+test('every outbound call carries an abort deadline',async t=>{
+  const calls=[];t.mock.method(globalThis,'fetch',mockFetch(calls));
+  process.env.BUFFER_API_KEY='buffer-test';t.after(()=>{delete process.env.BUFFER_API_KEY});
+  const r=res();await handler(post(),r);
+  assert.equal(r.statusCode,200);
+  assert.equal(calls.length,3);
+  for(const c of calls)assert.ok(c.signal instanceof AbortSignal,'no deadline on '+c.url);
 });

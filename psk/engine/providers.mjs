@@ -52,9 +52,13 @@ export async function chat(messages,{env=process.env,fetchImpl=globalThis.fetch,
         // Every failure moves on to the next free provider: a 400 is often provider-specific
         // (e.g. a decommissioned default model), not proof the request itself is bad.
         attempts.push({provider:p.id,model:p.model,status:res.status,ms});
+        // Release the unread error body so the pooled connection is freed before the next provider.
+        try{await res.body?.cancel?.();}catch{}
         continue;
       }
-      const data=await res.json();
+      let data;
+      // A 200 with a non-JSON body (proxy/HTML error page) is the provider's fault, not the network's.
+      try{data=await res.json();}catch(e){if(e.name==='AbortError')throw e;attempts.push({provider:p.id,model:p.model,status:'invalid-json',ms:Date.now()-started});continue;}
       const text=data?.choices?.[0]?.message?.content;
       if(typeof text!=='string'||!text.trim()){attempts.push({provider:p.id,model:p.model,status:'empty',ms});continue;}
       attempts.push({provider:p.id,model:p.model,status:200,ms});

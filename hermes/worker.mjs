@@ -36,7 +36,7 @@ import { diagnose, formatDiagnosis } from './diagnose.mjs';
 import { recordRequest, snapshot as metricsSnapshot, prometheusText } from './metrics.mjs';
 export { liveness, readiness, fullHealth } from './health.mjs';
 import { fetchWithTimeout } from './resilience.mjs';
-import { parseReminder, addReminder, listReminders, deleteReminder, formatReminder, allReminders, dueReminders, markSent, morningDigest } from './reminders.mjs';
+import { parseReminder, addReminder, listReminders, deleteReminder, formatReminder, allReminders, dueReminders, markSent, morningDigest, dayKey } from './reminders.mjs';
 export { parseReminder } from './reminders.mjs';
 
 const TG_LIMIT = 4000;
@@ -446,28 +446,35 @@ async function api(request, url, env) {
  * Kept exported and side-effect-free for unit tests with a fake env.
  */
 export async function runReminders(env, now = new Date()) {
-  if (!env.TELEGRAM_BOT_TOKEN) return { delivered: 0, digests: 0 };
-  const due = await dueReminders(env, now);
-  let delivered = 0;
+  if (!env.TELEGRAM_BOT_TOKEN) return { delivered: 0, digests: 0, failed: 0 };
+  // Team members' reminders (chat id `app:<username>`) have no Telegram chat: they stay unsent and
+  // listed in their app instead of being marked delivered after Telegram rejects the id.
+  const telegramChat = (chatId) => !String(chatId).startsWith('app:');
+  const due = (await dueReminders(env, now)).filter((r) => telegramChat(r.chatId));
+  let delivered = 0, failed = 0;
   for (const r of due) {
     try {
-      await send(env, r.chatId, `⏰ یادآور: ${r.text}`);
+      const ok = await send(env, r.chatId, `⏰ یادآور: ${r.text}`);
+      // Marked either way so a chat that blocked the bot is not retried every 5 minutes forever.
       await markSent(env, r.id);
-      delivered += 1;
+      if (ok) delivered += 1; else { failed += 1; console.error('[Hermes][reminder] telegram refused', r.id); }
     } catch (err) {
       console.error('[Hermes][reminder]', r.id, err.message);
     }
   }
-  // The digest is the day's agenda: only fires once per day, at the 8am Tehran run.
+  // The digest is the day's agenda: the 8am Tehran hour has 12 cron runs (every 5 minutes), so a
+  // per-day marker in KV makes it fire once.
   let digests = 0;
   const tehranHour = Number(new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Tehran', hour: 'numeric', hour12: false }).format(now));
-  if (tehranHour === 8) {
+  const marker = `reminders:digest:${dayKey(now)}`;
+  if (tehranHour === 8 && env.MEMORY && !(await env.MEMORY.get(marker))) {
+    await env.MEMORY.put(marker, '1', { expirationTtl: 172800 });
     for (const d of morningDigest(await allReminders(env), now)) {
-      if (!d.text) continue;
-      try { await send(env, d.chatId, d.text); digests += 1; } catch (err) { console.error('[Hermes][digest]', err.message); }
+      if (!d.text || !telegramChat(d.chatId)) continue;
+      try { if (await send(env, d.chatId, d.text)) digests += 1; } catch (err) { console.error('[Hermes][digest]', err.message); }
     }
   }
-  return { delivered, digests };
+  return { delivered, digests, failed };
 }
 
 // Weather for the app's HUD: the caller's city from Cloudflare's geo data, else Tehran. Keyless open-meteo.
@@ -866,12 +873,25 @@ async function handleClient(msg, env, chatId, userId, member) {
 
 export function chunks(str, size = TG_LIMIT) {
   const out = [];
-  for (let i = 0; i < str.length; i += size) out.push(str.slice(i, i + size));
+  for (let i = 0; i < str.length;) {
+    let end = Math.min(i + size, str.length);
+    // Never split an emoji's surrogate pair: Telegram rejects a lone half as invalid UTF-8.
+    const code = str.charCodeAt(end - 1);
+    if (end < str.length && end - 1 > i && code >= 0xd800 && code <= 0xdbff) end -= 1;
+    out.push(str.slice(i, end));
+    i = end;
+  }
   return out.length ? out : [''];
 }
 
+// True when Telegram accepted every part.
 async function send(env, chatId, body) {
-  for (const part of chunks(body)) await tg(env, 'sendMessage', { chat_id: chatId, text: part });
+  let ok = true;
+  for (const part of chunks(body)) {
+    const res = await tg(env, 'sendMessage', { chat_id: chatId, text: part });
+    if (!res || !res.ok) ok = false;
+  }
+  return ok;
 }
 
 // A reply, plus its big code blocks as files: long messages are split by Telegram, which breaks copying code.

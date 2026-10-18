@@ -1,21 +1,42 @@
 const U='https://aupkeramhsufnmhkbihl.supabase.co';
 const K='sb_publishable_iGffpPBxQqUNzNn-dVANOQ_NxXJebC-';
 
+// Every outbound call has a deadline below the function's maxDuration (30s, vercel.json), so a hung
+// Buffer/Supabase request ends in a recorded error instead of a silent platform kill.
+const TIMEOUT_MS=10000;
+const deadline=()=>AbortSignal.timeout(TIMEOUT_MS);
+
 async function gql(key,query,variables={}) {
-  const r=await fetch('https://api.buffer.com',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+key},body:JSON.stringify({query,variables})});
+  const r=await fetch('https://api.buffer.com',{method:'POST',signal:deadline(),headers:{'Content-Type':'application/json',Authorization:'Bearer '+key},body:JSON.stringify({query,variables})});
   const p=await r.json().catch(()=>({}));
   if(!r.ok||p.errors?.length) throw new Error(p.errors?.[0]?.message||('Buffer API '+r.status));
   return p.data;
 }
 async function rpc(name,args,token){
-  const r=await fetch(U+'/rest/v1/rpc/'+name,{method:'POST',headers:{apikey:K,Authorization:'Bearer '+token,'Content-Type':'application/json'},body:JSON.stringify(args||{})});
+  const r=await fetch(U+'/rest/v1/rpc/'+name,{method:'POST',signal:deadline(),headers:{apikey:K,Authorization:'Bearer '+token,'Content-Type':'application/json'},body:JSON.stringify(args||{})});
   const t=await r.text();
   if(!r.ok){let m=t;try{m=JSON.parse(t)?.message||t}catch{}throw new Error(m||('Supabase RPC '+r.status))}
   if(!t)return null;try{return JSON.parse(t)}catch{return t}
 }
+class HttpError extends Error{constructor(status,message){super(message);this.status=status}}
+// Returns the Supabase user for this session. A network failure is a 503 (Supabase unreachable),
+// not a 401 - telling the owner to sign in again would hide the real outage.
 async function validate(token){
-  const r=await fetch(U+'/auth/v1/user',{headers:{apikey:K,Authorization:'Bearer '+token}});
-  if(!r.ok) throw new Error('Lithos session expired. Sign in again.');
+  let r;
+  try{r=await fetch(U+'/auth/v1/user',{signal:deadline(),headers:{apikey:K,Authorization:'Bearer '+token}})}
+  catch(e){throw new HttpError(503,'Supabase auth unreachable: '+(e.message||e))}
+  if(!r.ok) throw new HttpError(401,'Lithos session expired. Sign in again.');
+  return r.json().catch(()=>({}));
+}
+// Owner gate. Any account of the Supabase project has a valid session, so a session alone must not
+// spend the Buffer quota or reach the ingest RPC. LITHOS_OWNER_EMAILS (comma-separated, Vercel env)
+// is the server-side allowlist; unset means nobody passes (fail closed).
+const ownerEmails=()=>String(process.env.LITHOS_OWNER_EMAILS||'').split(',').map(x=>x.trim().toLowerCase()).filter(Boolean);
+function assertOwner(user){
+  const allow=ownerEmails();
+  if(!allow.length) throw new HttpError(403,'LITHOS_OWNER_EMAILS not configured');
+  const email=String(user?.email||'').toLowerCase();
+  if(!email||!allow.includes(email)) throw new HttpError(403,'Not a Lithos owner');
 }
 const val=(m,t)=>Number((m||[]).find(x=>x.type===t)?.value??0);
 
@@ -23,7 +44,7 @@ export default async function handler(req,res){
   if(req.method!=='POST') return res.status(405).json({error:'POST only'});
   const h=req.headers.authorization||'',token=h.startsWith('Bearer ')?h.slice(7):'';
   if(!token) return res.status(401).json({error:'Missing Lithos session'});
-  try{await validate(token)}catch(e){return res.status(401).json({error:e.message||'Lithos session invalid'})}
+  try{assertOwner(await validate(token))}catch(e){return res.status(e.status||401).json({error:e.message||'Lithos session invalid'})}
 
   // ============================================================================
   // RECONSTRUCTED TAIL — the original body past this point was lost during source

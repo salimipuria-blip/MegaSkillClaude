@@ -1,6 +1,6 @@
 # Omni LLM Orchestrator (تاریخی) — دفتر جریان پروژه
 
-> توضیح زندهٔ پروژه؛ هر دور کاری همین‌جا اضافه می‌شود. آخرین به‌روزرسانی: **۲۰۲۶-۱۰-۱۴**.
+> توضیح زندهٔ پروژه؛ هر دور کاری همین‌جا اضافه می‌شود. آخرین به‌روزرسانی: **۲۰۲۶-۱۰-۱۸**.
 
 ## ۱) پروژه در یک نگاه
 - **پوشه:** `orchestrator/` · **وضعیت راهبردی:** تاریخی — هم‌پوشانی با موتور MEGA SKILLS 3000 دارد
@@ -54,5 +54,7 @@ deno test --no-remote --no-prompt supabase/functions/github-admin-gateway/handle
   - اجرای شاهد در همین محیط: `node scripts/doctor.mjs orchestrator` → قرارداد مخزن **سبز**؛ pytest و deno-gateway به‌دلیل نبود ابزار **skip** (نه fail)، و در خروجی زیرِ «skipped (missing tool/deps)» فهرست شدند. در CI هر دو ابزار نصب‌اند (`setup-deno` و `pip install pytest`) و هر دو گام واقعاً اجرا می‌شوند.
   - **بند بازِ قدیمی همچنان باز است:** materialize کردنِ اسنپ‌شاتِ تاریخیِ مهارت‌ها (یا حذفِ مستندِ آن تست‌ها) تا ۳ اسکیپِ درونِ pytest به صفر برسد. این اسکیپ‌ها آگاهانه‌اند و نباید به تستِ جعلی تبدیل شوند.
 
+- **۲۰۲۶-۱۰-۱۸ (ممیزی عمیق + دستور کار)** — `CLAUDE.md` پروژه (دستور کار دقیق با مشخصات yaml) نوشته و `PROFESSIONAL_GUIDE.md` به ممیزی تاریخ‌دار تبدیل شد. رفع‌ها: (۱) **SSRF** در `github-llm-verifier`: `https://[::ffff:127.0.0.1]/…` و metadata/NAT64/multicast به‌عنوان عمومی پذیرفته می‌شدند → گارد به `net.mjs` منتقل و بازنویسی شد + `net.test.mjs` (۴/۴) و اجرای آن از pytest؛ (۲) pytest از ریشهٔ monorepo `ImportError` می‌داد → `pythonpath = .` و مسیرهای مبتنی بر `__file__`؛ (۳) `skills/route.py` بدون registry traceback می‌داد → پیام روشن + تست؛ (۴) installer مسیرهای `/mnt/data` و کپی خراب `route.py` داشت → ورودی CLI. نتیجه: قرارداد OK، pytest **۲۱ pass / ۳ skip** (قبلاً ۱۶/۳)، node ۱۱/۱۱، deno check ۱۰/۱۰، deno test ۷/۷. باز (مالک): تصمیم دربارهٔ پروژهٔ زنده و redeploy؛ احراز نقش در ۹ تابع دیگر.
+
 ## Professional guide
-See `PROFESSIONAL_GUIDE.md` in this folder for performance improvements, debugging playbook, and next steps. Update it whenever behavior changes.
+دستور کار: `CLAUDE.md` · ممیزی فنی تاریخ‌دار: `PROFESSIONAL_GUIDE.md`. هر تغییر رفتار = به‌روزرسانی هر دو + یک خط در لاگ بالا.

@@ -1,19 +1,37 @@
 // Owner-only portfolio knowledge: what every project and repo is, where it stands and what is left.
-// build-knowledge.mjs (npm postinstall) copies docs/PORTFOLIO.md and each project's ROADMAP/PROGRESS into
+// build-knowledge.mjs (npm postinstall) copies docs/PORTFOLIO.md and each project's CLAUDE.md/ROADMAP/PROGRESS into
 // ./public/knowledge at deploy time; at runtime the owner's prompt gets the portfolio plus the projects a
 // message names. Never shown to team members or client workspaces.
 
-// id = folder in the repo (and the asset name); names = how people refer to it, in Persian and English.
+// id = the asset name; dir = folder in the repo (default: id); names = how people refer to it, in Persian
+// and English. Each project's CLAUDE.md (the agent brief: spec + work queue) comes first when it exists.
 export const PROJECTS = [
-  { id: 'hermes', names: ['هرمس', 'hermes'], docs: ['ROADMAP.md', 'PROGRESS.md'] },
-  { id: 'fjcod', names: ['چام', 'فروشگاه', 'cham', 'fjcod'], docs: ['PROGRESS.md'] },
-  { id: 'viking-team', names: ['وایکینگ', 'viking'], docs: ['PROGRESS.md'] },
-  { id: 'lithos', names: ['لیتوس', 'lithos'], docs: ['PROGRESS.md'] },
-  { id: 'psk', names: ['psk', 'mega skills 3000', 'مگا اسکیلز ۳۰۰۰'], docs: ['PROGRESS.md'] },
-  { id: 'bison-brand-book', names: ['بایسون', 'برندبوک', 'bison'], docs: ['PROGRESS.md'] },
-  { id: 'mobile', names: ['موبایل', 'کنسول', 'mobile'], docs: ['PROGRESS.md'] },
-  { id: 'orchestrator', names: ['ارکستراتور', 'orchestrator'], docs: ['PROGRESS.md'] },
+  { id: 'hermes', names: ['هرمس', 'hermes'], docs: ['CLAUDE.md', 'ROADMAP.md', 'PROGRESS.md'] },
+  { id: 'mega-skills-router', dir: 'plugins/mega-skills-router', names: ['مگا اسکیل', 'mega skill', 'mega-skills-router'], docs: ['CLAUDE.md', 'PROGRESS.md'] },
+  { id: 'fjcod', names: ['چام', 'فروشگاه', 'cham', 'fjcod'], docs: ['CLAUDE.md', 'PROGRESS.md'] },
+  { id: 'viking-team', names: ['وایکینگ', 'viking'], docs: ['CLAUDE.md', 'PROGRESS.md'] },
+  { id: 'lithos', names: ['لیتوس', 'lithos'], docs: ['CLAUDE.md', 'PROGRESS.md'] },
+  { id: 'psk', names: ['psk', 'mega skills 3000', 'مگا اسکیلز ۳۰۰۰'], docs: ['CLAUDE.md', 'PROGRESS.md'] },
+  { id: 'bison-brand-book', names: ['بایسون', 'برندبوک', 'bison'], docs: ['CLAUDE.md', 'PROGRESS.md'] },
+  { id: 'mobile', names: ['موبایل', 'کنسول', 'mobile'], docs: ['CLAUDE.md', 'PROGRESS.md'] },
+  { id: 'orchestrator', names: ['ارکستراتور', 'orchestrator'], docs: ['CLAUDE.md', 'PROGRESS.md'] },
 ];
+
+/**
+ * The part of one project doc worth keeping (build-knowledge.mjs, at deploy time). CLAUDE.md: its yaml
+ * project spec plus the "## صف کار" work queue. A roadmap: from its open queue on. Anything else: whole.
+ */
+export function focusDoc(name, md) {
+  const text = String(md || '');
+  if (name === 'CLAUDE.md') {
+    const spec = text.match(/```ya?ml\n[\s\S]*?```/);
+    const queue = text.match(/^##\s*صف کار[^\n]*\n[\s\S]*?(?=^##\s|(?![\s\S]))/m);
+    const parts = [spec && spec[0], queue && queue[0].trim()].filter(Boolean);
+    return parts.length ? parts.join('\n\n') : text;
+  }
+  const at = text.search(/^##\s*(صف کارها|کارهای بعدی|کار مانده|Next|TODO)/m);
+  return at > 0 ? text.slice(at) : text;
+}
 
 export const PORTFOLIO_CHARS = 1800;
 export const PROJECT_CHARS = 1400;

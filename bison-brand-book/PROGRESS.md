@@ -55,3 +55,13 @@ npm run dev            # پیش‌نمایش محلی روی 0.0.0.0:5173
 See `PROFESSIONAL_GUIDE.md` in this folder for performance improvements, debugging playbook, and next steps. Update it whenever behavior changes.
 
 - **۲۰۲۶-۱۰-۱۶ (Vercel ignoreCommand)** — `vercel.json` پروژه `ignoreCommand` گرفت: اگر این پوشه از آخرین استقرار موفق تغییر نکرده باشد Vercel ساخت را رد می‌کند (سهمیهٔ ۱۰۰ دیپلوی روزانه دیگر با PRهای پروژه‌های دیگر پر نمی‌شود)؛ اگر commit قبلی در clone کم‌عمق Vercel نباشد یا خالی باشد، exit 1 می‌دهد و ساخت طبق معمول انجام می‌شود (Vercel هر کد جز 0/1 را Failed می‌کند — نسخهٔ اول با exit 128 همین را روی PR #81 نشان داد و اصلاح شد). تأیید: پنج حالت محلی (همان sha → 0، تغییر/ناموجود/خالی → 1). استقرار واقعی Vercel در این محیط بررسی نشد.
+
+- **۲۰۲۶-۱۰-۱۸ (ممیزی عمیق + دستور کار پروژه)** — `CLAUDE.md` پروژه (دستور کار ساخت‌یافته با yaml، قواعد MUST/NEVER، جدول اشکال‌زدایی، صف کار با معیار پذیرش) اضافه و `PROFESSIONAL_GUIDE.md` به ممیزی واقعی این دور بازنویسی شد. با اجرای سایت در Chromium و باز کردن ZIP از `file://` این‌ها پیدا و رفع شد:
+  - **🔴 `lenis.tick` وجود ندارد** (Lenis 1.3) → خطا در هر فریم و اسکرول نرم مرده؛ به `lenis.raf(time * 1000)` اصلاح شد.
+  - **🔴 ZIP دانلودی آفلاین کار نمی‌کرد** (CSS/JS با CORS از `file://` بلاک، مسیر `/assets/`، نسخهٔ کهنه). `scripts/build-zip.mjs` + `npm run zip` ساخته و ZIP بازسازی شد؛ حالا بی‌خطا باز می‌شود.
+  - **🔴 دکمهٔ Download پایین صفحه به ریپوی قدیمی (403)** → `/BISON-Brand-Book.zip`.
+  - کنتراست: کیکر طلایی روی bone (1.84:1) و شمارهٔ فصل‌ها (3.73:1) → توکن `--ember-ink` (5.61:1)؛ override اول در آبشار می‌باخت که در مرورگر پیدا شد.
+  - ARIA: tablist ناقص → دکمه‌های `aria-pressed`؛ دیالوگ دمو با `inert` و برگشت فوکوس؛ `aria-label` روی div → `role="group"`؛ `type="button"` برای همهٔ دکمه‌ها.
+  - کارایی: تصاویر زیر fold lazy (بار eager از ~۳٫۰۴MB به ۱٫۴۶MB)، hero با `fetchpriority="high"`، فونت از `@import` به `<link>` + preconnect.
+  - README از لینک‌های مرده (Pages 404، raw 403) پاک شد.
+  - تست‌ها ۸ → **۲۴** (`tests/a11y.test.mjs` ۱۲، `tests/zip.test.mjs` ۴)؛ هر تست با جهش قرمز شد. بیلد سبز (JS 140.01kB / gzip 52.71)، audit صفر. استقرار زندهٔ Vercel از این محیط تأیید نشد.

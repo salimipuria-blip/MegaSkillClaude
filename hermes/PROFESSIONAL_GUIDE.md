@@ -1,42 +1,51 @@
-# Professional Guide — hermes
+# Professional Guide — hermes (ممیزی فنی)
 
-> Auto-maintained. Update this file whenever performance, debugging, or architecture changes.
-> Last updated: 2026-10-15.
+> Auto-maintained: هر دور بازبینی یا رفع اشکال، یک بخش تاریخ‌دار بالای قبلی اضافه شود (یافته، شاهد، رفع، تست).
+> دستور کار و نقشهٔ کد: `CLAUDE.md` · گزارش دورها: `PROGRESS.md` · نقشهٔ راه: `ROADMAP.md`.
+> آخرین ممیزی: **2026-10-18**.
 
-## Stack
-JavaScript (ESM) on Cloudflare Workers + Durable Objects
+## ممیزی 2026-10-18
 
-## Quality gates
-- Test: `npm test (206 unit) + npm run test:integration (10 workerd) + npm run test:shell`
-- Check: `npm run check (31 modules) + bash -n setup.sh config.sh logger.sh`
+### دروازه‌های کیفیت (اجراشده)
+| بررسی | قبل | بعد |
+|---|---|---|
+| `npm test` | 245/245 | **252/252** |
+| `npm run test:integration` (workerd) | 10/10 | 10/10 |
+| `node --test hermes/worker.test.mjs` (ریشه) | 78/78 | 79/79 |
+| `npm run check` · `lint:shell` · `test:shell` | ✅ | ✅ |
+| `node scripts/doctor.mjs hermes` | ✅ (۴۸s) | ✅ |
+| `node build-skills.mjs` · `build-knowledge.mjs` | 6029 skills · 8 projects | 6029 skills · **9 projects** |
 
-## Performance improvements applied
-- fetchWithTimeout (30s) on every outbound fetch
-- parallelized recallEdit/recallVariations and rememberEdit/rememberVariations
-- AbortController on conversationCall (30s)
-- module-level shard/total cache in skill-router
-- recordRequest wired into json/page/text helpers for accurate /metrics
-- reminders.mjs: KV-backed reminder queue with Tehran-aware parsing, delivered from scheduled() cron
-  (reminders fired once; morning digest at 08:00 Asia/Tehran); surfaced in /api/reminders and the app's REMINDERS panel
+### یافته‌ها
+| # | شدت | یافته | شاهد (ورودی شکست) | وضعیت |
+|---|---|---|---|---|
+| 1 | 🔴 | خلاصهٔ صبح ۱۲ بار در روز فرستاده می‌شد | Cron `*/5` → ساعت ۸ تهران ۱۲ اجرا دارد؛ `runReminders` فقط `tehranHour === 8` را چک می‌کرد و نشانهٔ «امروز فرستاده شد» نداشت | ✅ رفع: نشانهٔ KV `reminders:digest:<YYYY-MM-DD>` (TTL دو روز) |
+| 2 | 🟠 | یادآور اعضای تیم بی‌صدا گم می‌شد | `chatId = "app:sara"` → تلگرام «chat not found» می‌دهد، `tg()` پرتاب نمی‌کند، پس `markSent` و `delivered += 1` اجرا می‌شد و یادآور از فهرست اپ هم ناپدید می‌شد | ✅ رفع: شناسه‌های `app:` به تلگرام نمی‌روند و در فهرست اپ می‌مانند؛ پاسخ `ok:false` تلگرام `failed` شمرده می‌شود (باز هم `markSent` تا چت مسدود هر ۵ دقیقه تکرار نشود) |
+| 3 | 🟡 | `/file` برای فایل >1MB فایل خالی می‌فرستاد | Contents API برای ۱ تا ۱۰۰ مگابایت `encoding: "none"` و `content: ""` می‌دهد → `decode("")` | ✅ رفع: پیام روشن «بزرگ‌تر از ۱ مگابایت» |
+| 4 | 🟡 | `chunks()` ممکن بود ایموجی را نصف کند | پیام ۴۰۰۰+ نویسه با ایموجی روی مرز → نیمهٔ surrogate تنها → تلگرام رد می‌کند | ✅ رفع: برش یک واحد عقب‌تر |
+| 5 | 🟡 | دانش هرمس بریف پروژه‌ها و پلاگین مگا اسکیل را نداشت | `PROJECTS` فقط ROADMAP/PROGRESS؛ پلاگین در `plugins/` بود و `id` = مسیر | ✅ رفع: `CLAUDE.md` اول هر پروژه (فقط بلوک yaml + «صف کار» با `focusDoc`)، پروژهٔ `mega-skills-router` با `dir` |
+| 6 | 🟡 | README می‌گفت Cron کامنت است | `wrangler.toml` از قبل `crons = ["*/5 * * * *"]` دارد | ✅ رفع متن |
+| 7 | 🟡 | `changePassword` بقیهٔ نشست‌ها را باطل نمی‌کند | نشست دزدیده‌شده بعد از تغییر رمز قربانی ۳۰ روز معتبر می‌ماند | ⏳ باز (P1 در CLAUDE.md؛ اپ باید توکن تازه بگیرد) |
+| 8 | 🟡 | `/api/chat` برای اعضای تیم سقف درخواست ندارد | یک حساب می‌تواند سهمیهٔ رایگان Gemini را تمام کند | ⏳ باز (P2) |
+| 9 | 🟡 | صف یادآور KV خواندن-نوشتن غیر اتمیک | `addReminder` و `markSent` هم‌زمان → آخرین نوشتن یکی را گم می‌کند | ⏳ باز (P2؛ انتقال به DO) |
+| 10 | 🟡 | `sync-secrets.mjs` نام‌های `GITHUB_REPO_TOKEN`، `STABILITY_API_KEY`، `GOOGLE_*` را ندارد | فقط در صورت تعریف به‌عنوان build variable مهم است | ⏳ عمداً تغییر نکرد: افزودن می‌تواند secret درست runtime را با build variable کهنه بازنویسی کند؛ تصمیم با مالک |
+| 11 | ℹ️ | `/metrics` عمومی است | فقط شمارنده، بدون راز | پذیرفته |
 
-## Debugging playbook
-- Worker logs: wrangler tail / Cloudflare dashboard Logs
-- /health/live, /health/ready, /health/full, /metrics
-- Integration failures: check CONVERSATIONS binding and migration conversation-sqlite-v1
-- Gemini 403/429: verify GEMINI_API_KEY and quota; fallback chain GitHub→Groq→Cerebras→...
+### رفع‌های اعمال‌شده (فایل → تغییر → تست)
+- `worker.mjs#runReminders` → نشانهٔ روزانهٔ خلاصه، رد `app:`، شمارش `failed` → `reminders.test.mjs` (۳ تست جدید).
+- `worker.mjs#send` → برگرداندن `true/false` بر اساس `ok` تلگرام (بقیهٔ فراخوان‌ها مقدار را نادیده می‌گیرند؛ رفتارشان عوض نشد).
+- `worker.mjs#chunks` → امن برای surrogate pair → `worker.test.mjs` «never split an emoji».
+- `github.mjs#readFile` → خطای روشن برای `encoding !== 'base64'` → `coding.test.mjs`.
+- `knowledge.mjs` (`PROJECTS` با `dir` و `CLAUDE.md`، `focusDoc`) + `build-knowledge.mjs` (استفاده از `focusDoc`) → `knowledge.test.mjs` (۲ تست جدید).
+- `README.md` → توضیح درست Cron و یادآور اعضای تیم.
 
-## Feature flows added
-- `reminders.mjs` → `parseReminder/addReminder/listReminders/deleteReminder/dueReminders/markSent/morningDigest`
-- `worker.mjs` → `/reminders`, `/rem_del N`, natural-language «یادم بنداز ...», `scheduled()` → `runReminders()`, `/api/reminders*`
-- `app.mjs` → REMINDERS panel in the log sheet
-- Timezone: `wallClockToUtc` uses Intl offsets, so DST-free zones stay exact; `` is never used next to Persian letters
+### کارایی و امنیت
+- توکن نشست: HMAC-SHA256 با کلید مشتق از `TELEGRAM_BOT_TOKEN`؛ چرخاندن توکن بات همهٔ نشست‌ها و کلید `/app` را باطل می‌کند (مستند، عمدی).
+- رمزها PBKDF2-SHA256 با ۱۰۰٬۰۰۰ تکرار (سقف Workers)؛ قفل ۸ تلاش در ۱۵ دقیقه برای هر نام کاربری.
+- دانش پروژه‌ها در پرامپت مالک حداکثر ۱۸۰۰ + ۲×۱۴۰۰ نویسه؛ `focusDoc` بلوک yaml و صف کار را نگه می‌دارد تا همین سقف پرمحتوا باشد.
+- `public/knowledge/*` با `run_worker_first` هرگز مستقیم سرو نمی‌شود (تست «knowledge files are never served»).
 
-## Suggested next steps
-- Add per-route latency metrics to /metrics
-- Cache weather response 5 min in KV
-- Profile photo-edit candidates with console.time in dev
-
-## How to keep this file alive
-1. After any change, append a line under "Performance improvements applied" or "Debugging playbook".
-2. Run the quality gates above; record results in PROGRESS.md.
-3. If a new bottleneck is found, add it to "Suggested next steps" with a measurable target.
+### پیشنهادها
+1. Web Push برای یادآور اعضای تیم (بدون سرور اضافه).
+2. یک تست قرارداد که نام‌های `sync-secrets.mjs#NAMES` با فهرست secretهای `CLAUDE.md` هم‌خوان بماند (بعد از تصمیم مالک دربارهٔ یافتهٔ ۱۰).
+3. برچسب «۲۰۶ تست» در `scripts/doctor.mjs` (ریشه) کهنه است؛ عدد فعلی ۲۵۲.

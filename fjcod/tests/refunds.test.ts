@@ -19,9 +19,9 @@ describe('refund accounting (manager)', () => {
   beforeEach(() => {
     // resetToDemo() needs system.backup and then clears the session, so: sign in as owner,
     // re-seed, sign in again as the manager who owns sales.refund.
-    store.login('fjcod1405');
+    store.login('fx-owner-0');
     store.resetToDemo();
-    store.login('111111'); // manager: sales.refund
+    store.login('fx-manager-0'); // manager: sales.refund
     if (!store.openShiftOf(getDB(), store.currentUser()!.id)) store.openShift(1_000_000);
   });
 
@@ -97,8 +97,8 @@ describe('refund accounting (manager)', () => {
 
   it('lowers the expected cash of the open shift by the refunded amount', () => {
     store.logout();
-    store.login('333331');
-    store.changeOwnPassword('333331', 'cash-7711');
+    store.login('fx-cashier-1');
+    store.changeOwnPassword('fx-cashier-1', 'cash-7711');
     store.openShift(500_000);
     const p = pickProduct();
     const sale = store.checkout({
@@ -114,7 +114,7 @@ describe('refund accounting (manager)', () => {
 
     // the refund is booked by the manager, so it leaves the cashier's drawer
     store.logout();
-    store.login('111111');
+    store.login('fx-manager-0');
     store.refundSale(sale.id, [{ productId: p.id, qty: 1 }], '');
     const refund = getDB().sales.find((s) => s.id === sale.id)!.refunds[0];
     expect(store.expectedCash(getDB(), shift)).toBe(500_000 + p.price - refund.amount);
@@ -147,9 +147,9 @@ describe('cart and payment arithmetic', () => {
   });
 
   it('rejects a fractional or oversized refund quantity', () => {
-    store.login('fjcod1405');
+    store.login('fx-owner-0');
     store.resetToDemo();
-    store.login('111111');
+    store.login('fx-manager-0');
     const { product, sale } = sell(2);
     expect(() => store.refundSale(sale.id, [{ productId: product.id, qty: 1.5 }], '')).toThrow(/حداکثر|صحیح|نامعتبر/);
     expect(() => store.refundSale(sale.id, [{ productId: product.id, qty: 3 }], '')).toThrow(/حداکثر/);

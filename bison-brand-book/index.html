@@ -14,6 +14,12 @@
     <meta property="og:image" content="/images/hero-bison.jpg" />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@300;400;500;600;700&display=swap"
+    />
     <link rel="stylesheet" href="/src/styles.css" />
   </head>
   <body>
@@ -51,7 +57,7 @@
     <main id="main">
       <section class="hero" id="origin">
         <div class="hero-media">
-          <img src="/images/hero-bison.jpg" alt="American bison standing on a prairie at sunset" />
+          <img fetchpriority="high" src="/images/hero-bison.jpg" alt="American bison standing on a prairie at sunset" />
         </div>
         <div class="hero-copy">
           <div class="hero-top">
@@ -70,7 +76,7 @@
       <section class="manifesto" id="manifesto">
         <div class="manifesto-pin">
           <div class="manifesto-media">
-            <img src="/images/portrait-bison.jpg" alt="Close portrait of a bison in gold rim light" />
+            <img loading="lazy" decoding="async" src="/images/portrait-bison.jpg" alt="Close portrait of a bison in gold rim light" />
           </div>
           <div class="manifesto-copy">
             <p class="kicker">01 / Origin</p>
@@ -123,19 +129,19 @@
           <p class="lede">Primary mark is the full bison — hump first, head down, unhurried. The head lockup is reserved for tight squares: app icon, favicon, wax seal.</p>
         </div>
         <div class="mark-stage reveal">
-          <img src="/images/mark-body.png" alt="BISON primary mark, gold bison silhouette" />
+          <img loading="lazy" decoding="async" src="/images/mark-body.png" alt="BISON primary mark, gold bison silhouette" />
         </div>
         <div class="lockups">
           <article class="lockup">
-            <img src="/images/mark-body.png" alt="" />
+            <img loading="lazy" decoding="async" src="/images/mark-body.png" alt="" />
             <span>Primary — dark field</span>
           </article>
           <article class="lockup on-light">
-            <img src="/images/mark-body.png" alt="" style="filter: brightness(0)" />
+            <img loading="lazy" decoding="async" src="/images/mark-body.png" alt="" style="filter: brightness(0)" />
             <span>Primary — bone field</span>
           </article>
           <article class="lockup icon">
-            <img src="/images/mark-bison.png" alt="" />
+            <img loading="lazy" decoding="async" src="/images/mark-bison.png" alt="" />
             <span>Head — app / seal</span>
           </article>
         </div>
@@ -168,35 +174,35 @@
           <p class="lede">A short palette. Night for structure, bone for paper, gold for the animal. Click any swatch to copy its hex.</p>
         </div>
         <div class="swatches">
-          <button class="swatch iron" data-hex="#0B0A09" data-name="Iron">
+          <button type="button" class="swatch iron" data-hex="#0B0A09" data-name="Iron">
             <strong>Iron</strong>
             <small>#0B0A09 · Primary night</small>
           </button>
-          <button class="swatch hide" data-hex="#1C1917" data-name="Hide">
+          <button type="button" class="swatch hide" data-hex="#1C1917" data-name="Hide">
             <strong>Hide</strong>
             <small>#1C1917 · Surfaces</small>
           </button>
-          <button class="swatch stone" data-hex="#44403C" data-name="Stone">
+          <button type="button" class="swatch stone" data-hex="#44403C" data-name="Stone">
             <strong>Stone</strong>
             <small>#44403C · Secondary</small>
           </button>
-          <button class="swatch gold" data-hex="#C6A15B" data-name="Prairie Gold">
+          <button type="button" class="swatch gold" data-hex="#C6A15B" data-name="Prairie Gold">
             <strong>Prairie Gold</strong>
             <small>#C6A15B · The animal</small>
           </button>
-          <button class="swatch ember" data-hex="#A16207" data-name="Ember">
+          <button type="button" class="swatch ember" data-hex="#A16207" data-name="Ember">
             <strong>Ember</strong>
             <small>#A16207 · CTA</small>
           </button>
-          <button class="swatch bone" data-hex="#E8DFD2" data-name="Bone">
+          <button type="button" class="swatch bone" data-hex="#E8DFD2" data-name="Bone">
             <strong>Bone</strong>
             <small>#E8DFD2 · Paper</small>
           </button>
-          <button class="swatch dust" data-hex="#8A8175" data-name="Dust">
+          <button type="button" class="swatch dust" data-hex="#8A8175" data-name="Dust">
             <strong>Dust</strong>
             <small>#8A8175 · Meta</small>
           </button>
-          <button class="swatch snow" data-hex="#FAFAF9" data-name="Snow">
+          <button type="button" class="swatch snow" data-hex="#FAFAF9" data-name="Snow">
             <strong>Snow</strong>
             <small>#FAFAF9 · Light field</small>
           </button>
@@ -283,15 +289,15 @@
         </div>
         <div class="mosaic">
           <figure>
-            <img src="/images/hero-bison.jpg" alt="Bison in sunset grass" />
+            <img loading="lazy" decoding="async" src="/images/hero-bison.jpg" alt="Bison in sunset grass" />
             <figcaption>Hero — side light, full animal</figcaption>
           </figure>
           <figure>
-            <img src="/images/herd-winter.jpg" alt="Bison herd walking through snow" />
+            <img loading="lazy" decoding="async" src="/images/herd-winter.jpg" alt="Bison herd walking through snow" />
             <figcaption>Herd — winter documentary</figcaption>
           </figure>
           <figure>
-            <img src="/images/hide-texture.jpg" alt="Close-up of dark bison fur" />
+            <img loading="lazy" decoding="async" src="/images/hide-texture.jpg" alt="Close-up of dark bison fur" />
             <figcaption>Texture — hide, not fabric stock</figcaption>
           </figure>
         </div>
@@ -309,14 +315,14 @@
         </div>
 
         <div class="demo-toolbar">
-          <div class="device-switch" role="tablist" aria-label="Device preview">
-            <button class="device-tab is-on" role="tab" aria-selected="true" data-view="both">Both</button>
-            <button class="device-tab" role="tab" aria-selected="false" data-view="desktop">Computer</button>
-            <button class="device-tab" role="tab" aria-selected="false" data-view="mobile">Phone</button>
+          <div class="device-switch" role="group" aria-label="Device preview">
+            <button class="device-tab is-on" type="button" aria-pressed="true" data-view="both">Both</button>
+            <button class="device-tab" type="button" aria-pressed="false" data-view="desktop">Computer</button>
+            <button class="device-tab" type="button" aria-pressed="false" data-view="mobile">Phone</button>
           </div>
           <div class="btn-row">
-            <button class="live-btn" data-open="desktop">Open desktop demo</button>
-            <button class="live-btn" data-open="mobile" style="background: transparent; border: 1px solid rgba(232,223,210,.3)">
+            <button type="button" class="live-btn" data-open="desktop">Open desktop demo</button>
+            <button type="button" class="live-btn" data-open="mobile" style="background: transparent; border: 1px solid rgba(232,223,210,.3)">
               Open mobile demo
             </button>
           </div>
@@ -325,7 +331,7 @@
         <div class="theater" id="theater" data-view="both">
           <div class="stage">
             <div class="device laptop-wrap">
-              <div class="laptop" aria-label="Desktop store preview">
+              <div class="laptop" role="group" aria-label="Desktop store preview">
                 <div class="laptop-lid">
                   <div class="laptop-screen">
                     <div class="store">
@@ -335,7 +341,7 @@
                         <span>Bag 0</span>
                       </div>
                       <figure class="store-hero">
-                        <img src="/images/plains-dusk.jpg" alt="" />
+                        <img loading="lazy" decoding="async" src="/images/plains-dusk.jpg" alt="" />
                         <figcaption>
                           <h3>Winter Herd</h3>
                           <p>Lookbook 26 — now open</p>
@@ -343,14 +349,14 @@
                       </figure>
                       <div class="store-rail">
                         <article class="prod">
-                          <img src="/images/product-coat.jpg" alt="" />
+                          <img loading="lazy" decoding="async" src="/images/product-coat.jpg" alt="" />
                           <div>
                             <b>Prairie Coat</b>
                             <span>$640</span>
                           </div>
                         </article>
                         <article class="prod">
-                          <img src="/images/product-boot.jpg" alt="" />
+                          <img loading="lazy" decoding="async" src="/images/product-boot.jpg" alt="" />
                           <div>
                             <b>Iron Boot</b>
                             <span>$420</span>
@@ -366,7 +372,7 @@
             </div>
 
             <div class="device phone-wrap">
-              <div class="phone" aria-label="Mobile app preview">
+              <div class="phone" role="group" aria-label="Mobile app preview">
                 <div class="phone-island"></div>
                 <div class="phone-screen">
                   <div class="app">
@@ -376,7 +382,7 @@
                       <h3>Hold the weather.</h3>
                     </div>
                     <figure class="app-hero">
-                      <img src="/images/herd-winter.jpg" alt="" />
+                      <img loading="lazy" decoding="async" src="/images/herd-winter.jpg" alt="" />
                       <figcaption>
                         <h3>Herd 26</h3>
                         <p>New drop</p>
@@ -427,28 +433,28 @@
         <div class="dont-grid">
           <article class="dont-card">
             <div class="dont-preview is-stretch">
-              <img src="/images/mark-body.png" alt="" />
+              <img loading="lazy" decoding="async" src="/images/mark-body.png" alt="" />
             </div>
             <h3>Don't stretch</h3>
             <p>Never scale off-axis. The hump is the proportion. Distorting it turns a bison into a cartoon.</p>
           </article>
           <article class="dont-card">
             <div class="dont-preview is-rotate">
-              <img src="/images/mark-body.png" alt="" />
+              <img loading="lazy" decoding="async" src="/images/mark-body.png" alt="" />
             </div>
             <h3>Don't rotate</h3>
             <p>The animal stands. It does not charge at 18 degrees for a sticker pack.</p>
           </article>
           <article class="dont-card">
             <div class="dont-preview is-recolor">
-              <img src="/images/mark-body.png" alt="" />
+              <img loading="lazy" decoding="async" src="/images/mark-body.png" alt="" />
             </div>
             <h3>Don't recolor</h3>
             <p>Gold, iron, or bone. No team colors, no seasonal neons, no metallic mock-chrome.</p>
           </article>
           <article class="dont-card">
             <div class="dont-preview is-busy">
-              <img src="/images/mark-body.png" alt="" />
+              <img loading="lazy" decoding="async" src="/images/mark-body.png" alt="" />
             </div>
             <h3>Don't crowd</h3>
             <p>Busy grounds eat the silhouette. If the photo is loud, put the mark in a quiet plate.</p>
@@ -457,13 +463,13 @@
       </section>
 
       <section class="close" id="close">
-        <img src="/images/plains-dusk.jpg" alt="Prairie under a storm-lit dusk sky" />
+        <img loading="lazy" decoding="async" src="/images/plains-dusk.jpg" alt="Prairie under a storm-lit dusk sky" />
         <div class="close-inner">
           <p class="kicker">End of volume 01</p>
           <h2>Hold<br />the line.</h2>
           <p>The system is short on purpose. Use it exactly, or ask before you invent a ninth color.</p>
           <div class="btn-row">
-            <a class="btn-primary" href="https://github.com/salimipuria-blip/bison-brand-book/raw/arena/01a016c5-bison-brand-book/public/BISON-Brand-Book.zip">Download ZIP</a>
+            <a class="btn-primary" href="/BISON-Brand-Book.zip" download="BISON-Brand-Book.zip">Download ZIP</a>
             <a class="btn-secondary" href="#demo">Launch the demos</a>
           </div>
         </div>
@@ -481,7 +487,7 @@
     <div class="overlay" id="overlay" data-live="desktop" role="dialog" aria-modal="true" aria-labelledby="overlay-title" hidden>
       <div class="overlay-bar">
         <h2 id="overlay-title">BISON — Desktop</h2>
-        <button class="overlay-close" id="overlay-close" aria-label="Close live demo">Close</button>
+        <button type="button" class="overlay-close" id="overlay-close" aria-label="Close live demo">Close</button>
       </div>
       <div class="overlay-frame">
         <div class="live-desktop">
@@ -495,7 +501,7 @@
             </nav>
           </header>
           <section class="live-hero">
-            <img src="/images/hero-bison.jpg" alt="" />
+            <img loading="lazy" decoding="async" src="/images/hero-bison.jpg" alt="" />
             <div class="cap">
               <p class="kicker">Lookbook 26</p>
               <h3>Winter<br />Herd</h3>
@@ -504,14 +510,14 @@
           </section>
           <div class="live-grid">
             <article class="live-card">
-              <img src="/images/product-coat.jpg" alt="Prairie Coat" />
+              <img loading="lazy" decoding="async" src="/images/product-coat.jpg" alt="Prairie Coat" />
               <div>
                 <h4>Prairie Coat</h4>
                 <span>$640 · Hide / Bone lining</span>
               </div>
             </article>
             <article class="live-card">
-              <img src="/images/product-boot.jpg" alt="Iron Boot" />
+              <img loading="lazy" decoding="async" src="/images/product-boot.jpg" alt="Iron Boot" />
               <div>
                 <h4>Iron Boot</h4>
                 <span>$420 · Storm welt</span>
@@ -526,19 +532,19 @@
             <p class="hello">Good evening</p>
             <h3>Hold the weather.</h3>
             <figure class="lm-feat">
-              <img src="/images/herd-winter.jpg" alt="" />
+              <img loading="lazy" decoding="async" src="/images/herd-winter.jpg" alt="" />
               <span>Herd 26</span>
             </figure>
             <div class="lm-prods">
               <article class="lm-prod">
-                <img src="/images/product-coat.jpg" alt="" />
+                <img loading="lazy" decoding="async" src="/images/product-coat.jpg" alt="" />
                 <div>
                   <b>Prairie Coat</b>
                   <span>$640</span>
                 </div>
               </article>
               <article class="lm-prod">
-                <img src="/images/product-boot.jpg" alt="" />
+                <img loading="lazy" decoding="async" src="/images/product-boot.jpg" alt="" />
                 <div>
                   <b>Iron Boot</b>
                   <span>$420</span>

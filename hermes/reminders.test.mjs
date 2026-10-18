@@ -146,3 +146,45 @@ test('wrangler.toml enables the cron trigger that fires reminders', async () => 
   assert.match(active, /^\[triggers\]\s*$/m);
   assert.match(active, /^crons\s*=\s*\[\s*"[^"]+"/m);
 });
+
+test('the morning digest fires once per day although the 8am hour has 12 cron runs', async (t) => {
+  const { runReminders } = await import('./worker.mjs');
+  const { env, sent, restore } = fakeEnv([
+    { id: 'a', chatId: '42', due: '2026-10-15T06:30:00.000Z', text: 'gym at 10', sent: false },
+  ]);
+  t.after(restore);
+  const first = await runReminders(env, new Date('2026-10-15T04:30:00.000Z')); // 08:00 Tehran
+  const second = await runReminders(env, new Date('2026-10-15T04:35:00.000Z')); // 08:05 Tehran
+  assert.equal(first.digests, 1);
+  assert.equal(second.digests, 0);
+  assert.equal(sent.filter((m) => /یادآورهای امروز/.test(m.text)).length, 1);
+});
+
+test('team-member (app:) reminders are not sent to Telegram nor marked delivered', async (t) => {
+  const { runReminders } = await import('./worker.mjs');
+  const { listReminders } = await import('./reminders.mjs');
+  const { env, sent, restore } = fakeEnv([
+    { id: 'a', chatId: 'app:sara', due: '2026-10-15T05:00:00.000Z', text: 'team call', sent: false },
+  ]);
+  t.after(restore);
+  const res = await runReminders(env, new Date('2026-10-15T06:00:00.000Z'));
+  assert.equal(res.delivered, 0);
+  assert.equal(sent.length, 0);
+  assert.equal((await listReminders(env, 'app:sara')).length, 1); // still listed in the app
+});
+
+test('a reminder Telegram refuses is counted as failed, not delivered, and not retried', async (t) => {
+  const { runReminders } = await import('./worker.mjs');
+  const { env, restore } = fakeEnv([
+    { id: 'a', chatId: '42', due: '2026-10-15T05:00:00.000Z', text: 'x', sent: false },
+  ]);
+  t.after(restore);
+  const inner = globalThis.fetch;
+  globalThis.fetch = async (url, init) => (String(url).includes('api.telegram.org')
+    ? Response.json({ ok: false, description: 'Forbidden: bot was blocked by the user' }) : inner(url, init));
+  t.after(() => { globalThis.fetch = inner; });
+  const now = new Date('2026-10-15T06:00:00.000Z');
+  const res = await runReminders(env, now);
+  assert.deepEqual([res.delivered, res.failed], [0, 1]);
+  assert.equal((await runReminders(env, now)).failed, 0);
+});

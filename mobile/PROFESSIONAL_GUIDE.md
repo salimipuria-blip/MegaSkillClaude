@@ -1,27 +1,42 @@
-# Professional Guide — mobile
+# Professional Guide — mobile (ممیزی فنی)
 
-> Auto-maintained. Update this file whenever performance, debugging, or architecture changes.
-> Last updated: 2026-10-15.
+> ممیزی تاریخ‌دار هر دور. دستور کار ثابت در `CLAUDE.md`، تاریخچه در `PROGRESS.md`.
+> آخرین ممیزی: **2026-10-18**.
 
-## Stack
-Vanilla JS PWA
+## نتیجهٔ گیت‌های کیفیت
+| بررسی | قبل | بعد |
+|---|---|---|
+| `python3 mobile/build-index.py --check` | ✅ 5748 مهارت، `mega-mobile-v1-7bff70bc5794c7c0` | ✅ 5748، `mega-mobile-v1-f0a03afbdf7bc464` (assetها عوض شدند) |
+| `node --test mobile/search.test.mjs mobile/index.test.mjs` | ✅ 10/10 | ✅ **17/17** (۷ regression جدید) |
+| `python3 -m unittest … test_mobile_console.py` | ✅ 8/8 | ✅ 8/8 |
+| `node scripts/doctor.mjs mobile` | ✅ | ✅ |
+| Playwright Chromium + iPhone 13 | — | ✅ عرض 390، صفر خطای console، Esc شیت را می‌بندد |
+| اندازهٔ ایندکس | 2,243,860 B خام / 409,912 B gzip (بودجه 3 MiB) | بدون تغییر |
 
-## Quality gates
-- Test: `node --test *.test.mjs (10)`
-- Check: `node --check app.js search.mjs sw.js`
+## یافته‌ها و اصلاح‌ها (هر کدام با ورودی بازتولید)
+1. **query بی‌معنا = کل کتابخانه (باگ UX/درستی).** `«برای»` یا `«کُد»` → توکن خالی → `searchSkills` همه را برمی‌گرداند و وضعیت «۵٬۷۴۸ نتیجه» نشان می‌داد. اصلاح: متن غیرخالی با توکن خالی ⇒ `[]`. اکنون `«برای»` ⇒ «۰ نتیجه».
+2. **حرکات و تطویل توکن را می‌شکستند.** `«کُد»` به «ک» و «د» تقسیم و حذف می‌شد؛ `«کـد»` صفر نتیجه. اصلاح: حذف U+064B–065F، U+0670، U+0640 ⇒ هر دو = `code` (۳۳۳ نتیجه).
+3. **هـ/الف/ارقام.** `«خانۀ»` ⇒ ۰، `«۳d»` ⇒ ۰. اصلاح: ة/ۀ/ە→ه، أ/إ/ٱ→ا، ارقام فارسی/عربی→ASCII ⇒ `«۳d»` ۱۳ نتیجه.
+4. **lookup نمونهٔ اولیه (prototype).** `ALIASES[token]` روی شیء ساده برای `constructor`/`valueof` تابع `Object` برمی‌گرداند و توکن رشته نبود (با افزودن prefix به `TypeError` رسید). اصلاح: `Object.hasOwn`.
+5. **رتبه‌بندی بدون پوشش.** `«طراحی لوگو»` ⇒ ۳ نتیجهٔ اول `visual-design-brief`، … (فقط «design» در نام). اصلاح: مرتب‌سازی اول بر اساس تعداد کلمه‌های پوشش‌داده‌شده + alias `لوگو→logo` ⇒ `logo-image-design`, `ecolodge-logo-planner`, `logo-grid-construction`.
+6. **ZWNJ در برابر فاصله.** ۱٬۷۲۳ مهارت تریگر ZWNJدار دارند؛ «شبکه های» (کیبورد بدون نیم‌فاصله) با «شبکه‌های» جور نمی‌شد. اصلاح: ایندکس هر دو شکل چسبیده و جدا (فقط برای تریگرهای ZWNJدار، برای حفظ زمان ساخت) + stop wordهای «ها/های/ترین…».
+7. **جست‌وجوی حین تایپ.** `«reac»` ⇒ «نتیجه‌ای پیدا نشد» تا کلمه کامل شود. اصلاح: prefix برای آخرین توکن ≥۳ حرف با امتیاز کمتر ⇒ ۷۴ نتیجه، react در صدر.
+8. **toast.** دو کپی پیاپی: تایمر اول toast دوم را زود می‌بست. اصلاح: `clearTimeout`.
+9. **شیت.** Esc نمی‌بست، نقش dialog نداشت. اصلاح: `keydown Escape` + `role="dialog" aria-modal`.
+10. **شمارندهٔ کهنه.** تب VS Code «۵٬۹۸۶ مهارت» می‌گفت؛ منبع canonical `counts.skills = 6029`. اصلاح + تست که عدد را از `triggers.json` می‌خواند.
+11. **کارت چام گمراه‌کننده.** «در مسیر مهاجرت» در حالی که نسخهٔ نهایی در مخزن POINT است. متن به‌روز شد.
 
-## Performance improvements applied
-- Service worker caching; skills-index.json size
+## کارایی (اندازه‌گیری، نه حدس)
+- `searchSkills` روی ۵٬۷۴۸ مهارت: **۵٫۶–۶٫۷ms** هر جست‌وجو (Node 22، دسکتاپ) با prefix.
+- `buildSearchIndex`: **۱۵۰–۴۲۰ms** (نویزی، JIT)، هم‌رده با نسخهٔ قبل (۱۲۰–۳۰۰ms)؛ روی آیفون باید اندازه‌گیری شود (P1 در `CLAUDE.md`).
 
-## Debugging playbook
-- Check sw.js cache version
-- search.test.mjs
+## باز و ریسک
+- **منتشر نشده:** هیچ هاست HTTPS برای `mobile/` تعریف نشده؛ بدون آن Service Worker و نصب آفلاین روی آیفون ممکن نیست (تصمیم مالک).
+- Safari/iOS فیزیکی هنوز تست نشده؛ نتایج بالا emulation است.
+- به‌روزرسانی SW بی‌صداست (skipWaiting + claim)؛ صفحهٔ باز تا reload با JS قدیمی می‌ماند.
+- `PROJECTS` در `app.js` دستی است و با `scripts/doctor.mjs` فقط با تست Python هم‌گام نگه داشته می‌شود.
 
-## Suggested next steps
-- Compress skills-index.json
-- Add offline fallback
-
-## How to keep this file alive
-1. After any change, append a line under "Performance improvements applied" or "Debugging playbook".
-2. Run the quality gates above; record results in PROGRESS.md.
-3. If a new bottleneck is found, add it to "Suggested next steps" with a measurable target.
+## گام‌های بعدی (قابل‌اندازه‌گیری)
+1. انتشار HTTPS + هدر `no-cache` برای `sw.js` ⇒ پذیرش: نصب و جست‌وجوی آفلاین روی iPhone واقعی.
+2. ساخت ایندکس در idle/Worker اگر روی آیفون >۳۰۰ms.
+3. toast «نسخهٔ تازه» بعد از activate.

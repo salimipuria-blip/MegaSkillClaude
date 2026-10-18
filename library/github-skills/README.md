@@ -1,6 +1,6 @@
 # GitHub Skills (3,011 indexed)
 
-The current canonical `INDEX.json` contains 3,011 MIT-licensed skills collected from 50 public GitHub repositories; 281 entries are marked incomplete and excluded from default routing. The earlier 2,980 count below is the **2026-10-04 collection snapshot**, not the live repository total. Treat `INDEX.json` as the count source of truth; this page must be updated whenever the indexed corpus changes.
+The current canonical `INDEX.json` contains 3,011 MIT-licensed skills from 29 public GitHub repositories (unique `repo` values in `INDEX.json`; `_licenses/` keeps 46 license files from the wider collection); 281 entries are marked incomplete and excluded from default routing. The earlier 2,980 count below is the **2026-10-04 collection snapshot**, not the live repository total. Treat `INDEX.json` as the count source of truth; this page must be updated whenever the indexed corpus changes.
 
 **Available through the Mega Skills Router.** `.claude/skills/mega-skills-router` indexes every skill here; Claude reads a skill only when the router matches it to a request. To make one skill always loaded instead, copy its folder into `.claude/skills/`.
 

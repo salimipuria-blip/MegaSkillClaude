@@ -119,3 +119,22 @@ test('knowledge files are never served over HTTP, even with ASSETS bound', async
     assert.doesNotMatch(await res.text(), /PORTFOLIO-MARK|FJCOD-MARK/);
   }
 });
+
+test('focusDoc: a CLAUDE.md brief keeps its yaml spec and work queue; a roadmap starts at its queue', async () => {
+  const { focusDoc } = await import('./knowledge.mjs');
+  const brief = '# x — دستور کار Claude\n> status\n\n```yaml\nname: x\nstatus: live\n```\n\n## نقشهٔ کد\n- a.mjs\n\n' +
+    '## صف کار\n- P0: ship it\n\n## پروتکل به‌روزرسانی\n- update';
+  const out = focusDoc('CLAUDE.md', brief);
+  assert.match(out, /status: live/);
+  assert.match(out, /P0: ship it/);
+  assert.doesNotMatch(out, /نقشهٔ کد|پروتکل/);
+  assert.match(focusDoc('CLAUDE.md', '## صف کار\n- last section'), /last section/);
+  assert.equal(focusDoc('CLAUDE.md', 'no structure'), 'no structure');
+  assert.equal(focusDoc('ROADMAP.md', '# r\n## done\n- a\n## صف کارها\n- b'), '## صف کارها\n- b');
+});
+
+test('the mega skill plugin is a project of its own, read from plugins/', () => {
+  const p = mentionedProjects('وضعیت پلاگین مگا اسکیل چیه؟');
+  assert.equal(p[0].id, 'mega-skills-router');
+  assert.equal(p[0].dir, 'plugins/mega-skills-router');
+});

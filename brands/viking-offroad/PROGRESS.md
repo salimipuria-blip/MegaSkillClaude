@@ -36,7 +36,7 @@ CHROMIUM_PATH=/path/to/chromium node render.js 0,2 --sheets
 - استیکر خروجی را در پس‌زمینهٔ روشن و تیره ببین تا هاله/پس‌زمینهٔ ناخواسته پنهان نماند.
 
 ## ۵) کارهای باز / پیشنهاد بعدی
-- [ ] تولید `MANIFEST.json` قطعی از سورس: نام پک، تعداد، فهرست فایل‌ها، ابعاد، رنگ و SHA-256.
+- [x] تولید `MANIFEST.json` قطعی از سورس (انجام‌شده ۲۰۲۶-۱۰-۱۴؛ `scripts/build_sticker_manifest.py --check` در CI).
 - [ ] بازبینی چشمی نمونه از هر پک و ثبت نتیجه در تحویل واقعی.
 - [ ] اجرای رندر کامل با Chromium در محیط قابل‌تکرار و مقایسهٔ previewها با سورس؛ وابستگی Playwright هنوز lockfile مستقل ندارد.
 
@@ -50,3 +50,5 @@ CHROMIUM_PATH=/path/to/chromium node render.js 0,2 --sheets
   - `scripts/build_sticker_manifest.py` ساخته شد: برای هر پک، شناسه/نام/رنگ/تعدادِ captionها و duoها، SHA-256 و ابعاد و نوعِ رنگِ تک‌تکِ PNGها، preview و cover؛ جمع‌ها شامل ۳۶۰ استیکر و ۳۰٬۶۰۳٬۵۳۹ بایت. حالت `--check` خروجی را با فایلِ موجود مقایسه می‌کند (برای CI). خروجیِ تولیدی `brands/viking-offroad/stickers/MANIFEST.json` است.
   - به `scripts/doctor.mjs` (گام `manifest` در `brand-stickers`) و به CI وصل شد؛ `python3 scripts/check_brand_assets.py --stickers` همچنان ساختار را جداگانه نگه می‌دارد.
   - **محدودیت‌ها:** بازبینیِ چشمیِ نمونه از هر پک هنوز انجام نشده و رندرِ کامل با Chromium در این محیط اجرا نشده (فقط سینتکسِ رندرر تأیید شد). این manifest «تغییرِ پیکسل» را نشان می‌دهد، کیفیتِ بصری را نه.
+
+- **۲۰۲۶-۱۰-۱۸ (ممیزی دستور کار)** — دستور کار مشترک برندها در [`brands/CLAUDE.md`](../CLAUDE.md) نوشته شد. بررسی‌ها: `check_brand_assets.py --stickers` ✅، `build_sticker_manifest.py --check` ✅، تطبیق SHA-256 هر ۳۷۲ PNG (۳۶۰ استیکر + ۱۲ preview) با manifest ✅ صفر اختلاف، `doctor brand-stickers` ✅. یافته: فیلد `color` هر پک در `packs.js` (آبی/سبز/بنفش…) در رندر استفاده نمی‌شود و همهٔ پک‌ها تمام‌نارنجی‌اند (preview پک ۵ چشمی دیده شد: متن فارسی سالم، بدون پس‌زمینه). بند کهنهٔ «تولید MANIFEST» در فهرست باز تیک خورد. باز: بازبینی چشمی ۱۱ پک دیگر، lockfile برای `src/`.

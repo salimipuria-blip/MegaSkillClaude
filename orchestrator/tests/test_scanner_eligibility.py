@@ -1,6 +1,7 @@
 from pathlib import Path
-SRC=Path('supabase/functions/github-llm-scanner/index.ts')
-SQL=Path('supabase/migrations/20260912_live_snapshot.sql')
+ROOT=Path(__file__).resolve().parents[1]
+SRC=ROOT/'supabase/functions/github-llm-scanner/index.ts'
+SQL=ROOT/'supabase/migrations/20260912_live_snapshot.sql'
 
 
 def test_scanner_and_database_jointly_require_api_evidence_for_eligibility():

@@ -59,3 +59,5 @@ PLAYWRIGHT_PATH=/path/to/playwright CHROMIUM_PATH=/path/to/chromium \
 
 ## Professional guide
 See `PROFESSIONAL_GUIDE.md` in this folder for performance improvements, debugging playbook, and next steps. Update it whenever behavior changes.
+
+- **۲۰۲۶-۱۰-۱۸ (ممیزی دستور کار)** — دستور کار در [`brands/CLAUDE.md`](../../brands/CLAUDE.md) (هر دو پوشهٔ برند). `check_brand_assets.py --templates` ✅، `node --check render.mjs` ✅، `node --test brand/viking/tests/*.test.mjs` ✅ **۱۰/۱۰**، `doctor brand-viking` ✅. نکته: `node --test brand/viking/tests/` (پوشه) در Node 22 خطای MODULE_NOT_FOUND می‌دهد — همیشه فایل‌ها را بده (CI درست است). همچنان `brief.json.verified=false`؛ خروجی فقط پیش‌نویس چیدمان است تا مالک منبع ادعاها را بدهد.

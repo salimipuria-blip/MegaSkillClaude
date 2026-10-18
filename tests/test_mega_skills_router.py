@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import functools
 import importlib.util
 import json
 import unittest
@@ -14,7 +15,9 @@ COPIES = {
 }
 
 
+@functools.lru_cache(maxsize=None)
 def _load(skill_dir: Path):
+    """One module per copy, so the router's per-process index cache is shared across tests."""
     spec = importlib.util.spec_from_file_location(f"route_{skill_dir.parent.name}", skill_dir / "scripts" / "route.py")
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
@@ -162,6 +165,43 @@ class RouterRankingTest(unittest.TestCase):
                 self.assertEqual(len(json.loads(out.getvalue())), 3)
                 with self.assertRaises(SystemExit), contextlib.redirect_stderr(io.StringIO()):
                     module.main(["ai", "--index", str(directory / "missing.json")])
+
+    def test_persian_stack_names_route_to_their_skills(self):
+        """Persian names of the contract projects' stack used to miss: «ربات تلگرام» → telegram-channel-export,
+        «تست واحد» → bottoms-up-model-sheet (unit of measure), «برنامه‌نویسی پایتون» → openpyxl."""
+        expected = {
+            "ربات تلگرام": {"telegram-bot-builder", "telegram-automation"},
+            "تست واحد": {"pro-testing-strategy", "unit-testing-test-generate"},
+            "برنامه‌نویسی پایتون": {"python-code-style", "python-anti-patterns", "python-patterns"},
+            "دیتابیس سوپابیس": {"supabase-automation", "supabase", "postgres-patterns"},
+            "ایمیل مارکتینگ": {"email-marketing"},
+        }
+        for copy in COPIES:
+            for query, names in expected.items():
+                with self.subTest(copy=copy, query=query):
+                    self.assertIn(self.search(copy, query)[0], names)
+
+    def test_route_copies_differ_only_in_path_resolution(self):
+        """The two route.py files are maintained by hand; any algorithm change must land in both."""
+        def body(copy: str) -> list[str]:
+            lines = (COPIES[copy] / "scripts/route.py").read_text(encoding="utf-8").splitlines()
+            start = next(i for i, line in enumerate(lines) if line.startswith("DEFAULT_MIN_SCORE"))
+            return [line.replace("REPO_ROOT", "BASE").replace("SKILL_DIR", "BASE") for line in lines[start:]]
+        self.assertEqual(body("project"), body("plugin"))
+
+    def test_index_cache_reloads_an_edited_index(self):
+        import os
+        import tempfile
+        module = _load(COPIES["plugin"])
+        skill = {"name": "alpha-skill", "domain": "general", "source_path": "x/SKILL.md", "triggers": ["alpha"]}
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "triggers.json"
+            path.write_text(json.dumps({"skills": [skill]}), encoding="utf-8")
+            self.assertEqual([r["name"] for r in module.search_index(path, "alpha")], ["alpha-skill"])
+            path.write_text(json.dumps({"skills": [dict(skill, name="beta-skill", triggers=["beta"])]}), encoding="utf-8")
+            os.utime(path, ns=(path.stat().st_atime_ns, path.stat().st_mtime_ns + 1_000_000_000))
+            self.assertEqual(module.search_index(path, "alpha"), [])
+            self.assertEqual([r["name"] for r in module.search_index(path, "beta")], ["beta-skill"])
 
     def test_indexed_paths_exist(self):
         project = _load(COPIES["project"])
