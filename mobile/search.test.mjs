@@ -71,3 +71,45 @@ test("the downloaded index payload is schema- and shape-checked", () => {
   assert.equal(isSkillsPayload({ schema: "mega-skills-mobile/v1", counts: { routable_skills: 1 }, skills }), false);
   assert.equal(isSkillsPayload({ schema: "unexpected", counts: { routable_skills: 0 }, skills: [] }), false);
 });
+
+// Regressions from the 2026-10-18 audit (each failed before its fix).
+test("diacritics, tatweel, heh variants and Persian digits normalize away", () => {
+  assert.deepEqual(tokenize("کُد"), ["code"]);
+  assert.deepEqual(tokenize("کـد"), ["code"]);
+  assert.deepEqual(tokenize("خانۀ"), ["خانه"]);
+  assert.deepEqual(tokenize("۳d"), ["3d"]);
+});
+
+test("prototype words stay strings instead of resolving to Object.prototype", () => {
+  assert.deepEqual(tokenize("constructor toString"), ["constructor", "tostring"]);
+  const index = buildSearchIndex([{ ...skills[0], t: ["constructor pattern"] }]);
+  assert.equal(searchSkills(index, "constructor", "", 10).length, 1);
+});
+
+test("a query of only stop words or marks matches nothing, not the whole library", () => {
+  const index = buildSearchIndex(skills);
+  assert.deepEqual(searchSkills(index, "برای و", "", 10), []);
+  assert.deepEqual(searchSkills(index, "a", "", 10), [], "a single letter is not a query");
+  assert.equal(searchSkills(index, "   ", "", 10).length, skills.length, "blank still browses");
+});
+
+test("ZWNJ compounds match with ZWNJ, a space, or nothing between the parts", () => {
+  const index = buildSearchIndex([{ ...skills[0], n: "social-kit", t: ["شبکه‌های اجتماعی"] }]);
+  for (const query of ["شبکه‌های", "شبکه های", "شبکههای"]) {
+    assert.deepEqual(searchSkills(index, query, "", 10).map((s) => s.n), ["social-kit"], query);
+  }
+});
+
+test("covering every query word outranks one strong name hit", () => {
+  const index = buildSearchIndex([
+    { ...skills[0], n: "design-brief", t: ["brief"] },
+    { ...skills[0], n: "mark-explorer", t: ["طراحی لوگو"] },
+  ]);
+  assert.deepEqual(searchSkills(index, "طراحی لوگو", "", 10).map((s) => s.n), ["mark-explorer", "design-brief"]);
+});
+
+test("the last word matches as a prefix while it is still being typed", () => {
+  const index = buildSearchIndex(skills);
+  assert.deepEqual(searchSkills(index, "reac", "", 10).map((s) => s.n), ["react-performance"]);
+  assert.deepEqual(searchSkills(index, "re", "", 10), [], "two letters are too short to prefix-match");
+});

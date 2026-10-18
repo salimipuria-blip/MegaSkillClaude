@@ -45,3 +45,10 @@ test('search-relevant material is present and Persian-safe', () => {
   assert.ok(sample.some((s) => /[؀-ۿ]/.test(s.t.join(' '))), 'Persian triggers must survive the build');
   assert.ok(payload.skills.every((s) => !/<|>|javascript:/i.test(s.n)), 'no markup in skill names');
 });
+
+test('the page quotes the plugin total from the canonical router counts', () => {
+  const router = JSON.parse(readFileSync(new URL('../.claude/skills/mega-skills-router/references/triggers.json', import.meta.url), 'utf8'));
+  const html = readFileSync(new URL('./index.html', import.meta.url), 'utf8');
+  const fa = (n) => n.toLocaleString('en-US').replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[d]).replace(/,/g, '٬');
+  assert.ok(html.includes(`${fa(router.counts.skills)} مهارت در دسترس`), `index.html must say ${fa(router.counts.skills)} plugin skills`);
+});

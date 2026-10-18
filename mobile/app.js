@@ -26,7 +26,7 @@ const DOMAIN_FA = {
 const PROJECTS = [
   { id: "psk", name: "MEGA SKILLS 3000", fa: "موتور ۳۰۰۰ مهارت", path: "psk", test: "node scripts/doctor.mjs psk", desc: "سایت فارسی و موتور مسیریابی مهارت‌ها روی Vercel" },
   { id: "hermes", name: "Hermes", fa: "دستیار تلگرامی هرمس", path: "hermes", test: "node scripts/doctor.mjs hermes", desc: "بات ۲۴/۷ روی Cloudflare Worker + نصب‌کنندهٔ Oracle" },
-  { id: "fjcod", name: "CHAM Store OS", fa: "سامانهٔ فروشگاه چام", path: "fjcod", test: "node scripts/doctor.mjs fjcod", desc: "React 19 + TypeScript؛ در مسیر مهاجرت به بک‌اند امن" },
+  { id: "fjcod", name: "CHAM Store OS", fa: "سامانهٔ فروشگاه چام", path: "fjcod", test: "node scripts/doctor.mjs fjcod", desc: "نسخهٔ قدیمی (دادهٔ مرورگر، بدون ثبت فروش واقعی)؛ نسخهٔ نهایی با Supabase در مخزن POINT است" },
   { id: "lithos", name: "Lithos", fa: "داشبورد خصوصی لیتوس", path: "lithos", test: "node scripts/doctor.mjs lithos", desc: "پایش اینستاگرام/Buffer با Supabase" },
   { id: "viking-team", name: "Viking Team", fa: "مرکز فرمان وایکینگ", path: "viking-team", test: "node scripts/doctor.mjs viking-team", desc: "تیم اجرایی آفرود؛ Supabase Auth و RLS" },
   { id: "viking-motion", name: "Viking Motion Study", fa: "مطالعهٔ حرکتی وایکینگ", path: "viking-team/motion", test: "node scripts/doctor.mjs viking-motion", desc: "نمونهٔ Remotion مستقل؛ هنوز در محصول ادغام نشده" },
@@ -39,11 +39,14 @@ const PROJECTS = [
   { id: "mobile", name: "iPhone Console", fa: "همین کنسول آیفون", path: "mobile", test: "node scripts/doctor.mjs mobile", desc: "رابط موبایل VS Code و مهارت‌ها (همین صفحه)" },
 ];
 
+let toastTimer;
 function toast(message) {
   const element = $("#toast");
   element.textContent = message;
   element.classList.remove("hidden");
-  setTimeout(() => element.classList.add("hidden"), 1600);
+  // A second copy within 1.6s must not be hidden by the first copy's timer.
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => element.classList.add("hidden"), 1600);
 }
 
 async function copyText(text) {
@@ -189,3 +192,6 @@ function closeSheet() {
 }
 
 $("#sheetBackdrop").addEventListener("click", closeSheet);
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && !$("#skillSheet").classList.contains("hidden")) closeSheet();
+});

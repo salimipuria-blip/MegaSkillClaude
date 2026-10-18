@@ -11,20 +11,33 @@ const ALIASES = {
   "tahlil": "analysis", "dade": "data", "mohtava": "content",
   "foroosh": "sales", "roshd": "growth", "sakht": "create",
   "virayesh": "edit", "site": "website",
+  "لوگو": "logo", "برند": "brand", "سئو": "seo", "ایمیل": "email",
+  "پادکست": "podcast",
 };
 
 const STOP_WORDS = new Set([
   "a", "an", "the", "for", "of", "to", "and", "و", "در", "برای", "با",
   "از", "رو", "را", "می", "کن", "بده",
+  // Plural/adjective suffixes that become standalone words when a phone keyboard
+  // types a space instead of a ZWNJ («شبکه های»); alone they match everything.
+  "ها", "های", "هایی", "ای", "تر", "ترین",
 ]);
+
+const PERSIAN_DIGITS = /[\u06f0-\u06f9\u0660-\u0669]/g;
+const digitValue = (character) => String(character.charCodeAt(0) & 0xf);
 
 /** Normalize common Arabic/Persian glyph variants before tokenization. */
 export function normalizeText(value) {
   return String(value ?? "")
     .normalize("NFKC")
     .toLowerCase()
+    // Harakat, superscript alef and tatweel are decoration: «کُد» and «کـد» are «کد».
+    .replace(/[\u064b-\u065f\u0670\u0640]/g, "")
     .replace(/[يى]/g, "ی")
     .replace(/ك/g, "ک")
+    .replace(/[ةۀە]/g, "ه")
+    .replace(/[أإٱ]/g, "ا")
+    .replace(PERSIAN_DIGITS, digitValue)
     .replace(/[\u200c\u200d]/g, "")
     // ZWNJ-separated Persian compounds are split before alias lookup unless
     // normalized as phrases here (e.g. «برنامه‌نویسی» -> code).
@@ -38,7 +51,9 @@ export function tokenize(value) {
   return normalizeText(value)
     .split(/[^\p{L}\p{N}]+/u)
     .filter((token) => token.length > 1 && !STOP_WORDS.has(token))
-    .map((token) => ALIASES[token] || token);
+    // Own keys only: a plain-object lookup would turn "constructor" or "tostring"
+    // into Object.prototype functions instead of strings.
+    .map((token) => (Object.hasOwn(ALIASES, token) ? ALIASES[token] : token));
 }
 
 /** Escape any index-provided value before it is placed into an HTML template. */
@@ -88,7 +103,12 @@ export function buildSearchIndex(skills) {
     skill,
     position,
     nameTokens: new Set(tokenize(String(skill.n).replace(/-/g, " "))),
-    triggerTokens: new Set((Array.isArray(skill.t) ? skill.t : []).flatMap(tokenize)),
+    // A ZWNJ compound («شبکه‌های») is indexed joined and split, so it matches whether
+    // the keyboard typed a ZWNJ, nothing, or a plain space between the parts.
+    triggerTokens: new Set((Array.isArray(skill.t) ? skill.t : []).flatMap((trigger) =>
+      /[\u200c\u200d]/.test(trigger)
+        ? [...tokenize(trigger), ...tokenize(String(trigger).replace(/[\u200c\u200d]/g, " "))]
+        : tokenize(trigger))),
   }));
 }
 
@@ -99,6 +119,16 @@ export function searchSkills(searchIndex, query, domain = "", limit = 60) {
   if (safeLimit === 0) return [];
 
   const queryTokens = tokenize(query);
+  // Text that tokenizes to nothing (only stop words, marks or single letters) is
+  // not an empty query: it must not "match" the whole library.
+  if (queryTokens.length === 0 && normalizeText(query).trim() !== "") return [];
+  // The last word may still be mid-typing («reac»): let it match as a prefix.
+  const lastToken = queryTokens[queryTokens.length - 1];
+  const prefixToken = lastToken && lastToken.length >= 3 ? lastToken : "";
+  const hasPrefix = (tokens) => {
+    for (const token of tokens) if (token.startsWith(prefixToken)) return true;
+    return false;
+  };
   const matches = [];
 
   for (const entry of searchIndex) {
@@ -106,24 +136,35 @@ export function searchSkills(searchIndex, query, domain = "", limit = 60) {
     if (domain && skill.d !== domain) continue;
 
     if (queryTokens.length === 0) {
-      matches.push({ skill, position, score: 1 });
+      matches.push({ skill, position, hits: 0, score: 1 });
       continue;
     }
 
     let score = 0;
     let hits = 0;
-    for (const token of queryTokens) {
+    queryTokens.forEach((token, index) => {
       if (nameTokens.has(token)) {
         score += 5;
         hits += 1;
       } else if (triggerTokens.has(token)) {
         score += 2;
         hits += 1;
+      } else if (prefixToken && index === queryTokens.length - 1) {
+        if (hasPrefix(nameTokens)) {
+          score += 2;
+          hits += 1;
+        } else if (hasPrefix(triggerTokens)) {
+          score += 1;
+          hits += 1;
+        }
       }
-    }
-    if (hits > 0) matches.push({ skill, position, score });
+    });
+    if (hits > 0) matches.push({ skill, position, hits, score });
   }
 
-  matches.sort((left, right) => right.score - left.score || left.position - right.position);
+  // Covering more of the request beats one strong word: «طراحی لوگو» must rank
+  // logo skills above every skill that merely has "design" in its name.
+  matches.sort((left, right) =>
+    right.hits - left.hits || right.score - left.score || left.position - right.position);
   return matches.slice(0, safeLimit).map(({ skill }) => skill);
 }

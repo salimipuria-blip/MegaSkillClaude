@@ -1,6 +1,6 @@
 # کنسول آیفون مگااسکیل — دفتر جریان پروژه
 
-> دفتر زندهٔ `mobile/`؛ هر تغییر UI، index یا Service Worker باید در همین نوبت با فرمان/نتیجهٔ واقعی ثبت شود. آخرین به‌روزرسانی: **۲۰۲۶-۱۰-۱۴**.
+> دفتر زندهٔ `mobile/`؛ هر تغییر UI، index یا Service Worker باید در همین نوبت با فرمان/نتیجهٔ واقعی ثبت شود. آخرین به‌روزرسانی: **۲۰۲۶-۱۰-۱۸**. دستور کار ثابت: `CLAUDE.md`.
 
 ## ۱) پروژه در یک نگاه
 - **نوع:** PWA ایستا و فارسی برای VS Code وب، جست‌وجوی آفلاین مهارت‌ها و کپی فرمان تست هر پروژه.
@@ -59,6 +59,13 @@ python3 -m unittest discover -s tests -p test_mobile_console.py -v
   - **Smoke واقعی با Chromium و پروفایلِ iPhone 13** (عرض ۳۹۰، DPR ۳، لمسی، UA آیفون): عرضِ سند **۳۹۰ CSS px و بدون سرریزِ افقی**، ۱۳ کارتِ پروژه، شمارنده **۵٬۷۳۸**، `dir=rtl`، ثبتِ Service Worker، و **بارگذاریِ مجدد در حالت آفلاین که ۵٬۷۳۸ مدخل را از cache برگرداند**؛ صفر خطای page/console.
   - گامِ `search-tests` در doctor به‌روز شد تا هر دو فایلِ تست را اجرا کند؛ CI هم به‌روز شد.
   - **محدودیت:** همچنان Safari/iOS فیزیکی نیست — نصب به Home Screen، حالتِ هواپیمای واقعی، به‌روزرسانیِ واقعیِ Service Worker در Safari و اندازه‌گیریِ حافظه روی دستگاه، جداگانه باید آزمایش شوند.
+
+- **۲۰۲۶-۱۰-۱۸ (ممیزی جست‌وجو + دستور کار پروژه)** —
+  - `mobile/CLAUDE.md` ساخته شد: مشخصات yaml، نقشهٔ کد، قرارداد جست‌وجو، قواعد MUST/NEVER، جدول اشکال‌زدایی، صف P0–P2 و پروتکل به‌روزرسانی.
+  - **اصلاح‌ها در `search.mjs` (هرکدام با تست regression):** query بی‌توکن مثل «برای» دیگر کل ۵٬۷۴۸ مهارت را برنمی‌گرداند؛ حذف حرکات/تطویل («کُد»، «کـد» ⇒ code)؛ ة/ۀ/ە→ه، أ/إ/ٱ→ا، ارقام فارسی→ASCII («۳d» ۰ ⇒ ۱۳)؛ `Object.hasOwn` برای alias (باگ `constructor`)؛ رتبه‌بندی اول بر اساس پوشش کلمه‌ها («طراحی لوگو» ⇒ مهارت‌های logo در صدر) + alias لوگو/برند/سئو/ایمیل/پادکست؛ ایندکس دوشکلی ZWNJ («شبکه های» = «شبکه‌های») و stop wordهای ها/های/ترین؛ prefix برای آخرین کلمهٔ حین تایپ («reac» ۰ ⇒ ۷۴).
+  - **`app.js`/`index.html`:** تایمر toast، بستن شیت با Esc، `role="dialog"`، شمارندهٔ پلاگین ۵٬۹۸۶ ⇒ ۶٬۰۲۹ (تست از `triggers.json`)، متن کارت چام (نسخهٔ نهایی در POINT).
+  - نتیجه: `build-index.py --check` ✅ (`mega-mobile-v1-f0a03afbdf7bc464`)، Node **۱۷/۱۷** (قبلاً ۱۰/۱۰)، Python ۸/۸، `doctor mobile` ✅، Playwright iPhone 13: عرض ۳۹۰، صفر خطا. جست‌وجو ۵٫۶–۶٫۷ms.
+  - **باز:** هیچ هاست HTTPS برای `mobile/` نیست (تصمیم مالک)؛ iPhone واقعی تست نشده.
 
 ## Professional guide
 See `PROFESSIONAL_GUIDE.md` in this folder for performance improvements, debugging playbook, and next steps. Update it whenever behavior changes.
