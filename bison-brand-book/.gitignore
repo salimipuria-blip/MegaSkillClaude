@@ -1,5 +1,6 @@
 node_modules
 dist
+dist-offline
 /BISON-Brand-Book.zip
 .DS_Store
 *.local
