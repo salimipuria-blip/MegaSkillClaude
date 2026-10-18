@@ -58,7 +58,7 @@ owner_actions:
 | `image.mjs` · `photo-edit.mjs` · `upscale.mjs` · `image-bytes.mjs` · `textlayer.mjs` · `viking-style.mjs` | ساخت عکس، استودیوی ویرایش، لایهٔ متن وزیرمتن، سبک وایکینگ |
 | `media.mjs` | ویس → متن، دیدن عکس |
 | `google.mjs` | جیمیل (پیش‌نویس)، تقویم، درایو، شیت برای مالک |
-| `booking.mjs` · `trip-media.mjs` | `/trip` و `POST /api/booking` با rate limit و honeypot |
+| `booking.mjs` · `trip-media.mjs` | `/trip` و `POST /api/booking` با rate limit و honeypot | — لینک بیوی زنده: `https://hermes.fqlyr3d1iy6indqipoky75p0l8hl6ox.workers.dev/trip`
 | `health.mjs` · `diagnose.mjs` · `metrics.mjs` · `resilience.mjs` · `rate-limit.mjs` | پروب‌ها، خودآزمایی زنده، متریک، `fetchWithTimeout`، شمارندهٔ KV |
 | `app.mjs` | کل اپ وب (HTML/CSS/JS در یک رشته) |
 | `setup.sh` · `config.sh` · `logger.sh` · `tests/setup_validation.sh` | نصب کامل روی Oracle (تک‌فایلی بماند) |
