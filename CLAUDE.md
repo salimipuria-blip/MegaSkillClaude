@@ -29,6 +29,9 @@
 
 ## پروژه‌ها و تست
 همهٔ پروژه‌ها در همین مخزن‌اند؛ نقشهٔ پوشه‌ها و انتشار در `README.md`، وضعیت و کارهای بعدی در `ROADMAP.md`.
+
+**دستورکار هر پروژه:** هر پوشه یک `CLAUDE.md` دارد (spec یamlی، نقشهٔ کد، قواعد MUST/NEVER، جدول اشکال‌زدایی، صف کار P0–P2، پروتکل به‌روزرسانی) — قبل از کار در آن پوشه بخوان. بعد از هر تغییر: همان `CLAUDE.md` + `PROGRESS.md` (گزارش تاریخ‌دار) + `PROFESSIONAL_GUIDE.md` (ممیزی فنی) و در صورت تغییر وضعیت `docs/PORTFOLIO.md` را به‌روز کن. هرمس بخش spec و صف کار هر `CLAUDE.md` را در دانش مالک می‌خواند.
+فهرست: `hermes/` · `plugins/mega-skills-router/` · `psk/` · `lithos/` · `viking-team/` · `bison-brand-book/` · `orchestrator/` · `mobile/` · `fjcod/` (قدیمی؛ جانشین `POINT/fjcod`) · `library/` · `brands/`
 - `psk`: `npm run check && npm test`
 - `lithos`: `npm test && npm run build`
 - `fjcod` (فروشگاه چام): `npm ci && npm run check`

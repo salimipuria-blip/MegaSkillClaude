@@ -48,7 +48,7 @@ const PROJECTS = [
     id: 'psk', folder: 'psk', label: 'MEGA SKILLS 3000 (موتور مهارت‌ها)',
     steps: [
       {name: 'check', cmd: 'npm --ignore-scripts run check', cwd: 'psk', why: 'سینتکس همهٔ فایل‌های اجرایی'},
-      {name: 'tests', cmd: 'npm --ignore-scripts test', cwd: 'psk', why: '۵۳ تست شامل قرارداد مسیریابی و سیگنال‌های نیت'},
+      {name: 'tests', cmd: 'npm --ignore-scripts test', cwd: 'psk', why: '۵۷ تست شامل قرارداد مسیریابی و سیگنال‌های نیت'},
       {name: 'golden', cmd: 'node scripts/routing-golden.mjs --check', cwd: 'psk', why: 'خروجی مسیریاب عیناً تغییر نکرده'},
       {name: 'accuracy', cmd: 'node scripts/routing-accuracy.mjs', cwd: 'psk', why: 'دقت مسیریاب روی مجموعهٔ طلایی'},
       {name: 'bench', cmd: 'node scripts/bench-routing.mjs', cwd: 'psk', optional: true, why: 'کارایی مسیریابی (اختیاری)'},
@@ -59,7 +59,7 @@ const PROJECTS = [
     needs: ['lithos/node_modules'],
     steps: [
       {name: 'check', cmd: 'node --check api/buffer-sync.js', cwd: 'lithos', why: 'سینتکس تابع سرورلس'},
-      {name: 'tests', cmd: 'node --test tests/*.test.mjs', cwd: 'lithos', why: '۹ تست: سنک Buffer با Supabase ماک‌شده + قرارداد داشبورد'},
+      {name: 'tests', cmd: 'node --test tests/*.test.mjs', cwd: 'lithos', why: '۱۶ تست: سنک Buffer (مالک‌فقط، timeout، ۵۰۳) + قرارداد داشبورد'},
       {name: 'build', cmd: 'npm run build', cwd: 'lithos', why: 'بیلد Vite'},
     ],
   },
@@ -67,7 +67,7 @@ const PROJECTS = [
     id: 'fjcod', folder: 'fjcod', label: 'CHAM Store OS (فروشگاه چام)',
     needs: ['fjcod/node_modules'],
     steps: [
-      {name: 'check', cmd: 'npm run check', cwd: 'fjcod', why: 'typecheck + ۴۱ تست vitest (شامل حساب مرجوعی) + بیلد'},
+      {name: 'check', cmd: 'npm run check', cwd: 'fjcod', why: 'typecheck + ۴۵ تست vitest (شامل حساب مرجوعی) + بیلد'},
       {name: 'e2e', cmd: 'npm run e2e', cwd: 'fjcod', optional: true, why: 'اسموک مرورگر (اگر Chromium باشد)'},
     ],
   },
@@ -95,7 +95,7 @@ const PROJECTS = [
     steps: [
       {name: 'shell-syntax', cmd: 'bash -n hermes/setup.sh hermes/config.sh hermes/logger.sh', why: 'سینتکس نصب‌کننده'},
       {name: 'check', cmd: 'npm run check --prefix hermes', why: 'سینتکس همهٔ ماژول‌ها'},
-      {name: 'tests', cmd: 'npm test --prefix hermes', why: '۲۰۶ تست واحد (استودیو، لایهٔ متن، fetch با timeout و یادآورها)'},
+      {name: 'tests', cmd: 'npm test --prefix hermes', why: '۲۵۲ تست واحد (استودیو، لایهٔ متن، fetch با timeout، یادآورها، کدنویسی و دانش پروژه‌ها)'},
       {name: 'integration', cmd: 'npm run test:integration --prefix hermes', why: '۱۰ رگرسیون روی workerd محلی'},
       {name: 'skills-build', cmd: 'node hermes/build-skills.mjs', optional: true, why: 'ساخت دارایی‌های مهارت'},
     ],
@@ -136,7 +136,7 @@ const PROJECTS = [
     id: 'orchestrator', folder: 'orchestrator', label: 'Omni LLM Orchestrator (تاریخی)',
     steps: [
       {name: 'contract', cmd: 'python3 scripts/audit/check_repository_contract.py', cwd: 'orchestrator', why: 'قرارداد مخزن'},
-      {name: 'pytest', cmd: 'python3 -m pytest -q -ra tests', cwd: 'orchestrator', needsModule: 'pytest', why: '۱۶ تست + ۳ اسکیپ مستند شده'},
+      {name: 'pytest', cmd: 'python3 -m pytest -q -ra tests', cwd: 'orchestrator', needsModule: 'pytest', why: '۲۱ تست + ۳ اسکیپ مستند شده'},
       {name: 'deno-gateway', cmd: 'deno check --no-remote supabase/functions/github-admin-gateway/index.ts', cwd: 'orchestrator', needsTool: 'deno', why: 'قابل‌استقرار بودن توابع Edge'},
     ],
   },
