@@ -203,3 +203,8 @@ test('Telegram: /ci, /file as a document, /review through coding mode; not a com
   await telegram(baseEnv(), '/ci');
   assert.ok(sent(calls).some((t) => t.includes('GITHUB_REPO_TOKEN')));
 });
+
+test('github: a file over 1 MB is reported, never sent as an empty file', async () => {
+  mockFetch({ 'contents/big.json': [200, { type: 'file', encoding: 'none', content: '', size: 2500000 }] });
+  await assert.rejects(readFile({ GITHUB_REPO_TOKEN: 'tok' }, 'big.json'), /۱ مگابایت/);
+});
