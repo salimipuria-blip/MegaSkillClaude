@@ -1,6 +1,6 @@
 # هرمس (Hermes) — دستور کار Claude
 
-> وضعیت: زنده روی Cloudflare Worker `hermes`؛ ۲۵۲ تست واحد + ۱۰ رگرسیون workerd سبز · آخرین بازبینی: 2026-10-18
+> وضعیت: زنده روی Cloudflare Worker `hermes`؛ ۲۵۵ تست واحد + ۱۰ رگرسیون workerd سبز · آخرین بازبینی: 2026-10-18
 
 این فایل را Claude Code هنگام کار در `hermes/` خودکار می‌خواند. منبع حقیقت برای «چه چیزی، کجا، با چه دستوری» است؛ گزارش دورها در `PROGRESS.md`، ممیزی فنی در `PROFESSIONAL_GUIDE.md`، نقشهٔ راه در `ROADMAP.md`.
 
@@ -17,7 +17,7 @@ entrypoints:
   cron: worker.mjs#scheduled   # */5 * * * * → runReminders()
 commands:                      # همه در این بازبینی اجرا و سبز شدند (از hermes/ مگر خلافش گفته شود)
   install: npm ci --ignore-scripts --no-audit --no-fund
-  test: npm test                          # 252/252
+  test: npm test                          # 255/255
   test_integration: npm run test:integration   # 10/10 روی workerd محلی، بدون شبکه
   test_worker_from_root: node --test hermes/worker.test.mjs   # 79/79 (از ریشهٔ مخزن)
   check: npm run check                    # node --check روی همهٔ ماژول‌ها
