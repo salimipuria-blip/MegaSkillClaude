@@ -64,3 +64,8 @@ python3 -m unittest discover -s tests                     # یکپارچگی ا�
 See `PROFESSIONAL_GUIDE.md` in this folder for performance improvements, debugging playbook, and next steps. Update it whenever behavior changes.
 
 - **۲۰۲۶-۱۰-۱۶ (Vercel ignoreCommand)** — `vercel.json` پروژه `ignoreCommand` گرفت: اگر این پوشه از آخرین استقرار موفق تغییر نکرده باشد Vercel ساخت را رد می‌کند (سهمیهٔ ۱۰۰ دیپلوی روزانه دیگر با PRهای پروژه‌های دیگر پر نمی‌شود)؛ اگر commit قبلی در clone کم‌عمق Vercel نباشد یا خالی باشد، exit 1 می‌دهد و ساخت طبق معمول انجام می‌شود (Vercel هر کد جز 0/1 را Failed می‌کند — نسخهٔ اول با exit 128 همین را روی PR #81 نشان داد و اصلاح شد). تأیید: پنج حالت محلی (همان sha → 0، تغییر/ناموجود/خالی → 1). استقرار واقعی Vercel در این محیط بررسی نشد.
+
+- **۲۰۲۶-۱۰-۱۸ (ممیزی کامل + دستور کار پروژه)** — `CLAUDE.md` تازه (دستور کار ساخت‌یافته: spec، نقشهٔ کد، قواعد MUST/NEVER، جدول اشکال‌زدایی، صف P0–P2 با معیار پذیرش) و `PROFESSIONAL_GUIDE.md` بازنویسی‌شده به‌عنوان گزارش ممیزی.
+  - رفع: (۱) گالری هر ۲۰ ثانیه همهٔ عکس‌های خصوصی را دوباره دانلود می‌کرد → کش `storage_path → objectURL` با یکی‌کردن دانلود هم‌زمان؛ (۲) HEIC/HEIF آیفون با MIME خالی یا `image/heif` رد می‌شد → `mediaKind()` و `accept` گسترده؛ (۳) حذف سفرِ دارای وظیفه/گزارش خطای خام FK می‌داد → پیام فارسی؛ (۴) escape دوبارهٔ تاریخ نامعتبر؛ (۵) راهنمای alt برای HEIC در مرورگرهای غیر Safari.
+  - تست‌ها: Node **۴ → ۱۱** (`tests/team.test.mjs` جدید + ۲ تست رسانه)؛ Python ۱۵ OK؛ سینتکس و نگهبان کلید سبز. تست‌های جدید روی کد قبلی ۶ قرمز می‌دهند.
+  - **تأیید نشده:** اعمال SQL روی پروژهٔ واقعی، روشن بودن Confirm email، آپلود واقعی از آیفون (همه در صف P0 `CLAUDE.md`).
