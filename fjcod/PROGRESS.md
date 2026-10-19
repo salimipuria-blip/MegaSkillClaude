@@ -80,3 +80,9 @@ See `PROFESSIONAL_GUIDE.md` in this folder for performance improvements, debuggi
   - e2e رمزها را از صفحهٔ ورود می‌خواند.
   - نتیجه: `npm run check` → **۵ فایل، ۴۵ تست سبز** + build (قبل: ۴۱). `E2E_STRICT=1 npm run e2e` → **۱۹/۱۹**، صفر خطای console. تصویر 390×844 صفحهٔ ورود بررسی شد.
   - وضعیت: بازنشسته. Vercel `cham-store-os` از ۲۰۲۶-۱۰-۱۸ از مخزن POINT منتشر می‌شود؛ `vercel.json` این پوشه دیگر به پروژه‌ای وصل نیست.
+
+- **۲۰۲۶-۱۰-۲۰ (بازاجرای کامل گیت‌ها + E2E واقعی در محیط تازه؛ بدون تغییر کد)** — وابستگی‌ها با `npm ci --ignore-scripts --no-audit --no-fund` نصب شدند (بدون اجرای lifecycle script) و هر دو گیت اجرا شد.
+  - `npm run check` ✅ typecheck + **۴۵ تست Vitest در ۵ فایل** (`store` ۷، `auth-session` ۶، `initial-passwords` ۴، `core` ۲۰، `refunds` ۸) + build (`dist/assets/index-*.js` ۳۷۶٫۴۱kB / gzip ۱۱۵٫۱۹kB).
+  - `E2E_STRICT=1 npm run e2e` ✅ **۱۹/۱۹** با Chromium 153 واقعی (`CHROMIUM_PATH` + `LD_LIBRARY_PATH` از ابزار موقت `/tmp`، نه وابستگی مخزن): ورود/اجبار به تغییر رمز، ۹ ناوبری مالک، صف مشاور → صندوق، فروش با اسکن بارکد و پول خرد، بستن شیفت، dark mode و layout موبایل، **صفر خطای console**؛ پورت preview در پایان آزاد شد.
+  - مرورگر از `cdn.playwright.dev` قابل دانلود نبود (خارج از allowlist محیط، `ECONNRESET`)؛ مسیر جایگزین همان درس ثبت‌شده در `docs/directives/00-monorepo.md` بود: بستهٔ npm `@sparticuz/chromium` + `brotliDecompressSync` روی `bin/chromium.br` و `bin/al2023.tar.br`.
+  - **محدودیت:** این پوشه بازنشسته است و دادهٔ واقعی/مالی وارد آن نشد؛ هیچ migration یا seed اجرا نشد. backend/Auth/RLS سروری همچنان ندارد ⇒ برای دادهٔ حساس production-safe نیست. نسخهٔ منتشرشده در ریپوی `POINT/fjcod` جداگانه بررسی شود (در این checkout در دسترس نیست).
