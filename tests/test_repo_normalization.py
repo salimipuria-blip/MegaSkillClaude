@@ -298,6 +298,72 @@ class NormalizationConfigTests(unittest.TestCase):
         self.assertEqual(problems, [], f'{len(problems)} lockfile/manifest drift(s):\n- '
                                        + '\n- '.join(problems))
 
+    def test_dependency_review_verdicts_every_dependabot_target(self):
+        """`docs/DEPENDENCY_REVIEW.md` is the owner's triage record for update PRs.
+
+        Backlog task 99 accepts only a table in that file, and the repo rule is that
+        the owner merges dependency updates. The guard therefore keeps the document
+        honest: every directory Dependabot watches must carry a verdict, the verdict
+        vocabulary must stay the measured one, the merge decision must stay with the
+        owner, and what was never executed must stay written down as NOT RUN.
+        """
+        path = ROOT / 'docs/DEPENDENCY_REVIEW.md'
+        self.assertTrue(path.is_file(),
+                        'docs/DEPENDENCY_REVIEW.md is missing: dependency update PRs have no '
+                        'owner-readable triage record')
+        text = path.read_text(encoding='utf-8')
+        config = (ROOT / '.github/dependabot.yml').read_text()
+        watched = sorted({directory for _, directory in re.findall(
+            r'- package-ecosystem: "([^"]+)"\s+directory: "([^"]+)"', config)})
+        # Every target needs its own verdict *section* in the document: a heading that
+        # names the directory, and at least one table row inside it carrying a verdict.
+        # A bare mention in the summary must not pass, or a target could lose its
+        # evidence and the document would still look complete.
+        verdicts = {'امن', 'شکست', 'بلاک'}
+        # U+200C (half-space) sits inside the Arabic block; excluding it keeps a verdict
+        # word separable from whatever follows it in the same cell.
+        word_re = re.compile('[\u0600-\u06BC\u06BE-\u06FF]+')
+        sections = {}
+        current = None
+        for line in text.splitlines():
+            heading = re.match(r'^#{2,3}\s+(.*)$', line)
+            if heading:
+                current = heading.group(1)
+                sections.setdefault(current, [])
+                continue
+            if current is not None:
+                sections[current].append(line)
+        unjudged = []
+        for directory in watched:
+            token = f'`{directory}`'
+            own = [lines for title, lines in sections.items() if token in title]
+            if not own:
+                unjudged.append(f'{directory} (no section of its own)')
+                continue
+            judged = any(word_re.search(cell) and set(word_re.findall(cell)) & verdicts
+                         for lines in own for line in lines if line.startswith('|')
+                         for cell in (c.strip() for c in line.strip('|').split('|')))
+            if not judged:
+                unjudged.append(f'{directory} (section has no verdict row)')
+        self.assertEqual(unjudged, [],
+                         'docs/DEPENDENCY_REVIEW.md does not judge every Dependabot target: '
+                         + '; '.join(unjudged))
+        # the vocabulary the backlog asks for, so a verdict cannot be vague prose
+        self.assertIn('| وضعیت |', text)
+        for word in sorted(verdicts):
+            self.assertIn(word, text, f'the review no longer states any {word!r} verdict')
+        self.assertIn('`github-actions`', text, 'the Actions ecosystem is not covered')
+        # merging stays an owner decision; the document must keep saying so
+        self.assertRegex(text, r'[Mm]erge\s*(فقط\s*)?با\s*(تأییدِ\s*)?مالک')
+        # an honest triage separates what was executed from what never ran
+        self.assertIn('NOT RUN', text)
+        self.assertRegex(text, r'>?\s*تاریخِ اندازه‌گیری:\s*\d{4}-\d{2}-\d{2}',
+                         'the review must carry the date it was measured, so a stale row is visible')
+        prs = sorted({int(number) for number in re.findall(r'#(\d+)', text)})
+        self.assertGreaterEqual(len(prs), 16,
+                                f'the review names only {len(prs)} PRs; a full triage names every open one')
+        self.assertEqual(prs, sorted(set(prs)), 'duplicate PR numbering in the review')
+
     def test_token_guard_is_main_push_only_and_step_scoped(self):
         ci = CI.read_text()
         psk = ci.split('\n  psk:\n')[1].split('\n  lithos:\n')[0]
