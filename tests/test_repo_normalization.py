@@ -14,6 +14,56 @@ ROOT = Path(__file__).resolve().parents[1]
 HEALTH = ROOT / 'scripts/repo_health_check.sh'
 CI = ROOT / '.github/workflows/ci.yml'
 
+# The npm projects Dependabot watches. `psk` is in the list on purpose: it declares no
+# dependency at all, so the guard must prove that it legitimately needs no lockfile
+# instead of silently dropping it from coverage.
+NPM_PROJECTS = ('psk', 'lithos', 'fjcod', 'bison-brand-book', 'hermes', 'viking-team/motion')
+
+
+def _version_triple(value):
+    """Split a pinned npm version into (numbers, prerelease) without any dependency."""
+    core, _, tail = value.partition('-')
+    parts = []
+    for chunk in core.split('.'):
+        if not chunk.isdigit():
+            raise ValueError(f'not a numeric npm version: {value}')
+        parts.append(int(chunk))
+    return tuple(parts + [0] * (3 - len(parts))), tail
+
+
+def _satisfies(version, want):
+    """Tiny offline semver check: enough for the ranges these manifests really use.
+
+    Returns True/False when the range shape is understood, otherwise None so the
+    caller can report an unhandled range instead of guessing that it passes.
+    """
+    want = want.strip()
+    if want in ('*', 'latest', '') or want.startswith('workspace:'):
+        return True
+    if version == want:  # exact pins, including prerelease tags such as *-alpha
+        return True
+    numbers, prerelease = _version_triple(version)
+    exact = re.fullmatch(r'(\d+(?:\.\d+){0,2})(-[0-9A-Za-z.-]+)?', want)
+    caret = re.fullmatch(r'\^(\d+(?:\.\d+){0,2})(-[0-9A-Za-z.-]+)?', want)
+    tilde = re.fullmatch(r'~(\d+(?:\.\d+){0,2})(-[0-9A-Za-z.-]+)?', want)
+    at_least = re.fullmatch(r'>=\s*(\d+(?:\.\d+){0,2})(-[0-9A-Za-z.-]+)?', want)
+    for shape in (exact, caret, tilde, at_least):
+        if shape is None:
+            continue
+        base = [int(part) for part in shape.group(1).split('.')]
+        base += [0] * (3 - len(base))
+        floor = tuple(base)
+        if shape is at_least:
+            return numbers >= floor
+        if shape is exact:
+            return numbers == floor and bool(prerelease) == bool(shape.group(2))
+        if numbers[0] != floor[0] or prerelease:
+            return False
+        if shape is caret:
+            return numbers[0] != 0 or numbers >= floor
+        return numbers[1] == floor[1] and numbers[2] >= floor[2]
+    return None
+
 
 class HealthCheckTests(unittest.TestCase):
     def setUp(self):
@@ -185,6 +235,68 @@ class NormalizationConfigTests(unittest.TestCase):
         for ecosystem, directory in entries:
             if ecosystem == 'npm':
                 json.loads((ROOT / directory.lstrip('/') / 'package.json').read_text())
+
+    def test_npm_lockfiles_resolve_every_manifest_range(self):
+        """A committed lock must match its manifest, or the next `npm ci` breaks.
+
+        This is the exact failure class behind the stale Dependabot pull requests:
+        a manifest is bumped while the committed lockfile keeps the old resolution,
+        so `npm ci` (or a project test that compares pinned versions) fails only in
+        CI. The guard is offline: it reads the two JSON files and compares them.
+        """
+        config = (ROOT / '.github/dependabot.yml').read_text()
+        watched = {directory.lstrip('/') for ecosystem, directory in re.findall(
+            r'- package-ecosystem: "([^"]+)"\s+directory: "([^"]+)"', config)
+            if ecosystem == 'npm'}
+        self.assertEqual(watched, set(NPM_PROJECTS),
+                         'lockfile coverage drifted from the npm directories Dependabot watches')
+
+        problems = []
+        for project in NPM_PROJECTS:
+            folder = ROOT / project
+            manifest = json.loads((folder / 'package.json').read_text())
+            wanted = dict(manifest.get('dependencies') or {})
+            wanted.update({name: spec for name, spec in (manifest.get('devDependencies') or {}).items()
+                           if name not in wanted})
+            lock_path = folder / 'package-lock.json'
+            if not lock_path.exists():
+                if wanted:
+                    problems.append(f'{project}: declares {len(wanted)} dependencies but commits no '
+                                    'package-lock.json, so `npm ci` cannot reproduce the install')
+                continue
+            lock = json.loads(lock_path.read_text())
+            self.assertEqual(lock.get('lockfileVersion'), 3, f'{project}: unexpected lockfile format')
+            packages = lock.get('packages') or {}
+            resolved = packages.get('node_modules/')
+            # npm stores the project itself under the empty key; its recorded ranges
+            # must be the manifest ranges, otherwise the lock was generated elsewhere.
+            root_entry = packages.get('') or {}
+            for kind in ('dependencies', 'devDependencies'):
+                recorded = root_entry.get(kind) or {}
+                expected = {name: spec for name, spec in wanted.items()
+                            if (kind == 'dependencies') == (name in (manifest.get('dependencies') or {}))}
+                if recorded != expected:
+                    problems.append(f'{project}: lockfile root {kind} {json.dumps(recorded, sort_keys=True)} '
+                                    f'does not equal the manifest {json.dumps(expected, sort_keys=True)}')
+            for name, spec in sorted(wanted.items()):
+                entry = packages.get(f'node_modules/{name}')
+                if entry is None:
+                    problems.append(f'{project}: {name}@{spec} is missing from package-lock.json')
+                    continue
+                if entry.get('link') or entry.get('workspace'):
+                    continue  # a local workspace package has no version of its own
+                version = entry.get('version')
+                if not version:
+                    problems.append(f'{project}: {name} has no resolved version in package-lock.json')
+                    continue
+                verdict = _satisfies(version, spec)
+                if verdict is None:
+                    problems.append(f'{project}: unhandled range for {name}: {spec!r}')
+                elif not verdict:
+                    problems.append(f'{project}: {name} is pinned to {spec} but package-lock.json '
+                                    f'resolves {version}')
+        self.assertEqual(problems, [], f'{len(problems)} lockfile/manifest drift(s):\n- '
+                                       + '\n- '.join(problems))
 
     def test_token_guard_is_main_push_only_and_step_scoped(self):
         ci = CI.read_text()
