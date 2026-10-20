@@ -236,6 +236,47 @@ class StatusCounterTests(unittest.TestCase):
 
         self.assertIn(fa(counts["routable_skills"]), read(MOBILE_DIRECTIVE))
 
+    def test_current_status_rule_is_written_in_the_directives_index(self):
+        """The rule itself must be discoverable, not only enforced in code.
+
+        Root cause of the original drift: nothing told a contributor that a number in a
+        *current status* section has to come from a canonical source. Enforcing that only
+        in a test file leaves the rule invisible to humans editing the docs.
+        """
+        index = read(ROOT / "docs/directives/README.md")
+        for needle in ("منبع canonical", __file__.split("/")[-1], "تاریخ‌دار"):
+            with self.subTest(requirement=needle):
+                self.assertIn(needle, index)
+
+    def test_directive_doctor_ids_and_index_links_stay_resolvable(self):
+        """Every `doctor.mjs <id>` reference in the directives must be a real gate id,
+        and every documented project id must have a matching directive file."""
+        doctor_ids = set(re.findall(r"\bid:\s*'([^']+)'", read(DOCTOR)))
+        self_assert(len(doctor_ids) >= 10, "doctor.mjs: suspiciously few ids parsed")
+
+        for path in sorted((ROOT / "docs/directives").glob("*.md")):
+            text = path.read_text(encoding="utf-8")
+            for ref in set(re.findall(r"doctor\.mjs\s+([a-z][a-z0-9-]*)", text)):
+                with self.subTest(directive=path.name, ref=ref):
+                    self.assertIn(ref, doctor_ids, f"unknown doctor id referenced: {ref}")
+
+        # Index <-> disk must agree in BOTH directions, so a new directive cannot be
+        # orphaned and a renamed one cannot leave a dead link behind.
+        index_path = ROOT / "docs/directives/README.md"
+        index = read(index_path)
+        linked = set(re.findall(r"\]\((\d{2}-[a-z0-9-]+\.md)\)", index))
+        on_disk = {path.name for path in (ROOT / "docs/directives").glob("*.md")} - {"README.md"}
+
+        for name in sorted(linked):
+            with self.subTest(link=name):
+                self.assertTrue((index_path.parent / name).is_file(), f"dead directive link: {name}")
+        self.assertEqual(sorted(on_disk - linked), [], "directive file(s) missing from the index")
+
+        # Every backticked project folder in the index table must exist on disk.
+        for folder in sorted(set(re.findall(r"`([A-Za-z0-9_.\-]+(?:/[A-Za-z0-9_.\-]+)*/)`", index))):
+            with self.subTest(folder=folder):
+                self.assertTrue((ROOT / folder).is_dir(), f"index points at a missing folder: {folder}")
+
     def test_per_project_counters_in_roadmap_cite_a_dated_source(self):
         """Tier-B claims are quoted from each project book, so they must stay attributable."""
         text = read(ROADMAP)
