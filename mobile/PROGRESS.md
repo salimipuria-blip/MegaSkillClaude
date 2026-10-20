@@ -67,5 +67,11 @@ python3 -m unittest discover -s tests -p test_mobile_console.py -v
   - نتیجه: `build-index.py --check` ✅ (`mega-mobile-v1-f0a03afbdf7bc464`)، Node **۱۷/۱۷** (قبلاً ۱۰/۱۰)، Python ۸/۸، `doctor mobile` ✅، Playwright iPhone 13: عرض ۳۹۰، صفر خطا. جست‌وجو ۵٫۶–۶٫۷ms.
   - **باز:** هیچ هاست HTTPS برای `mobile/` نیست (تصمیم مالک)؛ iPhone واقعی تست نشده.
 
+- **۲۰۲۶-۱۰-۲۰ (بازاجرای گیت‌ها در محیط تازه؛ بدون تغییر کد)** — `node scripts/doctor.mjs mobile` و `python3 mobile/build-index.py --check` واقعاً اجرا شدند.
+  - `build-index.py --check` ✅ **۵٬۷۴۸ مهارت قابل‌مسیریابی**؛ fingerprint جاری `mega-mobile-v1-f0a03afbdf7bc464`؛ وزن **۲٬۲۴۳٬۸۶۰ بایت خام / ۴۰۹٬۹۱۲ بایت gzip** در برابر بودجهٔ ۳٬۱۴۵٬۷۲۸ ⇒ خروجی تولیدی drift ندارد و نیاز به build مجدد نبود.
+  - `search-tests` ✅ **۱۷/۱۷** (`search.test.mjs` + `index.test.mjs` روی فایل تولیدی کامیت‌شده)؛ `syntax` ✅ هر سه فایل.
+  - نگهبان تازهٔ ریشه (`tests/test_status_counters.py`) بررسی می‌کند که طول `mobile/skills-index.json` برابر `counts.routable_skills` در `triggers.json` بماند و عدد کهنهٔ ۵٬۷۳۸ بیرون بخش‌های تاریخ‌دار ظاهر نشود.
+  - **محدودیت:** Safari/iPhone فیزیکی، نصب به Home Screen، حالت هواپیمای واقعی و اندازه‌گیری حافظه روی دستگاه همچنان **NOT RUN** است؛ smoke مرورگری این دور هم اجرا نشد (Chromium موجود بود، ولی کارت‌ها/عرض فقط با پروفایل iPhone معنادار است و در scope این نوبت نبود).
+
 ## Professional guide
 See `PROFESSIONAL_GUIDE.md` in this folder for performance improvements, debugging playbook, and next steps. Update it whenever behavior changes.

@@ -8,9 +8,9 @@
 
 | پروژه | پوشه | وضعیت مهندسی | شکاف مهم / مرز تأیید |
 |---|---|---|---|
-| **MEGA SKILLS 3000** | `psk/` | موتور مهارت، API، سنجهٔ کیفیت و golden suite فعال؛ ۴۷ تست و دقت top-1 ۹۵٪ طبق `psk/PROGRESS.md` | Answer Mode به کلید/پیکربندی provider رایگان مالک نیاز دارد؛ `NO_PROVIDER_CONFIGURED` بدون کلید رفتار درست است؛ تست live فقط با deployment و کلید واقعی |
+| **MEGA SKILLS 3000** | `psk/` | موتور مهارت، API، سنجهٔ کیفیت و golden suite فعال؛ ۵۷ تست و دقت top-1 ۱۰۰٪ طبق `psk/PROGRESS.md` | Answer Mode به کلید/پیکربندی provider رایگان مالک نیاز دارد؛ `NO_PROVIDER_CONFIGURED` بدون کلید رفتار درست است؛ تست live فقط با deployment و کلید واقعی |
 | **Hermes** | `hermes/`, `tasks/`, `observability/` | Worker، SQLite Durable Object، استودیوی تصویر/متن، تست واحد و integration محلی | انتشار Worker با migration و bindingهای فعلی هنوز جداگانه باید تأیید شود؛ برنامه‌ریز تسک read-only است |
-| **CHAM Store OS** | `fjcod/` | React 19 + TypeScript + Vite؛ ۳۳ تست واحد و E2E اختیاری | **برای دادهٔ مالی/حساس production-safe نیست:** backend/Auth/RLS سروری هنوز اعمال نشده؛ دادهٔ مرورگر و رمزهای اولیه ریسک‌اند |
+| **CHAM Store OS** | `fjcod/` | React 19 + TypeScript + Vite؛ ۴۵ تست واحد و E2E با Chromium ۱۹/۱۹ طبق `fjcod/PROGRESS.md` | **برای دادهٔ مالی/حساس production-safe نیست:** backend/Auth/RLS سروری هنوز اعمال نشده؛ دادهٔ مرورگر و رمزهای اولیه ریسک‌اند؛ نسخهٔ نهایی و منتشرشده در ریپوی `POINT/fjcod` است (این پوشه قدیمی) |
 | **Lithos Live Intelligence** | `lithos/` | تست handler و build؛ رد پاسخ Buffer خالی به‌جای snapshot صفر | GraphQL/metricهای Buffer راستی‌آزمایی زنده نشده‌اند؛ `api/buffer-sync.js` بخشی بازسازی شده است |
 | **Viking Experience Command** | `viking-team/` | چک‌های static، Node و Python؛ Auth/RLS و private bucket در کد/SQL | migration، پنج حساب، RLS و upload HEIC روی Supabase/iPhone زنده تأیید نشده؛ انتشار هنوز ممکن است از مخزن قدیمی باشد |
 | **Viking Motion Study** | `viking-team/motion/` | نمونهٔ جداگانهٔ Remotion؛ dependency lock و typecheck strict اضافه شده | prototype است، در `/team/` ادغام نشده؛ typecheck به‌معنی رندر MP4 یا تأیید UX نیست |

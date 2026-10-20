@@ -1,11 +1,12 @@
 # MegaSkillClaude Monorepo — دفتر جریان مشترک
 
-> این دفتر فقط تغییرات cross-project (CI، doctor، نقشهٔ پروژه‌ها و قراردادهای مشترک) را نگه می‌دارد. هر محصول دفتر جداگانهٔ خودش را دارد. آخرین به‌روزرسانی: **۲۰۲۶-۱۰-۱۴**.
+> این دفتر فقط تغییرات cross-project (CI، doctor، نقشهٔ پروژه‌ها و قراردادهای مشترک) را نگه می‌دارد. هر محصول دفتر جداگانهٔ خودش را دارد. آخرین به‌روزرسانی: **۲۰۲۶-۱۰-۲۰**.
 
 ## ۱) وضعیت مشترک
 - ۱۲ پروژه/زیرپروژهٔ مدیریت‌شده (به‌علاوهٔ خود مخزن)؛ دفتر هرکدام در جدول `README.md` و دستور توسعهٔ هرکدام در [`docs/directives/`](docs/directives/README.md) است.
 - `node scripts/doctor.mjs <id>` مرجع فرمان‌های دقیق هر پروژه است؛ `--list` فهرست کامل را نشان می‌دهد. اکنون **۴۲ گام در ۱۳ دامنه** (۳۸ تا پیش از ۲۰۲۶-۱۰-۱۴).
-- Router canonical: **۶٬۰۱۹** مهارت = ۳٬۰۰۰ core + ۸ پروژه + ۳٬۰۱۱ GitHub؛ **۵٬۷۳۸ routable**، **۲۸۱ incomplete** و **۳۰٬۰۸۰ trigger**.
+- Router canonical: **۶٬۰۲۹** مهارت = ۳٬۰۰۰ core + ۱۸ پروژه + ۳٬۰۱۱ GitHub؛ **۵٬۷۴۸ routable**، **۲۸۱ incomplete** و **۳۰٬۲۰۳ trigger**.
+- تست‌های ریشه: **۷۹ تست ریشه** (پایتون) با `python3 -m unittest discover -s tests -p "test_*.py"`. نگهبانِ همین اعداد `tests/test_status_counters.py` است: شمارنده‌های بخش «وضعیت مشترک» را به `triggers.json`، `library/github-skills/INDEX.json`، `scripts/doctor.mjs` و `mobile/skills-index.json` قفل می‌کند و اعداد داخل بخش‌های تاریخ‌دار را به‌عنوان snapshot دست نمی‌زند.
 - CI شامل typecheck/build/test، health، skill sync، PWA، دارایی‌های برند و typecheck زیرپروژهٔ Motion است.
 
 ## ۲) اصلاحات بین‌پروژه‌ای
@@ -13,7 +14,7 @@
 **باگ «سبز کاذب» در doctor پیدا و اصلاح شد.** اجرای اولیه نشان داد `common-tests` در ۰٫۰ ثانیه سبز می‌شد: parser سادهٔ `split(' ')` کوتیشن‌های `-p "test_*.py"` را به آرگومان واقعی منتقل نمی‌کرد و Python بدون کشف تست، exit 0 می‌داد.
 - parser امنِ بدون shell جایگزین شد؛ آرگومان‌های quoted/escaped درست شکافته می‌شوند و فقط stepهای صریحاً shell از `bash -c` استفاده می‌کنند.
 - regression در `tests/doctor.test.mjs` و CI افزوده شد؛ اجرای واقعی اکنون شمار تست کشف‌شده را بررسی می‌کند.
-- **۵۹ تست ریشه** (۵۶ تا پیش از این دور، +۳ تستِ ارجاع‌های `package.json`) و `sync_skill_library.py --check` با صفر اختلاف سبز هستند.
+- **۵۹ تست ریشه در همان نوبت** (۵۶ تا پیش از آن دور، +۳ تستِ ارجاع‌های `package.json`) و `sync_skill_library.py --check` با صفر اختلاف سبز بودند؛ شمارِ جاریِ تست‌ها در بخش «وضعیت مشترک» نگه داشته می‌شود و نگهبان تست دارد.
 - شمارنده‌های قدیمی مهارت در READMEها همگام شدند؛ snapshot تاریخی ۲٬۹۸۰ فقط با برچسب تاریخ خود باقی مانده است.
 - `/build/` به `.gitignore` افزوده شد تا screenshot و رندرهای validation وارد commit نشوند.
 
@@ -43,7 +44,7 @@ node scripts/doctor.mjs --json
 - **ECC:** مخزن fork حذف شده؛ پلاگین‌ها در `plugins/` همین مخزن‌اند.
 
 ## ۴) کارهای باز مشترک
-- [ ] پس از CI، jobهای doctor، regression parser، `fjcod-e2e`، `bison` contract، sticker manifest و `viking-motion` spec را در GitHub Actions تأیید کن.
+- [x] پس از CI، jobهای doctor، regression parser، `fjcod-e2e`، `bison` contract، sticker manifest و `viking-motion` spec را در GitHub Actions تأیید کن. — **۲۰۲۶-۱۰-۲۰ تأیید شد (read-only با `gh api`):** روی HEAD `37a617c8` هر ۱۱ job موفق‌اند: `repo-health, psk, lithos, router, fjcod, fjcod-e2e, bison-brand-book, viking-team, viking-motion, orchestrator, hermes` = `success`؛ به‌علاوهٔ workflowهای `CI · Hermes`، `Security and scheduled health` و `Hermes live health`. همان ۴۲ گام هم لوکال با ابزار واقعی اجرا شد (بخش ۷).
 - [ ] برای کارهای staging/live از backup، حساب آزمایشی و secret manager استفاده کن؛ نتیجه را در دفتر همان محصول ثبت کن.
 - [ ] اگر فهرست پروژه/command عوض شد، `README.md`, `docs/directives/README.md`, `scripts/doctor.mjs` و `tests/test_project_documentation.py` را در همان تغییر هماهنگ نگه دار.
 - [ ] Safari/iPhone فیزیکی و سرویس‌های زنده را جداگانه آزمایش کن؛ شبیه‌سازی Chromium معادل تأیید iOS یا RLS نیست.
@@ -51,6 +52,8 @@ node scripts/doctor.mjs --json
 ## ۵) لاگ جریان (افزایشی)
 - **۲۰۲۶-۱۰-۱۴** — فرمان‌ها و test discovery در doctor اصلاح شدند؛ regression parser به CI اضافه شد؛ root ۵۶ تست سبز؛ router canonical به اعداد جاری همگام شد.
 - **۲۰۲۶-۱۰-۱۴ (full validation)** — ابزارهای موقت pytest/Deno/Chromium در دسترس قرار گرفتند؛ full doctor برای هر ۱۳ دامنه و ۳۸ مرحله سبز شد؛ CHAM E2E دوباره ۱۹/۱۹ پاس شد، Orchestrator Deno ۷/۷، PWA موبایل در حالت online/offline smoke شد و Motion MP4 واقعی رندر/با ffprobe بررسی شد. محدودیت Safari واقعی و backend/deployment زنده همچنان باز است.
+- **۲۰۲۶-۱۰-۲۰ (نگهبانِ شمارنده‌های وضعیت — `docs-counter-sync`)** — `tests/test_status_counters.py` (۶ تست) اضافه شد؛ شمارنده‌های بخش «۱) وضعیت مشترک» همین دفتر و سطرهای `psk`/`fjcod` در `ROADMAP.md` به منبع canonical قفل شدند (قبلاً `PROGRESS.md` ریشه و directive ۱۱ بیرون allowlist نگهبان بودند و بی‌صدا کهنه می‌شدند: ۶٬۰۱۹/۵٬۷۳۸/۳۰٬۰۸۰ و «۸ پروژه» و «۵۹ تست»). اعدادِ جاری اصلاح و بخش‌های تاریخ‌دار دست‌نخورده ماندند. TDD: نگهبان **پیش از** اصلاح ۷ failure مرتبط داد و **پس از** آن سبز شد؛ با سه جهش اثبات شد (۶٬۰۲۹→۶٬۰۱۹ ⇒ ۲ failure؛ ۷۹→۷۳ ⇒ ۱ failure؛ حذف یک گام از `scripts/doctor.mjs` ⇒ ۱ failure) و هر دو فایل با SHA-256 یکسان بازگردانده شدند. تست‌های ریشه **۷۳ → ۷۹**.
+- **۲۰۲۶-۱۰-۲۰ (راستی‌آزمایی سراسری ۴۲ گام با ابزار واقعی)** — نصب کامل وابستگی‌ها (`npm ci --ignore-scripts` برای hermes/lithos/bison/fjcod/motion؛ venv پایتون برای pytest؛ Deno از npm؛ Chromium از `@sparticuz/chromium` چون `cdn.playwright.dev` در allowlist محیط نبود) و اجرای `node scripts/doctor.mjs --json`: **۱۳ دامنه، ۴۲/۴۲ گام PASS، `failures: 0`، صفر skip، ۹۲٫۷ ثانیه**. جزئیات، اعداد اندازه‌گیری‌شده و محدودیت‌ها در بخش ۷ و دفتر هر پروژه.
 
 ## ۶) لاگ جریان — ۲۰۲۶-۱۰-۱۴ (دور سراسری: گسترش و سخت‌سازیِ همهٔ پروژه‌ها)
 
@@ -80,3 +83,84 @@ node scripts/doctor.mjs --json
 5. ادعاهای عددی/کمپینی از کد و هنر به یک **منبعِ قابلِ ردیابی** منتقل می‌شوند و تا تأیید نشوند، خروجی مسدود است.
 
 **محدودیت‌های سراسریِ اعلام‌شده:** هیچ‌کدام از این‌ها تأییدِ سرویسِ زنده نیستند — RLS/staging واقعی، انتشار Vercel، APIی زندهٔ Buffer، Safari/iOS فیزیکی و حساب‌های تلگرام/Cloudflare همچنان باید جداگانه آزمایش شوند. رندرها و مرورگرهای این دور ابزارهای موقت در `/tmp` هستند، نه وابستگیِ مخزن.
+
+## ۷) لاگ جریان — ۲۰۲۶-۱۰-۲۰ (نگهبانِ شمارنده‌ها + راستی‌آزماییِ کامل ۴۲ گام)
+
+### ۷٫۱) چه چیزی و چرا
+دو کارِ مستقل در یک دور: (الف) بستنِ شکافِ «شمارندهٔ کهنه در سندِ مرجع» با یک نگهبانِ تست، و (ب) اجرای واقعیِ همهٔ گیت‌ها با ابزارِ کامل تا اعدادِ مستند حدس نباشند.
+
+**ریشهٔ مشکلِ (الف):** نگهبانِ قبلی (`tests/test_project_documentation.py::test_router_counts_match_canonical_indexes_and_bootstrap_copies`) فقط چهار سند را می‌سنجید (plugin README، library README، GitHub README، directive ۰۸). `PROGRESS.md` ریشه و `docs/directives/11-mobile-console.md` بیرونِ آن allowlist بودند، پس وقتی canonical از ۶٬۰۱۹ به ۶٬۰۲۹ رفت، سندِ مرجعِ مونوریپو کهنه ماند و هیچ گیتی قرمز نشد.
+
+### ۷٫۲) تغییرها (فقط متن/تست؛ بدون تغییرِ رفتارِ محصول)
+| فایل | تغییر | دلیل |
+|---|---|---|
+| `tests/test_status_counters.py` | **فایلِ تازه**: ۶ تست نگهبان | قفل‌کردنِ شمارنده‌های «وضعیتِ جاری» به منبعِ canonical + ممنوع‌کردنِ `unittest discover` تودرتو |
+| `PROGRESS.md` | سطرِ تاریخ، شمارِ router (۶٬۰۲۹ = ۳٬۰۰۰ core + ۱۸ پروژه + ۳٬۰۱۱ GitHub؛ ۵٬۷۴۸/۲۸۱/۳۰٬۲۰۳)، افزودنِ سطرِ «۷۹ تست ریشه»، تاریخ‌دارکردنِ ادعای «۵۹ تست»، بستنِ چک‌باکسِ CI، دو ورودیِ لاگ و همین بخش | انطباقِ سندِ مرجع با واقعیتِ سنجیده‌شده |
+| `ROADMAP.md` | سطرِ `psk`: ۴۷ تست/۹۵٪ → **۵۷ تست/۱۰۰٪**؛ سطرِ `fjcod`: ۳۳ تست → **۴۵ تست + E2E ۱۹/۱۹** با ارجاع به دفترِ پروژه و یادداشتِ منبعِ انتشار (`POINT/fjcod`) | رفعِ تناقضِ سندِ مرکزی با دفترِ خودِ پروژه |
+| `psk/PROGRESS.md` · `mobile/PROGRESS.md` · `fjcod/PROGRESS.md` | **فقط append** ورودیِ تاریخ‌دارِ ۲۰۲۶-۱۰-۲۰ با فرمان، خروجی و محدودیت | ثبتِ همان نوبت، بدون بازنویسیِ لاگِ قبلی |
+
+**دست‌نخورده (عمداً):** `triggers.json`، `mobile/skills-index.json`، `plugins/**` و هر خروجیِ تولیدی دیگر؛ بخش‌های تاریخ‌دارِ اسناد (مثل «پروندهٔ این دور ۲۰۲۶-۱۰-۱۴» در directive ۱۱ با عددِ ۵٬۷۳۸) به‌عنوان snapshot باقی ماندند — نگهبان فقط بیرونِ بخشِ تاریخ‌دار را می‌سنجد. شمارهٔ بخشِ «۳٫۵» هم عمداً تغییر نکرد تا diff محدود بماند (هیچ ارجاعِ `PROGRESS.md#anchor` در مخزن نیست).
+
+### ۷٫۳) نگهبانِ تازه چه چیزی را قفل می‌کند
+- شمارِ `skills/routable/incomplete/triggers` و تفکیکِ `core/project/github` از `.claude/skills/mega-skills-router/references/triggers.json` (با cross-check در برابر `library/github-skills/INDEX.json`) در برابرِ متنِ «وضعیتِ مشترک»؛
+- شمارِ دامنه/گام از خودِ `scripts/doctor.mjs` (ایستا، بدون subprocess)؛
+- شمارِ تست‌های پایتونِ ریشه با شمارشِ AST متدهای `TestCase.test_*` (نه با اجرای تودرتو)؛
+- برابریِ طولِ `mobile/skills-index.json` با `counts.routable_skills`؛
+- نبودِ شمارندهٔ کهنه (۵۷۳۸/۲۲۳۷۳۰۸/۴۰۸۴۹۷/۵٬۷۳۸) بیرونِ بخش‌های تاریخ‌دار در directive ۱۱ و `ROADMAP.md`؛
+- اینکه هر عددِ تست/درصد در سطرهای `psk` و `fjcod` نقشهٔ راه، در دفترِ همان پروژه هم وجود داشته باشد (ادعای بی‌منبع ممنوع).
+
+**درسِ همین دور (به نگهبان تبدیل شد):** نسخهٔ اولِ تست با `subprocess` یک `unittest discover` روی همان فایل اجرا می‌کرد؛ چون الگو خودش را دوباره کشف می‌کرد، اجرا تودرتو شد (۳ سطح، ~۴۶ ثانیه) و بعد شکست. رفع: شمارشِ ایستا + تستِ `test_no_python_test_spawns_a_nested_unittest_discovery` که هر `unittest discover` subprocess را در `tests/` قرمز می‌کند.
+
+### ۷٫۴) محیطِ راستی‌آزمایی (همه رایگان، همه بیرونِ مخزن)
+```bash
+# وابستگی‌های پروژه‌ها (بدون اجرای lifecycle script؛ postinstall هرمس sync-secrets دارد)
+npm ci --prefix hermes --ignore-scripts --no-audit --no-fund          # 40 بسته
+(cd lithos && npm ci --ignore-scripts --no-audit --no-fund)           # 15
+(cd bison-brand-book && npm ci --ignore-scripts --no-audit --no-fund) # 17
+(cd fjcod && npm ci --ignore-scripts --no-audit --no-fund)            # 92
+(cd viking-team/motion && npm ci --ignore-scripts --no-audit --no-fund) # 253
+# psk هیچ وابستگی و lockfile ندارد ⇒ نصب لازم نیست (تست‌ها با node --test بومی)
+python3 -m venv /tmp/msc-venv && /tmp/msc-venv/bin/python -m pip install pytest   # pytest 9.1.1 (PEP 668 ⇒ venv)
+npm install -g deno                                                            # deno 2.9.6
+npm install @sparticuz/chromium   # در /tmp/msc-tools؛ سپس brotliDecompressSync روی bin/chromium.br و bin/al2023.tar.br
+```
+`cdn.playwright.dev` در allowlist این محیط نبود (`ECONNRESET`) ⇒ `npx playwright install chromium` ناموفق ماند و مسیرِ مستندِ خودِ مخزن (بستهٔ npm + brotli) جایگزین شد. مسیرهای `/tmp/msc-venv`، `/tmp/msc-tools` و `/tmp/chromium` ابزارِ موقّتِ همین محیط‌اند و هیچ‌کدام واردِ کد، CI یا Git نشدند (`git status` پس از همهٔ buildها فقط سه تغییرِ متن/تست را نشان می‌داد؛ `dist/` و `node_modules/` هر پروژه ignore شده‌اند).
+
+### ۷٫۵) نتیجهٔ اندازه‌گیری‌شدهٔ هر ۴۲ گام
+`node scripts/doctor.mjs --json` ⇒ **`failures: 0` · ۱۳ دامنه · ۴۲/۴۲ گام PASS · صفر skip · ۹۲٬۷۲۰ms**
+
+| دامنه | گام‌ها | شاهدِ عددیِ واقعی |
+|---|---|---|
+| `repo` | 3/3 | health exit 0؛ **Ran 79 tests OK**؛ skill sync «0 differing files» |
+| `psk` | 5/5 | **۵۷/۵۷ تست**؛ golden بدون regression؛ **top-1 ۱۰۰٫۰٪ · top-3 ۱۰۰٫۰٪ · safety ۱۰۰٫۰٪** (fa/en/mixed هر سه ۱۰۰٪)؛ bench p50 ۳۴٫۳۶۵µs (handler) و ۲۴۳٫۳۳۳µs (routing) |
+| `lithos` | 3/3 | **۱۶ تست** pass؛ `node --check api/buffer-sync.js`؛ build سبز |
+| `fjcod` | 2/2 | **۴۵ تست در ۵ فایل**؛ **E2E ۱۹/۱۹** با Chromium 153 و `E2E_STRICT=1`، صفر خطای console |
+| `bison-brand-book` | 3/3 | **۲۴ تست** contract؛ build سبز؛ `npm audit --omit=dev` ⇒ **۰ آسیب‌پذیری** |
+| `viking-team` | 4/4 | node **۱۱ تست**؛ python **Ran 15 tests**؛ app syntax؛ گامِ «نبودِ کلیدِ سرویس در `team/`» پاک (خودِ الگوها در این دفتر نوشته نمی‌شوند تا بازبینیِ امنیتیِ diff هشدارِ کاذب نگیرد) |
+| `hermes` | 5/5 | shell syntax سه فایل؛ check ۳۸ ماژول؛ **۲۵۵ تست واحد**؛ **۱۰ تست integration**؛ skills-build سبز |
+| `mobile` | 3/3 | index-cache «**۵۷۴۸** routable · `mega-mobile-v1-f0a03afbdf7bc464` · ۲٬۲۴۳٬۸۶۰B raw / ۴۰۹٬۹۱۲B gzip · بودجه ۳٬۱۴۵٬۷۲۸»؛ **۱۷ تست**؛ syntax |
+| `brand-stickers` | 2/2 | asset-contract و manifest هر دو سبز |
+| `brand-viking` | 4/4 | asset-contract؛ renderer syntax؛ renderer **۳ تست**؛ content-contract **۷ تست** |
+| `viking-motion` | 2/2 | typecheck سبز؛ spec **۶ تست** |
+| `orchestrator` | 3/3 | contract «repository contract: OK»؛ **pytest ۲۱ passed + ۳ skipped مستند** (artifactهای تاریخی materialize نشده‌اند؛ گیتِ سخت `--require-materialized-skills`)؛ `deno check --no-remote` سبز |
+| `router` | 3/3 | sync بدون drift؛ **Ran 79 tests OK**؛ `verify_skills.py --strict` ⇒ **Summary: HASHED: 3020** |
+
+### ۷٫۶) اثباتِ جهش (mutation) — نگهبان واقعاً نگهبان است
+| جهش | انتظار | نتیجهٔ واقعی |
+|---|---|---|
+| `PROGRESS.md`: «**۶٬۰۲۹**» → «**۶٬۰۱۹**» | قرمز | **FAILED (failures=2)** ✅ |
+| `PROGRESS.md`: «**۷۹ تست ریشه**» → «**۷۳ تست ریشه**» | قرمز | **FAILED (failures=1)** ✅ |
+| `scripts/doctor.mjs`: حذفِ گامِ `skill-library-sync` (۴۲→۴۱) | قرمز | **FAILED (failures=1)** با پیامِ `'۴۱' not found` ✅ |
+
+پس از هر جهش، فایل از روی کپیِ بایت‌به‌بایت بازگردانده شد و برابری با **SHA-256 یکسان** ثابت شد (`PROGRESS.md` = `3d69f113…fa39`، `scripts/doctor.mjs` = `049bc462…7e38`)؛ `git status` هم نشان داد `doctor.mjs` تغییرکرده باقی نمانده.
+**تلاشِ ناموفقِ نخست:** جهشِ سوم در اجرای اول واقعاً اعمال نشد (الگوی جست‌وجو با فاصله‌های فایل نمی‌خواند و `AssertionError: pattern not found` داد) و خروجی «OK» بی‌معنی بود؛ با حذفِ خطِ واقعی تکرار شد و این بار نگهبان قرمز شد. «OK» روی جهشِ اعمال‌نشده، اثباتِ نگهبان نیست.
+
+### ۷٫۷) گیت‌های پایانی
+`python3 -m unittest discover -s tests -p "test_*.py"` ⇒ **Ran 79 tests — OK** · `sync_skill_library.py --check` ⇒ **0 differing files** · `scan_secrets.py` ⇒ **0 finding(s), 0 read/size error(s)** · `repo_health_check.sh` ⇒ **exit 0** · `mobile/build-index.py --check` ⇒ سالم و بدون drift.
+
+### ۷٫۸) محدودیت‌ها و کارهای بازِ این دور
+- **بدون تغییرِ رفتارِ محصول:** هیچ کدِ اجراییِ محصول عوض نشد؛ فقط متن، مستندات و یک فایلِ تستِ تازه.
+- **NOT RUN / تأییدنشده:** Supabase RLS و migration (چام/وایکینگ/لیتوس)، `LITHOS_OWNER_EMAILS` و کلیدِ رایگانِ provider در Vercel، انتشار Worker هرمس، API زندهٔ Buffer، Safari/iPhone فیزیکی، رندرِ MP4 موشن در این دور (فقط typecheck/spec اجرا شد)، و وضعیتِ ریپوی `POINT/fjcod` (بیرونِ این checkout).
+- **انجام شد (فقط با مجوزِ صریحِ مالک در همین نوبت):** commit روی شاخهٔ کاری `arena/f47ed04a-megaskillclaude` (بدون force push و بدون rewrite تاریخچه).
+- **انجام نشد (عمداً و بدون مجوزِ جدا):** push به هر شاخه، بازکردن/merge هر PR، release/tag، deploy، هر DDL/DML یا migration یا seed، تغییرِ secret/permission/OAuth/webhook، فعال‌سازی سرویسِ پولی یا سهمیه‌دار، و Archive/حذف/انتقالِ مخزن.
+- **گام بعدیِ پیشنهادی:** همین نگهبان را در `docs/directives/README.md` به‌عنوان قانونِ «شمارندهٔ جاری باید منبعِ canonical داشته باشد» مستند کن تا دفترِ directiveها هم اجازهٔ عددِ بی‌منبع ندهند (تغییرِ متن، بدون ریسک)؛ سپس سراغِ P0 واقعی یعنی اتصالِ انتشار و SQL/RLS روی staging برو که نیازمندِ دسترسیِ زنده و تأییدِ جداست.
