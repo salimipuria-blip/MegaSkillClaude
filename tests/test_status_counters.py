@@ -20,6 +20,7 @@ Everything runs offline: no dependency installation, no network, no nested test 
 from __future__ import annotations
 
 import ast
+import gzip
 import json
 import re
 import unittest
@@ -45,7 +46,6 @@ DATED_HEADING = re.compile(
     r"[۰-۹٠-٩]{4}[-/][۰-۹٠-٩]{1,2}[-/][۰-۹٠-٩]{1,2})",
     re.MULTILINE,
 )
-STATUS_HEADING = re.compile(r"^##\s*۱\)\s*وضعیت مشترک\s*$", re.MULTILINE)
 ROOT_TEST_COUNT = re.compile(r"\*\*([۰-۹٠-٩,]+)\s+تست\s+(?:پایتون\s+)?ریشه\*\*")
 
 
@@ -65,9 +65,10 @@ def self_assert(condition: bool, message: str) -> None:
         raise AssertionError(message)
 
 
-def status_section(text: str, path: Path) -> str:
-    match = STATUS_HEADING.search(text)
-    self_assert(match is not None, f"{path.relative_to(ROOT)}: section «۱) وضعیت مشترک» not found")
+def status_section(text: str, path: Path, heading: str = r"^##\s*۱\)\s*وضعیت مشترک\s*$") -> str:
+    """Body of one `##` section, so a *current status* claim is never confused with a dated log."""
+    match = re.search(heading, text, re.MULTILINE)
+    self_assert(match is not None, f"{path.relative_to(ROOT)}: section matching {heading!r} not found")
     rest = text[match.end():]
     nxt = re.search(r"^##\s", rest, re.MULTILINE)
     return rest[: nxt.start()] if nxt else rest
@@ -235,6 +236,20 @@ class StatusCounterTests(unittest.TestCase):
                                      f"{path.relative_to(ROOT)}: stale {needle} outside a dated section")
 
         self.assertIn(fa(counts["routable_skills"]), read(MOBILE_DIRECTIVE))
+
+        # The directive must carry a measured CURRENT status, not only a dated snapshot.
+        # The weight is recomputed from the committed artifact, so a stale byte count in
+        # the doc fails on its own — nothing is hardcoded from a past run.
+        current = status_section(read(MOBILE_DIRECTIVE), MOBILE_DIRECTIVE,
+                                 heading=r"^##\s*وضعیتِ جاری\s*$")
+        raw = MOBILE_INDEX.stat().st_size
+        gzipped = len(gzip.compress(MOBILE_INDEX.read_bytes(), 9))
+        for label, value in (("raw", raw), ("gzip", gzipped), ("budget", 3 * 1024 * 1024)):
+            with self.subTest(weight=label):
+                self.assertIn(fa(value), current)
+        cache = re.search(r'const CACHE = "(mega-mobile-v1-[a-f0-9]+)"', read(ROOT / "mobile/sw.js"))
+        self_assert(cache is not None, "mobile/sw.js: generated cache fingerprint line not found")
+        self.assertIn(cache.group(1), current)
 
     def test_current_status_rule_is_written_in_the_directives_index(self):
         """The rule itself must be discoverable, not only enforced in code.
