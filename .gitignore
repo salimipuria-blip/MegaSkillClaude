@@ -11,3 +11,6 @@ node_modules/
 
 # Generated local validation renders/screenshots; never source artifacts.
 /build/
+
+# claude.ai skill zips (scripts/build_claudeai_skill.py --out dist/claudeai)
+dist/

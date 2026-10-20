@@ -1,10 +1,12 @@
 """Dependency-free safety regressions for PR 1; never use real secrets/services."""
+import hashlib
 import json
 import os
 from pathlib import Path
 import re
 import shutil
 import shlex
+import struct
 import subprocess
 import tempfile
 import textwrap
@@ -17,7 +19,8 @@ CI = ROOT / '.github/workflows/ci.yml'
 # The npm projects Dependabot watches. `psk` is in the list on purpose: it declares no
 # dependency at all, so the guard must prove that it legitimately needs no lockfile
 # instead of silently dropping it from coverage.
-NPM_PROJECTS = ('psk', 'lithos', 'fjcod', 'bison-brand-book', 'hermes', 'viking-team/motion')
+NPM_PROJECTS = ('psk', 'lithos', 'fjcod', 'bison-brand-book', 'hermes', 'viking-team/motion',
+                'brands/viking-offroad/stickers/src')
 
 
 def _version_triple(value):
@@ -228,10 +231,11 @@ class NormalizationConfigTests(unittest.TestCase):
             r'- package-ecosystem: "([^"]+)"\s+directory: "([^"]+)"'
             r'\s+schedule:\s+interval: "weekly"', config,
         )
-        npm_dirs = {'/psk', '/lithos', '/fjcod', '/bison-brand-book', '/hermes', '/viking-team/motion'}
+        npm_dirs = {'/psk', '/lithos', '/fjcod', '/bison-brand-book', '/hermes', '/viking-team/motion',
+                    '/brands/viking-offroad/stickers/src'}
         self.assertEqual(set(entries), {('npm', d) for d in npm_dirs} | {('github-actions', '/')})
         self.assertEqual(len(entries), config.count('- package-ecosystem:'))
-        self.assertEqual(len(entries), 7)
+        self.assertEqual(len(entries), 8)
         for ecosystem, directory in entries:
             if ecosystem == 'npm':
                 json.loads((ROOT / directory.lstrip('/') / 'package.json').read_text())
@@ -298,6 +302,72 @@ class NormalizationConfigTests(unittest.TestCase):
         self.assertEqual(problems, [], f'{len(problems)} lockfile/manifest drift(s):\n- '
                                        + '\n- '.join(problems))
 
+    def test_dependency_review_verdicts_every_dependabot_target(self):
+        """`docs/DEPENDENCY_REVIEW.md` is the owner's triage record for update PRs.
+
+        Backlog task 99 accepts only a table in that file, and the repo rule is that
+        the owner merges dependency updates. The guard therefore keeps the document
+        honest: every directory Dependabot watches must carry a verdict, the verdict
+        vocabulary must stay the measured one, the merge decision must stay with the
+        owner, and what was never executed must stay written down as NOT RUN.
+        """
+        path = ROOT / 'docs/DEPENDENCY_REVIEW.md'
+        self.assertTrue(path.is_file(),
+                        'docs/DEPENDENCY_REVIEW.md is missing: dependency update PRs have no '
+                        'owner-readable triage record')
+        text = path.read_text(encoding='utf-8')
+        config = (ROOT / '.github/dependabot.yml').read_text()
+        watched = sorted({directory for _, directory in re.findall(
+            r'- package-ecosystem: "([^"]+)"\s+directory: "([^"]+)"', config)})
+        # Every target needs its own verdict *section* in the document: a heading that
+        # names the directory, and at least one table row inside it carrying a verdict.
+        # A bare mention in the summary must not pass, or a target could lose its
+        # evidence and the document would still look complete.
+        verdicts = {'امن', 'شکست', 'بلاک'}
+        # U+200C (half-space) sits inside the Arabic block; excluding it keeps a verdict
+        # word separable from whatever follows it in the same cell.
+        word_re = re.compile('[\u0600-\u06BC\u06BE-\u06FF]+')
+        sections = {}
+        current = None
+        for line in text.splitlines():
+            heading = re.match(r'^#{2,3}\s+(.*)$', line)
+            if heading:
+                current = heading.group(1)
+                sections.setdefault(current, [])
+                continue
+            if current is not None:
+                sections[current].append(line)
+        unjudged = []
+        for directory in watched:
+            token = f'`{directory}`'
+            own = [lines for title, lines in sections.items() if token in title]
+            if not own:
+                unjudged.append(f'{directory} (no section of its own)')
+                continue
+            judged = any(word_re.search(cell) and set(word_re.findall(cell)) & verdicts
+                         for lines in own for line in lines if line.startswith('|')
+                         for cell in (c.strip() for c in line.strip('|').split('|')))
+            if not judged:
+                unjudged.append(f'{directory} (section has no verdict row)')
+        self.assertEqual(unjudged, [],
+                         'docs/DEPENDENCY_REVIEW.md does not judge every Dependabot target: '
+                         + '; '.join(unjudged))
+        # the vocabulary the backlog asks for, so a verdict cannot be vague prose
+        self.assertIn('| وضعیت |', text)
+        for word in sorted(verdicts):
+            self.assertIn(word, text, f'the review no longer states any {word!r} verdict')
+        self.assertIn('`github-actions`', text, 'the Actions ecosystem is not covered')
+        # merging stays an owner decision; the document must keep saying so
+        self.assertRegex(text, r'[Mm]erge\s*(فقط\s*)?با\s*(تأییدِ\s*)?مالک')
+        # an honest triage separates what was executed from what never ran
+        self.assertIn('NOT RUN', text)
+        self.assertRegex(text, r'>?\s*تاریخِ اندازه‌گیری:\s*\d{4}-\d{2}-\d{2}',
+                         'the review must carry the date it was measured, so a stale row is visible')
+        prs = sorted({int(number) for number in re.findall(r'#(\d+)', text)})
+        self.assertGreaterEqual(len(prs), 16,
+                                f'the review names only {len(prs)} PRs; a full triage names every open one')
+        self.assertEqual(prs, sorted(set(prs)), 'duplicate PR numbering in the review')
+
     def test_token_guard_is_main_push_only_and_step_scoped(self):
         ci = CI.read_text()
         psk = ci.split('\n  psk:\n')[1].split('\n  lithos:\n')[0]
@@ -346,6 +416,9 @@ class NormalizationConfigTests(unittest.TestCase):
         self.assertIn('E2E_STRICT: "1"', e2e)
         self.assertIn('python3 scripts/check_brand_assets.py', ci)
         self.assertIn('node --test tests/doctor.test.mjs', health)
+        # the readiness checker must stay mocked and credential-free
+        self.assertIn('node --test tests/check-supabase.test.mjs', health)
+        self.assertIn('node --check scripts/check-supabase.mjs', health)
         self.assertIn('npm ci --prefix viking-team/motion --ignore-scripts', ci)
 
     def test_example_contains_only_empty_values(self):
@@ -365,6 +438,95 @@ class NormalizationConfigTests(unittest.TestCase):
                                   ('.env.example', False), ('hermes/.env.example', False)]:
                 result = subprocess.run(['git', 'check-ignore', '-q', '--no-index', name], cwd=root)
                 self.assertEqual(result.returncode, 0 if ignored else 1, name)
+
+    def test_sticker_manifest_hashes_match_the_committed_pngs(self):
+        """Backlog task 59: the committed stickers must be byte-identical to what the manifest claims.
+
+        Re-rendering needs Chromium, which is not available offline, so this guard covers the part
+        that *can* be proven here: `MANIFEST.json` is the build contract, and every PNG it lists
+        (360 pack stickers + 12 previews + the cover) is re-hashed and re-measured against the file
+        on disk, in both directions. A silent re-render, a re-compression, an edited sticker or an
+        unlisted new file all turn this red — which is what makes `npm ci` + a pinned lockfile a
+        real reproducibility claim instead of a hope.
+        """
+        root = ROOT / 'brands/viking-offroad/stickers'
+        manifest = json.loads((root / 'MANIFEST.json').read_text(encoding='utf-8'))
+        listed: list[tuple[str, dict, bool]] = []          # (relative path, metadata, is_pack_sticker)
+        for pack in manifest['packs']:
+            listed += [(f"packs/pack-{pack['id']}/{item['file']}", item, True) for item in pack['files']]
+            listed.append((f"packs/{pack['preview']['file']}", pack['preview'], False))
+        # The cover entry stores a root-relative path ("cover/…"), previews are bare names inside packs/.
+        listed.append((manifest['cover']['file'], manifest['cover'], False))
+
+        problems: list[str] = []
+        pack_bytes = 0
+        for relative, meta, is_sticker in listed:
+            path = root / relative
+            if not path.is_file():
+                problems.append(f'{relative}: listed in MANIFEST.json but missing on disk')
+                continue
+            blob = path.read_bytes()
+            digest = hashlib.sha256(blob).hexdigest()
+            if digest != meta.get('sha256'):
+                problems.append(f'{relative}: sha256 {digest[:16]}… does not match the manifest '
+                                f'{str(meta.get("sha256"))[:16]}…')
+            if len(blob) != meta.get('bytes'):
+                problems.append(f'{relative}: {len(blob)} bytes on disk vs {meta.get("bytes")} in the manifest')
+            width, height, colour = struct.unpack('>IIB', blob[16:24] + blob[25:26])
+            if (width, height, colour) != (meta.get('width'), meta.get('height'), meta.get('colorType')):
+                problems.append(f'{relative}: IHDR {width}x{height}/{colour} vs manifest '
+                                f'{meta.get("width")}x{meta.get("height")}/{meta.get("colorType")}')
+            if is_sticker:
+                pack_bytes += len(blob)
+
+        # Only the shipped asset folders: `src/node_modules/` (from `npm ci`) also holds PNGs.
+        on_disk = {str(path.relative_to(root)) for folder in ('packs', 'cover')
+                   for path in (root / folder).rglob('*.png')}
+        unlisted = sorted(on_disk - {relative for relative, _, _ in listed})
+        if unlisted:
+            problems.append(f'{len(unlisted)} PNG(s) on disk are absent from MANIFEST.json: {", ".join(unlisted[:3])}…')
+
+        totals = manifest['totals']
+        stickers = sum(len(pack['files']) for pack in manifest['packs'])
+        if (totals.get('packs'), totals.get('stickers'), totals.get('bytes')) != (len(manifest['packs']), stickers, pack_bytes):
+            problems.append(f"totals block {json.dumps(totals)} disagrees with the entries it summarises "
+                            f"({len(manifest['packs'])} packs, {stickers} stickers, {pack_bytes} bytes)")
+
+        self.assertEqual(problems, [], f'{len(problems)} sticker integrity problem(s):\n- ' + '\n- '.join(problems))
+
+
+    def test_viking_setup_checklist_points_only_at_existing_files(self):
+        """Backlog task 50: the owner's Supabase checklist must name real artifacts.
+
+        A setup guide is the one document the owner follows with no way to verify it, so a drifted
+        path (renamed `sql/…`, moved `team/app.js`) becomes an incident on the live project. Every
+        backticked, path-shaped token is resolved against the repo root or against `viking-team/`
+        and must exist; the mandatory order of the two SQL files and the security-critical steps
+        (first admin row, Confirm email, the `23514` limit) are asserted as well.
+        """
+        path = ROOT / 'viking-team/SETUP.md'
+        text = path.read_text(encoding='utf-8')
+        for required in ('sql/viking_supabase_schema.sql', 'sql/viking_limit_five_active_members.sql',
+                         '23514', 'Confirm email', 'service_role', 'مدیر'):
+            self.assertIn(required, text, f'viking-team/SETUP.md no longer states {required!r}')
+        self.assertLess(text.index('viking_supabase_schema.sql'),
+                        text.index('viking_limit_five_active_members.sql'),
+                        'the schema file must be applied before the trigger file that needs its table')
+
+        checked, missing = 0, []
+        for token in sorted({part for raw in re.findall(r'`([^`\n]+)`', text) for part in raw.split()}):
+            if '/' not in token or any(char in token for char in '<>()→|*,;=…'):
+                continue
+            if token.startswith(('http', 'image/', 'text/', 'application/', 'public.', 'storage.', 'auth.')):
+                continue
+            candidates = (ROOT / token, ROOT / 'viking-team' / token)
+            if any(candidate.exists() for candidate in candidates):
+                checked += 1
+            else:
+                missing.append(token)
+        self.assertGreaterEqual(checked, 4, 'the checklist stopped naming real files, so this guard went vacuous')
+        self.assertEqual(missing, [], f'viking-team/SETUP.md names files that do not exist: {missing}')
+
 
 
 if __name__ == '__main__':

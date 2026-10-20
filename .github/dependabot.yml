@@ -26,6 +26,10 @@ updates:
     directory: "/viking-team/motion"
     schedule:
       interval: "weekly"
+  - package-ecosystem: "npm"
+    directory: "/brands/viking-offroad/stickers/src"
+    schedule:
+      interval: "weekly"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:

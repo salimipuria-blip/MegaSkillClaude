@@ -124,6 +124,59 @@ class RouterRankingTest(unittest.TestCase):
                 self.assertEqual(module._tokens("کسب‌وکار"), {"business"})
                 self.assertEqual(module._tokens("اينستاگرام"), {"instagram"})
 
+    def test_brand_aliases_fold_in_persian_and_english(self):
+        """The four contract brands must keep their brand token in both languages (backlog task 4).
+
+        The router stems tokens ("hermes" -> "herme"), so the expectation is derived through the
+        router's own `_stem` instead of hardcoding a stemmed spelling here.
+        """
+        brands = (("هرمس", "Hermes"), ("چام", "Cham"), ("وایکینگ", "Viking"), ("آفرود", "offroad"))
+        for copy, directory in COPIES.items():
+            module = _load(directory)
+            for persian, english in brands:
+                with self.subTest(copy=copy, brand=english):
+                    self.assertEqual(module._tokens(persian), module._tokens(english),
+                                     "the Persian and English brand names must tokenize identically")
+                    self.assertEqual(module._tokens(english), {module._stem(english.lower())},
+                                     "the brand token must survive aliasing and stemming")
+            # a brand must not swallow the rest of the query: «ربات تلگرام هرمس» keeps all three tokens
+            with self.subTest(copy=copy, query="ربات تلگرام هرمس"):
+                self.assertEqual(module._tokens("ربات تلگرام هرمس"),
+                                 {module._stem(word) for word in ("bot", "telegram", "hermes")})
+
+    def test_caption_query_with_unknown_modifiers_still_routes(self):
+        """«کپشن خنده دار هالووین» returned [] while «caption funny halloween» matched (backlog task 5).
+
+        Both queries carry exactly one indexed token (caption). The Persian one used to add three
+        unknown tokens (خنده/دار/هالووین) against two in English, which pushed its score under
+        FALLBACK_MIN_SCORE (0.25), so even the CLI's partial-match pass returned nothing. Folding
+        the light-verb phrase to a single token equalizes the two shapes. The acceptance is the
+        CLI's answer, so the test drives `main` exactly like `route.py "<query>"` does; all three
+        queries sit in the partial band (nothing reaches the strict 0.50 threshold).
+        """
+        import contextlib
+        import io
+        for copy, directory in COPIES.items():
+            module = _load(directory)
+            path = directory / "references/triggers.json"
+            # the mechanism, not just the outcome: the Persian query must end up with the very
+            # same token shape as the English query that always worked
+            english = module._tokens("caption funny halloween")
+            for persian in ("کپشن خنده دار هالووین", "کپشن خنده‌دار هالووین"):
+                with self.subTest(copy=copy, persian=persian):
+                    self.assertEqual(module._tokens(persian), english)
+            for query in ("کپشن خنده دار هالووین", "کپشن خنده‌دار هالووین", "caption funny halloween"):
+                with self.subTest(copy=copy, query=query):
+                    self.assertEqual(module.search_index(path, query, module.DEFAULT_MIN_SCORE), [],
+                                     "these are partial matches; the strict threshold must stay empty")
+                    out = io.StringIO()
+                    with contextlib.redirect_stdout(out):
+                        module.main([query, "--index", str(path)])
+                    top = [item["name"] for item in json.loads(out.getvalue())][:3]
+                    self.assertTrue(top, f"{query!r} returned no skill at all")
+                    self.assertTrue(any("caption" in name for name in top),
+                                    f"{query!r} put no caption skill in the top 3: {top}")
+
     def test_rare_words_outweigh_generic_ones(self):
         """In "سئو سایت" a skill that only matches the generic "site" must not pass as an SEO match."""
         for copy, directory in COPIES.items():

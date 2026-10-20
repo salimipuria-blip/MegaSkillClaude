@@ -39,6 +39,11 @@ jobs:
           node --test brand/viking/tests/content.test.mjs
       - name: Verify the project doctor really discovers quoted Python test patterns
         run: node --test tests/doctor.test.mjs
+      - name: Supabase readiness checker (mocked fetch, no network, no credentials)
+        run: |
+          node --check scripts/check-supabase.mjs
+          node scripts/check-supabase.mjs --expected-only
+          node --test tests/check-supabase.test.mjs
 
   psk:
     runs-on: ubuntu-latest

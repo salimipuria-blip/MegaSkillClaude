@@ -48,3 +48,10 @@ python3 -c "import re,pathlib;print(re.search(r'<script>(.*?)</script>', pathlib
 node --check /tmp/lithos.mjs
 ```
 و رفتار را با `tests/dashboard.test.mjs` (۵ تست) قفل کن: بررسیِ خطا برای هر چهار منبع، نگه‌داشتنِ زمانِ آخرین دادهٔ موفق، گرفتنِ rejection، فقط کلیدِ publishable در کلاینت، نبودِ `BUFFER_API_KEY` در سمت کلاینت.
+
+## وضعیتِ جاری
+
+اندازه‌گیریِ واقعی در **۲۰۲۶-۱۰-۲۰** — این بخش با نگهبانِ `tests/test_status_counters.py` قفل است: هر عدد از منبعِ canonicalِ خودش در ریپو بازخوانی می‌شود، پس عددِ کهنه یا جابه‌جاییِ واژه قرمز می‌شود. بخش‌های تاریخ‌دارِ پایین/بالای همین سند snapshotِ همان دورند و دست نمی‌خورند (بندِ ۷ «قواعد مشترک»).
+
+- `npm test` در `lithos/` ⇒ **۱۶ تست** با handlerِ mock‌شده (Buffer/Supabase).
+- **NOT RUN:** Buffer API زنده، RPCهای واقعیِ Supabase و `LITHOS_OWNER_EMAILS` — نیازمندِ دسترسیِ زنده و تأییدِ مالک.

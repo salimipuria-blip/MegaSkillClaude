@@ -46,3 +46,11 @@ python3 -m unittest discover -s tests -v     # تست‌های ریشه (router/
 
 **۴. ابزارهای موقت در `/tmp` مجاز، وابستگیِ موقت در مخزن ممنوع.** Chromium این دور از بستهٔ npm (`@sparticuz/chromium`) استخراج و با `LD_LIBRARY_PATH` اجرا شد تا E2E، رندر قالب‌ها، smokeِ PWA و رندرِ Motion **واقعاً** اجرا شوند. این مسیرها هرگز وارد کدِ مخزن یا CI نشدند (CI از `npx playwright install` خودش استفاده می‌کند).
 - دستورِ تکرار: `npm pack @sparticuz/chromium` → استخراجِ `bin/chromium.br` با `zlib.brotliDecompressSync` → `bin/al2023.tar.br` برای کتابخانه‌های shared.
+
+## وضعیتِ جاری
+
+اندازه‌گیریِ واقعی در **۲۰۲۶-۱۰-۲۰** — این بخش با نگهبانِ `tests/test_status_counters.py` قفل است: هر عدد از منبعِ canonicalِ خودش در ریپو بازخوانی می‌شود، پس عددِ کهنه یا جابه‌جاییِ واژه قرمز می‌شود. بخش‌های تاریخ‌دارِ پایین/بالای همین سند snapshotِ همان دورند و دست نمی‌خورند (بندِ ۷ «قواعد مشترک»).
+
+- `node scripts/doctor.mjs --json` ⇒ **۱۳ دامنه** و **۴۲ گام**؛ همین دو عدد از `scripts/doctor.mjs` خوانده می‌شوند (پارسِ ایستا، بدون subprocess).
+- تست‌های ریشهٔ پایتون: **۹۷ تست** با `python3 -m unittest discover -s tests -p "test_*.py"`.
+- **NOT RUN:** هر بررسیِ زنده (Vercel/Cloudflare/Supabase)، deploy و migration — بیرونِ allowlist و نیازمندِ تأییدِ مالک.

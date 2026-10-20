@@ -49,6 +49,19 @@ ALIASES = {
     "دیتابیس": "database", "پایگاه داده": "database", "سرور": "server", "ایمیل": "email",
     "سوپابیس": "supabase", "ورسل": "vercel", "کلادفلر": "cloudflare", "کلودفلر": "cloudflare", "ری‌اکت": "react", "ریکت": "react",
     "مارکتینگ": "marketing",
+    # Contract-project brand names, in Persian and English (backlog task 4). «آفرود»/«offroad»
+    # already existed; these three brands did not, so a brand query lost its brand token entirely.
+    "هرمس": "hermes", "hermes": "hermes", "چام": "cham", "cham": "cham",
+    "وایکینگ": "viking", "viking": "viking",
+    # «کپشن خنده دار هالووین» used to return [] while «caption funny halloween» matched. Both
+    # queries have one known token (caption); the Persian one carried three unknown tokens
+    # (خنده/دار/هالووین) against two unknown ones in English, which pushed its score under
+    # FALLBACK_MIN_SCORE (0.25), so even the CLI's partial-match pass found nothing. Folding the
+    # light-verb phrase to a single token gives the Persian query the same shape as the working
+    # English one (backlog task 5). Mapping it to "funny humor" instead would re-add a second
+    # unknown token and keep failing.
+    "خنده دار": "funny", "خنده‌دار": "funny", "خنده": "funny", "funny": "funny",
+    "هالووین": "halloween", "halloween": "halloween",
     # Phrase aliases may expand to several words: «تست واحد» is a unit test, not a unit of measure.
     "تست واحد": "unit test", "یونیت تست": "unit test",
 }

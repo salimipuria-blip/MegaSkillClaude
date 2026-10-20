@@ -13,9 +13,10 @@
 ## ساخت دوباره
 ```bash
 cd brands/viking-offroad/stickers/src
-npm install --no-package-lock
+npm ci                      # lockfile کامیت شده (package-lock.json) ⇒ نصبِ بازتولیدپذیر
 node render.js all          # همه‌ی پک‌ها؛ یا: node render.js 0,2 --sheets فقط پیش‌نمایش
 ```
+`package-lock.json` کامیت شده و `npm ci` دقیقاً `playwright-core@1.56.0` را می‌آورد؛ SHA-256 هر ۳۷۳ PNG خروجی در `MANIFEST.json` ثبت است و نگهبانِ `tests/test_repo_normalization.py` آن را با فایل‌های روی دیسک مقایسه می‌کند، پس ساختِ دوباره یا ویرایشِ پنهانِ یک استیکر قرمز می‌شود.
 مسیر کروم را با `CHROMIUM_PATH` بده اگر Playwright آن را پیدا نکرد. جمله‌ی جدید = یک خط در `packs.js`.
 
 ## کنترل کیفیت و جریان

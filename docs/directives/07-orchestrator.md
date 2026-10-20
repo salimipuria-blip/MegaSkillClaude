@@ -47,3 +47,10 @@ node --test supabase/functions/github-admin-gateway/*.test.mjs   # + deno check/
 3. آن ۳ اسکیپ **آگاهانه**اند: artifactِ تاریخیِ مهارت‌ها در این checkout materialize نشده. پیامِ skip دقیقاً می‌گوید کدام artifact لازم است و فلگِ سخت‌گیرانه (`--require-materialized-skills`) چیست. آن‌ها را با تستِ جعلی سبز نکن — این تنها موردی است که «skip» در این مخزن از روی عمد informational است.
 4. Deno: `deno check --no-remote` و `deno test --no-remote --no-prompt`. `--no-remote` برای تعیین‌ناپذیریِ شبکه الزامی است.
 5. در CI هر دو ابزار نصب‌اند، پس هیچ‌کدام از این گام‌ها آنجا skip نمی‌شوند؛ اگر در CI skip دیدی، تنظیمِ runner را بررسی کن، نه کد را.
+
+## وضعیتِ جاری
+
+اندازه‌گیریِ واقعی در **۲۰۲۶-۱۰-۲۰** — این بخش با نگهبانِ `tests/test_status_counters.py` قفل است: هر عدد از منبعِ canonicalِ خودش در ریپو بازخوانی می‌شود، پس عددِ کهنه یا جابه‌جاییِ واژه قرمز می‌شود. بخش‌های تاریخ‌دارِ پایین/بالای همین سند snapshotِ همان دورند و دست نمی‌خورند (بندِ ۷ «قواعد مشترک»).
+
+- `pytest` در `orchestrator/` ⇒ **۲۴ تست** که در محیطِ کامل به «۲۱ passed + ۳ skipped» تقسیم می‌شود؛ آن ۳ skip آگاهانه‌اند (artifactِ تاریخیِ ۳٬۰۰۰ مهارت در این checkout materialize نشده).
+- **NOT RUN:** نشستِ واقعیِ Supabase Auth و `GITHUB_ADMIN_USER_IDS` زنده؛ Deno Gateway روی دامنهٔ واقعی.

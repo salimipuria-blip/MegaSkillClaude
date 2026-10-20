@@ -65,3 +65,12 @@ node scripts/routing-golden.mjs --write
 npm test
 ```
 این دور ۱۹ مورد از ۱۰۸ تغییر کرد: ۵ اصلاحِ top-1، ۷ عقب‌رفتنِ درستِ `general`، ۷ جابه‌جاییِ صرفاً امتیازی. **بدون خواندنِ تک‌تک‌شان، `--write` ممنوع.**
+
+## وضعیتِ جاری
+
+اندازه‌گیریِ واقعی در **۲۰۲۶-۱۰-۲۰** — این بخش با نگهبانِ `tests/test_status_counters.py` قفل است: هر عدد از منبعِ canonicalِ خودش در ریپو بازخوانی می‌شود، پس عددِ کهنه یا جابه‌جاییِ واژه قرمز می‌شود. بخش‌های تاریخ‌دارِ پایین/بالای همین سند snapshotِ همان دورند و دست نمی‌خورند (بندِ ۷ «قواعد مشترک»).
+
+- `npm test` در `psk/` ⇒ **۵۷ تست** (بدون وابستگیِ npm؛ فقط `node --test`).
+- قراردادِ مسیریابی: **۱۰۸ کیس** طلایی در `psk/tests/fixtures/routing-golden.json` (`len(cases)`).
+- رجیستریِ مهارتِ خودِ psk: **۳٬۰۰۰ مهارت** در `psk/data/skills-registry.json` و **۱۰ مورد** در allowlist تعمیر (`skills-repaired.json` → `repaired`).
+- **NOT RUN:** Answer Mode زنده (نیاز به `GROQ_API_KEY`)، انتشار روی Vercel و تستِ واقعی از iPhone.

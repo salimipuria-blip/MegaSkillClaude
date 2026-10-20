@@ -50,3 +50,10 @@ grep -oE '(src|href)="[^"]+"' bison-brand-book/index.html | sort -u
 node scripts/doctor.mjs bison-brand-book   # قرارداد + بیلد + audit
 cd bison-brand-book && npm ci && npm test && npm run build && npm audit --omit=dev
 ```
+
+## وضعیتِ جاری
+
+اندازه‌گیریِ واقعی در **۲۰۲۶-۱۰-۲۰** — این بخش با نگهبانِ `tests/test_status_counters.py` قفل است: هر عدد از منبعِ canonicalِ خودش در ریپو بازخوانی می‌شود، پس عددِ کهنه یا جابه‌جاییِ واژه قرمز می‌شود. بخش‌های تاریخ‌دارِ پایین/بالای همین سند snapshotِ همان دورند و دست نمی‌خورند (بندِ ۷ «قواعد مشترک»).
+
+- `npm test` در `bison-brand-book/` ⇒ **۲۴ تست قراردادِ ایستا** (مسیرِ دارایی‌ها، anchorها، ZIP، reduced motion).
+- **NOT RUN:** بازبینیِ چشمیِ صفحه در مرورگرِ واقعی و انتشارِ ZIP نهایی.
