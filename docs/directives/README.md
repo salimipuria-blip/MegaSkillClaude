@@ -37,3 +37,9 @@
 4. **بدون PR اسکلتی و auto-merge:** تغییر واقعی، تست، review انسانی.
 5. رابط‌های کاربر فارسی/RTL هستند؛ دسترس‌پذیری، reduced-motion، کنتراست و عرض موبایل بررسی شوند.
 6. در پروژهٔ مربوط قبل از merge دستور همان پروژه از `node scripts/doctor.mjs <id>` را اجرا کن؛ بررسی سلامت ریشه جایگزین تست‌های اختصاصی نیست.
+7. **شمارندهٔ جاری باید منبع canonical داشته باشد:** هر عددی که در بخش «وضعیت جاری/تأییدشدهٔ» یک سند می‌آید (شمار مهارت، routable/incomplete، trigger، گام‌های doctor، شمار تست‌ها، وزن ایندکس) باید از منبع ماشین‌خوان همان حوزه خوانده شود، نه از حافظه یا از PR قبلی:
+   - مهارت‌ها/triggerها ⇒ `.claude/skills/mega-skills-router/references/triggers.json` (با cross-check `library/github-skills/INDEX.json`)؛
+   - دامنه/گام‌های بررسی ⇒ خودِ `scripts/doctor.mjs`؛
+   - تست‌های پایتون ریشه ⇒ `python3 -m unittest discover -s tests -p "test_*.py"`؛
+   - ایندکس/اثرانگشت موبایل ⇒ `python3 mobile/build-index.py --check`.
+   عددی که منبع سنجیده‌شده ندارد یا باید حذف شود یا صریح **NOT RUN** نوشته شود. اعداد داخل بخش **تاریخ‌دار** snapshot همان دورند: دست‌نخورده می‌مانند و با وضعیت جاری جایگزین نمی‌شوند. نگهبان این قاعده `tests/test_status_counters.py` است و در CI روی هر PR اجرا می‌شود.
