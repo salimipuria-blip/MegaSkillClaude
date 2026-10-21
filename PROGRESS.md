@@ -305,3 +305,12 @@ npm install @sparticuz/chromium   # در /tmp/msc-tools؛ سپس brotliDecompres
 
 ### ۹٫۹) مجوزها
 انجام شد (با همان مجوزِ قبلی): commit و push روی شاخهٔ کاریِ همین PR (fast-forward، بدونِ force). انجام نشد: merge/close هر PR، ready-for-review کردنِ PR، release/tag، deploy، force push، بازنویسیِ تاریخچه (از جمله پاک‌کردنِ تریلرهای ارثی)، هر DDL/DML/migration/seed، تغییرِ secret/permission/webhook، سرویسِ پولی.
+
+### ۹٫۱۰) قرمزیِ CI روی pushِ اول و رفعِ آن (با بازتولید، نه حدس)
+pushِ اولِ این دور (`4ccf6799`) سه job را قرمز کرد: `commit-identity` (گامِ «Identity-checker regressions»)، `router` (گامِ `python -m unittest discover`) و `repo-health` (گامِ `node --test tests/doctor.test.mjs` — که خودش `scripts/doctor.mjs repo --json` را اجرا می‌کند و سطرِ `common-tests` را `pass` می‌خواهد، پس هر شکستی در سوئیتِ پایتون آن را قرمز می‌کند). لاگِ jobها در این سندباکس خوانده نمی‌شود (`actions/jobs/<id>/logs` ⇒ ۰ بایت از `productionresultssa16.blob.core.windows.net`؛ annotationها فقط «exit code 1») ⇒ علت **بازتولیدِ محیطِ runner** شد:
+
+- در همان ریپو، حتی با `GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=/dev/null HOME=/tmp/fakehome` ⇒ تست **OK** (چون `.git/config` همین کلون هویت دارد).
+- در `git clone --depth 1` تازه در `/tmp/ci-sim` (دقیقاً وضعیتِ runner) ⇒ **شکست**: `git commit-tree` با «Author identity unknown … fatal: empty ident name (for <user@e2b.local>) not allowed».
+
+یعنی تستِ جهشِ تسک ۹۸ به هویتِ gitِ محیط وابسته بود. رفع: هویت روی خودِ خطِ فرمان (`git -c user.name=identity-guard -c user.email=identity-guard@localhost -c commit.gpgsign=false commit-tree …`) تا نه به configِ runner وابسته باشد نه به کلیدِ امضا. تأیید پس از رفع، در همان کلونِ شبیهِ CI: `tests.test_commit_identity` ⇒ **۷ OK**، `discover` کامل ⇒ **Ran 104 tests — OK**، `node --test tests/doctor.test.mjs` ⇒ **۱/۱**.
+شبیه‌سازیِ خودِ jobِ `commit-identity` هم با merge refِ واقعیِ PR انجام شد (`git fetch origin refs/pull/98/merge` ⇒ `b96de505`): `--range origin/main...FETCH_HEAD` ⇒ **۳ commit، clean، exit 0** (commitِ mergeِ خودِ GitHub هم پاک است) و متنِ واقعیِ PR از همان pipelineِ `printf` ⇒ **clean، exit 0**. کلونِ blobless با تاریخچهٔ کامل در این سندباکس ساخته نمی‌شود (`early EOF` / `bad pack header` روی `file://`) ⇒ آن بخش **NOT RUN** و به خودِ CI واگذار شد.

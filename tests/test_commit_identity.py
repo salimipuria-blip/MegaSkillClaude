@@ -85,8 +85,17 @@ def run_main(argv, stdin_text=None):
 
 
 def dangling_commit(message: str) -> str:
-    """Create a commit object that no ref points at: real git input, no branch and no history touched."""
-    result = subprocess.run(["git", "commit-tree", "HEAD^{tree}", "-p", "HEAD", "-m", message],
+    """Create a commit object that no ref points at: real git input, no branch and no history touched.
+
+    The identity is passed on the command line, not read from config. A CI runner's checkout has no
+    `user.name`/`user.email`, and `git commit-tree` refuses an empty ident — that made this guard red
+    on every CI job that runs the suite while passing locally, where the clone happens to carry an
+    identity. `commit.gpgsign=false` keeps a signing-enabled runner from needing a key it does not have.
+    """
+    result = subprocess.run(["git", "-c", "user.name=identity-guard",
+                             "-c", "user.email=identity-guard@localhost",
+                             "-c", "commit.gpgsign=false",
+                             "commit-tree", "HEAD^{tree}", "-p", "HEAD", "-m", message],
                             cwd=ROOT, capture_output=True, text=True, timeout=60)
     assert result.returncode == 0, result.stderr
     return result.stdout.strip()
