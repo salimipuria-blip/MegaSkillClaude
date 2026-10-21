@@ -263,6 +263,125 @@ class RouterRankingTest(unittest.TestCase):
         for item in results[:200]:
             self.assertTrue(Path(item["path"]).is_file(), item["path"])
 
+    # Backlog task 10. These 15 Persian requests returned [] before the synonym retry, measured on
+    # 2026-10-22 against references/triggers.json (6,029 skills / 30,203 triggers): the index simply
+    # carries no «قبض», «بلیط», «هواپیما», «انبارگردانی», «تنخواه», «اظهارنامه», «مودیان», «مرخصی»,
+    # «شیفت», «ترازنامه», «نقدینگی», «استهلاک» or «خاطرات» token. Each value lists the substrings an
+    # honest answer must contain in the top 3; «استهلاک دارایی» can only reach asset management because
+    # "depreciation" appears in 0 skills, and that limitation is documented in SYNONYMS itself.
+    SYNONYM_FIXTURES = {
+        "قبض برق رو پرداخت کن": ("invoice", "account", "payment"),
+        "انبارگردانی": ("stock-count", "inventory"),
+        "بلیط هواپیما رزرو کن": ("flight", "ticket", "booking"),
+        "دفترچه خاطرات": ("diary", "notebook", "journal"),
+        "خاطرات سفر را بنویس": ("diary", "journal", "travel"),
+        "متن آگهی استخدام": ("recruitment", "hiring", "job"),
+        "تنخواه گردان": ("petty-cash", "cash"),
+        "اظهارنامه مالیاتی": ("tax", "financial", "filing"),
+        "سامانه مودیان": ("invoice", "tax", "payment"),
+        "مرخصی کارمند": ("leave", "hr", "employee"),
+        "شیفت کاری": ("roster", "shift"),
+        "ترازنامه": ("financial", "balance", "sheet"),
+        "سود و زیان": ("loss", "margin", "closing", "profit"),
+        "نقدینگی": ("cash", "liquidity"),
+        "استهلاک دارایی": ("asset",),
+    }
+
+    def _cli(self, module, path, *argv):
+        import contextlib
+        import io
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            module.main([*argv, "--index", str(path)])
+        return out.getvalue()
+
+    def test_queries_that_used_to_return_nothing_retry_with_measured_synonyms(self):
+        """Backlog task 10: an empty answer triggers exactly one retry through the synonym map."""
+        for copy, directory in COPIES.items():
+            module = _load(directory)
+            path = directory / "references/triggers.json"
+            for query, wanted in self.SYNONYM_FIXTURES.items():
+                with self.subTest(copy=copy, query=query):
+                    # the premise is asserted, not assumed: without the retry these match nothing
+                    self.assertEqual(module.search_index(path, query, module.FALLBACK_MIN_SCORE), [],
+                                     f"{query!r} matches the index directly now; refresh the synonym fixtures")
+                    top = json.loads(self._cli(module, path, query, "--limit", "3"))
+                    self.assertTrue(top, f"{query!r} still returns nothing")
+                    self.assertEqual({item.get("fallback") for item in top}, {"synonym"},
+                                     "a retried answer must say so")
+                    names = [item["name"] for item in top]
+                    self.assertTrue(any(any(token in name for token in wanted) for name in names),
+                                    f"{query!r} returned nothing relevant: {names}")
+
+    def test_the_synonym_retry_never_fires_when_something_matched(self):
+        """Task 10 must not touch queries that already work, and must not soften an explicit threshold."""
+        for copy, directory in COPIES.items():
+            module = _load(directory)
+            path = directory / "references/triggers.json"
+            with self.subTest(copy=copy):
+                direct = json.loads(self._cli(module, path, "پشتیبانی مشتریان", "--limit", "3"))
+                self.assertTrue(direct)
+                self.assertNotIn("fallback", direct[0], "a direct hit must not be labelled as a retry")
+                # no synonym applies => no second search at all
+                self.assertEqual(module._synonym_query("react performance"), "")
+                self.assertEqual(module._synonym_query("کپشن خنده دار هالووین"), "")
+                # an explicit --min-score is a contract: the retry must honour it, not undercut it
+                strict = json.loads(self._cli(module, path, "انبارگردانی", "--min-score", "0.9"))
+                self.assertEqual(strict, [])
+                self.assertTrue(module._synonym_query("انبارگردانی"), "the retry is available, the threshold blocked it")
+
+    def test_explain_reports_matched_tokens_and_their_idf_weights(self):
+        """Backlog task 11: --explain shows which tokens matched and what each one weighed."""
+        for copy, directory in COPIES.items():
+            module = _load(directory)
+            path = directory / "references/triggers.json"
+            with self.subTest(copy=copy):
+                plain = json.loads(self._cli(module, path, "سئو سایت", "--limit", "1"))
+                self.assertNotIn("explain", plain[0], "the default output shape must not change")
+                explained = json.loads(self._cli(module, path, "سئو سایت", "--limit", "1", "--explain"))[0]["explain"]
+                for key in ("query_tokens", "token_weights", "matched_tokens", "unmatched_tokens",
+                            "trigger_tokens", "coverage", "phrase_match", "name_hits"):
+                    self.assertIn(key, explained)
+                self.assertEqual(explained["query_tokens"], ["seo", "website"], "aliases fold before explaining")
+                self.assertEqual(set(explained["token_weights"]), set(explained["query_tokens"]))
+                # the whole point of IDF: the rare token must outweigh the generic one
+                self.assertGreater(explained["token_weights"]["seo"], explained["token_weights"]["website"])
+                self.assertTrue(all(weight > 0 for weight in explained["token_weights"].values()))
+                self.assertEqual(set(explained["matched_tokens"]) | set(explained["unmatched_tokens"]),
+                                 set(explained["query_tokens"]))
+                self.assertTrue(set(explained["matched_tokens"]) <= set(explained["query_tokens"]))
+                self.assertLessEqual(explained["coverage"], 1.0)
+                self.assertIsInstance(explained["phrase_match"], bool)
+
+    def test_json_lines_and_fields_are_cheap_output_modes(self):
+        """Backlog task 16: one compact object per line, and only the fields the caller pays for."""
+        for copy, directory in COPIES.items():
+            module = _load(directory)
+            path = directory / "references/triggers.json"
+            with self.subTest(copy=copy):
+                lines = self._cli(module, path, "react performance", "--limit", "4", "--json-lines",
+                                  "--fields", "name,score").splitlines()
+                self.assertEqual(len(lines), 4)
+                rows = [json.loads(line) for line in lines]
+                for line, row in zip(lines, rows):
+                    self.assertEqual(list(row), ["name", "score"], "field order and nothing else")
+                    self.assertNotIn(" ", line.replace(row["name"], ""), "compact separators, no pretty printing")
+                array = json.loads(self._cli(module, path, "react performance", "--limit", "4"))
+                self.assertEqual([row["name"] for row in rows], [item["name"] for item in array],
+                                 "--json-lines must not reorder or re-rank")
+                self.assertEqual(rows[0]["name"], "react-performance")
+                # --fields wins over --explain, so a cheap caller never pays for the diagnostics
+                self.assertEqual(list(json.loads(self._cli(module, path, "react performance", "--limit", "1",
+                                                           "--fields", "name", "--explain"))[0]), ["name"])
+                import contextlib
+                import io
+                err = io.StringIO()
+                with self.assertRaises(SystemExit) as raised, contextlib.redirect_stderr(err):
+                    module.main(["react performance", "--index", str(path), "--fields", "name,bogus"])
+                self.assertEqual(raised.exception.code, 2)
+                self.assertIn("unknown field(s) bogus", err.getvalue())
+                self.assertIn("matched_trigger", err.getvalue())
+
 
 if __name__ == "__main__":
     unittest.main()

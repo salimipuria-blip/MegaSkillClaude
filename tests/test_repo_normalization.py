@@ -534,5 +534,66 @@ class NormalizationConfigTests(unittest.TestCase):
 
 
 
+class BacklogTriageTests(unittest.TestCase):
+    """Guard #5 — `docs/BACKLOG_TRIAGE.md` is the owner's map of the 100-task backlog (PR #95).
+
+    A triage that silently loses a task, invents a status, or marks work DONE without naming the
+    commit is worse than no triage: it is what the owner reads to decide what to unblock next. So the
+    document has to stay complete (all 100 numbers, exactly once), legal (statuses from the legend),
+    self-consistent (the summary counts are the row counts) and evidenced (DONE names a commit or PR).
+    """
+
+    LEGEND = {'DONE', 'QUEUED', 'BLOCKED/INDEX', 'BLOCKED/LIVE', 'BLOCKED/NET', 'BLOCKED/OWNER'}
+    PATH = ROOT / 'docs/BACKLOG_TRIAGE.md'
+
+    def rows(self):
+        text = self.PATH.read_text(encoding='utf-8')
+        rows = []
+        for line in text.splitlines():
+            if not re.match(r'^\|\s*\d+\s*\|\s*P\d\s*\|', line):
+                continue
+            # titles and reasons may carry an escaped pipe, so split only on unescaped ones
+            cells = [cell.strip() for cell in re.split(r'(?<!\\)\|', line.strip())]
+            cells = [cell for cell in cells if cell != '']
+            rows.append((int(cells[0]), cells))
+        return text, rows
+
+    def test_every_backlog_task_appears_exactly_once_with_a_legend_status(self):
+        self.assertTrue(self.PATH.is_file(), 'docs/BACKLOG_TRIAGE.md is missing')
+        _text, rows = self.rows()
+        numbers = [number for number, _cells in rows]
+        self.assertEqual(sorted(numbers), list(range(1, 101)),
+                         'the triage must cover every backlog task exactly once')
+        for number, cells in rows:
+            with self.subTest(task=number):
+                self.assertEqual(len(cells), 5, f'task {number} row is not number/priority/title/status/reason')
+                status = cells[3].strip('`')
+                self.assertIn(status, self.LEGEND, f'task {number} carries a status nobody defined')
+                self.assertTrue(cells[4], f'task {number} has a status but no reason')
+
+    def test_the_summary_counts_are_the_row_counts(self):
+        text, rows = self.rows()
+        counted = {}
+        for _number, cells in rows:
+            status = cells[3].strip('`')
+            counted[status] = counted.get(status, 0) + 1
+        self.assertEqual(sum(counted.values()), 100)
+        for status, total in counted.items():
+            with self.subTest(status=status):
+                self.assertIn(f'| `{status}` | {total} |', text,
+                              f'the summary table says something other than {total} for {status}')
+        self.assertIn('| **جمع** | **100** |', text)
+
+    def test_a_done_row_names_the_commit_or_pull_request_that_proves_it(self):
+        _text, rows = self.rows()
+        done = [(number, cells) for number, cells in rows if cells[3].strip('`') == 'DONE']
+        self.assertGreaterEqual(len(done), 18, 'no task is recorded as done; the triage went backwards')
+        for number, cells in done:
+            with self.subTest(task=number):
+                reason = cells[4]
+                self.assertTrue(re.search(r'[0-9a-f]{7,40}|PR #\d+|این دور', reason),
+                                f'task {number} claims DONE without naming a commit or PR')
+
+
 if __name__ == '__main__':
     unittest.main()

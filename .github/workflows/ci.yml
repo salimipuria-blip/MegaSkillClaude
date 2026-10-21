@@ -91,6 +91,10 @@ jobs:
         with:
           python-version: "3.12"
       - run: python scripts/sync_skill_library.py --check
+      # Backlog task 17: the imported third-party instructions are scanned for prompt-injection and
+      # remote-code patterns; the committed library/SECURITY_SCAN.md must be what a fresh scan yields.
+      - name: Third-party skill instruction scan is current
+        run: python3 scripts/scan_third_party_skills.py --check
       - run: python -m unittest discover -s tests -p "test_*.py" -v
 
   fjcod:

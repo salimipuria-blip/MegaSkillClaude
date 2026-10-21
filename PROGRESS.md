@@ -6,7 +6,7 @@
 - ۱۲ پروژه/زیرپروژهٔ مدیریت‌شده (به‌علاوهٔ خود مخزن)؛ دفتر هرکدام در جدول `README.md` و دستور توسعهٔ هرکدام در [`docs/directives/`](docs/directives/README.md) است.
 - `node scripts/doctor.mjs <id>` مرجع فرمان‌های دقیق هر پروژه است؛ `--list` فهرست کامل را نشان می‌دهد. اکنون **۴۲ گام در ۱۳ دامنه** (۳۸ تا پیش از ۲۰۲۶-۱۰-۱۴).
 - Router canonical: **۶٬۰۲۹** مهارت = ۳٬۰۰۰ core + ۱۸ پروژه + ۳٬۰۱۱ GitHub؛ **۵٬۷۴۸ routable**، **۲۸۱ incomplete** و **۳۰٬۲۰۳ trigger**.
-- تست‌های ریشه: **۱۰۴ تست ریشه** (پایتون) با `python3 -m unittest discover -s tests -p "test_*.py"`. نگهبانِ همین اعداد `tests/test_status_counters.py` است: شمارنده‌های بخش «وضعیت مشترک» را به `triggers.json`، `library/github-skills/INDEX.json`، `scripts/doctor.mjs` و `mobile/skills-index.json` قفل می‌کند، ارجاع‌های `doctor.mjs <id>` و لینک/پوشه‌های `docs/directives/README.md` را resolve می‌کند، و اعداد داخل بخش‌های تاریخ‌دار را به‌عنوان snapshot دست نمی‌زند. قاعدهٔ انسانی‌اش بند ۷ «قواعد مشترک» در [`docs/directives/README.md`](docs/directives/README.md) است.
+- تست‌های ریشه: **۱۲۲ تست ریشه** (پایتون) با `python3 -m unittest discover -s tests -p "test_*.py"`. نگهبانِ همین اعداد `tests/test_status_counters.py` است: شمارنده‌های بخش «وضعیت مشترک» را به `triggers.json`، `library/github-skills/INDEX.json`، `scripts/doctor.mjs` و `mobile/skills-index.json` قفل می‌کند، ارجاع‌های `doctor.mjs <id>` و لینک/پوشه‌های `docs/directives/README.md` را resolve می‌کند، و اعداد داخل بخش‌های تاریخ‌دار را به‌عنوان snapshot دست نمی‌زند. قاعدهٔ انسانی‌اش بند ۷ «قواعد مشترک» در [`docs/directives/README.md`](docs/directives/README.md) است.
 - CI شامل typecheck/build/test، health، skill sync، PWA، دارایی‌های برند و typecheck زیرپروژهٔ Motion است.
 
 ## ۲) اصلاحات بین‌پروژه‌ای
@@ -314,3 +314,67 @@ pushِ اولِ این دور (`4ccf6799`) سه job را قرمز کرد: `commi
 
 یعنی تستِ جهشِ تسک ۹۸ به هویتِ gitِ محیط وابسته بود. رفع: هویت روی خودِ خطِ فرمان (`git -c user.name=identity-guard -c user.email=identity-guard@localhost -c commit.gpgsign=false commit-tree …`) تا نه به configِ runner وابسته باشد نه به کلیدِ امضا. تأیید پس از رفع، در همان کلونِ شبیهِ CI: `tests.test_commit_identity` ⇒ **۷ OK**، `discover` کامل ⇒ **Ran 104 tests — OK**، `node --test tests/doctor.test.mjs` ⇒ **۱/۱**.
 شبیه‌سازیِ خودِ jobِ `commit-identity` هم با merge refِ واقعیِ PR انجام شد (`git fetch origin refs/pull/98/merge` ⇒ `b96de505`): `--range origin/main...FETCH_HEAD` ⇒ **۳ commit، clean، exit 0** (commitِ mergeِ خودِ GitHub هم پاک است) و متنِ واقعیِ PR از همان pipelineِ `printf` ⇒ **clean، exit 0**. کلونِ blobless با تاریخچهٔ کامل در این سندباکس ساخته نمی‌شود (`early EOF` / `bad pack header` روی `file://`) ⇒ آن بخش **NOT RUN** و به خودِ CI واگذار شد.
+
+## ۱۰) لاگ جریان — ۲۰۲۶-۱۰-۲۲ (پنج تسکِ حوزهٔ روتر/کتابخانهٔ مهارت + تریاژِ کاملِ ۱۰۰ تسک)
+
+### ۱۰٫۱) چه چیزی و چرا
+ادامهٔ همان PR (#98، بدونِ PR دوم). این دور سراغِ خوشهٔ **روتَر و کتابخانهٔ مهارت** رفت، چون بیشترین تسکِ P1/P2ِ آفلاین‌شدنی آن‌جا بود و چون یک حفرهٔ واقعی پیدا شد: `route.py` و `SKILL.md` **دو کپیِ دستی** هستند و تستِ برابریِ قدیمی فقط از خطِ `DEFAULT_MIN_SCORE` به پایین را مقایسه می‌کرد — یعنی کلِ واژگانِ `ALIASES`/`SYNONYMS` می‌توانست در یک کپی عوض شود و هیچ تستی قرمز نشود (تسک ۱۴ دقیقاً همین را می‌خواست).
+پیش از هر تغییری اندازه‌گیری شد: ۲۴ + ۲۵ + ۲۵ عبارتِ فارسیِ واقعی با CLI اجرا شد تا عبارت‌هایی که **امروز `[]` می‌دهند** پیدا شوند (۱۵ مورد)، و واژگانِ انگلیسیِ موجود در ایندکس شمرده شد تا نقشهٔ هم‌معنا از واژه‌هایی ساخته شود که **واقعاً در ایندکس هستند** (`depreciation`، `memoir`، `taxpayer`، `reservation`، `stocktaking`، `advertisement` در **۰** مهارت بودند ⇒ عمداً استفاده نشدند).
+
+### ۱۰٫۲) تغییرها
+| فایل | تغییر | تسک |
+|---|---|---|
+| هر دو کپیِ `scripts/route.py` (۲۹۵/۲۸۵ خط) | `SYNONYMS` با **۲۷ ورودیِ اندازه‌گیری‌شده** + `_synonym_query()` + یک retry خودکار **فقط وقتی نتیجه خالی است**؛ نتیجهٔ retry با `"fallback": "synonym"` علامت می‌خورد. `--min-score` صریح **نقض نمی‌شود** (retry همان آستانه را نگه می‌دارد) | ۱۰ |
+| همان دو کپی | `search_index(..., explain=True)` و فلگِ `--explain`: `query_tokens`، `token_weights` (وزنِ IDF هر توکن)، `matched_tokens`، `unmatched_tokens`، `trigger_tokens`، `coverage`، `phrase_match`، `name_hits`. خروجیِ پیش‌فرض **بدونِ تغییر** ماند | ۱۱ |
+| همان دو کپی | `--json-lines` (یک شیءِ فشرده در هر خط) و `--fields name,score,…` از میانِ **۸ فیلدِ معتبر**؛ فیلدِ ناشناخته ⇒ `parser.error` با فهرستِ معتبرها؛ `--fields` بر `--explain` اولویت دارد تا مصرف‌کنندهٔ ارزان پولِ تشخیص ندهد | ۱۶ |
+| `scripts/scan_third_party_skills.py` (تازه) | اسکنرِ ۱۰ الگو (prompt-override، persona-hijack، `curl\|sh`، base64→exec، reverse-shell، exfil-endpoint، credential-path، sudo، install-hook، hidden-content) روی `library/github-skills`؛ دو دامنهٔ `instructions` (پیش‌فرض، CI) و `all` (ممیزی)؛ خروجیِ **قطعی** (بدونِ timestamp)؛ `--check` مثلِ lockfile گزارشِ commit‌شده را مقایسه می‌کند؛ **هیچ فایلی را حذف یا بازنویسی نمی‌کند** | ۱۷ |
+| `library/SECURITY_SCAN.md` (تازه، تولیدی) | گزارشِ ۲۲۱ خطی: جدولِ دامنه، جدولِ ۱۰ الگو، صفِ بازبینیِ همهٔ یافته‌ها، و بخشِ «خطوطِ متمایز» که ۱۶۶ یافته را به **۱۰۷ خطِ متمایز** فرومی‌کاهد (۱۶ مهارت یک boilerplateِ مشترک دارند) | ۱۷ |
+| `tests/test_skill_router_sync.py` (تازه، ۶ تست) | نگهبانِ تسک ۱۴: کپیِ پلاگینِ `route.py` باید **بایت‌به‌بایت** حاصلِ سه جایگزینیِ مستند از کپیِ canonical باشد (کلِ فایل، نه فقط از `DEFAULT_MIN_SCORE`)؛ `SKILL.md` فقط در سه خطِ مستند (۱۱/۱۳/۱۸ از ۲۰)؛ دو ایندکس skill‌به‌skill برابر جز فرمِ مسیر؛ ۱۵ فایلِ domain با نشانِ `incomplete`؛ ۴۶ notice مجوز بایت‌به‌بایت؛ و ۴۰ `INSTRUCTIONS.md` نمونه برابرِ مبدأ canonical | ۱۴ |
+| `tests/test_third_party_skill_scan.py` (تازه، ۵ تست) | درختِ fixture با یک مهارت برای هر الگو + یک decoy؛ اثباتِ اینکه اسکنر **چیزی را تغییر نمی‌دهد** (هشِ درخت قبل/بعد)؛ ردکردنِ فایلِ باینری؛ قطعیتِ بایتِ گزارش؛ قرمزیِ `--check` با یک بایت drift | ۱۷ |
+| `tests/test_mega_skills_router.py` | ۴ تستِ تازه: ۱۵ عبارتِ خالی × ۲ کپی (premise هم assert می‌شود)، retry نباید وقتی چیزی match شده فعال شود، `--explain` و وزنِ IDF، و دو مودِ خروجی + اعتبارسنجیِ `--fields` | ۱۰/۱۱/۱۶ |
+| `tests/test_repo_normalization.py` | **نگهبانِ #۵** برای `docs/BACKLOG_TRIAGE.md`: پوششِ هر ۱۰۰ شماره دقیقاً یک بار، وضعیت‌ها فقط از راهنما، جمعِ جدول = شمارِ سطرها، و هر `DONE` باید commit/PR نام ببرد | — |
+| `docs/BACKLOG_TRIAGE.md` (تازه) | تریاژِ کاملِ ۱۰۰ تسک با دلیلِ اندازه‌گیری‌شده (پایین‌تر) | — |
+| `.github/workflows/ci.yml` | گامِ `python3 scripts/scan_third_party_skills.py --check` در jobِ `router` (پس از `sync --check`) | ۱۷ |
+| شمارنده‌ها | تستِ ریشه ۱۰۴→**۱۲۲** در `PROGRESS.md`، `docs/PORTFOLIO.md`، `docs/directives/00-monorepo.md` (هر سه را نگهبان مطالبه کرد) | — |
+
+### ۱۰٫۳) پذیرش‌ها — خروجیِ واقعی
+| تسک | فرمان | خروجی |
+|---|---|---|
+| ۱۰ | `route.py "<عبارت>"` روی ۱۵ عبارتِ خالی | **۱۵/۱۵ حل شد**؛ top-1ها: «انبارگردانی»⇒`stock-count-cycle-plan`، «بلیط هواپیما رزرو کن»⇒`domestic-flight-notes-ir`، «دفترچه خاطرات»⇒`diary`، «تنخواه گردان»⇒`petty-cash-management`، «مرخصی کارمند»⇒`hr-pro`/`leave-management`، «شیفت کاری»⇒`camp-roster-manager`، «متن آگهی استخدام»⇒`recruitment-pipeline`، «ترازنامه»⇒`financial-analyst` |
+| ۱۱ | `route.py "سئو سایت" --limit 1 --explain` | `token_weights: {seo: 4.524373, website: 1.470994}`، `matched_tokens: [seo, website]`، `coverage: 1.0`، `name_hits: 1` ⇒ توکنِ نادر از عمومی سنگین‌تر است؛ بدونِ `--explain` هیچ کلیدِ اضافه‌ای در خروجی نیست |
+| ۱۶ | `route.py … --json-lines --fields name,score` | دو خطِ فشرده، هر کدام یک شیء، فقط دو کلید، همان ترتیبِ آرایهٔ پیش‌فرض؛ `--fields name,bogus` ⇒ `error: unknown field(s) bogus; valid fields: …` (۸ فیلد) |
+| ۱۷ | `scan_third_party_skills.py --report/--check` | دامنهٔ `instructions`: **۳٬۰۱۱ فایل / ۳۲٬۴۵۵٬۴۳۶ بایت / ۱۶۶ یافته در ۸۰ مهارت** در ۸٫۹ ثانیه؛ دامنهٔ `all`: **۱۴٬۷۸۶ فایل / ۱۱۹٬۵۷۲٬۸۷۷ بایت / ۲۵۷ یافته در ۹۹ مهارت** (۶ باینری رد شد) در ۳۱ ثانیه؛ `--check` ⇒ «report is current» |
+| ۱۴ | `python3 -m unittest tests.test_skill_router_sync` | **۶ تست OK در ۰٫۳۱ ثانیه**؛ `sync_skill_library.py --check` هم هنوز **0 differing files** |
+| همه | `python3 -m unittest discover -s tests -p "test_*.py"` | **Ran 122 tests — OK** (پیش از این دور ۱۰۴) |
+
+### ۱۰٫۴) اثباتِ جهش
+| جهش | نتیجه |
+|---|---|
+| یک بایت در `SYNONYMS` کپیِ پلاگین (`"بلیط": "ticket"`→`"tickets"`) | **RED** — همان حفره‌ای که تستِ قدیمی نمی‌دید ✅ |
+| یک بایت در `SKILL.md` پلاگین | **RED** ✅ |
+| یک `source_path` در `references/triggers.json` پلاگین | **RED** ✅ |
+| یک مسیر در `references/domains/general.md` | **RED** ✅ |
+| یک بایتِ اضافه در یکی از ۴۶ notice مجوز | **RED** ✅ |
+| یک بایتِ اضافه در `references/skills/13c-metabolic-flux/INSTRUCTIONS.md` | **RED** ✅ |
+| حذفِ سطرِ تسک ۴۲ از `docs/BACKLOG_TRIAGE.md` | **RED** ✅ |
+| وضعیتِ یک سطرِ تسک به `WIP` (بیرونِ راهنما) | **RED** ✅ |
+| جمعِ `DONE` در خلاصه ۱۸→۱۷ | **RED** ✅ |
+| `DONE` بدونِ نامِ commit/PR (تسک ۱۹) | **RED** ✅ |
+
+بازگردانیِ همه با `cp -p` و **تأییدِ SHA-256** (همه `restored=True`)؛ پس از بازگردانی: `test_skill_router_sync` ۶/۶، `test_repo_normalization` ۲۳/۲۳، `sync --check` ۰ differing.
+
+### ۱۰٫۵) یافتهٔ این دور: یک فایلِ یتیمِ commit‌شده در کپیِ پلاگین
+`plugins/mega-skills-router/skills/mega-skills-router/references/skills/_licenses/mattpocock__skills__LICENSE` در ایندکس skill نیست و هیچ کدی به آن ارجاع نمی‌دهد؛ **بایت‌به‌بایت برابر** با `references/licenses/mattpocock__skills__LICENSE` است (همان‌جا که `sync` امروز noticeها را می‌نویسد) و در commit `45818f1c` (۲۰۲۶-۱۰-۱۳، PR #45 «add Matt Pocock's skill pack») اضافه شده. علتِ ماندگاری: `synchronize()` فقط می‌نویسد و **هرگز prune نمی‌کند**، و `--check` هم فقط «تازگیِ» آنچه می‌نویسد را می‌سنجد، نه نبودنِ اضافات ⇒ هیچ گیتی آن را نمی‌دید.
+اقدام: **حذف نکردم** (حذفِ فایلِ tracked نیازمندِ مجوزِ صریحِ مالک است). به‌جایش در `tests/test_skill_router_sync.py` به‌عنوانِ تنها استثناِ نام‌برده (`KNOWN_ORPHAN_DIRECTORIES = {"_licenses"}`) ثبت شد، پس **یتیمِ دوم** بلافاصله قرمز می‌کند. پیشنهاد: یا حذفِ همین یک فایل با تأیید شما، یا افزودنِ prune به `sync_skill_library.py` (تغییرِ رفتارِ ابزارِ canonical، باز هم با تأیید شما).
+
+### ۱۰٫۶) تریاژِ کاملِ ۱۰۰ تسک ⇒ `docs/BACKLOG_TRIAGE.md`
+تا پیش از این دور فقط ۲۰ تسک از ۱۰۰ بررسی شده بود. حالا هر ۱۰۰ تسک با دلیلِ اندازه‌گیری‌شده دسته‌بندی شده‌اند: **DONE ۱۸** · **QUEUED ۴۹** (آفلاین ممکن، در صف) · **BLOCKED/LIVE ۱۳** · **BLOCKED/OWNER ۱۳** · **BLOCKED/INDEX ۶** · **BLOCKED/NET ۱**. چند نمونه از سنجش‌هایی که «بلاک»ها را از «صف» جدا کرد: `import PIL` ⇒ ModuleNotFoundError (پس تسک‌های تصویری به venv+Pillow نیاز دارند، نه دسترسیِ زنده)؛ فونتِ Vazirmatn **در ریپو هست** (`brand/viking/assets/*.woff2`) پس تسک ۸۷/۵۸ دانلود نمی‌خواهند؛ `consumeFixedWindow` در `hermes/rate-limit.mjs`، `hermes/workspaces.test.mjs`، `hermes/skill-router.mjs`، `orchestrator/supabase/functions/github-llm-verifier/net.test.mjs` و `psk/api/tasks.js` **موجودند** پس تسک‌های ۲۳–۳۵، ۶۵–۷۰، ۹۴ قابلِ اجرا هستند؛ `mobile/vercel.json` وجود ندارد (تسک ۸۱).
+
+### ۱۰٫۷) گیت‌ها
+`discover` ⇒ **Ran 122 tests — OK** · روتر ۲۳ + برابری ۶ + اسکنر ۵ = **۳۴ OK** · نرمال‌سازی **۲۳ OK** · `sync_skill_library.py --check` ⇒ **0 differing files** · `scan_third_party_skills.py --check` ⇒ **current (3,011 files, 166 findings)** · `scan_secrets.py` ⇒ **0 finding(s)** (گزارشِ امنیتیِ تازه فقط الگو را **نقل** می‌کند و خودِ scan_secrets را قرمز نکرد) · `repo_health_check.sh` ⇒ **exit 0** · `mobile/build-index.py --check` ⇒ سالم (5748 routable) · `check_brand_assets.py --stickers` و `build_sticker_manifest.py --check` ⇒ سالم (۳۶۰ PNG، 30,603,539 بایت) · ساختِ claude.ai: lite **۳٬۲۳۳٬۴۲۳ بایت** (پیش از این دور ۳٬۲۳۱٬۲۳۱، چون `route.py` بزرگ‌تر شد) و **بایت‌بایت بازتولیدپذیر** (sha256 `5d04f3140a0847ee…` در دو ساخت) ⇒ ۶۱٫۷٪ سقفِ ۵MB · psk ⇒ **۵۷/۵۷**، golden **۱۰۸ کیس**، accuracy **۱۰۰٫۰٪**. هرمس در این دور دست نخورد و `node_modules` هم پس از re-clone نصب نشد ⇒ سوئیتِ هرمس **NOT RUN** (شمارهای canonicalِ ۲۶۳/۷۹/۱۰ با نگهبانِ ایستا سنجیده شدند).
+
+### ۱۰٫۸) NOT RUN / بلاک
+`docs/BACKLOG_TRIAGE.md` فهرستِ کامل را دارد. خلاصهٔ این دور: تسک‌های ۱–۳، ۸، ۹، ۱۳ (ایندکسِ تولیدی)، ۷ (دادهٔ واقعیِ مالک)، ۲۲/۲۴/۳۹/۴۹/۵۳/۷۱/۷۲/۷۶/۷۹/۸۰/۸۲/۸۹ (سرویس/مرورگر/دیتابیسِ زنده)، ۳۸ و ۴۰–۴۸ (قیدِ CHAM)، ۵۱ (دانلودِ بیرونِ allowlist)، ۵۷ (اسکرین‌شات + تأیید مالک)، ۱۰۰ (permission در CI) · حذفِ فایلِ یتیم و prune کردنِ `sync` (نیازمندِ مجوز) · اسکنِ کاملِ audit در CI (۳۱ ثانیه؛ فقط لوکال اجرا شد) · سوئیتِ هرمس و fjcod و lithos (وابستگی‌ها در این checkout نصب نیستند).
+
+### ۱۰٫۹) مجوزها
+انجام شد (با همان مجوزِ قبلی): commit و push روی شاخهٔ کاریِ همین PR (fast-forward، بدونِ force). انجام نشد: merge/close/ready-for-review هر PR، release/tag، deploy، force push، بازنویسیِ تاریخچه، **هر حذفی** (از جمله فایلِ یتیمِ ۱۰٫۵)، DDL/DML/migration/seed، تغییرِ secret/permission/webhook، سرویسِ پولی.
