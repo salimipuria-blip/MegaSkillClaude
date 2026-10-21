@@ -400,7 +400,7 @@ class NormalizationConfigTests(unittest.TestCase):
         jobs = set(re.findall(r'^  ([\w-]+):\n    runs-on:', ci, re.MULTILINE))
         self.assertEqual(jobs, {'repo-health', 'psk', 'lithos', 'router', 'fjcod', 'fjcod-e2e',
                                 'bison-brand-book', 'viking-team', 'viking-motion',
-                                'orchestrator', 'hermes'})
+                                'orchestrator', 'hermes', 'commit-identity'})
         health = ci.split('\n  repo-health:\n')[1].split('\n  psk:\n')[0]
         self.assertIn('bash scripts/repo_health_check.sh', health)
         self.assertNotIn('secrets.', health)
@@ -419,6 +419,11 @@ class NormalizationConfigTests(unittest.TestCase):
         # the readiness checker must stay mocked and credential-free
         self.assertIn('node --test tests/check-supabase.test.mjs', health)
         self.assertIn('node --check scripts/check-supabase.mjs', health)
+        # task 98: the identity gate needs the branch's messages, and no secret may leak into it
+        identity = ci.split('\n  commit-identity:\n')[1]
+        self.assertIn('scripts/check_commit_identity.py', identity)
+        self.assertIn('fetch-depth: 0', identity)
+        self.assertNotIn('secrets.', identity)
         self.assertIn('npm ci --prefix viking-team/motion --ignore-scripts', ci)
 
     def test_example_contains_only_empty_values(self):

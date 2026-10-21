@@ -27,8 +27,8 @@
 
 | پروژه | محل | وضعیت (۲۰۲۶-۱۰-۱۸) | کار مانده |
 |---|---|---|---|
-| **هرمس** (دستیار تلگرام + اپ) | `MegaSkillClaude/hermes` | زنده روی Cloudflare Worker `hermes`؛ ۲۵۵ تست واحد (از جمله ۷۹ تست worker) + ۱۰ رگرسیونِ integration؛ خلاصهٔ صبح فقط یک بار در روز؛ یادآور اعضای اپ گم نمی‌شود؛ صفحهٔ عمومی سفر و رزرو [`/trip`](https://hermes.fqlyr3d1iy6indqipoky75p0l8hl6ox.workers.dev/trip) | `hermes/CLAUDE.md` صف کار |
-| **پلاگین مگا اسکیل** | `MegaSkillClaude/plugins/mega-skills-router` | ۶٬۰۲۹ مهارت، ۹۷ تست ریشه (۲۰۲۶-۱۰-۲۰، با نگهبانِ `tests/test_status_counters.py` که اعداد را به `triggers.json` قفل می‌کند)؛ نام‌های فارسی استک پروژه‌ها درست مسیریابی می‌شوند؛ ۳ برابر سریع‌تر | مهارت تحویل اختصاصی هرمس/چام/وایکینگ (P0) |
+| **هرمس** (دستیار تلگرام + اپ) | `MegaSkillClaude/hermes` | زنده روی Cloudflare Worker `hermes`؛ ۲۶۳ تست واحد (از جمله ۷۹ تست worker) + ۱۰ رگرسیونِ integration؛ خلاصهٔ صبح فقط یک بار در روز؛ یادآور اعضای اپ گم نمی‌شود؛ صفحهٔ عمومی سفر و رزرو [`/trip`](https://hermes.fqlyr3d1iy6indqipoky75p0l8hl6ox.workers.dev/trip) | `hermes/CLAUDE.md` صف کار |
+| **پلاگین مگا اسکیل** | `MegaSkillClaude/plugins/mega-skills-router` | ۶٬۰۲۹ مهارت، ۱۰۴ تست ریشه (۲۰۲۶-۱۰-۲۰، با نگهبانِ `tests/test_status_counters.py` که اعداد را به `triggers.json` قفل می‌کند)؛ نام‌های فارسی استک پروژه‌ها درست مسیریابی می‌شوند؛ ۳ برابر سریع‌تر | مهارت تحویل اختصاصی هرمس/چام/وایکینگ (P0) |
 | **چام (فروشگاه)** | `POINT/fjcod` (جدید)، `MegaSkillClaude/fjcod` (قدیمی) | جدید منتشر شد: https://cham-store-os.vercel.app (منتظر اجرای SQL در Supabase)؛ مرجوعی دقیق تا ریال، جلوی موجودی منفی گرفته شد. قدیمی: رمز متنی حذف شد و رمزهای لو‌رفته خودکار عوض می‌شوند | اجرای SQL + ساخت مالک؛ سبد نگه‌داشته، داشبورد رشد، انتقال دادهٔ قدیمی |
 | **وایکینگ** (اپ تیم) | `MegaSkillClaude/viking-team` | ۱۵ پایتون + ۱۱ نود؛ آپلود HEIC آیفون، کش گالری | اعمال SQL/RLS روی Supabase واقعی (پروژهٔ `aupkeramhsufnmhkbihl` از اینجا DNS ندارد — بررسی شود) |
 | **لیتوس** (داشبورد) | `MegaSkillClaude/lithos` | ۱۶ تست؛ سنک فقط برای ایمیل مالک (`LITHOS_OWNER_EMAILS`)؛ schema در گیت | تنظیم `LITHOS_OWNER_EMAILS` در Vercel؛ بازگرداندن پروژهٔ Supabase |

@@ -6,7 +6,7 @@
 - ۱۲ پروژه/زیرپروژهٔ مدیریت‌شده (به‌علاوهٔ خود مخزن)؛ دفتر هرکدام در جدول `README.md` و دستور توسعهٔ هرکدام در [`docs/directives/`](docs/directives/README.md) است.
 - `node scripts/doctor.mjs <id>` مرجع فرمان‌های دقیق هر پروژه است؛ `--list` فهرست کامل را نشان می‌دهد. اکنون **۴۲ گام در ۱۳ دامنه** (۳۸ تا پیش از ۲۰۲۶-۱۰-۱۴).
 - Router canonical: **۶٬۰۲۹** مهارت = ۳٬۰۰۰ core + ۱۸ پروژه + ۳٬۰۱۱ GitHub؛ **۵٬۷۴۸ routable**، **۲۸۱ incomplete** و **۳۰٬۲۰۳ trigger**.
-- تست‌های ریشه: **۹۷ تست ریشه** (پایتون) با `python3 -m unittest discover -s tests -p "test_*.py"`. نگهبانِ همین اعداد `tests/test_status_counters.py` است: شمارنده‌های بخش «وضعیت مشترک» را به `triggers.json`، `library/github-skills/INDEX.json`، `scripts/doctor.mjs` و `mobile/skills-index.json` قفل می‌کند، ارجاع‌های `doctor.mjs <id>` و لینک/پوشه‌های `docs/directives/README.md` را resolve می‌کند، و اعداد داخل بخش‌های تاریخ‌دار را به‌عنوان snapshot دست نمی‌زند. قاعدهٔ انسانی‌اش بند ۷ «قواعد مشترک» در [`docs/directives/README.md`](docs/directives/README.md) است.
+- تست‌های ریشه: **۱۰۴ تست ریشه** (پایتون) با `python3 -m unittest discover -s tests -p "test_*.py"`. نگهبانِ همین اعداد `tests/test_status_counters.py` است: شمارنده‌های بخش «وضعیت مشترک» را به `triggers.json`، `library/github-skills/INDEX.json`، `scripts/doctor.mjs` و `mobile/skills-index.json` قفل می‌کند، ارجاع‌های `doctor.mjs <id>` و لینک/پوشه‌های `docs/directives/README.md` را resolve می‌کند، و اعداد داخل بخش‌های تاریخ‌دار را به‌عنوان snapshot دست نمی‌زند. قاعدهٔ انسانی‌اش بند ۷ «قواعد مشترک» در [`docs/directives/README.md`](docs/directives/README.md) است.
 - CI شامل typecheck/build/test، health، skill sync، PWA، دارایی‌های برند و typecheck زیرپروژهٔ Motion است.
 
 ## ۲) اصلاحات بین‌پروژه‌ای
@@ -243,3 +243,65 @@ npm install @sparticuz/chromium   # در /tmp/msc-tools؛ سپس brotliDecompres
 
 ### ۸٫۷) مجوزها
 انجام شد (با مجوزِ قبلیِ مالک): commit و push روی شاخهٔ کاری و بازکردنِ **یک PR به‌صورت DRAFT**. انجام نشد (بدونِ مجوزِ جدا): merge/close هر PR، release/tag، deploy، force push، بازنویسیِ تاریخچه، هر DDL/DML یا migration یا seed، تغییرِ secret/permission/OAuth/webhook، فعال‌سازیِ سرویسِ پولی، Archive/حذف/انتقالِ مخزن.
+
+## ۹) لاگ جریان — ۲۰۲۶-۱۰-۲۰ (ادامهٔ همان PR: تسک‌های ۱۹، ۲۰، ۲۱ در هرمس و ۹۸ در CI)
+
+### ۹٫۱) چه چیزی و چرا
+ادامهٔ دستورِ «تمام تسک هارو یکبار pr کن» روی **همان PR #98** (بدونِ PR دوم). چهار تسکِ باقی‌مانده که بدونِ دسترسیِ زنده ممکن بودند: سه P0 در هرمس (۱۹، ۲۰، ۲۱) و یک P1 در CI (۹۸). اصلِ حاکم: هر سه تغییرِ هرمس با تستِ واقعیِ همان ماژول قفل شدند و هیچ تستِ موجودی حذف یا ضعیف نشد — دو assertionِ `diagnose.test.mjs` **قوی‌تر** بازنویسی شدند (پیامِ جدید + حفظِ دلیلِ خامِ بالادستی).
+
+### ۹٫۲) تغییرها
+| فایل | تغییر | تسک |
+|---|---|---|
+| `hermes/diagnose.mjs` | `explainFailure()` + `probe(…, explain)`؛ `getOk` حالا `err.status` را نگه می‌دارد؛ کاتالوگِ **صفر-مدل** دیگر «کلید معتبر است (۰ مدل)» نیست بلکه شکست با راهنمایِ مجوز است؛ بودجهٔ `trim` برای پیامِ توضیح‌دار ۱۴۰→۲۶۰ تا شاهدِ خام بریده نشود | ۱۹ |
+| `hermes/diagnose.test.mjs` | ۲ assertion قوی‌تر + ۲ تستِ تازه (کاتالوگِ خالیِ GitHub Models؛ `explainFailure` فقط آنچه می‌شناسد را ترجمه می‌کند و برای ۴۰۲/۴۰۰۶ همان دلیلِ خام را برمی‌گرداند) | ۱۹ |
+| `hermes/resilience.mjs` | `ServicePark`: شمارشِ ۴۰۱/۴۰۳ در **KV**، پارک به مدتِ `PARK_MS` = یک ساعت پس از `PARK_THRESHOLD` = ۳ خطایِ متوالی، `succeed()` پاک‌کردنِ شمارنده، و تحملِ KV خراب (پارک هرگز نباید جواب را بشکند) | ۲۰ |
+| `hermes/providers.mjs` | سیم‌کشیِ پارک در حلقهٔ مغزها: پیش از هر provider خوانده می‌شود، در شاخهٔ ۴۰۱/۴۰۳ ثبت و در پاسخِ موفق پاک می‌شود؛ پیامِ فارسیِ «۳ بار پشت‌سرهم رد شد؛ تا حدود N دقیقهٔ دیگر صدا زده نمی‌شود» | ۲۰ |
+| `hermes/resilience.test.mjs` | ۵ تستِ تازه، از جمله پذیرشِ اصلی: پس از سه خطا **هیچ فراخوانیِ شبکه‌ای** برای آن سرویس انجام نمی‌شود (`calls` بدون تغییر) و پس از یک ساعت دوباره صدا زده می‌شود | ۲۰ |
+| `hermes/providers.mjs` | `fitSystem` حالا بلوک‌های محافظت‌شده (`OWNER PORTFOLIO KNOWLEDGE` و `LONG-TERM NOTES`) را **پیش از هر برشی** رزرو می‌کند (`PROTECTED_SHARE` = ۰٫۵۵، حداقل ۳۰۰ نویسه) و هر بلوک را با نشانِ خودش نگه می‌دارد؛ منطقِ قبلی به `fitPersona()` منتقل شد تا مسیرِ بدونِ نشان دست‌نخورده بماند؛ `FULL_BUDGET`/`SMALL_BUDGET` صادر شدند | ۲۱ |
+| `hermes/conversation.mjs` | بلوکِ یادداشت‌ها به `withNotes()` استخراج شد (بدونِ تغییرِ خروجی) تا تستِ بودجه **ترکیبِ واقعیِ production** را بسنجد، نه بازسازیِ دستیِ آن | ۲۱ |
+| `hermes/fitsystem.test.mjs` | تستِ پارامتری روی **هر ۷ provider** × دو بودجه (`provider.budget` و `SMALL_BUDGET`) با fixture از **سندهای واقعیِ ریپو** (`docs/PORTFOLIO.md`، `psk/PROGRESS.md`) | ۲۱ |
+| `scripts/check_commit_identity.py` | **فایلِ تازه**: هفت الگویِ «انتساب به مدل» (تریلرِ co-author، generated-with، مدل به‌عنوانِ نویسنده، `AI-generated`، سخن‌گفتن به‌عنوانِ AI، ایموجیِ ربات، `Signed-off-by` رباتیک) و **نه** نامِ محصول؛ دامنهٔ پیش‌فرض = commitهای زیرِ بررسی، `--all-history` برای ممیزی؛ «هیچ چیزی اسکن نشد» هرگز PASS نیست | ۹۸ |
+| `tests/test_commit_identity.py` | **فایلِ تازه**: ۷ تست، شاملِ جهشِ سطحِ git با `git commit-tree` (commitِ معلق با تریلر ⇒ exit 1، بدونِ آن ⇒ exit 0) | ۹۸ |
+| `.github/workflows/ci.yml` · `tests/test_repo_normalization.py` | job تازهٔ `commit-identity` با `fetch-depth: 0` و `filter: blob:none` (فقط پیام‌ها دانلود می‌شوند) + گامِ متنِ PR؛ نگهبانِ مجموعهٔ jobها به ۱۲ به‌روز شد و محتوای job (بی‌secret بودن) هم سنجیده می‌شود | ۹۸ |
+| `docs/PORTFOLIO.md` · `docs/directives/00-monorepo.md` · `docs/directives/02-hermes.md` · `scripts/doctor.mjs` | اعدادِ canonical: هرمس ۲۵۵→**۲۶۳** تستِ واحد (worker همان ۷۹، integration همان ۱۰) و تستِ ریشه ۹۷→**۱۰۴**. هر دو را **نگهبان‌های دورِ قبل لو دادند** و مقدارِ درست را خودشان گفتند | — |
+
+### ۹٫۳) پذیرش‌ها — خروجیِ واقعی
+| تسک | فرمان | خروجی |
+|---|---|---|
+| ۱۹ | `node --test diagnose.test.mjs` | **۷ تست / ۷ pass**؛ پیامِ Gemini ⇒ «کلید GEMINI_API_KEY نامعتبر است؛ در Cloudflare … عوض یا حذف کن» + `(400 API key not valid…)`؛ GitHub Models با صفر مدل ⇒ «توکن … مجوز Models: Read ندارد (کاتالوگ ۰ مدل داد)» و `ok: false` |
+| ۲۰ | `node --test resilience.test.mjs` | **۹ تست / ۹ pass**؛ پس از سه ۴۰۱/۴۰۳ ⇒ رکوردِ `service-park:Groq` در KV با `failures: 3` و `reason: HTTP 403` (هرگز مقدارِ کلید) و **صفر فراخوانیِ شبکه** در دورِ بعد؛ پس از یک ساعت دوباره فعال و با یک پاسخِ سالم پاک می‌شود |
+| ۲۱ | `node --test fitsystem.test.mjs` | **۴ تست / ۴ pass**؛ پیش از رفع: «GitHub Models @ 5000: the project-knowledge block was dropped» ⇒ پس از رفع، در هر ۷ provider و هر دو بودجه، حافظه (`NOTE-MARK`) و دانشِ پروژه (`PORTFOLIO-MARK`) و سرآغازِ persona زنده‌اند و طول از بودجه بیشتر نمی‌شود |
+| ۹۸ | `python3 -m unittest tests.test_commit_identity` | **۷ تست OK**؛ `--range origin/main...HEAD` ⇒ clean؛ `--all-history --json` ⇒ **۲۳۵ commit، ۱۸۱ ادعا** (همه `co-author trailer`) |
+| همه | `npm test --prefix hermes` · `npm run test:integration` · `npm run check` | **۲۶۳ تست / ۲۶۳ pass / ۰ fail** · **۱۰/۱۰** · `node --check` روی ۳۸ ماژول بدون خطا |
+
+### ۹٫۴) اثباتِ جهش
+| جهش | انتظار | نتیجهٔ واقعی |
+|---|---|---|
+| `PARK_THRESHOLD` از ۳ به ۵ | قرمز | ۳ تستِ تسک ۲۰ **not ok** (pass 6 / fail 3) ✅ |
+| `fitSystem`: غیرفعال‌کردنِ شناساییِ نشان (`protectedAt = -1`) | قرمز | **not ok** با همان پیامِ «the project-knowledge block was dropped» ✅ |
+| `diagnose.mjs`: کوتاه‌کردنِ راهنمایِ کلیدِ Gemini | قرمز | ۳ تست **not ok** ✅ |
+| commitِ معلق با تریلرِ `Co-Authored-By: Claude Opus 5.5` (با `git commit-tree`؛ هیچ شاخه‌ای جابه‌جا نشد) | قرمز | `--range <sha>^..<sha>` ⇒ **exit 1** و همان commit بدونِ تریلر ⇒ **exit 0** ✅ |
+
+بازگردانیِ هر سه فایل با `cp -p` و سپس `sha256sum -c` ⇒ **هر سه OK**؛ اجرای مجدد: **۲۰ تست / ۲۰ pass**.
+
+### ۹٫۵) یافتهٔ مهمِ این دور (نیازمندِ تصمیمِ مالک)
+`scripts/check_commit_identity.py --all-history` روی تاریخچهٔ واقعی: **۱۸۱ ادعایِ شناسه در ۲۳۵ commit**، همه از نوعِ تریلرِ `Co-Authored-By: Claude … <noreply@anthropic.com>` (از جمله `Claude Opus 5.5`، `Claude Opus 4.8`، `Claude Sonnet 5.5`). یعنی:
+- نگهبانِ تسک ۹۸ **بیکار نیست** — روی دادهٔ واقعی قرمز می‌شود؛
+- ولی پاک‌کردنِ تاریخچهٔ منتشرشده یعنی **بازنویسیِ تاریخچه + force push** که بدونِ مجوزِ صریحِ جدا انجام نمی‌شود ⇒ **NOT RUN**؛
+- پس دامنهٔ گیت عمداً «commitهای زیرِ بررسی» است (`origin/<base>...HEAD` در CI، در غیرِ این صورت `HEAD`) تا از ورودِ مواردِ تازه جلوگیری کند بدونِ اینکه روی ارثیه قرمزِ دائمی بدهد و در نتیجه خاموش شود.
+
+### ۹٫۶) بازیابیِ محیط (بدونِ از دست رفتنِ کار)
+فضای کاری بینِ دو نوبت **re-clone** شده بود: `HEAD` به `79f22db5` برگشته بود، کلون shallow (`git rev-list --count HEAD` = ۱) و `origin/arena/…` محلی وجود نداشت، در حالی که commitِ نوبتِ قبل (`935da365`) سالم روی GitHub و داخلِ PR #98 بود و تغییراتش به‌صورتِ uncommitted در درخت مانده بود. بازیابی: `git fetch origin <branch>:refs/remotes/origin/<branch>` + `git reset --mixed origin/<branch>` (بدونِ `--hard`، بدونِ force push، بدونِ بازنویسیِ تاریخچه) و سپس `git fetch --unshallow --filter=blob:none` برای ممیزیِ تاریخچه. پس از آن `git status` دقیقاً تغییراتِ همین نوبت را نشان داد.
+
+### ۹٫۷) NOT RUN / بلاک
+- **تسک ۳۸** (صفحهٔ «راه‌اندازی اولیه» در اپِ چام): به‌خاطرِ قيدِ still-bindingِ «ساختِ ویژگیِ تازهٔ CHAM در این ریپو تا اثباتِ منبعِ انتشارِ واقعی (`POINT/fjcod` → `cham-store-os.vercel.app`)» ⇒ تصمیم با مالک.
+- **تسک ۱۰۰** (workflow هفتگیِ doctor→issue): نیازمندِ `permissions: issues: write` است و پذیرشش «اجرای دستیِ موفقِ workflow»؛ تغییرِ permission در CI و اجرای واقعی روی GitHub بیرونِ مجوزِ فعلی است ⇒ **NOT RUN**.
+- **تسک‌های ۱–۳**: بدونِ تغییر (تولیدکنندهٔ `triggers.json` در ریپو نیست).
+- **۳۹/۴۹** (pgTAP و jobِ RLS): نیاز به Supabase/Postgres زنده.
+- اجرای زندهٔ `check-supabase.mjs` روی پروژهٔ واقعی، انتشارِ Worker، رندرِ استیکر، E2E چام و doctor کاملِ ۴۲ گام (در این checkout فقط `hermes` و `stickers/src` وابستگی دارند).
+
+### ۹٫۸) گیت‌های پایانی
+`python3 -m unittest discover -s tests -p "test_*.py"` ⇒ **Ran 104 tests — OK** · `npm test --prefix hermes` ⇒ **۲۶۳/۲۶۳** · `npm run test:integration --prefix hermes` ⇒ **۱۰/۱۰** · `npm run check --prefix hermes` ⇒ **۳۸ ماژول، بدون خطا** · `node --test tests/check-supabase.test.mjs` ⇒ **۹/۹** · `node --test tests/doctor.test.mjs` ⇒ **۱/۱** · `sync_skill_library.py --check` ⇒ **0 differing files** · `scan_secrets.py` ⇒ **0 finding(s)** · `check_brand_assets.py --stickers` و `build_sticker_manifest.py --check` ⇒ سالم · `mobile/build-index.py --check` ⇒ سالم · `repo_health_check.sh` ⇒ **exit 0** · psk ⇒ **۵۷/۵۷**، golden **۱۰۸ کیس**، accuracy **۱۰۰٫۰٪**.
+
+### ۹٫۹) مجوزها
+انجام شد (با همان مجوزِ قبلی): commit و push روی شاخهٔ کاریِ همین PR (fast-forward، بدونِ force). انجام نشد: merge/close هر PR، ready-for-review کردنِ PR، release/tag، deploy، force push، بازنویسیِ تاریخچه (از جمله پاک‌کردنِ تریلرهای ارثی)، هر DDL/DML/migration/seed، تغییرِ secret/permission/webhook، سرویسِ پولی.
