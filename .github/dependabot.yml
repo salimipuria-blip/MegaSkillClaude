@@ -28,13 +28,28 @@ updates:
       interval: "weekly"
     # remotion and @remotion/cli must carry the same exact version, which
     # viking-team/motion/tests/composition.test.mjs asserts twice (equality, and a
-    # ^\d+\.\d+\.\d+$ pin). One PR per package therefore always fails that test, which
-    # is why #105 and #107 sit UNSTABLE: group them so both move together.
+    # ^\d+\.\d+\.\d+$ pin). One PR per package therefore always fails that test: that
+    # is why #105 and #107 could never go green and were closed once this group
+    # produced #112, which moved both packages together and passed.
+    #
+    # react and react-dom are the same class of pair for a different reason. This
+    # manifest pins both to 18.3.1, so a PR that moves only one half to 19.x makes
+    # the install step fail on the peer range: react-dom@18.3.1 wants react@^18.3.1.
+    # #113 and #114 each move one half and both fail "Install the isolated
+    # motion-study dependencies" for exactly that reason, read out of their own
+    # lockfiles - #113 resolves react 19.3.1 against react-dom 18.3.1, and #114 is
+    # the mirror image. Grouping the four names keeps the pair atomic.
     groups:
       remotion:
         patterns:
           - "remotion"
           - "@remotion/*"
+      react:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@types/react"
+          - "@types/react-dom"
   - package-ecosystem: "npm"
     directory: "/brands/viking-offroad/stickers/src"
     schedule:
