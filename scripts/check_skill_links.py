@@ -81,14 +81,28 @@ JUSTIFIED: dict[tuple[str, str], tuple[int, str, str]] = {
         305, 'sibling', 'row of a see-also table pointing at another skill of the upstream suite'),
 }
 
-FENCE = re.compile(r'^\s*(```+|~~~+)\s*(\S*)')
+# CommonMark 4.5: a fence is indented 0-3 spaces (4 or more is an indented code block, not a fence)
+# and its info string may not contain a backtick. The length of the marker run matters: a fence
+# opened with four backticks is closed only by four or more.
+FENCE = re.compile(r'^\s{0,3}(```+|~~~+)[ \t]*(\S*)')
 
 
 def code_regions(lines: list[str]) -> tuple[set[int], set[int]]:
     """Line numbers inside closed fenced blocks, and inside a fence the file never closes.
 
-    CommonMark pairs a fence with a later line using the same marker character and no info string.
-    Anything left open at end of file is returned separately so callers can fail closed on it.
+    CommonMark pairs a fence with a later line that (a) is indented 0-3 spaces, (b) uses the same
+    marker character, (c) uses at least as many marker characters as the opener, and (d) carries no
+    info string. Anything left open at end of file is returned separately so callers can fail closed
+    on it.
+
+    Both (a) and (c) were missing here until `scripts/report_skill_quality.py` reused this function
+    and its own marker-only pairing disagreed with it. Measured over the 3,011 imported skills, the
+    incomplete rule mis-paired 37 files — 1,435 lines landed on the wrong side of a fence — and
+    called 26 files unclosed where the spec says 16. This audit's own buckets did not move, because
+    it checks that a link target exists *before* it consults the fence excuse, so the 7 links in
+    `markdown-to-html/SKILL.md` that sat in a wrongly-closed region were already counted resolved.
+    Anything that measures prose instead — the quality lint — would have scored those 37 files on
+    text that is not theirs.
     """
     closed: set[int] = set()
     opened_at: int | None = None
@@ -97,10 +111,10 @@ def code_regions(lines: list[str]) -> tuple[set[int], set[int]]:
         match = FENCE.match(line)
         if not match:
             continue
-        marker, info = match.group(1)[0], match.group(2)
+        marker, info = match.group(1), match.group(2)
         if opened_at is None:
             opened_at, opened_marker = number, marker
-        elif marker == opened_marker and not info:
+        elif marker[0] == opened_marker[0] and len(marker) >= len(opened_marker) and not info:
             closed.update(range(opened_at, number + 1))
             opened_at = None
     unclosed = set(range(opened_at, len(lines) + 1)) if opened_at else set()

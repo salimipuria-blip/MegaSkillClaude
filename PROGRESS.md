@@ -6,7 +6,7 @@
 - ۱۲ پروژه/زیرپروژهٔ مدیریت‌شده (به‌علاوهٔ خود مخزن)؛ دفتر هرکدام در جدول `README.md` و دستور توسعهٔ هرکدام در [`docs/directives/`](docs/directives/README.md) است.
 - `node scripts/doctor.mjs <id>` مرجع فرمان‌های دقیق هر پروژه است؛ `--list` فهرست کامل را نشان می‌دهد. اکنون **۴۲ گام در ۱۳ دامنه** (۳۸ تا پیش از ۲۰۲۶-۱۰-۱۴).
 - Router canonical: **۶٬۰۲۹** مهارت = ۳٬۰۰۰ core + ۱۸ پروژه + ۳٬۰۱۱ GitHub؛ **۵٬۷۴۵ routable**، **۲۸۴ incomplete** و **۳۰٬۲۰۳ trigger**.
-- تست‌های ریشه: **۱۵۲ تست ریشه** (پایتون) با `python3 -m unittest discover -s tests -p "test_*.py"`. نگهبانِ همین اعداد `tests/test_status_counters.py` است: شمارنده‌های بخش «وضعیت مشترک» را به `triggers.json`، `library/github-skills/INDEX.json`، `scripts/doctor.mjs` و `mobile/skills-index.json` قفل می‌کند، ارجاع‌های `doctor.mjs <id>` و لینک/پوشه‌های `docs/directives/README.md` را resolve می‌کند، و اعداد داخل بخش‌های تاریخ‌دار را به‌عنوان snapshot دست نمی‌زند. قاعدهٔ انسانی‌اش بند ۷ «قواعد مشترک» در [`docs/directives/README.md`](docs/directives/README.md) است.
+- تست‌های ریشه: **۱۷۷ تست ریشه** (پایتون) با `python3 -m unittest discover -s tests -p "test_*.py"`. نگهبانِ همین اعداد `tests/test_status_counters.py` است: شمارنده‌های بخش «وضعیت مشترک» را به `triggers.json`، `library/github-skills/INDEX.json`، `scripts/doctor.mjs` و `mobile/skills-index.json` قفل می‌کند، ارجاع‌های `doctor.mjs <id>` و لینک/پوشه‌های `docs/directives/README.md` را resolve می‌کند، و اعداد داخل بخش‌های تاریخ‌دار را به‌عنوان snapshot دست نمی‌زند. قاعدهٔ انسانی‌اش بند ۷ «قواعد مشترک» در [`docs/directives/README.md`](docs/directives/README.md) است.
 - CI شامل typecheck/build/test، health، skill sync، PWA، دارایی‌های برند و typecheck زیرپروژهٔ Motion است.
 
 ## ۲) اصلاحات بین‌پروژه‌ای
@@ -420,3 +420,17 @@ pushِ اولِ این دور (`4ccf6799`) سه job را قرمز کرد: `commi
 
 ### ۱۱٫۸) مجوزها
 انجام شد (با همان مجوزِ قبلی): commit و push روی شاخهٔ کاریِ همین PR (fast-forward). انجام نشد: merge/close/ready-for-review، release/tag، deploy، force push، بازنویسیِ تاریخچه، **هر حذفی** (فایلِ همراه، noticeِ بی‌ارجاع، کپیِ یتیم)، DDL/DML/migration/seed، تغییرِ secret/permission/webhook، سرویسِ پولی.
+
+## ۱۲) لاگ جریان — ۲۰۲۶-۱۰-۲۲ (دورِ دوم: تسک ۹۳ + باگِ قاعدهٔ fence)
+
+شاخهٔ تازه از `c6a07ca9` (همان mergeِ PR #98) شروع شد. تنها تسکِ این دور **۹۳** بود و یک باگِ واقعی که حینِ ساختنش پیدا شد.
+
+**تسک ۹۳ (P2) — گزارش کیفیت:** `scripts/report_skill_quality.py` هر ۳٬۰۲۹ `library/**/SKILL.md` را با شش سیگنالِ قابلِ بازبینی امتیاز می‌دهد (طولِ prose از `\w+` تا markdown شمرده نشود، workflow با سه سطح ۲۵/۱۵/۶، خروجیِ تعریف‌شده ۲۰/۱۲، چک‌لیست ۱۵/۱۰، ساختارِ سرفصل ۱۰/۵، نمونهٔ کد ۵، و ۱۰− امتیاز برای پرچمِ `incomplete`) و `library/QUALITY_REPORT.md` را **قطعی و بدون timestamp** بازتولید می‌کند تا `--check` بایت‌به‌بایت مقایسه کند. سنجه‌ها: میانهٔ امتیاز ۷۲، میانگین ۷۰٫۸، باندها `strong 759 / usable 1755 / thin 468 / weak 41 / stub 6`، و ۵۰ ضعیف‌ترین با `missing` هر ردیف. میانگینِ ۱۸ مهارتِ curated (۸۹٫۷) از ۳٬۰۱۱ وارداتی (۷۰٫۹) بالاتر است. گزارش صریحاً می‌گوید که **ساختار** را می‌سنجد نه درستیِ توصیه را، و هیچ فایلی را تغییر نداده است.
+
+**باگِ قاعدهٔ fence (پیدا شد چون تابع را مشترک کردم):** برای اینکه دو ابزار یک تعریف از بلوکِ کد داشته باشند، `code_regions` را از `check_skill_links.py` import کردم و سنجهٔ خودم با آن اختلاف پیدا کرد. ریشه‌اش دو شرطِ جاماندهٔ CommonMark بود: fence بسته‌کننده باید **حداقل به همان تعداد** marker داشته باشد (نه فقط همان کاراکتر) و تورفتگیِ fence **۰–۳ فاصله** است. اثرِ اندازه‌گیری‌شده روی ۳٬۰۱۱ مهارت: ۳۷ فایل بد جفت می‌شدند (۱٬۴۳۵ سطر در سمتِ اشتباه) و ۲۶ فایل «باز» به‌جای ۱۶ فایلِ واقعاً باز. سطل‌های ممیزیِ لینک **بی‌تغییر** ماندند (ممیزی پیش از قاعدهٔ fence وجودِ هدف را چک می‌کند) ولی هر سنجه‌ای که prose را می‌شمارد روی ۳۷ فایل متنِ اشتباهی را اندازه می‌گرفت. دو تستِ تازه در `tests/test_skill_link_audit.py` همان دو شرط را با شکلِ واقعیِ `aws-cost-optimize` و `markdown-to-html` سنجاق کردند.
+
+**دو تلهٔ سنجه که پیش از انتشار گرفته شدند:** (۱) سه مهارتِ `mcp-*` کلِ بدنه را داخل یک fence از نوع `prompt` دارند (آرتیفکتِ مبدلِ upstream) و بدونِ پوست‌کندن، `mcp-create-adaptive-cards` با ۱٬۲۳۷ کلمه prose امتیازِ ۵ می‌گرفت و رأسِ «ضعیف‌ترین‌ها» می‌شد — یعنی آرتیفکتِ سنجه به‌جای مهارتِ ضعیف؛ پوست‌کندن فقط وقتی رخ می‌دهد که همهٔ سطرهای غیرخالیِ بدنه داخلِ همان یک fence باشند. (۲) دو عددِ داخلِ جمله‌های گزارش (`۶٬۰۲۹` و `۱٬۲۳۷`) hardcode بودند؛ اکنون از سنجه مشتق می‌شوند و تست باز-مشتق‌شان می‌کند، به‌علاوه تستی هر مسیری را که گزارش نام می‌برد با درخت چک می‌کند.
+
+**گیت‌ها:** `discover` ⇒ **Ran 177 tests — OK** (پیش از این دور ۱۵۲) · `report_skill_quality.py --check` ⇒ current · `check_skill_links.py --check` ⇒ `unflagged: [] · findings: 0` · `tests.test_skill_quality_report` ۲۳/۲۳ · `tests.test_skill_link_audit` ۱۵/۱۵ · گامِ تازهٔ CI: `Skill quality report is current` در jobِ `router`.
+
+**NOT RUN:** جهش‌های این دور (فقط ۲ مورد دستی: آستانهٔ ۴۰۰→۳۰۰ و حذفِ پوست‌کندن، هر دو قرمز دیده شدند) به‌صورتِ کاملِ systematic اجرا نشد · امتیازدهیِ محتوایی · نیمهٔ `psk/` · اصلاحِ markdownِ آن ۱۶ فایل و پوست‌کندنِ دائمیِ ۳ مهارت (دست‌کاریِ محتوای وارداتی = تصمیمِ مالک) · تسک‌های ۱۲/۱۵/۹۵/۹۶ شروع نشدند.
