@@ -12,7 +12,7 @@ jobs:
   repo-health:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -51,7 +51,7 @@ jobs:
       run:
         working-directory: psk
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -74,7 +74,7 @@ jobs:
       run:
         working-directory: lithos
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -86,7 +86,7 @@ jobs:
   router:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -107,7 +107,7 @@ jobs:
       run:
         working-directory: fjcod
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -120,7 +120,7 @@ jobs:
       run:
         working-directory: bison-brand-book
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -136,7 +136,7 @@ jobs:
       run:
         working-directory: viking-team
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -161,7 +161,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -181,7 +181,7 @@ jobs:
       run:
         working-directory: fjcod
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -200,7 +200,7 @@ jobs:
       run:
         working-directory: orchestrator
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -243,7 +243,7 @@ jobs:
   hermes:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - run: bash -n hermes/setup.sh
       - run: shellcheck -S warning hermes/setup.sh
       - uses: actions/setup-node@v4
@@ -263,7 +263,7 @@ jobs:
   commit-identity:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           # Backlog task 98. Only commit *messages* are read, so a blobless full history keeps this
           # job short while still letting the range below resolve on a pull request.
