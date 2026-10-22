@@ -8,14 +8,14 @@ PWA ایستا و فارسی برای بازکردن ریپوی MegaSkillClaude 
 - `mobile/search.mjs`: normalization، aliasهای فارسی/فینگلیش، رتبه‌بندی، اعتبارسنجی payload و HTML escaping.
 - `mobile/skills-index.json`: خروجی تولیدی از `.claude/skills/mega-skills-router/references/triggers.json`; دستی ویرایش نشود.
 - `mobile/sw.js`: shell آفلاین؛ cache key با اثرانگشت همهٔ assetهای پیش‌ذخیره و کد worker ساخته می‌شود.
-- نسخهٔ فعلی ایندکس: **۵٬۷۴۸ مهارت قابل‌مسیریابی** (عدد رابط/manifest باید با builder همگام بماند).
+- نسخهٔ فعلی ایندکس: **۵٬۷۴۵ مهارت قابل‌مسیریابی** (عدد رابط/manifest باید با builder همگام بماند).
 
 ## وضعیتِ جاری
-خروجیِ واقعیِ `python3 mobile/build-index.py --check` در **۲۰۲۶-۱۰-۲۰** (این بخش با نگهبانِ `tests/test_status_counters.py` قفل است: شمارِ routable از `triggers.json` و وزن از خودِ `mobile/skills-index.json` بازخوانی می‌شود، پس عددِ کهنه اینجا قرمز می‌شود):
+خروجیِ واقعیِ `python3 mobile/build-index.py --check` در **۲۰۲۶-۱۰-۲۲** (این بخش با نگهبانِ `tests/test_status_counters.py` قفل است: شمارِ routable از `triggers.json` و وزن از خودِ `mobile/skills-index.json` بازخوانی می‌شود، پس عددِ کهنه اینجا قرمز می‌شود):
 
-- **۵٬۷۴۸** مهارت قابل‌مسیریابی از **۶٬۰۲۹** مهارتِ canonical (**۲۸۱** مورد ناقص از مسیریابیِ پیش‌فرض خارج است).
-- اثرانگشتِ cache: `mega-mobile-v1-f0a03afbdf7bc464`.
-- وزنِ ایندکس: **۲٬۲۴۳٬۸۶۰** بایت خام / **۴۰۹٬۹۱۲** بایت gzip در برابرِ بودجهٔ **۳٬۱۴۵٬۷۲۸** بایت ⇒ gzip حدود یک‌پنجم است و تقسیمِ دامنه‌ای هنوز توجیه ندارد.
+- **۵٬۷۴۵** مهارت قابل‌مسیریابی از **۶٬۰۲۹** مهارتِ canonical (**۲۸۴** مورد ناقص از مسیریابیِ پیش‌فرض خارج است).
+- اثرانگشتِ cache: `mega-mobile-v1-db2702efc8f36526`.
+- وزنِ ایندکس: **۲٬۲۴۲٬۶۳۵** بایت خام / **۴۰۹٬۶۱۷** بایت gzip در برابرِ بودجهٔ **۳٬۱۴۵٬۷۲۸** بایت ⇒ gzip حدود یک‌پنجم است و تقسیمِ دامنه‌ای هنوز توجیه ندارد.
 - `node --test mobile/search.test.mjs mobile/index.test.mjs` ⇒ **۱۷/۱۷** (تست‌ها روی فایلِ تولیدیِ کامیت‌شده اجرا می‌شوند، نه روی سازنده).
 - **NOT RUN:** Safari/iPhone فیزیکی، نصب به Home Screen، حالتِ هواپیمای واقعی و اندازه‌گیریِ حافظه/زمانِ بارگذاری روی دستگاه.
 

@@ -29176,7 +29176,11 @@
   "score": 7.434,
   "description": "Diagnoses and improves Qdrant search relevance. Use when someone reports 'search results are bad', 'wrong results', 'low precision', 'low recall', 'irrelevant matches', 'missing expected results', or asks 'how to improve search quality?', 'which embedding model?', 'should I use hybrid search?', 'sho",
   "url": "https://github.com/github/awesome-copilot/tree/HEAD/skills/qdrant-search-quality",
-  "incomplete": false
+  "incomplete": true,
+  "missing_files": [
+   "diagnosis/SKILL.md",
+   "search-strategies/SKILL.md"
+  ]
  },
  {
   "name": "mdm-device-management",
@@ -31217,7 +31221,10 @@
   "license": "MIT",
   "description": "Generate an interactive bash wizard that walks a human through steps only they can perform. Use when provisioning infrastructure, setting up credentials or CI s",
   "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/engineering/wizard",
-  "incomplete": false
+  "incomplete": true,
+  "missing_files": [
+   "template.sh"
+  ]
  },
  {
   "name": "git-guardrails-claude-code",
@@ -31226,7 +31233,10 @@
   "license": "MIT",
   "description": "Set up Claude Code hooks to block dangerous git commands (push, reset --hard, clean, branch -D, etc.) before they execute. Use when user wants to prevent destru",
   "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/misc/git-guardrails-claude-code",
-  "incomplete": false
+  "incomplete": true,
+  "missing_files": [
+   "scripts/block-dangerous-git.sh"
+  ]
  },
  {
   "name": "migrate-to-shoehorn",

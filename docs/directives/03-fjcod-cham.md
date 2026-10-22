@@ -65,3 +65,10 @@ cd fjcod && npm ci && npm run build
 CHROMIUM_PATH=/path/to/chromium E2E_STRICT=1 npm run e2e    # ۱۹/۱۹
 ```
 `E2E_STRICT=1` الزامی است: بدونِ آن، نبودِ مرورگر با خروجیِ ۰ «skip» می‌شود و در CI یعنی **سبزِ کاذب**. با آن، خروجی ۲ می‌دهد.
+
+## وضعیتِ جاری
+
+اندازه‌گیریِ واقعی در **۲۰۲۶-۱۰-۲۰** — این بخش با نگهبانِ `tests/test_status_counters.py` قفل است: هر عدد از منبعِ canonicalِ خودش در ریپو بازخوانی می‌شود، پس عددِ کهنه یا جابه‌جاییِ واژه قرمز می‌شود. بخش‌های تاریخ‌دارِ پایین/بالای همین سند snapshotِ همان دورند و دست نمی‌خورند (بندِ ۷ «قواعد مشترک»).
+
+- `npm run check` در `fjcod/` (`tsc -b` + `vitest run` + `vite build`) ⇒ **۴۵ تست**.
+- **NOT RUN:** E2E مرورگری (`npm run e2e`) در این checkout بدون Chromium اجرا نشد؛ منبعِ واقعیِ انتشارِ CHAM (`POINT/fjcod` → `cham-store-os.vercel.app`) و Supabase RLS/RPC زنده بیرونِ دسترسی‌اند.

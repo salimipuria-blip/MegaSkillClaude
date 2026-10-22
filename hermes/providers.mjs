@@ -1,4 +1,4 @@
-import { fetchWithTimeout } from './resilience.mjs';
+import { fetchWithTimeout, ServicePark, isAuthStatus } from './resilience.mjs';
 import { SKILLS } from './skills.mjs';
 // Free text brains with an OpenAI-compatible API. GitHub Models gives every model its own daily quota, so many models
 // are listed (and more are read from its catalog when those are busy) to get as many free answers a day as possible.
@@ -43,8 +43,9 @@ const NOT_CHAT = /whisper|tts|embed|guard|vision-preview|audio|image|moderation|
 export const configuredProviders = (env) => PROVIDERS.filter((p) => (p.key ? env[p.key] : env[p.off] !== 'off'));
 const authHeader = (env, p) => (p.key ? { authorization: `Bearer ${String(env[p.key]).trim()}` } : {});
 
-const FULL_BUDGET = 24000;
-const SMALL_BUDGET = 5000;
+// Exported so the prompt-budget test measures the real numbers instead of a copy of them.
+export const FULL_BUDGET = 24000;
+export const SMALL_BUDGET = 5000;
 const MAX_CALLS = 16;
 const MAX_TOTAL = 34; // all providers together, leaving room for Gemini, Telegram and KV under the limit of 50
 
@@ -75,11 +76,76 @@ export async function discoverModels(env, p) {
 const cut = (text, max) => (text.length > max ? `${text.slice(0, Math.max(0, max - 1))}…` : text);
 const PERSONA_CHARS = 1500; // identity + style at the head of every system prompt
 
+// Blocks that must survive any trim: the owner's project knowledge and long-term notes. Losing them
+// makes Hermes answer without the owner's own facts, which reads as a wrong answer rather than a
+// shorter one — that was the backlog task 21 finding at the 5000-char budget (GitHub Models): a plain
+// head+tail cut kept the newest notes but dropped the knowledge header and the portfolio facts.
+const PROTECTED_MARKERS = ['OWNER PORTFOLIO KNOWLEDGE', 'LONG-TERM NOTES'];
+const PROTECTED_SHARE = 0.55;  // at most this share of a tight budget goes to the protected blocks
+const MIN_PROTECTED = 300;     // …but never less than this, or the markers themselves would not fit
+
+function firstMarkerAt(text) {
+  let best = -1;
+  for (const marker of PROTECTED_MARKERS) {
+    const at = text.indexOf(marker);
+    if (at >= 0 && (best < 0 || at < best)) best = at;
+  }
+  return best;
+}
+
+// Clips one protected block without losing its own marker: the marker line stays, then the body.
+// Notes keep their newest lines (the tail), knowledge keeps its first facts (the head), because that
+// is the order each block is written in.
+function clipBlock(block, max) {
+  if (block.length <= max) return block;
+  const newline = block.indexOf('\n');
+  const header = newline > 0 && newline + 1 <= max ? block.slice(0, newline + 1) : block.slice(0, Math.max(0, max - 1));
+  const room = Math.max(0, max - header.length - 1);
+  const body = block.startsWith('LONG-TERM NOTES')
+    ? block.slice(Math.max(header.length, block.length - room))
+    : block.slice(header.length, header.length + room);
+  return `${header}…${body}`;
+}
+
+// Splits the protected region at every marker, so each block gets a share and no marker is lost.
+function clipProtected(region, max) {
+  const starts = [];
+  for (const marker of PROTECTED_MARKERS) {
+    for (let from = 0; from < region.length;) {
+      const at = region.indexOf(marker, from);
+      if (at < 0) break;
+      starts.push(at);
+      from = at + marker.length;
+    }
+  }
+  const cuts = [...new Set(starts)].sort((a, b) => a - b);
+  if (!cuts.length) return cut(region, max);
+  const lead = region.slice(0, cuts[0]);
+  const blocks = cuts.map((start, i) => region.slice(start, i + 1 < cuts.length ? cuts[i + 1] : region.length));
+  const share = Math.max(PROTECTED_MARKERS[1].length + 2, Math.floor((max - lead.length) / blocks.length));
+  return lead + blocks.map((block) => clipBlock(block, share)).join('');
+}
+
 // Shrinks a system prompt without losing what makes Hermes Hermes. The static skill pack (SKILLS) sits in the
 // middle of the prompt, before the per-turn parts (memory notes, project knowledge, coding playbook, routed skills),
 // so a plain head cut dropped all of those on every small-budget provider. Here the skill pack gives way first;
 // if the rest is still too long, the persona head and the newest tail are kept.
 export function fitSystem(text, max) {
+  if (text.length <= max) return text;
+  const protectedAt = firstMarkerAt(text);
+  if (protectedAt >= 0) {
+    // Reserve room for the owner's own facts first; the persona and the skill pack share the rest.
+    const region = text.slice(protectedAt);
+    const reserve = Math.min(region.length, Math.max(MIN_PROTECTED, Math.floor(max * PROTECTED_SHARE)));
+    const headRoom = Math.max(0, max - reserve);
+    const head = headRoom > 0 ? fitPersona(text.slice(0, protectedAt), headRoom) : '';
+    return head + (region.length <= reserve ? region : clipProtected(region, reserve));
+  }
+  return fitPersona(text, max);
+}
+
+// The persona half of the trim: the skill pack gives way first, then the head and the newest tail stay.
+function fitPersona(text, max) {
   if (text.length <= max) return text;
   const at = text.indexOf(SKILLS);
   if (at >= 0) {
@@ -136,8 +202,19 @@ export async function askProviders(env, contents, system, { code = false } = {})
   const all = toMessages(contents, system);
   const errors = [];
   let total = 0;
+  // Task 20: a key that was rejected three times in a row is parked in KV for an hour, so the next
+  // isolate does not spend an outbound call (and the owner's wait) on a service that cannot answer.
+  const park = env.MEMORY ? new ServicePark({ kv: env.MEMORY }) : null;
   for (const p of configuredProviders(env)) {
     if (total >= MAX_TOTAL) { errors.push(`${p.name}: نوبت نرسید`); continue; }
+    if (park) {
+      const parkedUntil = await park.parked(p.name);
+      if (parkedUntil) {
+        const minutes = Math.max(1, Math.round((parkedUntil.parkedUntil - park.now()) / 60000));
+        errors.push(`${p.name}: کلیدش ${park.threshold} بار پشت‌سرهم رد شد؛ تا حدود ${minutes} دقیقهٔ دیگر صدا زده نمی‌شود`);
+        continue;
+      }
+    }
     const cacheKey = `provider-model:${code ? 'code:' : ''}${p.name}`;
     const cached = env.MEMORY ? await env.MEMORY.get(cacheKey) : null;
     const full = fitContext(all, p.budget || FULL_BUDGET);
@@ -155,13 +232,19 @@ export async function askProviders(env, contents, system, { code = false } = {})
           const maxTokens = code ? 4096 : 2048;
           let r = await callModel(env, p, model, full, maxTokens);
           if (tooLarge(r)) { calls++; total++; r = await callModel(env, p, model, small, maxTokens); }
-          if (r.status === 401 || r.status === 403) { reasons.push(`کلید پذیرفته نشد (${r.status})`); allMissing = false; return 'stop'; }
+          if (isAuthStatus(r.status)) {
+            reasons.push(`کلید پذیرفته نشد (${r.status})`);
+            if (park) await park.failAuth(p.name, r.status);
+            allMissing = false;
+            return 'stop';
+          }
           if (r.status !== 200) {
             reasons.push(`${model}: ${r.status}${r.why ? ` ${r.why}` : ''}`);
             if (r.status !== 404 && !(r.status === 400 && !tooLarge(r))) allMissing = false;
             continue;
           }
           if (r.text) {
+            if (park) await park.succeed(p.name);
             if (env.MEMORY && model !== cached) await env.MEMORY.put(cacheKey, model);
             return r.text;
           }

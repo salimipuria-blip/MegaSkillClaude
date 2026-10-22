@@ -39,6 +39,11 @@ jobs:
           node --test brand/viking/tests/content.test.mjs
       - name: Verify the project doctor really discovers quoted Python test patterns
         run: node --test tests/doctor.test.mjs
+      - name: Supabase readiness checker (mocked fetch, no network, no credentials)
+        run: |
+          node --check scripts/check-supabase.mjs
+          node scripts/check-supabase.mjs --expected-only
+          node --test tests/check-supabase.test.mjs
 
   psk:
     runs-on: ubuntu-latest
@@ -86,6 +91,14 @@ jobs:
         with:
           python-version: "3.12"
       - run: python scripts/sync_skill_library.py --check
+      # Backlog task 17: the imported third-party instructions are scanned for prompt-injection and
+      # remote-code patterns; the committed library/SECURITY_SCAN.md must be what a fresh scan yields.
+      - name: Third-party skill instruction scan is current
+        run: python3 scripts/scan_third_party_skills.py --check
+      # Backlog task 90: a skill whose SKILL.md promises a companion file that is not there must be
+      # flagged `incomplete`, so the router never hands out instructions that dead-end.
+      - name: Imported skill links are flagged or justified
+        run: python3 scripts/check_skill_links.py --check
       - run: python -m unittest discover -s tests -p "test_*.py" -v
 
   fjcod:
@@ -199,6 +212,10 @@ jobs:
           node-version: 22
       - name: GitHub admin authorization regressions
         run: node --test supabase/functions/github-admin-gateway/*.test.mjs
+      # Backlog task 94: the free-LLM-mesh verifier's SSRF and DNS-rebinding guard had tests that no
+      # CI job ever ran, so a regression in resolveHostPublic() would have shipped silently.
+      - name: Free LLM mesh SSRF and DNS-rebinding regressions
+        run: node --test supabase/functions/github-llm-verifier/*.test.mjs
       - name: Native Deno gateway check and regressions (no network)
         run: |
           deno check --no-remote supabase/functions/github-admin-gateway/index.ts
@@ -241,3 +258,32 @@ jobs:
         run: |
           node hermes/build-skills.mjs | tee build.log
           grep -Eq "\] [0-9]{4,} skills" build.log
+
+
+  commit-identity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Backlog task 98. Only commit *messages* are read, so a blobless full history keeps this
+          # job short while still letting the range below resolve on a pull request.
+          fetch-depth: 0
+          filter: blob:none
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: No model identity in this branch's commit messages
+        run: >-
+          python3 scripts/check_commit_identity.py
+          --range "origin/${{ github.base_ref || github.event.repository.default_branch }}...HEAD"
+      - name: No model identity in the pull request text
+        if: github.event_name == 'pull_request'
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: >-
+          printf '%s\n\n%s\n' "$PR_TITLE" "$PR_BODY"
+          | python3 scripts/check_commit_identity.py
+          --stdin "pull request #${{ github.event.pull_request.number }}"
+      - name: Identity-checker regressions
+        run: python3 -m unittest tests.test_commit_identity -v

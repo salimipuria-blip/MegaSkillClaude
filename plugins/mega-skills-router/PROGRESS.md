@@ -22,7 +22,7 @@ node scripts/doctor.mjs router                  # هر سه با هم
 |---|---|
 | `sync_skill_library.py --check` | ✅ «۰ فایل متفاوت» — سه نما هم‌گام‌اند |
 | تست‌های ریشه (شامل مسیریاب) | ✅ **۵۶/۵۶** (یکی از آن‌ها: idempotent بودن تولید و دست‌نخورده‌ماندن فایل‌های ناشناخته) |
-| شمار canonical فعلی | ✅ **6,029 کل / 5,748 قابل‌مسیریابی / 281 ناقص**؛ شامل 3,000 هسته، 18 مهارت پروژه و 3,011 مهارت GitHub؛ 30,203 trigger |
+| شمار canonical فعلی | ✅ **6,029 کل / 5,745 قابل‌مسیریابی / 284 ناقص**؛ شامل 3,000 هسته، 18 مهارت پروژه و 3,011 مهارت GitHub؛ 30,203 trigger |
 | `verify_skills.py` | ✅ اجرا شد (گزارشی) |
 | ارجاع‌های شکسته در پلاگین | ✅ هیچ (اسکریپت audit مسیرها را بررسی کرد؛ تک‌موردهای `library/github-skills/archify/package.json`
   به `library/github-skills/scripts/*.mjs` ارجاع می‌دهند که در این چک‌اوت نیست — پایین را ببینید) |
@@ -65,3 +65,5 @@ node scripts/doctor.mjs router                  # هر سه با هم
 
 ## Professional guide
 See `PROFESSIONAL_GUIDE.md` in this folder for performance improvements, debugging playbook, and next steps. Update it whenever behavior changes.
+
+- **۲۰۲۶-۱۰-۲۲ (نسخهٔ 1.3.0، CHANGELOG، ممیزی لینک و اسکن تزریق)** — نسخهٔ پلاگین `1.2.0 → 1.3.0` (MINOR: فلگ‌های تازه و fallback هم‌معنا؛ بدونِ شکستِ قرارداد) در `plugin.json`، `marketplace.json` و `CHANGELOG.md` تازه‌ساخته هم‌زمان شد و `tests/test_plugin_versioning.py` هر سه را قفل کرد. ممیزیِ لینکِ مهارت‌های GitHub (`scripts/check_skill_links.py`) سه مهارت را که فایلِ وعده‌داده‌شدهٔ داخلِ پوشه‌شان نبود `incomplete` کرد ⇒ شمارِ جاری **6,029 کل / 5,745 قابل‌مسیریابی / 284 ناقص / 30,203 trigger** و ایندکسِ موبایل `mega-mobile-v1-db2702efc8f36526` (۲٬۲۴۲٬۶۳۵ بایت خام / ۴۰۹٬۶۱۷ gzip). اسکنِ الگوهای تزریق/اجرای کد روی ۳٬۰۱۳ فایلِ دستورالعملِ وارداتی ⇒ ۱۶۶ یافته در ۸۰ مهارت، فقط گزارش و بدونِ حذف. دو کپیِ `route.py`/`SKILL.md` اکنون کامل مقایسه می‌شوند (پیش‌تر فقط از `DEFAULT_MIN_SCORE` به پایین).

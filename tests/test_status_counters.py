@@ -35,6 +35,8 @@ MOBILE_INDEX = ROOT / "mobile/skills-index.json"
 ROOT_PROGRESS = ROOT / "PROGRESS.md"
 ROADMAP = ROOT / "ROADMAP.md"
 MOBILE_DIRECTIVE = ROOT / "docs/directives/11-mobile-console.md"
+PORTFOLIO = ROOT / "docs/PORTFOLIO.md"
+DIRECTIVES = ROOT / "docs/directives"
 
 # Same digit mapping the mobile console test already uses, so the guard reads the
 # Persian-digit docs exactly the way they are written (including the ٬ separator).
@@ -153,6 +155,130 @@ def python_test_methods() -> int:
                 and item.name.startswith("test")
             )
     return total
+
+
+def node_test_count(*patterns: str) -> int:
+    """Static count of `test(`/`it(` cases in node test files — matches `node --test` output.
+
+    Verified against real runs for psk (57), lithos (16), bison (24), viking-team (11),
+    motion (6) and hermes (255 + 10), so the guard stays offline and fast without lying.
+    """
+    files: list[Path] = []
+    for pattern in patterns:
+        files.extend(sorted(ROOT.glob(pattern)))
+    self_assert(bool(files), f"no node test file matched {patterns}")
+    total = 0
+    for path in files:
+        total += len(re.findall(r"^\s*(?:test|it)\s*\(", path.read_text(encoding="utf-8", errors="replace"), re.MULTILINE))
+    return total
+
+
+def python_test_count(*patterns: str) -> int:
+    """Static count of `test_*` functions (pytest style) under the given globs."""
+    files: list[Path] = []
+    for pattern in patterns:
+        files.extend(sorted(ROOT.glob(pattern)))
+    self_assert(bool(files), f"no python test file matched {patterns}")
+    total = 0
+    for path in files:
+        tree = ast.parse(path.read_text(encoding="utf-8"))
+        total += sum(
+            1 for node in ast.walk(tree)
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and node.name.startswith("test_")
+        )
+    return total
+
+
+def hermes_suite_counts() -> dict[str, int]:
+    """Unit/integration case counts and the module list, all read from `hermes/package.json`."""
+    scripts = json.loads(read(ROOT / "hermes/package.json"))["scripts"]
+
+    def count(script: str) -> int:
+        names = re.findall(r"[\w.-]+\.test\.mjs", script)
+        self_assert(bool(names), f"hermes script lists no test file: {script}")
+        return node_test_count(*(f"hermes/{name}" for name in names))
+
+    return {
+        "unit": count(scripts["test"]),
+        "worker": node_test_count("hermes/worker.test.mjs"),
+        "integration": count(scripts["test:integration"]),
+        "modules": len(re.findall(r"node --check (\S+)", scripts["check"])),
+    }
+
+
+def psk_counts() -> dict[str, int]:
+    registry = json.loads(read(ROOT / "psk/data/skills-registry.json"))
+    golden = json.loads(read(ROOT / "psk/tests/fixtures/routing-golden.json"))
+    repaired = json.loads(read(ROOT / "psk/data/skills-repaired.json"))
+    return {"skills": len(registry["skills"]), "golden": len(golden["cases"]), "repaired": len(repaired["repaired"])}
+
+
+def sticker_assets() -> dict[str, int]:
+    """Sticker packs only: the 12 previews and the cover live beside `packs/` and are not stickers."""
+    packs = sorted(path for path in (ROOT / "brands/viking-offroad/stickers/packs").glob("pack-*") if path.is_dir())
+    pngs = [png for pack in packs for png in sorted(pack.glob("*.png"))]
+    self_assert(bool(packs) and bool(pngs), "stickers: no pack PNG found")
+    return {"packs": len(packs), "pngs": len(pngs), "bytes": sum(png.stat().st_size for png in pngs)}
+
+
+def motion_spec() -> dict[str, int]:
+    text = read(ROOT / "viking-team/motion/src/Root.tsx")
+    spec: dict[str, int] = {}
+    for key, pattern in (("width", r"width=\{(\d+)\}"), ("height", r"height=\{(\d+)\}"),
+                         ("fps", r"fps=\{(\d+)\}"), ("frames", r"durationInFrames=\{(\d+)\}")):
+        match = re.search(pattern, text)
+        self_assert(match is not None, f"motion Root.tsx: {key} not found")
+        spec[key] = int(match.group(1))
+    return spec
+
+
+# Backlog task 97: every directive states at least one counter, and each counter is recomputed
+# here from the repository itself. The keyword must sit on the same line as the number, so a
+# reworded or stale line fails instead of passing on a coincidental digit elsewhere.
+DIRECTIVE_COUNTERS: dict[str, tuple[tuple[str, object], ...]] = {
+    "00-monorepo.md": (("دامنه", lambda: doctor_shape()[0]), ("گام", lambda: doctor_shape()[1]),
+                       ("تست", lambda: python_test_count("tests/test_*.py"))),
+    "01-psk-mega-skills.md": (
+        ("تست", lambda: node_test_count("psk/tests/*.test.mjs")),
+        ("کیس", lambda: psk_counts()["golden"]),
+        ("مهارت", lambda: psk_counts()["skills"]),
+    ),
+    "02-hermes.md": (
+        ("واحد", lambda: hermes_suite_counts()["unit"]),
+        ("worker", lambda: hermes_suite_counts()["worker"]),
+        ("integration", lambda: hermes_suite_counts()["integration"]),
+        ("ماژول", lambda: hermes_suite_counts()["modules"]),
+    ),
+    "03-fjcod-cham.md": (("تست", lambda: node_test_count("fjcod/tests/*.test.*")),),
+    "04-lithos.md": (("تست", lambda: node_test_count("lithos/tests/*.test.mjs")),),
+    "05-viking-team.md": (
+        ("نود", lambda: node_test_count("viking-team/tests/*.test.mjs")),
+        ("پایتون", lambda: python_test_count("viking-team/tests/test_*.py")),
+    ),
+    "06-bison-brand-book.md": (("تست", lambda: node_test_count("bison-brand-book/tests/*.test.mjs")),),
+    "07-orchestrator.md": (("تست", lambda: python_test_count("orchestrator/tests/**/test_*.py")),),
+    "08-skills-library-router.md": (
+        ("مهارت", lambda: router_counts()["skills"]),
+        ("تریگر", lambda: router_counts()["triggers"]),
+        ("روت‌شدنی", lambda: router_counts()["routable_skills"]),
+        ("دامنه", lambda: len(json.loads(read(TRIGGERS))["domains"])),
+    ),
+    "09-viking-brand-assets.md": (
+        ("پک", lambda: sticker_assets()["packs"]),
+        ("استیکر", lambda: sticker_assets()["pngs"]),
+        ("بایت", lambda: sticker_assets()["bytes"]),
+    ),
+    "10-viking-content-renderer.md": (
+        ("تست", lambda: node_test_count("brand/viking/tests/*.test.mjs")),
+        ("ادعا", lambda: len(json.loads(read(ROOT / "brand/viking/brief.json"))["claims"])),
+    ),
+    "11-mobile-console.md": (("مهارت", lambda: router_counts()["routable_skills"]),),
+    "12-viking-motion-study.md": (
+        ("تست", lambda: node_test_count("viking-team/motion/tests/*.test.mjs")),
+        ("فریم", lambda: motion_spec()["frames"]),
+        ("fps", lambda: motion_spec()["fps"]),
+    ),
+}
 
 
 class StatusCounterTests(unittest.TestCase):
@@ -309,6 +435,48 @@ class StatusCounterTests(unittest.TestCase):
                 self.assertTrue(quoted, f"{label}: roadmap row lost its counters")
                 for number in quoted:
                     self.assertIn(number, book, f"{label}: roadmap claims {number} which its book does not")
+
+    def test_every_directive_carries_a_guarded_current_status(self):
+        """Backlog task 97: a counter in *any* directive must be tied to a canonical source.
+
+        Only `11-mobile-console.md` used to have a measured `## وضعیتِ جاری`; the other twelve
+        carried numbers solely inside dated snapshots, which rule 7 deliberately freezes — so a
+        stale claim about "today" could survive in any of them. Each directive now states at least
+        one counter that this test recomputes offline from the repository itself.
+        """
+        on_disk = sorted(path.name for path in DIRECTIVES.glob("*.md") if path.name != "README.md")
+        self.assertEqual(sorted(DIRECTIVE_COUNTERS), on_disk,
+                         "every directive needs a counter spec, and no spec may point at a file that is gone")
+        for name in on_disk:
+            path = DIRECTIVES / name
+            section = status_section(read(path), path, heading=r"^##\s*وضعیتِ جاری\s*$")
+            lines = [line for line in section.splitlines() if line.strip()]
+            for keyword, compute in DIRECTIVE_COUNTERS[name]:
+                value = compute()
+                with self.subTest(directive=name, keyword=keyword):
+                    self.assertTrue(
+                        any(keyword in line and fa(value) in line for line in lines),
+                        f"{name}: «وضعیتِ جاری» has no line pairing {keyword!r} with the canonical {fa(value)}",
+                    )
+
+    def test_portfolio_hermes_counters_match_the_suite(self):
+        """Backlog task 36: the hermes row of `docs/PORTFOLIO.md` must carry the real counts.
+
+        The row claimed «۲۵۲ تست» while `npm test --prefix hermes` reports 255 cases; nothing
+        guarded it because `PORTFOLIO.md` is not one of the four documents the older guard covers.
+        """
+        counts = hermes_suite_counts()
+        rows = [line for line in read(PORTFOLIO).splitlines()
+                if line.startswith("|") and "هرمس" in line and "workers.dev" in line]
+        self.assertEqual(len(rows), 1, f"docs/PORTFOLIO.md: expected exactly one hermes row, found {len(rows)}")
+        row = rows[0]
+        for keyword, value in (("واحد", counts["unit"]), ("worker", counts["worker"]),
+                               ("integration", counts["integration"])):
+            with self.subTest(keyword=keyword):
+                self.assertIn(keyword, row, f"the hermes row no longer names {keyword!r}")
+                self.assertIn(fa(value), row,
+                              f"the hermes row must state the measured {keyword} count {fa(value)}")
+
 
 
 if __name__ == "__main__":

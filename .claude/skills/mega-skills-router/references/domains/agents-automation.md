@@ -557,7 +557,7 @@ Skills: 765
 - `pytorch-fsdp2` → `library/github-skills/pytorch-fsdp2/SKILL.md`
 - `pytorch-patterns` → `library/github-skills/pytorch-patterns/SKILL.md`
 - `qa-test-generator-agent` → `psk/data/skills/qa-test-generator-agent/SKILL.md`
-- `qdrant-search-quality` → `library/github-skills/qdrant-search-quality/SKILL.md`
+- `qdrant-search-quality` → `library/github-skills/qdrant-search-quality/SKILL.md` [incomplete: excluded from default routing]
 - `qdrant-search-quality-diagnosis` → `library/github-skills/qdrant-search-quality-diagnosis/SKILL.md`
 - `quality-documentation-manager` → `library/github-skills/quality-documentation-manager/SKILL.md`
 - `quality-manager-qms-iso13485` → `library/github-skills/quality-manager-qms-iso13485/SKILL.md`

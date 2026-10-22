@@ -748,7 +748,7 @@ Skills: 1840
 - `gguf-quantization` → `references/skills/gguf-quantization/INSTRUCTIONS.md`
 - `gha-security-review` → `references/skills/gha-security-review/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `ginkgo-cloud-lab` → `references/skills/ginkgo-cloud-lab/INSTRUCTIONS.md`
-- `git-guardrails-claude-code` → `references/skills/git-guardrails-claude-code/INSTRUCTIONS.md`
+- `git-guardrails-claude-code` → `references/skills/git-guardrails-claude-code/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `git-hooks-automation` → `references/skills/git-hooks-automation/INSTRUCTIONS.md`
 - `git-pr-workflows-git-workflow` → `references/skills/git-pr-workflows-git-workflow/INSTRUCTIONS.md`
 - `git-workflow-and-versioning` → `references/skills/git-workflow-and-versioning/INSTRUCTIONS.md`
@@ -1796,7 +1796,7 @@ Skills: 1840
 - `windows-server` → `references/skills/windows-server/INSTRUCTIONS.md`
 - `winmd-api-search` → `references/skills/winmd-api-search/INSTRUCTIONS.md`
 - `winui3-migration-guide` → `references/skills/winui3-migration-guide/INSTRUCTIONS.md`
-- `wizard` → `references/skills/wizard/INSTRUCTIONS.md`
+- `wizard` → `references/skills/wizard/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `wjttc-builder` → `references/skills/wjttc-builder/INSTRUCTIONS.md`
 - `wjttc-tester` → `references/skills/wjttc-tester/INSTRUCTIONS.md`
 - `woocommerce-store-fa` → `references/skills/woocommerce-store-fa/INSTRUCTIONS.md`

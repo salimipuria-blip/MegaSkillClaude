@@ -9,7 +9,7 @@ Shared assets of the MEGA SKILLS 3000 project, kept in one place. Backend/fronte
 | About page with founder section | `psk/public/about.html` | served at `/about` |
 | Curated project skills (18) | `library/skills/` | install: `bash library/install.sh [project-path]` |
 | Mega Skills Router plugin | `plugins/mega-skills-router/` (marketplace `psk` in `.claude-plugin/`) | installable anywhere: `/plugin marketplace add salimipuria-blip/MegaSkillClaude` then `/plugin install mega-skills-router@psk`; self-contained copy of all 6,029 skills |
-| Mega Skills Router | `.claude/skills/mega-skills-router/` | the only auto-loaded skill: routes each request through 15 domain indexes and 30,203 triggers to relevant skills among 6,029 (3,000 core + 18 project + 3,011 GitHub); 5,748 are routable by default and 281 incomplete entries are excluded |
+| Mega Skills Router | `.claude/skills/mega-skills-router/` | the only auto-loaded skill: routes each request through 15 domain indexes and 30,203 triggers to relevant skills among 6,029 (3,000 core + 18 project + 3,011 GitHub); 5,745 are routable by default and 284 incomplete entries are excluded |
 | GitHub skills (3,011, MIT) | `library/github-skills/` | current canonical index spanning 29 public repositories (count from `INDEX.json`); available through the router; see its README |
 
 Original portfolio hosting: https://purias-salimi.salimipuria.chatgpt.site/
@@ -32,7 +32,7 @@ Original portfolio hosting: https://purias-salimi.salimipuria.chatgpt.site/
 
 ## همگام‌سازی و مهارت‌های ناقص
 
-۶٬۰۲۹ مهارت نگه‌داری می‌شوند؛ ۲۸۱ مورد ناقص از مسیریابی پیش‌فرض خارج‌اند و ۵٬۷۴۸ مورد فعال‌اند.
+۶٬۰۲۹ مهارت نگه‌داری می‌شوند؛ ۲۸۴ مورد ناقص از مسیریابی پیش‌فرض خارج‌اند و ۵٬۷۴۵ مورد فعال‌اند.
 عدد فعلی GitHub skills برابر ۳٬۰۱۱ و بستهٔ مهارت‌های پروژه ۱۸ مورد است؛ منبع شمارشِ دقیق `INDEX.json` و نمایهٔ canonical router است.
 منابع اصلی در `library/` و `psk/data/` هستند. بعد از تغییرشان، از ریشه
 `python3 scripts/sync_skill_library.py` را اجرا کنید. CI با `--check` ناهماهنگی نسخهٔ قابل‌نصب،
