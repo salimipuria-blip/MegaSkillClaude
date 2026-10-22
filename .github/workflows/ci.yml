@@ -188,7 +188,20 @@ jobs:
         with:
           node-version: 22
       - run: npm ci --no-audit --no-fund
-      - run: npx playwright install --with-deps chromium
+      - name: Cache Playwright browsers
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ runner.os }}-${{ hashFiles('fjcod/package-lock.json') }}
+      - name: Install Chromium (bounded step, retried once)
+        timeout-minutes: 5
+        run: |
+          for attempt in 1 2; do
+            npx playwright install --with-deps chromium && exit 0
+            echo "playwright install failed on attempt $attempt; retrying in 20s" >&2
+            sleep 20
+          done
+          exit 1
       - run: npm run build
       - name: Browser smoke (desktop + 390x844 mobile viewport)
         env:

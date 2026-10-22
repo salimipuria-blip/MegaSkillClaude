@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { AlertTriangle, Flame, Lightbulb, Phone, Repeat, Target, TrendingUp, Trophy } from 'lucide-react';
+import { TriangleAlert, Flame, Lightbulb, Phone, Repeat, Target, TrendingUp, Trophy } from 'lucide-react';
 import { can, currentUser, markContacted, saveStoreTarget, useStore } from '../core/store';
 import { comparePeriod, growthStreak, insights, leaderboard, repeatRate, sellerOf, targetProgress, weeklySeries, winBackList } from '../core/growth';
 import { addDays, fa, fa0, jDate, jMonthName, parseNum, startOfJMonth, toman, tomanShort } from '../lib/format';
@@ -148,7 +148,7 @@ export function Growth() {
           <div className="card-head"><h3 className="row" style={{ gap: 8 }}><Lightbulb size={16} color="var(--accent)" /> اقدامات پیشنهادی</h3></div>
           {d.tips.map((t, i) => (
             <div key={i} className={`insight ${t.tone}`}>
-              <span className="dot">{t.tone === 'warn' ? <AlertTriangle size={16} /> : t.tone === 'good' ? <TrendingUp size={16} /> : <Lightbulb size={16} />}</span>
+              <span className="dot">{t.tone === 'warn' ? <TriangleAlert size={16} /> : t.tone === 'good' ? <TrendingUp size={16} /> : <Lightbulb size={16} />}</span>
               <div><b>{t.title}</b><div className="subtle">{t.action}</div></div>
             </div>
           ))}

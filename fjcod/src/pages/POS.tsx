@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState } from 'react';
-import { Barcode, CreditCard, Inbox, Minus, PackageSearch, Plus, Printer, Send, ShoppingBag, Trash2, UserPlus, UserRound, Wallet, X } from 'lucide-react';
+import { Barcode, CreditCard, Inbox, Minus, PackageSearch, Plus, Printer, Send, ShoppingBag, Trash, UserPlus, UserRound, Wallet, X } from 'lucide-react';
 import type { PageId } from '../App';
 import type { Customer, PaymentMethod, Sale } from '../core/types';
 import { buildLines, can, checkout, currentUser, holdCart, openShift, openShiftOf, removeHeldCart, saveCustomer, useStore } from '../core/store';
@@ -148,7 +148,7 @@ export function POS({ go }: { go: (p: PageId) => void }) {
                       <div className="subtle">{by?.name} · {c ? c.name + ' · ' : ''}{fa(h.items.reduce((a, i) => a + i.qty, 0))} قلم · {jDateTime(h.at)}</div>
                     </div>
                     <button className="btn btn-sm btn-primary" onClick={() => loadHeld(h.id)} disabled={heldCartId === h.id}>بارگذاری</button>
-                    <button className="btn btn-sm btn-ghost btn-danger" onClick={() => run(() => removeHeldCart(h.id), 'سبد حذف شد.')} aria-label="حذف سبد"><Trash2 size={15} /></button>
+                    <button className="btn btn-sm btn-ghost btn-danger" onClick={() => run(() => removeHeldCart(h.id), 'سبد حذف شد.')} aria-label="حذف سبد"><Trash size={15} /></button>
                   </div>
                 );
               })}
