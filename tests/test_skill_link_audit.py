@@ -122,6 +122,44 @@ class ClassifierTests(unittest.TestCase):
         self.assertEqual(unclosed, {6, 7})
         self.assertNotIn(7, closed, 'a dead link must not hide behind a fence the file never closes')
 
+    def test_a_longer_marker_run_is_not_closed_by_a_shorter_one(self):
+        """CommonMark 4.5: the closer needs the same character and at least as many markers.
+
+        `library/github-skills/aws-cost-optimize/SKILL.md` nests a bash sample inside a four-backtick
+        markdown block. Pairing on the marker character alone closed the outer block at the inner
+        fence, then read the real closer as a new opener and called the file unclosed. Across the
+        3,011 imported skills that mistake mis-paired 37 files (1,435 lines on the wrong side of a
+        fence) and called 26 of them broken where the spec says 16.
+        """
+        lines = [
+            'prose',                       # 1
+            '````markdown',                # 2 opens with four backticks
+            '```bash',                     # 3 three markers and an info string: content
+            'rm -rf /tmp/x',               # 4
+            '```',                         # 5 three markers: too short to close line 2
+            '````',                        # 6 four markers, no info string: closes
+            '1. a real step',              # 7 prose
+        ]
+        closed, unclosed = audit_module.code_regions(lines)
+        self.assertEqual(closed, {2, 3, 4, 5, 6})
+        self.assertEqual(unclosed, set())
+        self.assertNotIn(7, closed, 'prose after the wrapper must stay prose')
+
+    def test_a_fence_indented_four_spaces_is_an_indented_code_block_not_a_fence(self):
+        """`markdown-to-html` shows nested samples this way; counting them as fences mis-pairs files."""
+        lines = [
+            '```text',                     # 1 opens
+            '    ```markdown',             # 2 four spaces: content of the outer block
+            '    your code here',          # 3
+            '    ```',                     # 4 four spaces: content
+            '```',                         # 5 closes
+            'see [notes](notes.md)',       # 6 prose
+        ]
+        closed, unclosed = audit_module.code_regions(lines)
+        self.assertEqual(closed, {1, 2, 3, 4, 5})
+        self.assertEqual(unclosed, set())
+        self.assertNotIn(6, closed)
+
     def test_placeholders_and_external_targets_are_not_paths(self):
         self.assertEqual(audit_module.classify('{slug}/notes.md'), 'placeholder')
         self.assertEqual(audit_module.classify('chapters/ch01-<slug>.md'), 'placeholder')

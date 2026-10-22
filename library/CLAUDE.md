@@ -29,6 +29,8 @@ commands:                       # all run green 2026-10-18 from repo root
   links:    python3 scripts/check_skill_links.py --check    # "unflagged: [] · findings: 0"
   links_full: python3 scripts/check_skill_links.py --verbose  # سطل‌ها + توجیه‌های بررسی‌شده
   provenance: python3 -m unittest tests.test_github_skill_provenance   # 10/10 (نام‌گذاری mp-* و _licenses)
+  quality:  python3 scripts/report_skill_quality.py --check            # "quality report is current"
+  quality_full: python3 scripts/report_skill_quality.py --json         # سنجهٔ هر مهارت + ۵۰ ضعیف‌ترین
   hashes:   python3 scripts/verify_skills.py                    # 3020 SKILL.md hashed
   install:  bash library/install.sh [project-path]              # copies the 18 project skills
 status: healthy
@@ -82,6 +84,7 @@ python3 scripts/check_skill_links.py --verbose
 
 - ✅ **P1 — لینکِ محلیِ مرده بدون پرچم `incomplete`** (تسک ۹۰ از `docs/AGENT_TASKS_100.md`): `scripts/check_skill_links.py` جای آن snippet را گرفت؛ ۶۷ موردِ بی‌پرچم به ۳ پرچمِ واقعی (`git-guardrails-claude-code`, `qdrant-search-quality`, `wizard`) + ۳۶ لینکِ داخلِ بلوکِ کدِ بسته (قالبِ خروجی، نه وعدهٔ فایل) + ۲۶ placeholder + ۱۹۰ ارجاعِ بیرونِ پوشه + ۲ پیوندِ «خواهر»ِ بررسی‌شده تجزیه شد. خروجی: `unflagged: []`. شمارها **۲۸۱→۲۸۴ ناقص** و **۵٬۷۴۸→۵٬۷۴۵ قابل‌مسیریابی** در همهٔ اسناد و تست‌ها هم‌زمان شد. گیت: `tests/test_skill_link_audit.py` (۱۳ تست) + گامِ CI.
 - ✅ **P2 — سیاست نام‌گذاری `mp-*`** (تسک ۹۱): در `github-skills/README.md` مستند شد؛ هر ۱۰ مورد از `mattpocock/skills` هستند و هر ۱۰ پیشوند **ضروری** است چون نامِ بدونِ پیشوند از مخزنِ دیگری در ایندکس گرفته شده. گیت: `tests/test_github_skill_provenance.py`.
+- ✅ **P2 — گزارش کیفیت مهارت‌ها** (تسک ۹۳): `scripts/report_skill_quality.py` هر ۳٬۰۲۹ `library/**/SKILL.md` را با شش سیگنالِ قابلِ بازبینی (طولِ prose، workflow، خروجیِ تعریف‌شده، چک‌لیست، ساختارِ سرفصل، نمونهٔ کد) امتیاز می‌دهد و `library/QUALITY_REPORT.md` را قطعی بازتولید می‌کند؛ ۵۰ ضعیف‌ترین با دلیلِ هر ردیف. میانگین ۷۰٫۸، میانهٔ ۷۲، و ۶ مهارت در باندِ `stub`. حینِ ساختنش **باگِ قاعدهٔ fence** در `check_skill_links.py` پیدا شد (بک‌تیکِ کمتر fence بلندتر را نمی‌بندد؛ تورفتگیِ ۴ فاصله اصلاً fence نیست) و مطابق CommonMark اصلاح شد: ۳۷ فایل درست جفت شدند و «فایلِ با fence باز» از ۲۶ (اشتباه) به ۱۶ (واقعی) رسید. سطل‌های ممیزیِ لینک بی‌تغییر ماندند چون ممیزی **پیش از** قاعدهٔ fence وجودِ فایل را بررسی می‌کند. گیت: `tests/test_skill_quality_report.py` (۲۳ تست) + ۲ تستِ تازه در `tests/test_skill_link_audit.py` (۱۵/۱۵) + گامِ CI.
 - ✅ **P2 — `_licenses/`** (تسک ۹۲): ۴۶ فایل برای ۲۹ مخزن **توجیه شد** (حذف نیازمندِ مجوزِ مالک است): هر ۲۹ مخزن متنِ مجوزشان هست، ۴۵ تایِ ۴۶ توسط `SOURCE.md` ارجاع شده‌اند، و تنها فایلِ بی‌ارجاع (`sickn33__agentic-awesome-skills__skills_remote-gpu-trainer_LICENSE`) با دلیل در README نام برده شده. sync سبز و کپیِ پلاگین بایت‌به‌بایت برابر است.
 
 **باز (نیازمندِ تصمیمِ مالک، بلاک‌کنندهٔ CI نیست):** دو مورد در `owner_actions` بالا — کپیِ یتیمِ `_licenses` در درختِ پلاگین، و اینکه آیا فایل‌های همراهِ ۳ مهارتِ پرچم‌خورده از مبدأ وارد شوند (یکی‌شان اسکریپتِ shellِ شخصِ ثالث است).

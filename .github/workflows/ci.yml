@@ -99,6 +99,8 @@ jobs:
       # flagged `incomplete`, so the router never hands out instructions that dead-end.
       - name: Imported skill links are flagged or justified
         run: python3 scripts/check_skill_links.py --check
+      - name: Skill quality report is current
+        run: python3 scripts/report_skill_quality.py --check
       - run: python -m unittest discover -s tests -p "test_*.py" -v
 
   fjcod:
