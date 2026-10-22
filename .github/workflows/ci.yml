@@ -178,7 +178,7 @@ jobs:
   # E2E_STRICT=1 turns a missing browser into a failure instead of a silent skip.
   fjcod-e2e:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     defaults:
       run:
         working-directory: fjcod
@@ -193,12 +193,13 @@ jobs:
         with:
           path: ~/.cache/ms-playwright
           key: playwright-chromium-${{ runner.os }}-${{ hashFiles('fjcod/package-lock.json') }}
-      - name: Install Chromium (bounded step, retried once)
-        timeout-minutes: 5
+          restore-keys: playwright-chromium-${{ runner.os }}-
+      - name: Install Chromium (each attempt bounded, one retry)
+        timeout-minutes: 10
         run: |
           for attempt in 1 2; do
-            npx playwright install --with-deps chromium && exit 0
-            echo "playwright install failed on attempt $attempt; retrying in 20s" >&2
+            timeout 240 npx playwright install --with-deps chromium && exit 0
+            echo "playwright install attempt $attempt failed or timed out; retrying in 20s" >&2
             sleep 20
           done
           exit 1
