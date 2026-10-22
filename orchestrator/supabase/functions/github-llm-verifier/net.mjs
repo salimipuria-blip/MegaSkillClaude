@@ -63,3 +63,19 @@ export function isSafePublicHttpsUrl(value) {
     return false;
   }
 }
+
+/**
+ * Decide whether a resolved DNS answer set is safe to connect to.
+ *
+ * Fails closed on purpose, because this is the DNS-rebinding guard: the same hostname can answer a
+ * public address on one lookup and a private one on the next, and the connection may land on either.
+ * So an empty answer set is refused (nothing was proven public), a junk entry is refused, and a
+ * single private address among public ones is refused — `some` here would be the vulnerability.
+ *
+ * @param {unknown} answers addresses as returned by the resolver (strings, no brackets)
+ * @returns {boolean} true only when every answer is a public address
+ */
+export function dnsAnswersArePublic(answers) {
+  if (!Array.isArray(answers) || answers.length === 0) return false;
+  return answers.every((ip) => typeof ip === 'string' && ip.trim() !== '' && ipIsPublic(ip.trim()));
+}

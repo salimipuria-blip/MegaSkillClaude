@@ -4,8 +4,8 @@
   "skills": 6029,
   "triggers": 30203,
   "colliding_triggers": 0,
-  "incomplete_skills": 281,
-  "routable_skills": 5748
+  "incomplete_skills": 284,
+  "routable_skills": 5745
  },
  "domains": {
   "agents-automation": 765,
@@ -75748,7 +75748,8 @@
     "Diagnoses and improves Qdrant search relevance.",
     "Diagnoses and improves Qdrant search relevance. Use when someone reports 'search results are bad', 'wrong results', 'low precision', 'low recall', 'irrelevant m"
    ],
-   "origin": "github"
+   "origin": "github",
+   "incomplete": true
   },
   {
    "name": "mdm-device-management",
@@ -78368,7 +78369,8 @@
     "Generate an interactive bash wizard that walks a human throu",
     "Generate an interactive bash wizard that walks a human through steps only they can perform. Use when provisioning infrastructure, setting up credentials or CI s"
    ],
-   "origin": "github"
+   "origin": "github",
+   "incomplete": true
   },
   {
    "name": "git-guardrails-claude-code",
@@ -78381,7 +78383,8 @@
     "Set up Claude Code hooks to block dangerous git commands (pu",
     "Set up Claude Code hooks to block dangerous git commands (push, reset --hard, clean, branch -D, etc.) before they execute. Use when user wants to prevent destru"
    ],
-   "origin": "github"
+   "origin": "github",
+   "incomplete": true
   },
   {
    "name": "migrate-to-shoehorn",

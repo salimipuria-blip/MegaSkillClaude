@@ -80,7 +80,7 @@ class RouterRankingTest(unittest.TestCase):
     def test_both_indexes_mirror_the_canonical_incomplete_flags(self):
         github = json.loads((ROOT / "library/github-skills/INDEX.json").read_text())
         expected = {s["name"] for s in github if s.get("incomplete")}
-        self.assertEqual(len(expected), 281)
+        self.assertEqual(len(expected), 284)
         for directory in COPIES.values():
             index = json.loads((directory / "references/triggers.json").read_text())
             self.assertEqual({s["name"] for s in index["skills"] if s.get("incomplete")}, expected)

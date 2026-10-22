@@ -5,8 +5,8 @@
 ## ۱) وضعیت مشترک
 - ۱۲ پروژه/زیرپروژهٔ مدیریت‌شده (به‌علاوهٔ خود مخزن)؛ دفتر هرکدام در جدول `README.md` و دستور توسعهٔ هرکدام در [`docs/directives/`](docs/directives/README.md) است.
 - `node scripts/doctor.mjs <id>` مرجع فرمان‌های دقیق هر پروژه است؛ `--list` فهرست کامل را نشان می‌دهد. اکنون **۴۲ گام در ۱۳ دامنه** (۳۸ تا پیش از ۲۰۲۶-۱۰-۱۴).
-- Router canonical: **۶٬۰۲۹** مهارت = ۳٬۰۰۰ core + ۱۸ پروژه + ۳٬۰۱۱ GitHub؛ **۵٬۷۴۸ routable**، **۲۸۱ incomplete** و **۳۰٬۲۰۳ trigger**.
-- تست‌های ریشه: **۱۲۲ تست ریشه** (پایتون) با `python3 -m unittest discover -s tests -p "test_*.py"`. نگهبانِ همین اعداد `tests/test_status_counters.py` است: شمارنده‌های بخش «وضعیت مشترک» را به `triggers.json`، `library/github-skills/INDEX.json`، `scripts/doctor.mjs` و `mobile/skills-index.json` قفل می‌کند، ارجاع‌های `doctor.mjs <id>` و لینک/پوشه‌های `docs/directives/README.md` را resolve می‌کند، و اعداد داخل بخش‌های تاریخ‌دار را به‌عنوان snapshot دست نمی‌زند. قاعدهٔ انسانی‌اش بند ۷ «قواعد مشترک» در [`docs/directives/README.md`](docs/directives/README.md) است.
+- Router canonical: **۶٬۰۲۹** مهارت = ۳٬۰۰۰ core + ۱۸ پروژه + ۳٬۰۱۱ GitHub؛ **۵٬۷۴۵ routable**، **۲۸۴ incomplete** و **۳۰٬۲۰۳ trigger**.
+- تست‌های ریشه: **۱۵۲ تست ریشه** (پایتون) با `python3 -m unittest discover -s tests -p "test_*.py"`. نگهبانِ همین اعداد `tests/test_status_counters.py` است: شمارنده‌های بخش «وضعیت مشترک» را به `triggers.json`، `library/github-skills/INDEX.json`، `scripts/doctor.mjs` و `mobile/skills-index.json` قفل می‌کند، ارجاع‌های `doctor.mjs <id>` و لینک/پوشه‌های `docs/directives/README.md` را resolve می‌کند، و اعداد داخل بخش‌های تاریخ‌دار را به‌عنوان snapshot دست نمی‌زند. قاعدهٔ انسانی‌اش بند ۷ «قواعد مشترک» در [`docs/directives/README.md`](docs/directives/README.md) است.
 - CI شامل typecheck/build/test، health، skill sync، PWA، دارایی‌های برند و typecheck زیرپروژهٔ Motion است.
 
 ## ۲) اصلاحات بین‌پروژه‌ای
@@ -378,3 +378,45 @@ pushِ اولِ این دور (`4ccf6799`) سه job را قرمز کرد: `commi
 
 ### ۱۰٫۹) مجوزها
 انجام شد (با همان مجوزِ قبلی): commit و push روی شاخهٔ کاریِ همین PR (fast-forward، بدونِ force). انجام نشد: merge/close/ready-for-review هر PR، release/tag، deploy، force push، بازنویسیِ تاریخچه، **هر حذفی** (از جمله فایلِ یتیمِ ۱۰٫۵)، DDL/DML/migration/seed، تغییرِ secret/permission/webhook، سرویسِ پولی.
+
+## ۱۱) لاگ جریان — ۲۰۲۶-۱۰-۲۲ (پنج تسکِ دیگر: ۹۰، ۹۱، ۹۲، ۹۴، ۱۸ + بازیابیِ درخت)
+
+### ۱۱٫۱) بازیابی پیش از کار
+این checkout بار سوم از نو clone شده بود: `HEAD` روی `79f22db5` (= `main`) افتاده بود و هر ۴ commitِ شاخه از تاریخِ محلی غایب بودند، در حالی که محتوایِ فایل‌ها در درختِ کاری مانده بود. پیش از هر ویرایشی سنجیده شد: `gh pr view 98` ⇒ head `fc45cc67` سالم، `git ls-remote` ⇒ همان SHA، و `git diff origin/…` ⇒ **صفر اختلافِ محتوایی** (تنها ۱۴ فایلِ untracked که در ایندکس نبودند). بازیابی با `git fetch` + `git reset --mixed` (بدونِ `--hard`) و اثباتِ بایتی: `git write-tree` == `HEAD^{tree}` == `522289b6…`، `porcelain` صفر. تاریخِ محلی همچنان **shallow با ۵ commit** است ⇒ برای پرسش‌های تاریخی فقط به اسنادِ داخلِ مخزن استناد شد، نه به `git log`.
+
+### ۱۱٫۲) تسک ۹۰ (P1) — لینکِ محلیِ مرده در مهارت‌های وارداتی
+`library/CLAUDE.md` یک snippetِ ad-hoc داشت با baselineِ ۲۰۲۶-۱۰-۱۸: **۱۱۴ مهارت با لینکِ مرده، ۶۷ بدونِ پرچم**. اول همان snippet **verbatim** اجرا و همان ۱۱۴/۶۷ بازتولید شد، بعد جای خودش را به `scripts/check_skill_links.py` داد.
+قراردادِ داده از خودِ داده استخراج شد نه از حدس: از **۶۷۸** `missing_files` ثبت‌شده برای ۲۸۱ مهارتِ پرچم‌دار، **۶۷۷** مسیرِ داخلِ پوشهٔ مهارت و ۱ زیرمهارتِ تودرتو بود و **صفر** مسیرِ `../`، صفر placeholder، صفر پیوندِ پوشه ⇒ قاعده: «لینکِ نسبیِ داخلِ پوشه که فایلِ واقعی نام می‌برد = وعدهٔ فایلِ همراه؛ اگر نیست ⇒ `incomplete`».
+تجزیهٔ ۶۷ مورد (هر کدام خوانده شد):
+| دسته | تعداد | قاعده |
+|---|---|---|
+| پرچمِ واقعی گرفت | **۳ مهارت / ۴ فایل** | `git-guardrails-claude-code` («The bundled script is at: `scripts/block-dangerous-git.sh`» — پوشه فقط SKILL.md و SOURCE.md دارد)، `qdrant-search-quality` (`diagnosis/SKILL.md`, `search-strategies/SKILL.md`؛ مطابقِ سابقهٔ `templates/SKILL.md` در ۲۸۱ پرچمِ موجود)، `wizard` («The delightful UX is already solved by `template.sh`») |
+| `code_sample` | ۳۶ لینک | داخلِ بلوکِ کدِ **بسته** ⇒ قالبِ خروجی است نه وعدهٔ فایل. نمونه‌ها: «### Generated SKILL.md» در `microsoft-skill-creator` (که بدونِ این قاعده اشتباهاً پرچم می‌گرفت)، فهرستِ `llms.txt` در `create-llms`/`update-llms`، و `registry["vit_h"](checkpoint="x.pth")` در `segment-anything-model` که رجکسِ لینک آن را می‌گرفت |
+| `upstream` | ۱۹۰ لینک | `../../DESIGN.md`، `../../../c-level-advisor/…` ⇒ در چیدمانِ تختِ portable **نمی‌توانند** وجود داشته باشند (همان دلیلِ ۴۲ مهارتِ بی‌پرچمِ امروز) |
+| `placeholder` | ۲۶ لینک | `{slug}`، `<type>`، `src`، `url`، `2` |
+| `justified` (بررسیِ دستی، سنجاق‌شده به شمارهٔ خط) | ۲ لینک | `self-improving-agent:162` («sister plugin in this repo» — پیوندِ پوشه) و `security-pen-testing:305` (سطرِ جدولِ see-also به مهارتِ دیگرِ همان سوئیت) |
+
+**بلوکِ کدِ fail-closed:** ۱۶ فایل fence فرد دارند، پس «داخلِ کد» فقط وقتی پذیرفته می‌شود که بلوک **بسته** شده باشد؛ اگر فایلی با fence باز تمام شود، لینک‌هایش پروزا حساب می‌شوند و در `unclosed_fence` گزارش می‌گیرند (امروز صفر).
+اثر: **۲۸۱→۲۸۴ ناقص، ۵٬۷۴۸→۵٬۷۴۵ قابل‌مسیریابی**. فایل‌های همراه از مبدأ **آورده نشدند** — یکی‌شان اسکریپتِ shellِ شخصِ ثالث است و قاعدهٔ `library/CLAUDE.md` اجرای اسکریپتِ وارداتی را ممنوع کرده؛ آوردنش تصمیمِ مالک است و در `owner_actions` ثبت شد.
+هم‌گامیِ شمارش‌ها (پذیرشِ صریحِ تسک): `INDEX.json` (۳ ورودی، diff دقیقاً ۱۶ سطر) + ۳ `SOURCE.md` (خطِ `INCOMPLETE:` با همان boilerplate یکتا، به‌عنوانِ سطرِ آخر) + `sync_skill_library.py` (۹ فایل: دو ایندکس، ۴ domain، ۳ کپیِ portable SOURCE.md) + `mobile/build-index.py` (ایندکس و `sw.js`: `mega-mobile-v1-db2702efc8f36526`، ۲٬۲۴۲٬۶۳۵B خام / ۴۰۹٬۶۱۷B gzip) + **۳۳ جایِ مستند/تست** در ۱۵ فایل: هر دو `SKILL.md` (خطوطِ ۳ و ۱۸)، `plugin.json`، `library/README.md` (انگلیسی و فارسی)، `library/github-skills/README.md`، README پلاگین، `CLAUDE.md` پلاگین (۲ جا)، `PROGRESS.md` پلاگین، دستورِ ۰۸ (۲ جا)، دستورِ ۱۱ (۳ جا)، `mobile/CLAUDE.md` (۲ جا)، `mobile/README.md`، `mobile/index.html`، `mobile/manifest.webmanifest`، `ROADMAP.md`، و سه تست (`test_project_documentation`، `test_mega_skills_router`، `test_skill_router_sync`). سطرهاى تاریخ‌دار (`PROGRESS.md:۵۷/۱۱۶/۱۵۹`، `docs/REPO_HARDENING.md`، `hermes/ROADMAP.md`، `mobile/PROGRESS.md`، `mobile/PROFESSIONAL_GUIDE.md`، `library/PROFESSIONAL_GUIDE.md`) عمداً **منجمد** ماندند.
+
+### ۱۱٫۳) تسک ۹۴ (P1) — گاردِ DNS-rebinding
+گارد در `orchestrator/supabase/functions/github-llm-verifier/index.ts` **از قبل** بود (`resolveHostPublic` پیش از هر `fetch`، با `redirect:"manual"` و اعتبارسنجیِ هر hop)، ولی قاعدهٔ تصمیمش inline و **بدونِ تست** بود. منتقل شد به `dnsAnswersArePublic()` در `net.mjs`: fail-closed روی مجموعهٔ خالی، ورودیِ junk، و **یک** آدرسِ خصوصی میانِ عمومی‌ها (همان ترفندِ rebinding؛ `some` به‌جای `every` خودِ حفره است). `net.test.mjs` از ۴ به **۷ تست** رسید + نگهبانِ ایستا روی `index.ts` (import از `net.mjs`، ترتیبِ resolve **پیش از** fetch، `redirect:"manual"`، سقفِ hop، و شمارِ محل‌های `fetch(` = ۲ تا محلِ سومِ بی‌بررسی اضافه نشود).
+**یافتهٔ مهم:** این تست‌ها در **هیچ jobِ CI اجرا نمی‌شدند** (jobِ `orchestrator` فقط `github-admin-gateway/*.test.mjs` را می‌دوید) ⇒ گامِ «Free LLM mesh SSRF and DNS-rebinding regressions» اضافه شد. این mesh فقط GET می‌زند (`method:"POST"` در فایل نیست) و تست همین را قفل کرده تا POSTِ بعدی بدونِ گارد نیاید.
+
+### ۱۱٫۴) تسک ۱۸ (P2) — نسخه و CHANGELOG پلاگین
+`plugins/mega-skills-router/CHANGELOG.md` ساخته شد (Keep a Changelog + semver با تعریفِ MAJOR/MINOR/PATCH مخصوصِ همین پلاگین) و نسخه **۱٫۲٫۰ → ۱٫۳٫۰** (MINOR: فلگ‌های تازه و fallback هم‌معنا بدونِ شکستِ قرارداد) هم‌زمان در `plugin.json`، `marketplace.json` ریشه و تازه‌ترین مدخلِ CHANGELOG. `tests/test_plugin_versioning.py` (۷ تست) این سه‌جا، یکتایی/نزولیِ بودن/تاریخِ مدخل‌ها، پُربودنِ بخش‌ها، و **انطباقِ مدخلِ جاری با `counts` واقعیِ ایندکس** را قفل می‌کند ⇒ تغییرِ شمار بدونِ bump و مدخلِ تازه ممکن نیست. تاریخِ نسخه‌های پیش از ۱٫۲٫۰ **بازسازی نشد**: tag وجود ندارد و این clone تاریخِ `plugin.json` را پیش از `79f22db5` نشان نمی‌دهد؛ مدخلِ ۱٫۲٫۰ به `plugins/mega-skills-router/PROGRESS.md` استناد می‌کند و همان‌جا نوشته شده که tag برای تأییدش نیست.
+
+### ۱۱٫۵) تسک ۹۱ و ۹۲ (P2) — نام‌گذاری و مجوزها
+**۹۱:** هر ۱۰ مهارتِ `mp-*` از `mattpocock/skills` هستند و frontmatterشان نامِ بدونِ پیشوند دارد؛ اندازه‌گیری نشان داد **هر ۱۰ پیشوند ضروری است** چون همان نام از مخزنِ دیگری (`sickn33/agentic-awesome-skills`, `alirezarezvani/claude-skills`, `phuryn/pm-skills`) در ایندکس هست. سیاست در `library/github-skills/README.md` مستند شد (نامِ پوشه canonical، frontmatter دست‌نخورده، قاعدهٔ importِ آینده) با جدولی که تست آن را **سطر‌به‌سطر با `INDEX.json`** مقایسه می‌کند — نخستین نسخهٔ آن جدول را اشتباه نوشتم و همین تست ۴ سطرِ غلط را لو داد.
+**۹۲:** `_licenses/` **توجیه** شد نه پاک (حذف = مجوزِ مالک): ۴۶ فایل، هر ۲۹ مخزن پوشش داده شده، ۵ مخزن چند LICENSE مسیرمحور دارند (۱۱/۴/۳/۲/۲ + ۲۴ مخزن یکی)، ۴۵ تایِ ۴۶ توسط `SOURCE.md` ارجاع شده‌اند، و تنها فایلِ بی‌ارجاع (`sickn33__agentic-awesome-skills__skills_remote-gpu-trainer_LICENSE`) با دلیلِ ماندنش در README نام برده شده. تست مجموعهٔ بی‌ارجاع را به **دقیقاً همین یک فایل** قفل می‌کند ⇒ noticeِ سرگردانِ دوم قرمز می‌شود. (کپیِ یتیمِ `_licenses` در درختِ پلاگین — یافتهٔ §۱۰٫۵ — همچنان منتظرِ تصمیمِ مالک است و با `KNOWN_ORPHAN_DIRECTORIES` نگهبانی می‌شود.)
+
+### ۱۱٫۶) جهش‌ها و گیت‌ها
+**۱۳ جهش، همه قرمز:** ۵ روی ممیزیِ لینک (بی‌پرچم‌کردنِ `wizard`، کوتاه‌کردنِ `missing_files`، حذفِ خطِ `INCOMPLETE:`، جابه‌جاییِ سنجاقِ توجیه از ۱۶۲ به ۱۶۳، بازگرداندنِ `wizard/template.sh`) · ۴ روی نام‌گذاری/مجوز (مخزنِ اشتباه در جدولِ README، شمارِ اشتباهِ مجوز، حذفِ نامِ noticeِ بی‌ارجاع، ارجاعِ SOURCE.md به noticeِ ناموجود) · ۴ روی نسخه (اختلافِ marketplace، تاریخِ آینده، ترتیبِ معکوسِ مدخل‌ها، حذفِ ادعای `--explain`) · و ۴ روی گاردِ DNS (`every`→`some`، حذفِ `resolveHostPublic` از `safeGetJson`، `redirect:"follow"`، inline کردنِ قاعده به‌جای helper). بازگردانیِ همه با `cp -p` و **تأییدِ SHA-256**؛ فایلِ موقتیِ `wizard/template.sh` هم ساخته و پاک شد (untracked، بدونِ حذفِ tracked).
+**گیت‌ها:** `discover` ⇒ **Ran 152 tests — OK** (پیش از این دور ۱۲۲) · ممیزیِ لینک ⇒ `unflagged: [] · findings: 0` · `sync --check` ⇒ **0 differing files** · `scan_third_party_skills.py --check` ⇒ current (۳٬۰۱۱ فایل، ۱۶۶ یافته) · `mobile/build-index.py --check` ⇒ سالم با fingerprint تازه · `node --test …/net.test.mjs` ⇒ **۷/۷** · `scan_secrets.py` و `repo_health_check.sh` در پاسِ نهایی.
+
+### ۱۱٫۷) NOT RUN / بلاک
+· آوردنِ فایلِ همراه از مبدأ (`raw.githubusercontent.com` در allowlist این محیط نیست؛ تصمیمش هم با مالک) · حذفِ noticeِ بی‌ارجاع و کپیِ یتیمِ `_licenses` (نیازمندِ مجوز) · **تسک ۹۳** (گزارشِ کیفیتِ مهارت‌ها) و ۱۲/۱۵ (حجمِ نصب و ایندکسِ پیش‌توکن‌شده) به دورِ بعد ماندند تا همین پنج تسک کامل و سبز land شوند · سوئیتِ هرمس/fjcod/lithos (دست‌نخورده؛ وابستگی‌ها نصب نیستند) · Deno check واقعی روی `github-llm-verifier/index.ts` در این محیط (Deno نصب نیست؛ CI انجامش می‌دهد).
+
+### ۱۱٫۸) مجوزها
+انجام شد (با همان مجوزِ قبلی): commit و push روی شاخهٔ کاریِ همین PR (fast-forward). انجام نشد: merge/close/ready-for-review، release/tag، deploy، force push، بازنویسیِ تاریخچه، **هر حذفی** (فایلِ همراه، noticeِ بی‌ارجاع، کپیِ یتیم)، DDL/DML/migration/seed، تغییرِ secret/permission/webhook، سرویسِ پولی.

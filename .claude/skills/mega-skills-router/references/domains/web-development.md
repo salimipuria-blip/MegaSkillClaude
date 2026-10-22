@@ -748,7 +748,7 @@ Skills: 1840
 - `gguf-quantization` → `library/github-skills/gguf-quantization/SKILL.md`
 - `gha-security-review` → `library/github-skills/gha-security-review/SKILL.md` [incomplete: excluded from default routing]
 - `ginkgo-cloud-lab` → `library/github-skills/ginkgo-cloud-lab/SKILL.md`
-- `git-guardrails-claude-code` → `library/github-skills/git-guardrails-claude-code/SKILL.md`
+- `git-guardrails-claude-code` → `library/github-skills/git-guardrails-claude-code/SKILL.md` [incomplete: excluded from default routing]
 - `git-hooks-automation` → `library/github-skills/git-hooks-automation/SKILL.md`
 - `git-pr-workflows-git-workflow` → `library/github-skills/git-pr-workflows-git-workflow/SKILL.md`
 - `git-workflow-and-versioning` → `library/github-skills/git-workflow-and-versioning/SKILL.md`
@@ -1796,7 +1796,7 @@ Skills: 1840
 - `windows-server` → `library/github-skills/windows-server/SKILL.md`
 - `winmd-api-search` → `library/github-skills/winmd-api-search/SKILL.md`
 - `winui3-migration-guide` → `library/github-skills/winui3-migration-guide/SKILL.md`
-- `wizard` → `library/github-skills/wizard/SKILL.md`
+- `wizard` → `library/github-skills/wizard/SKILL.md` [incomplete: excluded from default routing]
 - `wjttc-builder` → `library/github-skills/wjttc-builder/SKILL.md`
 - `wjttc-tester` → `library/github-skills/wjttc-tester/SKILL.md`
 - `woocommerce-store-fa` → `psk/data/skills/woocommerce-store-fa/SKILL.md`

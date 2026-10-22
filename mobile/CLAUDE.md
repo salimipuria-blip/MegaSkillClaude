@@ -7,7 +7,7 @@ project:
   name: mega-mobile-console
   purpose: >
     PWA فارسی و آفلاین برای آیفون: بازکردن همین مخزن در vscode.dev/github.dev،
-    جست‌وجوی ۵٬۷۴۸ مهارت قابل‌مسیریابی روی دستگاه، کپی پرامپت آماده و دستور تست هر پروژه.
+    جست‌وجوی ۵٬۷۴۵ مهارت قابل‌مسیریابی روی دستگاه، کپی پرامپت آماده و دستور تست هر پروژه.
   stack: [HTML, CSS, "ES modules (no build step)", "Service Worker", "Python 3 generator"]
   backend: none            # هیچ API، کلید، کوکی یا دادهٔ کاربر به سرور نمی‌رود
   entrypoints:
@@ -20,7 +20,7 @@ project:
   generated: [mobile/skills-index.json, "const CACHE in mobile/sw.js"]   # دستی ویرایش نشوند
   commands:  # همه از ریشهٔ مخزن، در 2026-10-18 اجرا شدند
     rebuild: python3 mobile/build-index.py            # بعد از هر تغییر asset یا مهارت
-    check:   python3 mobile/build-index.py --check    # "OK (5748 routable skills; ... 2243860 bytes raw / 409912 gzipped)"
+    check:   python3 mobile/build-index.py --check    # "OK (5745 routable skills; ... 2242635 bytes raw / 409617 gzipped)"
     syntax:  node --check mobile/app.js && node --check mobile/sw.js && node --check mobile/search.mjs
     unit:    node --test mobile/search.test.mjs mobile/index.test.mjs   # 17/17
     repo:    python3 -m unittest discover -s tests -p test_mobile_console.py   # 8/8
@@ -39,7 +39,7 @@ project:
 ## نقشهٔ کد
 | فایل | مسئولیت | نکتهٔ حساس |
 |---|---|---|
-| `index.html` | پوستهٔ RTL، ۴ تب، متادیتای iOS (`apple-mobile-web-app-*`, `viewport-fit=cover`) | شمارنده‌ها (۵٬۷۴۸ و ۶٬۰۲۹) با تست به منبع canonical قفل‌اند |
+| `index.html` | پوستهٔ RTL، ۴ تب، متادیتای iOS (`apple-mobile-web-app-*`, `viewport-fit=cover`) | شمارنده‌ها (۵٬۷۴۵ و ۶٬۰۲۹) با تست به منبع canonical قفل‌اند |
 | `app.js` | `PROJECTS` (۱۳ کارت)، تب‌ها، کپی/toast، چیپ حوزه، شیت مهارت (Esc می‌بندد) | هر رشتهٔ داده‌ای فقط با `escapeHtml` وارد HTML شود |
 | `search.mjs` | `normalizeText` → `tokenize` → `buildSearchIndex` (یک‌بار) → `searchSkills` | مرتب‌سازی: `hits` ↓، `score` ↓، `position` ↑ |
 | `sw.js` | precache کامل، cache-first، پاک‌کردن فقط `mega-mobile-*` قدیمی | فقط GET هم‌origin داخل scope؛ fallback پوسته فقط برای navigate |

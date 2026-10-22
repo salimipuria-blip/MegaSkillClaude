@@ -95,6 +95,10 @@ jobs:
       # remote-code patterns; the committed library/SECURITY_SCAN.md must be what a fresh scan yields.
       - name: Third-party skill instruction scan is current
         run: python3 scripts/scan_third_party_skills.py --check
+      # Backlog task 90: a skill whose SKILL.md promises a companion file that is not there must be
+      # flagged `incomplete`, so the router never hands out instructions that dead-end.
+      - name: Imported skill links are flagged or justified
+        run: python3 scripts/check_skill_links.py --check
       - run: python -m unittest discover -s tests -p "test_*.py" -v
 
   fjcod:
@@ -208,6 +212,10 @@ jobs:
           node-version: 22
       - name: GitHub admin authorization regressions
         run: node --test supabase/functions/github-admin-gateway/*.test.mjs
+      # Backlog task 94: the free-LLM-mesh verifier's SSRF and DNS-rebinding guard had tests that no
+      # CI job ever ran, so a regression in resolveHostPublic() would have shipped silently.
+      - name: Free LLM mesh SSRF and DNS-rebinding regressions
+        run: node --test supabase/functions/github-llm-verifier/*.test.mjs
       - name: Native Deno gateway check and regressions (no network)
         run: |
           deno check --no-remote supabase/functions/github-admin-gateway/index.ts
