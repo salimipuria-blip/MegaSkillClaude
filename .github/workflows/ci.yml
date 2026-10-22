@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
       - uses: actions/setup-python@v6
@@ -52,7 +52,7 @@ jobs:
         working-directory: psk
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
       - name: Require ENGINE_TOKEN for main branch builds
@@ -75,7 +75,7 @@ jobs:
         working-directory: lithos
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
       - run: npm install --no-audit --no-fund
@@ -110,7 +110,7 @@ jobs:
         working-directory: fjcod
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
       - run: npm ci --no-audit --no-fund
@@ -123,7 +123,7 @@ jobs:
         working-directory: bison-brand-book
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
       - run: npm ci --no-audit --no-fund
@@ -139,7 +139,7 @@ jobs:
         working-directory: viking-team
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
       - name: Media behavior regressions
@@ -164,7 +164,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
       - name: Install the isolated motion-study dependencies
@@ -184,7 +184,7 @@ jobs:
         working-directory: fjcod
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
       - run: npm ci --no-audit --no-fund
@@ -209,7 +209,7 @@ jobs:
       - uses: denoland/setup-deno@v2
         with:
           deno-version: v2.x
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
       - name: GitHub admin authorization regressions
@@ -248,7 +248,7 @@ jobs:
       - uses: actions/checkout@v7
       - run: bash -n hermes/setup.sh
       - run: shellcheck -S warning hermes/setup.sh
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
       - run: npm ci --prefix hermes --ignore-scripts --no-audit --no-fund
