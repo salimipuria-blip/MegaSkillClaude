@@ -66,7 +66,7 @@ INCOMPLETE_MARKER = "[incomplete: excluded from default routing]"
 
 
 def domain_lines(path: Path) -> list[tuple[str, str, str]]:
-    """`(name, path, marker)` rows of one domain index, in file order.
+    r"""`(name, path, marker)` rows of one domain index, in file order.
 
     A row reads `- \`name\` → \`path\``, and skills flagged incomplete in the index carry the
     marker suffix after the path, so the parser has to split on the closing backtick, not strip it.
