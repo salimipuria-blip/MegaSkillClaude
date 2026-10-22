@@ -166,3 +166,40 @@ git worktree add --detach /tmp/wt HEAD && cd /tmp/wt && gh pr diff <n> | git app
 ```
 
 و دادهٔ peer با `npm view <pkg>@<version> peerDependencies peerDependenciesMeta` (فقط registry، بدون نصب).
+
+## ۹) به‌روزرسانی ۲۰۲۶-۱۰-۲۲ — mergeها با دستورِ صریحِ مالک
+
+> تاریخِ اندازه‌گیری: ۲۰۲۶-۱۰-۲۲ · پایه: `main` در `d22b832a` → پس از این دور `e9637116`
+> بخش‌های ۱ تا ۸ دست‌نخورده‌اند: آن‌ها snapshotِ دورِ ۲۰۲۶-۱۰-۲۰ هستند و بازنویسیِ تاریخِ اندازه‌گیری‌شده ممنوع. این بخش وضعیتِ امروز است.
+> قاعدهٔ «merge فقط با مالک» پابرجاست؛ تفاوتِ این دور آن است که مالک برای همین PRها دستورِ صریحِ merge داد (`squash` + حذفِ شاخهٔ Dependabot).
+
+### merge شدند
+
+| PR | تغییر | CI پیش از merge (اندازه‌گیری‌شده) | merge commit | وضعیت |
+|---|---|---|---|---|
+| `#54` | `actions/checkout` 4 → 7 | ۲۳ pass / ۱ skipping · `MERGEABLE/CLEAN` | `9dd40fb5` | **امن** |
+| `#102` | `playwright-core` 1.56.0 → 1.64.1 در stickers | ۲۰ pass · `CLEAN` | `7e0e2325` | **امن** |
+| `#103` | `wrangler` 4.149.0 → 4.151.2 در hermes | ۲۳ pass · `CLEAN` | `9f672ebc` | **امن** |
+| `#106` | `playwright-core` 1.63.0 → 1.64.1 در fjcod | ۲۰ pass · `CLEAN` | `ed72d0e3` | **امن** |
+| `#104` | `lucide-react` 0.540.0 → 1.59.0 در fjcod (ماژور) | ۲۰ pass شاملِ `fjcod` و `fjcod-e2e` · `CLEAN` | `e9637116` | **امن** با دو تبصرهٔ زیر |
+
+**راستی‌آزماییِ `#104`** — ماژور بود، پس «CI سبز» تنها کافی نبود: tarballِ `lucide-react@1.59.0` از `registry.npmjs.org` گرفته شد و فهرستِ exportهایش از `dist/lucide-react.d.ts` استخراج شد. **هر ۵۲ نامی** که `fjcod/src` وارد می‌کند در نسخهٔ هدف هست (۰ مفقود از ۱۴٬۰۱۷ symbol) و `peerDependencies` نسخهٔ هدف `react ^16.5.1 || ^17 || ^18 || ^19` است. بر این راستی‌آزمایی، jobِ `fjcod` (build/تایپ) و jobِ `fjcod-e2e` (smokeِ مرورگری روی desktop و viewportِ ۳۹۰×۸۴۴) هم روی خودِ بامپ سبز بودند.
+
+- **NOT RUN:** بازبینیِ چشمیِ فروشگاه. این محیط مرورگر ندارد، پس «آیکن‌ها سرِ جایشان‌اند» از build + smoke + بررسیِ export نتیجه گرفته شد، نه از دیدنِ صفحهٔ واقعی.
+- **یافتهٔ پیگیری:** ۵ تایِ آن ۵۲ نام در نسخهٔ ۱ **aliasِ نامِ قدیمی‌اند**: `AlertCircle→CircleAlert`، `AlertTriangle→TriangleAlert`، `CheckCircle2→CircleCheck`، `FileBarChart→FileChartColumnIncreasing`، `Trash2→Trash`. امروز کار می‌کنند و build را نمی‌شکنند، ولی اگر ماژورِ بعدی aliasها را بردارد `fjcod` می‌شکند ⇒ پیشنهاد: همین ۵ نام در `fjcod/src` به نامِ canonical تغییر کنند (تغییرِ مکانیکی، با تستِ build). بقیهٔ ۴۷ نام canonical‌اند (نگاشت‌های `index_*` در `.d.ts` نامِ داخلیِ bundle است، نه تغییرِ نام).
+
+### merge نشدند (با علتِ اندازه‌گیری‌شده)
+
+| PR | علتِ اندازه‌گیری‌شده | وضعیت |
+|---|---|---|
+| `#101` (`setup-python` 5 → 6) | پیش از این دور `CLEAN` بود؛ **پس از mergeِ `#54`** به `CONFLICTING/DIRTY` رفت چون هر دو همان سه workflow را touched کرده‌اند. دستورِ `@dependabot rebase` داده شد (نخستین دستورِ dependabot در این مخزن؛ بخشِ ۷ می‌گوید در آن دور هیچ داده نشده بود) | **بلاک** تا rebaseِ خودِ Dependabot |
+| `#55` (`setup-node` 4 → 7) | در لحظهٔ سنجه **همهٔ** چک‌ها `pending` بودند (پس از جلو رفتنِ `main` دوباره اجرا شده بود) و وضعیت `UNKNOWN` ⇒ سبزِ کامل احراز نشد | **بلاک** تا پایانِ سبزِ چک‌ها |
+| `#71` (`upload-artifact` 4 → 7) | ۱۴ چکِ مخزن pass ولی **۵ چکِ دیپلوی Vercel** fail: `cham-store-os`، `psk-3000`، `bison.brandbook.site.2026`، `lithos-live-intelligence-vercel-fixed`، `viking-experience-command` ⇒ مانع بیرونی است، نه کدِ این PR | **بلاک** |
+| `#105` و `#107` (`remotion` و `@remotion/cli` 4.0.506 → 4.0.536) | هر دو `MERGEABLE/UNSTABLE`. علت در کدِ خودِ پروژه است: `viking-team/motion/tests/composition.test.mjs` خط ۵۷ برابریِ `dependencies.remotion` با `dependencies['@remotion/cli']` و خط ۵۸ pinِ دقیقِ سه‌جزئی را assert می‌کند ⇒ هر PRِ جداگانه فقط یک سمت را جابه‌جا می‌کند و همان تست می‌شکند. راه‌حل در `dependabot.yml` گروه `remotion` است (PR `#109`)؛ پس از mergeِ آن، این دو PR بسته می‌شوند تا Dependabot یک PRِ گروهی بسازد | **بلاک** |
+
+### NOT RUN (این دور)
+
+- اجرای محلیِ `npm ci`/`npm test` برای `#102`/`#104`/`#106`: `node_modules` آن پروژه‌ها در این محیط نصب نیست؛ استناد به check-runهای واقعیِ خودِ PRها + registry.
+- mergeِ `#55`، `#71`، `#101` و بستنِ `#105`/`#107` (موکول به سبز شدنِ `#109`).
+- هر تغییر در تنظیماتِ Vercel یا در branch protection (چک‌های دیپلویِ قرمزِ `#71` و «الزامِ status check» روی `main` هر دو تصمیمِ مالک‌اند؛ روی مخزنِ خصوصی، الزامِ status check به پلنِ پولیِ GitHub نیاز دارد).
+- رندرِ واقعیِ MP4 با `remotion` (همان NOT RUNِ دورِ قبل پابرجاست).

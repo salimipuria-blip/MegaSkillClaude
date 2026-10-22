@@ -26,6 +26,15 @@ updates:
     directory: "/viking-team/motion"
     schedule:
       interval: "weekly"
+    # remotion and @remotion/cli must carry the same exact version, which
+    # viking-team/motion/tests/composition.test.mjs asserts twice (equality, and a
+    # ^\d+\.\d+\.\d+$ pin). One PR per package therefore always fails that test, which
+    # is why #105 and #107 sit UNSTABLE: group them so both move together.
+    groups:
+      remotion:
+        patterns:
+          - "remotion"
+          - "@remotion/*"
   - package-ecosystem: "npm"
     directory: "/brands/viking-offroad/stickers/src"
     schedule:
