@@ -5,7 +5,7 @@
 
 ## وضعیت فعلی (شواهد: `scripts/sync_skill_library.py`, `docs/REPO_HARDENING.md`)
 - ✅ `sync_skill_library.py` نمایه، دستورالعمل، فایل همراه و متن مجوز را از منبع اصلی به پلاگین قابل‌نصب (`plugins/mega-skills-router`) همگام می‌کند؛ `--check` در CI ناهماهنگی را fail می‌کند. فایل bootstrap `SKILL.md` خودش عضو index تولیدی نیست؛ metadata آن را در هر دو مسیر `.claude/skills/mega-skills-router/` و `plugins/mega-skills-router/skills/mega-skills-router/` هم‌زمان نگه دار و با تست شمارنده‌ها بررسی کن.
-- ✅ نمایهٔ canonical اکنون 6,029 مهارت دارد (3,000 هسته + 18 مهارت پروژه + 3,011 مهارت GitHub)؛ 5,964 قابل مسیریابی، 65 مورد ناقص از مسیر پیش‌فرض کنار گذاشته‌شده، و 30,203 trigger دارد (`--include-incomplete` فقط برای بررسی دستی). اعداد تاریخی READMEها با `triggers.json` و `library/github-skills/INDEX.json` همگام بمانند.
+- ✅ نمایهٔ canonical اکنون 5,964 مهارت دارد (3,000 هسته + 18 مهارت پروژه + 2,946 مهارت GitHub)؛ هر 5,964 قابل مسیریابی، 0 مورد ناقص (۶۵ مهارتِ ناقص در ۲۰۲۶-۱۰-۲۳ حذف شد)، و 29,878 trigger دارد. اعداد تاریخی READMEها با `triggers.json` و `library/github-skills/INDEX.json` همگام بمانند.
 - تست‌های ریشه: `test_mega_skills_router.py`, `test_skill_library_sync.py`, `test_statusline.py` + بنچمارک/golden مسیریابی در `psk/`.
 
 ## اجرا و تست
@@ -44,8 +44,8 @@ python3 scripts/verify_skills.py                    # یکپارچگی مهار�
 
 ## وضعیتِ جاری
 
-اندازه‌گیریِ واقعی در **۲۰۲۶-۱۰-۲۰** — این بخش با نگهبانِ `tests/test_status_counters.py` قفل است: هر عدد از منبعِ canonicalِ خودش در ریپو بازخوانی می‌شود، پس عددِ کهنه یا جابه‌جاییِ واژه قرمز می‌شود. بخش‌های تاریخ‌دارِ پایین/بالای همین سند snapshotِ همان دورند و دست نمی‌خورند (بندِ ۷ «قواعد مشترک»).
+اندازه‌گیریِ واقعی در **۲۰۲۶-۱۰-۲۳** — این بخش با نگهبانِ `tests/test_status_counters.py` قفل است: هر عدد از منبعِ canonicalِ خودش در ریپو بازخوانی می‌شود، پس عددِ کهنه یا جابه‌جاییِ واژه قرمز می‌شود. بخش‌های تاریخ‌دارِ پایین/بالای همین سند snapshotِ همان دورند و دست نمی‌خورند (بندِ ۷ «قواعد مشترک»).
 
-- `references/triggers.json` ⇒ **۶٬۰۲۹ مهارت** = ۳٬۰۰۰ core + ۱۸ پروژه + ۳٬۰۱۱ GitHub، با **۳۰٬۲۰۳ تریگر** و **۰ برخورد**.
-- از اینها **۵٬۹۶۴ روت‌شدنی** و **۶۵ ناقص** (opt-in) است، در **۱۵ دامنه**.
+- `references/triggers.json` ⇒ **۵٬۹۶۴ مهارت** = ۳٬۰۰۰ core + ۱۸ پروژه + ۲٬۹۴۶ GitHub، با **۲۹٬۸۷۸ تریگر** و **۰ برخورد**.
+- از اینها **۵٬۹۶۴ روت‌شدنی** و **۰ ناقص** است، در **۱۵ دامنه**.
 - **NOT RUN:** بازتولیدِ خودِ ایندکس — `triggers.json` یک اثرِ تولیدی است و تولیدکننده‌اش در این ریپو نیست (`scripts/sync_skill_library.py` فقط annotate/propagate می‌کند)؛ پس افزودنِ مهارتِ تازه بدونِ آن ممکن نیست.

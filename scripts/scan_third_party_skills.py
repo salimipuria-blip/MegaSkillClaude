@@ -2,13 +2,13 @@
 """Scan imported third-party skill instructions for prompt-injection and remote-code patterns.
 
 Backlog task 17: report, never delete. `library/github-skills/**` is imported MIT-licensed material
-(3,011 skills) whose text is handed to a model as *instructions*. A line telling the model to drop
+(2,946 skills) whose text is handed to a model as *instructions*. A line telling the model to drop
 the operator's rules, or to pipe a remote script into a shell, is a supply-chain risk even when
 nobody meant harm — and the operator cannot review 32 MB of prose by eye, so the review has to be
 directed at the lines that matter.
 
 Scopes:
-  instructions (default)  `SKILL.md` only: 3,011 files / 32.5 MB / ~7 s. This is what CI gates.
+  instructions (default)  `SKILL.md` only: 2,949 files / 32.5 MB / ~7 s. This is what CI gates.
   all                     every text file in the same tree: 14,792 files / 120 MB. Audit mode.
 
 A finding is a review item, not a verdict. Half of them are vendor install commands quoted inside

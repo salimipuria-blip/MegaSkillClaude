@@ -1,6 +1,6 @@
 # data-spreadsheets
 
-Skills: 297
+Skills: 296
 
 - `ab-test-calculator` → `references/skills/ab-test-calculator/INSTRUCTIONS.md`
 - `academic-plotting` → `references/skills/academic-plotting/INSTRUCTIONS.md`
@@ -212,7 +212,6 @@ Skills: 297
 - `product-strategy` → `references/skills/product-strategy/INSTRUCTIONS.md`
 - `production-audit` → `references/skills/production-audit/INSTRUCTIONS.md`
 - `programmatic-seo` → `references/skills/programmatic-seo/INSTRUCTIONS.md`
-- `prometheus-configuration` → `references/skills/prometheus-configuration/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `prometheus-grafana` → `references/skills/prometheus-grafana/INSTRUCTIONS.md`
 - `pydicom` → `references/skills/pydicom/INSTRUCTIONS.md`
 - `pymatgen` → `references/skills/pymatgen/INSTRUCTIONS.md`

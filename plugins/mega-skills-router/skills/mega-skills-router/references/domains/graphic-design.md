@@ -1,6 +1,6 @@
 # graphic-design
 
-Skills: 231
+Skills: 230
 
 - `academy-brochure-reporter` → `references/skills/academy-brochure-reporter/INSTRUCTIONS.md`
 - `academy-grid-reporter` → `references/skills/academy-grid-reporter/INSTRUCTIONS.md`
@@ -141,7 +141,6 @@ Skills: 231
 - `persian-miniature-remix` → `references/skills/persian-miniature-remix/INSTRUCTIONS.md`
 - `persian-typography-rules` → `references/skills/persian-typography-rules/INSTRUCTIONS.md`
 - `planning-and-task-breakdown` → `references/skills/planning-and-task-breakdown/INSTRUCTIONS.md`
-- `platform-engineering` → `references/skills/platform-engineering/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `poster-composition-kit` → `references/skills/poster-composition-kit/INSTRUCTIONS.md`
 - `poster-design-studio` → `references/skills/poster-design-studio/INSTRUCTIONS.md`
 - `poster-generator-skill` → `references/skills/poster-generator-skill/INSTRUCTIONS.md`

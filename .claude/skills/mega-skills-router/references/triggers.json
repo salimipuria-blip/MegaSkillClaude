@@ -1,28 +1,28 @@
 {
  "schema_version": 1,
  "counts": {
-  "skills": 6029,
-  "triggers": 30203,
+  "skills": 5964,
+  "triggers": 29878,
   "colliding_triggers": 0,
-  "incomplete_skills": 65,
+  "incomplete_skills": 0,
   "routable_skills": 5964
  },
  "domains": {
-  "agents-automation": 765,
-  "business-sales": 487,
+  "agents-automation": 746,
+  "business-sales": 485,
   "content-writing": 161,
-  "data-spreadsheets": 297,
-  "general": 248,
-  "graphic-design": 231,
+  "data-spreadsheets": 296,
+  "general": 247,
+  "graphic-design": 230,
   "image-ai": 117,
   "knowledge-research": 329,
   "product-design": 145,
   "prompt-requirements": 338,
   "skill-development": 249,
-  "social-media": 260,
+  "social-media": 259,
   "travel-outdoors": 439,
   "video-ai": 123,
-  "web-development": 1840
+  "web-development": 1800
  },
  "collisions": [],
  "skills": [
@@ -41705,34 +41705,6 @@
    "origin": "github"
   },
   {
-   "name": "gdpr-compliant",
-   "domain": "web-development",
-   "source_path": "library/github-skills/gdpr-compliant/SKILL.md",
-   "triggers": [
-    "gdpr-compliant",
-    "gdpr compliant",
-    "web development gdpr compliant",
-    "Apply GDPR-compliant engineering practices across your codebase.",
-    "Apply GDPR-compliant engineering practices across your codebase. Use this skill whenever you are designing APIs, writing data models, building authentication fl"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
-   "name": "d365-solution-blueprint",
-   "domain": "web-development",
-   "source_path": "library/github-skills/d365-solution-blueprint/SKILL.md",
-   "triggers": [
-    "d365-solution-blueprint",
-    "d365 solution blueprint",
-    "web development d365 solution blueprint",
-    "Authors a Dynamics 365 Finance and Supply Chain Management Solution Blueprint from scratch through a structured, section",
-    "Authors a Dynamics 365 Finance and Supply Chain Management Solution Blueprint from scratch through a structured, section-by-section architect interview, establi"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "dotnet-mcp-builder",
    "domain": "web-development",
    "source_path": "library/github-skills/dotnet-mcp-builder/SKILL.md",
@@ -42474,20 +42446,6 @@
    "origin": "github"
   },
   {
-   "name": "book-to-skill",
-   "domain": "web-development",
-   "source_path": "library/github-skills/book-to-skill/SKILL.md",
-   "triggers": [
-    "book-to-skill",
-    "book to skill",
-    "web development book to skill",
-    "Converts books and documents (PDF, EPUB, DOCX, HTML, Markdown, plain text, RTF, MOBI/AZW with Calibre) into structured a",
-    "Converts books and documents (PDF, EPUB, DOCX, HTML, Markdown, plain text, RTF, MOBI/AZW with Calibre) into structured agent skills, extracting frameworks, ment"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "kotlin-exposed-patterns",
    "domain": "general",
    "source_path": "library/github-skills/kotlin-exposed-patterns/SKILL.md",
@@ -42616,20 +42574,6 @@
     "Expert skill for writing FreeCAD Python scripts, macros, and automation. Use when asked to create FreeCAD models, parametric objects, Part/Mesh/Sketcher scripts"
    ],
    "origin": "github"
-  },
-  {
-   "name": "generate-image",
-   "domain": "web-development",
-   "source_path": "library/github-skills/generate-image/SKILL.md",
-   "triggers": [
-    "generate-image",
-    "generate image",
-    "web development generate image",
-    "Generates or edits images with AI models through the OpenRouter Image API (Gemini, Seedream, Recraft, GPT-Image, Riverfl",
-    "Generates or edits images with AI models through the OpenRouter Image API (Gemini, Seedream, Recraft, GPT-Image, Riverflow). Use for photos, illustrations, artw"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "autonomous-loops",
@@ -46363,20 +46307,6 @@
    "origin": "github"
   },
   {
-   "name": "tm7-threat-model",
-   "domain": "agents-automation",
-   "source_path": "library/github-skills/tm7-threat-model/SKILL.md",
-   "triggers": [
-    "tm7-threat-model",
-    "tm7 threat model",
-    "agents automation tm7 threat model",
-    "Creates valid Microsoft Threat Modeling Tool (.tm7) files compatible with the Microsoft Threat Modeling Tool v7.3+.",
-    "Creates valid Microsoft Threat Modeling Tool (.tm7) files compatible with the Microsoft Threat Modeling Tool v7.3+. Use this skill whenever asked to create, gen"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "primekg",
    "domain": "data-spreadsheets",
    "source_path": "library/github-skills/primekg/SKILL.md",
@@ -46791,20 +46721,6 @@
     "Rigorous mathematical proof verification and fixing workflow. Reads a LaTeX proof, identifies gaps via fresh-agent Codex GPT-6-Astra ultra review, fixes each ga"
    ],
    "origin": "github"
-  },
-  {
-   "name": "research-implement-feature",
-   "domain": "web-development",
-   "source_path": "library/github-skills/research-implement-feature/SKILL.md",
-   "triggers": [
-    "research-implement-feature",
-    "research implement feature",
-    "web development research implement feature",
-    "Build a working artifact from a plain \\\"implement X for me\\\" request: a running end-to-end spine first, then one feature",
-    "Build a working artifact from a plain \\\"implement X for me\\\" request: a running end-to-end spine first, then one feature per rung, with every under-determined d"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "slides-polish",
@@ -47910,20 +47826,6 @@
     "Creates safety-bounded draft structures and runs local deterministic checks for clinical case, diagnostic, trial, safety, and aggregate research reports. Use on"
    ],
    "origin": "github"
-  },
-  {
-   "name": "fine-tuning-openvla-oft",
-   "domain": "web-development",
-   "source_path": "library/github-skills/fine-tuning-openvla-oft/SKILL.md",
-   "triggers": [
-    "fine-tuning-openvla-oft",
-    "fine tuning openvla oft",
-    "web development fine tuning openvla oft",
-    "Fine-tunes and evaluates OpenVLA-OFT and OpenVLA-OFT+ policies for robot action generation with continuous action heads,",
-    "Fine-tunes and evaluates OpenVLA-OFT and OpenVLA-OFT+ policies for robot action generation with continuous action heads, LoRA adaptation, and FiLM conditioning"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "ml-training-recipes",
@@ -49187,20 +49089,6 @@
    "origin": "github"
   },
   {
-   "name": "speculative-decoding",
-   "domain": "web-development",
-   "source_path": "library/github-skills/speculative-decoding/SKILL.md",
-   "triggers": [
-    "speculative-decoding",
-    "speculative decoding",
-    "web development speculative decoding",
-    "Accelerate LLM inference using speculative decoding, Medusa multiple heads, and lookahead decoding techniques.",
-    "Accelerate LLM inference using speculative decoding, Medusa multiple heads, and lookahead decoding techniques. Use when optimizing inference speed (1.5-3.6× spe"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "multi-advisor",
    "domain": "agents-automation",
    "source_path": "library/github-skills/multi-advisor/SKILL.md",
@@ -49238,20 +49126,6 @@
     "Framework for building LLM-powered applications with agents, chains, and RAG. Supports multiple providers (OpenAI, Anthropic, Google), 500+ integrations, ReAct"
    ],
    "origin": "github"
-  },
-  {
-   "name": "long-context",
-   "domain": "agents-automation",
-   "source_path": "library/github-skills/long-context/SKILL.md",
-   "triggers": [
-    "long-context",
-    "long context",
-    "agents automation long context",
-    "Extend context windows of transformer models using RoPE, YaRN, ALiBi, and position interpolation techniques.",
-    "Extend context windows of transformer models using RoPE, YaRN, ALiBi, and position interpolation techniques. Use when processing long documents (32k-128k+ token"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "swift-protocol-di-testing",
@@ -49967,20 +49841,6 @@
     "Diagnose and accelerate large data movement — ingestion, backfill, export, ETL, warehouse loading, manifest catch-up, and table synchronization — by isolating t"
    ],
    "origin": "github"
-  },
-  {
-   "name": "writing-skills",
-   "domain": "web-development",
-   "source_path": "library/github-skills/writing-skills/SKILL.md",
-   "triggers": [
-    "writing-skills",
-    "writing skills",
-    "web development writing skills",
-    "Use when creating new skills, editing existing skills, or verifying skills work before deployment",
-    "Use when creating new skills, editing existing skills, or verifying skills work before deployment (github-skills)"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "ux-researcher-designer",
@@ -50737,20 +50597,6 @@
    "origin": "github"
   },
   {
-   "name": "shopify-expert",
-   "domain": "web-development",
-   "source_path": "library/github-skills/shopify-expert/SKILL.md",
-   "triggers": [
-    "shopify-expert",
-    "shopify expert",
-    "web development shopify expert",
-    "Builds and debugs Shopify themes (.liquid files, theme.json, sections), develops custom Shopify apps (shopify.app.toml,",
-    "Builds and debugs Shopify themes (.liquid files, theme.json, sections), develops custom Shopify apps (shopify.app.toml, OAuth, webhooks), and implements Storefr"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "commit-message-storyteller",
    "domain": "content-writing",
    "source_path": "library/github-skills/commit-message-storyteller/SKILL.md",
@@ -51089,20 +50935,6 @@
    "origin": "github"
   },
   {
-   "name": "fine-tuning-serving-openpi",
-   "domain": "web-development",
-   "source_path": "library/github-skills/fine-tuning-serving-openpi/SKILL.md",
-   "triggers": [
-    "fine-tuning-serving-openpi",
-    "fine tuning serving openpi",
-    "web development fine tuning serving openpi",
-    "Fine-tune and serve Physical Intelligence OpenPI models (pi0, pi0-fast, pi0.5) using JAX or PyTorch backends for robot p",
-    "Fine-tune and serve Physical Intelligence OpenPI models (pi0, pi0-fast, pi0.5) using JAX or PyTorch backends for robot policy inference across ALOHA, DROID, and"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "huggingface-tokenizers",
    "domain": "web-development",
    "source_path": "library/github-skills/huggingface-tokenizers/SKILL.md",
@@ -51127,20 +50959,6 @@
     "Design, create, review, migrate, or troubleshoot Azure Developer CLI (azd) projects using current Microsoft guidance. Use for azd, azure.yaml, AZD templates, Bi"
    ],
    "origin": "github"
-  },
-  {
-   "name": "pubmed-database",
-   "domain": "web-development",
-   "source_path": "library/github-skills/pubmed-database/SKILL.md",
-   "triggers": [
-    "pubmed-database",
-    "pubmed database",
-    "web development pubmed database",
-    "Direct REST API access to PubMed.",
-    "Direct REST API access to PubMed. Advanced Boolean/MeSH queries, E-utilities API, batch processing, citation management. For Python workflows, prefer biopython"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "lovable-cleanup",
@@ -51741,20 +51559,6 @@
    "origin": "github"
   },
   {
-   "name": "llava",
-   "domain": "web-development",
-   "source_path": "library/github-skills/llava/SKILL.md",
-   "triggers": [
-    "llava",
-    "llava (github-skills)",
-    "web development llava",
-    "Large Language and Vision Assistant.",
-    "Large Language and Vision Assistant. Enables visual instruction tuning and image-based conversations. Combines CLIP vision encoder with Vicuna/LLaMA language mo"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "simpy",
    "domain": "web-development",
    "source_path": "library/github-skills/simpy/SKILL.md",
@@ -52026,20 +51830,6 @@
     "Generates images and text via reverse-engineered Gemini Web API. Supports text generation, image generation from prompts, reference images for vision input, and"
    ],
    "origin": "github"
-  },
-  {
-   "name": "grounded-vault",
-   "domain": "web-development",
-   "source_path": "library/github-skills/grounded-vault/SKILL.md",
-   "triggers": [
-    "grounded-vault",
-    "grounded vault",
-    "web development grounded vault",
-    "Use when maintaining a durable Markdown knowledge store that agents compile from sources, when every number or quote in",
-    "Use when maintaining a durable Markdown knowledge store that agents compile from sources, when every number or quote in a wiki page must trace back to an immuta"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "atlas-ledger",
@@ -52341,20 +52131,6 @@
    "origin": "github"
   },
   {
-   "name": "optimizing-attention-flash",
-   "domain": "agents-automation",
-   "source_path": "library/github-skills/optimizing-attention-flash/SKILL.md",
-   "triggers": [
-    "optimizing-attention-flash",
-    "optimizing attention flash",
-    "agents automation optimizing attention flash",
-    "Optimizes transformer attention with Flash Attention for 2-4x speedup and 10-20x memory reduction.",
-    "Optimizes transformer attention with Flash Attention for 2-4x speedup and 10-20x memory reduction. Use when training/running transformers with long sequences (>"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "baoyu-comic",
    "domain": "knowledge-research",
    "source_path": "library/github-skills/baoyu-comic/SKILL.md",
@@ -52366,20 +52142,6 @@
     "Knowledge comic creator supporting multiple art styles and tones. Creates original educational comics with detailed panel layouts and batch-capable image genera"
    ],
    "origin": "github"
-  },
-  {
-   "name": "uniprot-database",
-   "domain": "web-development",
-   "source_path": "library/github-skills/uniprot-database/SKILL.md",
-   "triggers": [
-    "uniprot-database",
-    "uniprot database",
-    "web development uniprot database",
-    "Direct REST API access to UniProt.",
-    "Direct REST API access to UniProt. Protein searches, FASTA retrieval, ID mapping, Swiss-Prot/TrEMBL. For Python workflows with multiple databases, prefer bioser"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "cc-skill-security-review",
@@ -52668,20 +52430,6 @@
    "origin": "github"
   },
   {
-   "name": "xiaohongshu-auto-posting",
-   "domain": "agents-automation",
-   "source_path": "library/github-skills/xiaohongshu-auto-posting/SKILL.md",
-   "triggers": [
-    "xiaohongshu-auto-posting",
-    "xiaohongshu auto posting",
-    "agents automation xiaohongshu auto posting",
-    "Automates the complete Xiaohongshu (XHS / Little Red Book) content operation workflow: pain-point topic collection → sty",
-    "Automates the complete Xiaohongshu (XHS / Little Red Book) content operation workflow: pain-point topic collection → style case collection → topic selection → c"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "x-tweet-search-by-query",
    "domain": "web-development",
    "source_path": "library/github-skills/x-tweet-search-by-query/SKILL.md",
@@ -52758,20 +52506,6 @@
     "Collects every tweet in an X (Twitter) conversation thread given a conversation id (root tweet id) — the focal tweet plus all replies, sub-replies, and quote ch"
    ],
    "origin": "github"
-  },
-  {
-   "name": "x-keyword-comment",
-   "domain": "business-sales",
-   "source_path": "library/github-skills/x-keyword-comment/SKILL.md",
-   "triggers": [
-    "x-keyword-comment",
-    "x keyword comment",
-    "business sales x keyword comment",
-    "X (Twitter) keyword-based reply posting: search tweets by keyword, read each tweet's content, generate contextual replie",
-    "X (Twitter) keyword-based reply posting: search tweets by keyword, read each tweet's content, generate contextual replies from a configured brand persona, and p"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "xiaohongshu-search-full",
@@ -53357,20 +53091,6 @@
     "Activation-aware weight quantization for 4-bit LLM compression with 3x speedup and minimal accuracy loss. Use when deploying large models (7B-70B) on limited GP"
    ],
    "origin": "github"
-  },
-  {
-   "name": "training-llms-megatron",
-   "domain": "agents-automation",
-   "source_path": "library/github-skills/training-llms-megatron/SKILL.md",
-   "triggers": [
-    "training-llms-megatron",
-    "training llms megatron",
-    "agents automation training llms megatron",
-    "Trains large language models (2B-462B parameters) using NVIDIA Megatron-Core with advanced parallelism strategies.",
-    "Trains large language models (2B-462B parameters) using NVIDIA Megatron-Core with advanced parallelism strategies. Use when training models >1B parameters, need"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "baoyu-infographic",
@@ -54608,20 +54328,6 @@
    "origin": "github"
   },
   {
-   "name": "code-review-ai-ai-review",
-   "domain": "web-development",
-   "source_path": "library/github-skills/code-review-ai-ai-review/SKILL.md",
-   "triggers": [
-    "code-review-ai-ai-review",
-    "code review ai ai review",
-    "web development code review ai ai review",
-    "You are an expert AI-powered code review specialist combining automated static analysis, intelligent pattern recognition",
-    "You are an expert AI-powered code review specialist combining automated static analysis, intelligent pattern recognition, and modern DevOps practices. Leverage"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "framework-migration-legacy-modernize",
    "domain": "agents-automation",
    "source_path": "library/github-skills/framework-migration-legacy-modernize/SKILL.md",
@@ -54685,20 +54391,6 @@
     "You are a React component architecture expert specializing in scaffolding production-ready, accessible, and performant components. Generate complete component i"
    ],
    "origin": "github"
-  },
-  {
-   "name": "performance-testing-review-ai-review",
-   "domain": "web-development",
-   "source_path": "library/github-skills/performance-testing-review-ai-review/SKILL.md",
-   "triggers": [
-    "performance-testing-review-ai-review",
-    "performance testing review ai review",
-    "web development performance testing review ai review",
-    "You are an expert AI-powered code review specialist combining automated static analysis, intelligent pattern recognition (github-skills)",
-    "You are an expert AI-powered code review specialist combining automated static analysis, intelligent pattern recognition, and modern DevOps practices. Leverage (github-skills)"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "javascript-typescript-typescript-scaffold",
@@ -55232,20 +54924,6 @@
     "Find similar vulnerabilities and bugs across codebases using pattern-based analysis. Use when hunting bug variants, building CodeQL/Semgrep queries, analyzing s"
    ],
    "origin": "github"
-  },
-  {
-   "name": "implementing-llms-litgpt",
-   "domain": "agents-automation",
-   "source_path": "library/github-skills/implementing-llms-litgpt/SKILL.md",
-   "triggers": [
-    "implementing-llms-litgpt",
-    "implementing llms litgpt",
-    "agents automation implementing llms litgpt",
-    "Implements and trains LLMs using Lightning AI's LitGPT with 20+ pretrained architectures (Llama, Gemma, Phi, Qwen, Mistr",
-    "Implements and trains LLMs using Lightning AI's LitGPT with 20+ pretrained architectures (Llama, Gemma, Phi, Qwen, Mistral). Use when need clean model implement"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "gptq",
@@ -56132,20 +55810,6 @@
    "origin": "github"
   },
   {
-   "name": "defi-protocol-templates",
-   "domain": "business-sales",
-   "source_path": "library/github-skills/defi-protocol-templates/SKILL.md",
-   "triggers": [
-    "defi-protocol-templates",
-    "defi protocol templates",
-    "business sales defi protocol templates",
-    "Implement DeFi protocols with production-ready templates for staking, AMMs, governance, and lending systems.",
-    "Implement DeFi protocols with production-ready templates for staking, AMMs, governance, and lending systems. Use when building decentralized finance application"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "calendly-automation",
    "domain": "agents-automation",
    "source_path": "library/github-skills/calendly-automation/SKILL.md",
@@ -56690,20 +56354,6 @@
     "Performs pandas DataFrame operations for data analysis, manipulation, and transformation. Use when working with pandas DataFrames, data cleaning, aggregation, m"
    ],
    "origin": "github"
-  },
-  {
-   "name": "iterate-pr",
-   "domain": "social-media",
-   "source_path": "library/github-skills/iterate-pr/SKILL.md",
-   "triggers": [
-    "iterate-pr",
-    "iterate pr",
-    "social media iterate pr",
-    "Iterate on a PR until CI passes.",
-    "Iterate on a PR until CI passes. Use when you need to fix CI failures, address review feedback, or continuously push fixes until all checks are green. Automates"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "audit-integrity",
@@ -57707,20 +57357,6 @@
    "origin": "github"
   },
   {
-   "name": "cowork-to-code-bridge",
-   "domain": "web-development",
-   "source_path": "library/github-skills/cowork-to-code-bridge/SKILL.md",
-   "triggers": [
-    "cowork-to-code-bridge",
-    "cowork to code bridge",
-    "web development cowork to code bridge",
-    "Use an already-installed, independently verified cowork-to-code bridge to run narrowly approved actions on the user's ow",
-    "Use an already-installed, independently verified cowork-to-code bridge to run narrowly approved actions on the user's own macOS, Linux, or WSL2 machine through"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "workflow-orchestration-patterns",
    "domain": "agents-automation",
    "source_path": "library/github-skills/workflow-orchestration-patterns/SKILL.md",
@@ -58449,20 +58085,6 @@
    "origin": "github"
   },
   {
-   "name": "appdeploy",
-   "domain": "web-development",
-   "source_path": "library/github-skills/appdeploy/SKILL.md",
-   "triggers": [
-    "appdeploy",
-    "appdeploy (github-skills)",
-    "web development appdeploy",
-    "Deploy web apps with backend APIs, database, and file storage.",
-    "Deploy web apps with backend APIs, database, and file storage. Use when the user asks to deploy or publish a website or web app and wants a public URL. Uses HTT"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "webflow-automation",
    "domain": "web-development",
    "source_path": "library/github-skills/webflow-automation/SKILL.md",
@@ -58630,20 +58252,6 @@
     "Create and update pitch decks, one-pagers, investor memos, accelerator applications, financial models, and fundraising materials. Use when the user needs invest"
    ],
    "origin": "github"
-  },
-  {
-   "name": "ml-pipeline-workflow",
-   "domain": "web-development",
-   "source_path": "library/github-skills/ml-pipeline-workflow/SKILL.md",
-   "triggers": [
-    "ml-pipeline-workflow",
-    "ml pipeline workflow",
-    "web development ml pipeline workflow",
-    "Build end-to-end MLOps pipelines from data preparation through model training, validation, and production deployment.",
-    "Build end-to-end MLOps pipelines from data preparation through model training, validation, and production deployment. Use when creating ML pipelines, implementi"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "interview",
@@ -59738,20 +59346,6 @@
    "origin": "github"
   },
   {
-   "name": "constitutional-ai",
-   "domain": "agents-automation",
-   "source_path": "library/github-skills/constitutional-ai/SKILL.md",
-   "triggers": [
-    "constitutional-ai",
-    "constitutional ai",
-    "agents automation constitutional ai",
-    "Anthropic's method for training harmless AI through self-improvement.",
-    "Anthropic's method for training harmless AI through self-improvement. Two-phase approach - supervised learning with self-critique/revision, then RLAIF (RL from"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "entra-agent-user",
    "domain": "web-development",
    "source_path": "library/github-skills/entra-agent-user/SKILL.md",
@@ -60205,20 +59799,6 @@
     "Analyze data coverage, create monitors for warehouse tables and AI agents. Covers coverage gaps, use-case analysis, data monitor creation, and agent observabili"
    ],
    "origin": "github"
-  },
-  {
-   "name": "spatial-design",
-   "domain": "web-development",
-   "source_path": "library/github-skills/spatial-design/SKILL.md",
-   "triggers": [
-    "spatial-design",
-    "spatial design",
-    "web development spatial design",
-    "Web and App implementation guide for Spatial Design.",
-    "Web and App implementation guide for Spatial Design. Trigger when user wants environment-aware layouts, Apple Vision Pro inspiration, and mixed reality aestheti"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "events-activities",
@@ -61092,20 +60672,6 @@
    "origin": "github"
   },
   {
-   "name": "llamaguard",
-   "domain": "web-development",
-   "source_path": "library/github-skills/llamaguard/SKILL.md",
-   "triggers": [
-    "llamaguard",
-    "llamaguard (github-skills)",
-    "web development llamaguard",
-    "Meta's 7-8B specialized moderation model for LLM input/output filtering.",
-    "Meta's 7-8B specialized moderation model for LLM input/output filtering. 6 safety categories - violence/hate, sexual content, weapons, substances, self-harm, cr"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "offensive-wpa3-sae",
    "domain": "web-development",
    "source_path": "library/github-skills/offensive-wpa3-sae/SKILL.md",
@@ -61600,20 +61166,6 @@
    "origin": "github"
   },
   {
-   "name": "spatial-computing-ui",
-   "domain": "web-development",
-   "source_path": "library/github-skills/spatial-computing-ui/SKILL.md",
-   "triggers": [
-    "spatial-computing-ui",
-    "spatial computing ui",
-    "web development spatial computing ui",
-    "Web and App implementation guide for Spatial Computing UI.",
-    "Web and App implementation guide for Spatial Computing UI. Trigger when user wants floating elements, environmental awareness, and Apple Vision Pro style."
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "neo-brutalism",
    "domain": "web-development",
    "source_path": "library/github-skills/neo-brutalism/SKILL.md",
@@ -62095,20 +61647,6 @@
    "origin": "github"
   },
   {
-   "name": "duotone-design",
-   "domain": "web-development",
-   "source_path": "library/github-skills/duotone-design/SKILL.md",
-   "triggers": [
-    "duotone-design",
-    "duotone design",
-    "web development duotone design",
-    "Web and App implementation guide for Duotone Design.",
-    "Web and App implementation guide for Duotone Design. Trigger when user wants two-color schemes, striking imagery, and Spotify-like playlist aesthetics."
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "filesystem-context",
    "domain": "prompt-requirements",
    "source_path": "library/github-skills/filesystem-context/SKILL.md",
@@ -62395,20 +61933,6 @@
    "origin": "github"
   },
   {
-   "name": "synthwave",
-   "domain": "web-development",
-   "source_path": "library/github-skills/synthwave/SKILL.md",
-   "triggers": [
-    "synthwave",
-    "synthwave (github-skills)",
-    "web development synthwave",
-    "Web and App implementation guide for Synthwave.",
-    "Web and App implementation guide for Synthwave. Trigger when user wants 80s-inspired neon, dark backgrounds, outrun grids, and Miami Vice aesthetics."
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "amplitude-automation",
    "domain": "agents-automation",
    "source_path": "library/github-skills/amplitude-automation/SKILL.md",
@@ -62511,20 +62035,6 @@
     "Fix social sharing previews so URLs render as rich cards on Facebook, LinkedIn, X/Twitter, WhatsApp, Telegram, and more. Covers OG tags, Twitter cards, absolute"
    ],
    "origin": "github"
-  },
-  {
-   "name": "distributed-llm-pretraining-torchtitan",
-   "domain": "agents-automation",
-   "source_path": "library/github-skills/distributed-llm-pretraining-torchtitan/SKILL.md",
-   "triggers": [
-    "distributed-llm-pretraining-torchtitan",
-    "distributed llm pretraining torchtitan",
-    "agents automation distributed llm pretraining torchtitan",
-    "Provides PyTorch-native distributed LLM pretraining using torchtitan with 4D parallelism (FSDP2, TP, PP, CP).",
-    "Provides PyTorch-native distributed LLM pretraining using torchtitan with 4D parallelism (FSDP2, TP, PP, CP). Use when pretraining Llama 3.1, DeepSeek V3, or cu"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "instagram-hashtag-posts",
@@ -62982,20 +62492,6 @@
    "origin": "github"
   },
   {
-   "name": "retro-design",
-   "domain": "web-development",
-   "source_path": "library/github-skills/retro-design/SKILL.md",
-   "triggers": [
-    "retro-design",
-    "retro design",
-    "web development retro design",
-    "Web and App implementation guide for Retro Design (60s-80s).",
-    "Web and App implementation guide for Retro Design (60s-80s). Trigger when user wants vintage aesthetics, warm muted colors, and nostalgic layouts."
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "vaporwave",
    "domain": "web-development",
    "source_path": "library/github-skills/vaporwave/SKILL.md",
@@ -63022,20 +62518,6 @@
    "origin": "github"
   },
   {
-   "name": "task-intelligence",
-   "domain": "agents-automation",
-   "source_path": "library/github-skills/task-intelligence/SKILL.md",
-   "triggers": [
-    "task-intelligence",
-    "task intelligence",
-    "agents automation task intelligence",
-    "Protocolo de Inteligência Pré-Tarefa",
-    "Protocolo de Inteligência Pré-Tarefa — ativa TODOS os agentes relevantes do ecossistema ANTES de executar qualquer tarefa solicitada pelo usuário."
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "canva-automation",
    "domain": "agents-automation",
    "source_path": "library/github-skills/canva-automation/SKILL.md",
@@ -63047,20 +62529,6 @@
     "Automate Canva tasks via Rube MCP (Composio): designs, exports, folders, brand templates, autofill. Always search tools first for current schemas."
    ],
    "origin": "github"
-  },
-  {
-   "name": "skyvern-browser-automation",
-   "domain": "web-development",
-   "source_path": "library/github-skills/skyvern-browser-automation/SKILL.md",
-   "triggers": [
-    "skyvern-browser-automation",
-    "skyvern browser automation",
-    "web development skyvern browser automation",
-    "AI-powered browser automation",
-    "AI-powered browser automation — navigate sites, fill forms, extract structured data, log in with stored credentials, and build reusable workflows."
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "comfyui-gateway",
@@ -63453,20 +62921,6 @@
    "origin": "github"
   },
   {
-   "name": "update-llms",
-   "domain": "agents-automation",
-   "source_path": "library/github-skills/update-llms/SKILL.md",
-   "triggers": [
-    "update-llms",
-    "update llms",
-    "agents automation update llms",
-    "Update the llms.txt file in the root folder to reflect changes in documentation or specifications following the llms.txt",
-    "Update the llms.txt file in the root folder to reflect changes in documentation or specifications following the llms.txt specification at https://llmstxt.org/"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "power-bi-performance-troubleshooting",
    "domain": "agents-automation",
    "source_path": "library/github-skills/power-bi-performance-troubleshooting/SKILL.md",
@@ -63829,20 +63283,6 @@
     "Go from reverse engineering to a working exploit: stack/heap/kernel pwn workflows with pwntools, libc-database, ROP, and stabilization from CTF to authorized re"
    ],
    "origin": "github"
-  },
-  {
-   "name": "layered-design",
-   "domain": "web-development",
-   "source_path": "library/github-skills/layered-design/SKILL.md",
-   "triggers": [
-    "layered-design",
-    "layered design",
-    "web development layered design",
-    "Web and App implementation guide for Layered Design.",
-    "Web and App implementation guide for Layered Design. Trigger when user wants multiple depth levels, floating panels, and overlapping content."
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "skill-sentinel",
@@ -64285,20 +63725,6 @@
     "Azure AI Document Translation SDK for batch translation of documents with format preservation. Use for translating Word, PDF, Excel, PowerPoint, and other docum"
    ],
    "origin": "github"
-  },
-  {
-   "name": "humanize-chinese",
-   "domain": "agents-automation",
-   "source_path": "library/github-skills/humanize-chinese/SKILL.md",
-   "triggers": [
-    "humanize-chinese",
-    "humanize chinese",
-    "agents automation humanize chinese",
-    "Detect and rewrite AI-like Chinese text with a practical workflow for scoring, humanization, academic AIGC reduction, an",
-    "Detect and rewrite AI-like Chinese text with a practical workflow for scoring, humanization, academic AIGC reduction, and style conversion. Use when the user as"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "sendblue-cli",
@@ -66771,20 +66197,6 @@
    "origin": "github"
   },
   {
-   "name": "emergency-card",
-   "domain": "general",
-   "source_path": "library/github-skills/emergency-card/SKILL.md",
-   "triggers": [
-    "emergency-card",
-    "emergency card",
-    "general emergency card",
-    "生成紧急情况下快速访问的医疗信息摘要卡片。当用户需要旅行、就诊准备、紧急情况或询问\"紧急信息\"、\"医疗卡片\"、\"急救信息\"时使用此技能。提取关键信息（过敏、用药、急症、植入物），支持多格式输出（JSON、文本、二维码），用于急救或快速就医。",
-    "生成紧急情况下快速访问的医疗信息摘要卡片。当用户需要旅行、就诊准备、紧急情况或询问\"紧急信息\"、\"医疗卡片\"、\"急救信息\"时使用此技能。提取关键信息（过敏、用药、急症、植入物），支持多格式输出（JSON、文本、二维码），用于急救或快速就医。 (github-skills)"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "frontend-optimistic-mutations",
    "domain": "web-development",
    "source_path": "library/github-skills/frontend-optimistic-mutations/SKILL.md",
@@ -67279,20 +66691,6 @@
    "origin": "github"
   },
   {
-   "name": "mailtrap-testing-with-sandbox",
-   "domain": "web-development",
-   "source_path": "library/github-skills/mailtrap-testing-with-sandbox/SKILL.md",
-   "triggers": [
-    "mailtrap-testing-with-sandbox",
-    "mailtrap testing with sandbox",
-    "web development mailtrap testing with sandbox",
-    "Capture outbound email in Mailtrap Email Sandbox for development, staging, CI, HTML inspection, spam checks, and fake in",
-    "Capture outbound email in Mailtrap Email Sandbox for development, staging, CI, HTML inspection, spam checks, and fake inbox tests."
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "flat-design",
    "domain": "web-development",
    "source_path": "library/github-skills/flat-design/SKILL.md",
@@ -67488,20 +66886,6 @@
    "origin": "github"
   },
   {
-   "name": "verl-rl-training",
-   "domain": "web-development",
-   "source_path": "library/github-skills/verl-rl-training/SKILL.md",
-   "triggers": [
-    "verl-rl-training",
-    "verl rl training",
-    "web development verl rl training",
-    "Provides guidance for training LLMs with reinforcement learning using verl (Volcano Engine RL).",
-    "Provides guidance for training LLMs with reinforcement learning using verl (Volcano Engine RL). Use when implementing RLHF, GRPO, PPO, or other RL algorithms fo"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "case-review",
    "domain": "agents-automation",
    "source_path": "library/github-skills/case-review/SKILL.md",
@@ -67539,20 +66923,6 @@
     "Expert database optimizer specializing in modern performance tuning, query optimization, and scalable architectures. (github-skills)"
    ],
    "origin": "github"
-  },
-  {
-   "name": "paypal-integration",
-   "domain": "agents-automation",
-   "source_path": "library/github-skills/paypal-integration/SKILL.md",
-   "triggers": [
-    "paypal-integration",
-    "paypal integration",
-    "agents automation paypal integration",
-    "Master PayPal payment integration including Express Checkout, IPN handling, recurring billing, and refund workflows.",
-    "Master PayPal payment integration including Express Checkout, IPN handling, recurring billing, and refund workflows. (github-skills)"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "voice-cloning-studio",
@@ -67971,20 +67341,6 @@
    "origin": "github"
   },
   {
-   "name": "mamba-architecture",
-   "domain": "agents-automation",
-   "source_path": "library/github-skills/mamba-architecture/SKILL.md",
-   "triggers": [
-    "mamba-architecture",
-    "mamba architecture",
-    "agents automation mamba architecture",
-    "State-space model with O(n) complexity vs Transformers' O(n²).",
-    "State-space model with O(n) complexity vs Transformers' O(n²). 5× faster inference, million-token sequences, no KV cache. Selective SSM with hardware-aware desi"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "acreadiness-assess",
    "domain": "web-development",
    "source_path": "library/github-skills/acreadiness-assess/SKILL.md",
@@ -68126,20 +67482,6 @@
     "Automate Figma tasks via Rube MCP (Composio): files, components, design tokens, comments, exports. Always search tools first for current schemas."
    ],
    "origin": "github"
-  },
-  {
-   "name": "slime-rl-training",
-   "domain": "agents-automation",
-   "source_path": "library/github-skills/slime-rl-training/SKILL.md",
-   "triggers": [
-    "slime-rl-training",
-    "slime rl training",
-    "agents automation slime rl training",
-    "Provides guidance for LLM post-training with RL using slime, a Megatron+SGLang framework.",
-    "Provides guidance for LLM post-training with RL using slime, a Megatron+SGLang framework. Use when training GLM models, implementing custom data generation work"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "tiktok-video-detail",
@@ -69312,20 +68654,6 @@
    "origin": "github"
   },
   {
-   "name": "segment-anything-model",
-   "domain": "agents-automation",
-   "source_path": "library/github-skills/segment-anything-model/SKILL.md",
-   "triggers": [
-    "segment-anything-model",
-    "segment anything model",
-    "agents automation segment anything model",
-    "Foundation model for image segmentation with zero-shot transfer.",
-    "Foundation model for image segmentation with zero-shot transfer. Use when you need to segment any object in images using points, boxes, or masks as prompts, or"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "google-maps-api-skill",
    "domain": "web-development",
    "source_path": "library/github-skills/google-maps-api-skill/SKILL.md",
@@ -69664,34 +68992,6 @@
    "origin": "github"
   },
   {
-   "name": "cmux",
-   "domain": "agents-automation",
-   "source_path": "library/github-skills/cmux/SKILL.md",
-   "triggers": [
-    "cmux",
-    "cmux (github-skills)",
-    "agents automation cmux",
-    "Control cmux workspaces, panes, surfaces, and agent sessions safely from macOS terminal workflows.",
-    "Control cmux workspaces, panes, surfaces, and agent sessions safely from macOS terminal workflows. (github-skills)"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
-   "name": "using-neon",
-   "domain": "web-development",
-   "source_path": "library/github-skills/using-neon/SKILL.md",
-   "triggers": [
-    "using-neon",
-    "using neon",
-    "web development using neon",
-    "Neon is a serverless Postgres platform that separates compute and storage to offer autoscaling, branching, instant resto",
-    "Neon is a serverless Postgres platform that separates compute and storage to offer autoscaling, branching, instant restore, and scale-to-zero. It's fully compat"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "terraform-module-library",
    "domain": "web-development",
    "source_path": "library/github-skills/terraform-module-library/SKILL.md",
@@ -69718,20 +69018,6 @@
    "origin": "github"
   },
   {
-   "name": "sast-configuration",
-   "domain": "web-development",
-   "source_path": "library/github-skills/sast-configuration/SKILL.md",
-   "triggers": [
-    "sast-configuration",
-    "sast configuration",
-    "web development sast configuration",
-    "Static Application Security Testing (SAST) tool setup, configuration, and custom rule creation for comprehensive securit",
-    "Static Application Security Testing (SAST) tool setup, configuration, and custom rule creation for comprehensive security scanning across multiple programming l"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "monorepo-management",
    "domain": "graphic-design",
    "source_path": "library/github-skills/monorepo-management/SKILL.md",
@@ -69743,20 +69029,6 @@
     "Master monorepo management with Turborepo, Nx, and pnpm workspaces to build efficient, scalable multi-package repositories with optimized builds and dependency"
    ],
    "origin": "github"
-  },
-  {
-   "name": "prometheus-configuration",
-   "domain": "data-spreadsheets",
-   "source_path": "library/github-skills/prometheus-configuration/SKILL.md",
-   "triggers": [
-    "prometheus-configuration",
-    "prometheus configuration",
-    "data spreadsheets prometheus configuration",
-    "Complete guide to Prometheus setup, metric collection, scrape configuration, and recording rules.",
-    "Complete guide to Prometheus setup, metric collection, scrape configuration, and recording rules. (github-skills)"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "frontend-observability",
@@ -71462,20 +70734,6 @@
    "origin": "github"
   },
   {
-   "name": "azure-cosmos-py",
-   "domain": "web-development",
-   "source_path": "library/github-skills/azure-cosmos-py/SKILL.md",
-   "triggers": [
-    "azure-cosmos-py",
-    "azure cosmos py",
-    "web development azure cosmos py",
-    "Azure Cosmos DB SDK for Python (NoSQL API).",
-    "Azure Cosmos DB SDK for Python (NoSQL API). Use for document CRUD, queries, containers, and globally distributed data."
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "rag-observability-evals",
    "domain": "agents-automation",
    "source_path": "library/github-skills/rag-observability-evals/SKILL.md",
@@ -71513,20 +70771,6 @@
     "OpenInference semantic conventions and instrumentation for Phoenix AI observability. Use when implementing LLM tracing, creating custom spans, or deploying to p"
    ],
    "origin": "github"
-  },
-  {
-   "name": "create-llms",
-   "domain": "agents-automation",
-   "source_path": "library/github-skills/create-llms/SKILL.md",
-   "triggers": [
-    "create-llms",
-    "create llms",
-    "agents automation create llms",
-    "Create an llms.txt file from scratch based on repository structure following the llms.txt specification at https://llmst",
-    "Create an llms.txt file from scratch based on repository structure following the llms.txt specification at https://llmstxt.org/"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "azure-appconfiguration-ts",
@@ -71763,20 +71007,6 @@
    "origin": "github"
   },
   {
-   "name": "platform-engineering",
-   "domain": "graphic-design",
-   "source_path": "library/github-skills/platform-engineering/SKILL.md",
-   "triggers": [
-    "platform-engineering",
-    "platform engineering",
-    "graphic design platform engineering",
-    "Build internal developer platforms (IDPs) with self-service infrastructure,",
-    "Build internal developer platforms (IDPs) with self-service infrastructure, (github-skills)"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "codex-delegate",
    "domain": "web-development",
    "source_path": "library/github-skills/codex-delegate/SKILL.md",
@@ -71957,20 +71187,6 @@
     "Implement GDPR data protection requirements. Configure consent management,"
    ],
    "origin": "github"
-  },
-  {
-   "name": "model-serving-kubernetes",
-   "domain": "web-development",
-   "source_path": "library/github-skills/model-serving-kubernetes/SKILL.md",
-   "triggers": [
-    "model-serving-kubernetes",
-    "model serving kubernetes",
-    "web development model serving kubernetes",
-    "Deploy ML models on Kubernetes with KServe (formerly KFServing) and NVIDIA",
-    "Deploy ML models on Kubernetes with KServe (formerly KFServing) and NVIDIA (github-skills)"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "terraform-azure",
@@ -72155,20 +71371,6 @@
    "origin": "github"
   },
   {
-   "name": "hugging-face-datasets",
-   "domain": "web-development",
-   "source_path": "library/github-skills/hugging-face-datasets/SKILL.md",
-   "triggers": [
-    "hugging-face-datasets",
-    "hugging face datasets",
-    "web development hugging face datasets",
-    "Create and manage datasets on Hugging Face Hub.",
-    "Create and manage datasets on Hugging Face Hub. Supports initializing repos, defining configs/system prompts, streaming row updates, and SQL-based dataset query"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "llm-prompt-optimizer",
    "domain": "agents-automation",
    "source_path": "library/github-skills/llm-prompt-optimizer/SKILL.md",
@@ -72258,20 +71460,6 @@
     "Use YYLO Ledger task management: create, list, search, get, mark, update, (github-skills)"
    ],
    "origin": "github"
-  },
-  {
-   "name": "helm-charts",
-   "domain": "web-development",
-   "source_path": "library/github-skills/helm-charts/SKILL.md",
-   "triggers": [
-    "helm-charts",
-    "helm charts",
-    "web development helm charts",
-    "Create, manage, and deploy Helm charts for Kubernetes package management.",
-    "Create, manage, and deploy Helm charts for Kubernetes package management. (github-skills)"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "opentelemetry",
@@ -72599,20 +71787,6 @@
    "origin": "github"
   },
   {
-   "name": "azure-devops",
-   "domain": "web-development",
-   "source_path": "library/github-skills/azure-devops/SKILL.md",
-   "triggers": [
-    "azure-devops",
-    "azure devops",
-    "web development azure devops",
-    "Set up Azure Pipelines for CI/CD, configure build and release pipelines,",
-    "Set up Azure Pipelines for CI/CD, configure build and release pipelines, (github-skills)"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "multi-tenant-llm-hosting",
    "domain": "agents-automation",
    "source_path": "library/github-skills/multi-tenant-llm-hosting/SKILL.md",
@@ -72715,20 +71889,6 @@
     "Simulate a structured peer-review process using multiple specialized agents to validate designs, surface hidden assumptions, and identify failure modes before i"
    ],
    "origin": "github"
-  },
-  {
-   "name": "nsfw-ai-spicyapi",
-   "domain": "web-development",
-   "source_path": "library/github-skills/nsfw-ai-spicyapi/SKILL.md",
-   "triggers": [
-    "nsfw-ai-spicyapi",
-    "nsfw ai spicyapi",
-    "web development nsfw ai spicyapi",
-    "Generate adult (18+) images, image-to-video clips and image edits through the SpicyAPI API, with a cost quote before eve",
-    "Generate adult (18+) images, image-to-video clips and image edits through the SpicyAPI API, with a cost quote before every paid run and adults-only / consent ru"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "browser-cdp",
@@ -73080,20 +72240,6 @@
     "Azure API Management SDK for Python. Use for managing APIM services, APIs, products, subscriptions, and policies."
    ],
    "origin": "github"
-  },
-  {
-   "name": "cloudformation",
-   "domain": "web-development",
-   "source_path": "library/github-skills/cloudformation/SKILL.md",
-   "triggers": [
-    "cloudformation",
-    "cloudformation (github-skills)",
-    "web development cloudformation",
-    "Deploy AWS resources with CloudFormation templates.",
-    "Deploy AWS resources with CloudFormation templates. Create stacks, use"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "us-property-data",
@@ -74409,20 +73555,6 @@
    "origin": "github"
   },
   {
-   "name": "makepad-deployment",
-   "domain": "web-development",
-   "source_path": "library/github-skills/makepad-deployment/SKILL.md",
-   "triggers": [
-    "makepad-deployment",
-    "makepad deployment",
-    "web development makepad deployment",
-    "CRITICAL: Use for Makepad packaging and deployment.",
-    "CRITICAL: Use for Makepad packaging and deployment. Triggers on:"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "google-no-code",
    "domain": "web-development",
    "source_path": "library/github-skills/google-no-code/SKILL.md",
@@ -75202,20 +74334,6 @@
    "origin": "github"
   },
   {
-   "name": "simpo-training",
-   "domain": "agents-automation",
-   "source_path": "library/github-skills/simpo-training/SKILL.md",
-   "triggers": [
-    "simpo-training",
-    "simpo training",
-    "agents automation simpo training",
-    "Simple Preference Optimization for LLM alignment.",
-    "Simple Preference Optimization for LLM alignment. Reference-free alternative to DPO with better performance (+6.4 points on AlpacaEval 2.0). No reference model"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "conductor-status",
    "domain": "web-development",
    "source_path": "library/github-skills/conductor-status/SKILL.md",
@@ -75396,20 +74514,6 @@
     "Use when working with comprehensive review full review (github-skills)"
    ],
    "origin": "github"
-  },
-  {
-   "name": "azure-mgmt-apimanagement-dotnet",
-   "domain": "web-development",
-   "source_path": "library/github-skills/azure-mgmt-apimanagement-dotnet/SKILL.md",
-   "triggers": [
-    "azure-mgmt-apimanagement-dotnet",
-    "azure mgmt apimanagement dotnet",
-    "web development azure mgmt apimanagement dotnet",
-    "Azure Resource Manager SDK for API Management in .NET.",
-    "Azure Resource Manager SDK for API Management in .NET. (github-skills)"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "database-schema-designer",
@@ -76385,20 +75489,6 @@
     "Orchestrate review, tests, commits, branch pushes, and pull-request creation with parallel agents. Use when completed changes must move through validation into"
    ],
    "origin": "github"
-  },
-  {
-   "name": "polis-protocol",
-   "domain": "agents-automation",
-   "source_path": "library/github-skills/polis-protocol/SKILL.md",
-   "triggers": [
-    "polis-protocol",
-    "polis protocol",
-    "agents automation polis protocol",
-    "Coordinate multi-vendor AI agents as a self-improving team",
-    "Coordinate multi-vendor AI agents as a self-improving team — a learning router assigns work by track record and citizens can amend the protocol's own rules."
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "azure-smart-city-iot-solution-builder",

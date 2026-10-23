@@ -1,6 +1,6 @@
 # web-development
 
-Skills: 1840
+Skills: 1800
 
 - `1688-product-detail` → `references/skills/1688-product-detail/INSTRUCTIONS.md`
 - `2slides-ppt-generator` → `references/skills/2slides-ppt-generator/INSTRUCTIONS.md`
@@ -106,7 +106,6 @@ Skills: 1840
 - `apify-integration-development` → `references/skills/apify-integration-development/INSTRUCTIONS.md`
 - `apify-ultimate-scraper` → `references/skills/apify-ultimate-scraper/INSTRUCTIONS.md`
 - `app-store-optimization` → `references/skills/app-store-optimization/INSTRUCTIONS.md`
-- `appdeploy` → `references/skills/appdeploy/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `appium-skill` → `references/skills/appium-skill/INSTRUCTIONS.md`
 - `apple-appstore-reviewer` → `references/skills/apple-appstore-reviewer/INSTRUCTIONS.md`
 - `apple-container` → `references/skills/apple-container/INSTRUCTIONS.md`
@@ -215,12 +214,10 @@ Skills: 1840
 - `azure-containerregistry-py` → `references/skills/azure-containerregistry-py/INSTRUCTIONS.md`
 - `azure-cosmos-db-py` → `references/skills/azure-cosmos-db-py/INSTRUCTIONS.md`
 - `azure-cosmos-java` → `references/skills/azure-cosmos-java/INSTRUCTIONS.md`
-- `azure-cosmos-py` → `references/skills/azure-cosmos-py/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `azure-cosmos-ts` → `references/skills/azure-cosmos-ts/INSTRUCTIONS.md`
 - `azure-data-tables-java` → `references/skills/azure-data-tables-java/INSTRUCTIONS.md`
 - `azure-deployment-preflight` → `references/skills/azure-deployment-preflight/INSTRUCTIONS.md`
 - `azure-developer-cli` → `references/skills/azure-developer-cli/INSTRUCTIONS.md`
-- `azure-devops` → `references/skills/azure-devops/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `azure-devops-cli` → `references/skills/azure-devops-cli/INSTRUCTIONS.md`
 - `azure-eventgrid-dotnet` → `references/skills/azure-eventgrid-dotnet/INSTRUCTIONS.md`
 - `azure-eventgrid-java` → `references/skills/azure-eventgrid-java/INSTRUCTIONS.md`
@@ -239,7 +236,6 @@ Skills: 1840
 - `azure-messaging-webpubsub-java` → `references/skills/azure-messaging-webpubsub-java/INSTRUCTIONS.md`
 - `azure-mgmt-apicenter-dotnet` → `references/skills/azure-mgmt-apicenter-dotnet/INSTRUCTIONS.md`
 - `azure-mgmt-apicenter-py` → `references/skills/azure-mgmt-apicenter-py/INSTRUCTIONS.md`
-- `azure-mgmt-apimanagement-dotnet` → `references/skills/azure-mgmt-apimanagement-dotnet/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `azure-mgmt-apimanagement-py` → `references/skills/azure-mgmt-apimanagement-py/INSTRUCTIONS.md`
 - `azure-mgmt-applicationinsights-dotnet` → `references/skills/azure-mgmt-applicationinsights-dotnet/INSTRUCTIONS.md`
 - `azure-mgmt-arizeaiobservabilityeval-dotnet` → `references/skills/azure-mgmt-arizeaiobservabilityeval-dotnet/INSTRUCTIONS.md`
@@ -319,7 +315,6 @@ Skills: 1840
 - `blockrun` → `references/skills/blockrun/INSTRUCTIONS.md`
 - `blog-mdx-pipeline` → `references/skills/blog-mdx-pipeline/INSTRUCTIONS.md`
 - `blue-green-deploy` → `references/skills/blue-green-deploy/INSTRUCTIONS.md`
-- `book-to-skill` → `references/skills/book-to-skill/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `booking-form-builder` → `references/skills/booking-form-builder/INSTRUCTIONS.md`
 - `bookstore-gallery-generator` → `references/skills/bookstore-gallery-generator/INSTRUCTIONS.md`
 - `bookstore-gallery-optimizer` → `references/skills/bookstore-gallery-optimizer/INSTRUCTIONS.md`
@@ -401,14 +396,12 @@ Skills: 1840
 - `cloudflare-pages` → `references/skills/cloudflare-pages/INSTRUCTIONS.md`
 - `cloudflare-workers` → `references/skills/cloudflare-workers/INSTRUCTIONS.md`
 - `cloudflare-zero-trust` → `references/skills/cloudflare-zero-trust/INSTRUCTIONS.md`
-- `cloudformation` → `references/skills/cloudformation/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `code-documenter` → `references/skills/code-documenter/INSTRUCTIONS.md`
 - `code-exemplars-blueprint-generator` → `references/skills/code-exemplars-blueprint-generator/INSTRUCTIONS.md`
 - `code-of-conduct` → `references/skills/code-of-conduct/INSTRUCTIONS.md`
 - `code-polish` → `references/skills/code-polish/INSTRUCTIONS.md`
 - `code-refactoring-tech-debt` → `references/skills/code-refactoring-tech-debt/INSTRUCTIONS.md`
 - `code-review` → `references/skills/code-review/INSTRUCTIONS.md`
-- `code-review-ai-ai-review` → `references/skills/code-review-ai-ai-review/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `code-review-and-quality` → `references/skills/code-review-and-quality/INSTRUCTIONS.md`
 - `code-review-checklist` → `references/skills/code-review-checklist/INSTRUCTIONS.md`
 - `code-review-excellence` → `references/skills/code-review-excellence/INSTRUCTIONS.md`
@@ -473,7 +466,6 @@ Skills: 1840
 - `cost-optimization` → `references/skills/cost-optimization/INSTRUCTIONS.md`
 - `cost-tracking` → `references/skills/cost-tracking/INSTRUCTIONS.md`
 - `council-multi-model` → `references/skills/council-multi-model/INSTRUCTIONS.md`
-- `cowork-to-code-bridge` → `references/skills/cowork-to-code-bridge/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `cpp-coding-standards` → `references/skills/cpp-coding-standards/INSTRUCTIONS.md`
 - `cpp-pro` → `references/skills/cpp-pro/INSTRUCTIONS.md`
 - `cpp-testing` → `references/skills/cpp-testing/INSTRUCTIONS.md`
@@ -493,7 +485,6 @@ Skills: 1840
 - `cyber-y2k` → `references/skills/cyber-y2k/INSTRUCTIONS.md`
 - `cyberpunk-ui` → `references/skills/cyberpunk-ui/INSTRUCTIONS.md`
 - `cypress-skill` → `references/skills/cypress-skill/INSTRUCTIONS.md`
-- `d365-solution-blueprint` → `references/skills/d365-solution-blueprint/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `daily-prep` → `references/skills/daily-prep/INSTRUCTIONS.md`
 - `dark-mode` → `references/skills/dark-mode/INSTRUCTIONS.md`
 - `dark-mode-toggle-kit` → `references/skills/dark-mode-toggle-kit/INSTRUCTIONS.md`
@@ -592,7 +583,6 @@ Skills: 1840
 - `dropthehassle-publish` → `references/skills/dropthehassle-publish/INSTRUCTIONS.md`
 - `dsh-deepread` → `references/skills/dsh-deepread/INSTRUCTIONS.md`
 - `dsl-vm-reverse` → `references/skills/dsl-vm-reverse/INSTRUCTIONS.md`
-- `duotone-design` → `references/skills/duotone-design/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `dwarf-expert` → `references/skills/dwarf-expert/INSTRUCTIONS.md`
 - `e2e-testing` → `references/skills/e2e-testing/INSTRUCTIONS.md`
 - `e2e-testing-patterns` → `references/skills/e2e-testing-patterns/INSTRUCTIONS.md`
@@ -664,8 +654,6 @@ Skills: 1840
 - `file-conversion` → `references/skills/file-conversion/INSTRUCTIONS.md`
 - `finance-billing-ops` → `references/skills/finance-billing-ops/INSTRUCTIONS.md`
 - `fine-tuning-expert` → `references/skills/fine-tuning-expert/INSTRUCTIONS.md`
-- `fine-tuning-openvla-oft` → `references/skills/fine-tuning-openvla-oft/INSTRUCTIONS.md` [incomplete: excluded from default routing]
-- `fine-tuning-serving-openpi` → `references/skills/fine-tuning-serving-openpi/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `finishing-a-development-branch` → `references/skills/finishing-a-development-branch/INSTRUCTIONS.md`
 - `fintech-deploy-library` → `references/skills/fintech-deploy-library/INSTRUCTIONS.md`
 - `fintech-landing-analyzer` → `references/skills/fintech-landing-analyzer/INSTRUCTIONS.md`
@@ -729,7 +717,6 @@ Skills: 1840
 - `gcp-networking` → `references/skills/gcp-networking/INSTRUCTIONS.md`
 - `gcp-secret-manager` → `references/skills/gcp-secret-manager/INSTRUCTIONS.md`
 - `gdb-cli` → `references/skills/gdb-cli/INSTRUCTIONS.md`
-- `gdpr-compliant` → `references/skills/gdpr-compliant/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `gdpr-dsgvo-expert` → `references/skills/gdpr-dsgvo-expert/INSTRUCTIONS.md`
 - `gemini-api-dev` → `references/skills/gemini-api-dev/INSTRUCTIONS.md`
 - `gemini-api-integration` → `references/skills/gemini-api-integration/INSTRUCTIONS.md`
@@ -737,7 +724,6 @@ Skills: 1840
 - `gemini-live-api-dev` → `references/skills/gemini-live-api-dev/INSTRUCTIONS.md`
 - `gemini-omni-flash-api` → `references/skills/gemini-omni-flash-api/INSTRUCTIONS.md`
 - `generate-custom-instructions-from-codebase` → `references/skills/generate-custom-instructions-from-codebase/INSTRUCTIONS.md`
-- `generate-image` → `references/skills/generate-image/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `generating-python-installer` → `references/skills/generating-python-installer/INSTRUCTIONS.md`
 - `genomic-intelligence` → `references/skills/genomic-intelligence/INSTRUCTIONS.md`
 - `geo-audit` → `references/skills/geo-audit/INSTRUCTIONS.md`
@@ -782,7 +768,6 @@ Skills: 1840
 - `graphql-architect` → `references/skills/graphql-architect/INSTRUCTIONS.md`
 - `graphql-schema` → `references/skills/graphql-schema/INSTRUCTIONS.md`
 - `grill-with-docs` → `references/skills/grill-with-docs/INSTRUCTIONS.md`
-- `grounded-vault` → `references/skills/grounded-vault/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `grpo-rlvr-training` → `references/skills/grpo-rlvr-training/INSTRUCTIONS.md`
 - `gtars` → `references/skills/gtars/INSTRUCTIONS.md`
 - `gtm-partnership-architecture` → `references/skills/gtm-partnership-architecture/INSTRUCTIONS.md`
@@ -799,7 +784,6 @@ Skills: 1840
 - `healthcare-phi-compliance` → `references/skills/healthcare-phi-compliance/INSTRUCTIONS.md`
 - `helium-mcp` → `references/skills/helium-mcp/INSTRUCTIONS.md`
 - `helm-chart-builder` → `references/skills/helm-chart-builder/INSTRUCTIONS.md`
-- `helm-charts` → `references/skills/helm-charts/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `hexagonal-architecture` → `references/skills/hexagonal-architecture/INSTRUCTIONS.md`
 - `hf-mcp` → `references/skills/hf-mcp/INSTRUCTIONS.md`
 - `high-contrast` → `references/skills/high-contrast/INSTRUCTIONS.md`
@@ -816,7 +800,6 @@ Skills: 1840
 - `hotel-speed-analyzer` → `references/skills/hotel-speed-analyzer/INSTRUCTIONS.md`
 - `hqq-quantization` → `references/skills/hqq-quantization/INSTRUCTIONS.md`
 - `hugging-face-community-evals` → `references/skills/hugging-face-community-evals/INSTRUCTIONS.md`
-- `hugging-face-datasets` → `references/skills/hugging-face-datasets/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `hugging-face-gradio` → `references/skills/hugging-face-gradio/INSTRUCTIONS.md`
 - `hugging-face-model-trainer` → `references/skills/hugging-face-model-trainer/INSTRUCTIONS.md`
 - `hugging-face-papers` → `references/skills/hugging-face-papers/INSTRUCTIONS.md`
@@ -970,7 +953,6 @@ Skills: 1840
 - `latchbio-integration` → `references/skills/latchbio-integration/INSTRUCTIONS.md`
 - `latchshot-page-capture` → `references/skills/latchshot-page-capture/INSTRUCTIONS.md`
 - `launch-strategy` → `references/skills/launch-strategy/INSTRUCTIONS.md`
-- `layered-design` → `references/skills/layered-design/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `lead-magnet-page-builder` → `references/skills/lead-magnet-page-builder/INSTRUCTIONS.md`
 - `lean-comments` → `references/skills/lean-comments/INSTRUCTIONS.md`
 - `legacy-circuit-mockups` → `references/skills/legacy-circuit-mockups/INSTRUCTIONS.md`
@@ -986,8 +968,6 @@ Skills: 1840
 - `liuguang-banlan-ui` → `references/skills/liuguang-banlan-ui/INSTRUCTIONS.md`
 - `living-docs-governance` → `references/skills/living-docs-governance/INSTRUCTIONS.md`
 - `llama-cpp` → `references/skills/llama-cpp/INSTRUCTIONS.md`
-- `llamaguard` → `references/skills/llamaguard/INSTRUCTIONS.md` [incomplete: excluded from default routing]
-- `llava` → `references/skills/llava/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `llm-app-security` → `references/skills/llm-app-security/INSTRUCTIONS.md`
 - `llm-cost-optimization` → `references/skills/llm-cost-optimization/INSTRUCTIONS.md`
 - `llm-cost-optimizer` → `references/skills/llm-cost-optimizer/INSTRUCTIONS.md`
@@ -1011,7 +991,6 @@ Skills: 1840
 - `mailtrap-email-integration` → `references/skills/mailtrap-email-integration/INSTRUCTIONS.md`
 - `mailtrap-managing-contacts` → `references/skills/mailtrap-managing-contacts/INSTRUCTIONS.md`
 - `mailtrap-sending-emails` → `references/skills/mailtrap-sending-emails/INSTRUCTIONS.md`
-- `mailtrap-testing-with-sandbox` → `references/skills/mailtrap-testing-with-sandbox/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `maintain-codex-wiki` → `references/skills/maintain-codex-wiki/INSTRUCTIONS.md`
 - `make-repo-contribution` → `references/skills/make-repo-contribution/INSTRUCTIONS.md`
 - `makepad-2-0-animation` → `references/skills/makepad-2-0-animation/INSTRUCTIONS.md`
@@ -1019,7 +998,6 @@ Skills: 1840
 - `makepad-2-0-events` → `references/skills/makepad-2-0-events/INSTRUCTIONS.md`
 - `makepad-2-0-layout` → `references/skills/makepad-2-0-layout/INSTRUCTIONS.md`
 - `makepad-2-0-widgets` → `references/skills/makepad-2-0-widgets/INSTRUCTIONS.md`
-- `makepad-deployment` → `references/skills/makepad-deployment/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `markdown-html-orchestrator` → `references/skills/markdown-html-orchestrator/INSTRUCTIONS.md`
 - `markdown-to-html` → `references/skills/markdown-to-html/INSTRUCTIONS.md`
 - `marketing-demand-acquisition` → `references/skills/marketing-demand-acquisition/INSTRUCTIONS.md`
@@ -1060,7 +1038,6 @@ Skills: 1840
 - `ml-adoption-playbook` → `references/skills/ml-adoption-playbook/INSTRUCTIONS.md`
 - `ml-engineer` → `references/skills/ml-engineer/INSTRUCTIONS.md`
 - `ml-pipeline` → `references/skills/ml-pipeline/INSTRUCTIONS.md`
-- `ml-pipeline-workflow` → `references/skills/ml-pipeline-workflow/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `ml-training-recipes` → `references/skills/ml-training-recipes/INSTRUCTIONS.md`
 - `mle-workflow` → `references/skills/mle-workflow/INSTRUCTIONS.md`
 - `mlflow` → `references/skills/mlflow/INSTRUCTIONS.md`
@@ -1072,7 +1049,6 @@ Skills: 1840
 - `modal` → `references/skills/modal/INSTRUCTIONS.md`
 - `modal-serverless-gpu` → `references/skills/modal-serverless-gpu/INSTRUCTIONS.md`
 - `model-merging` → `references/skills/model-merging/INSTRUCTIONS.md`
-- `model-serving-kubernetes` → `references/skills/model-serving-kubernetes/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `model-supply-chain-security` → `references/skills/model-supply-chain-security/INSTRUCTIONS.md`
 - `mongodb` → `references/skills/mongodb/INSTRUCTIONS.md`
 - `monitoring-expert` → `references/skills/monitoring-expert/INSTRUCTIONS.md`
@@ -1148,7 +1124,6 @@ Skills: 1840
 - `not-a-vibe-coder` → `references/skills/not-a-vibe-coder/INSTRUCTIONS.md`
 - `notebook-llm` → `references/skills/notebook-llm/INSTRUCTIONS.md`
 - `notion-automation` → `references/skills/notion-automation/INSTRUCTIONS.md`
-- `nsfw-ai-spicyapi` → `references/skills/nsfw-ai-spicyapi/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `nutrient-document-processing` → `references/skills/nutrient-document-processing/INSTRUCTIONS.md`
 - `nuts-payment-library` → `references/skills/nuts-payment-library/INSTRUCTIONS.md`
 - `nwb-conversion` → `references/skills/nwb-conversion/INSTRUCTIONS.md`
@@ -1238,7 +1213,6 @@ Skills: 1840
 - `performance-optimization` → `references/skills/performance-optimization/INSTRUCTIONS.md`
 - `performance-optimizer` → `references/skills/performance-optimizer/INSTRUCTIONS.md`
 - `performance-profiler` → `references/skills/performance-profiler/INSTRUCTIONS.md`
-- `performance-testing-review-ai-review` → `references/skills/performance-testing-review-ai-review/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `perl-patterns` → `references/skills/perl-patterns/INSTRUCTIONS.md`
 - `perl-testing` → `references/skills/perl-testing/INSTRUCTIONS.md`
 - `pester-migration` → `references/skills/pester-migration/INSTRUCTIONS.md`
@@ -1312,7 +1286,6 @@ Skills: 1840
 - `protobuf-grpc-api-review` → `references/skills/protobuf-grpc-api-review/INSTRUCTIONS.md`
 - `prototype` → `references/skills/prototype/INSTRUCTIONS.md`
 - `publish-to-pages` → `references/skills/publish-to-pages/INSTRUCTIONS.md`
-- `pubmed-database` → `references/skills/pubmed-database/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `pufferlib` → `references/skills/pufferlib/INSTRUCTIONS.md`
 - `pulse` → `references/skills/pulse/INSTRUCTIONS.md`
 - `pwa-builder-starter` → `references/skills/pwa-builder-starter/INSTRUCTIONS.md`
@@ -1396,7 +1369,6 @@ Skills: 1840
 - `repo-standardizer` → `references/skills/repo-standardizer/INSTRUCTIONS.md`
 - `reports-analytics` → `references/skills/reports-analytics/INSTRUCTIONS.md`
 - `research-finance` → `references/skills/research-finance/INSTRUCTIONS.md`
-- `research-implement-feature` → `references/skills/research-implement-feature/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `research-ops-skills` → `references/skills/research-ops-skills/INSTRUCTIONS.md`
 - `research-review` → `references/skills/research-review/INSTRUCTIONS.md`
 - `research-summarizer` → `references/skills/research-summarizer/INSTRUCTIONS.md`
@@ -1404,7 +1376,6 @@ Skills: 1840
 - `restaurant-payment-assistant` → `references/skills/restaurant-payment-assistant/INSTRUCTIONS.md`
 - `result-to-claim` → `references/skills/result-to-claim/INSTRUCTIONS.md`
 - `retro` → `references/skills/retro/INSTRUCTIONS.md`
-- `retro-design` → `references/skills/retro-design/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `retro-futurism` → `references/skills/retro-futurism/INSTRUCTIONS.md`
 - `review-agent-setup` → `references/skills/review-agent-setup/INSTRUCTIONS.md`
 - `review-and-simplify-changes` → `references/skills/review-and-simplify-changes/INSTRUCTIONS.md`
@@ -1450,7 +1421,6 @@ Skills: 1840
 - `sandbox-npm-install` → `references/skills/sandbox-npm-install/INSTRUCTIONS.md`
 - `sankhya-dashboard-html-jsp-custom-best-pratices` → `references/skills/sankhya-dashboard-html-jsp-custom-best-pratices/INSTRUCTIONS.md`
 - `santa-method` → `references/skills/santa-method/INSTRUCTIONS.md`
-- `sast-configuration` → `references/skills/sast-configuration/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `sast-scanning` → `references/skills/sast-scanning/INSTRUCTIONS.md`
 - `sbom-supply-chain` → `references/skills/sbom-supply-chain/INSTRUCTIONS.md`
 - `scaffold-exercises` → `references/skills/scaffold-exercises/INSTRUCTIONS.md`
@@ -1532,7 +1502,6 @@ Skills: 1840
 - `shipping-and-launch` → `references/skills/shipping-and-launch/INSTRUCTIONS.md`
 - `shipping-artifacts` → `references/skills/shipping-artifacts/INSTRUCTIONS.md`
 - `shopify-development` → `references/skills/shopify-development/INSTRUCTIONS.md`
-- `shopify-expert` → `references/skills/shopify-expert/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `signed-audit-trails-recipe` → `references/skills/signed-audit-trails-recipe/INSTRUCTIONS.md`
 - `simplify-code` → `references/skills/simplify-code/INSTRUCTIONS.md`
 - `simpy` → `references/skills/simpy/INSTRUCTIONS.md`
@@ -1548,7 +1517,6 @@ Skills: 1840
 - `skill-scout` → `references/skills/skill-scout/INSTRUCTIONS.md`
 - `skill-security-audit` → `references/skills/skill-security-audit/INSTRUCTIONS.md`
 - `skypilot-multi-cloud-orchestration` → `references/skills/skypilot-multi-cloud-orchestration/INSTRUCTIONS.md`
-- `skyvern-browser-automation` → `references/skills/skyvern-browser-automation/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `slack-automation` → `references/skills/slack-automation/INSTRUCTIONS.md`
 - `slang-shader-engineer` → `references/skills/slang-shader-engineer/INSTRUCTIONS.md`
 - `slideops` → `references/skills/slideops/INSTRUCTIONS.md`
@@ -1565,15 +1533,12 @@ Skills: 1840
 - `source-driven-development` → `references/skills/source-driven-development/INSTRUCTIONS.md`
 - `spark-engineer` → `references/skills/spark-engineer/INSTRUCTIONS.md`
 - `sparse-autoencoder-training` → `references/skills/sparse-autoencoder-training/INSTRUCTIONS.md`
-- `spatial-computing-ui` → `references/skills/spatial-computing-ui/INSTRUCTIONS.md` [incomplete: excluded from default routing]
-- `spatial-design` → `references/skills/spatial-design/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `spec-driven-development` → `references/skills/spec-driven-development/INSTRUCTIONS.md`
 - `spec-driven-loop` → `references/skills/spec-driven-loop/INSTRUCTIONS.md`
 - `spec-driven-workflow` → `references/skills/spec-driven-workflow/INSTRUCTIONS.md`
 - `spec-miner` → `references/skills/spec-miner/INSTRUCTIONS.md`
 - `spec-to-code-compliance` → `references/skills/spec-to-code-compliance/INSTRUCTIONS.md`
 - `spec-to-repo` → `references/skills/spec-to-repo/INSTRUCTIONS.md`
-- `speculative-decoding` → `references/skills/speculative-decoding/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `speed-budget-checklist` → `references/skills/speed-budget-checklist/INSTRUCTIONS.md`
 - `spinning-up-deep-rl` → `references/skills/spinning-up-deep-rl/INSTRUCTIONS.md`
 - `sponsor-finder` → `references/skills/sponsor-finder/INSTRUCTIONS.md`
@@ -1620,7 +1585,6 @@ Skills: 1840
 - `swiftui-expert-skill` → `references/skills/swiftui-expert-skill/INSTRUCTIONS.md`
 - `swiss-design` → `references/skills/swiss-design/INSTRUCTIONS.md`
 - `sympy` → `references/skills/sympy/INSTRUCTIONS.md`
-- `synthwave` → `references/skills/synthwave/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `system-commandline-cli` → `references/skills/system-commandline-cli/INSTRUCTIONS.md`
 - `systematic-debugging` → `references/skills/systematic-debugging/INSTRUCTIONS.md`
 - `systems-programming-rust-project` → `references/skills/systems-programming-rust-project/INSTRUCTIONS.md`
@@ -1712,7 +1676,6 @@ Skills: 1840
 - `understand-domain` → `references/skills/understand-domain/INSTRUCTIONS.md`
 - `understand-figma` → `references/skills/understand-figma/INSTRUCTIONS.md`
 - `unified-memory` → `references/skills/unified-memory/INSTRUCTIONS.md`
-- `uniprot-database` → `references/skills/uniprot-database/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `unit-test-vue-pinia` → `references/skills/unit-test-vue-pinia/INSTRUCTIONS.md`
 - `unit-testing-test-generate` → `references/skills/unit-testing-test-generate/INSTRUCTIONS.md`
 - `unity-developer` → `references/skills/unity-developer/INSTRUCTIONS.md`
@@ -1726,7 +1689,6 @@ Skills: 1840
 - `use-dom` → `references/skills/use-dom/INSTRUCTIONS.md`
 - `usfiscaldata` → `references/skills/usfiscaldata/INSTRUCTIONS.md`
 - `using-n8n-mcp-skills` → `references/skills/using-n8n-mcp-skills/INSTRUCTIONS.md`
-- `using-neon` → `references/skills/using-neon/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `ux-researcher-designer` → `references/skills/ux-researcher-designer/INSTRUCTIONS.md`
 - `v-development` → `references/skills/v-development/INSTRUCTIONS.md`
 - `vaporwave` → `references/skills/vaporwave/INSTRUCTIONS.md`
@@ -1743,7 +1705,6 @@ Skills: 1840
 - `vercel-react-view-transitions` → `references/skills/vercel-react-view-transitions/INSTRUCTIONS.md`
 - `verification-loop` → `references/skills/verification-loop/INSTRUCTIONS.md`
 - `verify-agent-action` → `references/skills/verify-agent-action/INSTRUCTIONS.md`
-- `verl-rl-training` → `references/skills/verl-rl-training/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `vibe-code-auditor` → `references/skills/vibe-code-auditor/INSTRUCTIONS.md`
 - `vibe-code-cleanup` → `references/skills/vibe-code-cleanup/INSTRUCTIONS.md`
 - `vibecode-production-qa-validator` → `references/skills/vibecode-production-qa-validator/INSTRUCTIONS.md`
@@ -1809,7 +1770,6 @@ Skills: 1840
 - `wp-site-health-auditor` → `references/skills/wp-site-health-auditor/INSTRUCTIONS.md`
 - `wrap-up` → `references/skills/wrap-up/INSTRUCTIONS.md`
 - `writing-plans` → `references/skills/writing-plans/INSTRUCTIONS.md`
-- `writing-skills` → `references/skills/writing-skills/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `x-api` → `references/skills/x-api/INSTRUCTIONS.md`
 - `x-dm-auto-chat` → `references/skills/x-dm-auto-chat/INSTRUCTIONS.md`
 - `x-tweet-by-conversation` → `references/skills/x-tweet-by-conversation/INSTRUCTIONS.md`

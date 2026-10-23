@@ -1,6 +1,6 @@
 # social-media
 
-Skills: 260
+Skills: 259
 
 - `academy-collab-reporter` → `psk/data/skills/academy-collab-reporter/SKILL.md`
 - `academy-reels-monitor` → `psk/data/skills/academy-reels-monitor/SKILL.md`
@@ -161,7 +161,6 @@ Skills: 260
 - `instagram-content-generator` → `library/skills/instagram-content-generator/SKILL.md`
 - `instagram-dm-export-reader` → `psk/data/skills/instagram-dm-export-reader/SKILL.md`
 - `instagram-post-visual-kit` → `psk/data/skills/instagram-post-visual-kit/SKILL.md`
-- `iterate-pr` → `library/github-skills/iterate-pr/SKILL.md` [incomplete: excluded from default routing]
 - `jewelry-comment-reporter` → `psk/data/skills/jewelry-comment-reporter/SKILL.md`
 - `jewelry-reels-library` → `psk/data/skills/jewelry-reels-library/SKILL.md`
 - `link-in-bio-structure` → `psk/data/skills/link-in-bio-structure/SKILL.md`

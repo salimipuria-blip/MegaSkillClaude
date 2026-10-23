@@ -1,6 +1,6 @@
 # general
 
-Skills: 248
+Skills: 247
 
 - `academy-parser-pack` → `references/skills/academy-parser-pack/INSTRUCTIONS.md`
 - `access-review` → `references/skills/access-review/INSTRUCTIONS.md`
@@ -60,7 +60,6 @@ Skills: 248
 - `ecolodge-actions-assistant` → `references/skills/ecolodge-actions-assistant/INSTRUCTIONS.md`
 - `ecolodge-privacy-library` → `references/skills/ecolodge-privacy-library/INSTRUCTIONS.md`
 - `ecolodge-reporter-reporter` → `references/skills/ecolodge-reporter-reporter/INSTRUCTIONS.md`
-- `emergency-card` → `references/skills/emergency-card/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `employee-suggestion-hub` → `references/skills/employee-suggestion-hub/INSTRUCTIONS.md`
 - `enterprise-vpn-attack` → `references/skills/enterprise-vpn-attack/INSTRUCTIONS.md`
 - `escalation-trigger-rules` → `references/skills/escalation-trigger-rules/INSTRUCTIONS.md`

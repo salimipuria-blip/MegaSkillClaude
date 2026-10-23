@@ -39,7 +39,7 @@ project:
 ## نقشهٔ کد
 | فایل | مسئولیت | نکتهٔ حساس |
 |---|---|---|
-| `index.html` | پوستهٔ RTL، ۴ تب، متادیتای iOS (`apple-mobile-web-app-*`, `viewport-fit=cover`) | شمارنده‌ها (۵٬۹۶۴ و ۶٬۰۲۹) با تست به منبع canonical قفل‌اند |
+| `index.html` | پوستهٔ RTL، ۴ تب، متادیتای iOS (`apple-mobile-web-app-*`, `viewport-fit=cover`) | شمارنده‌ها (۵٬۹۶۴ روت‌شدنی از ۵٬۹۶۴) با تست به منبع canonical قفل‌اند |
 | `app.js` | `PROJECTS` (۱۳ کارت)، تب‌ها، کپی/toast، چیپ حوزه، شیت مهارت (Esc می‌بندد) | هر رشتهٔ داده‌ای فقط با `escapeHtml` وارد HTML شود |
 | `search.mjs` | `normalizeText` → `tokenize` → `buildSearchIndex` (یک‌بار) → `searchSkills` | مرتب‌سازی: `hits` ↓، `score` ↓، `position` ↑ |
 | `sw.js` | precache کامل، cache-first، پاک‌کردن فقط `mega-mobile-*` قدیمی | فقط GET هم‌origin داخل scope؛ fallback پوسته فقط برای navigate |

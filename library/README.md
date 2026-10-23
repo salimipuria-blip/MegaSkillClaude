@@ -8,9 +8,9 @@ Shared assets of the MEGA SKILLS 3000 project, kept in one place. Backend/fronte
 | MEGA SKILLS 3000 portfolio (Puria Salimi, Content Director) | `psk/public/puria/` | served at `/puria/`; static port of the original React/Vite source, same copy, photo (SHA-256 identical) and scroll choreography |
 | About page with founder section | `psk/public/about.html` | served at `/about` |
 | Curated project skills (18) | `library/skills/` | install: `bash library/install.sh [project-path]` |
-| Mega Skills Router plugin | `plugins/mega-skills-router/` (marketplace `psk` in `.claude-plugin/`) | installable anywhere: `/plugin marketplace add salimipuria-blip/MegaSkillClaude` then `/plugin install mega-skills-router@psk`; self-contained copy of all 6,029 skills |
-| Mega Skills Router | `.claude/skills/mega-skills-router/` | the only auto-loaded skill: routes each request through 15 domain indexes and 30,203 triggers to relevant skills among 6,029 (3,000 core + 18 project + 3,011 GitHub); 5,964 are routable by default and 65 incomplete entries are excluded |
-| GitHub skills (3,011, MIT) | `library/github-skills/` | current canonical index spanning 29 public repositories (count from `INDEX.json`); available through the router; see its README |
+| Mega Skills Router plugin | `plugins/mega-skills-router/` (marketplace `psk` in `.claude-plugin/`) | installable anywhere: `/plugin marketplace add salimipuria-blip/MegaSkillClaude` then `/plugin install mega-skills-router@psk`; self-contained copy of all 5,964 skills |
+| Mega Skills Router | `.claude/skills/mega-skills-router/` | the only auto-loaded skill: routes each request through 15 domain indexes and 29,878 triggers to relevant skills among 5,964 (3,000 core + 18 project + 2,946 GitHub); all 5,964 are routable and 0 incomplete entries remain |
+| GitHub skills (2,946, MIT) | `library/github-skills/` | current canonical index spanning 28 public repositories (count from `INDEX.json`); available through the router; see its README |
 
 Original portfolio hosting: https://purias-salimi.salimipuria.chatgpt.site/
 
@@ -32,8 +32,8 @@ Original portfolio hosting: https://purias-salimi.salimipuria.chatgpt.site/
 
 ## همگام‌سازی و مهارت‌های ناقص
 
-۶٬۰۲۹ مهارت نگه‌داری می‌شوند؛ ۶۵ مورد ناقص از مسیریابی پیش‌فرض خارج‌اند و ۵٬۹۶۴ مورد فعال‌اند.
-عدد فعلی GitHub skills برابر ۳٬۰۱۱ و بستهٔ مهارت‌های پروژه ۱۸ مورد است؛ منبع شمارشِ دقیق `INDEX.json` و نمایهٔ canonical router است.
+۵٬۹۶۴ مهارت نگه‌داری می‌شوند و همه فعال‌اند؛ ۰ مورد ناقص (۶۵ مهارتِ ناقصِ باقی‌مانده در ۲۰۲۶-۱۰-۲۳ حذف شد).
+عدد فعلی GitHub skills برابر ۲٬۹۴۶ و بستهٔ مهارت‌های پروژه ۱۸ مورد است؛ منبع شمارشِ دقیق `INDEX.json` و نمایهٔ canonical router است.
 منابع اصلی در `library/` و `psk/data/` هستند. بعد از تغییرشان، از ریشه
 `python3 scripts/sync_skill_library.py` را اجرا کنید. CI با `--check` ناهماهنگی نسخهٔ قابل‌نصب،
 نمایه‌ها، فایل‌های همراه و مجوزها را پیدا می‌کند؛ کپی‌های پلاگین را جداگانه ویرایش نکنید.

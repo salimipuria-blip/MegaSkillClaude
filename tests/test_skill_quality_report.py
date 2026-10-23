@@ -270,7 +270,7 @@ class RealLibraryReportTests(unittest.TestCase):
                          if not any((parent / 'SKILL.md').is_file()
                                     for parent in path.parent.parents if parent.is_relative_to(LIBRARY)))
         self.assertEqual(self.result['scanned'], len(on_disk))
-        self.assertEqual(self.result['scanned'], 3029, 'library/skills (18) + library/github-skills (3,011)')
+        self.assertEqual(self.result['scanned'], 2964, 'library/skills (18) + library/github-skills (2,946)')
         self.assertEqual([row['path'] for row in sorted(self.result['rows'],
                                                         key=lambda row: row['path'])], on_disk)
         self.assertEqual(self.result['coverage']['unindexed'], 0,
@@ -349,7 +349,7 @@ class RealLibraryReportTests(unittest.TestCase):
     def test_the_incomplete_column_agrees_with_the_link_audit(self):
         self.assertEqual(self.result['coverage']['incomplete'], self.counts['incomplete_skills'],
                          'the report must not carry its own idea of what incomplete means')
-        self.assertEqual(self.counts['incomplete_skills'], 65)
+        self.assertEqual(self.counts['incomplete_skills'], 0)
         self.assertEqual(self.counts['skills'] - self.counts['incomplete_skills'],
                          self.counts['routable_skills'])
 
@@ -385,7 +385,7 @@ class RealLibraryReportTests(unittest.TestCase):
         self.assertEqual(stub['score'], 0, 'a one-line hand-off skill has no structure to measure')
         self.assertIn(stub['path'], [row['path'] for row in self.result['weakest']])
         self.assertEqual(self.result['by_source']['curated']['skills'], 18)
-        self.assertEqual(self.result['by_source']['imported']['skills'], 3011)
+        self.assertEqual(self.result['by_source']['imported']['skills'], 2946)
         self.assertLess(self.result['by_source']['imported']['mean'],
                         self.result['by_source']['curated']['mean'],
                         'the 18 skills this repo wrote are the structural benchmark for the imports')

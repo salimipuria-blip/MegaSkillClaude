@@ -1,6 +1,6 @@
 # data-spreadsheets
 
-Skills: 297
+Skills: 296
 
 - `ab-test-calculator` → `psk/data/skills/ab-test-calculator/SKILL.md`
 - `academic-plotting` → `library/github-skills/academic-plotting/SKILL.md`
@@ -212,7 +212,6 @@ Skills: 297
 - `product-strategy` → `library/github-skills/product-strategy/SKILL.md`
 - `production-audit` → `library/github-skills/production-audit/SKILL.md`
 - `programmatic-seo` → `library/github-skills/programmatic-seo/SKILL.md`
-- `prometheus-configuration` → `library/github-skills/prometheus-configuration/SKILL.md` [incomplete: excluded from default routing]
 - `prometheus-grafana` → `library/github-skills/prometheus-grafana/SKILL.md`
 - `pydicom` → `library/github-skills/pydicom/SKILL.md`
 - `pymatgen` → `library/github-skills/pymatgen/SKILL.md`

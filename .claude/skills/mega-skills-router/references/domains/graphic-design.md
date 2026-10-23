@@ -1,6 +1,6 @@
 # graphic-design
 
-Skills: 231
+Skills: 230
 
 - `academy-brochure-reporter` → `psk/data/skills/academy-brochure-reporter/SKILL.md`
 - `academy-grid-reporter` → `psk/data/skills/academy-grid-reporter/SKILL.md`
@@ -141,7 +141,6 @@ Skills: 231
 - `persian-miniature-remix` → `psk/data/skills/persian-miniature-remix/SKILL.md`
 - `persian-typography-rules` → `psk/data/skills/persian-typography-rules/SKILL.md`
 - `planning-and-task-breakdown` → `library/github-skills/planning-and-task-breakdown/SKILL.md`
-- `platform-engineering` → `library/github-skills/platform-engineering/SKILL.md` [incomplete: excluded from default routing]
 - `poster-composition-kit` → `psk/data/skills/poster-composition-kit/SKILL.md`
 - `poster-design-studio` → `library/github-skills/poster-design-studio/SKILL.md`
 - `poster-generator-skill` → `psk/data/skills/poster-generator-skill/SKILL.md`

@@ -1,25 +1,48 @@
 {
   "extraKnownMarketplaces": {
-    "ecc": {
-      "source": { "source": "github", "repo": "affaan-m/ECC" }
-    },
     "marketingskills": {
-      "source": { "source": "github", "repo": "coreyhaines31/marketingskills" }
+      "source": {
+        "source": "github",
+        "repo": "coreyhaines31/marketingskills"
+      }
+    },
+    "psk": {
+      "source": {
+        "source": "github",
+        "repo": "salimipuria-blip/MegaSkillClaude"
+      }
     }
   },
-  "enabledPlugins": { "ecc@ecc": true, "marketing-skills@marketingskills": true },
+  "enabledPlugins": {
+    "mega-skills-router@psk": true,
+    "marketing-skills@marketingskills": true
+  },
   "statusLine": {
     "type": "command",
     "command": "node \"$CLAUDE_PROJECT_DIR/.claude/statusline/statusline.js\""
   },
   "hooks": {
     "SessionStart": [
-      { "hooks": [{ "type": "command", "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/session-start.sh" }] }
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/session-start.sh"
+          }
+        ]
+      }
     ],
     "PostToolUse": [
       {
         "matcher": "*",
-        "hooks": [{ "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.claude/statusline/record-action.js\"", "async": true, "timeout": 10 }]
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/statusline/record-action.js\"",
+            "async": true,
+            "timeout": 10
+          }
+        ]
       }
     ]
   }

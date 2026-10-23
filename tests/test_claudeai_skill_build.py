@@ -3,7 +3,7 @@
 The backlog accepts this task only if (a) every `path` a router result returns exists in *both*
 zips and (b) the lite build stays under 5 MB. Both are checked here against complete builds — no
 sampling — because a sampled zip would prove membership for files that are easy to ship and stay
-silent about the 3,011 GitHub-skill entries that make the full variant heavy.
+silent about the 2,946 GitHub-skill entries that make the full variant heavy.
 """
 import hashlib
 import importlib.util

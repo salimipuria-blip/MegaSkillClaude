@@ -1,6 +1,6 @@
 # web-development
 
-Skills: 1840
+Skills: 1800
 
 - `1688-product-detail` → `library/github-skills/1688-product-detail/SKILL.md`
 - `2slides-ppt-generator` → `library/github-skills/2slides-ppt-generator/SKILL.md`
@@ -106,7 +106,6 @@ Skills: 1840
 - `apify-integration-development` → `library/github-skills/apify-integration-development/SKILL.md`
 - `apify-ultimate-scraper` → `library/github-skills/apify-ultimate-scraper/SKILL.md`
 - `app-store-optimization` → `library/github-skills/app-store-optimization/SKILL.md`
-- `appdeploy` → `library/github-skills/appdeploy/SKILL.md` [incomplete: excluded from default routing]
 - `appium-skill` → `library/github-skills/appium-skill/SKILL.md`
 - `apple-appstore-reviewer` → `library/github-skills/apple-appstore-reviewer/SKILL.md`
 - `apple-container` → `library/github-skills/apple-container/SKILL.md`
@@ -215,12 +214,10 @@ Skills: 1840
 - `azure-containerregistry-py` → `library/github-skills/azure-containerregistry-py/SKILL.md`
 - `azure-cosmos-db-py` → `library/github-skills/azure-cosmos-db-py/SKILL.md`
 - `azure-cosmos-java` → `library/github-skills/azure-cosmos-java/SKILL.md`
-- `azure-cosmos-py` → `library/github-skills/azure-cosmos-py/SKILL.md` [incomplete: excluded from default routing]
 - `azure-cosmos-ts` → `library/github-skills/azure-cosmos-ts/SKILL.md`
 - `azure-data-tables-java` → `library/github-skills/azure-data-tables-java/SKILL.md`
 - `azure-deployment-preflight` → `library/github-skills/azure-deployment-preflight/SKILL.md`
 - `azure-developer-cli` → `library/github-skills/azure-developer-cli/SKILL.md`
-- `azure-devops` → `library/github-skills/azure-devops/SKILL.md` [incomplete: excluded from default routing]
 - `azure-devops-cli` → `library/github-skills/azure-devops-cli/SKILL.md`
 - `azure-eventgrid-dotnet` → `library/github-skills/azure-eventgrid-dotnet/SKILL.md`
 - `azure-eventgrid-java` → `library/github-skills/azure-eventgrid-java/SKILL.md`
@@ -239,7 +236,6 @@ Skills: 1840
 - `azure-messaging-webpubsub-java` → `library/github-skills/azure-messaging-webpubsub-java/SKILL.md`
 - `azure-mgmt-apicenter-dotnet` → `library/github-skills/azure-mgmt-apicenter-dotnet/SKILL.md`
 - `azure-mgmt-apicenter-py` → `library/github-skills/azure-mgmt-apicenter-py/SKILL.md`
-- `azure-mgmt-apimanagement-dotnet` → `library/github-skills/azure-mgmt-apimanagement-dotnet/SKILL.md` [incomplete: excluded from default routing]
 - `azure-mgmt-apimanagement-py` → `library/github-skills/azure-mgmt-apimanagement-py/SKILL.md`
 - `azure-mgmt-applicationinsights-dotnet` → `library/github-skills/azure-mgmt-applicationinsights-dotnet/SKILL.md`
 - `azure-mgmt-arizeaiobservabilityeval-dotnet` → `library/github-skills/azure-mgmt-arizeaiobservabilityeval-dotnet/SKILL.md`
@@ -319,7 +315,6 @@ Skills: 1840
 - `blockrun` → `library/github-skills/blockrun/SKILL.md`
 - `blog-mdx-pipeline` → `psk/data/skills/blog-mdx-pipeline/SKILL.md`
 - `blue-green-deploy` → `library/github-skills/blue-green-deploy/SKILL.md`
-- `book-to-skill` → `library/github-skills/book-to-skill/SKILL.md` [incomplete: excluded from default routing]
 - `booking-form-builder` → `psk/data/skills/booking-form-builder/SKILL.md`
 - `bookstore-gallery-generator` → `psk/data/skills/bookstore-gallery-generator/SKILL.md`
 - `bookstore-gallery-optimizer` → `psk/data/skills/bookstore-gallery-optimizer/SKILL.md`
@@ -401,14 +396,12 @@ Skills: 1840
 - `cloudflare-pages` → `library/github-skills/cloudflare-pages/SKILL.md`
 - `cloudflare-workers` → `library/github-skills/cloudflare-workers/SKILL.md`
 - `cloudflare-zero-trust` → `library/github-skills/cloudflare-zero-trust/SKILL.md`
-- `cloudformation` → `library/github-skills/cloudformation/SKILL.md` [incomplete: excluded from default routing]
 - `code-documenter` → `library/github-skills/code-documenter/SKILL.md`
 - `code-exemplars-blueprint-generator` → `library/github-skills/code-exemplars-blueprint-generator/SKILL.md`
 - `code-of-conduct` → `library/github-skills/code-of-conduct/SKILL.md`
 - `code-polish` → `library/github-skills/code-polish/SKILL.md`
 - `code-refactoring-tech-debt` → `library/github-skills/code-refactoring-tech-debt/SKILL.md`
 - `code-review` → `library/github-skills/code-review/SKILL.md`
-- `code-review-ai-ai-review` → `library/github-skills/code-review-ai-ai-review/SKILL.md` [incomplete: excluded from default routing]
 - `code-review-and-quality` → `library/github-skills/code-review-and-quality/SKILL.md`
 - `code-review-checklist` → `library/github-skills/code-review-checklist/SKILL.md`
 - `code-review-excellence` → `library/github-skills/code-review-excellence/SKILL.md`
@@ -473,7 +466,6 @@ Skills: 1840
 - `cost-optimization` → `library/github-skills/cost-optimization/SKILL.md`
 - `cost-tracking` → `library/github-skills/cost-tracking/SKILL.md`
 - `council-multi-model` → `library/github-skills/council-multi-model/SKILL.md`
-- `cowork-to-code-bridge` → `library/github-skills/cowork-to-code-bridge/SKILL.md` [incomplete: excluded from default routing]
 - `cpp-coding-standards` → `library/github-skills/cpp-coding-standards/SKILL.md`
 - `cpp-pro` → `library/github-skills/cpp-pro/SKILL.md`
 - `cpp-testing` → `library/github-skills/cpp-testing/SKILL.md`
@@ -493,7 +485,6 @@ Skills: 1840
 - `cyber-y2k` → `library/github-skills/cyber-y2k/SKILL.md`
 - `cyberpunk-ui` → `library/github-skills/cyberpunk-ui/SKILL.md`
 - `cypress-skill` → `library/github-skills/cypress-skill/SKILL.md`
-- `d365-solution-blueprint` → `library/github-skills/d365-solution-blueprint/SKILL.md` [incomplete: excluded from default routing]
 - `daily-prep` → `library/github-skills/daily-prep/SKILL.md`
 - `dark-mode` → `library/github-skills/dark-mode/SKILL.md`
 - `dark-mode-toggle-kit` → `psk/data/skills/dark-mode-toggle-kit/SKILL.md`
@@ -592,7 +583,6 @@ Skills: 1840
 - `dropthehassle-publish` → `library/github-skills/dropthehassle-publish/SKILL.md`
 - `dsh-deepread` → `library/github-skills/dsh-deepread/SKILL.md`
 - `dsl-vm-reverse` → `library/github-skills/dsl-vm-reverse/SKILL.md`
-- `duotone-design` → `library/github-skills/duotone-design/SKILL.md` [incomplete: excluded from default routing]
 - `dwarf-expert` → `library/github-skills/dwarf-expert/SKILL.md`
 - `e2e-testing` → `library/github-skills/e2e-testing/SKILL.md`
 - `e2e-testing-patterns` → `library/github-skills/e2e-testing-patterns/SKILL.md`
@@ -664,8 +654,6 @@ Skills: 1840
 - `file-conversion` → `library/github-skills/file-conversion/SKILL.md`
 - `finance-billing-ops` → `library/github-skills/finance-billing-ops/SKILL.md`
 - `fine-tuning-expert` → `library/github-skills/fine-tuning-expert/SKILL.md`
-- `fine-tuning-openvla-oft` → `library/github-skills/fine-tuning-openvla-oft/SKILL.md` [incomplete: excluded from default routing]
-- `fine-tuning-serving-openpi` → `library/github-skills/fine-tuning-serving-openpi/SKILL.md` [incomplete: excluded from default routing]
 - `finishing-a-development-branch` → `library/github-skills/finishing-a-development-branch/SKILL.md`
 - `fintech-deploy-library` → `psk/data/skills/fintech-deploy-library/SKILL.md`
 - `fintech-landing-analyzer` → `psk/data/skills/fintech-landing-analyzer/SKILL.md`
@@ -729,7 +717,6 @@ Skills: 1840
 - `gcp-networking` → `library/github-skills/gcp-networking/SKILL.md`
 - `gcp-secret-manager` → `library/github-skills/gcp-secret-manager/SKILL.md`
 - `gdb-cli` → `library/github-skills/gdb-cli/SKILL.md`
-- `gdpr-compliant` → `library/github-skills/gdpr-compliant/SKILL.md` [incomplete: excluded from default routing]
 - `gdpr-dsgvo-expert` → `library/github-skills/gdpr-dsgvo-expert/SKILL.md`
 - `gemini-api-dev` → `library/github-skills/gemini-api-dev/SKILL.md`
 - `gemini-api-integration` → `library/github-skills/gemini-api-integration/SKILL.md`
@@ -737,7 +724,6 @@ Skills: 1840
 - `gemini-live-api-dev` → `library/github-skills/gemini-live-api-dev/SKILL.md`
 - `gemini-omni-flash-api` → `library/github-skills/gemini-omni-flash-api/SKILL.md`
 - `generate-custom-instructions-from-codebase` → `library/github-skills/generate-custom-instructions-from-codebase/SKILL.md`
-- `generate-image` → `library/github-skills/generate-image/SKILL.md` [incomplete: excluded from default routing]
 - `generating-python-installer` → `library/github-skills/generating-python-installer/SKILL.md`
 - `genomic-intelligence` → `library/github-skills/genomic-intelligence/SKILL.md`
 - `geo-audit` → `library/github-skills/geo-audit/SKILL.md`
@@ -782,7 +768,6 @@ Skills: 1840
 - `graphql-architect` → `library/github-skills/graphql-architect/SKILL.md`
 - `graphql-schema` → `library/github-skills/graphql-schema/SKILL.md`
 - `grill-with-docs` → `library/github-skills/grill-with-docs/SKILL.md`
-- `grounded-vault` → `library/github-skills/grounded-vault/SKILL.md` [incomplete: excluded from default routing]
 - `grpo-rlvr-training` → `library/github-skills/grpo-rlvr-training/SKILL.md`
 - `gtars` → `library/github-skills/gtars/SKILL.md`
 - `gtm-partnership-architecture` → `library/github-skills/gtm-partnership-architecture/SKILL.md`
@@ -799,7 +784,6 @@ Skills: 1840
 - `healthcare-phi-compliance` → `library/github-skills/healthcare-phi-compliance/SKILL.md`
 - `helium-mcp` → `library/github-skills/helium-mcp/SKILL.md`
 - `helm-chart-builder` → `library/github-skills/helm-chart-builder/SKILL.md`
-- `helm-charts` → `library/github-skills/helm-charts/SKILL.md` [incomplete: excluded from default routing]
 - `hexagonal-architecture` → `library/github-skills/hexagonal-architecture/SKILL.md`
 - `hf-mcp` → `library/github-skills/hf-mcp/SKILL.md`
 - `high-contrast` → `library/github-skills/high-contrast/SKILL.md`
@@ -816,7 +800,6 @@ Skills: 1840
 - `hotel-speed-analyzer` → `psk/data/skills/hotel-speed-analyzer/SKILL.md`
 - `hqq-quantization` → `library/github-skills/hqq-quantization/SKILL.md`
 - `hugging-face-community-evals` → `library/github-skills/hugging-face-community-evals/SKILL.md`
-- `hugging-face-datasets` → `library/github-skills/hugging-face-datasets/SKILL.md` [incomplete: excluded from default routing]
 - `hugging-face-gradio` → `library/github-skills/hugging-face-gradio/SKILL.md`
 - `hugging-face-model-trainer` → `library/github-skills/hugging-face-model-trainer/SKILL.md`
 - `hugging-face-papers` → `library/github-skills/hugging-face-papers/SKILL.md`
@@ -970,7 +953,6 @@ Skills: 1840
 - `latchbio-integration` → `library/github-skills/latchbio-integration/SKILL.md`
 - `latchshot-page-capture` → `library/github-skills/latchshot-page-capture/SKILL.md`
 - `launch-strategy` → `library/github-skills/launch-strategy/SKILL.md`
-- `layered-design` → `library/github-skills/layered-design/SKILL.md` [incomplete: excluded from default routing]
 - `lead-magnet-page-builder` → `psk/data/skills/lead-magnet-page-builder/SKILL.md`
 - `lean-comments` → `library/github-skills/lean-comments/SKILL.md`
 - `legacy-circuit-mockups` → `library/github-skills/legacy-circuit-mockups/SKILL.md`
@@ -986,8 +968,6 @@ Skills: 1840
 - `liuguang-banlan-ui` → `library/github-skills/liuguang-banlan-ui/SKILL.md`
 - `living-docs-governance` → `library/github-skills/living-docs-governance/SKILL.md`
 - `llama-cpp` → `library/github-skills/llama-cpp/SKILL.md`
-- `llamaguard` → `library/github-skills/llamaguard/SKILL.md` [incomplete: excluded from default routing]
-- `llava` → `library/github-skills/llava/SKILL.md` [incomplete: excluded from default routing]
 - `llm-app-security` → `library/github-skills/llm-app-security/SKILL.md`
 - `llm-cost-optimization` → `library/github-skills/llm-cost-optimization/SKILL.md`
 - `llm-cost-optimizer` → `library/github-skills/llm-cost-optimizer/SKILL.md`
@@ -1011,7 +991,6 @@ Skills: 1840
 - `mailtrap-email-integration` → `library/github-skills/mailtrap-email-integration/SKILL.md`
 - `mailtrap-managing-contacts` → `library/github-skills/mailtrap-managing-contacts/SKILL.md`
 - `mailtrap-sending-emails` → `library/github-skills/mailtrap-sending-emails/SKILL.md`
-- `mailtrap-testing-with-sandbox` → `library/github-skills/mailtrap-testing-with-sandbox/SKILL.md` [incomplete: excluded from default routing]
 - `maintain-codex-wiki` → `library/github-skills/maintain-codex-wiki/SKILL.md`
 - `make-repo-contribution` → `library/github-skills/make-repo-contribution/SKILL.md`
 - `makepad-2-0-animation` → `library/github-skills/makepad-2-0-animation/SKILL.md`
@@ -1019,7 +998,6 @@ Skills: 1840
 - `makepad-2-0-events` → `library/github-skills/makepad-2-0-events/SKILL.md`
 - `makepad-2-0-layout` → `library/github-skills/makepad-2-0-layout/SKILL.md`
 - `makepad-2-0-widgets` → `library/github-skills/makepad-2-0-widgets/SKILL.md`
-- `makepad-deployment` → `library/github-skills/makepad-deployment/SKILL.md` [incomplete: excluded from default routing]
 - `markdown-html-orchestrator` → `library/github-skills/markdown-html-orchestrator/SKILL.md`
 - `markdown-to-html` → `library/github-skills/markdown-to-html/SKILL.md`
 - `marketing-demand-acquisition` → `library/github-skills/marketing-demand-acquisition/SKILL.md`
@@ -1060,7 +1038,6 @@ Skills: 1840
 - `ml-adoption-playbook` → `library/github-skills/ml-adoption-playbook/SKILL.md`
 - `ml-engineer` → `library/github-skills/ml-engineer/SKILL.md`
 - `ml-pipeline` → `library/github-skills/ml-pipeline/SKILL.md`
-- `ml-pipeline-workflow` → `library/github-skills/ml-pipeline-workflow/SKILL.md` [incomplete: excluded from default routing]
 - `ml-training-recipes` → `library/github-skills/ml-training-recipes/SKILL.md`
 - `mle-workflow` → `library/github-skills/mle-workflow/SKILL.md`
 - `mlflow` → `library/github-skills/mlflow/SKILL.md`
@@ -1072,7 +1049,6 @@ Skills: 1840
 - `modal` → `library/github-skills/modal/SKILL.md`
 - `modal-serverless-gpu` → `library/github-skills/modal-serverless-gpu/SKILL.md`
 - `model-merging` → `library/github-skills/model-merging/SKILL.md`
-- `model-serving-kubernetes` → `library/github-skills/model-serving-kubernetes/SKILL.md` [incomplete: excluded from default routing]
 - `model-supply-chain-security` → `library/github-skills/model-supply-chain-security/SKILL.md`
 - `mongodb` → `library/github-skills/mongodb/SKILL.md`
 - `monitoring-expert` → `library/github-skills/monitoring-expert/SKILL.md`
@@ -1148,7 +1124,6 @@ Skills: 1840
 - `not-a-vibe-coder` → `library/github-skills/not-a-vibe-coder/SKILL.md`
 - `notebook-llm` → `psk/data/skills/notebook-llm/SKILL.md`
 - `notion-automation` → `library/github-skills/notion-automation/SKILL.md`
-- `nsfw-ai-spicyapi` → `library/github-skills/nsfw-ai-spicyapi/SKILL.md` [incomplete: excluded from default routing]
 - `nutrient-document-processing` → `library/github-skills/nutrient-document-processing/SKILL.md`
 - `nuts-payment-library` → `psk/data/skills/nuts-payment-library/SKILL.md`
 - `nwb-conversion` → `library/github-skills/nwb-conversion/SKILL.md`
@@ -1238,7 +1213,6 @@ Skills: 1840
 - `performance-optimization` → `library/github-skills/performance-optimization/SKILL.md`
 - `performance-optimizer` → `library/github-skills/performance-optimizer/SKILL.md`
 - `performance-profiler` → `library/github-skills/performance-profiler/SKILL.md`
-- `performance-testing-review-ai-review` → `library/github-skills/performance-testing-review-ai-review/SKILL.md` [incomplete: excluded from default routing]
 - `perl-patterns` → `library/github-skills/perl-patterns/SKILL.md`
 - `perl-testing` → `library/github-skills/perl-testing/SKILL.md`
 - `pester-migration` → `library/github-skills/pester-migration/SKILL.md`
@@ -1312,7 +1286,6 @@ Skills: 1840
 - `protobuf-grpc-api-review` → `library/github-skills/protobuf-grpc-api-review/SKILL.md`
 - `prototype` → `library/github-skills/prototype/SKILL.md`
 - `publish-to-pages` → `library/github-skills/publish-to-pages/SKILL.md`
-- `pubmed-database` → `library/github-skills/pubmed-database/SKILL.md` [incomplete: excluded from default routing]
 - `pufferlib` → `library/github-skills/pufferlib/SKILL.md`
 - `pulse` → `library/github-skills/pulse/SKILL.md`
 - `pwa-builder-starter` → `psk/data/skills/pwa-builder-starter/SKILL.md`
@@ -1396,7 +1369,6 @@ Skills: 1840
 - `repo-standardizer` → `library/github-skills/repo-standardizer/SKILL.md`
 - `reports-analytics` → `library/github-skills/reports-analytics/SKILL.md`
 - `research-finance` → `library/github-skills/research-finance/SKILL.md`
-- `research-implement-feature` → `library/github-skills/research-implement-feature/SKILL.md` [incomplete: excluded from default routing]
 - `research-ops-skills` → `library/github-skills/research-ops-skills/SKILL.md`
 - `research-review` → `library/github-skills/research-review/SKILL.md`
 - `research-summarizer` → `library/github-skills/research-summarizer/SKILL.md`
@@ -1404,7 +1376,6 @@ Skills: 1840
 - `restaurant-payment-assistant` → `psk/data/skills/restaurant-payment-assistant/SKILL.md`
 - `result-to-claim` → `library/github-skills/result-to-claim/SKILL.md`
 - `retro` → `library/github-skills/retro/SKILL.md`
-- `retro-design` → `library/github-skills/retro-design/SKILL.md` [incomplete: excluded from default routing]
 - `retro-futurism` → `library/github-skills/retro-futurism/SKILL.md`
 - `review-agent-setup` → `library/github-skills/review-agent-setup/SKILL.md`
 - `review-and-simplify-changes` → `library/github-skills/review-and-simplify-changes/SKILL.md`
@@ -1450,7 +1421,6 @@ Skills: 1840
 - `sandbox-npm-install` → `library/github-skills/sandbox-npm-install/SKILL.md`
 - `sankhya-dashboard-html-jsp-custom-best-pratices` → `library/github-skills/sankhya-dashboard-html-jsp-custom-best-pratices/SKILL.md`
 - `santa-method` → `library/github-skills/santa-method/SKILL.md`
-- `sast-configuration` → `library/github-skills/sast-configuration/SKILL.md` [incomplete: excluded from default routing]
 - `sast-scanning` → `library/github-skills/sast-scanning/SKILL.md`
 - `sbom-supply-chain` → `library/github-skills/sbom-supply-chain/SKILL.md`
 - `scaffold-exercises` → `library/github-skills/scaffold-exercises/SKILL.md`
@@ -1532,7 +1502,6 @@ Skills: 1840
 - `shipping-and-launch` → `library/github-skills/shipping-and-launch/SKILL.md`
 - `shipping-artifacts` → `library/github-skills/shipping-artifacts/SKILL.md`
 - `shopify-development` → `library/github-skills/shopify-development/SKILL.md`
-- `shopify-expert` → `library/github-skills/shopify-expert/SKILL.md` [incomplete: excluded from default routing]
 - `signed-audit-trails-recipe` → `library/github-skills/signed-audit-trails-recipe/SKILL.md`
 - `simplify-code` → `library/github-skills/simplify-code/SKILL.md`
 - `simpy` → `library/github-skills/simpy/SKILL.md`
@@ -1548,7 +1517,6 @@ Skills: 1840
 - `skill-scout` → `library/github-skills/skill-scout/SKILL.md`
 - `skill-security-audit` → `library/github-skills/skill-security-audit/SKILL.md`
 - `skypilot-multi-cloud-orchestration` → `library/github-skills/skypilot-multi-cloud-orchestration/SKILL.md`
-- `skyvern-browser-automation` → `library/github-skills/skyvern-browser-automation/SKILL.md` [incomplete: excluded from default routing]
 - `slack-automation` → `library/github-skills/slack-automation/SKILL.md`
 - `slang-shader-engineer` → `library/github-skills/slang-shader-engineer/SKILL.md`
 - `slideops` → `library/github-skills/slideops/SKILL.md`
@@ -1565,15 +1533,12 @@ Skills: 1840
 - `source-driven-development` → `library/github-skills/source-driven-development/SKILL.md`
 - `spark-engineer` → `library/github-skills/spark-engineer/SKILL.md`
 - `sparse-autoencoder-training` → `library/github-skills/sparse-autoencoder-training/SKILL.md`
-- `spatial-computing-ui` → `library/github-skills/spatial-computing-ui/SKILL.md` [incomplete: excluded from default routing]
-- `spatial-design` → `library/github-skills/spatial-design/SKILL.md` [incomplete: excluded from default routing]
 - `spec-driven-development` → `library/github-skills/spec-driven-development/SKILL.md`
 - `spec-driven-loop` → `library/github-skills/spec-driven-loop/SKILL.md`
 - `spec-driven-workflow` → `library/github-skills/spec-driven-workflow/SKILL.md`
 - `spec-miner` → `library/github-skills/spec-miner/SKILL.md`
 - `spec-to-code-compliance` → `library/github-skills/spec-to-code-compliance/SKILL.md`
 - `spec-to-repo` → `library/github-skills/spec-to-repo/SKILL.md`
-- `speculative-decoding` → `library/github-skills/speculative-decoding/SKILL.md` [incomplete: excluded from default routing]
 - `speed-budget-checklist` → `psk/data/skills/speed-budget-checklist/SKILL.md`
 - `spinning-up-deep-rl` → `library/github-skills/spinning-up-deep-rl/SKILL.md`
 - `sponsor-finder` → `library/github-skills/sponsor-finder/SKILL.md`
@@ -1620,7 +1585,6 @@ Skills: 1840
 - `swiftui-expert-skill` → `library/github-skills/swiftui-expert-skill/SKILL.md`
 - `swiss-design` → `library/github-skills/swiss-design/SKILL.md`
 - `sympy` → `library/github-skills/sympy/SKILL.md`
-- `synthwave` → `library/github-skills/synthwave/SKILL.md` [incomplete: excluded from default routing]
 - `system-commandline-cli` → `library/github-skills/system-commandline-cli/SKILL.md`
 - `systematic-debugging` → `library/github-skills/systematic-debugging/SKILL.md`
 - `systems-programming-rust-project` → `library/github-skills/systems-programming-rust-project/SKILL.md`
@@ -1712,7 +1676,6 @@ Skills: 1840
 - `understand-domain` → `library/github-skills/understand-domain/SKILL.md`
 - `understand-figma` → `library/github-skills/understand-figma/SKILL.md`
 - `unified-memory` → `library/github-skills/unified-memory/SKILL.md`
-- `uniprot-database` → `library/github-skills/uniprot-database/SKILL.md` [incomplete: excluded from default routing]
 - `unit-test-vue-pinia` → `library/github-skills/unit-test-vue-pinia/SKILL.md`
 - `unit-testing-test-generate` → `library/github-skills/unit-testing-test-generate/SKILL.md`
 - `unity-developer` → `library/github-skills/unity-developer/SKILL.md`
@@ -1726,7 +1689,6 @@ Skills: 1840
 - `use-dom` → `library/github-skills/use-dom/SKILL.md`
 - `usfiscaldata` → `library/github-skills/usfiscaldata/SKILL.md`
 - `using-n8n-mcp-skills` → `library/github-skills/using-n8n-mcp-skills/SKILL.md`
-- `using-neon` → `library/github-skills/using-neon/SKILL.md` [incomplete: excluded from default routing]
 - `ux-researcher-designer` → `library/github-skills/ux-researcher-designer/SKILL.md`
 - `v-development` → `library/github-skills/v-development/SKILL.md`
 - `vaporwave` → `library/github-skills/vaporwave/SKILL.md`
@@ -1743,7 +1705,6 @@ Skills: 1840
 - `vercel-react-view-transitions` → `library/github-skills/vercel-react-view-transitions/SKILL.md`
 - `verification-loop` → `library/github-skills/verification-loop/SKILL.md`
 - `verify-agent-action` → `library/github-skills/verify-agent-action/SKILL.md`
-- `verl-rl-training` → `library/github-skills/verl-rl-training/SKILL.md` [incomplete: excluded from default routing]
 - `vibe-code-auditor` → `library/github-skills/vibe-code-auditor/SKILL.md`
 - `vibe-code-cleanup` → `library/github-skills/vibe-code-cleanup/SKILL.md`
 - `vibecode-production-qa-validator` → `library/github-skills/vibecode-production-qa-validator/SKILL.md`
@@ -1809,7 +1770,6 @@ Skills: 1840
 - `wp-site-health-auditor` → `library/github-skills/wp-site-health-auditor/SKILL.md`
 - `wrap-up` → `library/github-skills/wrap-up/SKILL.md`
 - `writing-plans` → `library/github-skills/writing-plans/SKILL.md`
-- `writing-skills` → `library/github-skills/writing-skills/SKILL.md` [incomplete: excluded from default routing]
 - `x-api` → `library/github-skills/x-api/SKILL.md`
 - `x-dm-auto-chat` → `library/github-skills/x-dm-auto-chat/SKILL.md`
 - `x-tweet-by-conversation` → `library/github-skills/x-tweet-by-conversation/SKILL.md`
