@@ -22,6 +22,12 @@
 - متن فارسی داخل عکس را مدل خراب می‌نویسد: تصویر را بدون متن بساز و متن را با فونت Vazirmatn (`npm pack vazirmatn`) و Playwright روی آن بگذار.
 - چهره‌ی ساختگی و متن انگلیسی روی عکس نگذار مگر کاربر بخواهد.
 
+## ساخت موشن/ویدیو
+- مهارت‌ها در `.claude/skills/` نصب‌اند: `remotion-*` (۱۲ مهارت رسمی Remotion) و از OpenDesign `motion-design`، `video-hyperframes`، `gsap-core`، `gsap-timeline` (مجوزها در `.claude/skills/_licenses/`).
+- روال: عکس‌های صحنه را طبق روال عکس بالا با Figma بساز (بدون متن). بعد یک HTML با تایم‌لاین قطعی بنویس (`window.seek(t)`) که متن فارسی را با Vazirmatn روی عکس‌ها بگذارد. با Playwright فریم‌به‌فریم بگیر و با `ffmpeg` (`libx264`، `yuv420p`) MP4 بساز. نمونهٔ کامل: `brands/viking-offroad/motion/tour-camp-10s/`.
+- Remotion (`npm i remotion @remotion/cli`) در sandbox فقط با `--browser-executable` روی `chrome-headless-shell` از `/opt/pw-browsers/chromium_headless_shell-*` رندر می‌گیرد. `chrome` معمولی خطای «Old Headless mode has been removed» می‌دهد.
+- قبل از تحویل، فریم‌های کلیدی را باز کن و بررسی کن. اشکال رایج در صفحهٔ RTL: هر چیزی که از کادر بیرون بزند (`inset` منفی، `translateX`) صفحه را افقی جابه‌جا می‌کند. همه‌چیز را داخل یک `#stage` با `position:fixed; overflow:hidden` بگذار.
+
 ## برندها
 - **viking.offroad** (وایکینگ آفرود): تور آفرود و کمپ؛ مشکی و نارنجی (#F28A1E)، حال‌وهوای سینمایی گرم. پک استیکرها (۳۶۰ تا، تمام‌نارنجی، با سورس): `brands/viking-offroad/stickers/`. کاورهای هایلایت فعلی: عکس‌های لوکیشن با رنگ‌بندی نارنجی گرم و لبه‌ی تیره، سوژه در مرکز برای برش دایره‌ای.
 - **MEGA SKILLS 3000**: پوشه‌ی `psk/`، سایت `psk-3000` روی Vercel.
