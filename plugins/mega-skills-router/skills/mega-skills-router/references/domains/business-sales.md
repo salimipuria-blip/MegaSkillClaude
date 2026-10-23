@@ -1,6 +1,6 @@
 # business-sales
 
-Skills: 487
+Skills: 485
 
 - `academy-fraud-planner` → `references/skills/academy-fraud-planner/INSTRUCTIONS.md`
 - `academy-funnel-auditor` → `references/skills/academy-funnel-auditor/INSTRUCTIONS.md`
@@ -121,7 +121,6 @@ Skills: 487
 - `deal-desk` → `references/skills/deal-desk/INSTRUCTIONS.md`
 - `debugging-wizard` → `references/skills/debugging-wizard/INSTRUCTIONS.md`
 - `decision-memo-onepager` → `references/skills/decision-memo-onepager/INSTRUCTIONS.md`
-- `defi-protocol-templates` → `references/skills/defi-protocol-templates/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `delivery-expectation-page` → `references/skills/delivery-expectation-page/INSTRUCTIONS.md`
 - `demo-script-framework` → `references/skills/demo-script-framework/INSTRUCTIONS.md`
 - `dental-crm-assistant` → `references/skills/dental-crm-assistant/INSTRUCTIONS.md`
@@ -476,7 +475,6 @@ Skills: 487
 - `whatsapp-sales-script-fa` → `references/skills/whatsapp-sales-script-fa/INSTRUCTIONS.md`
 - `win-loss-interview-kit` → `references/skills/win-loss-interview-kit/INSTRUCTIONS.md`
 - `wondelai` → `references/skills/wondelai/INSTRUCTIONS.md`
-- `x-keyword-comment` → `references/skills/x-keyword-comment/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `yalda-campaign-shop` → `references/skills/yalda-campaign-shop/INSTRUCTIONS.md`
 - `yoga-closing-analyzer` → `references/skills/yoga-closing-analyzer/INSTRUCTIONS.md`
 - `yoga-closing-pack` → `references/skills/yoga-closing-pack/INSTRUCTIONS.md`

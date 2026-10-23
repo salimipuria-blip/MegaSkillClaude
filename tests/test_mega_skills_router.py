@@ -68,21 +68,28 @@ class RouterRankingTest(unittest.TestCase):
                 self.assertEqual(self.search("project", query), self.search("plugin", query))
 
     def test_incomplete_skills_are_opt_in_only(self):
+        # Since 2026-10-23 the library carries no incomplete skill (they were repaired or removed),
+        # so the opt-in mechanism is exercised on a synthetic index built from a real entry.
+        import tempfile
         for copy, directory in COPIES.items():
             with self.subTest(copy=copy):
                 module = _load(directory)
-                path = directory / "references/triggers.json"
-                # configure-ecc served here until its missing script was restored (2026-10-23);
-                # tm7-threat-model still lacks assets/example-minimal.tm7 upstream.
-                default = module.search_index(path, "tm7-threat-model")
-                self.assertNotIn("tm7-threat-model", [s["name"] for s in default])
-                reviewed = module.search_index(path, "tm7-threat-model", include_incomplete=True)
-                self.assertEqual(reviewed[0]["name"], "tm7-threat-model")
+                real = json.loads((directory / "references/triggers.json").read_text(encoding="utf-8"))
+                entry = dict(next(s for s in real["skills"] if s["name"] == "tour-promo-reel-template"))
+                entry["incomplete"] = True
+                synthetic = dict(real, skills=[entry],
+                                 counts=dict(real["counts"], skills=1, incomplete_skills=1, routable_skills=0))
+                with tempfile.TemporaryDirectory() as tmp:
+                    path = Path(tmp) / "triggers.json"
+                    path.write_text(json.dumps(synthetic), encoding="utf-8")
+                    self.assertEqual(module.search_index(path, "tour-promo-reel-template"), [])
+                    reviewed = module.search_index(path, "tour-promo-reel-template", include_incomplete=True)
+                    self.assertEqual(reviewed[0]["name"], "tour-promo-reel-template")
 
     def test_both_indexes_mirror_the_canonical_incomplete_flags(self):
         github = json.loads((ROOT / "library/github-skills/INDEX.json").read_text())
         expected = {s["name"] for s in github if s.get("incomplete")}
-        self.assertEqual(len(expected), 65)
+        self.assertEqual(len(expected), 0, "incomplete skills are repaired or removed, never shipped hidden")
         for directory in COPIES.values():
             index = json.loads((directory / "references/triggers.json").read_text())
             self.assertEqual({s["name"] for s in index["skills"] if s.get("incomplete")}, expected)
@@ -193,7 +200,8 @@ class RouterRankingTest(unittest.TestCase):
     def test_cli_falls_back_to_partial_matches(self):
         import contextlib
         import io
-        query = "کپشن اینستاگرام تور آفرود"
+        # «زرافه» is in no trigger and is not a brand, so it keeps its weight and the strict pass stays empty.
+        query = "کپشن اینستاگرام تور زرافه"
         for copy, directory in COPIES.items():
             module = _load(directory)
             path = directory / "references/triggers.json"
@@ -207,6 +215,22 @@ class RouterRankingTest(unittest.TestCase):
                 with contextlib.redirect_stdout(out):
                     module.main([query, "--index", str(path), "--min-score", "0.5"])
                 self.assertEqual(json.loads(out.getvalue()), [])
+
+    def test_a_brand_name_no_skill_carries_does_not_sink_the_request(self):
+        # «وایکینگ» stems to "vik" and «آفرود» to "offroad"; no skill carries either, so as the rarest
+        # tokens they took most of the IDF weight and «تور آفرود وایکینگ» returned nothing at any threshold.
+        for copy, directory in COPIES.items():
+            module = _load(directory)
+            path = directory / "references/triggers.json"
+            with self.subTest(copy=copy):
+                self.assertTrue({"vik", "offroad"} <= module.BRAND_STEMS)
+                brand = module.search_index(path, "تور آفرود وایکینگ", module.DEFAULT_MIN_SCORE)
+                plain = module.search_index(path, "تور", module.DEFAULT_MIN_SCORE)
+                self.assertTrue(brand)
+                self.assertEqual([item["name"] for item in brand], [item["name"] for item in plain])
+                # an unknown word that is not a brand still counts: it usually is the intent
+                self.assertEqual(module.search_index(path, "تور زرافه", module.DEFAULT_MIN_SCORE), [])
+                self.assertEqual(module.search_index(path, "وایکینگ آفرود"), [])
 
     def test_cli_limits_output(self):
         import contextlib

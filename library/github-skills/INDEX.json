@@ -1994,32 +1994,6 @@
   "incomplete": false
  },
  {
-  "name": "gdpr-compliant",
-  "repo": "github/awesome-copilot",
-  "path": "skills/gdpr-compliant",
-  "license": "MIT",
-  "score": 9.099,
-  "description": "Apply GDPR-compliant engineering practices across your codebase. Use this skill whenever you are designing APIs, writing data models, building authentication flows, implementing logging, handling user data, writing retention/deletion jobs, designing cloud infrastructure, or reviewing pull requests f",
-  "url": "https://github.com/github/awesome-copilot/tree/HEAD/skills/gdpr-compliant",
-  "incomplete": true,
-  "missing_files": [
-   "references/operations.md"
-  ]
- },
- {
-  "name": "d365-solution-blueprint",
-  "repo": "github/awesome-copilot",
-  "path": "skills/d365-solution-blueprint",
-  "license": "MIT",
-  "score": 9.099,
-  "description": "Authors a Dynamics 365 Finance and Supply Chain Management Solution Blueprint from scratch through a structured, section-by-section architect interview, establishing scope, target operating model, application and data architecture, integration landscape, migration strategy, security model, ALM, test",
-  "url": "https://github.com/github/awesome-copilot/tree/HEAD/skills/d365-solution-blueprint",
-  "incomplete": true,
-  "missing_files": [
-   "references/firm-standards.md"
-  ]
- },
- {
   "name": "dotnet-mcp-builder",
   "repo": "github/awesome-copilot",
   "path": "skills/dotnet-mcp-builder",
@@ -2590,21 +2564,6 @@
   "incomplete": false
  },
  {
-  "name": "book-to-skill",
-  "repo": "virgiliojr94/book-to-skill",
-  "path": ".",
-  "license": "MIT",
-  "score": 9.025,
-  "description": "Converts books and documents (PDF, EPUB, DOCX, HTML, Markdown, plain text, RTF, MOBI/AZW with Calibre) into structured agent skills, extracting frameworks, mental models, principles, techniques, and anti-patterns. Use when the user wants to study a document through GitHub Copilot CLI, Amp, Claude Co",
-  "url": "https://github.com/virgiliojr94/book-to-skill/tree/HEAD/.",
-  "incomplete": true,
-  "missing_files": [
-   "cheatsheet.md",
-   "glossary.md",
-   "patterns.md"
-  ]
- },
- {
   "name": "kotlin-exposed-patterns",
   "repo": "affaan-m/ECC",
   "path": "skills/kotlin-exposed-patterns",
@@ -2703,19 +2662,6 @@
   "description": "Expert skill for writing FreeCAD Python scripts, macros, and automation. Use when asked to create FreeCAD models, parametric objects, Part/Mesh/Sketcher scripts, workbench tools, GUI dialogs with PySide, Coin3D scenegraph manipulation, or any FreeCAD Python API task. Covers FreeCAD scripting basics,",
   "url": "https://github.com/github/awesome-copilot/tree/HEAD/skills/freecad-scripts",
   "incomplete": false
- },
- {
-  "name": "generate-image",
-  "repo": "K-Dense-AI/scientific-agent-skills",
-  "path": "skills/generate-image",
-  "license": "MIT",
-  "score": 9.007,
-  "description": "Generates or edits images with AI models through the OpenRouter Image API (Gemini, Seedream, Recraft, GPT-Image, Riverflow). Use for photos, illustrations, artwork, concept art, visual assets, logos, and image editing or compositing from reference images. For flowcharts, circuits, pathways, and othe",
-  "url": "https://github.com/K-Dense-AI/scientific-agent-skills/tree/HEAD/skills/generate-image",
-  "incomplete": true,
-  "missing_files": [
-   "assets/logo.svg"
-  ]
  },
  {
   "name": "autonomous-loops",
@@ -5586,19 +5532,6 @@
   "incomplete": false
  },
  {
-  "name": "tm7-threat-model",
-  "repo": "github/awesome-copilot",
-  "path": "skills/tm7-threat-model",
-  "license": "MIT",
-  "score": 8.764,
-  "description": "Creates valid Microsoft Threat Modeling Tool (.tm7) files compatible with the Microsoft Threat Modeling Tool v7.3+. Use this skill whenever asked to create, generate, or modify a .tm7 threat model file, or when performing STRIDE threat modeling that should output a .tm7 file that opens cleanly in th",
-  "url": "https://github.com/github/awesome-copilot/tree/HEAD/skills/tm7-threat-model",
-  "incomplete": true,
-  "missing_files": [
-   "assets/example-minimal.tm7"
-  ]
- },
- {
   "name": "primekg",
   "repo": "K-Dense-AI/scientific-agent-skills",
   "path": "skills/primekg",
@@ -5911,19 +5844,6 @@
   "score": 8.728,
   "description": "Rigorous mathematical proof verification and fixing workflow. Reads a LaTeX proof, identifies gaps via fresh-agent Codex GPT-6-Astra ultra review, fixes each gap with full derivations, re-reviews, and generates an audit report. Base review is same-family provisional. Use when user says \"检查证明\", \"veri",
   "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/proof-checker"
- },
- {
-  "name": "research-implement-feature",
-  "repo": "wanshuiyin/Auto-claude-code-research-in-sleep",
-  "path": "skills/skills-codex/research-implement-feature",
-  "license": "MIT",
-  "score": 8.728,
-  "description": "Build a working artifact from a plain \\\"implement X for me\\\" request: a running end-to-end spine first, then one feature per rung, with every under-determined decision written to an assumption ledger BEFORE the code that depends on it and a sweep for the ones that slipped through undeclared (same-fa",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/research-implement-feature",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/run.py"
-  ]
  },
  {
   "name": "slides-polish",
@@ -6761,21 +6681,6 @@
   "description": "Creates safety-bounded draft structures and runs local deterministic checks for clinical case, diagnostic, trial, safety, and aggregate research reports. Use only with synthetic, de-identified, or aggregate inputs and verified source-fact manifests; every output requires qualified review.",
   "url": "https://github.com/K-Dense-AI/scientific-agent-skills/tree/HEAD/skills/clinical-reports",
   "incomplete": false
- },
- {
-  "name": "fine-tuning-openvla-oft",
-  "repo": "Orchestra-Research/AI-Research-SKILLs",
-  "path": "18-multimodal/openvla-oft",
-  "license": "MIT",
-  "score": 8.621,
-  "description": "Fine-tunes and evaluates OpenVLA-OFT and OpenVLA-OFT+ policies for robot action generation with continuous action heads, LoRA adaptation, and FiLM conditioning on LIBERO simulation and ALOHA real-world setups. Use when reproducing OpenVLA-OFT paper results, training custom VLA action heads (L1 or di",
-  "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/tree/HEAD/18-multimodal/openvla-oft",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/deploy.py",
-   "scripts/finetune.py",
-   "scripts/merge_lora_weights_and_save.py"
-  ]
  },
  {
   "name": "ml-training-recipes",
@@ -7748,19 +7653,6 @@
   "incomplete": false
  },
  {
-  "name": "speculative-decoding",
-  "repo": "Orchestra-Research/AI-Research-SKILLs",
-  "path": "19-emerging-techniques/speculative-decoding",
-  "license": "MIT",
-  "score": 8.516,
-  "description": "Accelerate LLM inference using speculative decoding, Medusa multiple heads, and lookahead decoding techniques. Use when optimizing inference speed (1.5-3.6× speedup), reducing latency for real-time applications, or deploying models with limited compute. Covers draft models, tree-based attention, Jac",
-  "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/tree/HEAD/19-emerging-techniques/speculative-decoding",
-  "incomplete": true,
-  "missing_files": [
-   "references/draft_model.md"
-  ]
- },
- {
   "name": "multi-advisor",
   "repo": "sickn33/agentic-awesome-skills",
   "path": "skills/multi-advisor",
@@ -7789,19 +7681,6 @@
   "description": "Framework for building LLM-powered applications with agents, chains, and RAG. Supports multiple providers (OpenAI, Anthropic, Google), 500+ integrations, ReAct agents, tool calling, memory management, and vector store retrieval. Use for building chatbots, question-answering systems, autonomous agent",
   "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/tree/HEAD/14-agents/langchain",
   "incomplete": false
- },
- {
-  "name": "long-context",
-  "repo": "Orchestra-Research/AI-Research-SKILLs",
-  "path": "19-emerging-techniques/long-context",
-  "license": "MIT",
-  "score": 8.511,
-  "description": "Extend context windows of transformer models using RoPE, YaRN, ALiBi, and position interpolation techniques. Use when processing long documents (32k-128k+ tokens), extending pre-trained models beyond original context limits, or implementing efficient positional encodings. Covers rotary embeddings, a",
-  "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/tree/HEAD/19-emerging-techniques/long-context",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/train.py"
-  ]
  },
  {
   "name": "swift-protocol-di-testing",
@@ -8347,20 +8226,6 @@
   "description": "Diagnose and accelerate large data movement — ingestion, backfill, export, ETL, warehouse loading, manifest catch-up, and table synchronization — by isolating the true bottleneck, benchmarking variants, and codifying the fastest path with a hard accounting block proving rows and timestamps cohere. U",
   "url": "https://github.com/affaan-m/ECC/tree/HEAD/skills/data-throughput-accelerator",
   "incomplete": false
- },
- {
-  "name": "writing-skills",
-  "repo": "obra/superpowers",
-  "path": "skills/writing-skills",
-  "license": "MIT",
-  "score": 8.455,
-  "description": "Use when creating new skills, editing existing skills, or verifying skills work before deployment",
-  "url": "https://github.com/obra/superpowers/tree/HEAD/skills/writing-skills",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/tool.js",
-   "scripts/tool.sh"
-  ]
  },
  {
   "name": "ux-researcher-designer",
@@ -8938,19 +8803,6 @@
   "incomplete": false
  },
  {
-  "name": "shopify-expert",
-  "repo": "Jeffallan/claude-skills",
-  "path": "skills/shopify-expert",
-  "license": "MIT",
-  "score": 8.387,
-  "description": "Builds and debugs Shopify themes (.liquid files, theme.json, sections), develops custom Shopify apps (shopify.app.toml, OAuth, webhooks), and implements Storefront API integrations for headless storefronts. Use when building or customizing Shopify themes, creating Hydrogen or custom React storefront",
-  "url": "https://github.com/Jeffallan/claude-skills/tree/HEAD/skills/shopify-expert",
-  "incomplete": true,
-  "missing_files": [
-   "templates/product.liquid"
-  ]
- },
- {
   "name": "commit-message-storyteller",
   "repo": "github/awesome-copilot",
   "path": "skills/commit-message-storyteller",
@@ -9209,24 +9061,6 @@
   "incomplete": false
  },
  {
-  "name": "fine-tuning-serving-openpi",
-  "repo": "Orchestra-Research/AI-Research-SKILLs",
-  "path": "18-multimodal/openpi",
-  "license": "MIT",
-  "score": 8.371,
-  "description": "Fine-tune and serve Physical Intelligence OpenPI models (pi0, pi0-fast, pi0.5) using JAX or PyTorch backends for robot policy inference across ALOHA, DROID, and LIBERO environments. Use when adapting pi0 models to custom datasets, converting JAX checkpoints to PyTorch, running policy inference serve",
-  "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/tree/HEAD/18-multimodal/openpi",
-  "incomplete": true,
-  "missing_files": [
-   "examples/convert_jax_model_to_pytorch.py",
-   "examples/simple_client/main.py",
-   "scripts/compute_norm_stats.py",
-   "scripts/serve_policy.py",
-   "scripts/train.py",
-   "scripts/train_pytorch.py"
-  ]
- },
- {
   "name": "huggingface-tokenizers",
   "repo": "Orchestra-Research/AI-Research-SKILLs",
   "path": "02-tokenization/huggingface-tokenizers",
@@ -9245,20 +9079,6 @@
   "description": "Design, create, review, migrate, or troubleshoot Azure Developer CLI (azd) projects using current Microsoft guidance. Use for azd, azure.yaml, AZD templates, Bicep or Terraform under infra, AZD environments and secrets, hooks, deployment workflows, and azd-managed CI/CD.",
   "url": "https://github.com/github/awesome-copilot/tree/HEAD/skills/azure-developer-cli",
   "incomplete": false
- },
- {
-  "name": "pubmed-database",
-  "repo": "sickn33/agentic-awesome-skills",
-  "path": "skills/pubmed-database",
-  "license": "MIT",
-  "score": 8.369,
-  "description": "Direct REST API access to PubMed. Advanced Boolean/MeSH queries, E-utilities API, batch processing, citation management. For Python workflows, prefer biopython (Bio.Entrez). Use this for direct HTTP/REST work or custom API implementations.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/pubmed-database",
-  "incomplete": true,
-  "missing_files": [
-   "references/common_queries.md",
-   "references/search_syntax.md"
-  ]
  },
  {
   "name": "lovable-cleanup",
@@ -9718,20 +9538,6 @@
   "incomplete": false
  },
  {
-  "name": "llava",
-  "repo": "Orchestra-Research/AI-Research-SKILLs",
-  "path": "18-multimodal/llava",
-  "license": "MIT",
-  "score": 8.348,
-  "description": "Large Language and Vision Assistant. Enables visual instruction tuning and image-based conversations. Combines CLIP vision encoder with Vicuna/LLaMA language models. Supports multi-turn image chat, visual question answering, and instruction following. Use for vision-language chatbots or image unders",
-  "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/tree/HEAD/18-multimodal/llava",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/v1_5/finetune.sh",
-   "scripts/v1_5/pretrain.sh"
-  ]
- },
- {
   "name": "simpy",
   "repo": "K-Dense-AI/scientific-agent-skills",
   "path": "skills/simpy",
@@ -9938,19 +9744,6 @@
   "description": "Generates images and text via reverse-engineered Gemini Web API. Supports text generation, image generation from prompts, reference images for vision input, and multi-turn conversations. Use when other skills need image generation backend, or when user requests \"generate image with Gemini\", \"Gemini ",
   "url": "https://github.com/JimLiu/baoyu-skills/tree/HEAD/skills/baoyu-danger-gemini-web",
   "incomplete": false
- },
- {
-  "name": "grounded-vault",
-  "repo": "wshobson/agents",
-  "path": "plugins/documentation-standards/skills/grounded-vault",
-  "license": "MIT",
-  "score": 8.325,
-  "description": "Use when maintaining a durable Markdown knowledge store that agents compile from sources, when every number or quote in a wiki page must trace back to an immutable source, or when compiled pages need cheap drift detection against the code they describe. Teaches the raw/wiki/archive layout, per-claim",
-  "url": "https://github.com/wshobson/agents/tree/HEAD/plugins/documentation-standards/skills/grounded-vault",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/check_vault.py"
-  ]
  },
  {
   "name": "atlas-ledger",
@@ -10180,20 +9973,6 @@
   "incomplete": false
  },
  {
-  "name": "optimizing-attention-flash",
-  "repo": "Orchestra-Research/AI-Research-SKILLs",
-  "path": "10-optimization/flash-attention",
-  "license": "MIT",
-  "score": 8.296,
-  "description": "Optimizes transformer attention with Flash Attention for 2-4x speedup and 10-20x memory reduction. Use when training/running transformers with long sequences (>512 tokens), encountering GPU memory issues with attention, or need faster inference. Supports PyTorch native SDPA, flash-attn library, H100",
-  "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/tree/HEAD/10-optimization/flash-attention",
-  "incomplete": true,
-  "missing_files": [
-   "references/advanced-features.md",
-   "references/algorithm.md"
-  ]
- },
- {
   "name": "baoyu-comic",
   "repo": "JimLiu/baoyu-skills",
   "path": "skills/baoyu-comic",
@@ -10202,19 +9981,6 @@
   "description": "Knowledge comic creator supporting multiple art styles and tones. Creates original educational comics with detailed panel layouts and batch-capable image generation. Use when user asks to create \"知识漫画\", \"教育漫画\", \"biography comic\", \"tutorial comic\", or \"Logicomix-style comic\".",
   "url": "https://github.com/JimLiu/baoyu-skills/tree/HEAD/skills/baoyu-comic",
   "incomplete": false
- },
- {
-  "name": "uniprot-database",
-  "repo": "sickn33/agentic-awesome-skills",
-  "path": "skills/uniprot-database",
-  "license": "MIT",
-  "score": 8.294,
-  "description": "Direct REST API access to UniProt. Protein searches, FASTA retrieval, ID mapping, Swiss-Prot/TrEMBL. For Python workflows with multiple databases, prefer bioservices (unified interface to 40+ services). Use this for direct HTTP/REST work or UniProt-specific control.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/uniprot-database",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/uniprot_client.py"
-  ]
  },
  {
   "name": "cc-skill-security-review",
@@ -10429,23 +10195,6 @@
   "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/threads-user-posts"
  },
  {
-  "name": "xiaohongshu-auto-posting",
-  "repo": "browser-act/skills",
-  "path": "solutions/social-listening/xiaohongshu-auto-posting",
-  "license": "MIT",
-  "score": 8.285,
-  "description": "Automates the complete Xiaohongshu (XHS / Little Red Book) content operation workflow: pain-point topic collection → style case collection → topic selection → content writing → publishing → performance tracking. Use when user mentions xiaohongshu auto posting, xhs auto post, little red book posting,",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/xiaohongshu-auto-posting",
-  "incomplete": true,
-  "missing_files": [
-   "references/phase1-topic-collection.md",
-   "references/phase2-case-collection.md",
-   "references/phase4-writing.md",
-   "references/phase5-publish.md",
-   "references/phase6-tracking.md"
-  ]
- },
- {
   "name": "x-tweet-search-by-query",
   "repo": "browser-act/skills",
   "path": "solutions/social-listening/x-tweet-search-by-query",
@@ -10500,20 +10249,6 @@
   "description": "Collects every tweet in an X (Twitter) conversation thread given a conversation id (root tweet id) — the focal tweet plus all replies, sub-replies, and quote chains — and returns normalized per-tweet data with text, author, engagement counts, media, hashtags, mentions, in_reply_to mapping, and curso",
   "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/x-tweet-by-conversation",
   "incomplete": false
- },
- {
-  "name": "x-keyword-comment",
-  "repo": "browser-act/skills",
-  "path": "solutions/social-listening/x-keyword-comment",
-  "license": "MIT",
-  "score": 8.285,
-  "description": "X (Twitter) keyword-based reply posting: search tweets by keyword, read each tweet's content, generate contextual replies from a configured brand persona, and post replies to the reply area. Use when user wants to batch reply to X tweets by keyword, auto-comment on X topic tweets, drive traffic via ",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/x-keyword-comment",
-  "incomplete": true,
-  "missing_files": [
-   "references/quality-checklist.md",
-   "references/reply-composition.md"
-  ]
  },
  {
   "name": "xiaohongshu-search-full",
@@ -10941,19 +10676,6 @@
   "description": "Activation-aware weight quantization for 4-bit LLM compression with 3x speedup and minimal accuracy loss. Use when deploying large models (7B-70B) on limited GPU memory, when you need faster inference than GPTQ with better accuracy preservation, or for instruction-tuned and multimodal models. MLSys ",
   "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/tree/HEAD/10-optimization/awq",
   "incomplete": false
- },
- {
-  "name": "training-llms-megatron",
-  "repo": "Orchestra-Research/AI-Research-SKILLs",
-  "path": "08-distributed-training/megatron-core",
-  "license": "MIT",
-  "score": 8.266,
-  "description": "Trains large language models (2B-462B parameters) using NVIDIA Megatron-Core with advanced parallelism strategies. Use when training models >1B parameters, need maximum GPU efficiency (47% MFU on H100), or require tensor/pipeline/sequence/context/expert parallelism. Production-ready framework used f",
-  "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/tree/HEAD/08-distributed-training/megatron-core",
-  "incomplete": true,
-  "missing_files": [
-   "examples/run_simple_mcore_train_loop.py"
-  ]
  },
  {
   "name": "baoyu-infographic",
@@ -11893,19 +11615,6 @@
   "incomplete": false
  },
  {
-  "name": "code-review-ai-ai-review",
-  "repo": "sickn33/agentic-awesome-skills",
-  "path": "skills/code-review-ai-ai-review",
-  "license": "MIT",
-  "score": 8.174,
-  "description": "You are an expert AI-powered code review specialist combining automated static analysis, intelligent pattern recognition, and modern DevOps practices. Leverage AI tools (GitHub Copilot, Qodo, GPT-5, C",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/code-review-ai-ai-review",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/ai_review.py"
-  ]
- },
- {
   "name": "framework-migration-legacy-modernize",
   "repo": "sickn33/agentic-awesome-skills",
   "path": "skills/framework-migration-legacy-modernize",
@@ -11954,19 +11663,6 @@
   "description": "You are a React component architecture expert specializing in scaffolding production-ready, accessible, and performant components. Generate complete component implementations with TypeScript, tests, s",
   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/frontend-mobile-development-component-scaffold",
   "incomplete": false
- },
- {
-  "name": "performance-testing-review-ai-review",
-  "repo": "sickn33/agentic-awesome-skills",
-  "path": "skills/performance-testing-review-ai-review",
-  "license": "MIT",
-  "score": 8.174,
-  "description": "You are an expert AI-powered code review specialist combining automated static analysis, intelligent pattern recognition, and modern DevOps practices. Leverage AI tools (GitHub Copilot, Qodo, GPT-5, C",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/performance-testing-review-ai-review",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/ai_review.py"
-  ]
  },
  {
   "name": "javascript-typescript-typescript-scaffold",
@@ -12377,20 +12073,6 @@
   "description": "Find similar vulnerabilities and bugs across codebases using pattern-based analysis. Use when hunting bug variants, building CodeQL/Semgrep queries, analyzing security vulnerabilities, or performing systematic code audits after finding an initial issue.",
   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/variant-analysis",
   "incomplete": false
- },
- {
-  "name": "implementing-llms-litgpt",
-  "repo": "Orchestra-Research/AI-Research-SKILLs",
-  "path": "01-model-architecture/litgpt",
-  "license": "MIT",
-  "score": 8.151,
-  "description": "Implements and trains LLMs using Lightning AI's LitGPT with 20+ pretrained architectures (Llama, Gemma, Phi, Qwen, Mistral). Use when need clean model implementations, educational understanding of architectures, or production fine-tuning with LoRA/QLoRA. Single-file implementations, no abstraction l",
-  "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/tree/HEAD/01-model-architecture/litgpt",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/convert_lit_checkpoint.py",
-   "scripts/prepare_dataset.py"
-  ]
  },
  {
   "name": "gptq",
@@ -13070,27 +12752,6 @@
   "incomplete": false
  },
  {
-  "name": "defi-protocol-templates",
-  "repo": "sickn33/agentic-awesome-skills",
-  "path": "skills/defi-protocol-templates",
-  "license": "MIT",
-  "score": 8.124,
-  "description": "Implement DeFi protocols with production-ready templates for staking, AMMs, governance, and lending systems. Use when building decentralized finance applications or smart contract protocols.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/defi-protocol-templates",
-  "incomplete": true,
-  "missing_files": [
-   "assets/amm-contract.sol",
-   "assets/governance-token.sol",
-   "assets/lending-protocol.sol",
-   "assets/staking-contract.sol",
-   "references/flash-loans.md",
-   "references/governance-tokens.md",
-   "references/lending-protocols.md",
-   "references/liquidity-pools.md",
-   "references/staking.md"
-  ]
- },
- {
   "name": "calendly-automation",
   "repo": "sickn33/agentic-awesome-skills",
   "path": "skills/calendly-automation",
@@ -13506,20 +13167,6 @@
   "description": "Performs pandas DataFrame operations for data analysis, manipulation, and transformation. Use when working with pandas DataFrames, data cleaning, aggregation, merging, or time series analysis. Invoke for data manipulation tasks such as joining DataFrames on multiple keys, pivoting tables, resampling",
   "url": "https://github.com/Jeffallan/claude-skills/tree/HEAD/skills/pandas-pro",
   "incomplete": false
- },
- {
-  "name": "iterate-pr",
-  "repo": "sickn33/agentic-awesome-skills",
-  "path": "skills/iterate-pr",
-  "license": "MIT",
-  "score": 8.107,
-  "description": "Iterate on a PR until CI passes. Use when you need to fix CI failures, address review feedback, or continuously push fixes until all checks are green. Automates the feedback-fix-push-wait cycle.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/iterate-pr",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/fetch_pr_checks.py",
-   "scripts/fetch_pr_feedback.py"
-  ]
  },
  {
   "name": "audit-integrity",
@@ -14287,20 +13934,6 @@
   "incomplete": false
  },
  {
-  "name": "cowork-to-code-bridge",
-  "repo": "sickn33/agentic-awesome-skills",
-  "path": "skills/cowork-to-code-bridge",
-  "license": "MIT",
-  "score": 8.069,
-  "description": "Use an already-installed, independently verified cowork-to-code bridge to run narrowly approved actions on the user's own macOS, Linux, or WSL2 machine through a local file queue.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/cowork-to-code-bridge",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/git_status.sh",
-   "scripts/run_claude.sh"
-  ]
- },
- {
   "name": "workflow-orchestration-patterns",
   "repo": "sickn33/agentic-awesome-skills",
   "path": "skills/workflow-orchestration-patterns",
@@ -14856,19 +14489,6 @@
   "incomplete": false
  },
  {
-  "name": "appdeploy",
-  "repo": "sickn33/agentic-awesome-skills",
-  "path": "skills/appdeploy",
-  "license": "MIT",
-  "score": 8.049,
-  "description": "Deploy web apps with backend APIs, database, and file storage. Use when the user asks to deploy or publish a website or web app and wants a public URL. Uses HTTP API via curl.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/appdeploy",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/generate-appdeploy-skill.ts"
-  ]
- },
- {
   "name": "webflow-automation",
   "repo": "sickn33/agentic-awesome-skills",
   "path": "skills/webflow-automation",
@@ -14996,21 +14616,6 @@
   "description": "Create and update pitch decks, one-pagers, investor memos, accelerator applications, financial models, and fundraising materials. Use when the user needs investor-facing documents, projections, use-of-funds tables, milestone plans, or materials that must stay internally consistent across multiple fu",
   "url": "https://github.com/affaan-m/ECC/tree/HEAD/skills/investor-materials",
   "incomplete": false
- },
- {
-  "name": "ml-pipeline-workflow",
-  "repo": "wshobson/agents",
-  "path": "plugins/machine-learning-ops/skills/ml-pipeline-workflow",
-  "license": "MIT",
-  "score": 8.043,
-  "description": "Build end-to-end MLOps pipelines from data preparation through model training, validation, and production deployment. Use when creating ML pipelines, implementing MLOps practices, or automating model training and deployment workflows.",
-  "url": "https://github.com/wshobson/agents/tree/HEAD/plugins/machine-learning-ops/skills/ml-pipeline-workflow",
-  "incomplete": true,
-  "missing_files": [
-   "assets/pipeline-dag.yaml.template",
-   "references/data-preparation.md",
-   "references/model-training.md"
-  ]
  },
  {
   "name": "interview",
@@ -15846,21 +15451,6 @@
   "incomplete": false
  },
  {
-  "name": "constitutional-ai",
-  "repo": "Orchestra-Research/AI-Research-SKILLs",
-  "path": "07-safety-alignment/constitutional-ai",
-  "license": "MIT",
-  "score": 8.006,
-  "description": "Anthropic's method for training harmless AI through self-improvement. Two-phase approach - supervised learning with self-critique/revision, then RLAIF (RL from AI Feedback). Use for safety alignment, reducing harmful outputs without human labels. Powers Claude's safety system.",
-  "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/tree/HEAD/07-safety-alignment/constitutional-ai",
-  "incomplete": true,
-  "missing_files": [
-   "references/constitution-design.md",
-   "references/cot-critique.md",
-   "references/rlaif-comparison.md"
-  ]
- },
- {
   "name": "entra-agent-user",
   "repo": "github/awesome-copilot",
   "path": "skills/entra-agent-user",
@@ -16203,19 +15793,6 @@
   "score": 7.989,
   "description": "Analyze data coverage, create monitors for warehouse tables and AI agents. Covers coverage gaps, use-case analysis, data monitor creation, and agent observability.",
   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/monte-carlo-monitoring-advisor"
- },
- {
-  "name": "spatial-design",
-  "repo": "sickn33/agentic-awesome-skills",
-  "path": "skills/design-it/spatial-design",
-  "license": "MIT",
-  "score": 7.989,
-  "description": "Web and App implementation guide for Spatial Design. Trigger when user wants environment-aware layouts, Apple Vision Pro inspiration, and mixed reality aesthetics.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/design-it/spatial-design",
-  "incomplete": true,
-  "missing_files": [
-   "assets/room-environment.jpg"
-  ]
  },
  {
   "name": "events-activities",
@@ -16886,19 +16463,6 @@
   "incomplete": false
  },
  {
-  "name": "llamaguard",
-  "repo": "Orchestra-Research/AI-Research-SKILLs",
-  "path": "07-safety-alignment/llamaguard",
-  "license": "MIT",
-  "score": 7.961,
-  "description": "Meta's 7-8B specialized moderation model for LLM input/output filtering. 6 safety categories - violence/hate, sexual content, weapons, substances, self-harm, criminal planning. 94-95% accuracy. Deploy with vLLM, HuggingFace, Sagemaker. Integrates with NeMo Guardrails.",
-  "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/tree/HEAD/07-safety-alignment/llamaguard",
-  "incomplete": true,
-  "missing_files": [
-   "references/custom-categories.md"
-  ]
- },
- {
   "name": "offensive-wpa3-sae",
   "repo": "SnailSploit/Claude-Red",
   "path": "Skills/wireless/offensive-wpa3-sae",
@@ -17276,19 +16840,6 @@
   "incomplete": false
  },
  {
-  "name": "spatial-computing-ui",
-  "repo": "sickn33/agentic-awesome-skills",
-  "path": "skills/design-it/spatial-computing-ui",
-  "license": "MIT",
-  "score": 7.944,
-  "description": "Web and App implementation guide for Spatial Computing UI. Trigger when user wants floating elements, environmental awareness, and Apple Vision Pro style.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/design-it/spatial-computing-ui",
-  "incomplete": true,
-  "missing_files": [
-   "assets/living-room.jpg"
-  ]
- },
- {
   "name": "neo-brutalism",
   "repo": "sickn33/agentic-awesome-skills",
   "path": "skills/design-it/neo-brutalism",
@@ -17657,19 +17208,6 @@
   "incomplete": false
  },
  {
-  "name": "duotone-design",
-  "repo": "sickn33/agentic-awesome-skills",
-  "path": "skills/design-it/duotone-design",
-  "license": "MIT",
-  "score": 7.929,
-  "description": "Web and App implementation guide for Duotone Design. Trigger when user wants two-color schemes, striking imagery, and Spotify-like playlist aesthetics.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/design-it/duotone-design",
-  "incomplete": true,
-  "missing_files": [
-   "assets/sample_photo.jpg"
-  ]
- },
- {
   "name": "filesystem-context",
   "repo": "sickn33/agentic-awesome-skills",
   "path": "skills/filesystem-context",
@@ -17890,19 +17428,6 @@
   "incomplete": false
  },
  {
-  "name": "synthwave",
-  "repo": "sickn33/agentic-awesome-skills",
-  "path": "skills/design-it/synthwave",
-  "license": "MIT",
-  "score": 7.919,
-  "description": "Web and App implementation guide for Synthwave. Trigger when user wants 80s-inspired neon, dark backgrounds, outrun grids, and Miami Vice aesthetics.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/design-it/synthwave",
-  "incomplete": true,
-  "missing_files": [
-   "assets/synth_grid.png"
-  ]
- },
- {
   "name": "amplitude-automation",
   "repo": "sickn33/agentic-awesome-skills",
   "path": "skills/amplitude-automation",
@@ -17981,19 +17506,6 @@
   "description": "Fix social sharing previews so URLs render as rich cards on Facebook, LinkedIn, X/Twitter, WhatsApp, Telegram, and more. Covers OG tags, Twitter cards, absolute image URLs, and debugging.",
   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/social-metadata-hardening",
   "incomplete": false
- },
- {
-  "name": "distributed-llm-pretraining-torchtitan",
-  "repo": "Orchestra-Research/AI-Research-SKILLs",
-  "path": "01-model-architecture/torchtitan",
-  "license": "MIT",
-  "score": 7.916,
-  "description": "Provides PyTorch-native distributed LLM pretraining using torchtitan with 4D parallelism (FSDP2, TP, PP, CP). Use when pretraining Llama 3.1, DeepSeek V3, or custom models at scale from 8 to 512+ GPUs with Float8, torch.compile, and distributed checkpointing.",
-  "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/tree/HEAD/01-model-architecture/torchtitan",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/download_hf_assets.py"
-  ]
  },
  {
   "name": "instagram-hashtag-posts",
@@ -18343,19 +17855,6 @@
   "incomplete": false
  },
  {
-  "name": "retro-design",
-  "repo": "sickn33/agentic-awesome-skills",
-  "path": "skills/design-it/retro-design",
-  "license": "MIT",
-  "score": 7.904,
-  "description": "Web and App implementation guide for Retro Design (60s-80s). Trigger when user wants vintage aesthetics, warm muted colors, and nostalgic layouts.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/design-it/retro-design",
-  "incomplete": true,
-  "missing_files": [
-   "assets/film_grain.png"
-  ]
- },
- {
   "name": "vaporwave",
   "repo": "sickn33/agentic-awesome-skills",
   "path": "skills/design-it/vaporwave",
@@ -18376,19 +17875,6 @@
   "incomplete": false
  },
  {
-  "name": "task-intelligence",
-  "repo": "sickn33/agentic-awesome-skills",
-  "path": "skills/task-intelligence",
-  "license": "MIT",
-  "score": 7.904,
-  "description": "Protocolo de Inteligência Pré-Tarefa — ativa TODOS os agentes relevantes do ecossistema ANTES de executar qualquer tarefa solicitada pelo usuário.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/task-intelligence",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/pre_task_check.py"
-  ]
- },
- {
   "name": "canva-automation",
   "repo": "sickn33/agentic-awesome-skills",
   "path": "skills/canva-automation",
@@ -18397,27 +17883,6 @@
   "description": "Automate Canva tasks via Rube MCP (Composio): designs, exports, folders, brand templates, autofill. Always search tools first for current schemas.",
   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/canva-automation",
   "incomplete": false
- },
- {
-  "name": "skyvern-browser-automation",
-  "repo": "sickn33/agentic-awesome-skills",
-  "path": "skills/skyvern-browser-automation",
-  "license": "MIT",
-  "score": 7.904,
-  "description": "AI-powered browser automation — navigate sites, fill forms, extract structured data, log in with stored credentials, and build reusable workflows.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/skyvern-browser-automation",
-  "incomplete": true,
-  "missing_files": [
-   "references/agent-mode.md",
-   "references/ai-actions.md",
-   "references/block-types.md",
-   "references/cli-parity.md",
-   "references/common-failures.md",
-   "references/complex-inputs.md",
-   "references/credentials.md",
-   "references/engines.md",
-   "references/pagination.md"
-  ]
  },
  {
   "name": "comfyui-gateway",
@@ -18717,28 +18182,6 @@
   "incomplete": false
  },
  {
-  "name": "update-llms",
-  "repo": "github/awesome-copilot",
-  "path": "skills/update-llms",
-  "license": "MIT",
-  "score": 7.889,
-  "description": "Update the llms.txt file in the root folder to reflect changes in documentation or specifications following the llms.txt specification at https://llmstxt.org/",
-  "url": "https://github.com/github/awesome-copilot/tree/HEAD/skills/update-llms",
-  "incomplete": true,
-  "missing_files": [
-   "CODE_OF_CONDUCT.md",
-   "CONTRIBUTING.md",
-   "README.md",
-   "docs/architecture.md",
-   "docs/decisions.md",
-   "docs/deployment.md",
-   "docs/setup.md",
-   "examples/basic-usage.md",
-   "spec/api-spec.md",
-   "spec/technical-spec.md"
-  ]
- },
- {
   "name": "power-bi-performance-troubleshooting",
   "repo": "github/awesome-copilot",
   "path": "skills/power-bi-performance-troubleshooting",
@@ -19015,19 +18458,6 @@
   "description": "Go from reverse engineering to a working exploit: stack/heap/kernel pwn workflows with pwntools, libc-database, ROP, and stabilization from CTF to authorized remote targets.",
   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/pwn-chain",
   "incomplete": false
- },
- {
-  "name": "layered-design",
-  "repo": "sickn33/agentic-awesome-skills",
-  "path": "skills/design-it/layered-design",
-  "license": "MIT",
-  "score": 7.879,
-  "description": "Web and App implementation guide for Layered Design. Trigger when user wants multiple depth levels, floating panels, and overlapping content.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/design-it/layered-design",
-  "incomplete": true,
-  "missing_files": [
-   "assets/architectural-bg.jpg"
-  ]
  },
  {
   "name": "skill-sentinel",
@@ -19365,22 +18795,6 @@
   "description": "Azure AI Document Translation SDK for batch translation of documents with format preservation. Use for translating Word, PDF, Excel, PowerPoint, and other document formats at scale.",
   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azure-ai-translation-document-py",
   "incomplete": false
- },
- {
-  "name": "humanize-chinese",
-  "repo": "sickn33/agentic-awesome-skills",
-  "path": "skills/humanize-chinese",
-  "license": "MIT",
-  "score": 7.865,
-  "description": "Detect and rewrite AI-like Chinese text with a practical workflow for scoring, humanization, academic AIGC reduction, and style conversion. Use when the user asks to 去AI味, 降AIGC, 去除AI痕迹, 论文降重, 知网检测, 维普检测, humanize chinese, detect AI text, or make Chinese text sound more natural.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/humanize-chinese",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/academic_cn.py",
-   "scripts/compare_cn.py",
-   "scripts/detect_cn.py",
-   "scripts/style_cn.py"
-  ]
  },
  {
   "name": "sendblue-cli",
@@ -21272,19 +20686,6 @@
   "incomplete": false
  },
  {
-  "name": "emergency-card",
-  "repo": "sickn33/agentic-awesome-skills",
-  "path": "skills/emergency-card",
-  "license": "MIT",
-  "score": 7.774,
-  "description": "生成紧急情况下快速访问的医疗信息摘要卡片。当用户需要旅行、就诊准备、紧急情况或询问\"紧急信息\"、\"医疗卡片\"、\"急救信息\"时使用此技能。提取关键信息（过敏、用药、急症、植入物），支持多格式输出（JSON、文本、二维码），用于急救或快速就医。",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/emergency-card",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/generate_emergency_card.py"
-  ]
- },
- {
   "name": "frontend-optimistic-mutations",
   "repo": "sickn33/agentic-awesome-skills",
   "path": "skills/frontend-optimistic-mutations",
@@ -21658,19 +21059,6 @@
   "incomplete": false
  },
  {
-  "name": "mailtrap-testing-with-sandbox",
-  "repo": "sickn33/agentic-awesome-skills",
-  "path": "skills/mailtrap-testing-with-sandbox",
-  "license": "MIT",
-  "score": 7.761,
-  "description": "Capture outbound email in Mailtrap Email Sandbox for development, staging, CI, HTML inspection, spam checks, and fake inbox tests.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/mailtrap-testing-with-sandbox",
-  "incomplete": true,
-  "missing_files": [
-   "templates/handlebars.md"
-  ]
- },
- {
   "name": "flat-design",
   "repo": "sickn33/agentic-awesome-skills",
   "path": "skills/design-it/flat-design",
@@ -21820,19 +21208,6 @@
   "incomplete": false
  },
  {
-  "name": "verl-rl-training",
-  "repo": "Orchestra-Research/AI-Research-SKILLs",
-  "path": "06-post-training/verl",
-  "license": "MIT",
-  "score": 7.756,
-  "description": "Provides guidance for training LLMs with reinforcement learning using verl (Volcano Engine RL). Use when implementing RLHF, GRPO, PPO, or other RL algorithms for LLM post-training at scale with flexible infrastructure backends.",
-  "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/tree/HEAD/06-post-training/verl",
-  "incomplete": true,
-  "missing_files": [
-   "references/multi-turn.md"
-  ]
- },
- {
   "name": "case-review",
   "repo": "sickn33/agentic-awesome-skills",
   "path": "skills/case-review",
@@ -21860,25 +21235,6 @@
   "description": "Expert database optimizer specializing in modern performance tuning, query optimization, and scalable architectures.",
   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/database-optimizer",
   "incomplete": false
- },
- {
-  "name": "paypal-integration",
-  "repo": "sickn33/agentic-awesome-skills",
-  "path": "skills/paypal-integration",
-  "license": "MIT",
-  "score": 7.754,
-  "description": "Master PayPal payment integration including Express Checkout, IPN handling, recurring billing, and refund workflows.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/paypal-integration",
-  "incomplete": true,
-  "missing_files": [
-   "assets/ipn-processor.py",
-   "assets/paypal-client.py",
-   "assets/recurring-billing.py",
-   "references/billing-agreements.md",
-   "references/express-checkout.md",
-   "references/ipn-handling.md",
-   "references/refund-workflows.md"
-  ]
  },
  {
   "name": "voice-cloning-studio",
@@ -22197,20 +21553,6 @@
   "incomplete": false
  },
  {
-  "name": "mamba-architecture",
-  "repo": "Orchestra-Research/AI-Research-SKILLs",
-  "path": "01-model-architecture/mamba",
-  "license": "MIT",
-  "score": 7.741,
-  "description": "State-space model with O(n) complexity vs Transformers' O(n²). 5× faster inference, million-token sequences, no KV cache. Selective SSM with hardware-aware design. Mamba-1 (d_state=16) and Mamba-2 (d_state=128, multi-head). Models 130M-2.8B on HuggingFace.",
-  "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/tree/HEAD/01-model-architecture/mamba",
-  "incomplete": true,
-  "missing_files": [
-   "references/mamba2-details.md",
-   "references/selective-ssm.md"
-  ]
- },
- {
   "name": "acreadiness-assess",
   "repo": "github/awesome-copilot",
   "path": "skills/acreadiness-assess",
@@ -22317,19 +21659,6 @@
   "description": "Automate Figma tasks via Rube MCP (Composio): files, components, design tokens, comments, exports. Always search tools first for current schemas.",
   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/figma-automation",
   "incomplete": false
- },
- {
-  "name": "slime-rl-training",
-  "repo": "Orchestra-Research/AI-Research-SKILLs",
-  "path": "06-post-training/slime",
-  "license": "MIT",
-  "score": 7.736,
-  "description": "Provides guidance for LLM post-training with RL using slime, a Megatron+SGLang framework. Use when training GLM models, implementing custom data generation workflows, or needing tight Megatron-LM integration for RL scaling.",
-  "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/tree/HEAD/06-post-training/slime",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/models/qwen3-4B.sh"
-  ]
  },
  {
   "name": "tiktok-video-detail",
@@ -23223,21 +22552,6 @@
   "incomplete": false
  },
  {
-  "name": "segment-anything-model",
-  "repo": "Orchestra-Research/AI-Research-SKILLs",
-  "path": "18-multimodal/segment-anything",
-  "license": "MIT",
-  "score": 7.681,
-  "description": "Foundation model for image segmentation with zero-shot transfer. Use when you need to segment any object in images using points, boxes, or masks as prompts, or automatically generate all object masks in an image.",
-  "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/tree/HEAD/18-multimodal/segment-anything",
-  "incomplete": true,
-  "missing_files": [
-   "checkpoint=\"sam_vit_b_01ec64.pth\"",
-   "checkpoint=\"sam_vit_h_4b8939.pth\"",
-   "scripts/export_onnx_model.py"
-  ]
- },
- {
   "name": "google-maps-api-skill",
   "repo": "browser-act/skills",
   "path": "solutions/lead-generation/google-maps-api-skill",
@@ -23497,40 +22811,6 @@
   "incomplete": false
  },
  {
-  "name": "cmux",
-  "repo": "sickn33/agentic-awesome-skills",
-  "path": "skills/cmux",
-  "license": "MIT",
-  "score": 7.664,
-  "description": "Control cmux workspaces, panes, surfaces, and agent sessions safely from macOS terminal workflows.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/cmux",
-  "incomplete": true,
-  "missing_files": [
-   "references/socket-api.md"
-  ]
- },
- {
-  "name": "using-neon",
-  "repo": "sickn33/agentic-awesome-skills",
-  "path": "skills/using-neon",
-  "license": "MIT",
-  "score": 7.663,
-  "description": "Neon is a serverless Postgres platform that separates compute and storage to offer autoscaling, branching, instant restore, and scale-to-zero. It's fully compatible with Postgres and works with any language, framework, or ORM that supports Postgres.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/using-neon",
-  "incomplete": true,
-  "missing_files": [
-   "references/connection-methods.md",
-   "references/devtools.md",
-   "references/features.md",
-   "references/neon-auth.md",
-   "references/neon-cli.md",
-   "references/neon-drizzle.md",
-   "references/neon-js.md",
-   "references/neon-platform-api.md",
-   "references/neon-python-sdk.md"
-  ]
- },
- {
   "name": "terraform-module-library",
   "repo": "wshobson/agents",
   "path": "plugins/cloud-infrastructure/skills/terraform-module-library",
@@ -23551,19 +22831,6 @@
   "incomplete": false
  },
  {
-  "name": "sast-configuration",
-  "repo": "sickn33/agentic-awesome-skills",
-  "path": "plugins/agentic-bundle-aas-secure-app-builder/skills/sast-configuration",
-  "license": "MIT",
-  "score": 7.662,
-  "description": "Static Application Security Testing (SAST) tool setup, configuration, and custom rule creation for comprehensive security scanning across multiple programming languages.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/plugins/agentic-bundle-aas-secure-app-builder/skills/sast-configuration",
-  "incomplete": true,
-  "missing_files": [
-   "references/semgrep-rules.md"
-  ]
- },
- {
   "name": "monorepo-management",
   "repo": "wshobson/agents",
   "path": "plugins/developer-essentials/skills/monorepo-management",
@@ -23572,22 +22839,6 @@
   "description": "Master monorepo management with Turborepo, Nx, and pnpm workspaces to build efficient, scalable multi-package repositories with optimized builds and dependency management. Use when setting up monorepos, optimizing builds, or managing shared dependencies.",
   "url": "https://github.com/wshobson/agents/tree/HEAD/plugins/developer-essentials/skills/monorepo-management",
   "incomplete": false
- },
- {
-  "name": "prometheus-configuration",
-  "repo": "sickn33/agentic-awesome-skills",
-  "path": "skills/prometheus-configuration",
-  "license": "MIT",
-  "score": 7.659,
-  "description": "Complete guide to Prometheus setup, metric collection, scrape configuration, and recording rules.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/prometheus-configuration",
-  "incomplete": true,
-  "missing_files": [
-   "assets/prometheus.yml.template",
-   "references/recording-rules.md",
-   "references/scrape-configs.md",
-   "scripts/validate-prometheus.sh"
-  ]
  },
  {
   "name": "frontend-observability",
@@ -24888,19 +24139,6 @@
   "incomplete": false
  },
  {
-  "name": "azure-cosmos-py",
-  "repo": "sickn33/agentic-awesome-skills",
-  "path": "skills/azure-cosmos-py",
-  "license": "MIT",
-  "score": 7.559,
-  "description": "Azure Cosmos DB SDK for Python (NoSQL API). Use for document CRUD, queries, containers, and globally distributed data.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azure-cosmos-py",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/setup_cosmos_container.py"
-  ]
- },
- {
   "name": "rag-observability-evals",
   "repo": "sickn33/agentic-awesome-skills",
   "path": "skills/rag-observability-evals",
@@ -24929,28 +24167,6 @@
   "description": "OpenInference semantic conventions and instrumentation for Phoenix AI observability. Use when implementing LLM tracing, creating custom spans, or deploying to production.",
   "url": "https://github.com/github/awesome-copilot/tree/HEAD/skills/phoenix-tracing",
   "incomplete": false
- },
- {
-  "name": "create-llms",
-  "repo": "github/awesome-copilot",
-  "path": "skills/create-llms",
-  "license": "MIT",
-  "score": 7.557,
-  "description": "Create an llms.txt file from scratch based on repository structure following the llms.txt specification at https://llmstxt.org/",
-  "url": "https://github.com/github/awesome-copilot/tree/HEAD/skills/create-llms",
-  "incomplete": true,
-  "missing_files": [
-   "CODE_OF_CONDUCT.md",
-   "CONTRIBUTING.md",
-   "README.md",
-   "docs/architecture.md",
-   "docs/decisions.md",
-   "docs/deployment.md",
-   "docs/setup.md",
-   "examples/basic-usage.md",
-   "spec/api-spec.md",
-   "spec/technical-spec.md"
-  ]
  },
  {
   "name": "azure-appconfiguration-ts",
@@ -25132,19 +24348,6 @@
   "incomplete": false
  },
  {
-  "name": "platform-engineering",
-  "repo": "sickn33/agentic-awesome-skills",
-  "path": "skills/platform-engineering",
-  "license": "MIT",
-  "score": 7.549,
-  "description": "Build internal developer platforms (IDPs) with self-service infrastructure,",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/platform-engineering",
-  "incomplete": true,
-  "missing_files": [
-   "templates/blob/main/all-templates.yaml"
-  ]
- },
- {
   "name": "codex-delegate",
   "repo": "sickn33/agentic-awesome-skills",
   "path": "skills/codex-delegate",
@@ -25282,19 +24485,6 @@
   "description": "Implement GDPR data protection requirements. Configure consent management,",
   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/gdpr-compliance",
   "incomplete": false
- },
- {
-  "name": "model-serving-kubernetes",
-  "repo": "sickn33/agentic-awesome-skills",
-  "path": "skills/model-serving-kubernetes",
-  "license": "MIT",
-  "score": 7.544,
-  "description": "Deploy ML models on Kubernetes with KServe (formerly KFServing) and NVIDIA",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/model-serving-kubernetes",
-  "incomplete": true,
-  "missing_files": [
-   "examples/models/sklearn/1.0"
-  ]
  },
  {
   "name": "terraform-azure",
@@ -25437,20 +24627,6 @@
   "incomplete": false
  },
  {
-  "name": "hugging-face-datasets",
-  "repo": "sickn33/agentic-awesome-skills",
-  "path": "skills/hugging-face-datasets",
-  "license": "MIT",
-  "score": 7.542,
-  "description": "Create and manage datasets on Hugging Face Hub. Supports initializing repos, defining configs/system prompts, streaming row updates, and SQL-based dataset querying/transformation. Designed to work alongside HF MCP server for comprehensive dataset workflows.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/hugging-face-datasets",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/dataset_manager.py",
-   "scripts/sql_manager.py"
-  ]
- },
- {
   "name": "llm-prompt-optimizer",
   "repo": "sickn33/agentic-awesome-skills",
   "path": "skills/llm-prompt-optimizer",
@@ -25518,23 +24694,6 @@
   "description": "Use YYLO Ledger task management: create, list, search, get, mark, update,",
   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/ledger-tasks-yylo",
   "incomplete": false
- },
- {
-  "name": "helm-charts",
-  "repo": "sickn33/agentic-awesome-skills",
-  "path": "skills/helm-charts",
-  "license": "MIT",
-  "score": 7.539,
-  "description": "Create, manage, and deploy Helm charts for Kubernetes package management.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/helm-charts",
-  "incomplete": true,
-  "missing_files": [
-   "templates/_helpers.tpl",
-   "templates/deployment.yaml",
-   "templates/ingress.yaml",
-   "templates/pre-install-job.yaml",
-   "templates/tests/test-connection.yaml"
-  ]
  },
  {
   "name": "opentelemetry",
@@ -25783,20 +24942,6 @@
   "incomplete": false
  },
  {
-  "name": "azure-devops",
-  "repo": "sickn33/agentic-awesome-skills",
-  "path": "skills/azure-devops",
-  "license": "MIT",
-  "score": 7.534,
-  "description": "Set up Azure Pipelines for CI/CD, configure build and release pipelines,",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azure-devops",
-  "incomplete": true,
-  "missing_files": [
-   "templates/build-job.yml",
-   "templates/deploy-stage.yml"
-  ]
- },
- {
   "name": "multi-tenant-llm-hosting",
   "repo": "sickn33/agentic-awesome-skills",
   "path": "skills/multi-tenant-llm-hosting",
@@ -25875,19 +25020,6 @@
   "description": "Simulate a structured peer-review process using multiple specialized agents to validate designs, surface hidden assumptions, and identify failure modes before implementation.",
   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/multi-agent-brainstorming",
   "incomplete": false
- },
- {
-  "name": "nsfw-ai-spicyapi",
-  "repo": "sickn33/agentic-awesome-skills",
-  "path": "skills/nsfw-ai-spicyapi",
-  "license": "MIT",
-  "score": 7.531,
-  "description": "Generate adult (18+) images, image-to-video clips and image edits through the SpicyAPI API, with a cost quote before every paid run and adults-only / consent rules.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/nsfw-ai-spicyapi",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/spicy.py"
-  ]
  },
  {
   "name": "browser-cdp",
@@ -26156,21 +25288,6 @@
   "description": "Azure API Management SDK for Python. Use for managing APIM services, APIs, products, subscriptions, and policies.",
   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azure-mgmt-apimanagement-py",
   "incomplete": false
- },
- {
-  "name": "cloudformation",
-  "repo": "sickn33/agentic-awesome-skills",
-  "path": "skills/cloudformation",
-  "license": "MIT",
-  "score": 7.524,
-  "description": "Deploy AWS resources with CloudFormation templates. Create stacks, use",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/cloudformation",
-  "incomplete": true,
-  "missing_files": [
-   "templates/app.yaml",
-   "templates/database.yaml",
-   "templates/network.yaml"
-  ]
  },
  {
   "name": "us-property-data",
@@ -27176,20 +26293,6 @@
   "incomplete": false
  },
  {
-  "name": "makepad-deployment",
-  "repo": "sickn33/agentic-awesome-skills",
-  "path": "plugins/agentic-bundle-makepad-builder/skills/makepad-deployment",
-  "license": "MIT",
-  "score": 7.494,
-  "description": "CRITICAL: Use for Makepad packaging and deployment. Triggers on:",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/plugins/agentic-bundle-makepad-builder/skills/makepad-deployment",
-  "incomplete": true,
-  "missing_files": [
-   "references/makepad-packaging-action.md",
-   "references/platform-troubleshooting.md"
-  ]
- },
- {
   "name": "google-no-code",
   "repo": "sickn33/agentic-awesome-skills",
   "path": "skills/google-no-code",
@@ -27788,19 +26891,6 @@
   "incomplete": false
  },
  {
-  "name": "simpo-training",
-  "repo": "Orchestra-Research/AI-Research-SKILLs",
-  "path": "06-post-training/simpo",
-  "license": "MIT",
-  "score": 7.449,
-  "description": "Simple Preference Optimization for LLM alignment. Reference-free alternative to DPO with better performance (+6.4 points on AlpacaEval 2.0). No reference model needed, more efficient than DPO. Use for preference alignment when want simpler, faster training than DPO/PPO.",
-  "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/tree/HEAD/06-post-training/simpo",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/run_simpo.py"
-  ]
- },
- {
   "name": "conductor-status",
   "repo": "sickn33/agentic-awesome-skills",
   "path": "skills/conductor-status",
@@ -27939,19 +27029,6 @@
   "description": "Use when working with comprehensive review full review",
   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/comprehensive-review-full-review",
   "incomplete": false
- },
- {
-  "name": "azure-mgmt-apimanagement-dotnet",
-  "repo": "sickn33/agentic-awesome-skills",
-  "path": "skills/azure-mgmt-apimanagement-dotnet",
-  "license": "MIT",
-  "score": 7.444,
-  "description": "Azure Resource Manager SDK for API Management in .NET.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azure-mgmt-apimanagement-dotnet",
-  "incomplete": true,
-  "missing_files": [
-   "references/policies.md"
-  ]
  },
  {
   "name": "database-schema-designer",
@@ -28697,19 +27774,6 @@
   "description": "Orchestrate review, tests, commits, branch pushes, and pull-request creation with parallel agents. Use when completed changes must move through validation into a PR or guarded merge.",
   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/git-pr-workflows-git-workflow",
   "incomplete": false
- },
- {
-  "name": "polis-protocol",
-  "repo": "sickn33/agentic-awesome-skills",
-  "path": "skills/polis-protocol",
-  "license": "MIT",
-  "score": 7.384,
-  "description": "Coordinate multi-vendor AI agents as a self-improving team — a learning router assigns work by track record and citizens can amend the protocol's own rules.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/polis-protocol",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/demo.sh"
-  ]
  },
  {
   "name": "azure-smart-city-iot-solution-builder",

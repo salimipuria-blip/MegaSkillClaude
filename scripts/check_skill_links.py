@@ -3,7 +3,7 @@
 
 Why this exists
 ---------------
-`library/github-skills/` holds 3,011 skills imported folder by folder from 29 public repositories.
+`library/github-skills/` holds 2,946 skills imported folder by folder from 28 public repositories.
 An imported SKILL.md can point at a companion file that was never copied, and then the router hands
 an agent instructions that dead-end. `library/CLAUDE.md` records the baseline measured on 2026-10-18
 with an ad-hoc snippet: **114 skills with a dead local link, 67 of them not flagged `incomplete`**.

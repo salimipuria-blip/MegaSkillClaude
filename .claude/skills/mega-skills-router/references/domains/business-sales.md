@@ -1,6 +1,6 @@
 # business-sales
 
-Skills: 487
+Skills: 485
 
 - `academy-fraud-planner` → `psk/data/skills/academy-fraud-planner/SKILL.md`
 - `academy-funnel-auditor` → `psk/data/skills/academy-funnel-auditor/SKILL.md`
@@ -121,7 +121,6 @@ Skills: 487
 - `deal-desk` → `library/github-skills/deal-desk/SKILL.md`
 - `debugging-wizard` → `library/github-skills/debugging-wizard/SKILL.md`
 - `decision-memo-onepager` → `psk/data/skills/decision-memo-onepager/SKILL.md`
-- `defi-protocol-templates` → `library/github-skills/defi-protocol-templates/SKILL.md` [incomplete: excluded from default routing]
 - `delivery-expectation-page` → `psk/data/skills/delivery-expectation-page/SKILL.md`
 - `demo-script-framework` → `psk/data/skills/demo-script-framework/SKILL.md`
 - `dental-crm-assistant` → `psk/data/skills/dental-crm-assistant/SKILL.md`
@@ -476,7 +475,6 @@ Skills: 487
 - `whatsapp-sales-script-fa` → `psk/data/skills/whatsapp-sales-script-fa/SKILL.md`
 - `win-loss-interview-kit` → `psk/data/skills/win-loss-interview-kit/SKILL.md`
 - `wondelai` → `psk/data/skills/wondelai/SKILL.md`
-- `x-keyword-comment` → `library/github-skills/x-keyword-comment/SKILL.md` [incomplete: excluded from default routing]
 - `yalda-campaign-shop` → `psk/data/skills/yalda-campaign-shop/SKILL.md`
 - `yoga-closing-analyzer` → `psk/data/skills/yoga-closing-analyzer/SKILL.md`
 - `yoga-closing-pack` → `psk/data/skills/yoga-closing-pack/SKILL.md`

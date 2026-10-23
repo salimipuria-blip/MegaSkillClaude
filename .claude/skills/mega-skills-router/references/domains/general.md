@@ -1,6 +1,6 @@
 # general
 
-Skills: 248
+Skills: 247
 
 - `academy-parser-pack` → `psk/data/skills/academy-parser-pack/SKILL.md`
 - `access-review` → `library/github-skills/access-review/SKILL.md`
@@ -60,7 +60,6 @@ Skills: 248
 - `ecolodge-actions-assistant` → `psk/data/skills/ecolodge-actions-assistant/SKILL.md`
 - `ecolodge-privacy-library` → `psk/data/skills/ecolodge-privacy-library/SKILL.md`
 - `ecolodge-reporter-reporter` → `psk/data/skills/ecolodge-reporter-reporter/SKILL.md`
-- `emergency-card` → `library/github-skills/emergency-card/SKILL.md` [incomplete: excluded from default routing]
 - `employee-suggestion-hub` → `library/github-skills/employee-suggestion-hub/SKILL.md`
 - `enterprise-vpn-attack` → `library/github-skills/enterprise-vpn-attack/SKILL.md`
 - `escalation-trigger-rules` → `psk/data/skills/escalation-trigger-rules/SKILL.md`

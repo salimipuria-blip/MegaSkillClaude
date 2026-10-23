@@ -116,10 +116,9 @@ class VersionConsistencyTests(unittest.TestCase):
     def test_the_current_entry_describes_what_the_canonical_index_says(self):
         counts = json.loads(CANONICAL_INDEX.read_text(encoding='utf-8'))['counts']
         _version, _date, body = self.releases[0]
-        # Needles name what the *current* release (1.4.0) is about; 1.3.0's flags stay in its own entry.
-        for needle in (f"{counts['routable_skills']:,}", str(counts['incomplete_skills']),
-                       'shared-references', '_licenses/', 'polis-protocol',
-                       'git-guardrails-claude-code', 'qdrant-search-quality', 'wizard'):
+        # Needles name what the *current* release (1.5.0) is about; 1.4.0's repairs stay in its own entry.
+        for needle in (f"{counts['routable_skills']:,}", f"{counts['incomplete_skills']} incomplete",
+                       f"{counts['triggers']:,}", '_licenses/', 'polis-protocol', '--limit 5', 'prunes'):
             with self.subTest(needle=needle):
                 self.assertIn(needle, body,
                               'the current release entry no longer matches the repository: bump the '

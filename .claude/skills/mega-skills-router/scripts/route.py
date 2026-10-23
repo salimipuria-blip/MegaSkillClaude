@@ -116,6 +116,7 @@ REPO_ROOT = _repo_root()
 DEFAULT_MIN_SCORE = 0.50
 FALLBACK_MIN_SCORE = 0.25
 NAME_BOOST = 1.2
+BRAND_TOKENS = frozenset({"viking", "hermes", "cham", "offroad"})
 ARABIC_VARIANTS = str.maketrans({"ي": "ی", "ى": "ی", "ك": "ک"})
 
 
@@ -145,6 +146,9 @@ def _token_list(value: str) -> list[str]:
 def _tokens(value: str) -> set[str]:
     return set(_token_list(value))
 
+
+# Compared after normalization: the English stemmer reads "viking" as "vik".
+BRAND_STEMS = frozenset(token for brand in BRAND_TOKENS for token in _token_list(brand))
 
 def _contains_phrase(haystack: list[str], needle: list[str]) -> bool:
     size = len(needle)
@@ -195,8 +199,14 @@ def search_index(index_path: Path, query: str, min_score: float = 0.50, *, inclu
         document_frequency.update(seen & query_tokens)
         prepared.append((skill, name_tokens, triggers))
     # Rare words carry the intent: in "سئو سایت" a skill that only says "site" must not tie with an SEO skill.
-    weight = {token: math.log(1 + len(prepared) / (1 + document_frequency[token])) for token in query_tokens}
+    # A contract-brand name says who the work is for, not what it is. While no skill carries it, it got
+    # the largest IDF and sank every match: «تور آفرود وایکینگ» found nothing. Other unknown words stay
+    # weighted, because they usually are the intent («قبض برق») and the synonym retry depends on that.
+    weight = {token: 0.0 if token in BRAND_STEMS and not document_frequency[token]
+              else math.log(1 + len(prepared) / (1 + document_frequency[token])) for token in query_tokens}
     total_weight = sum(weight.values())
+    if not total_weight:
+        return []
 
     def coverage(tokens: set[str]) -> float:
         return sum(weight[token] for token in query_tokens & tokens) / total_weight

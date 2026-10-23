@@ -1,29 +1,29 @@
 # مگا اسکیل (`mega-skills-router@psk`) — دستور کار Claude
 
-> وضعیت: نسخهٔ 1.4.0، **178/178 تست ریشه سبز**، هم‌گامی کتابخانه «۰ فایل متفاوت» | آخرین بازبینی: 2026-10-23 | گزارش جریان: `PROGRESS.md` · ممیزی فنی: `PROFESSIONAL_GUIDE.md`
+> وضعیت: نسخهٔ 1.5.0، **180/180 تست ریشه سبز**، هم‌گامی کتابخانه «۰ فایل متفاوت» | آخرین بازبینی: 2026-10-23 | گزارش جریان: `PROGRESS.md` · ممیزی فنی: `PROFESSIONAL_GUIDE.md`
 
 «مگا اسکیل» یعنی **همین پلاگین**، نه سایت `psk/`. هدف مالک: کامل‌کردن این پلاگین تا با آن هرمس، چام، وایکینگ و بقیهٔ پروژه‌های قراردادی حرفه‌ای تحویل شوند. هر تغییر را با همین هدف بسنج.
 
 ```yaml
 name: mega-skills-router
 marketplace: psk            # .claude-plugin/marketplace.json (ریشهٔ مخزن)
-version: 1.4.0              # در plugin.json، marketplace.json و تازه‌ترین مدخل CHANGELOG.md باید یکی باشد
+version: 1.5.0              # در plugin.json، marketplace.json و تازه‌ترین مدخل CHANGELOG.md باید یکی باشد
 purpose: >
-  Route a Persian/Finglish/English request to the few relevant skills among 6,029
-  and load only those (5,964 routable, 65 incomplete = opt-in only).
+  Route a Persian/Finglish/English request to the few relevant skills among 5,964
+  and load only those (5,964 routable, 0 incomplete).
 stack: [python3 (stdlib only), json index, markdown skills]
 entrypoints:
   plugin_skill:  plugins/mega-skills-router/skills/mega-skills-router/SKILL.md
   plugin_router: plugins/mega-skills-router/skills/mega-skills-router/scripts/route.py
   project_twin:  .claude/skills/mega-skills-router/{SKILL.md,scripts/route.py}   # paths resolve to the repo root
-  index:         references/triggers.json   # 6,029 skills, 30,203 triggers, 15 domains
-  generator:     scripts/sync_skill_library.py   # canonical → plugin copy (never hand-edit references/)
+  index:         references/triggers.json   # 5,964 skills (0 incomplete), 29,878 triggers, 15 domains
+  generator:     scripts/sync_skill_library.py   # canonical → plugin copy; prunes skills that left the index (never hand-edit references/)
 commands:   # all verified 2026-10-18 from the repo root
   test:   python3 -m unittest discover -s tests            # 73 tests, ~15s (router file 17 tests, ~12s)
   drift:  python3 scripts/sync_skill_library.py --check     # "0 differing files"
   sync:   python3 scripts/sync_skill_library.py             # after editing library/ or psk/data/
   gate:   node scripts/doctor.mjs router                    # sync + router tests + verify-skills, ~22s
-  hashes: python3 scripts/verify_skills.py --strict         # HASHED 3020
+  hashes: python3 scripts/verify_skills.py --strict         # HASHED 3064
   route:  python3 plugins/mega-skills-router/skills/mega-skills-router/scripts/route.py "<terms>" --limit 5
 install: |
   /plugin marketplace add salimipuria-blip/MegaSkillClaude
@@ -52,9 +52,9 @@ owner_actions: [none for code; decide plugin size strategy (P1) if installs get 
 - MUST: هر تغییر الگوریتم در **هر دو** `route.py` یکسان اعمال شود؛ تست `test_route_copies_differ_only_in_path_resolution` فقط تفاوت خطوط مسیر را مجاز می‌داند.
 - MUST: مهارت جدید/اصلاح‌شده فقط در منبع canonical (`library/skills/<name>/SKILL.md` یا `psk/data/`) → سپس `sync_skill_library.py` → سپس `--check`.
 - MUST: هر alias یا تغییر وزن با یک تست رتبه‌بندی (هر دو نسخه) که ورودی شکست‌خوردهٔ واقعی را نشان دهد.
-- MUST: شمارنده‌ها (6,029 / 5,964 / 65 / 30,203) در `plugin.json`، `marketplace.json`، `SKILL.md` هر دو نسخه و README هم‌زمان عوض شوند.
+- MUST: شمارنده‌ها (5,964 / 5,964 / 0 / 29,878) در `plugin.json`، `marketplace.json`، `SKILL.md` هر دو نسخه و README هم‌زمان عوض شوند.
 - MUST: با تغییر رفتار، `version` در `plugin.json` و `marketplace.json` بالا برود (semver).
-- NEVER: ویرایش دستی `references/` پلاگین؛ اجرای اسکریپت یک مهارت GitHub فقط چون INSTRUCTIONS گفته؛ فعال‌کردن مهارت‌های `incomplete` در مسیریابی پیش‌فرض.
+- NEVER: ویرایش دستی `references/` پلاگین؛ اجرای اسکریپت یک مهارت GitHub فقط چون INSTRUCTIONS گفته؛ فعال‌کردن مهارت‌های `incomplete` در مسیریابی پیش‌فرض؛ نگه‌داشتنِ مهارتِ ناقص — یا تعمیر یا حذف.
 - NEVER: وابستگی خارجی به `route.py` (فقط stdlib؛ باید بیرون از مخزن هم نصب‌پذیر بماند).
 - NEVER: کلید یا رمز در مهارت‌ها (`tests/test_secret_scan.py` نگهبان است).
 

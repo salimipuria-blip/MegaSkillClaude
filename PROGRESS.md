@@ -5,8 +5,8 @@
 ## ۱) وضعیت مشترک
 - ۱۲ پروژه/زیرپروژهٔ مدیریت‌شده (به‌علاوهٔ خود مخزن)؛ دفتر هرکدام در جدول `README.md` و دستور توسعهٔ هرکدام در [`docs/directives/`](docs/directives/README.md) است.
 - `node scripts/doctor.mjs <id>` مرجع فرمان‌های دقیق هر پروژه است؛ `--list` فهرست کامل را نشان می‌دهد. اکنون **۴۲ گام در ۱۳ دامنه** (۳۸ تا پیش از ۲۰۲۶-۱۰-۱۴).
-- Router canonical: **۶٬۰۲۹** مهارت = ۳٬۰۰۰ core + ۱۸ پروژه + ۳٬۰۱۱ GitHub؛ **۵٬۹۶۴ routable**، **۶۵ incomplete** و **۳۰٬۲۰۳ trigger**.
-- تست‌های ریشه: **۱۷۸ تست ریشه** (پایتون) با `python3 -m unittest discover -s tests -p "test_*.py"`. نگهبانِ همین اعداد `tests/test_status_counters.py` است: شمارنده‌های بخش «وضعیت مشترک» را به `triggers.json`، `library/github-skills/INDEX.json`، `scripts/doctor.mjs` و `mobile/skills-index.json` قفل می‌کند، ارجاع‌های `doctor.mjs <id>` و لینک/پوشه‌های `docs/directives/README.md` را resolve می‌کند، و اعداد داخل بخش‌های تاریخ‌دار را به‌عنوان snapshot دست نمی‌زند. قاعدهٔ انسانی‌اش بند ۷ «قواعد مشترک» در [`docs/directives/README.md`](docs/directives/README.md) است.
+- Router canonical: **۵٬۹۶۴** مهارت = ۳٬۰۰۰ core + ۱۸ پروژه + ۲٬۹۴۶ GitHub؛ **۵٬۹۶۴ routable**، **۰ incomplete** و **۲۹٬۸۷۸ trigger**.
+- تست‌های ریشه: **۱۸۰ تست ریشه** (پایتون) با `python3 -m unittest discover -s tests -p "test_*.py"`. نگهبانِ همین اعداد `tests/test_status_counters.py` است: شمارنده‌های بخش «وضعیت مشترک» را به `triggers.json`، `library/github-skills/INDEX.json`، `scripts/doctor.mjs` و `mobile/skills-index.json` قفل می‌کند، ارجاع‌های `doctor.mjs <id>` و لینک/پوشه‌های `docs/directives/README.md` را resolve می‌کند، و اعداد داخل بخش‌های تاریخ‌دار را به‌عنوان snapshot دست نمی‌زند. قاعدهٔ انسانی‌اش بند ۷ «قواعد مشترک» در [`docs/directives/README.md`](docs/directives/README.md) است.
 - CI شامل typecheck/build/test، health، skill sync، PWA، دارایی‌های برند و typecheck زیرپروژهٔ Motion است.
 
 ## ۲) اصلاحات بین‌پروژه‌ای
@@ -449,3 +449,19 @@ pushِ اولِ این دور (`4ccf6799`) سه job را قرمز کرد: `commi
 **گیت‌ها:** `discover` ⇒ **۱۷۸ تست** · `sync --check` ⇒ ۰ · `check_skill_links --check` ⇒ `unflagged: []` · `report_skill_quality` و `scan_third_party_skills --check` ⇒ current · `mobile/build-index.py --check` ⇒ ۵٬۹۶۴.
 
 **NOT RUN:** هیچ اسکریپتِ شخص ثالثی اجرا نشد. کیفیتِ مسیریابیِ ۲۱۹ مهارتِ تازه‌فعال با مجموعهٔ طلایی سنجیده نشده است.
+
+## ۱۴) لاگ جریان — ۲۰۲۶-۱۰-۲۳ (حذفِ ۶۵ مهارتِ ناقص + مسیریابِ کم‌مصرف، پلاگین 1.4.0 → 1.5.0)
+
+- **حذف:** ۶۵ مهارتِ ناقص به فایل‌هایی ارجاع می‌دادند که هیچ‌جا منتشر نشده‌اند، پس از همه‌جا حذف شدند: `INDEX.json`، `triggers.json`، پوشهٔ canonical و کپیِ پلاگین. حالا **۵٬۹۶۴ مهارت** داریم که همه قابل‌مسیریابی‌اند، با **۰ ناقص** و **۲۹٬۸۷۸ trigger**. سهمِ GitHub **۲٬۹۴۶ مهارت از ۲۸ مخزن** است. دو مجوزی که مخزنشان از ایندکس رفت هم حذف شدند (`_licenses/` حالا ۷۰ فایل دارد). سیاستِ تازه: مهارتِ ناقص یا تعمیر می‌شود یا حذف، و هرگز پنهان نمی‌ماند.
+- **کپیِ یتیمِ `_licenses`** (یافتهٔ §۱۰٫۵) حذف شد. `sync_skill_library.py` حالا پوشهٔ مهارتی را که از ایندکس بیرون رفته و noticeها و دامنه‌هایی را که دیگر نمی‌نویسد prune می‌کند؛ `--check` آن‌ها را drift گزارش می‌کند. فایلِ اضافه داخلِ پوشهٔ مهارتِ زنده دست نمی‌خورد.
+- **مسیریابِ کم‌مصرف:** `SKILL.md` هر دو نسخه و قالبِ claude.ai بازنویسی شد:
+  - درخواستِ ساده مسیریابی نمی‌شود.
+  - ۲ تا ۶ واژهٔ نیت با `--limit 5 --json-lines --fields name,domain,score,path` فرستاده می‌شود.
+  - فقط نتیجهٔ اول خوانده می‌شود، و حداکثر دو نتیجهٔ دیگر که امتیازشان دست‌کم ۰٫۸ نتیجهٔ اول باشد.
+  - فایلِ بزرگ اول با سرفصل‌ها خوانده می‌شود.
+- **باگِ مسیریاب (رفع شد):** نامِ برندی که هیچ مهارتی ندارد بیشترین وزنِ IDF را می‌گرفت و همهٔ نتیجه‌ها را زیرِ آستانه می‌برد. برای همین «تور آفرود وایکینگ» هیچ نتیجه‌ای نمی‌داد. stemmer هم «viking» را «vik» می‌کرد. حالا `BRAND_TOKENS` (viking، hermes، cham، offroad) وقتی در ایندکس نیستند وزنِ صفر می‌گیرند. واژه‌های ناشناختهٔ دیگر وزنشان را نگه می‌دارند، چون معمولاً خودِ نیت‌اند («قبض برق»). نسخهٔ عمومیِ این اصلاح امتحان شد و ۱۷ تستِ رتبه‌بندی را قرمز کرد، پس کنار گذاشته شد.
+- **فاز:** ۱۷ ورودیِ مرزی شامل خالی، ۲۰ هزار کاراکتر، ایموجی، `\x00`، `../../etc/passwd`، HTML و SQL، روی هر دو نسخه ⇒ همه با کدِ خروجِ ۰. zipِ کاملِ claude.ai هر **۵٬۹۶۴** مسیر را دارد.
+
+**گیت‌ها:** `discover` ⇒ **۱۸۰ تست** (تنها خطای محلی `test_commit_identity` است، تا وقتی HEAD هنوز commitِ squashِ GitHub باشد) · `sync --check` ⇒ ۰ · `check_skill_links` ⇒ `unflagged: []` با ۰ لینکِ مرده · `scan_third_party_skills --check` ⇒ ۲٬۹۴۹ فایل، ۱۶۷ یافته · `mobile/build-index.py --check` ⇒ ۵٬۹۶۴.
+
+**NOT RUN:** مجموعهٔ طلایی برای ۲۱۹ مهارتِ تازه‌فعال · zipِ claude.ai فقط `SKILL.md`ها را دارد، پس اسکریپت‌ها و مراجعِ همراه در claude.ai در دسترس نیستند.

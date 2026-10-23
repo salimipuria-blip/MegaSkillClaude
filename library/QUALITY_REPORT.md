@@ -17,16 +17,16 @@ deleted or demoted: routing is untouched by this report.
 |---|---|
 | tree scanned | `library` |
 | index joined on `source_path` | `.claude/skills/mega-skills-router/references/triggers.json` |
-| SKILL.md files | 3,029 |
-| bytes | 32,598,414 |
-| words per skill (min / median / mean / max) | 6 / 846 / 998 / 6,834 |
-| score (min / median / mean / max) | 0 / 75 / 71.5 / 100 |
+| SKILL.md files | 2,964 |
+| bytes | 31,831,022 |
+| words per skill (min / median / mean / max) | 6 / 856 / 1001 / 6,834 |
+| score (min / median / mean / max) | 0 / 77 / 71.8 / 100 |
 | weakest listed | 50 (limit 50) |
 
 Word counts exclude fenced blocks and frontmatter, so a skill padded with a long code sample
 is not rewarded for it, and a word is a run of word characters, so heading hashes, list markers
 and table pipes do not pad the number either. The default scope is `library/`; `--target .`
-widens it to all 6,029 indexed skills (the `psk/` half is out of
+widens it to all 5,964 indexed skills (the `psk/` half is out of
 scope for task 93 and CI does not scan it).
 
 ## Criteria and points
@@ -63,18 +63,18 @@ every non-blank body line sits inside that one fence, so a genuine code sample i
 
 | signal | skills | share |
 |---|---|---|
-| frontmatter `name` | 3,029 | 100.0% |
-| frontmatter `description` | 3,029 | 100.0% |
-| workflow: ordered steps | 2,060 | 68.0% |
-| workflow: heading only | 493 | 16.3% |
-| workflow: bullets only | 456 | 15.1% |
-| checklist: `- [ ]` items | 305 | 10.1% |
-| checklist: heading only | 135 | 4.5% |
-| defined output: heading | 732 | 24.2% |
-| defined output: prose only | 1,629 | 53.8% |
-| at least one code example | 2,642 | 87.2% |
-| ≥ 2 headings | 3,021 | 99.7% |
-| flagged `incomplete` (penalised) | 65 | 2.1% |
+| frontmatter `name` | 2,964 | 100.0% |
+| frontmatter `description` | 2,964 | 100.0% |
+| workflow: ordered steps | 2,017 | 68.0% |
+| workflow: heading only | 480 | 16.2% |
+| workflow: bullets only | 447 | 15.1% |
+| checklist: `- [ ]` items | 302 | 10.2% |
+| checklist: heading only | 134 | 4.5% |
+| defined output: heading | 727 | 24.5% |
+| defined output: prose only | 1,594 | 53.8% |
+| at least one code example | 2,579 | 87.0% |
+| ≥ 2 headings | 2,956 | 99.7% |
+| flagged `incomplete` (penalised) | 0 | 0.0% |
 | ends inside an open fence | 16 | 0.5% |
 | whole body inside one wrapper fence (peeled before measuring) | 3 | 0.1% |
 | not found in the router index | 0 | 0.0% |
@@ -87,10 +87,10 @@ available to any skill author, imported or curated.
 
 | band | score | skills | share |
 |---|---|---|---|
-| `strong` | 80–100 | 786 | 25.9% |
-| `usable` | 60–79 | 1,734 | 57.2% |
-| `thin` | 40–59 | 466 | 15.4% |
-| `weak` | 20–39 | 38 | 1.3% |
+| `strong` | 80–100 | 785 | 26.5% |
+| `usable` | 60–79 | 1,700 | 57.4% |
+| `thin` | 40–59 | 442 | 14.9% |
+| `weak` | 20–39 | 32 | 1.1% |
 | `stub` | 0–19 | 5 | 0.2% |
 
 ## By source
@@ -98,27 +98,27 @@ available to any skill author, imported or curated.
 | source | skills | mean | min | max |
 |---|---|---|---|---|
 | `curated` | 18 | 89.7 | 75 | 95 |
-| `imported` | 3,011 | 71.4 | 0 | 100 |
+| `imported` | 2,946 | 71.7 | 0 | 100 |
 
 ## By domain
 
 | domain | skills | mean | min | max |
 |---|---|---|---|---|
-| `agents-automation` | 529 | 73.0 | 23 | 100 |
-| `business-sales` | 133 | 75.3 | 40 | 100 |
+| `agents-automation` | 510 | 73.6 | 23 | 100 |
+| `business-sales` | 131 | 75.4 | 40 | 100 |
 | `content-writing` | 63 | 76.2 | 41 | 100 |
-| `data-spreadsheets` | 173 | 73.5 | 27 | 100 |
-| `general` | 119 | 64.9 | 0 | 100 |
-| `graphic-design` | 102 | 70.3 | 31 | 100 |
+| `data-spreadsheets` | 172 | 73.5 | 27 | 100 |
+| `general` | 118 | 64.9 | 0 | 100 |
+| `graphic-design` | 101 | 70.7 | 35 | 100 |
 | `image-ai` | 14 | 72.9 | 53 | 85 |
 | `knowledge-research` | 81 | 78.9 | 58 | 100 |
 | `product-design` | 37 | 70.4 | 41 | 100 |
 | `prompt-requirements` | 9 | 72.6 | 65 | 80 |
 | `skill-development` | 20 | 74.3 | 53 | 100 |
-| `social-media` | 27 | 74.1 | 53 | 100 |
+| `social-media` | 26 | 74.4 | 53 | 100 |
 | `travel-outdoors` | 1 | 65 | 65 | 65 |
 | `video-ai` | 11 | 72.1 | 58 | 87 |
-| `web-development` | 1,710 | 70.5 | 0 | 100 |
+| `web-development` | 1,670 | 70.9 | 0 | 100 |
 
 ## The 50 weakest skills
 
@@ -139,44 +139,44 @@ Lowest score first; ties break on fewer words, then on path, so the table is rep
 | 10 | 27 | `weak` | 97 | bullets-only | none | none | no | `library/github-skills/web3-testing/SKILL.md` | short, no-checklist, no-output |
 | 11 | 27 | `weak` | 98 | bullets-only | none | none | no | `library/github-skills/nft-standards/SKILL.md` | short, no-checklist, no-output |
 | 12 | 31 | `weak` | 90 | ordered-steps | none | none | no | `library/github-skills/mp-research/SKILL.md` | short, no-checklist, no-output, no-structure, no-example |
-| 13 | 31 | `weak` | 284 | bullets-only | none | none | yes | `library/github-skills/helm-charts/SKILL.md` | no-checklist, no-output, incomplete |
-| 14 | 31 | `weak` | 356 | bullets-only | none | none | yes | `library/github-skills/platform-engineering/SKILL.md` | no-checklist, no-output, incomplete |
-| 15 | 31 | `weak` | 361 | bullets-only | none | none | yes | `library/github-skills/model-serving-kubernetes/SKILL.md` | no-checklist, no-output, incomplete |
-| 16 | 31 | `weak` | 362 | bullets-only | none | none | yes | `library/github-skills/cloudformation/SKILL.md` | no-checklist, no-output, incomplete |
-| 17 | 31 | `weak` | 882 | bullets-only | none | none | yes | `library/github-skills/mailtrap-testing-with-sandbox/SKILL.md` | no-checklist, no-output, no-example, incomplete |
-| 18 | 34 | `weak` | 105 | bullets-only | none | none | no | `library/github-skills/database-migration/SKILL.md` | short, no-checklist, no-output |
-| 19 | 34 | `weak` | 109 | bullets-only | none | none | no | `library/github-skills/alerting-oncall/SKILL.md` | short, no-checklist, no-output |
-| 20 | 34 | `weak` | 114 | bullets-only | none | none | no | `library/github-skills/dependency-upgrade/SKILL.md` | short, no-checklist, no-output |
-| 21 | 34 | `weak` | 119 | bullets-only | none | none | no | `library/github-skills/docker-patterns/SKILL.md` | short, no-checklist, no-output |
-| 22 | 34 | `weak` | 138 | bullets-only | none | none | no | `library/github-skills/frontend-patterns/SKILL.md` | short, no-checklist, no-output |
-| 23 | 34 | `weak` | 151 | bullets-only | none | none | no | `library/github-skills/azure-sql/SKILL.md` | short, no-checklist, no-output |
-| 24 | 34 | `weak` | 158 | bullets-only | none | none | no | `library/github-skills/react-modernization/SKILL.md` | short, no-checklist, no-output |
-| 25 | 34 | `weak` | 159 | bullets-only | none | none | no | `library/github-skills/arm-templates/SKILL.md` | short, no-checklist, no-output |
-| 26 | 34 | `weak` | 163 | bullets-only | none | none | no | `library/github-skills/azure-networking/SKILL.md` | short, no-checklist, no-output |
-| 27 | 34 | `weak` | 166 | bullets-only | none | none | no | `library/github-skills/gcp-audit-logs/SKILL.md` | short, no-checklist, no-output |
-| 28 | 34 | `weak` | 166 | bullets-only | none | none | no | `library/github-skills/swift-mcp-server-generator/SKILL.md` | short, no-checklist, no-output |
-| 29 | 34 | `weak` | 167 | bullets-only | none | none | no | `library/github-skills/disaster-recovery/SKILL.md` | short, no-checklist, no-output |
-| 30 | 34 | `weak` | 170 | bullets-only | none | none | no | `library/github-skills/policy-as-code/SKILL.md` | short, no-checklist, no-output |
-| 31 | 34 | `weak` | 171 | bullets-only | none | none | no | `library/github-skills/django-patterns/SKILL.md` | short, no-checklist, no-output |
-| 32 | 34 | `weak` | 172 | bullets-only | none | none | no | `library/github-skills/tailwind-design-system/SKILL.md` | short, no-checklist, no-output |
-| 33 | 34 | `weak` | 176 | bullets-only | none | none | no | `library/github-skills/angular-migration/SKILL.md` | short, no-checklist, no-output |
-| 34 | 34 | `weak` | 180 | bullets-only | none | none | no | `library/github-skills/kubernetes-ops/SKILL.md` | short, no-checklist, no-output |
-| 35 | 34 | `weak` | 182 | bullets-only | none | none | no | `library/github-skills/asset-inventory/SKILL.md` | short, no-checklist, no-output |
-| 36 | 34 | `weak` | 188 | bullets-only | none | none | no | `library/github-skills/blue-green-deploy/SKILL.md` | short, no-checklist, no-output |
-| 37 | 34 | `weak` | 193 | bullets-only | none | none | no | `library/github-skills/istio-traffic-management/SKILL.md` | short, no-checklist, no-output |
-| 38 | 35 | `weak` | 209 | none | none | none | no | `library/github-skills/generate-custom-instructions-from-codebase/SKILL.md` | no-workflow, no-checklist, no-output |
-| 39 | 35 | `weak` | 398 | none | none | none | no | `library/github-skills/engineering-advanced-skills/SKILL.md` | no-workflow, no-checklist, no-output |
-| 40 | 35 | `weak` | 575 | none | none | none | no | `library/github-skills/from-the-other-side-vega/SKILL.md` | no-workflow, no-checklist, no-output, no-example |
-| 41 | 36 | `weak` | 65 | workflow-heading | none | none | no | `library/github-skills/senior-data-scientist/SKILL.md` | short, no-checklist, no-output |
-| 42 | 36 | `weak` | 384 | bullets-only | none | none | no | `library/github-skills/qdrant-deployment-options/SKILL.md` | no-checklist, no-output, no-example |
-| 43 | 36 | `weak` | 498 | bullets-only | none | none | yes | `library/github-skills/long-context/SKILL.md` | no-checklist, no-output, incomplete |
-| 44 | 40 | `thin` | 145 | none | none | output-prose | no | `library/github-skills/business-growth-skills/SKILL.md` | short, no-workflow, no-checklist |
-| 45 | 40 | `thin` | 335 | workflow-heading | none | none | yes | `library/github-skills/simpo-training/SKILL.md` | no-checklist, no-output, incomplete |
-| 46 | 41 | `thin` | 92 | ordered-steps | none | none | no | `library/github-skills/nanoclaw-repl/SKILL.md` | short, no-checklist, no-output, no-example |
-| 47 | 41 | `thin` | 203 | bullets-only | none | none | no | `library/github-skills/gcp-secret-manager/SKILL.md` | no-checklist, no-output |
-| 48 | 41 | `thin` | 203 | bullets-only | none | none | no | `library/github-skills/postgres-patterns/SKILL.md` | no-checklist, no-output |
-| 49 | 41 | `thin` | 204 | bullets-only | none | none | no | `library/github-skills/slo-implementation/SKILL.md` | no-checklist, no-output |
-| 50 | 41 | `thin` | 208 | bullets-only | none | none | no | `library/github-skills/kotlin-ktor-patterns/SKILL.md` | no-checklist, no-output |
+| 13 | 34 | `weak` | 105 | bullets-only | none | none | no | `library/github-skills/database-migration/SKILL.md` | short, no-checklist, no-output |
+| 14 | 34 | `weak` | 109 | bullets-only | none | none | no | `library/github-skills/alerting-oncall/SKILL.md` | short, no-checklist, no-output |
+| 15 | 34 | `weak` | 114 | bullets-only | none | none | no | `library/github-skills/dependency-upgrade/SKILL.md` | short, no-checklist, no-output |
+| 16 | 34 | `weak` | 119 | bullets-only | none | none | no | `library/github-skills/docker-patterns/SKILL.md` | short, no-checklist, no-output |
+| 17 | 34 | `weak` | 138 | bullets-only | none | none | no | `library/github-skills/frontend-patterns/SKILL.md` | short, no-checklist, no-output |
+| 18 | 34 | `weak` | 151 | bullets-only | none | none | no | `library/github-skills/azure-sql/SKILL.md` | short, no-checklist, no-output |
+| 19 | 34 | `weak` | 158 | bullets-only | none | none | no | `library/github-skills/react-modernization/SKILL.md` | short, no-checklist, no-output |
+| 20 | 34 | `weak` | 159 | bullets-only | none | none | no | `library/github-skills/arm-templates/SKILL.md` | short, no-checklist, no-output |
+| 21 | 34 | `weak` | 163 | bullets-only | none | none | no | `library/github-skills/azure-networking/SKILL.md` | short, no-checklist, no-output |
+| 22 | 34 | `weak` | 166 | bullets-only | none | none | no | `library/github-skills/gcp-audit-logs/SKILL.md` | short, no-checklist, no-output |
+| 23 | 34 | `weak` | 166 | bullets-only | none | none | no | `library/github-skills/swift-mcp-server-generator/SKILL.md` | short, no-checklist, no-output |
+| 24 | 34 | `weak` | 167 | bullets-only | none | none | no | `library/github-skills/disaster-recovery/SKILL.md` | short, no-checklist, no-output |
+| 25 | 34 | `weak` | 170 | bullets-only | none | none | no | `library/github-skills/policy-as-code/SKILL.md` | short, no-checklist, no-output |
+| 26 | 34 | `weak` | 171 | bullets-only | none | none | no | `library/github-skills/django-patterns/SKILL.md` | short, no-checklist, no-output |
+| 27 | 34 | `weak` | 172 | bullets-only | none | none | no | `library/github-skills/tailwind-design-system/SKILL.md` | short, no-checklist, no-output |
+| 28 | 34 | `weak` | 176 | bullets-only | none | none | no | `library/github-skills/angular-migration/SKILL.md` | short, no-checklist, no-output |
+| 29 | 34 | `weak` | 180 | bullets-only | none | none | no | `library/github-skills/kubernetes-ops/SKILL.md` | short, no-checklist, no-output |
+| 30 | 34 | `weak` | 182 | bullets-only | none | none | no | `library/github-skills/asset-inventory/SKILL.md` | short, no-checklist, no-output |
+| 31 | 34 | `weak` | 188 | bullets-only | none | none | no | `library/github-skills/blue-green-deploy/SKILL.md` | short, no-checklist, no-output |
+| 32 | 34 | `weak` | 193 | bullets-only | none | none | no | `library/github-skills/istio-traffic-management/SKILL.md` | short, no-checklist, no-output |
+| 33 | 35 | `weak` | 209 | none | none | none | no | `library/github-skills/generate-custom-instructions-from-codebase/SKILL.md` | no-workflow, no-checklist, no-output |
+| 34 | 35 | `weak` | 398 | none | none | none | no | `library/github-skills/engineering-advanced-skills/SKILL.md` | no-workflow, no-checklist, no-output |
+| 35 | 35 | `weak` | 575 | none | none | none | no | `library/github-skills/from-the-other-side-vega/SKILL.md` | no-workflow, no-checklist, no-output, no-example |
+| 36 | 36 | `weak` | 65 | workflow-heading | none | none | no | `library/github-skills/senior-data-scientist/SKILL.md` | short, no-checklist, no-output |
+| 37 | 36 | `weak` | 384 | bullets-only | none | none | no | `library/github-skills/qdrant-deployment-options/SKILL.md` | no-checklist, no-output, no-example |
+| 38 | 40 | `thin` | 145 | none | none | output-prose | no | `library/github-skills/business-growth-skills/SKILL.md` | short, no-workflow, no-checklist |
+| 39 | 41 | `thin` | 92 | ordered-steps | none | none | no | `library/github-skills/nanoclaw-repl/SKILL.md` | short, no-checklist, no-output, no-example |
+| 40 | 41 | `thin` | 203 | bullets-only | none | none | no | `library/github-skills/gcp-secret-manager/SKILL.md` | no-checklist, no-output |
+| 41 | 41 | `thin` | 203 | bullets-only | none | none | no | `library/github-skills/postgres-patterns/SKILL.md` | no-checklist, no-output |
+| 42 | 41 | `thin` | 204 | bullets-only | none | none | no | `library/github-skills/slo-implementation/SKILL.md` | no-checklist, no-output |
+| 43 | 41 | `thin` | 208 | bullets-only | none | none | no | `library/github-skills/kotlin-ktor-patterns/SKILL.md` | no-checklist, no-output |
+| 44 | 41 | `thin` | 210 | bullets-only | none | none | no | `library/github-skills/azure-keyvault/SKILL.md` | no-checklist, no-output |
+| 45 | 41 | `thin` | 211 | bullets-only | none | none | no | `library/github-skills/image-generator/SKILL.md` | no-checklist, no-output |
+| 46 | 41 | `thin` | 213 | bullets-only | none | none | no | `library/github-skills/windows-hardening/SKILL.md` | no-checklist, no-output |
+| 47 | 41 | `thin` | 215 | bullets-only | none | none | no | `library/github-skills/backend-patterns/SKILL.md` | no-checklist, no-output |
+| 48 | 41 | `thin` | 217 | bullets-only | none | none | no | `library/github-skills/performance-profiler/SKILL.md` | no-checklist, no-output |
+| 49 | 41 | `thin` | 218 | bullets-only | none | none | no | `library/github-skills/semantic-versioning/SKILL.md` | no-checklist, no-output |
+| 50 | 41 | `thin` | 221 | bullets-only | none | none | no | `library/github-skills/multi-tenant-llm-hosting/SKILL.md` | no-checklist, no-output |
 
 ## What this report does not say
 

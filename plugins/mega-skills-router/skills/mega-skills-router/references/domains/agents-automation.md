@@ -1,6 +1,6 @@
 # agents-automation
 
-Skills: 765
+Skills: 746
 
 - `13c-metabolic-flux` → `references/skills/13c-metabolic-flux/INSTRUCTIONS.md`
 - `academy-eval-analyzer` → `references/skills/academy-eval-analyzer/INSTRUCTIONS.md`
@@ -130,7 +130,6 @@ Skills: 765
 - `clip` → `references/skills/clip/INSTRUCTIONS.md`
 - `close-automation` → `references/skills/close-automation/INSTRUCTIONS.md`
 - `cmo-advisor` → `references/skills/cmo-advisor/INSTRUCTIONS.md`
-- `cmux` → `references/skills/cmux/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `cobrapy` → `references/skills/cobrapy/INSTRUCTIONS.md`
 - `coda-automation` → `references/skills/coda-automation/INSTRUCTIONS.md`
 - `cognee-knowledge-memory` → `references/skills/cognee-knowledge-memory/INSTRUCTIONS.md`
@@ -144,7 +143,6 @@ Skills: 765
 - `conductor-implement` → `references/skills/conductor-implement/INSTRUCTIONS.md`
 - `confluence-automation` → `references/skills/confluence-automation/INSTRUCTIONS.md`
 - `confluence-expert` → `references/skills/confluence-expert/INSTRUCTIONS.md`
-- `constitutional-ai` → `references/skills/constitutional-ai/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `content-publisher-agent` → `references/skills/content-publisher-agent/INSTRUCTIONS.md`
 - `context-agent` → `references/skills/context-agent/INSTRUCTIONS.md`
 - `context-budget-compressor` → `references/skills/context-budget-compressor/INSTRUCTIONS.md`
@@ -168,7 +166,6 @@ Skills: 765
 - `course-upskilling-requests` → `references/skills/course-upskilling-requests/INSTRUCTIONS.md`
 - `create-agentsmd` → `references/skills/create-agentsmd/INSTRUCTIONS.md`
 - `create-github-action-workflow-specification` → `references/skills/create-github-action-workflow-specification/INSTRUCTIONS.md`
-- `create-llms` → `references/skills/create-llms/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `creative-thinking-for-research` → `references/skills/creative-thinking-for-research/INSTRUCTIONS.md`
 - `crewai` → `references/skills/crewai/INSTRUCTIONS.md`
 - `crewai-multi-agent` → `references/skills/crewai-multi-agent/INSTRUCTIONS.md`
@@ -200,7 +197,6 @@ Skills: 765
 - `diagnosing-superpowers` → `references/skills/diagnosing-superpowers/INSTRUCTIONS.md`
 - `dispatching-parallel-agents` → `references/skills/dispatching-parallel-agents/INSTRUCTIONS.md`
 - `distilly` → `references/skills/distilly/INSTRUCTIONS.md`
-- `distributed-llm-pretraining-torchtitan` → `references/skills/distributed-llm-pretraining-torchtitan/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `docs-sync-automation` → `references/skills/docs-sync-automation/INSTRUCTIONS.md`
 - `document-management-system` → `references/skills/document-management-system/INSTRUCTIONS.md`
 - `docusign-automation` → `references/skills/docusign-automation/INSTRUCTIONS.md`
@@ -343,13 +339,11 @@ Skills: 765
 - `huggingface-community-evals` → `references/skills/huggingface-community-evals/INSTRUCTIONS.md`
 - `human-approval-gates` → `references/skills/human-approval-gates/INSTRUCTIONS.md`
 - `human-in-the-loop-gate` → `references/skills/human-in-the-loop-gate/INSTRUCTIONS.md`
-- `humanize-chinese` → `references/skills/humanize-chinese/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `hypogenic` → `references/skills/hypogenic/INSTRUCTIONS.md`
 - `ida-reverse` → `references/skills/ida-reverse/INSTRUCTIONS.md`
 - `idea-discovery-robot` → `references/skills/idea-discovery-robot/INSTRUCTIONS.md`
 - `image-generator` → `references/skills/image-generator/INSTRUCTIONS.md`
 - `image-studio` → `references/skills/image-studio/INSTRUCTIONS.md`
-- `implementing-llms-litgpt` → `references/skills/implementing-llms-litgpt/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `instagram-automation` → `references/skills/instagram-automation/INSTRUCTIONS.md`
 - `instruction-hierarchy-enforcer` → `references/skills/instruction-hierarchy-enforcer/INSTRUCTIONS.md`
 - `intercom-automation` → `references/skills/intercom-automation/INSTRUCTIONS.md`
@@ -393,7 +387,6 @@ Skills: 765
 - `llm-prompt-optimizer` → `references/skills/llm-prompt-optimizer/INSTRUCTIONS.md`
 - `llm-wiki` → `references/skills/llm-wiki/INSTRUCTIONS.md`
 - `llmops-platform-engineering` → `references/skills/llmops-platform-engineering/INSTRUCTIONS.md`
-- `long-context` → `references/skills/long-context/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `long-task-checkpointer` → `references/skills/long-task-checkpointer/INSTRUCTIONS.md`
 - `longbridge-research` → `references/skills/longbridge-research/INSTRUCTIONS.md`
 - `lookdev-auto` → `references/skills/lookdev-auto/INSTRUCTIONS.md`
@@ -405,7 +398,6 @@ Skills: 765
 - `mailchimp-automation` → `references/skills/mailchimp-automation/INSTRUCTIONS.md`
 - `make-automation` → `references/skills/make-automation/INSTRUCTIONS.md`
 - `malware-analysis` → `references/skills/malware-analysis/INSTRUCTIONS.md`
-- `mamba-architecture` → `references/skills/mamba-architecture/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `marine-carbonate-chemistry` → `references/skills/marine-carbonate-chemistry/INSTRUCTIONS.md`
 - `markdown-mermaid-writing` → `references/skills/markdown-mermaid-writing/INSTRUCTIONS.md`
 - `marketing-campaign` → `references/skills/marketing-campaign/INSTRUCTIONS.md`
@@ -485,7 +477,6 @@ Skills: 765
 - `openrlhf-training` → `references/skills/openrlhf-training/INSTRUCTIONS.md`
 - `opensource-pipeline` → `references/skills/opensource-pipeline/INSTRUCTIONS.md`
 - `operator-approval-loop` → `references/skills/operator-approval-loop/INSTRUCTIONS.md`
-- `optimizing-attention-flash` → `references/skills/optimizing-attention-flash/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `orca-replay` → `references/skills/orca-replay/INSTRUCTIONS.md`
 - `orch-add-feature` → `references/skills/orch-add-feature/INSTRUCTIONS.md`
 - `orch-build-mvp` → `references/skills/orch-build-mvp/INSTRUCTIONS.md`
@@ -500,7 +491,6 @@ Skills: 765
 - `parallel-execution-optimizer` → `references/skills/parallel-execution-optimizer/INSTRUCTIONS.md`
 - `patent` → `references/skills/patent/INSTRUCTIONS.md`
 - `patent-pipeline` → `references/skills/patent-pipeline/INSTRUCTIONS.md`
-- `paypal-integration` → `references/skills/paypal-integration/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `peft-fine-tuning` → `references/skills/peft-fine-tuning/INSTRUCTIONS.md`
 - `pennylane` → `references/skills/pennylane/INSTRUCTIONS.md`
 - `persona-switch-guardrails` → `references/skills/persona-switch-guardrails/INSTRUCTIONS.md`
@@ -517,7 +507,6 @@ Skills: 765
 - `planning-with-files-de` → `references/skills/planning-with-files-de/INSTRUCTIONS.md`
 - `planning-with-files-es` → `references/skills/planning-with-files-es/INSTRUCTIONS.md`
 - `pm-skills` → `references/skills/pm-skills/INSTRUCTIONS.md`
-- `polis-protocol` → `references/skills/polis-protocol/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `polis-protocol-a-self-optimizing-city-of-agents` → `references/skills/polis-protocol-a-self-optimizing-city-of-agents/INSTRUCTIONS.md`
 - `posthog-automation` → `references/skills/posthog-automation/INSTRUCTIONS.md`
 - `postman-newman-automation` → `references/skills/postman-newman-automation/INSTRUCTIONS.md`
@@ -634,7 +623,6 @@ Skills: 765
 - `screen-recording` → `references/skills/screen-recording/INSTRUCTIONS.md`
 - `scvelo` → `references/skills/scvelo/INSTRUCTIONS.md`
 - `scvi-tools` → `references/skills/scvi-tools/INSTRUCTIONS.md`
-- `segment-anything-model` → `references/skills/segment-anything-model/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `segment-automation` → `references/skills/segment-automation/INSTRUCTIONS.md`
 - `self-reflection-critic` → `references/skills/self-reflection-critic/INSTRUCTIONS.md`
 - `sendgrid-automation` → `references/skills/sendgrid-automation/INSTRUCTIONS.md`
@@ -647,13 +635,11 @@ Skills: 765
 - `sglang` → `references/skills/sglang/INSTRUCTIONS.md`
 - `shopify-automation` → `references/skills/shopify-automation/INSTRUCTIONS.md`
 - `signal-write` → `references/skills/signal-write/INSTRUCTIONS.md`
-- `simpo-training` → `references/skills/simpo-training/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `skill-comply` → `references/skills/skill-comply/INSTRUCTIONS.md`
 - `skill-gap-analysis` → `references/skills/skill-gap-analysis/INSTRUCTIONS.md`
 - `skill-installer` → `references/skills/skill-installer/INSTRUCTIONS.md`
 - `skill-stocktake` → `references/skills/skill-stocktake/INSTRUCTIONS.md`
 - `skillopt-sleep` → `references/skills/skillopt-sleep/INSTRUCTIONS.md`
-- `slime-rl-training` → `references/skills/slime-rl-training/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `social-graph-ranker` → `references/skills/social-graph-ranker/INSTRUCTIONS.md`
 - `social-listening-agent` → `references/skills/social-listening-agent/INSTRUCTIONS.md`
 - `social-orchestrator` → `references/skills/social-orchestrator/INSTRUCTIONS.md`
@@ -684,7 +670,6 @@ Skills: 765
 - `system-prompt-refactor-loop` → `references/skills/system-prompt-refactor-loop/INSTRUCTIONS.md`
 - `systems-paper-writing` → `references/skills/systems-paper-writing/INSTRUCTIONS.md`
 - `task-coordination-strategies` → `references/skills/task-coordination-strategies/INSTRUCTIONS.md`
-- `task-intelligence` → `references/skills/task-intelligence/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `taste-distillation` → `references/skills/taste-distillation/INSTRUCTIONS.md`
 - `tasteforge-video` → `references/skills/tasteforge-video/INSTRUCTIONS.md`
 - `tdd-workflow` → `references/skills/tdd-workflow/INSTRUCTIONS.md`
@@ -699,7 +684,6 @@ Skills: 765
 - `think` → `references/skills/think/INSTRUCTIONS.md`
 - `threat-modeling` → `references/skills/threat-modeling/INSTRUCTIONS.md`
 - `tiktok-automation` → `references/skills/tiktok-automation/INSTRUCTIONS.md`
-- `tm7-threat-model` → `references/skills/tm7-threat-model/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `tmux` → `references/skills/tmux/INSTRUCTIONS.md`
 - `todoist-automation` → `references/skills/todoist-automation/INSTRUCTIONS.md`
 - `tone-consistency-auditor` → `references/skills/tone-consistency-auditor/INSTRUCTIONS.md`
@@ -717,7 +701,6 @@ Skills: 765
 - `tour-toolcall-pack` → `references/skills/tour-toolcall-pack/INSTRUCTIONS.md`
 - `tour-toolcall-workflow` → `references/skills/tour-toolcall-workflow/INSTRUCTIONS.md`
 - `trace-to-training-data` → `references/skills/trace-to-training-data/INSTRUCTIONS.md`
-- `training-llms-megatron` → `references/skills/training-llms-megatron/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `transformer-lens-interpretability` → `references/skills/transformer-lens-interpretability/INSTRUCTIONS.md`
 - `transformers` → `references/skills/transformers/INSTRUCTIONS.md`
 - `translator-agent-fa-en` → `references/skills/translator-agent-fa-en/INSTRUCTIONS.md`
@@ -732,7 +715,6 @@ Skills: 765
 - `unified-notifications-ops` → `references/skills/unified-notifications-ops/INSTRUCTIONS.md`
 - `unslop-commit` → `references/skills/unslop-commit/INSTRUCTIONS.md`
 - `unsloth-finetuning` → `references/skills/unsloth-finetuning/INSTRUCTIONS.md`
-- `update-llms` → `references/skills/update-llms/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `user-profile-entity-graph` → `references/skills/user-profile-entity-graph/INSTRUCTIONS.md`
 - `using-agent-skills` → `references/skills/using-agent-skills/INSTRUCTIONS.md`
 - `versioned-persona-registry` → `references/skills/versioned-persona-registry/INSTRUCTIONS.md`
@@ -758,7 +740,6 @@ Skills: 765
 - `wrike-automation` → `references/skills/wrike-automation/INSTRUCTIONS.md`
 - `writing-systems-papers` → `references/skills/writing-systems-papers/INSTRUCTIONS.md`
 - `x-tweet-by-url` → `references/skills/x-tweet-by-url/INSTRUCTIONS.md`
-- `xiaohongshu-auto-posting` → `references/skills/xiaohongshu-auto-posting/INSTRUCTIONS.md` [incomplete: excluded from default routing]
 - `yann-lecun-debate` → `references/skills/yann-lecun-debate/INSTRUCTIONS.md`
 - `yao-meta-skill` → `references/skills/yao-meta-skill/INSTRUCTIONS.md`
 - `yoga-fallback-reporter` → `references/skills/yoga-fallback-reporter/INSTRUCTIONS.md`

@@ -24,6 +24,30 @@ from could not see any commit history for `plugin.json` before `79f22db5` (2026-
 before 1.2.0 are therefore *not* reconstructed here — inventing entries would be worse than naming
 the gap. Each release below cites the document that evidences it.
 
+## [1.5.0] - 2026-10-23
+
+Every indexed skill is now complete and routable, and the routing workflow is rewritten to spend the
+fewest tokens.
+
+### Removed
+
+- The 65 GitHub skills that stayed `incomplete` in 1.4.0 (they referenced files published nowhere)
+  are deleted from `library/github-skills/INDEX.json`, `references/triggers.json`, their canonical
+  folders and the portable copy. Index: **5,964 skills, 5,964 routable, 0 incomplete, 29,878
+  triggers**, 2,946 GitHub skills from 28 repositories. Two license notices whose repository left the
+  index were removed with them (`_licenses/` now holds 70); `polis-protocol` was one of those repositories.
+- The orphan `references/skills/_licenses/` copy left by PR #45.
+
+### Changed
+
+- `SKILL.md` (both copies) is a token-lean workflow: skip routing for trivial requests, query with
+  2–6 intent terms and `--limit 5 --json-lines --fields name,domain,score,path`, read the top result
+  and at most two more that score ≥ 0.8 of it, and read large skills by heading. The description
+  loaded into every session is shorter.
+- `scripts/sync_skill_library.py` prunes the folder of a skill that left the index and notice or
+  domain files it no longer writes; `--check` reports them as drift.
+- The claude.ai build (`scripts/build_claudeai_skill.py`) uses the same token-lean steps.
+
 ## [1.4.0] - 2026-10-23
 
 The index keeps its shape and all 6,029 skills; what changes is how many of them route by default.

@@ -1,6 +1,6 @@
 # agents-automation
 
-Skills: 765
+Skills: 746
 
 - `13c-metabolic-flux` → `library/github-skills/13c-metabolic-flux/SKILL.md`
 - `academy-eval-analyzer` → `psk/data/skills/academy-eval-analyzer/SKILL.md`
@@ -130,7 +130,6 @@ Skills: 765
 - `clip` → `library/github-skills/clip/SKILL.md`
 - `close-automation` → `library/github-skills/close-automation/SKILL.md`
 - `cmo-advisor` → `library/github-skills/cmo-advisor/SKILL.md`
-- `cmux` → `library/github-skills/cmux/SKILL.md` [incomplete: excluded from default routing]
 - `cobrapy` → `library/github-skills/cobrapy/SKILL.md`
 - `coda-automation` → `library/github-skills/coda-automation/SKILL.md`
 - `cognee-knowledge-memory` → `psk/data/skills/cognee-knowledge-memory/SKILL.md`
@@ -144,7 +143,6 @@ Skills: 765
 - `conductor-implement` → `library/github-skills/conductor-implement/SKILL.md`
 - `confluence-automation` → `library/github-skills/confluence-automation/SKILL.md`
 - `confluence-expert` → `library/github-skills/confluence-expert/SKILL.md`
-- `constitutional-ai` → `library/github-skills/constitutional-ai/SKILL.md` [incomplete: excluded from default routing]
 - `content-publisher-agent` → `psk/data/skills/content-publisher-agent/SKILL.md`
 - `context-agent` → `library/github-skills/context-agent/SKILL.md`
 - `context-budget-compressor` → `psk/data/skills/context-budget-compressor/SKILL.md`
@@ -168,7 +166,6 @@ Skills: 765
 - `course-upskilling-requests` → `library/github-skills/course-upskilling-requests/SKILL.md`
 - `create-agentsmd` → `library/github-skills/create-agentsmd/SKILL.md`
 - `create-github-action-workflow-specification` → `library/github-skills/create-github-action-workflow-specification/SKILL.md`
-- `create-llms` → `library/github-skills/create-llms/SKILL.md` [incomplete: excluded from default routing]
 - `creative-thinking-for-research` → `library/github-skills/creative-thinking-for-research/SKILL.md`
 - `crewai` → `library/github-skills/crewai/SKILL.md`
 - `crewai-multi-agent` → `library/github-skills/crewai-multi-agent/SKILL.md`
@@ -200,7 +197,6 @@ Skills: 765
 - `diagnosing-superpowers` → `library/github-skills/diagnosing-superpowers/SKILL.md`
 - `dispatching-parallel-agents` → `library/github-skills/dispatching-parallel-agents/SKILL.md`
 - `distilly` → `library/github-skills/distilly/SKILL.md`
-- `distributed-llm-pretraining-torchtitan` → `library/github-skills/distributed-llm-pretraining-torchtitan/SKILL.md` [incomplete: excluded from default routing]
 - `docs-sync-automation` → `psk/data/skills/docs-sync-automation/SKILL.md`
 - `document-management-system` → `library/github-skills/document-management-system/SKILL.md`
 - `docusign-automation` → `library/github-skills/docusign-automation/SKILL.md`
@@ -343,13 +339,11 @@ Skills: 765
 - `huggingface-community-evals` → `library/github-skills/huggingface-community-evals/SKILL.md`
 - `human-approval-gates` → `psk/data/skills/human-approval-gates/SKILL.md`
 - `human-in-the-loop-gate` → `psk/data/skills/human-in-the-loop-gate/SKILL.md`
-- `humanize-chinese` → `library/github-skills/humanize-chinese/SKILL.md` [incomplete: excluded from default routing]
 - `hypogenic` → `library/github-skills/hypogenic/SKILL.md`
 - `ida-reverse` → `library/github-skills/ida-reverse/SKILL.md`
 - `idea-discovery-robot` → `library/github-skills/idea-discovery-robot/SKILL.md`
 - `image-generator` → `library/github-skills/image-generator/SKILL.md`
 - `image-studio` → `library/github-skills/image-studio/SKILL.md`
-- `implementing-llms-litgpt` → `library/github-skills/implementing-llms-litgpt/SKILL.md` [incomplete: excluded from default routing]
 - `instagram-automation` → `library/github-skills/instagram-automation/SKILL.md`
 - `instruction-hierarchy-enforcer` → `psk/data/skills/instruction-hierarchy-enforcer/SKILL.md`
 - `intercom-automation` → `library/github-skills/intercom-automation/SKILL.md`
@@ -393,7 +387,6 @@ Skills: 765
 - `llm-prompt-optimizer` → `library/github-skills/llm-prompt-optimizer/SKILL.md`
 - `llm-wiki` → `library/github-skills/llm-wiki/SKILL.md`
 - `llmops-platform-engineering` → `library/github-skills/llmops-platform-engineering/SKILL.md`
-- `long-context` → `library/github-skills/long-context/SKILL.md` [incomplete: excluded from default routing]
 - `long-task-checkpointer` → `psk/data/skills/long-task-checkpointer/SKILL.md`
 - `longbridge-research` → `library/github-skills/longbridge-research/SKILL.md`
 - `lookdev-auto` → `library/github-skills/lookdev-auto/SKILL.md`
@@ -405,7 +398,6 @@ Skills: 765
 - `mailchimp-automation` → `library/github-skills/mailchimp-automation/SKILL.md`
 - `make-automation` → `library/github-skills/make-automation/SKILL.md`
 - `malware-analysis` → `library/github-skills/malware-analysis/SKILL.md`
-- `mamba-architecture` → `library/github-skills/mamba-architecture/SKILL.md` [incomplete: excluded from default routing]
 - `marine-carbonate-chemistry` → `library/github-skills/marine-carbonate-chemistry/SKILL.md`
 - `markdown-mermaid-writing` → `library/github-skills/markdown-mermaid-writing/SKILL.md`
 - `marketing-campaign` → `library/github-skills/marketing-campaign/SKILL.md`
@@ -485,7 +477,6 @@ Skills: 765
 - `openrlhf-training` → `library/github-skills/openrlhf-training/SKILL.md`
 - `opensource-pipeline` → `library/github-skills/opensource-pipeline/SKILL.md`
 - `operator-approval-loop` → `library/github-skills/operator-approval-loop/SKILL.md`
-- `optimizing-attention-flash` → `library/github-skills/optimizing-attention-flash/SKILL.md` [incomplete: excluded from default routing]
 - `orca-replay` → `library/github-skills/orca-replay/SKILL.md`
 - `orch-add-feature` → `library/github-skills/orch-add-feature/SKILL.md`
 - `orch-build-mvp` → `library/github-skills/orch-build-mvp/SKILL.md`
@@ -500,7 +491,6 @@ Skills: 765
 - `parallel-execution-optimizer` → `library/github-skills/parallel-execution-optimizer/SKILL.md`
 - `patent` → `library/github-skills/patent/SKILL.md`
 - `patent-pipeline` → `library/github-skills/patent-pipeline/SKILL.md`
-- `paypal-integration` → `library/github-skills/paypal-integration/SKILL.md` [incomplete: excluded from default routing]
 - `peft-fine-tuning` → `library/github-skills/peft-fine-tuning/SKILL.md`
 - `pennylane` → `library/github-skills/pennylane/SKILL.md`
 - `persona-switch-guardrails` → `psk/data/skills/persona-switch-guardrails/SKILL.md`
@@ -517,7 +507,6 @@ Skills: 765
 - `planning-with-files-de` → `library/github-skills/planning-with-files-de/SKILL.md`
 - `planning-with-files-es` → `library/github-skills/planning-with-files-es/SKILL.md`
 - `pm-skills` → `library/github-skills/pm-skills/SKILL.md`
-- `polis-protocol` → `library/github-skills/polis-protocol/SKILL.md` [incomplete: excluded from default routing]
 - `polis-protocol-a-self-optimizing-city-of-agents` → `library/github-skills/polis-protocol-a-self-optimizing-city-of-agents/SKILL.md`
 - `posthog-automation` → `library/github-skills/posthog-automation/SKILL.md`
 - `postman-newman-automation` → `library/github-skills/postman-newman-automation/SKILL.md`
@@ -634,7 +623,6 @@ Skills: 765
 - `screen-recording` → `library/github-skills/screen-recording/SKILL.md`
 - `scvelo` → `library/github-skills/scvelo/SKILL.md`
 - `scvi-tools` → `library/github-skills/scvi-tools/SKILL.md`
-- `segment-anything-model` → `library/github-skills/segment-anything-model/SKILL.md` [incomplete: excluded from default routing]
 - `segment-automation` → `library/github-skills/segment-automation/SKILL.md`
 - `self-reflection-critic` → `psk/data/skills/self-reflection-critic/SKILL.md`
 - `sendgrid-automation` → `library/github-skills/sendgrid-automation/SKILL.md`
@@ -647,13 +635,11 @@ Skills: 765
 - `sglang` → `library/github-skills/sglang/SKILL.md`
 - `shopify-automation` → `library/github-skills/shopify-automation/SKILL.md`
 - `signal-write` → `library/github-skills/signal-write/SKILL.md`
-- `simpo-training` → `library/github-skills/simpo-training/SKILL.md` [incomplete: excluded from default routing]
 - `skill-comply` → `library/github-skills/skill-comply/SKILL.md`
 - `skill-gap-analysis` → `library/github-skills/skill-gap-analysis/SKILL.md`
 - `skill-installer` → `library/github-skills/skill-installer/SKILL.md`
 - `skill-stocktake` → `library/github-skills/skill-stocktake/SKILL.md`
 - `skillopt-sleep` → `library/github-skills/skillopt-sleep/SKILL.md`
-- `slime-rl-training` → `library/github-skills/slime-rl-training/SKILL.md` [incomplete: excluded from default routing]
 - `social-graph-ranker` → `library/github-skills/social-graph-ranker/SKILL.md`
 - `social-listening-agent` → `psk/data/skills/social-listening-agent/SKILL.md`
 - `social-orchestrator` → `library/github-skills/social-orchestrator/SKILL.md`
@@ -684,7 +670,6 @@ Skills: 765
 - `system-prompt-refactor-loop` → `psk/data/skills/system-prompt-refactor-loop/SKILL.md`
 - `systems-paper-writing` → `library/github-skills/systems-paper-writing/SKILL.md`
 - `task-coordination-strategies` → `library/github-skills/task-coordination-strategies/SKILL.md`
-- `task-intelligence` → `library/github-skills/task-intelligence/SKILL.md` [incomplete: excluded from default routing]
 - `taste-distillation` → `library/github-skills/taste-distillation/SKILL.md`
 - `tasteforge-video` → `library/github-skills/tasteforge-video/SKILL.md`
 - `tdd-workflow` → `library/github-skills/tdd-workflow/SKILL.md`
@@ -699,7 +684,6 @@ Skills: 765
 - `think` → `library/github-skills/think/SKILL.md`
 - `threat-modeling` → `library/github-skills/threat-modeling/SKILL.md`
 - `tiktok-automation` → `library/github-skills/tiktok-automation/SKILL.md`
-- `tm7-threat-model` → `library/github-skills/tm7-threat-model/SKILL.md` [incomplete: excluded from default routing]
 - `tmux` → `library/github-skills/tmux/SKILL.md`
 - `todoist-automation` → `library/github-skills/todoist-automation/SKILL.md`
 - `tone-consistency-auditor` → `psk/data/skills/tone-consistency-auditor/SKILL.md`
@@ -717,7 +701,6 @@ Skills: 765
 - `tour-toolcall-pack` → `psk/data/skills/tour-toolcall-pack/SKILL.md`
 - `tour-toolcall-workflow` → `psk/data/skills/tour-toolcall-workflow/SKILL.md`
 - `trace-to-training-data` → `library/github-skills/trace-to-training-data/SKILL.md`
-- `training-llms-megatron` → `library/github-skills/training-llms-megatron/SKILL.md` [incomplete: excluded from default routing]
 - `transformer-lens-interpretability` → `library/github-skills/transformer-lens-interpretability/SKILL.md`
 - `transformers` → `library/github-skills/transformers/SKILL.md`
 - `translator-agent-fa-en` → `psk/data/skills/translator-agent-fa-en/SKILL.md`
@@ -732,7 +715,6 @@ Skills: 765
 - `unified-notifications-ops` → `library/github-skills/unified-notifications-ops/SKILL.md`
 - `unslop-commit` → `library/github-skills/unslop-commit/SKILL.md`
 - `unsloth-finetuning` → `library/github-skills/unsloth-finetuning/SKILL.md`
-- `update-llms` → `library/github-skills/update-llms/SKILL.md` [incomplete: excluded from default routing]
 - `user-profile-entity-graph` → `psk/data/skills/user-profile-entity-graph/SKILL.md`
 - `using-agent-skills` → `library/github-skills/using-agent-skills/SKILL.md`
 - `versioned-persona-registry` → `psk/data/skills/versioned-persona-registry/SKILL.md`
@@ -758,7 +740,6 @@ Skills: 765
 - `wrike-automation` → `library/github-skills/wrike-automation/SKILL.md`
 - `writing-systems-papers` → `library/github-skills/writing-systems-papers/SKILL.md`
 - `x-tweet-by-url` → `library/github-skills/x-tweet-by-url/SKILL.md`
-- `xiaohongshu-auto-posting` → `library/github-skills/xiaohongshu-auto-posting/SKILL.md` [incomplete: excluded from default routing]
 - `yann-lecun-debate` → `library/github-skills/yann-lecun-debate/SKILL.md`
 - `yao-meta-skill` → `library/github-skills/yao-meta-skill/SKILL.md`
 - `yoga-fallback-reporter` → `psk/data/skills/yoga-fallback-reporter/SKILL.md`
