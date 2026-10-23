@@ -28,6 +28,10 @@
 - Remotion (`npm i remotion @remotion/cli`) در sandbox فقط با `--browser-executable` روی `chrome-headless-shell` از `/opt/pw-browsers/chromium_headless_shell-*` رندر می‌گیرد. `chrome` معمولی خطای «Old Headless mode has been removed» می‌دهد.
 - قبل از تحویل، فریم‌های کلیدی را باز کن و بررسی کن. اشکال رایج در صفحهٔ RTL: هر چیزی که از کادر بیرون بزند (`inset` منفی، `translateX`) صفحه را افقی جابه‌جا می‌کند. همه‌چیز را داخل یک `#stage` با `position:fixed; overflow:hidden` بگذار.
 
+## مهارت‌های مارکتینگ
+- پلاگین `marketing-skills@marketingskills` (۵۲ مهارت MIT از `coreyhaines31/marketingskills`) در `.claude/settings.json` فعال است و هر جلسه خودکار نصب می‌شود. نام‌ها با پیشوند `marketing-skills:` هستند، مثلاً `marketing-skills:copywriting`، `marketing-skills:social`، `marketing-skills:ad-creative`، `marketing-skills:launch` و `marketing-skills:marketing-plan`.
+- برای کار مارکتینگ و محتوا، اول `mega-skills-router` را اجرا کن. اگر یکی از این ۵۲ مهارت دقیق‌تر جواب می‌داد، همان را بخوان.
+
 ## برندها
 - **viking.offroad** (وایکینگ آفرود): تور آفرود و کمپ؛ مشکی و نارنجی (#F28A1E)، حال‌وهوای سینمایی گرم. پک استیکرها (۳۶۰ تا، تمام‌نارنجی، با سورس): `brands/viking-offroad/stickers/`. کاورهای هایلایت فعلی: عکس‌های لوکیشن با رنگ‌بندی نارنجی گرم و لبه‌ی تیره، سوژه در مرکز برای برش دایره‌ای.
 - **MEGA SKILLS 3000**: پوشه‌ی `psk/`، سایت `psk-3000` روی Vercel.
