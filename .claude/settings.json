@@ -2,9 +2,12 @@
   "extraKnownMarketplaces": {
     "ecc": {
       "source": { "source": "github", "repo": "affaan-m/ECC" }
+    },
+    "marketingskills": {
+      "source": { "source": "github", "repo": "coreyhaines31/marketingskills" }
     }
   },
-  "enabledPlugins": { "ecc@ecc": true },
+  "enabledPlugins": { "ecc@ecc": true, "marketing-skills@marketingskills": true },
   "statusLine": {
     "type": "command",
     "command": "node \"$CLAUDE_PROJECT_DIR/.claude/statusline/statusline.js\""
