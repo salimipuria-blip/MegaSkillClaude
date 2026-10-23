@@ -24,6 +24,32 @@ from could not see any commit history for `plugin.json` before `79f22db5` (2026-
 before 1.2.0 are therefore *not* reconstructed here — inventing entries would be worse than naming
 the gap. Each release below cites the document that evidences it.
 
+## [1.4.0] - 2026-10-23
+
+The index keeps its shape and all 6,029 skills; what changes is how many of them route by default.
+
+### Changed
+
+- Routable skills **5,745 → 5,964** and incomplete **284 → 65**. 219 flagged GitHub skills were
+  repaired at the source (`library/github-skills/`): the `SKILL.md` was refreshed to the latest
+  upstream version where it had moved on, missing companions were copied from the upstream
+  repository (including shared folders such as `shared-references/`) or, when that repository no
+  longer had them, from the skill's own original repository, with its license added to
+  `_licenses/` (now 72 notices). The three skills flagged by the 1.3.0 link audit
+  (`git-guardrails-claude-code`, `qdrant-search-quality`, `wizard`) are among the repaired ones.
+- The 65 that stay `incomplete` point at files that exist nowhere public (another project's training
+  scripts, files the user supplies, files never published). `polis-protocol` is held back on purpose:
+  its missing `scripts/demo.sh` advertises a `curl | bash` installer from a different GitHub owner.
+
+### Added
+
+- A dated `Restored 2026-10-23` line in every repaired skill's `SOURCE.md`, naming where its files
+  came from and the license notice that covers them.
+
+Evidence: `library/github-skills/README.md` "Incomplete skills (65)" and "Companion-source notices",
+`scripts/check_skill_links.py --check` ⇒ `unflagged: [] · findings: 0`, root `PROGRESS.md`
+۲۰۲۶-۱۰-۲۳.
+
 ## [1.3.0] - 2026-10-22
 
 Covers everything that landed after 1.2.0, including the 2026-10-18 work that shipped without a

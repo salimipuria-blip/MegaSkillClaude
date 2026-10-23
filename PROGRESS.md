@@ -5,8 +5,8 @@
 ## ۱) وضعیت مشترک
 - ۱۲ پروژه/زیرپروژهٔ مدیریت‌شده (به‌علاوهٔ خود مخزن)؛ دفتر هرکدام در جدول `README.md` و دستور توسعهٔ هرکدام در [`docs/directives/`](docs/directives/README.md) است.
 - `node scripts/doctor.mjs <id>` مرجع فرمان‌های دقیق هر پروژه است؛ `--list` فهرست کامل را نشان می‌دهد. اکنون **۴۲ گام در ۱۳ دامنه** (۳۸ تا پیش از ۲۰۲۶-۱۰-۱۴).
-- Router canonical: **۶٬۰۲۹** مهارت = ۳٬۰۰۰ core + ۱۸ پروژه + ۳٬۰۱۱ GitHub؛ **۵٬۷۴۵ routable**، **۲۸۴ incomplete** و **۳۰٬۲۰۳ trigger**.
-- تست‌های ریشه: **۱۷۷ تست ریشه** (پایتون) با `python3 -m unittest discover -s tests -p "test_*.py"`. نگهبانِ همین اعداد `tests/test_status_counters.py` است: شمارنده‌های بخش «وضعیت مشترک» را به `triggers.json`، `library/github-skills/INDEX.json`، `scripts/doctor.mjs` و `mobile/skills-index.json` قفل می‌کند، ارجاع‌های `doctor.mjs <id>` و لینک/پوشه‌های `docs/directives/README.md` را resolve می‌کند، و اعداد داخل بخش‌های تاریخ‌دار را به‌عنوان snapshot دست نمی‌زند. قاعدهٔ انسانی‌اش بند ۷ «قواعد مشترک» در [`docs/directives/README.md`](docs/directives/README.md) است.
+- Router canonical: **۶٬۰۲۹** مهارت = ۳٬۰۰۰ core + ۱۸ پروژه + ۳٬۰۱۱ GitHub؛ **۵٬۹۶۴ routable**، **۶۵ incomplete** و **۳۰٬۲۰۳ trigger**.
+- تست‌های ریشه: **۱۷۸ تست ریشه** (پایتون) با `python3 -m unittest discover -s tests -p "test_*.py"`. نگهبانِ همین اعداد `tests/test_status_counters.py` است: شمارنده‌های بخش «وضعیت مشترک» را به `triggers.json`، `library/github-skills/INDEX.json`، `scripts/doctor.mjs` و `mobile/skills-index.json` قفل می‌کند، ارجاع‌های `doctor.mjs <id>` و لینک/پوشه‌های `docs/directives/README.md` را resolve می‌کند، و اعداد داخل بخش‌های تاریخ‌دار را به‌عنوان snapshot دست نمی‌زند. قاعدهٔ انسانی‌اش بند ۷ «قواعد مشترک» در [`docs/directives/README.md`](docs/directives/README.md) است.
 - CI شامل typecheck/build/test، health، skill sync، PWA، دارایی‌های برند و typecheck زیرپروژهٔ Motion است.
 
 ## ۲) اصلاحات بین‌پروژه‌ای
@@ -434,3 +434,18 @@ pushِ اولِ این دور (`4ccf6799`) سه job را قرمز کرد: `commi
 **گیت‌ها:** `discover` ⇒ **Ran 177 tests — OK** (پیش از این دور ۱۵۲) · `report_skill_quality.py --check` ⇒ current · `check_skill_links.py --check` ⇒ `unflagged: [] · findings: 0` · `tests.test_skill_quality_report` ۲۳/۲۳ · `tests.test_skill_link_audit` ۱۵/۱۵ · گامِ تازهٔ CI: `Skill quality report is current` در jobِ `router`.
 
 **NOT RUN:** جهش‌های این دور (فقط ۲ مورد دستی: آستانهٔ ۴۰۰→۳۰۰ و حذفِ پوست‌کندن، هر دو قرمز دیده شدند) به‌صورتِ کاملِ systematic اجرا نشد · امتیازدهیِ محتوایی · نیمهٔ `psk/` · اصلاحِ markdownِ آن ۱۶ فایل و پوست‌کندنِ دائمیِ ۳ مهارت (دست‌کاریِ محتوای وارداتی = تصمیمِ مالک) · تسک‌های ۱۲/۱۵/۹۵/۹۶ شروع نشدند.
+
+## ۱۳) لاگ جریان — ۲۰۲۶-۱۰-۲۳ (بازیابیِ ۲۸۴ مهارتِ ناقص + ۲۵ مهارتِ موشن)
+
+- **مگا اسکیل (پلاگین 1.3.0 → 1.4.0):** از ۲۸۴ مهارتِ ناقص **۲۱۹ کامل شد**. قابل‌مسیریابی‌ها از **۵٬۷۴۵ به ۵٬۹۶۴** رسید و ناقص‌ها از **۲۸۴ به ۶۵**. منبعِ فایل‌ها: نسخهٔ تازهٔ بالادستی، پوشه‌های مشترک همان مخزن و مخزنِ اصلیِ هر مهارت (۲۶ مجوزِ تازه؛ `_licenses/` از ۴۶ به ۷۲). جزئیات و گیت‌ها در `library/PROFESSIONAL_GUIDE.md` (۲۰۲۶-۱۰-۲۳) آمده است.
+- **سه مهارتی که تصمیمشان با مالک بود** (`git-guardrails-claude-code`، `qdrant-search-quality`، `wizard`): مالک گفت «همه نصب شوند»، پس فایل‌هایشان آورده شد.
+- **نگه‌داشته‌شده:** `polis-protocol/scripts/demo.sh` یک نصب‌کنندهٔ `curl | bash` از مالکِ دیگری را تبلیغ می‌کند.
+- **۲۵ مهارتِ موشن در `.claude/skills/`** (همه MIT، پیش از نصب برای الگوهای مخرب اسکن شدند):
+  - iart-ai: ۱۷ مهارت از چهار پک tiktok، ad، motion-design و kinetic-typography
+  - anymotion: ۶ مهارت
+  - `pixel2motion`
+  - `after-effects-mcp`
+
+**گیت‌ها:** `discover` ⇒ **۱۷۸ تست** · `sync --check` ⇒ ۰ · `check_skill_links --check` ⇒ `unflagged: []` · `report_skill_quality` و `scan_third_party_skills --check` ⇒ current · `mobile/build-index.py --check` ⇒ ۵٬۹۶۴.
+
+**NOT RUN:** هیچ اسکریپتِ شخص ثالثی اجرا نشد. کیفیتِ مسیریابیِ ۲۱۹ مهارتِ تازه‌فعال با مجموعهٔ طلایی سنجیده نشده است.

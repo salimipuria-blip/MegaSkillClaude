@@ -264,7 +264,11 @@ class RealLibraryReportTests(unittest.TestCase):
         cls.counts = json.loads(CANONICAL.read_text(encoding='utf-8'))['counts']
 
     def test_the_population_is_every_library_skill_and_all_of_it_is_indexed(self):
-        on_disk = sorted(str(path.relative_to(ROOT)) for path in LIBRARY.rglob('SKILL.md'))
+        # A SKILL.md nested inside another skill's folder is a companion document, not a skill
+        # (three since 2026-10-23: qdrant-search-quality/{diagnosis,search-strategies}, on-call-handoff-patterns/templates).
+        on_disk = sorted(str(path.relative_to(ROOT)) for path in LIBRARY.rglob('SKILL.md')
+                         if not any((parent / 'SKILL.md').is_file()
+                                    for parent in path.parent.parents if parent.is_relative_to(LIBRARY)))
         self.assertEqual(self.result['scanned'], len(on_disk))
         self.assertEqual(self.result['scanned'], 3029, 'library/skills (18) + library/github-skills (3,011)')
         self.assertEqual([row['path'] for row in sorted(self.result['rows'],
@@ -345,7 +349,7 @@ class RealLibraryReportTests(unittest.TestCase):
     def test_the_incomplete_column_agrees_with_the_link_audit(self):
         self.assertEqual(self.result['coverage']['incomplete'], self.counts['incomplete_skills'],
                          'the report must not carry its own idea of what incomplete means')
-        self.assertEqual(self.counts['incomplete_skills'], 284)
+        self.assertEqual(self.counts['incomplete_skills'], 65)
         self.assertEqual(self.counts['skills'] - self.counts['incomplete_skills'],
                          self.counts['routable_skills'])
 

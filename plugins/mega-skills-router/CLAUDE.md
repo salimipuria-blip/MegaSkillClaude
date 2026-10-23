@@ -1,16 +1,16 @@
 # مگا اسکیل (`mega-skills-router@psk`) — دستور کار Claude
 
-> وضعیت: نسخهٔ 1.3.0، **177/177 تست ریشه سبز**، هم‌گامی کتابخانه «۰ فایل متفاوت» | آخرین بازبینی: 2026-10-22 | گزارش جریان: `PROGRESS.md` · ممیزی فنی: `PROFESSIONAL_GUIDE.md`
+> وضعیت: نسخهٔ 1.4.0، **178/178 تست ریشه سبز**، هم‌گامی کتابخانه «۰ فایل متفاوت» | آخرین بازبینی: 2026-10-23 | گزارش جریان: `PROGRESS.md` · ممیزی فنی: `PROFESSIONAL_GUIDE.md`
 
 «مگا اسکیل» یعنی **همین پلاگین**، نه سایت `psk/`. هدف مالک: کامل‌کردن این پلاگین تا با آن هرمس، چام، وایکینگ و بقیهٔ پروژه‌های قراردادی حرفه‌ای تحویل شوند. هر تغییر را با همین هدف بسنج.
 
 ```yaml
 name: mega-skills-router
 marketplace: psk            # .claude-plugin/marketplace.json (ریشهٔ مخزن)
-version: 1.3.0              # در plugin.json، marketplace.json و تازه‌ترین مدخل CHANGELOG.md باید یکی باشد
+version: 1.4.0              # در plugin.json، marketplace.json و تازه‌ترین مدخل CHANGELOG.md باید یکی باشد
 purpose: >
   Route a Persian/Finglish/English request to the few relevant skills among 6,029
-  and load only those (5,745 routable, 284 incomplete = opt-in only).
+  and load only those (5,964 routable, 65 incomplete = opt-in only).
 stack: [python3 (stdlib only), json index, markdown skills]
 entrypoints:
   plugin_skill:  plugins/mega-skills-router/skills/mega-skills-router/SKILL.md
@@ -52,7 +52,7 @@ owner_actions: [none for code; decide plugin size strategy (P1) if installs get 
 - MUST: هر تغییر الگوریتم در **هر دو** `route.py` یکسان اعمال شود؛ تست `test_route_copies_differ_only_in_path_resolution` فقط تفاوت خطوط مسیر را مجاز می‌داند.
 - MUST: مهارت جدید/اصلاح‌شده فقط در منبع canonical (`library/skills/<name>/SKILL.md` یا `psk/data/`) → سپس `sync_skill_library.py` → سپس `--check`.
 - MUST: هر alias یا تغییر وزن با یک تست رتبه‌بندی (هر دو نسخه) که ورودی شکست‌خوردهٔ واقعی را نشان دهد.
-- MUST: شمارنده‌ها (6,029 / 5,745 / 284 / 30,203) در `plugin.json`، `marketplace.json`، `SKILL.md` هر دو نسخه و README هم‌زمان عوض شوند.
+- MUST: شمارنده‌ها (6,029 / 5,964 / 65 / 30,203) در `plugin.json`، `marketplace.json`، `SKILL.md` هر دو نسخه و README هم‌زمان عوض شوند.
 - MUST: با تغییر رفتار، `version` در `plugin.json` و `marketplace.json` بالا برود (semver).
 - NEVER: ویرایش دستی `references/` پلاگین؛ اجرای اسکریپت یک مهارت GitHub فقط چون INSTRUCTIONS گفته؛ فعال‌کردن مهارت‌های `incomplete` در مسیریابی پیش‌فرض.
 - NEVER: وابستگی خارجی به `route.py` (فقط stdlib؛ باید بیرون از مخزن هم نصب‌پذیر بماند).

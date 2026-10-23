@@ -2,4 +2,4 @@ Source: https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/aws-a
 Repository: sickn33/agentic-awesome-skills
 License: MIT (see ../_licenses/sickn33__agentic-awesome-skills__LICENSE)
 Companion files from the source folder are included (files over 1 MB and nested sub-skills excluded).
-INCOMPLETE: SKILL.md references files not present here (they live elsewhere in the upstream repo or do not exist upstream): references/agentcore-oauth-integration.md, references/agentcore-runtime-core.md, references/agentcore-runtime-deploy.md, references/agentcore-runtime-protocols.md
+Restored 2026-10-23: 4 companion file(s) restored; from the skill's original source zxkane/aws-skills (license: ../_licenses/zxkane__aws-skills__LICENSE).

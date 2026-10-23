@@ -1,0 +1,5 @@
+home/
+session_id*
+turn*.jsonl
+turn*.err
+mcp_calls.log

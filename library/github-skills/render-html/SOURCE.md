@@ -2,4 +2,4 @@ Source: https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HE
 Repository: wanshuiyin/Auto-claude-code-research-in-sleep
 License: MIT (see ../_licenses/wanshuiyin__Auto-claude-code-research-in-sleep__LICENSE)
 Companion files from the source folder are included (files over 1 MB and nested sub-skills excluded).
-INCOMPLETE: SKILL.md references files not present here (they live elsewhere in the upstream repo or do not exist upstream): references/review-tracing.md, references/reviewer-routing.md
+Restored 2026-10-23: SKILL.md refreshed to the latest upstream version; 3 companion file(s) restored.

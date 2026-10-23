@@ -24,7 +24,7 @@ GitHub skills are third-party: review a skill before running any script it ships
 
 ## Generated library and incomplete workflows
 
-Of 6,029 packaged skills, 5,745 are routable by default; the 284 canonical `incomplete` entries
+Of 6,029 packaged skills, 5,964 are routable by default; the 65 canonical `incomplete` entries
 remain available for provenance/manual review but are not selected automatically. Python's
 `--include-incomplete` is an explicit review opt-in. Upstream license texts ship under
 `references/licenses/`.

@@ -9,7 +9,7 @@ Skills: 297
 - `academy-macro-auditor` → `psk/data/skills/academy-macro-auditor/SKILL.md`
 - `academy-rfm-library` → `psk/data/skills/academy-rfm-library/SKILL.md`
 - `accesslint-diff` → `library/github-skills/accesslint-diff/SKILL.md`
-- `airbnb-search-listing` → `library/github-skills/airbnb-search-listing/SKILL.md` [incomplete: excluded from default routing]
+- `airbnb-search-listing` → `library/github-skills/airbnb-search-listing/SKILL.md`
 - `analytics` → `library/github-skills/analytics/SKILL.md`
 - `analytics-product` → `library/github-skills/analytics-product/SKILL.md`
 - `analytics-tracking` → `library/github-skills/analytics-tracking/SKILL.md`
@@ -30,7 +30,7 @@ Skills: 297
 - `break-even-analyzer` → `psk/data/skills/break-even-analyzer/SKILL.md`
 - `brendangregg-use-tsa` → `library/github-skills/brendangregg-use-tsa/SKILL.md`
 - `budget-vs-actual-fa` → `psk/data/skills/budget-vs-actual-fa/SKILL.md`
-- `bulk-rnaseq` → `library/github-skills/bulk-rnaseq/SKILL.md` [incomplete: excluded from default routing]
+- `bulk-rnaseq` → `library/github-skills/bulk-rnaseq/SKILL.md`
 - `cafe-dashboard-assistant` → `psk/data/skills/cafe-dashboard-assistant/SKILL.md`
 - `cafe-formula-planner` → `psk/data/skills/cafe-formula-planner/SKILL.md`
 - `cafe-invoice-library` → `psk/data/skills/cafe-invoice-library/SKILL.md`
@@ -61,9 +61,9 @@ Skills: 297
 - `content-marketer` → `library/github-skills/content-marketer/SKILL.md`
 - `cosmetics-inventory-monitor` → `psk/data/skills/cosmetics-inventory-monitor/SKILL.md`
 - `cpo-advisor` → `library/github-skills/cpo-advisor/SKILL.md`
-- `create-canvas-extension` → `library/github-skills/create-canvas-extension/SKILL.md` [incomplete: excluded from default routing]
+- `create-canvas-extension` → `library/github-skills/create-canvas-extension/SKILL.md`
 - `crm-export-cleaner` → `psk/data/skills/crm-export-cleaner/SKILL.md`
-- `csv-manual-export` → `library/github-skills/csv-manual-export/SKILL.md` [incomplete: excluded from default routing]
+- `csv-manual-export` → `library/github-skills/csv-manual-export/SKILL.md`
 - `csv-xlsx-converter-cli` → `psk/data/skills/csv-xlsx-converter-cli/SKILL.md`
 - `cto-advisor` → `library/github-skills/cto-advisor/SKILL.md`
 - `daily-news-report` → `library/github-skills/daily-news-report/SKILL.md`
@@ -86,13 +86,13 @@ Skills: 297
 - `dental-roster-analyzer` → `psk/data/skills/dental-roster-analyzer/SKILL.md`
 - `detect-ai-text` → `library/github-skills/detect-ai-text/SKILL.md`
 - `diagnosing-bugs` → `library/github-skills/diagnosing-bugs/SKILL.md`
-- `douyin-video-search` → `library/github-skills/douyin-video-search/SKILL.md` [incomplete: excluded from default routing]
+- `douyin-video-search` → `library/github-skills/douyin-video-search/SKILL.md`
 - `ecolodge-kpi-workflow` → `psk/data/skills/ecolodge-kpi-workflow/SKILL.md`
 - `ecolodge-rfm-assistant` → `psk/data/skills/ecolodge-rfm-assistant/SKILL.md`
 - `embedded-iot-mentor` → `library/github-skills/embedded-iot-mentor/SKILL.md`
 - `energy-procurement` → `library/github-skills/energy-procurement/SKILL.md`
-- `etsy-keyword-search` → `library/github-skills/etsy-keyword-search/SKILL.md` [incomplete: excluded from default routing]
-- `etsy-product-detail` → `library/github-skills/etsy-product-detail/SKILL.md` [incomplete: excluded from default routing]
+- `etsy-keyword-search` → `library/github-skills/etsy-keyword-search/SKILL.md`
+- `etsy-product-detail` → `library/github-skills/etsy-product-detail/SKILL.md`
 - `event-invoice-reporter` → `psk/data/skills/event-invoice-reporter/SKILL.md`
 - `event-rfm-generator` → `psk/data/skills/event-rfm-generator/SKILL.md`
 - `evm-token-decimals` → `library/github-skills/evm-token-decimals/SKILL.md`
@@ -131,8 +131,8 @@ Skills: 297
 - `geo-report` → `library/github-skills/geo-report/SKILL.md`
 - `geo-schema` → `library/github-skills/geo-schema/SKILL.md`
 - `goal-seek-scenario-kit` → `psk/data/skills/goal-seek-scenario-kit/SKILL.md`
-- `goofish-item-detail` → `library/github-skills/goofish-item-detail/SKILL.md` [incomplete: excluded from default routing]
-- `goofish-search-list` → `library/github-skills/goofish-search-list/SKILL.md` [incomplete: excluded from default routing]
+- `goofish-item-detail` → `library/github-skills/goofish-item-detail/SKILL.md`
+- `goofish-search-list` → `library/github-skills/goofish-search-list/SKILL.md`
 - `gradebook-template` → `psk/data/skills/gradebook-template/SKILL.md`
 - `grafana-dashboards` → `library/github-skills/grafana-dashboards/SKILL.md`
 - `grants` → `library/github-skills/grants/SKILL.md`
@@ -150,7 +150,7 @@ Skills: 297
 - `incident-postmortem` → `library/github-skills/incident-postmortem/SKILL.md`
 - `infographics` → `library/github-skills/infographics/SKILL.md`
 - `ingest-youtube` → `library/github-skills/ingest-youtube/SKILL.md`
-- `integrity-forensics` → `library/github-skills/integrity-forensics/SKILL.md` [incomplete: excluded from default routing]
+- `integrity-forensics` → `library/github-skills/integrity-forensics/SKILL.md`
 - `inventory-tracker-xlsx` → `psk/data/skills/inventory-tracker-xlsx/SKILL.md`
 - `invoice-generator-xlsx-fa` → `psk/data/skills/invoice-generator-xlsx-fa/SKILL.md`
 - `ios-developer` → `library/github-skills/ios-developer/SKILL.md`
@@ -167,7 +167,7 @@ Skills: 297
 - `kpi-definer-workshop` → `psk/data/skills/kpi-definer-workshop/SKILL.md`
 - `kpi-tracker` → `library/github-skills/kpi-tracker/SKILL.md`
 - `lemmaly` → `library/github-skills/lemmaly/SKILL.md`
-- `longbridge-fundamentals` → `library/github-skills/longbridge-fundamentals/SKILL.md` [incomplete: excluded from default routing]
+- `longbridge-fundamentals` → `library/github-skills/longbridge-fundamentals/SKILL.md`
 - `macro-recorder-guide` → `psk/data/skills/macro-recorder-guide/SKILL.md`
 - `market-research` → `library/github-skills/market-research/SKILL.md`
 - `market-research-reports` → `library/github-skills/market-research-reports/SKILL.md`
@@ -258,13 +258,13 @@ Skills: 297
 - `survey-results-analyzer` → `psk/data/skills/survey-results-analyzer/SKILL.md`
 - `swiftui-ui-patterns` → `library/github-skills/swiftui-ui-patterns/SKILL.md`
 - `swiftui-view-refactor` → `library/github-skills/swiftui-view-refactor/SKILL.md`
-- `taobao-product-reviews` → `library/github-skills/taobao-product-reviews/SKILL.md` [incomplete: excluded from default routing]
+- `taobao-product-reviews` → `library/github-skills/taobao-product-reviews/SKILL.md`
 - `team-communications` → `library/github-skills/team-communications/SKILL.md`
 - `text-to-columns-tricks` → `psk/data/skills/text-to-columns-tricks/SKILL.md`
-- `threads-keyword-search` → `library/github-skills/threads-keyword-search/SKILL.md` [incomplete: excluded from default routing]
-- `threads-profile-search` → `library/github-skills/threads-profile-search/SKILL.md` [incomplete: excluded from default routing]
-- `threads-user-posts` → `library/github-skills/threads-user-posts/SKILL.md` [incomplete: excluded from default routing]
-- `tiktok-video-detail` → `library/github-skills/tiktok-video-detail/SKILL.md` [incomplete: excluded from default routing]
+- `threads-keyword-search` → `library/github-skills/threads-keyword-search/SKILL.md`
+- `threads-profile-search` → `library/github-skills/threads-profile-search/SKILL.md`
+- `threads-user-posts` → `library/github-skills/threads-user-posts/SKILL.md`
+- `tiktok-video-detail` → `library/github-skills/tiktok-video-detail/SKILL.md`
 - `tour-dashboard-reporter` → `psk/data/skills/tour-dashboard-reporter/SKILL.md`
 - `tour-inventory-autopilot` → `psk/data/skills/tour-inventory-autopilot/SKILL.md`
 - `tour-invoice-reporter` → `psk/data/skills/tour-invoice-reporter/SKILL.md`
@@ -280,7 +280,7 @@ Skills: 297
 - `vba-to-python-migrator` → `psk/data/skills/vba-to-python-migrator/SKILL.md`
 - `verify-citations` → `library/github-skills/verify-citations/SKILL.md`
 - `vpe-review` → `library/github-skills/vpe-review/SKILL.md`
-- `walmart-product-reviews` → `library/github-skills/walmart-product-reviews/SKILL.md` [incomplete: excluded from default routing]
+- `walmart-product-reviews` → `library/github-skills/walmart-product-reviews/SKILL.md`
 - `warehouse` → `library/github-skills/warehouse/SKILL.md`
 - `weather-data-lifecycle-management` → `library/github-skills/weather-data-lifecycle-management/SKILL.md`
 - `weather-data-reproducibility` → `library/github-skills/weather-data-reproducibility/SKILL.md`
@@ -292,9 +292,9 @@ Skills: 297
 - `wellally-tech` → `library/github-skills/wellally-tech/SKILL.md`
 - `wiki-lint` → `library/github-skills/wiki-lint/SKILL.md`
 - `wordpress-centric-high-seo-optimized-blogwriting-skill` → `library/github-skills/wordpress-centric-high-seo-optimized-blogwriting-skill/SKILL.md`
-- `xiaohongshu-note-detail` → `library/github-skills/xiaohongshu-note-detail/SKILL.md` [incomplete: excluded from default routing]
-- `xiaohongshu-search` → `library/github-skills/xiaohongshu-search/SKILL.md` [incomplete: excluded from default routing]
-- `xiaohongshu-user-profile` → `library/github-skills/xiaohongshu-user-profile/SKILL.md` [incomplete: excluded from default routing]
+- `xiaohongshu-note-detail` → `library/github-skills/xiaohongshu-note-detail/SKILL.md`
+- `xiaohongshu-search` → `library/github-skills/xiaohongshu-search/SKILL.md`
+- `xiaohongshu-user-profile` → `library/github-skills/xiaohongshu-user-profile/SKILL.md`
 - `xlookup-lookup-builder` → `psk/data/skills/xlookup-lookup-builder/SKILL.md`
 - `xlsx-form-designer` → `psk/data/skills/xlsx-form-designer/SKILL.md`
 - `yoga-dashboard-optimizer` → `psk/data/skills/yoga-dashboard-optimizer/SKILL.md`

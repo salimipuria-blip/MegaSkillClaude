@@ -2,4 +2,4 @@ Source: https://github.com/K-Dense-AI/scientific-agent-skills/tree/HEAD/skills/b
 Repository: K-Dense-AI/scientific-agent-skills
 License: MIT (see ../_licenses/K-Dense-AI__scientific-agent-skills__LICENSE.md)
 Companion files from the source folder are included (files over 1 MB and nested sub-skills excluded).
-INCOMPLETE: SKILL.md references files not present here (they live elsewhere in the upstream repo or do not exist upstream): scripts/run_enrichment.py
+Restored 2026-10-23: 1 companion file(s) restored.

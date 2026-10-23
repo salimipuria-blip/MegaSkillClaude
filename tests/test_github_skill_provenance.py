@@ -9,9 +9,11 @@ owner's approval, so both are settled by measurement plus a rule that a test can
 * the upstream frontmatter `name:` stays byte-identical to its origin, so exactly the 10 skills of
   `mattpocock/skills` diverge, and each `mp-` prefix is *necessary* because another indexed skill
   from a different repository already owns the unprefixed name;
-* all 29 source repositories have their license text in `_licenses/`; 45 of the 46 notices are
+* all 29 source repositories have their license text in `_licenses/`; 45 of their 46 notices are
   referenced by an imported skill's `SOURCE.md`, and the one leftover is named in the README with
-  the reason it stays.
+  the reason it stays;
+* the 26 further notices belong to the original repositories that supplied restored companion files
+  (2026-10-23); each is cited by a `SOURCE.md` and listed in the README.
 """
 from __future__ import annotations
 
@@ -126,10 +128,16 @@ class LicenseNoticeTests(unittest.TestCase):
                 for match in LICENSE_REFERENCE.findall(source.read_text(encoding='utf-8')):
                     cls.referenced.add(match)
 
+    def _companion_notices(self):
+        """Notices of repositories that are not indexed sources but supplied restored companion files."""
+        prefixes = tuple(entry['repo'].replace('/', '__') + '__' for entry in self.entries)
+        return sorted(notice for notice in self.notices if not notice.startswith(prefixes))
+
     def test_every_source_repository_has_its_license_text_here(self):
         repos = {entry['repo'] for entry in self.entries}
         self.assertEqual(len(repos), 29)
-        self.assertEqual(len(self.notices), 46)
+        self.assertEqual(len(self.notices), 72)
+        self.assertEqual(len(self.notices) - len(self._companion_notices()), 46)
         covered = set()
         for notice in self.notices:
             for repo in repos:
@@ -138,8 +146,18 @@ class LicenseNoticeTests(unittest.TestCase):
                     break
         self.assertEqual(covered, repos, 'a repository was imported without its license text')
 
+    def test_every_companion_source_notice_is_used_and_documented(self):
+        # 2026-10-23: 219 incomplete skills were repaired; files that the indexed repository no longer
+        # shipped came from the skill's own original repository, whose license travels with them.
+        companions = self._companion_notices()
+        self.assertEqual(len(companions), 26)
+        for notice in companions:
+            with self.subTest(notice=notice):
+                self.assertIn(notice, self.referenced, 'a companion-source notice no SOURCE.md cites')
+                self.assertIn(f'`{notice}`', self.readme, 'list every companion-source notice in the README')
+
     def test_every_license_reference_in_a_source_file_resolves(self):
-        self.assertEqual(len(self.referenced), 45)
+        self.assertEqual(len(self.referenced), 71)
         missing = sorted(self.referenced - set(self.notices))
         self.assertEqual(missing, [], 'SOURCE.md points at a license notice that is not in _licenses/')
 
@@ -173,7 +191,7 @@ class LicenseNoticeTests(unittest.TestCase):
         singles = sorted(repo for repo, count in per_repository.items() if count == 1)
         self.assertEqual(len(singles), 24)
         self.assertIn('the other 24 repositories | 1 each', self.readme)
-        self.assertEqual(sum(per_repository.values()), len(self.notices))
+        self.assertEqual(sum(per_repository.values()), len(self.notices) - len(self._companion_notices()))
 
     def test_the_portable_plugin_ships_the_same_notice_set(self):
         portable = sorted(path.name for path in PLUGIN_LICENSES.iterdir() if path.is_file())

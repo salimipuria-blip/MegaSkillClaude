@@ -1,6 +1,6 @@
 # GitHub Skills (3,011 indexed)
 
-The current canonical `INDEX.json` contains 3,011 MIT-licensed skills from 29 public GitHub repositories (unique `repo` values in `INDEX.json`; `_licenses/` keeps 46 license files from the wider collection); 284 entries are marked incomplete and excluded from default routing. The earlier 2,980 count below is the **2026-10-04 collection snapshot**, not the live repository total. Treat `INDEX.json` as the count source of truth; this page must be updated whenever the indexed corpus changes.
+The current canonical `INDEX.json` contains 3,011 MIT-licensed skills from 29 public GitHub repositories (unique `repo` values in `INDEX.json`; `_licenses/` keeps 46 license files from the wider collection); 65 entries are marked incomplete and excluded from default routing (284 before the 2026-10-23 repair). The earlier 2,980 count below is the **2026-10-04 collection snapshot**, not the live repository total. Treat `INDEX.json` as the count source of truth; this page must be updated whenever the indexed corpus changes.
 
 **Available through the Mega Skills Router.** `.claude/skills/mega-skills-router` indexes every skill here; Claude reads a skill only when the router matches it to a request. To make one skill always loaded instead, copy its folder into `.claude/skills/`.
 
@@ -80,7 +80,43 @@ deleting a tracked file is the owner's decision rather than a cleanup side effec
 (guarded by `tests/test_skill_router_sync.py`). `tests/test_github_skill_provenance.py` pins the
 unreferenced set to exactly this one file, so a second leftover notice cannot accumulate silently.
 
-## Incomplete skills (284)
+### Companion-source notices (26 files, added 2026-10-23)
+
+When the 284 incomplete skills were repaired, some promised files no longer existed in the indexed
+repository but did exist in the skill's *own original* repository (named by a URL in the skill
+itself). Those files were copied together with that repository's license, and the skill's
+`SOURCE.md` cites the notice by name. All are MIT, MIT-0 or Apache-2.0:
+
+- `AgriciDaniel__claude-seo__LICENSE`
+- `Suraj1235__open-dynamic-workflows__LICENSE`
+- `amElnagdy__review-skills__LICENSE`
+- `beatra-ai__ai-image-generator-skill__LICENSE`
+- `beatra-ai__ai-logo-maker-skill__LICENSE`
+- `beatra-ai__ai-media-generator-skill__LICENSE`
+- `beatra-ai__ai-music-generator-skill__LICENSE`
+- `beatra-ai__ai-podcast-voiceover-skill__LICENSE`
+- `beatra-ai__ai-poster-maker-skill__LICENSE`
+- `beatra-ai__ai-product-photography-skill__LICENSE`
+- `beatra-ai__ai-voice-cloning-skill__LICENSE`
+- `beatra-ai__ai-voiceover-generator-skill__LICENSE`
+- `beatra-ai__beatra-skills__LICENSE`
+- `beatra-ai__ecommerce-product-images-skill__LICENSE`
+- `beatra-ai__lyrics-to-song-skill__LICENSE`
+- `beatra-ai__multilingual-voiceover-skill__LICENSE`
+- `beatra-ai__photo-to-anime-skill__LICENSE`
+- `beatra-ai__talking-avatar-video-skill__LICENSE`
+- `beatra-ai__viral-video-remake-skill__LICENSE`
+- `hyhmrright__logic-lens__LICENSE`
+- `microsoft__skills__LICENSE`
+- `takeaseatventure__sql-sentinel__LICENSE`
+- `vercel-labs__agent-browser__LICENSE`
+- `yehudalevy-collab__polis-protocol__LICENSE`
+- `zhaoxuya520__reverse-skill__LICENSE`
+- `zxkane__aws-skills__LICENSE`
+
+## Incomplete skills (65)
+Repaired 2026-10-23: of the 284 skills that were flagged, 219 are complete again. Their `SKILL.md` was refreshed to the latest upstream version, missing companions were copied from the upstream repository (including shared folders such as `shared-references/`) or from the skill's original repository, and each `SOURCE.md` has a dated `Restored` line. The 65 that remain point at files that exist nowhere public: training scripts of a separate project, files the user supplies (photos, their own README), or files their authors never published. One (`polis-protocol`) is held back on purpose, because the missing `scripts/demo.sh` advertises a `curl | bash` installer from a different GitHub owner.
+
 These reference files that are not in their folder (usually shared scripts at the upstream repo root, or files missing upstream). They are retained for provenance but excluded from default Python and Hermes routing. Each is marked `"incomplete": true` in `INDEX.json` and has an `INCOMPLETE:` line in its `SOURCE.md`. The generator propagates this flag into both router indexes; `--include-incomplete` is an explicit Python-only opt-in for manual review, not a claim that missing files work. After verifying a repaired skill, update the canonical flag and run `python3 scripts/sync_skill_library.py`.
 
 The automated filter does not replace a human review: read a skill before activating it.
