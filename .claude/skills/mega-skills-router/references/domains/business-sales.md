@@ -15,12 +15,12 @@ Skills: 487
 - `affiliate-link-system` → `psk/data/skills/affiliate-link-system/SKILL.md`
 - `after-sale-care-sequence` → `psk/data/skills/after-sale-care-sequence/SKILL.md`
 - `after-sales-upsell-email` → `psk/data/skills/after-sales-upsell-email/SKILL.md`
-- `ai-multilingual-dubbing` → `library/github-skills/ai-multilingual-dubbing/SKILL.md` [incomplete: excluded from default routing]
-- `ai-podcast-voiceover` → `library/github-skills/ai-podcast-voiceover/SKILL.md` [incomplete: excluded from default routing]
+- `ai-multilingual-dubbing` → `library/github-skills/ai-multilingual-dubbing/SKILL.md`
+- `ai-podcast-voiceover` → `library/github-skills/ai-podcast-voiceover/SKILL.md`
 - `akaunting-ledger-kit` → `psk/data/skills/akaunting-ledger-kit/SKILL.md`
 - `ansoff-matrix` → `library/github-skills/ansoff-matrix/SKILL.md`
 - `apple-hig-expert` → `library/github-skills/apple-hig-expert/SKILL.md`
-- `babysit-pr` → `library/github-skills/babysit-pr/SKILL.md` [incomplete: excluded from default routing]
+- `babysit-pr` → `library/github-skills/babysit-pr/SKILL.md`
 - `baoyu-article-illustrator` → `library/github-skills/baoyu-article-illustrator/SKILL.md`
 - `baoyu-post-to-weibo` → `library/github-skills/baoyu-post-to-weibo/SKILL.md`
 - `battlecard-competitor-fa` → `psk/data/skills/battlecard-competitor-fa/SKILL.md`
@@ -270,7 +270,7 @@ Skills: 487
 - `linkedin-engagement` → `library/github-skills/linkedin-engagement/SKILL.md`
 - `loyalty-club-designer-fa` → `psk/data/skills/loyalty-club-designer-fa/SKILL.md`
 - `manim-video` → `library/github-skills/manim-video/SKILL.md`
-- `market-sizing-analysis` → `library/github-skills/market-sizing-analysis/SKILL.md` [incomplete: excluded from default routing]
+- `market-sizing-analysis` → `library/github-skills/market-sizing-analysis/SKILL.md`
 - `market-sizing-topdown` → `psk/data/skills/market-sizing-topdown/SKILL.md`
 - `marketing-campaign-planner` → `library/skills/marketing-campaign-planner/SKILL.md`
 - `marketing-context` → `library/github-skills/marketing-context/SKILL.md`
@@ -466,7 +466,7 @@ Skills: 487
 - `variant-pricing-kit` → `psk/data/skills/variant-pricing-kit/SKILL.md`
 - `vendor-management` → `library/github-skills/vendor-management/SKILL.md`
 - `verify-document` → `library/github-skills/verify-document/SKILL.md`
-- `voiceover-narration-studio` → `library/github-skills/voiceover-narration-studio/SKILL.md` [incomplete: excluded from default routing]
+- `voiceover-narration-studio` → `library/github-skills/voiceover-narration-studio/SKILL.md`
 - `warranty-doc-fa` → `psk/data/skills/warranty-doc-fa/SKILL.md`
 - `wedding-nps-generator` → `psk/data/skills/wedding-nps-generator/SKILL.md`
 - `wedding-objection-analyzer` → `psk/data/skills/wedding-objection-analyzer/SKILL.md`
@@ -488,4 +488,4 @@ Skills: 487
 - `yoga-referral-auditor` → `psk/data/skills/yoga-referral-auditor/SKILL.md`
 - `yoga-reviews-assistant` → `psk/data/skills/yoga-reviews-assistant/SKILL.md`
 - `yoga-reviews-reporter` → `psk/data/skills/yoga-reviews-reporter/SKILL.md`
-- `youtube-transcript` → `library/github-skills/youtube-transcript/SKILL.md` [incomplete: excluded from default routing]
+- `youtube-transcript` → `library/github-skills/youtube-transcript/SKILL.md`

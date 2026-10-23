@@ -1,7 +1,7 @@
 """Byte-level parity between the two maintained copies of the Mega Skills Router (backlog task 14).
 
 `scripts/sync_skill_library.py --check` already proves the *generated* half of the plugin is current
-(the index, 15 domain files, 6,029 instruction copies and 46 license notices — 4.8 s over 120 MB),
+(the index, 15 domain files, 6,029 instruction copies and 72 license notices — 4.8 s over 120 MB),
 and it runs as its own CI step. What nothing guarded until now is the *hand-maintained* half:
 `scripts/route.py` and `SKILL.md` exist twice and are edited by hand, and the older parity test in
 `tests/test_mega_skills_router.py` compares route.py only from `DEFAULT_MIN_SCORE` downwards — so the
@@ -154,7 +154,7 @@ class SkillLibraryParityTests(unittest.TestCase):
         portable = PLUGIN / "references/licenses"
         source_files = {path.relative_to(source) for path in sorted(source.rglob("*")) if path.is_file()}
         portable_files = {path.relative_to(portable) for path in sorted(portable.rglob("*")) if path.is_file()}
-        self.assertEqual(len(source_files), 46, "the measured notice count changed; update this guard")
+        self.assertEqual(len(source_files), 72, "the measured notice count changed; update this guard")
         self.assertEqual(source_files, portable_files)
         for relative in sorted(source_files):
             self.assertEqual((source / relative).read_bytes(), (portable / relative).read_bytes(),

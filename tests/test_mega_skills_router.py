@@ -72,15 +72,17 @@ class RouterRankingTest(unittest.TestCase):
             with self.subTest(copy=copy):
                 module = _load(directory)
                 path = directory / "references/triggers.json"
-                default = module.search_index(path, "configure-ecc")
-                self.assertNotIn("configure-ecc", [s["name"] for s in default])
-                reviewed = module.search_index(path, "configure-ecc", include_incomplete=True)
-                self.assertEqual(reviewed[0]["name"], "configure-ecc")
+                # configure-ecc served here until its missing script was restored (2026-10-23);
+                # tm7-threat-model still lacks assets/example-minimal.tm7 upstream.
+                default = module.search_index(path, "tm7-threat-model")
+                self.assertNotIn("tm7-threat-model", [s["name"] for s in default])
+                reviewed = module.search_index(path, "tm7-threat-model", include_incomplete=True)
+                self.assertEqual(reviewed[0]["name"], "tm7-threat-model")
 
     def test_both_indexes_mirror_the_canonical_incomplete_flags(self):
         github = json.loads((ROOT / "library/github-skills/INDEX.json").read_text())
         expected = {s["name"] for s in github if s.get("incomplete")}
-        self.assertEqual(len(expected), 284)
+        self.assertEqual(len(expected), 65)
         for directory in COPIES.values():
             index = json.loads((directory / "references/triggers.json").read_text())
             self.assertEqual({s["name"] for s in index["skills"] if s.get("incomplete")}, expected)

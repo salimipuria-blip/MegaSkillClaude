@@ -67,27 +67,27 @@ class RealLibraryAuditTests(unittest.TestCase):
         self.assertEqual({skill['name'] for skill in router['skills']
                           if skill.get('origin') == 'github' and skill.get('incomplete')}, flagged)
 
-    def test_the_three_skills_flagged_this_round_carry_the_whole_flag_triplet(self):
+    def test_the_three_skills_flagged_in_2026_10_22_are_repaired_end_to_end(self):
+        # Flagged by this audit on 2026-10-22; the owner chose to import their files on 2026-10-23.
+        # A repair is only real when every promised file exists and all four records agree.
         entries = {entry['name']: entry
                    for entry in json.loads((LIBRARY / 'INDEX.json').read_text(encoding='utf-8'))}
         router = {skill['name']: skill
                   for skill in json.loads(CANONICAL.read_text(encoding='utf-8'))['skills']}
-        for name, missing in NEWLY_FLAGGED.items():
+        for name, promised in NEWLY_FLAGGED.items():
             with self.subTest(skill=name):
-                self.assertTrue(entries[name].get('incomplete'), f'{name} lost its INDEX.json flag')
-                self.assertEqual(entries[name].get('missing_files'), missing)
-                for path in missing:
-                    self.assertFalse((LIBRARY / name / path).exists(),
-                                     f'{name}/{path} exists now, so the incomplete flag is stale')
+                self.assertFalse(entries[name].get('incomplete'), f'{name} is still flagged in INDEX.json')
+                self.assertNotIn('missing_files', entries[name])
+                for path in promised:
+                    self.assertTrue((LIBRARY / name / path).is_file(), f'{name}/{path} was not restored')
                 source = (LIBRARY / name / 'SOURCE.md').read_text(encoding='utf-8')
-                self.assertEqual(source.rstrip('\n').splitlines()[-1],
-                                 'INCOMPLETE: SKILL.md references files not present here (they live '
-                                 'elsewhere in the upstream repo or do not exist upstream): ' + ', '.join(missing))
-                self.assertTrue(router[name].get('incomplete'), f'{name} is not flagged in the router index')
+                self.assertNotIn('INCOMPLETE:', source)
+                self.assertIn('Restored 2026-10-23', source)
+                self.assertFalse(router[name].get('incomplete'), f'{name} is still flagged in the router index')
                 domain = (ROOT / f".claude/skills/mega-skills-router/references/domains/{router[name]['domain']}.md")
                 line = next(line for line in domain.read_text(encoding='utf-8').splitlines()
                             if f'`{name}`' in line)
-                self.assertIn('[incomplete: excluded from default routing]', line)
+                self.assertNotIn('[incomplete', line)
 
     def test_every_justification_is_still_true_and_still_needed(self):
         for (name, target), (line, kind, reason) in sorted(audit_module.JUSTIFIED.items()):

@@ -6,7 +6,7 @@ Skills: 161
 - `academy-repurpose-library` → `references/skills/academy-repurpose-library/INSTRUCTIONS.md`
 - `academy-thread-analyzer` → `references/skills/academy-thread-analyzer/INSTRUCTIONS.md`
 - `agile-product-owner` → `references/skills/agile-product-owner/INSTRUCTIONS.md`
-- `ai-studio-image` → `references/skills/ai-studio-image/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `ai-studio-image` → `references/skills/ai-studio-image/INSTRUCTIONS.md`
 - `alternatives-pages` → `references/skills/alternatives-pages/INSTRUCTIONS.md`
 - `ama-question-bank` → `references/skills/ama-question-bank/INSTRUCTIONS.md`
 - `annual-report-narrative` → `references/skills/annual-report-narrative/INSTRUCTIONS.md`
@@ -107,7 +107,7 @@ Skills: 161
 - `mission-vision-writer` → `references/skills/mission-vision-writer/INSTRUCTIONS.md`
 - `nature-education-cards` → `references/skills/nature-education-cards/INSTRUCTIONS.md`
 - `nuts-casestudy-planner` → `references/skills/nuts-casestudy-planner/INSTRUCTIONS.md`
-- `on-call-handoff-patterns` → `references/skills/on-call-handoff-patterns/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `on-call-handoff-patterns` → `references/skills/on-call-handoff-patterns/INSTRUCTIONS.md`
 - `onboarding-cro` → `references/skills/onboarding-cro/INSTRUCTIONS.md`
 - `packing-checklist-writer` → `references/skills/packing-checklist-writer/INSTRUCTIONS.md`
 - `performance-review-writer` → `references/skills/performance-review-writer/INSTRUCTIONS.md`
@@ -138,7 +138,7 @@ Skills: 161
 - `social-captions-batcher` → `references/skills/social-captions-batcher/INSTRUCTIONS.md`
 - `speak-summary` → `references/skills/speak-summary/INSTRUCTIONS.md`
 - `speaker-one-pager` → `references/skills/speaker-one-pager/INSTRUCTIONS.md`
-- `specification-writing` → `references/skills/specification-writing/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `specification-writing` → `references/skills/specification-writing/INSTRUCTIONS.md`
 - `story-long-analyze` → `references/skills/story-long-analyze/INSTRUCTIONS.md`
 - `story-short-analyze` → `references/skills/story-short-analyze/INSTRUCTIONS.md`
 - `storytelling-frameworks-kit` → `references/skills/storytelling-frameworks-kit/INSTRUCTIONS.md`

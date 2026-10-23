@@ -23,7 +23,13 @@
 - چهره‌ی ساختگی و متن انگلیسی روی عکس نگذار مگر کاربر بخواهد.
 
 ## ساخت موشن/ویدیو
-- مهارت‌ها در `.claude/skills/` نصب‌اند: `remotion-*` (۱۲ مهارت رسمی Remotion) و از OpenDesign `motion-design`، `video-hyperframes`، `gsap-core`، `gsap-timeline` (مجوزها در `.claude/skills/_licenses/`).
+- مهارت‌ها در `.claude/skills/` نصب‌اند (مجوزها در `.claude/skills/_licenses/`):
+  - `remotion-*`: ۱۲ مهارت رسمی Remotion
+  - از OpenDesign: `motion-design`، `video-hyperframes`، `gsap-core`، `gsap-timeline`
+  - از iart-ai: `short-form-video`، `caption-animation`، `kinetic-typography`، `logo-animation`، `beat-sync-editing`، `ad-creative-video`، `launch-video`، `after-effects` و ۹ مهارت دیگر
+  - از anymotion: `motion-graphics`، `motion-audio`، `saas-explainer-motion` و ۳ مهارت دیگر
+  - `pixel2motion` (لوگو به SVG و انیمیشن)
+  - `after-effects-mcp` (نیازمند After Effects روی کامپیوتر خودت)
 - روال: عکس‌های صحنه را طبق روال عکس بالا با Figma بساز (بدون متن). بعد یک HTML با تایم‌لاین قطعی بنویس (`window.seek(t)`) که متن فارسی را با Vazirmatn روی عکس‌ها بگذارد. با Playwright فریم‌به‌فریم بگیر و با `ffmpeg` (`libx264`، `yuv420p`) MP4 بساز. نمونهٔ کامل: `brands/viking-offroad/motion/tour-camp-10s/`.
 - Remotion (`npm i remotion @remotion/cli`) در sandbox فقط با `--browser-executable` روی `chrome-headless-shell` از `/opt/pw-browsers/chromium_headless_shell-*` رندر می‌گیرد. `chrome` معمولی خطای «Old Headless mode has been removed» می‌دهد.
 - قبل از تحویل، فریم‌های کلیدی را باز کن و بررسی کن. اشکال رایج در صفحهٔ RTL: هر چیزی که از کادر بیرون بزند (`inset` منفی، `translateX`) صفحه را افقی جابه‌جا می‌کند. همه‌چیز را داخل یک `#stage` با `position:fixed; overflow:hidden` بگذار.

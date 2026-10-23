@@ -291,7 +291,11 @@ def survey(target: Path, index_path: Path | None, limit: int = DEFAULT_LIMIT) ->
         for item in payload.get("skills", []):
             entries[str(item.get("source_path"))] = item
 
-    files = sorted(target.rglob("SKILL.md"))
+    # A SKILL.md inside another skill's folder is that skill's companion document (e.g.
+    # qdrant-search-quality/diagnosis/SKILL.md), not a skill of its own: the router never indexes it.
+    files = sorted(path for path in target.rglob("SKILL.md")
+                   if not any((parent / "SKILL.md").is_file()
+                              for parent in path.parent.parents if parent.is_relative_to(target)))
     rows = []
     for path in files:
         try:

@@ -226,11 +226,7 @@
   "license": "MIT",
   "score": 9.769,
   "description": "Run the conversational ECC setup wizard inside the current harness: inventory the install, collect scope (user/project/local) and hook mode (off/minimal/standard/strict) in Claude Code, use Codex's native plugin lifecycle, or install the project surface under ./.kimi-code, then preview, apply, and v",
-  "url": "https://github.com/affaan-m/ECC/tree/HEAD/skills/configure-ecc",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/lib/terminal-welcome.js"
-  ]
+  "url": "https://github.com/affaan-m/ECC/tree/HEAD/skills/configure-ecc"
  },
  {
   "name": "eval-harness",
@@ -239,11 +235,7 @@
   "license": "MIT",
   "score": 9.759,
   "description": "Eval-driven development (EDD) framework for AI coding sessions — define capability and regression evals before coding, grade with code-based, model-based, rule, or human graders, and track pass@k and pass^k reliability. Use when defining pass/fail criteria for agent tasks, measuring agent reliabilit",
-  "url": "https://github.com/affaan-m/ECC/tree/HEAD/skills/eval-harness",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/eval-harness.js"
-  ]
+  "url": "https://github.com/affaan-m/ECC/tree/HEAD/skills/eval-harness"
  },
  {
   "name": "config-gc",
@@ -412,11 +404,7 @@
   "license": "MIT",
   "score": 9.579,
   "description": "PreToolUse fact-forcing gate that denies the first Edit/Write/Bash (including MultiEdit) attempt until the agent presents concrete facts (importers, data schemas, verbatim user instruction), then allows retry; A/B-tested at +2.25 quality points. Use when enabling or configuring the GateGuard hook, e",
-  "url": "https://github.com/affaan-m/ECC/tree/HEAD/skills/gateguard",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/hooks/gateguard-fact-force.js"
-  ]
+  "url": "https://github.com/affaan-m/ECC/tree/HEAD/skills/gateguard"
  },
  {
   "name": "diagnosing-superpowers",
@@ -965,19 +953,7 @@
   "license": "MIT",
   "score": 9.22,
   "description": "Browser automation CLI for AI agents. Use when the user needs to interact with websites, including navigating pages, filling forms, clicking buttons, taking screenshots, extracting data, testing web apps, or automating any browser task. Triggers include requests to \"open a website\", \"fill out a form",
-  "url": "https://github.com/shanraisshan/claude-code-best-practice/tree/HEAD/.claude/skills/agent-browser",
-  "incomplete": true,
-  "missing_files": [
-   "references/authentication.md",
-   "references/commands.md",
-   "references/proxy-support.md",
-   "references/session-management.md",
-   "references/snapshot-refs.md",
-   "references/video-recording.md",
-   "templates/authenticated-session.sh",
-   "templates/capture-workflow.sh",
-   "templates/form-automation.sh"
-  ]
+  "url": "https://github.com/shanraisshan/claude-code-best-practice/tree/HEAD/.claude/skills/agent-browser"
  },
  {
   "name": "incremental-implementation",
@@ -1196,11 +1172,7 @@
   "license": "MIT",
   "score": 9.177,
   "description": "Prepares bulk RNA-seq FASTQ, Salmon, STAR or featureCounts output for gene-level differential expression. Covers nf-core/rnaseq and standalone quantification, biological replication, strandedness, reference provenance, validated count assembly and a PyDESeq2 handoff. Use for FASTQ-to-counts analysis",
-  "url": "https://github.com/K-Dense-AI/scientific-agent-skills/tree/HEAD/skills/bulk-rnaseq",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/run_enrichment.py"
-  ]
+  "url": "https://github.com/K-Dense-AI/scientific-agent-skills/tree/HEAD/skills/bulk-rnaseq"
  },
  {
   "name": "autoskill",
@@ -1789,11 +1761,7 @@
   "license": "MIT",
   "score": 9.102,
   "description": "Share durable, inspectable context and handoffs between Claude, Codex, Hermes, Cursor, OpenCode, and other agents through the local ECC Memory Vault. Use when an agent must save work state, transfer context, resume another agent's task, or search shared project knowledge.",
-  "url": "https://github.com/affaan-m/ECC/tree/HEAD/skills/unified-memory",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/ecc.js"
-  ]
+  "url": "https://github.com/affaan-m/ECC/tree/HEAD/skills/unified-memory"
  },
  {
   "name": "github-issues",
@@ -2035,8 +2003,7 @@
   "url": "https://github.com/github/awesome-copilot/tree/HEAD/skills/gdpr-compliant",
   "incomplete": true,
   "missing_files": [
-   "references/operations.md",
-   "references/security.md"
+   "references/operations.md"
   ]
  },
  {
@@ -2632,7 +2599,9 @@
   "url": "https://github.com/virgiliojr94/book-to-skill/tree/HEAD/.",
   "incomplete": true,
   "missing_files": [
-   "scripts/extract.py"
+   "cheatsheet.md",
+   "glossary.md",
+   "patterns.md"
   ]
  },
  {
@@ -2755,11 +2724,7 @@
   "license": "MIT",
   "score": 9.004,
   "description": "Patterns and architectures for autonomous Claude Code loops — from simple sequential pipelines to RFC-driven multi-agent DAG systems. Retained for compatibility only: when new autonomous loop guidance is needed, use continuous-agent-loop instead.",
-  "url": "https://github.com/affaan-m/ECC/tree/HEAD/skills/autonomous-loops",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/claw.js"
-  ]
+  "url": "https://github.com/affaan-m/ECC/tree/HEAD/skills/autonomous-loops"
  },
  {
   "name": "competitor-ad-intelligence",
@@ -4018,11 +3983,7 @@
   "license": "MIT",
   "score": 8.939,
   "description": "Atlassian Confluence expert for creating and managing spaces, knowledge bases, and documentation. Configures space permissions and hierarchies, creates page templates with macros, sets up documentation taxonomies, designs page layouts, and manages content governance. Use when users need to build or ",
-  "url": "https://github.com/alirezarezvani/claude-skills/tree/HEAD/.gemini/skills/confluence-expert",
-  "incomplete": true,
-  "missing_files": [
-   "templates/scripts/template_scaffolder.py"
-  ]
+  "url": "https://github.com/alirezarezvani/claude-skills/tree/HEAD/.gemini/skills/confluence-expert"
  },
  {
   "name": "commercial-forecaster",
@@ -5884,14 +5845,7 @@
   "license": "MIT",
   "score": 8.728,
   "description": "Draft a structured grant proposal from research ideas and literature. Supports KAKENHI (Japan), NSF (US), NSFC (China, including 面上/青年/优青/杰青/海外优青/重点), ERC (EU), DFG (Germany), SNSF (Switzerland), ARC (Australia), NWO (Netherlands), and generic formats. Use when user says \\\"write grant\\\", \\\"grant pro",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/grant-proposal",
-  "incomplete": true,
-  "missing_files": [
-   "references/integration-contract.md",
-   "references/output-language.md",
-   "references/output-manifest.md",
-   "references/output-versioning.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/grant-proposal"
  },
  {
   "name": "kill-argument",
@@ -5900,16 +5854,7 @@
   "license": "MIT",
   "score": 8.728,
   "description": "Two-thread adversarial review: a fresh reviewer constructs the strongest 200-word rejection memo, then a second fresh reviewer defends the paper point-by-point and surfaces still-unresolved critical issues. Use when user says \\\"kill argument\\\", \\\"adversarial review\\\", \\\"hostile review\\\", \\\"rebuttal ",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/kill-argument",
-  "incomplete": true,
-  "missing_files": [
-   "references/assurance-contract.md",
-   "references/external-cadence.md",
-   "references/fan-out-pattern.md",
-   "references/integration-contract.md",
-   "references/review-tracing.md",
-   "references/reviewer-routing.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/kill-argument"
  },
  {
   "name": "formula-derivation",
@@ -5938,12 +5883,7 @@
   "license": "MIT",
   "score": 8.728,
   "description": "Workflow 5: orchestrate a text-only resubmit of a polished paper to a different venue under hard constraints (no new experiments, no bib edits, no framework changes, never overwrite prior submissions). Use when user says \\\"resubmit pipeline\\\", \\\"重投流程\\\", \\\"port paper to <new venue>\\\", \\\"resubmit to <",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/resubmit-pipeline",
-  "incomplete": true,
-  "missing_files": [
-   "references/assurance-contract.md",
-   "references/review-tracing.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/resubmit-pipeline"
  },
  {
   "name": "paper-talk",
@@ -5952,13 +5892,7 @@
   "license": "MIT",
   "score": 8.728,
   "description": "End-to-end conference talk pipeline: paper → slide outline → Beamer + PPTX → per-page polish → assurance checks (claim / citation / anonymity) → final export and report. Default-good for academic conference talks (NeurIPS / ICML / ICLR / VALSE / 投稿 talks). Trigger phrases: \\\"做 talk\\\", \\\"做 PPT 全流程\\\",",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/paper-talk",
-  "incomplete": true,
-  "missing_files": [
-   "references/assurance-contract.md",
-   "references/effort-contract.md",
-   "references/experiment-integrity.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/paper-talk"
  },
  {
   "name": "idea-discovery-robot",
@@ -5967,13 +5901,7 @@
   "license": "MIT",
   "score": 8.728,
   "description": "Workflow 1 adaptation for robotics and embodied AI. Orchestrates robotics-aware literature survey, idea generation, novelty check, and critical review to go from a broad robotics direction to benchmark-grounded, simulation-first ideas. Use when user says \\\\\\\"robotics idea discovery\\\\\\\", \\\\\\\"\\u673a\\u",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/idea-discovery-robot",
-  "incomplete": true,
-  "missing_files": [
-   "references/output-language.md",
-   "references/output-manifest.md",
-   "references/output-versioning.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/idea-discovery-robot"
  },
  {
   "name": "proof-checker",
@@ -5982,14 +5910,7 @@
   "license": "MIT",
   "score": 8.728,
   "description": "Rigorous mathematical proof verification and fixing workflow. Reads a LaTeX proof, identifies gaps via fresh-agent Codex GPT-6-Astra ultra review, fixes each gap with full derivations, re-reviews, and generates an audit report. Base review is same-family provisional. Use when user says \"检查证明\", \"veri",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/proof-checker",
-  "incomplete": true,
-  "missing_files": [
-   "references/assurance-contract.md",
-   "references/fan-out-pattern.md",
-   "references/reviewer-independence.md",
-   "references/reviewer-routing.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/proof-checker"
  },
  {
   "name": "research-implement-feature",
@@ -6001,14 +5922,6 @@
   "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/research-implement-feature",
   "incomplete": true,
   "missing_files": [
-   "references/acceptance-gate.md",
-   "references/capture-antipatterns.md",
-   "references/effort-contract.md",
-   "references/injection-hygiene.md",
-   "references/output-language.md",
-   "references/review-scope-limits.md",
-   "references/reviewer-independence.md",
-   "references/reviewer-routing.md",
    "scripts/run.py"
   ]
  },
@@ -6019,15 +5932,7 @@
   "license": "MIT",
   "score": 8.728,
   "description": "Per-page Codex review + targeted python-pptx / Beamer fixes for academic talk slides. Use AFTER /paper-slides (or any externally generated PPTX/Beamer) when the deck looks 'mostly OK' but the user wants a final pass that aligns visual weight with a reference, bumps PPTX fonts to projector-readable s",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/slides-polish",
-  "incomplete": true,
-  "missing_files": [
-   "references/effort-contract.md",
-   "references/experiment-integrity.md",
-   "references/review-tracing.md",
-   "references/reviewer-independence.md",
-   "references/reviewer-routing.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/slides-polish"
  },
  {
   "name": "citation-audit",
@@ -6036,15 +5941,7 @@
   "license": "MIT",
   "score": 8.728,
   "description": "Zero-context verification that every bibliographic entry in the paper is real, correctly attributed, and used in a context the cited paper actually supports — catching hallucinated authors, wrong years, fabricated venues, version mismatches, and wrong-context citations. Use when user says \\\"审查引用\\\", ",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/citation-audit",
-  "incomplete": true,
-  "missing_files": [
-   "references/assurance-contract.md",
-   "references/citation-discipline.md",
-   "references/integration-contract.md",
-   "references/review-tracing.md",
-   "references/reviewer-independence.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/citation-audit"
  },
  {
   "name": "research-refine",
@@ -6053,14 +5950,7 @@
   "license": "MIT",
   "score": 8.728,
   "description": "Turn a vague research direction into a problem-anchored, elegant, frontier-aware, implementation-oriented method plan via iterative GPT-6-Astra review. Use when the user says \\\"refine my approach\\\", \\\"\\u5e2e\\u6211\\u7ec6\\u5316\\u65b9\\u6848\\\", \\\"decompose this problem\\\", \\\"\\u6253\\u78e8idea\\\", \\\"refine ",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/research-refine",
-  "incomplete": true,
-  "missing_files": [
-   "references/output-language.md",
-   "references/output-manifest.md",
-   "references/output-versioning.md",
-   "references/taste-calibration.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/research-refine"
  },
  {
   "name": "comm-lit-review",
@@ -6079,12 +5969,7 @@
   "license": "MIT",
   "score": 8.728,
   "description": "Run the Anti-Autoresearch integrity-forensics sweep (span-anchored evidence ledger → GPT auditors propose findings → a rules-only reporter that lists every proposal with what the auditor said about it) against a paper via a SHA-pinned thin launcher — then convert the verdict into a typed policy gate",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/integrity-forensics",
-  "incomplete": true,
-  "missing_files": [
-   "references/external-cadence.md",
-   "references/integration-contract.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/integrity-forensics"
  },
  {
   "name": "paper-writing",
@@ -6093,13 +5978,7 @@
   "license": "MIT",
   "score": 8.728,
   "description": "Workflow 3: Full paper writing pipeline. Orchestrates paper-plan \\u2192 paper-figure \\u2192 paper-write \\u2192 paper-compile \\u2192 auto-paper-improvement-loop to go from a narrative report to a polished, submission-ready PDF. Use when user says \\\\\\\"\\u5199\\u8bba\\u6587\\u5168\\u6d41\\u7a0b\\\\\\\", \\\\\\\"writ",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex-gemini-review/paper-writing",
-  "incomplete": true,
-  "missing_files": [
-   "references/output-language.md",
-   "references/output-manifest.md",
-   "references/output-versioning.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex-gemini-review/paper-writing"
  },
  {
   "name": "paper-poster-html",
@@ -6108,12 +5987,7 @@
   "license": "MIT",
   "score": 8.728,
   "description": "DEFAULT poster pipeline — build an academic conference poster (ICML/NeurIPS/ICLR/CVPR/...) as a single HTML/CSS file with measurement-driven hard gates, real paper figures, a two-hue design-token system, and print-ready PDF via headless Chromium. Use when the user says \\\"做海报\\\", \\\"poster\\\", \\\"confere",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/paper-poster-html",
-  "incomplete": true,
-  "missing_files": [
-   "references/review-tracing.md",
-   "references/taste-calibration.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/paper-poster-html"
  },
  {
   "name": "code-simplification",
@@ -6202,12 +6076,7 @@
   "license": "MIT",
   "score": 8.713,
   "description": "Multi-agent orchestration using dmux (tmux pane manager for AI agents). Patterns for parallel agent workflows across Claude Code, Codex, OpenCode, and other harnesses. Use when running multiple agent sessions in parallel or coordinating multi-agent development workflows.",
-  "url": "https://github.com/affaan-m/ECC/tree/HEAD/skills/dmux-workflows",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/lib/tmux-worktree-orchestrator.js",
-   "scripts/orchestrate-worktrees.js"
-  ]
+  "url": "https://github.com/affaan-m/ECC/tree/HEAD/skills/dmux-workflows"
  },
  {
   "name": "team-composition-analysis",
@@ -6316,13 +6185,7 @@
   "license": "MIT",
   "score": 8.698,
   "description": "Workflow 1: Full idea discovery pipeline. Orchestrates research-lit \\u2192 idea-creator \\u2192 novelty-check \\u2192 research-review to go from a broad research direction to validated, pilot-tested ideas. Use when user says \\\\\\\"\\u627eidea\\u5168\\u6d41\\u7a0b\\\\\\\", \\\\\\\"idea discovery pipeline\\\\\\\", \\\\\\\"\\u",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex-gemini-review/idea-discovery",
-  "incomplete": true,
-  "missing_files": [
-   "references/output-language.md",
-   "references/output-manifest.md",
-   "references/output-versioning.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex-gemini-review/idea-discovery"
  },
  {
   "name": "torchdrug",
@@ -6551,12 +6414,7 @@
   "license": "MIT",
   "score": 8.673,
   "description": "Generate deterministic publication-quality architecture, workflow, and pipeline diagrams from structured JSON (FigureSpec) into editable SVG. Use when user says \\\"架构图\\\", \\\"workflow 图\\\", \\\"pipeline 图\\\", \\\"确定性矢量图\\\", \\\"figure spec\\\", \\\"draw architecture\\\", or needs precise, editable, publication-ready ",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/figure-spec",
-  "incomplete": true,
-  "missing_files": [
-   "references/integration-contract.md",
-   "references/review-tracing.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/figure-spec"
  },
  {
   "name": "continuous-learning",
@@ -6745,13 +6603,7 @@
   "license": "MIT",
   "score": 8.641,
   "description": "Answer questions about ECC by reading the live repo surface — agents, skills, commands, hooks, rules, install profiles, and docs — instead of memory. Use when the user asks what ECC includes, how to install or reset it, which skill or command fits a task, or how project onboarding works.",
-  "url": "https://github.com/affaan-m/ECC/tree/HEAD/skills/ecc-guide",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/ci/catalog.js",
-   "scripts/install-apply.js",
-   "scripts/install-plan.js"
-  ]
+  "url": "https://github.com/affaan-m/ECC/tree/HEAD/skills/ecc-guide"
  },
  {
   "name": "experiment-audit",
@@ -6760,15 +6612,7 @@
   "license": "MIT",
   "score": 8.638,
   "description": "Audit experiment integrity before claiming results. Uses fresh-agent GPT-6-Astra review (same-family provisional in the base Codex mirror) to check for fake ground truth, score normalization fraud, phantom results, and insufficient scope. Use when user says \\\"审计实验\\\", \\\"check experiment integrity\\\", ",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/experiment-audit",
-  "incomplete": true,
-  "missing_files": [
-   "references/experiment-integrity.md",
-   "references/integration-contract.md",
-   "references/review-tracing.md",
-   "references/reviewer-independence.md",
-   "references/reviewer-routing.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/experiment-audit"
  },
  {
   "name": "high-end-visual-design",
@@ -6797,16 +6641,7 @@
   "license": "MIT",
   "score": 8.634,
   "description": "Fast in-memory DataFrame library for datasets that fit in RAM. Use when pandas is too slow but data still fits in memory. Lazy evaluation, parallel execution, Apache Arrow backend. Best for 1-100GB datasets, ETL pipelines, faster pandas replacement. For larger-than-RAM data use dask or vaex.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/polars",
-  "incomplete": true,
-  "missing_files": [
-   "references/best_practices.md",
-   "references/core_concepts.md",
-   "references/io_guide.md",
-   "references/operations.md",
-   "references/pandas_migration.md",
-   "references/transformations.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/polars"
  },
  {
   "name": "javascript-testing-patterns",
@@ -6915,13 +6750,7 @@
   "license": "MIT",
   "score": 8.623,
   "description": "Turn a refined research proposal or method idea into a detailed, claim-driven experiment roadmap. Use after `research-refine`, or when the user asks for a detailed experiment plan, ablation matrix, evaluation protocol, run order, compute budget, or paper-ready validation that supports the core probl",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/experiment-plan",
-  "incomplete": true,
-  "missing_files": [
-   "references/output-language.md",
-   "references/output-manifest.md",
-   "references/output-versioning.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/experiment-plan"
  },
  {
   "name": "clinical-reports",
@@ -8121,12 +7950,7 @@
   "license": "MIT",
   "score": 8.493,
   "description": "Render an ARIS Markdown / JSON artifact (IDEA_REPORT, AUTO_REVIEW, KILL_ARGUMENT, PAPER_PLAN, research-wiki state, etc.) into a single-file HTML view designed for human reading. Use when the user says \\\"渲染 HTML\\\", \\\"出一份 HTML 报告\\\", \\\"render html\\\", \\\"make this readable\\\", \\\"export to html\\\", or wants",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/render-html",
-  "incomplete": true,
-  "missing_files": [
-   "references/review-tracing.md",
-   "references/reviewer-routing.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/render-html"
  },
  {
   "name": "integrate-context-matic",
@@ -8265,16 +8089,7 @@
   "license": "MIT",
   "score": 8.478,
   "description": "Analyze ARIS usage logs and propose optimizations to SKILL.md files, reviewer prompts, and workflow defaults. Outer-loop harness optimization inspired by Meta-Harness (Lee et al., 2026). Use when user says \\\"优化技能\\\", \\\"meta optimize\\\", \\\"improve skills\\\", \\\"分析使用记录\\\", or wants to optimize ARIS's own h",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/meta-optimize",
-  "incomplete": true,
-  "missing_files": [
-   "references/capture-antipatterns.md",
-   "references/integration-contract.md",
-   "references/output-language.md",
-   "references/output-manifest.md",
-   "references/output-versioning.md",
-   "references/review-tracing.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/meta-optimize"
  },
  {
   "name": "labarchive-integration",
@@ -8403,11 +8218,7 @@
   "license": "MIT",
   "score": 8.468,
   "description": "Autonomous design space exploration loop for computer architecture and EDA. Runs a program, analyzes results, tunes parameters, and iterates until objective is met or timeout. Use when user says \\\\\\\"DSE\\\\\\\", \\\\\\\"design space exploration\\\\\\\", \\\\\\\"sweep parameters\\\\\\\", \\\\\\\"optimize\\\\\\\", \\\\\\\"find best ",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/dse-loop",
-  "incomplete": true,
-  "missing_files": [
-   "references/external-cadence.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/dse-loop"
  },
  {
   "name": "paper-claim-audit",
@@ -8416,14 +8227,7 @@
   "license": "MIT",
   "score": 8.468,
   "description": "Zero-context verification that every number, comparison, and scope claim in the paper matches raw result files. Uses a fresh Codex reviewer with no prior context; base output is same-family provisional. Use when user says \\\"审查论文数据\\\", \\\"check paper claims\\\", \\\"verify numbers\\\", \\\"论文数字核对\\\", or before ",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/paper-claim-audit",
-  "incomplete": true,
-  "missing_files": [
-   "references/assurance-contract.md",
-   "references/integration-contract.md",
-   "references/review-tracing.md",
-   "references/reviewer-independence.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/paper-claim-audit"
  },
  {
   "name": "astropy",
@@ -8492,12 +8296,7 @@
   "license": "MIT",
   "score": 8.464,
   "description": "Creates devcontainers with Claude Code, language-specific tooling (Python/Node/Rust/Go), and persistent volumes. Use when adding devcontainer support to a project, setting up isolated development environments, or configuring sandboxed Claude Code workspaces.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/devcontainer-setup",
-  "incomplete": true,
-  "missing_files": [
-   "references/dockerfile-best-practices.md",
-   "references/features-vs-dockerfile.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/devcontainer-setup"
  },
  {
   "name": "pytdc",
@@ -8710,14 +8509,7 @@
   "license": "MIT",
   "score": 8.439,
   "description": "AWS Bedrock AgentCore comprehensive expert for deploying and managing AI agents at scale. Use when working with any AgentCore service including Gateway, Runtime, Memory, Identity, Code Interpreter, Browser, Observability, Agent Registry, or Evaluations.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/aws-agentic-ai",
-  "incomplete": true,
-  "missing_files": [
-   "references/agentcore-oauth-integration.md",
-   "references/agentcore-runtime-core.md",
-   "references/agentcore-runtime-deploy.md",
-   "references/agentcore-runtime-protocols.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/aws-agentic-ai"
  },
  {
   "name": "benchmark-optimization-loop",
@@ -8736,11 +8528,7 @@
   "license": "MIT",
   "score": 8.437,
   "description": "Export a promoted fine-tuned model in the right deployment format — merged safetensors, LoRA-only, GGUF with imatrix, or FP8. Use after a checkpoint passes promotion, when choosing a quantization format for a target device, or when an exported model fails its smoke test.",
-  "url": "https://github.com/wshobson/agents/tree/HEAD/plugins/llm-finetuning/skills/quantized-export",
-  "incomplete": true,
-  "missing_files": [
-   "references/model-catalog.md"
-  ]
+  "url": "https://github.com/wshobson/agents/tree/HEAD/plugins/llm-finetuning/skills/quantized-export"
  },
  {
   "name": "meta-apply",
@@ -8749,14 +8537,7 @@
   "license": "MIT",
   "score": 8.436,
   "description": "Privileged applier that LANDS meta-optimize / corpus-audit patches the user approved — the ONLY skill permitted to mutate the skill corpus from a self-modification proposal, with cross-model jury and human approval at landing. Use when the user says \\\"meta apply\\\", \\\"/meta-apply\\\", \\\"land the staged",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/meta-apply",
-  "incomplete": true,
-  "missing_files": [
-   "references/integration-contract.md",
-   "references/review-scope-limits.md",
-   "references/review-tracing.md",
-   "references/reviewer-independence.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/meta-apply"
  },
  {
   "name": "api-onboarding",
@@ -8815,12 +8596,7 @@
   "license": "MIT",
   "score": 8.429,
   "description": "Diagnoses pipeline performance issues -- slow jobs, expensive queries, latency trends -- using Monte Carlo's cross-platform observability. Uses a tiered investigation approach: discover problems, bridge to affected tables, then drill into root causes.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/monte-carlo-performance-diagnosis",
-  "incomplete": true,
-  "missing_files": [
-   "references/investigation-tiers.md",
-   "references/query-analysis.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/monte-carlo-performance-diagnosis"
  },
  {
   "name": "semantic-scholar",
@@ -8829,12 +8605,7 @@
   "license": "MIT",
   "score": 8.428,
   "description": "Search published venue papers (IEEE, ACM, Springer, etc.) via Semantic Scholar API. Complements /arxiv (preprints) with citation counts, venue metadata, and TLDR. Use when user says \"search semantic scholar\", \"find IEEE papers\", \"find journal papers\", \"venue papers\", \"citation search\", or wants publ",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/semantic-scholar",
-  "incomplete": true,
-  "missing_files": [
-   "references/integration-contract.md",
-   "references/wiki-helper-resolution.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/semantic-scholar"
  },
  {
   "name": "tiledbvcf",
@@ -9386,13 +9157,7 @@
   "license": "MIT",
   "score": 8.374,
   "description": "Investigate and remediate data quality alerts using Monte Carlo MCP tools. Runs root cause analysis, assesses blast radius, discovers available tools (MCP/CLI/API), proposes and executes fixes, or escalates with full context when uncertain.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/monte-carlo-remediation",
-  "incomplete": true,
-  "missing_files": [
-   "references/patterns.md",
-   "references/safety.md",
-   "references/tool-discovery.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/monte-carlo-remediation"
  },
  {
   "name": "burp-suite-testing",
@@ -9421,11 +9186,7 @@
   "license": "MIT",
   "score": 8.373,
   "description": "Generate publication-quality AI illustrations for academic papers using Gemini image generation. Creates architecture diagrams, method illustrations with Claude-supervised iterative refinement loop. Use when user says \\\"生成图表\\\", \\\"画架构图\\\", \\\"AI绘图\\\", \\\"paper illustration\\\", \\\"generate diagram\\\", or nee",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/paper-illustration",
-  "incomplete": true,
-  "missing_files": [
-   "references/integration-contract.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/paper-illustration"
  },
  {
   "name": "pymoo",
@@ -9495,7 +9256,6 @@
   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/pubmed-database",
   "incomplete": true,
   "missing_files": [
-   "references/api_reference.md",
    "references/common_queries.md",
    "references/search_syntax.md"
   ]
@@ -9587,13 +9347,7 @@
   "license": "MIT",
   "score": 8.363,
   "description": "Workflow 4: Submission rebuttal pipeline. Parses external reviews, enforces coverage and grounding, drafts a safe text-only rebuttal under venue limits, and manages follow-up rounds. Use when user says \\\"rebuttal\\\", \\\"reply to reviewers\\\", \\\"ICML rebuttal\\\", \\\"OpenReview response\\\", or wants to answ",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/rebuttal",
-  "incomplete": true,
-  "missing_files": [
-   "references/integration-contract.md",
-   "references/review-tracing.md",
-   "references/reviewer-routing.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/rebuttal"
  },
  {
   "name": "result-to-claim",
@@ -9602,13 +9356,7 @@
   "license": "MIT",
   "score": 8.363,
   "description": "Use when experiments complete to judge what claims the results support, what they don't, and what evidence is still missing. A secondary Codex agent evaluates results against intended claims and routes to next action (pivot, supplement, or confirm). Use after experiments finish — before writing the ",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/result-to-claim",
-  "incomplete": true,
-  "missing_files": [
-   "references/evidence-precheck.md",
-   "references/experiment-integrity.md",
-   "references/review-tracing.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/result-to-claim"
  },
  {
   "name": "zarr-python",
@@ -9667,13 +9415,7 @@
   "license": "MIT",
   "score": 8.358,
   "description": "Persistent research knowledge base that accumulates papers, ideas, experiments, claims, and their relationships across the entire research lifecycle. Inspired by Karpathy's LLM Wiki pattern. Use when user says \\\"知识库\\\", \\\"research wiki\\\", \\\"add paper\\\", \\\"wiki query\\\", \\\"查知识库\\\", or wants to build/que",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/research-wiki",
-  "incomplete": true,
-  "missing_files": [
-   "references/capture-antipatterns.md",
-   "references/injection-hygiene.md",
-   "references/integration-contract.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/research-wiki"
  },
  {
   "name": "offensive-shellcode",
@@ -10056,11 +9798,7 @@
   "license": "MIT",
   "score": 8.338,
   "description": "Run GPU workloads on Modal — training, fine-tuning, inference, batch processing. Zero-config serverless: no SSH, no Docker, auto scale-to-zero. Use when user says \\\"modal run\\\", \\\"modal training\\\", \\\"modal inference\\\", \\\"deploy to modal\\\", \\\"need a GPU\\\", \\\"run on modal\\\", \\\"serverless GPU\\\", or nee",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/serverless-modal",
-  "incomplete": true,
-  "missing_files": [
-   "references/compute-env-contract.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/serverless-modal"
  },
  {
   "name": "crewai-multi-agent",
@@ -10129,12 +9867,7 @@
   "license": "MIT",
   "score": 8.333,
   "description": "SSH job queue for multi-seed/multi-config ML experiments with OOM-aware retry, stale-screen cleanup, and wave-transition race prevention. Use when user says \"batch experiments\", \"队列实验\", \"run grid\", \"multi-seed sweep\", \"auto-chain experiments\", or when /run-experiment is insufficient for 10+ jobs tha",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/experiment-queue",
-  "incomplete": true,
-  "missing_files": [
-   "references/compute-env-contract.md",
-   "references/external-cadence.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/experiment-queue"
  },
  {
   "name": "microservices-architect",
@@ -10306,12 +10039,7 @@
   "license": "MIT",
   "score": 8.311,
   "description": "Generates optimized prompts for AI tools. Activates only when the user explicitly asks to write, fix, improve, or adapt a prompt for a specific AI tool (LLM, Cursor, Midjourney, image AI, video AI, coding agents, etc.). Does not activate for general conversation, coding tasks, document writing, or o",
-  "url": "https://github.com/nidhinjs/prompt-master/tree/HEAD/.",
-  "incomplete": true,
-  "missing_files": [
-   "references/patterns.md",
-   "references/templates.md"
-  ]
+  "url": "https://github.com/nidhinjs/prompt-master/tree/HEAD/."
  },
  {
   "name": "linkedin-content",
@@ -10370,11 +10098,7 @@
   "license": "MIT",
   "score": 8.304,
   "description": "All pods run in namespace crs. Use when pods in the crs namespace are in CrashLoopBackOff, OOMKilled, or restarting, multiple services restart simultaneously (cascade failure), or redis is unresponsive or showing AOF warnings.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/debug-buttercup",
-  "incomplete": true,
-  "missing_files": [
-   "references/failure-patterns.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/debug-buttercup"
  },
  {
   "name": "monte-carlo-storage-cost-analysis",
@@ -10383,11 +10107,7 @@
   "license": "MIT",
   "score": 8.304,
   "description": "Analyze a warehouse for stale, unused, or redundant tables via the analyze_storage_costs MCP tool. Classifies waste patterns and table categories, computes safety tiers, and handles category drill-downs and lineage follow-ups.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/monte-carlo-storage-cost-analysis",
-  "incomplete": true,
-  "missing_files": [
-   "references/output-structure.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/monte-carlo-storage-cost-analysis"
  },
  {
   "name": "code-review-excellence",
@@ -10533,11 +10253,7 @@
   "license": "MIT",
   "score": 8.293,
   "description": "Align a fine-tuned model with preference data using DPO, ORPO, KTO, or SimPO. Use when preference pairs or thumbs-up/down feedback exist, when choosing between preference-optimization methods, or when a DPO run needs hyperparameters or debugging.",
-  "url": "https://github.com/wshobson/agents/tree/HEAD/plugins/llm-finetuning/skills/preference-optimization",
-  "incomplete": true,
-  "missing_files": [
-   "references/unsloth-trl-mapping.md"
-  ]
+  "url": "https://github.com/wshobson/agents/tree/HEAD/plugins/llm-finetuning/skills/preference-optimization"
  },
  {
   "name": "pysam",
@@ -10576,12 +10292,7 @@
   "license": "MIT",
   "score": 8.289,
   "description": "AWS cost optimization, monitoring, and operational excellence expert. Use when analyzing AWS bills, estimating costs, setting up CloudWatch alarms, querying logs, auditing CloudTrail activity, or assessing security posture.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/aws-cost-operations",
-  "incomplete": true,
-  "missing_files": [
-   "references/cloudwatch-alarms.md",
-   "references/operations-patterns.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/aws-cost-operations"
  },
  {
   "name": "cohesivity",
@@ -10640,11 +10351,7 @@
   "license": "MIT",
   "score": 8.285,
   "description": "Trustpilot customer reviews scraper for any company listed on trustpilot.com — given a company domain (e.g. shopify.com, apple.com, shopwagandtail.com) plus optional filters (page number, single star rating 1-5, single language ISO code, verified-only flag, has-company-reply flag, date period last30",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/trustpilot-reviews",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/trustpilot-reviews"
  },
  {
   "name": "facebook-page-posts",
@@ -10653,11 +10360,7 @@
   "license": "MIT",
   "score": 8.285,
   "description": "Scrapes posts from any public Facebook Page timeline, returning structured data including post text, author info, engagement metrics (likes/comments/shares), reaction breakdowns (like/love/haha/wow/sad/angry/care), hashtags and external links, and media type. Use when user wants to scrape Facebook p",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/facebook-page-posts",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/facebook-page-posts"
  },
  {
   "name": "facebook-groups-scrape-posts",
@@ -10666,11 +10369,7 @@
   "license": "MIT",
   "score": 8.285,
   "description": "Scrapes posts from a Facebook group given a group URL, sort order, and desired count — returns structured post metadata including post_id, permalink, author, timestamp, body text, images/videos, reaction counts, reaction type breakdown, comment count, and share count. Use when: user wants to scrape/",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/facebook-groups-scrape-posts",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/facebook-groups-scrape-posts"
  },
  {
   "name": "xiaohongshu-search",
@@ -10679,11 +10378,7 @@
   "license": "MIT",
   "score": 8.285,
   "description": "Search Xiaohongshu (RedNote / xhs) notes by keyword and return a paginated list with title, author, engagement stats (likes, collects, comments), cover image URL, and xsecToken for detail lookup. Use when user mentions find notes on xiaohongshu, search rednote, search xhs, scrape xiaohongshu search,",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/xiaohongshu-search",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/xiaohongshu-search"
  },
  {
   "name": "x-tweet-by-handle",
@@ -10722,11 +10417,7 @@
   "license": "MIT",
   "score": 8.285,
   "description": "Trustpilot company profile lookup on trustpilot.com — input a company domain (e.g. apple.com, shopify.com, shopwagandtail.com) and extract company metadata: official display name, businessUnitId, TrustScore (1-5), star rating, total review count, last-12-months review count, primary category and all",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/trustpilot-company-info",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/trustpilot-company-info"
  },
  {
   "name": "threads-user-posts",
@@ -10735,11 +10426,7 @@
   "license": "MIT",
   "score": 8.285,
   "description": "Fetches public posts from a Threads user's profile page, extracting post text, engagement metrics, and media info from SSR-embedded JSON. Use when user asks to scrape Threads posts, get someone's Threads feed, pull posts from a Threads account, collect Threads content by username, download Threads u",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/threads-user-posts",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/threads-user-posts"
  },
  {
   "name": "xiaohongshu-auto-posting",
@@ -10775,11 +10462,7 @@
   "license": "MIT",
   "score": 8.285,
   "description": "Fetch Xiaohongshu (RedNote / xhs) user profile information and their published notes list by user ID, returning nickname, bio, follower/following counts, engagement totals, tags, and paginated notes with engagement stats. Use when user mentions user profile xiaohongshu, rednote creator profile, xhs ",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/xiaohongshu-user-profile",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/xiaohongshu-user-profile"
  },
  {
   "name": "facebook-ads-library-search",
@@ -10788,11 +10471,7 @@
   "license": "MIT",
   "score": 8.285,
   "description": "Searches Meta Ad Library (Facebook/Instagram/WhatsApp ads) by keyword or Facebook page ID and extracts ad details including creatives, copy, CTA, publisher platforms, spend, impressions, reach estimates, and page transparency info. Use when user mentions Meta Ad Library, Facebook ads scraper, Instag",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/facebook-ads-library-search",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/facebook-ads-library-search"
  },
  {
   "name": "xiaohongshu-note-detail",
@@ -10801,11 +10480,7 @@
   "license": "MIT",
   "score": 8.285,
   "description": "Fetch Xiaohongshu (RedNote / xhs) note detail and comments by note ID, returning title, description, author info, engagement stats, tags, and paginated comment list. Use when user mentions note detail xiaohongshu, get rednote post, xhs note content, xiaohongshu comment scrape, fetch post comments, s",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/xiaohongshu-note-detail",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/xiaohongshu-note-detail"
  },
  {
   "name": "facebook-page-profile-posts",
@@ -10814,11 +10489,7 @@
   "license": "MIT",
   "score": 8.285,
   "description": "Scrapes posts from any public Facebook Page or personal Profile timeline, returning structured data including post text, author info with profile picture, engagement metrics (likes/comments/shares), full reaction breakdown (Like/Love/Wow/Haha/Sad/Angry/Care as both array and flat counts), hashtags a",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/facebook-page-profile-posts",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/facebook-page-profile-posts"
  },
  {
   "name": "x-tweet-by-conversation",
@@ -10841,8 +10512,7 @@
   "incomplete": true,
   "missing_files": [
    "references/quality-checklist.md",
-   "references/reply-composition.md",
-   "scripts/xxx.py"
+   "references/reply-composition.md"
   ]
  },
  {
@@ -10852,11 +10522,7 @@
   "license": "MIT",
   "score": 8.285,
   "description": "Search Xiaohongshu (XHS / RedNote) notes by keyword with full field extraction including body text, topics/tags, image list URLs, video stream URL, publish timestamp, and all engagement stats (likes, collects, comments, shares). Supports all page filter options: sort order (general, latest, most lik",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/xiaohongshu-search-full",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/xiaohongshu-search-full"
  },
  {
   "name": "x-tweet-search",
@@ -10865,11 +10531,7 @@
   "license": "MIT",
   "score": 8.285,
   "description": "Scrapes tweets from X (Twitter) by search query, user handle, or direct URL — returns full tweet data including text, author info, engagement metrics, media, and hashtags. Use when user mentions X, Twitter, tweet scraping, scrape tweets, get tweets, fetch tweets, twitter data, x.com data, tweet coll",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/x-tweet-search",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/x-tweet-search"
  },
  {
   "name": "google-search-serp",
@@ -10878,11 +10540,7 @@
   "license": "MIT",
   "score": 8.285,
   "description": "Extracts Google Search results page (SERP) data including organic results, paid ads, related searches, People Also Ask questions, AI Overview text, and total result count from google.com. Use when user mentions Google search results, SERP scraping, google search data, search engine results page, org",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/search-research/google-search-serp",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/search-research/google-search-serp"
  },
  {
   "name": "webcrawler-deep-crawl",
@@ -10891,11 +10549,7 @@
   "license": "MIT",
   "score": 8.285,
   "description": "Deep-crawl any website from start URLs, return per-page LLM-ready text/markdown/HTML plus metadata (title, description, author, language, canonical URL, OG) and in-scope outbound links. Use when user mentions deep crawl website, recursive crawl, crawl a whole site, scrape entire website, scrape docs",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/search-research/webcrawler-deep-crawl",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/search-research/webcrawler-deep-crawl"
  },
  {
   "name": "producthunt-launches",
@@ -10904,11 +10558,7 @@
   "license": "MIT",
   "score": 8.285,
   "description": "Scrape Product Hunt daily/weekly/monthly/yearly leaderboard launches with full product details, maker profiles, and website contact info. Use when user mentions Product Hunt, producthunt, PH scraper, product hunt launches, product hunt leaderboard, scrape product hunt, product hunt data, PH daily la",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/lead-generation/producthunt-launches",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/lead-generation/producthunt-launches"
  },
  {
   "name": "youtube-channel-business-email",
@@ -10917,11 +10567,7 @@
   "license": "MIT",
   "score": 8.285,
   "description": "YouTube channel business email and contact extractor: accepts a channel id (UCxxx), handle (@name), or URL; navigates the channel About view; extracts the business email from the description text plus full channel metadata (name, id, country, subscriber count, view count, video count, joined date, e",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/lead-generation/youtube-channel-business-email",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/lead-generation/youtube-channel-business-email"
  },
  {
   "name": "google-maps-contact-extract",
@@ -10930,11 +10576,7 @@
   "license": "MIT",
   "score": 8.285,
   "description": "Extracts business contact details from Google Maps search results and place detail pages, then visits each business website to collect emails, phone numbers, and social media profiles (Facebook, Instagram, Twitter/X, LinkedIn, YouTube, TikTok, Pinterest, Discord). Use when user mentions Google Maps ",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/lead-generation/google-maps-contact-extract",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/lead-generation/google-maps-contact-extract"
  },
  {
   "name": "linkedin-jobs-search",
@@ -10943,11 +10585,7 @@
   "license": "MIT",
   "score": 8.285,
   "description": "Search LinkedIn job listings and extract full job details. Supports filtering by work type (remote/on-site/hybrid), contract type (full-time/part-time/contract/internship), experience level, date posted, and company. Returns job title, company, location, work type, contract type, experience level, p",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/lead-generation/linkedin-jobs-search",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/lead-generation/linkedin-jobs-search"
  },
  {
   "name": "indeed-job-search",
@@ -10956,11 +10594,7 @@
   "license": "MIT",
   "score": 8.285,
   "description": "Scrape job listings from Indeed.com by keyword, location, and country. Returns job title, company, salary, rating, description, benefits, and apply links. Use when user mentions Indeed, Indeed scraper, Indeed jobs, scrape Indeed, job search Indeed, Indeed job listings, extract Indeed data, Indeed jo",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/lead-generation/indeed-job-search",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/lead-generation/indeed-job-search"
  },
  {
   "name": "amazon-product-detail",
@@ -10969,11 +10603,7 @@
   "license": "MIT",
   "score": 8.285,
   "description": "Amazon product detail page scraper: extract full product data from any open Amazon product detail URL (any /dp/{asin} or /gp/product/{asin} page across all Amazon regional TLDs) — returns asin, url, title, brand, price, listPrice, stars, reviewsCount, starsBreakdown (5/4/3/2/1 star percentages), ans",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/amazon-product-detail",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/amazon-product-detail"
  },
  {
   "name": "amazon-bestseller-listing",
@@ -10982,11 +10612,7 @@
   "license": "MIT",
   "score": 8.285,
   "description": "Amazon Best Sellers listing scraper: extract product cards from any Amazon Best Sellers (zgbs) or /gp/bestsellers/ category page — returns rank (position on chart), asin, title, url, image, imageAlt, price, stars, reviewCount, ratingRaw per item, plus category metadata (categoryName, categoryFullNam",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/amazon-bestseller-listing",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/amazon-bestseller-listing"
  },
  {
   "name": "amazon-alexa-qa",
@@ -10995,11 +10621,7 @@
   "license": "MIT",
   "score": 8.285,
   "description": "Amazon Alexa for Shopping Q&A automation: submits questions to Amazon's Alexa/Rufus AI shopping assistant and collects response text; supports optional keyword search context (navigate to search results page before asking for category-specific answers). Use when user mentions Amazon Alexa, Rufus, Am",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/amazon-alexa-qa",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/amazon-alexa-qa"
  },
  {
   "name": "goofish-search-list",
@@ -11008,11 +10630,7 @@
   "license": "MIT",
   "score": 8.285,
   "description": "Scrapes second-hand item search results from Goofish (闲鱼/xianyu, goofish.com) — China's largest second-hand marketplace. Input: keyword, optional sort/filter params. Output: list of items with id, title, price, image, location, want-count per page (30 items/page). Use when user mentions goofish, 闲鱼,",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/goofish-search-list",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/goofish-search-list"
  },
  {
   "name": "amazon-listing-competitor-analysis-skill",
@@ -11031,11 +10649,7 @@
   "license": "MIT",
   "score": 8.285,
   "description": "Extracts full item detail from any open eBay item URL, returning JSON with url, itemNumber, title, subTitle, categories, price, priceWithCurrency, currency, wasPrice, available, availableText, sold, image, images, seller, sellerUrl, sellerFeedbackCount, sellerPositiveRating, itemLocation, brand, typ",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/ebay-item-detail",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/ebay-item-detail"
  },
  {
   "name": "ebay-search-listing",
@@ -11044,11 +10658,7 @@
   "license": "MIT",
   "score": 8.285,
   "description": "Extracts product listings from any eBay search or category page URL, returning per-item cards (itemNumber, url, title, subtitle, caption, price, priceWithCurrency, currency, wasPrice, bids, shipping, seller, sellerFeedbackCount, sellerPositiveRating, reviewsCount, starRating, image) plus pagination ",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/ebay-search-listing",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/ebay-search-listing"
  },
  {
   "name": "etsy-product-detail",
@@ -11057,11 +10667,7 @@
   "license": "MIT",
   "score": 8.285,
   "description": "Etsy product detail scraper: given an Etsy listing URL, returns full product detail including listingId, title, priceCurrent, priceOriginal, currency, images (all), description, shopName, shopUrl, rating, reviewCount, favorites, inCartCount, variations (with per-option price ranges), highlights, lis",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/etsy-product-detail",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/etsy-product-detail"
  },
  {
   "name": "amazon-search-listing",
@@ -11070,11 +10676,7 @@
   "license": "MIT",
   "score": 8.285,
   "description": "Amazon search and category listing scraper: extract product listings from any Amazon search results page, keyword search URL, or category browse page and return per-item cards (asin, title, url, image, price, listPrice, stars, reviewCount, badges, isAmazonChoice, isBestSeller, isSponsored, delivery,",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/amazon-search-listing",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/amazon-search-listing"
  },
  {
   "name": "etsy-keyword-search",
@@ -11083,11 +10685,7 @@
   "license": "MIT",
   "score": 8.285,
   "description": "Etsy keyword search scraper: given a search keyword and optional page number, returns paginated product listings with listingId, shopId, title, url, image, salePrice, originalPrice, currency, rating, reviewCount, shopName, isAd, freeShipping, badge from etsy.com search results. Use when user mention",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/etsy-keyword-search",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/etsy-keyword-search"
  },
  {
   "name": "etsy-category-listing",
@@ -11096,11 +10694,7 @@
   "license": "MIT",
   "score": 8.285,
   "description": "Etsy category page scraper: given an Etsy category URL (e.g. https://www.etsy.com/c/jewelry) and optional page number, returns paginated product listings with listingId, shopId, title, url, image, salePrice, originalPrice, currency, rating, reviewCount, shopName, isAd, freeShipping, badge from categ",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/etsy-category-listing",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/etsy-category-listing"
  },
  {
   "name": "ebay-sold-listings-search",
@@ -11109,11 +10703,7 @@
   "license": "MIT",
   "score": 8.285,
   "description": "eBay sold-listings scraper across 8 marketplaces (ebay.com/.co.uk/.de/.fr/.it/.es/.ca/.com.au). Takes keyword plus filters (category, price range, item condition, item location, sort order, completed toggle) and returns paginated real-sale records with itemId, url, title, condition, conditionId, end",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/ebay-sold-listings-search",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/ebay-sold-listings-search"
  },
  {
   "name": "1688-product-detail",
@@ -11122,11 +10712,7 @@
   "license": "MIT",
   "score": 8.285,
   "description": "Extracts comprehensive wholesale product data from 1688.com product detail pages: title, tiered pricing, SKU variants with dimensions/weight, product images, seller info, shop scores, buyer protection, cross-border flags, product attributes, coupon/promotion data, and review stats. Use when user men",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/1688-product-detail",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/1688-product-detail"
  },
  {
   "name": "walmart-product-detail",
@@ -11135,11 +10721,7 @@
   "license": "MIT",
   "score": 8.285,
   "description": "Walmart product detail page extractor: given a walmart.com product URL (walmart.com/ip/...), extract full product data including itemId, title, brand, model, UPC, price, wasPrice, currency, availability, category path, seller info, all images, shortDescription, longDescription, product highlights, f",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/walmart-product-detail",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/walmart-product-detail"
  },
  {
   "name": "youtube-transcript",
@@ -11148,11 +10730,7 @@
   "license": "MIT",
   "score": 8.285,
   "description": "YouTube transcript extraction and content reformatting: given a YouTube video URL, opens the video's transcript panel, extracts all timestamped segments, and transforms the raw transcript into summaries, chapter outlines, Twitter/X threads, blog posts, or notable quotes. Use when the user shares a Y",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/video-platforms/youtube-transcript",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/video-platforms/youtube-transcript"
  },
  {
   "name": "youtube-transcript-analysis-api-skill",
@@ -11424,11 +11002,7 @@
   "license": "MIT",
   "score": 8.264,
   "description": "Generate, refine, validate, and render diagrams from natural language, notes, code, schemas, or existing diagram sources: flowcharts, swimlanes, attack-path graphs, data-flow diagrams, architecture, and state machines.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/diagram-generator",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/render_diagram.py"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/diagram-generator"
  },
  {
   "name": "fine-tuning-expert",
@@ -11477,11 +11051,7 @@
   "license": "MIT",
   "score": 8.258,
   "description": "Generate publication-quality academic illustrations through a local Codex app-server bridge that uses Codex native image generation. This is a separate experimental alternative to `paper-illustration`, intended for Claude Code users who want a GPT-image-style renderer without modifying the original ",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/paper-illustration-image2",
-  "incomplete": true,
-  "missing_files": [
-   "references/integration-contract.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/paper-illustration-image2"
  },
  {
   "name": "chroma",
@@ -11590,14 +11160,7 @@
   "license": "MIT",
   "score": 8.243,
   "description": "Fill in the per-paper TODO sections of research-wiki/papers/<slug>.md pages that literature-ingest skills leave as bare scaffolds. Use when user says 'enrich wiki', 'fill paper TODOs', 'wiki body 補完', '把 paper 摘要寫進 wiki', 'research-wiki 自動填', or after a batch ingest that left papers/ as TODO scaffol",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/wiki-enrich",
-  "incomplete": true,
-  "missing_files": [
-   "references/integration-contract.md",
-   "references/output-language.md",
-   "references/output-manifest.md",
-   "references/wiki-helper-resolution.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/wiki-enrich"
  },
  {
   "name": "llamaindex",
@@ -11616,11 +11179,7 @@
   "license": "MIT",
   "score": 8.241,
   "description": "TikTok hashtag video scraper: input a hashtag name → output paginated video list with full metadata (author profile, engagement stats, music, video meta, hashtag list). Use when user mentions TikTok hashtag scraping, TikTok tag videos, scrape TikTok by hashtag, extract TikTok hashtag data, TikTok ch",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/video-platforms/tiktok-hashtag-videos",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/video-platforms/tiktok-hashtag-videos"
  },
  {
   "name": "ejentum-reasoning-harness",
@@ -11659,16 +11218,7 @@
   "license": "MIT",
   "score": 8.238,
   "description": "Workflow 1.5: Bridge between idea discovery and auto review. Reads EXPERIMENT_PLAN.md, implements experiment code, deploys to GPU, collects initial results. Use when user says \\\"实现实验\\\", \\\"implement experiments\\\", \\\"bridge\\\", \\\"从计划到跑实验\\\", \\\"deploy the plan\\\", or has an experiment plan ready to execut",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/experiment-bridge",
-  "incomplete": true,
-  "missing_files": [
-   "references/external-cadence.md",
-   "references/output-language.md",
-   "references/output-manifest.md",
-   "references/output-versioning.md",
-   "references/review-tracing.md",
-   "templates/RESEARCH_CONTRACT_TEMPLATE.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/experiment-bridge"
  },
  {
   "name": "qdrant-model-migration",
@@ -11847,11 +11397,7 @@
   "license": "MIT",
   "score": 8.223,
   "description": "Fine-tune vision-language models (VLMs) with supervised learning on image+text data. Use when adapting a VLM to a visual domain or task, configuring frozen-vision-tower LoRA, or debugging a VLM fine-tune that trains without learning.",
-  "url": "https://github.com/wshobson/agents/tree/HEAD/plugins/llm-finetuning/skills/vision-sft",
-  "incomplete": true,
-  "missing_files": [
-   "references/model-catalog.md"
-  ]
+  "url": "https://github.com/wshobson/agents/tree/HEAD/plugins/llm-finetuning/skills/vision-sft"
  },
  {
   "name": "etsy-shop-catalog",
@@ -11860,11 +11406,7 @@
   "license": "MIT",
   "score": 8.221,
   "description": "Etsy shop catalog scraper: given an Etsy shop URL (e.g. https://www.etsy.com/shop/{shop-name}) and optional page number, returns paginated product listings from that shop's own storefront with listingId, shopId, title, url, image, salePrice, originalPrice, currency, rating, reviewCount, shopName, is",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/etsy-shop-catalog",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/etsy-shop-catalog"
  },
  {
   "name": "linkedin-strategy",
@@ -11883,13 +11425,7 @@
   "license": "MIT",
   "score": 8.219,
   "description": "Create stunning, animation-rich HTML presentations from scratch or by converting PowerPoint files. Use when the user wants to build a presentation, convert a PPT/PPTX to web, or create slides for a talk/pitch.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/frontend-slides-frontend-slides",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/deploy.sh",
-   "scripts/export-pdf.sh",
-   "scripts/extract-pptx.py"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/frontend-slides-frontend-slides"
  },
  {
   "name": "auto-review-loop",
@@ -11898,15 +11434,7 @@
   "license": "MIT",
   "score": 8.218,
   "description": "Autonomous multi-round research review loop. Repeatedly reviews using Claude Code via claude-review MCP, implements fixes, and re-reviews until positive assessment or max rounds reached. Use when user says \\\"auto review loop\\\", \\\"review until it passes\\\", or wants autonomous iterative improvement.",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex-claude-review/auto-review-loop",
-  "incomplete": true,
-  "missing_files": [
-   "references/output-language.md",
-   "references/output-manifest.md",
-   "references/output-versioning.md",
-   "references/review-scope-limits.md",
-   "references/review-tracing.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex-claude-review/auto-review-loop"
  },
  {
   "name": "homelab-network-setup",
@@ -11925,20 +11453,7 @@
   "license": "MIT",
   "score": 8.217,
   "description": "Financial statements, business segments, dividends, valuation multiples (PE/PB/PS), industry comparison, operating data, corporate actions, company and executive profiles, cross-stock comparison, and valuation ranking via Longbridge.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/longbridge-fundamentals",
-  "incomplete": true,
-  "missing_files": [
-   "references/behavioral-finance.md",
-   "references/business-segments.md",
-   "references/company.md",
-   "references/compare.md",
-   "references/corp-action.md",
-   "references/corporate-events.md",
-   "references/corporate.md",
-   "references/dcf.md",
-   "references/dividend.md",
-   "references/executive.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/longbridge-fundamentals"
  },
  {
   "name": "karpathy-coder",
@@ -12007,20 +11522,7 @@
   "license": "MIT",
   "score": 8.208,
   "description": "Real-time quotes, K-line charts, order book, trade ticks, intraday capital flow, market sentiment temperature, trading session schedule, security lists, exchange rates, and IPO calendar for HK/US/A-share/SG via Longbridge. Also covers ADR premium and FX carry frameworks.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/longbridge-market-data",
-  "incomplete": true,
-  "missing_files": [
-   "references/adr-premium.md",
-   "references/ah-premium.md",
-   "references/capital.md",
-   "references/depth.md",
-   "references/exchange-rate.md",
-   "references/fx-carry.md",
-   "references/intraday.md",
-   "references/ipo.md",
-   "references/kline.md",
-   "references/market-status.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/longbridge-market-data"
  },
  {
   "name": "skill-developer",
@@ -12119,14 +11621,7 @@
   "license": "MIT",
   "score": 8.194,
   "description": "Analyze a Monte Carlo monitor and recommend config changes to reduce alert noise. Supports metric, custom SQL, validation, and table monitors. Fetches the report, identifies patterns, and suggests tuning.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/tune-monitor",
-  "incomplete": true,
-  "missing_files": [
-   "references/custom-sql-monitor.md",
-   "references/metric-monitor.md",
-   "references/table-monitor.md",
-   "references/validation-monitor.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/tune-monitor"
  },
  {
   "name": "wellally-tech",
@@ -12315,16 +11810,7 @@
   "license": "MIT",
   "score": 8.183,
   "description": "Full end-to-end research pipeline: from a broad research direction through idea discovery, experiments, and review all the way to a polished paper PDF. Use when user says \\\"全流程\\\", \\\"full pipeline\\\", \\\"从找idea到投稿\\\", \\\"end-to-end research\\\", or wants the complete autonomous research lifecycle.",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/research-pipeline",
-  "incomplete": true,
-  "missing_files": [
-   "references/external-cadence.md",
-   "references/output-language.md",
-   "references/output-manifest.md",
-   "references/output-versioning.md",
-   "references/resumable-runs.md",
-   "templates/RESEARCH_BRIEF_TEMPLATE.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/research-pipeline"
  },
  {
   "name": "monetization",
@@ -12993,11 +12479,7 @@
   "license": "MIT",
   "score": 8.147,
   "description": "Scrapes Instagram posts tagged at a specific location or place, returning media items with captions, like/comment counts, media URLs and user info. Use when user mentions Instagram location posts, posts from a place on Instagram, Instagram geotag scraping, posts tagged at location, Instagram place f",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/instagram-place-posts",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/instagram-place-posts"
  },
  {
   "name": "deepread",
@@ -13306,14 +12788,7 @@
   "license": "MIT",
   "score": 8.134,
   "description": "Comprehensive market sizing methodologies for calculating Total Addressable Market (TAM), Serviceable Available Market (SAM), and Serviceable Obtainable Market (SOM) for startup opportunities.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/market-sizing-analysis",
-  "incomplete": true,
-  "missing_files": [
-   "examples/marketplace-sizing.md",
-   "examples/value-theory-example.md",
-   "references/industry-templates.md",
-   "references/methodology-deep-dive.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/market-sizing-analysis"
  },
  {
   "name": "python-pro",
@@ -13532,11 +13007,7 @@
   "license": "MIT",
   "score": 8.127,
   "description": "Searches Douyin (douyin.com) for videos by keyword and returns structured video data including author info, stats, cover, description, hashtags, and download URL. Supports date range filtering and sorting by relevance, likes, or recency. Use when user mentions Douyin search, scrape Douyin videos, co",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/video-platforms/douyin-video-search",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/video-platforms/douyin-video-search"
  },
  {
   "name": "legacy-modernizer",
@@ -13746,17 +13217,7 @@
   "license": "MIT",
   "score": 8.119,
   "description": "Generate SEO-focused images such as OG cards, hero images, schema assets, product visuals, and infographics. Use when image generation is part of an SEO workflow or content publishing task.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/seo-image-gen",
-  "incomplete": true,
-  "missing_files": [
-   "references/cost-tracking.md",
-   "references/gemini-models.md",
-   "references/mcp-tools.md",
-   "references/post-processing.md",
-   "references/presets.md",
-   "references/prompt-engineering.md",
-   "references/seo-image-presets.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/seo-image-gen"
  },
  {
   "name": "mtls-configuration",
@@ -13815,11 +13276,7 @@
   "license": "MIT",
   "score": 8.116,
   "description": "Fetch customer reviews for a Taobao or Tmall product by itemId, returning reviewer name, date, purchased variant, review text, and photo URLs. Use when user asks to get product reviews from Taobao, scrape Taobao customer feedback, extract buyer reviews by item ID, collect Tmall ratings and comments,",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/taobao-product-reviews",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/taobao-product-reviews"
  },
  {
   "name": "baoyu-slide-deck",
@@ -14018,16 +13475,7 @@
   "license": "MIT",
   "score": 8.109,
   "description": "AWS serverless and event-driven architecture expert based on Well-Architected Framework. Use when building serverless APIs, Lambda functions, REST APIs, microservices, or async workflows.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/aws-serverless-eda",
-  "incomplete": true,
-  "missing_files": [
-   "references/deployment-best-practices.md",
-   "references/eda-patterns.md",
-   "references/observability-best-practices.md",
-   "references/performance-optimization.md",
-   "references/security-best-practices.md",
-   "references/serverless-patterns.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/aws-serverless-eda"
  },
  {
   "name": "leave-management",
@@ -14250,12 +13698,7 @@
   "license": "MIT",
   "score": 8.099,
   "description": "Triage Monte Carlo alerts interactively or build an automated workflow. Fetch, score, and troubleshoot alerts using MCP tools now, or design a reusable workflow that runs on a schedule.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/automated-triage",
-  "incomplete": true,
-  "missing_files": [
-   "references/triage-example.md",
-   "references/triage-stages.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/automated-triage"
  },
  {
   "name": "azure-eventhub-java",
@@ -14524,11 +13967,7 @@
   "license": "MIT",
   "score": 8.084,
   "description": "Microsoft 365 Agents SDK for Python. Build multichannel agents for Teams/M365/Copilot Studio with aiohttp hosting, AgentApplication routing, streaming responses, and MSAL-based auth.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/m365-agents-py",
-  "incomplete": true,
-  "missing_files": [
-   "references/acceptance-criteria.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/m365-agents-py"
  },
  {
   "name": "budget-cash-flow",
@@ -14607,11 +14046,7 @@
   "license": "MIT",
   "score": 8.079,
   "description": "Discovers Threads user accounts by keyword, extracting profile data including username, display name, verification status, biography, and follower count. Use when user asks to find Threads accounts, search Threads profiles, discover Threads users by keyword, look up Threads creators, find influencer",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/threads-profile-search",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/threads-profile-search"
  },
  {
   "name": "marketplace-rbac-audit",
@@ -14630,12 +14065,7 @@
   "license": "MIT",
   "score": 8.079,
   "description": "Turn a repository into a cited HTML slide deck and detect the day it drifts from the code. Citations record file, lines, and hash; a stdlib check reports CURRENT, MOVED, or CHANGED.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/slideops",
-  "incomplete": true,
-  "missing_files": [
-   "references/automation.md",
-   "references/verification.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/slideops"
  },
  {
   "name": "setup-matt-pocock-skills",
@@ -14844,14 +14274,7 @@
   "license": "MIT",
   "score": 8.069,
   "description": "Reverse engineer binaries with IDA Pro: decompilation, disassembly, data-flow tracking, cross-references, and IDA MCP automation for deep static analysis of PE/ELF/Mach-O targets.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/ida-reverse",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/install-autostart.ps1",
-   "scripts/open.ps1",
-   "scripts/start-gui.ps1",
-   "scripts/start.ps1"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/ida-reverse"
  },
  {
   "name": "shellcheck-configuration",
@@ -14954,11 +14377,7 @@
   "license": "MIT",
   "score": 8.068,
   "description": "Quick single-paper lookup via AlphaXiv LLM-optimized summaries with tiered source fallback. Use when user says \"explain this paper\", \"summarize paper\", pastes an arXiv/AlphaXiv URL, or provides a bare arXiv ID for quick understanding - not for broad literature search.",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/alphaxiv",
-  "incomplete": true,
-  "missing_files": [
-   "references/integration-contract.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/alphaxiv"
  },
  {
   "name": "openalex",
@@ -14967,11 +14386,7 @@
   "license": "MIT",
   "score": 8.068,
   "description": "Search academic papers via OpenAlex API for open citation data, institutional affiliations, and funding information. Use when user says \"openalex search\", \"search openalex\", \"open citation graph\", or wants comprehensive academic metadata beyond arXiv/Semantic Scholar.",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/openalex",
-  "incomplete": true,
-  "missing_files": [
-   "references/integration-contract.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/openalex"
  },
  {
   "name": "swift-expert",
@@ -14990,11 +14405,7 @@
   "license": "MIT",
   "score": 8.067,
   "description": "Walmart category page scraper: input a walmart.com browse or category URL with optional page number, extract paginated product listings with itemId, url, title, brand, image, price, wasPrice, rating, reviewCount, availability, seller info, fulfillmentBadge, and classType. Use when user mentions walm",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/walmart-category-listing",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/walmart-category-listing"
  },
  {
   "name": "ml-paper-writing",
@@ -15083,13 +14494,7 @@
   "license": "MIT",
   "score": 8.064,
   "description": "Install and use the official Beatra AI Video Studio package, pinned by digest, for paid text-to-video, image-to-video, and video edit or extend jobs on the hosted Beatra service.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/beatra-ai-video-studio",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/authorize.py",
-   "scripts/mcp_client.py",
-   "scripts/uninstall.py"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/beatra-ai-video-studio"
  },
  {
   "name": "linkedin-content-generator",
@@ -15168,11 +14573,7 @@
   "license": "MIT",
   "score": 8.062,
   "description": "Walmart keyword search scraper: input a search keyword and page number, navigate to walmart.com search results, extract paginated product listings with itemId, url, title, brand, image, price, wasPrice, rating, reviewCount, availability, seller info, fulfillmentBadge, classType, and shortDescription",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/walmart-keyword-search",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/walmart-keyword-search"
  },
  {
   "name": "azure-security-keyvault-secrets-java",
@@ -15524,11 +14925,7 @@
   "license": "MIT",
   "score": 8.044,
   "description": "Walmart product reviews scraper: given a walmart.com product item ID, navigate to the reviews page and extract paginated customer reviews including reviewId, rating, title, review text, author nickname, submission date, verified purchase status, helpful votes, variant selected (color/size), badges, ",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/walmart-product-reviews",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/walmart-product-reviews"
  },
  {
   "name": "image-annotations",
@@ -15632,11 +15029,7 @@
   "license": "MIT",
   "score": 8.041,
   "description": "TikTok user profile video scraper: input a TikTok username → output the user's profile info plus paginated video list with full metadata (engagement stats, music, video meta). Use when user mentions TikTok profile scraping, scrape TikTok user videos, get TikTok creator videos, extract TikTok profile",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/video-platforms/tiktok-profile-videos",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/video-platforms/tiktok-profile-videos"
  },
  {
   "name": "understand",
@@ -15795,11 +15188,7 @@
   "license": "MIT",
   "score": 8.037,
   "description": "Create or register a canvas extension in the awesome-copilot repository. Use when asked to scaffold a new canvas extension, create its plugin.json, add a reusable extension to one or more plugins, or migrate extension metadata. Extensions are reusable source under extensions/; shippable plugin manif",
-  "url": "https://github.com/github/awesome-copilot/tree/HEAD/.github/skills/create-canvas-extension",
-  "incomplete": true,
-  "missing_files": [
-   "assets/preview.png"
-  ]
+  "url": "https://github.com/github/awesome-copilot/tree/HEAD/.github/skills/create-canvas-extension"
  },
  {
   "name": "interaction-design",
@@ -15958,19 +15347,7 @@
   "license": "MIT",
   "score": 8.029,
   "description": "Find exploitable vulnerabilities in GitHub Actions workflows. Every finding MUST include a concrete exploitation scenario — if you can't build the attack, don't report it.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/gha-security-review",
-  "incomplete": true,
-  "missing_files": [
-   "references/ai-prompt-injection-via-ci.md",
-   "references/comment-triggered-commands.md",
-   "references/credential-escalation.md",
-   "references/expression-injection.md",
-   "references/permissions-and-secrets.md",
-   "references/pwn-request.md",
-   "references/real-world-attacks.md",
-   "references/runner-infrastructure.md",
-   "references/supply-chain.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/gha-security-review"
  },
  {
   "name": "linktree-link-hub",
@@ -16099,16 +15476,7 @@
   "license": "MIT",
   "score": 8.023,
   "description": "Generate a structured paper outline from review conclusions and experiment results. Use when user says \\\\\\\"\\u5199\\u5927\\u7eb2\\\\\\\", \\\\\\\"paper outline\\\\\\\", \\\\\\\"plan the paper\\\\\\\", \\\\\\\"\\u8bba\\u6587\\u89c4\\u5212\\\\\\\", or wants to create a paper plan before writing.",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/paper-plan",
-  "incomplete": true,
-  "missing_files": [
-   "references/assurance-contract.md",
-   "references/output-language.md",
-   "references/output-manifest.md",
-   "references/output-versioning.md",
-   "references/venue-checklists.md",
-   "references/writing-principles.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/paper-plan"
  },
  {
   "name": "ecommerce-listing",
@@ -16117,11 +15485,7 @@
   "license": "MIT",
   "score": 8.021,
   "description": "Extract product list from any e-commerce category page, search results page, or keyword search with filters. Returns paginated product arrays with URL, name, price, currency, image, rating, review count per item. Supports URL input, keyword search, and site-scoped search with filters: price range, b",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/ecommerce-listing",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/ecommerce-listing"
  },
  {
   "name": "antigravity-skill-orchestrator",
@@ -16140,11 +15504,7 @@
   "license": "MIT",
   "score": 8.021,
   "description": "Master on-call shift handoffs with context transfer, escalation procedures, and documentation. Use this skill when transitioning on-call responsibilities between engineers and ensuring the incoming responder has full situational awareness, when writing a shift summary that captures active incidents,",
-  "url": "https://github.com/wshobson/agents/tree/HEAD/plugins/incident-response/skills/on-call-handoff-patterns",
-  "incomplete": true,
-  "missing_files": [
-   "templates/SKILL.md"
-  ]
+  "url": "https://github.com/wshobson/agents/tree/HEAD/plugins/incident-response/skills/on-call-handoff-patterns"
  },
  {
   "name": "run-without-you",
@@ -16333,11 +15693,7 @@
   "license": "MIT",
   "score": 8.014,
   "description": "Manage GPU compute jobs on the Qizhi (启智) platform using qzcli — a kubectl-style CLI tool. Use when user says \"qzcli\", \"启智平台\", \"submit job\", \"stop job\", \"查计算组\", \"avail\", \"list jobs\", \"batch submit\", or needs to manage distributed training jobs on a Qizhi instance.",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/qzcli",
-  "incomplete": true,
-  "missing_files": [
-   "references/compute-env-contract.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/qzcli"
  },
  {
   "name": "orch-build-mvp",
@@ -16561,11 +15917,7 @@
   "license": "MIT",
   "score": 8.004,
   "description": "CSV Manual Export: a UTF-8 CSV template from a confirmed field list, empty by default, with no invented columns or values. Use for an import, staging or handoff file.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/csv-manual-export",
-  "incomplete": true,
-  "missing_files": [
-   "references/catalog.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/csv-manual-export"
  },
  {
   "name": "accounting-software-selection",
@@ -16584,11 +15936,7 @@
   "license": "MIT",
   "score": 8.003,
   "description": "Scrapes posts from an Instagram user's profile feed including captions, media URLs, like/comment counts, timestamps and location tags. Use when user mentions scraping Instagram posts, download Instagram feed, get posts from Instagram account, IG profile posts, Instagram user posts, pull posts from I",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/instagram-profile-posts",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/instagram-profile-posts"
  },
  {
   "name": "finance-billing-ops",
@@ -16697,11 +16045,7 @@
   "license": "MIT",
   "score": 7.998,
   "description": "Autonomously improve a generated paper via Claude review through claude-review MCP → implement fixes → recompile, for 2 rounds. Use when user says \\\"改论文\\\", \\\"improve paper\\\", \\\"论文润色循环\\\", \\\"auto improve\\\", or wants to iteratively polish a generated paper.",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex-claude-review/auto-paper-improvement-loop",
-  "incomplete": true,
-  "missing_files": [
-   "references/review-tracing.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex-claude-review/auto-paper-improvement-loop"
  },
  {
   "name": "pre-ship-gate",
@@ -16760,11 +16104,7 @@
   "license": "MIT",
   "score": 7.994,
   "description": "Microsoft 365 Agents SDK for .NET. Build multichannel agents for Teams/M365/Copilot Studio with ASP.NET Core hosting, AgentApplication routing, and MSAL-based auth.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/m365-agents-dotnet",
-  "incomplete": true,
-  "missing_files": [
-   "references/acceptance-criteria.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/m365-agents-dotnet"
  },
  {
   "name": "maximalism",
@@ -16793,11 +16133,7 @@
   "license": "MIT",
   "score": 7.994,
   "description": "Drive the radare2 CLI for binary reconnaissance, disassembly, analysis, function locating, export, and lightweight patching (r2/rabin2/rasm2/radiff2) without a GUI.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/radare2",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/recon.ps1"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/radare2"
  },
  {
   "name": "coda-automation",
@@ -16866,12 +16202,7 @@
   "license": "MIT",
   "score": 7.989,
   "description": "Analyze data coverage, create monitors for warehouse tables and AI agents. Covers coverage gaps, use-case analysis, data monitor creation, and agent observability.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/monte-carlo-monitoring-advisor",
-  "incomplete": true,
-  "missing_files": [
-   "references/agent-monitor-creation.md",
-   "references/data-monitor-creation.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/monte-carlo-monitoring-advisor"
  },
  {
   "name": "spatial-design",
@@ -16963,15 +16294,7 @@
   "license": "MIT",
   "score": 7.988,
   "description": "Get a deep critical review of research from an external reviewer backend (Codex or manual). Use when user says \"review my research\", \"help me review\", \"get external review\", or wants critical feedback on research ideas, papers, or experimental results.",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/research-review",
-  "incomplete": true,
-  "missing_files": [
-   "references/external-cadence.md",
-   "references/integration-contract.md",
-   "references/output-composition.md",
-   "references/review-tracing.md",
-   "references/reviewer-routing.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/research-review"
  },
  {
   "name": "evolving-ai-agents",
@@ -17150,13 +16473,7 @@
   "license": "MIT",
   "score": 7.982,
   "description": "Run an end-to-end workflow that chains `research-refine` and `experiment-plan`. Use when the user wants a one-shot pipeline from vague research direction to focused final proposal plus detailed experiment roadmap, or asks to \\\"\\u4e32\\u8d77\\u6765\\\", build a pipeline, do it end-to-end, or generate bot",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/research-refine-pipeline",
-  "incomplete": true,
-  "missing_files": [
-   "references/output-language.md",
-   "references/output-manifest.md",
-   "references/output-versioning.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/research-refine-pipeline"
  },
  {
   "name": "block-no-verify-hook",
@@ -17578,9 +16895,7 @@
   "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/tree/HEAD/07-safety-alignment/llamaguard",
   "incomplete": true,
   "missing_files": [
-   "references/benchmarks.md",
-   "references/custom-categories.md",
-   "references/deployment.md"
+   "references/custom-categories.md"
   ]
  },
  {
@@ -17650,16 +16965,7 @@
   "license": "MIT",
   "score": 7.959,
   "description": "Scaffold, write, debug, and enhance enterprise-grade Playwright E2E tests in Java using Page Object Model, JUnit 5, Allure reporting, and parallel execution.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/playwright-java",
-  "incomplete": true,
-  "missing_files": [
-   "references/assertions.md",
-   "references/config.md",
-   "references/fixtures.md",
-   "references/page-objects.md",
-   "templates/BasePage.java",
-   "templates/BaseTest.java"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/playwright-java"
  },
  {
   "name": "presentation-deck",
@@ -17768,11 +17074,7 @@
   "license": "MIT",
   "score": 7.953,
   "description": "Searches Google to discover social media profiles associated with a person, brand, or username; returns platform name, profile URL, username, bio snippet, and follower count across X, Instagram, Facebook, LinkedIn, TikTok, YouTube, Pinterest, Reddit, Snapchat, Threads, and more. Use when user wants ",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/lead-generation/google-social-media-finder",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/lead-generation/google-social-media-finder"
  },
  {
   "name": "azure-ai-translation-text-py",
@@ -17841,11 +17143,7 @@
   "license": "MIT",
   "score": 7.949,
   "description": "Geracao de imagens humanizadas via Google AI Studio (Gemini). Fotos realistas estilo influencer ou educacional com iluminacao natural e imperfeicoes sutis.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/ai-studio-image",
-  "incomplete": true,
-  "missing_files": [
-   "references/api-reference.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/ai-studio-image"
  },
  {
   "name": "editorial-design",
@@ -18107,11 +17405,7 @@
   "license": "MIT",
   "score": 7.939,
   "description": "Fetches comments from an Instagram post including comment text, username, timestamp, like count and reply count. Use when user mentions Instagram comments scraping, get comments from Instagram post, Instagram comment list, pull Instagram comments, read Instagram comments, Instagram post discussion, ",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/instagram-post-comments",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/instagram-post-comments"
  },
  {
   "name": "threads-keyword-search",
@@ -18120,11 +17414,7 @@
   "license": "MIT",
   "score": 7.939,
   "description": "Searches Threads posts by keyword or hashtag and returns matching posts with engagement metrics, extracted from SSR-embedded JSON. Use when user asks to search Threads posts, find Threads content by topic, scrape Threads search results, collect Threads posts about a keyword, monitor Threads hashtag ",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/threads-keyword-search",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/threads-keyword-search"
  },
  {
   "name": "brendangregg-use-tsa",
@@ -18712,11 +18002,7 @@
   "license": "MIT",
   "score": 7.916,
   "description": "Scrapes Instagram posts by hashtag, returning media items with captions, like/comment counts, media URLs and user info from the hashtag explore feed. Use when user mentions Instagram hashtag scraping, get posts by hashtag, IG hashtag feed, scrape Instagram by tag, hashtag posts Instagram, search Ins",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/instagram-hashtag-posts",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/instagram-hashtag-posts"
  },
  {
   "name": "ui-screenshots",
@@ -18745,11 +18031,7 @@
   "license": "MIT",
   "score": 7.915,
   "description": "Operate and extend NanoClaw, ECC's zero-dependency session-aware REPL, with persistent markdown-backed sessions and slash commands for model switching, skill loading, session branching, cross-session search, history compaction, and export. Use when running or extending scripts/claw.js, or when resum",
-  "url": "https://github.com/affaan-m/ECC/tree/HEAD/skills/nanoclaw-repl",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/claw.js"
-  ]
+  "url": "https://github.com/affaan-m/ECC/tree/HEAD/skills/nanoclaw-repl"
  },
  {
   "name": "email-drafter",
@@ -18888,17 +18170,7 @@
   "license": "MIT",
   "score": 7.911,
   "description": "Your purpose is now is to create reusable command line scripts and utilities for using the Hugging Face API, allowing chaining, piping and intermediate processing where helpful. You can access the API directly, as well as use the hf command line tool.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/hugging-face-tool-builder",
-  "incomplete": true,
-  "missing_files": [
-   "references/baseline_hf_api.py",
-   "references/baseline_hf_api.sh",
-   "references/baseline_hf_api.tsx",
-   "references/find_models_by_paper.sh",
-   "references/hf_enrich_models.sh",
-   "references/hf_model_card_frontmatter.sh",
-   "references/hf_model_papers_auth.sh"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/hugging-face-tool-builder"
  },
  {
   "name": "soc2-compliance",
@@ -19144,8 +18416,7 @@
    "references/complex-inputs.md",
    "references/credentials.md",
    "references/engines.md",
-   "references/pagination.md",
-   "references/parameters.md"
+   "references/pagination.md"
   ]
  },
  {
@@ -19265,11 +18536,7 @@
   "license": "MIT",
   "score": 7.899,
   "description": "Azure Speech to Text REST API for short audio (Python). Use for simple speech recognition of audio files up to 60 seconds without the Speech SDK.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azure-speech-to-text-rest-py",
-  "incomplete": true,
-  "missing_files": [
-   "references/pronunciation-assessment.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azure-speech-to-text-rest-py"
  },
  {
   "name": "tax-register",
@@ -19288,13 +18555,7 @@
   "license": "MIT",
   "score": 7.899,
   "description": "Deploy containerized frontend + backend applications to Azure Container Apps with remote builds, managed identity, and idempotent infrastructure.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azd-deployment",
-  "incomplete": true,
-  "missing_files": [
-   "references/azure-yaml-schema.md",
-   "references/bicep-patterns.md",
-   "references/troubleshooting.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azd-deployment"
  },
  {
   "name": "python-observability",
@@ -19383,12 +18644,7 @@
   "license": "MIT",
   "score": 7.894,
   "description": "Azure AI Search SDK for .NET (Azure.Search.Documents). Use for building search applications with full-text, vector, semantic, and hybrid search.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azure-search-documents-dotnet",
-  "incomplete": true,
-  "missing_files": [
-   "references/semantic-search.md",
-   "references/vector-search.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azure-search-documents-dotnet"
  },
  {
   "name": "code-refactoring-tech-debt",
@@ -19470,8 +18726,16 @@
   "url": "https://github.com/github/awesome-copilot/tree/HEAD/skills/update-llms",
   "incomplete": true,
   "missing_files": [
-   "examples/advanced-usage.md",
-   "examples/basic-usage.md"
+   "CODE_OF_CONDUCT.md",
+   "CONTRIBUTING.md",
+   "README.md",
+   "docs/architecture.md",
+   "docs/decisions.md",
+   "docs/deployment.md",
+   "docs/setup.md",
+   "examples/basic-usage.md",
+   "spec/api-spec.md",
+   "spec/technical-spec.md"
   ]
  },
  {
@@ -19571,18 +18835,7 @@
   "license": "MIT",
   "score": 7.888,
   "description": "Generate and rank research ideas given a broad direction. Use when user says \\\"\\u627eidea\\\", \\\"brainstorm ideas\\\", \\\"generate research ideas\\\", \\\"what can we work on\\\", or wants to explore a research area for publishable directions.",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/idea-creator",
-  "incomplete": true,
-  "missing_files": [
-   "references/fan-out-pattern.md",
-   "references/injection-hygiene.md",
-   "references/output-composition.md",
-   "references/output-language.md",
-   "references/output-manifest.md",
-   "references/output-versioning.md",
-   "references/review-tracing.md",
-   "references/wiki-helper-resolution.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/idea-creator"
  },
  {
   "name": "arxiv",
@@ -19591,12 +18844,7 @@
   "license": "MIT",
   "score": 7.888,
   "description": "Search, download, and summarize academic papers from arXiv. Use when user says \"search arxiv\", \"download paper\", \"fetch arxiv\", \"arxiv search\", \"get paper pdf\", or wants to find and save papers from arXiv to the local paper library.",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/arxiv",
-  "incomplete": true,
-  "missing_files": [
-   "references/integration-contract.md",
-   "references/wiki-helper-resolution.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/arxiv"
  },
  {
   "name": "migrating-oracle-to-postgres-stored-procedures",
@@ -19978,12 +19226,7 @@
   "license": "MIT",
   "score": 7.872,
   "description": "Extract complete product information from any e-commerce product page. Returns name, price, currency, brand, images, description, SKU/ASIN/EAN/UPC/GTIN/MPN identifiers, stock availability, rating, review count, variants, and seller. Works on Shopify, Amazon, WooCommerce, eBay, Walmart, Etsy, AliExpr",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/ecommerce-product-detail",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/extract-listing.py",
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/ecommerce-product-detail"
  },
  {
   "name": "tiktok-search-videos",
@@ -19992,11 +19235,7 @@
   "license": "MIT",
   "score": 7.87,
   "description": "TikTok keyword search video scraper: input search keyword → output paginated video list with full metadata (author, engagement stats, music, video meta). Use when user mentions TikTok search scraping, search TikTok by keyword, TikTok search results, extract TikTok search data, scrape TikTok videos b",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/video-platforms/tiktok-search-videos",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/video-platforms/tiktok-search-videos"
  },
  {
   "name": "java-architect",
@@ -20095,11 +19334,7 @@
   "license": "MIT",
   "score": 7.868,
   "description": "Search Taobao and Tmall product listings by keyword, returning paginated product cards with title, price, shop, image, sales, and tags. Use when user asks to search Taobao, find products on Taobao/Tmall, scrape Taobao search results, get product listings from Taobao, collect Taobao items by keyword,",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/taobao-keyword-search",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/taobao-keyword-search"
  },
  {
   "name": "golang-pro",
@@ -20564,13 +19799,7 @@
   "license": "MIT",
   "score": 7.848,
   "description": "Draft LaTeX paper section by section from an outline. Use when user says \\\\\\\"\\u5199\\u8bba\\u6587\\\\\\\", \\\\\\\"write paper\\\\\\\", \\\\\\\"draft LaTeX\\\\\\\", \\\\\\\"\\u5f00\\u59cb\\u5199\\\\\\\", or wants to generate LaTeX content from a paper plan.",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/paper-write",
-  "incomplete": true,
-  "missing_files": [
-   "references/citation-discipline.md",
-   "references/venue-checklists.md",
-   "references/writing-principles.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/paper-write"
  },
  {
   "name": "accesslint-diff",
@@ -20779,11 +20008,7 @@
   "license": "MIT",
   "score": 7.838,
   "description": "Fetch full product detail from a Taobao or Tmall product page by itemId, returning title, price, shop info, images, SKU variants, and product attributes. Use when user asks to get product details from Taobao, scrape a Taobao item page, extract product info by item ID, fetch Tmall product data, 抓取淘宝商",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/taobao-product-detail",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/taobao-product-detail"
  },
  {
   "name": "research-lit",
@@ -20792,13 +20017,7 @@
   "license": "MIT",
   "score": 7.838,
   "description": "Search and analyze research papers, find related work, summarize key ideas. Use when user says \\\"find papers\\\", \\\"related work\\\", \\\"literature review\\\", \\\"what does this paper say\\\", or needs to understand academic papers.",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/research-lit",
-  "incomplete": true,
-  "missing_files": [
-   "references/fan-out-pattern.md",
-   "references/integration-contract.md",
-   "references/output-composition.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/research-lit"
  },
  {
   "name": "wiki-vitepress",
@@ -20927,11 +20146,7 @@
   "license": "MIT",
   "score": 7.829,
   "description": "Extracts full detail data from a single Goofish (闲鱼/xianyu, goofish.com) second-hand item page. Input: item URL or item ID. Output: title, price, seller info (name, labels), full description, image gallery, item tags/attributes, want-count. Use when user mentions goofish item detail, 闲鱼商品详情, xianyu ",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/goofish-item-detail",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/goofish-item-detail"
  },
  {
   "name": "reports-analytics",
@@ -21140,11 +20355,7 @@
   "license": "MIT",
   "score": 7.824,
   "description": "Find logic bugs in a single file or function via semi-formal execution tracing (Premises → Trace → Divergence → Trigger → Remedy).",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/logic-review",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/grade-iteration.py"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/logic-review"
  },
  {
   "name": "design-taste-frontend",
@@ -21543,12 +20754,7 @@
   "license": "MIT",
   "score": 7.803,
   "description": "Write the full patent specification from claims and invention disclosure. Use when user says \\\"撰写说明书\\\", \\\"write specification\\\", \\\"写说明书\\\", \\\"patent description\\\", or wants to draft the complete patent specification.",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/specification-writing",
-  "incomplete": true,
-  "missing_files": [
-   "references/patent-format-cn.md",
-   "references/patent-writing-principles.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/specification-writing"
  },
  {
   "name": "beachhead-segment",
@@ -21697,13 +20903,7 @@
   "license": "MIT",
   "score": 7.794,
   "description": "Install and use the official Ecommerce Product Images package, pinned by digest, for paid hosted work on the Beatra service.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/ecommerce-listing-image-set",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/authorize.py",
-   "scripts/mcp_client.py",
-   "scripts/uninstall.py"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/ecommerce-listing-image-set"
  },
  {
   "name": "youtube-summarizer",
@@ -21742,18 +20942,7 @@
   "license": "MIT",
   "score": 7.794,
   "description": "Master comprehensive evaluation strategies for LLM applications, from automated metrics to human evaluation and A/B testing.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/llm-evaluation",
-  "incomplete": true,
-  "missing_files": [
-   "assets/benchmark-dataset.jsonl",
-   "assets/evaluation-framework.py",
-   "references/a-b-testing.md",
-   "references/benchmarking.md",
-   "references/human-evaluation.md",
-   "references/metrics.md",
-   "references/regression-testing.md",
-   "scripts/evaluate-model.py"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/llm-evaluation"
  },
  {
   "name": "multi-agent-architect",
@@ -21892,13 +21081,7 @@
   "license": "MIT",
   "score": 7.784,
   "description": "Install and use the official AI Voiceover Generator package, pinned by digest, for paid hosted work on the Beatra service.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/voiceover-narration-studio",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/authorize.py",
-   "scripts/mcp_client.py",
-   "scripts/uninstall.py"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/voiceover-narration-studio"
  },
  {
   "name": "mlops-engineer",
@@ -21937,13 +21120,7 @@
   "license": "MIT",
   "score": 7.784,
   "description": "Install and use the official Multilingual Voiceover package, pinned by digest, for paid hosted work on the Beatra service.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/ai-multilingual-dubbing",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/authorize.py",
-   "scripts/mcp_client.py",
-   "scripts/uninstall.py"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/ai-multilingual-dubbing"
  },
  {
   "name": "use-dom",
@@ -21962,13 +21139,7 @@
   "license": "MIT",
   "score": 7.784,
   "description": "Install and use the official AI Product Photography package, pinned by digest, for paid hosted work on the Beatra service.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/product-photo-studio",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/authorize.py",
-   "scripts/mcp_client.py",
-   "scripts/uninstall.py"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/product-photo-studio"
  },
  {
   "name": "n8n-binary-and-data",
@@ -22150,13 +21321,7 @@
   "license": "MIT",
   "score": 7.774,
   "description": "Install and use the official AI Podcast Voiceover package, pinned by digest, for paid hosted work on the Beatra service.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/ai-podcast-voiceover",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/authorize.py",
-   "scripts/mcp_client.py",
-   "scripts/uninstall.py"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/ai-podcast-voiceover"
  },
  {
   "name": "onboarding-playbook",
@@ -22175,13 +21340,7 @@
   "license": "MIT",
   "score": 7.774,
   "description": "Install and use the official Talking Avatar Video package, pinned by digest, for paid hosted work on the Beatra service.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/talking-avatar-video",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/authorize.py",
-   "scripts/mcp_client.py",
-   "scripts/uninstall.py"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/talking-avatar-video"
  },
  {
   "name": "azure-cosmos-db-py",
@@ -22190,18 +21349,7 @@
   "license": "MIT",
   "score": 7.774,
   "description": "Build production-grade Azure Cosmos DB NoSQL services following clean code, security best practices, and TDD principles.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azure-cosmos-db-py",
-  "incomplete": true,
-  "missing_files": [
-   "assets/conftest_template.py",
-   "assets/cosmos_client_template.py",
-   "assets/service_template.py",
-   "references/client-setup.md",
-   "references/error-handling.md",
-   "references/partitioning.md",
-   "references/service-layer.md",
-   "references/testing.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azure-cosmos-db-py"
  },
  {
   "name": "deployment-engineer",
@@ -22410,13 +21558,7 @@
   "license": "MIT",
   "score": 7.764,
   "description": "Install and use the official AI Music Generator package, pinned by digest, for paid hosted work on the Beatra service.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/music-generation-studio",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/authorize.py",
-   "scripts/mcp_client.py",
-   "scripts/uninstall.py"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/music-generation-studio"
  },
  {
   "name": "beatra",
@@ -22425,13 +21567,7 @@
   "license": "MIT",
   "score": 7.764,
   "description": "Install and use the official AI Media Generator package, pinned by digest, for paid hosted work on the Beatra service.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/beatra",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/authorize.py",
-   "scripts/mcp_client.py",
-   "scripts/uninstall.py"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/beatra"
  },
  {
   "name": "viral-video-teardown-remake",
@@ -22440,13 +21576,7 @@
   "license": "MIT",
   "score": 7.764,
   "description": "Install and use the official Viral Video Remake package, pinned by digest, for paid hosted work on the Beatra service.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/viral-video-teardown-remake",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/authorize.py",
-   "scripts/mcp_client.py",
-   "scripts/uninstall.py"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/viral-video-teardown-remake"
  },
  {
   "name": "network-engineer",
@@ -22485,13 +21615,7 @@
   "license": "MIT",
   "score": 7.764,
   "description": "Install and use the official AI Image Generator package, pinned by digest, for paid hosted work on the Beatra service.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/ai-image-generation-studio",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/authorize.py",
-   "scripts/mcp_client.py",
-   "scripts/uninstall.py"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/ai-image-generation-studio"
  },
  {
   "name": "mdpr-skill",
@@ -22623,13 +21747,7 @@
   "license": "MIT",
   "score": 7.759,
   "description": "Azure Service Bus SDK for Python messaging. Use for queues, topics, subscriptions, and enterprise messaging patterns.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azure-servicebus-py",
-  "incomplete": true,
-  "missing_files": [
-   "references/dead-letter.md",
-   "references/patterns.md",
-   "scripts/setup_servicebus.py"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azure-servicebus-py"
  },
  {
   "name": "azure-mgmt-botservice-py",
@@ -22731,11 +21849,7 @@
   "license": "MIT",
   "score": 7.754,
   "description": "One API and one credential for frontier and open-source LLMs, built into your Neon branch and powered by Databricks.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/neon-ai-gateway",
-  "incomplete": true,
-  "missing_files": [
-   "references/ai-sdk.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/neon-ai-gateway"
  },
  {
   "name": "database-optimizer",
@@ -22773,13 +21887,7 @@
   "license": "MIT",
   "score": 7.754,
   "description": "Install and use the official AI Voice Cloning package, pinned by digest, for paid hosted work on the Beatra service.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/voice-cloning-studio",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/authorize.py",
-   "scripts/mcp_client.py",
-   "scripts/uninstall.py"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/voice-cloning-studio"
  },
  {
   "name": "flowhunt-skill",
@@ -22928,13 +22036,7 @@
   "license": "MIT",
   "score": 7.749,
   "description": "Install and use the official AI Poster Maker package, pinned by digest, for paid hosted work on the Beatra service.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/poster-design-studio",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/authorize.py",
-   "scripts/mcp_client.py",
-   "scripts/uninstall.py"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/poster-design-studio"
  },
  {
   "name": "security-scanning-security-hardening",
@@ -23053,13 +22155,7 @@
   "license": "MIT",
   "score": 7.744,
   "description": "Install and use the official Lyrics to Song package, pinned by digest, for paid hosted work on the Beatra service.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/suno-lyrics-to-song",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/authorize.py",
-   "scripts/mcp_client.py",
-   "scripts/uninstall.py"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/suno-lyrics-to-song"
  },
  {
   "name": "backend-architect",
@@ -23078,13 +22174,7 @@
   "license": "MIT",
   "score": 7.744,
   "description": "Install and use the official Photo to Anime package, pinned by digest, for paid hosted work on the Beatra service.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/ai-photo-restyler",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/authorize.py",
-   "scripts/mcp_client.py",
-   "scripts/uninstall.py"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/ai-photo-restyler"
  },
  {
   "name": "azure-mgmt-applicationinsights-dotnet",
@@ -23117,7 +22207,6 @@
   "incomplete": true,
   "missing_files": [
    "references/mamba2-details.md",
-   "references/performance.md",
    "references/selective-ssm.md"
   ]
  },
@@ -23168,13 +22257,7 @@
   "license": "MIT",
   "score": 7.739,
   "description": "Install and use the official AI Logo Maker package, pinned by digest, for paid hosted work on the Beatra service.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/ai-logo-maker",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/authorize.py",
-   "scripts/mcp_client.py",
-   "scripts/uninstall.py"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/ai-logo-maker"
  },
  {
   "name": "azure-compute-batch-java",
@@ -23213,13 +22296,7 @@
   "license": "MIT",
   "score": 7.738,
   "description": "Autonomous multi-round research review loop using MiniMax API. Use when you want to use MiniMax instead of Codex MCP for external review. Trigger with \\\"auto review loop minimax\\\" or \\\"minimax review\\\".",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/auto-review-loop-minimax",
-  "incomplete": true,
-  "missing_files": [
-   "references/output-language.md",
-   "references/output-manifest.md",
-   "references/output-versioning.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/auto-review-loop-minimax"
  },
  {
   "name": "aws-well-architected-review",
@@ -23261,11 +22338,7 @@
   "license": "MIT",
   "score": 7.736,
   "description": "TikTok single video detail scraper: input a TikTok video URL → output full video metadata (author profile, engagement stats, music, video meta, hashtags, mentions, slideshow images). Use when user mentions TikTok video detail, get TikTok video data, extract TikTok video metadata, scrape single TikTo",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/video-platforms/tiktok-video-detail",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/video-platforms/tiktok-video-detail"
  },
  {
   "name": "dotnet-timezone",
@@ -23304,11 +22377,7 @@
   "license": "MIT",
   "score": 7.733,
   "description": "Browse a Taobao or Tmall shop's product catalog by shopId, returning paginated product listings with itemId and title. Use when user asks to scrape a Taobao shop, get all products from a store, list items in a Taobao/Tmall shop, fetch shop catalog by userId or shopId, 采集淘宝店铺商品, 抓取淘宝店铺所有商品, 获取天猫店铺商品列",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/taobao-shop-catalog",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/taobao-shop-catalog"
  },
  {
   "name": "azure-ai-vision-imageanalysis-py",
@@ -23407,12 +22476,7 @@
   "license": "MIT",
   "score": 7.728,
   "description": "Search and progressively read open-access academic papers through DeepXiv. Use when the user wants layered paper access, section-level reading, trending papers, or DeepXiv-backed literature retrieval.",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/deepxiv",
-  "incomplete": true,
-  "missing_files": [
-   "references/integration-contract.md",
-   "references/wiki-helper-resolution.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/deepxiv"
  },
  {
   "name": "dropthehassle-publish",
@@ -23451,13 +22515,7 @@
   "license": "MIT",
   "score": 7.724,
   "description": "Instrument browser/web apps with the Application Insights JavaScript SDK (@microsoft/applicationinsights-web).",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/applicationinsights-web-ts",
-  "incomplete": true,
-  "missing_files": [
-   "references/agent-traces.md",
-   "references/configuration.md",
-   "references/framework-extensions.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/applicationinsights-web-ts"
  },
  {
   "name": "database-admin",
@@ -23596,11 +22654,7 @@
   "license": "MIT",
   "score": 7.716,
   "description": "Extracts Airbnb accommodation search results from a destination query via SSR-embedded data, returning listing ID, URL, name, coordinates, rating, price, photos, and badge info for each result, plus pagination cursors for multi-page retrieval. Use when user mentions Airbnb search results, Airbnb lis",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/airbnb-search-listing",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/airbnb-search-listing"
  },
  {
   "name": "writing-great-skills",
@@ -23789,18 +22843,7 @@
   "license": "MIT",
   "score": 7.704,
   "description": "Analyze cryptographic code to detect operations that leak secret data through execution timing variations.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/constant-time-analysis",
-  "incomplete": true,
-  "missing_files": [
-   "references/compiled.md",
-   "references/javascript.md",
-   "references/kotlin.md",
-   "references/php.md",
-   "references/python.md",
-   "references/ruby.md",
-   "references/swift.md",
-   "references/vm-compiled.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/constant-time-analysis"
  },
  {
   "name": "security-auditor",
@@ -23819,19 +22862,7 @@
   "license": "MIT",
   "score": 7.704,
   "description": "Curated upstream guidance for Monte Carlo Analyze Root Cause; use when the workflow matches the user goal.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/monte-carlo-analyze-root-cause",
-  "incomplete": true,
-  "missing_files": [
-   "references/common-root-causes.md",
-   "references/data-exploration.md",
-   "references/etl-failure-investigation.md",
-   "references/field-anomaly-investigation.md",
-   "references/freshness-investigation.md",
-   "references/intake-no-incident.md",
-   "references/query-change-investigation.md",
-   "references/schema-investigation.md",
-   "references/volume-investigation.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/monte-carlo-analyze-root-cause"
  },
  {
   "name": "docs-as-marketing",
@@ -23880,11 +22911,7 @@
   "license": "MIT",
   "score": 7.701,
   "description": "Audit SQL for the cost & performance anti-patterns that burn warehouse credits. Scores warehouse health 0-100 and outputs a prioritized cost-reduction plan for BigQuery, Snowflake, Redshift, and Postgres.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/sql-sentinel",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/sql-sentinel.js"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/sql-sentinel"
  },
  {
   "name": "webdriverio-skill",
@@ -24183,14 +23210,7 @@
   "license": "MIT",
   "score": 7.683,
   "description": "Draft patent claims for an invention. Use when user says \\\"撰写权利要求\\\", \\\"draft claims\\\", \\\"写权利要求书\\\", \\\"claim drafting\\\", or wants to create patent claims. The core skill of the patent pipeline.",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/claims-drafting",
-  "incomplete": true,
-  "missing_files": [
-   "references/patent-format-cn.md",
-   "references/patent-format-ep.md",
-   "references/patent-format-us.md",
-   "references/patent-writing-principles.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/claims-drafting"
  },
  {
   "name": "weather-pipeline-performance-diagnosis",
@@ -24212,6 +23232,8 @@
   "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/tree/HEAD/18-multimodal/segment-anything",
   "incomplete": true,
   "missing_files": [
+   "checkpoint=\"sam_vit_b_01ec64.pth\"",
+   "checkpoint=\"sam_vit_h_4b8939.pth\"",
    "scripts/export_onnx_model.py"
   ]
  },
@@ -24322,12 +23344,7 @@
   "license": "MIT",
   "score": 7.674,
   "description": "Curated upstream guidance for Monte Carlo Asset Health; use when the workflow matches the user goal.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/monte-carlo-asset-health",
-  "incomplete": true,
-  "missing_files": [
-   "references/parameters.md",
-   "references/workflows.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/monte-carlo-asset-health"
  },
  {
   "name": "python-configuration",
@@ -24505,7 +23522,6 @@
    "references/connection-methods.md",
    "references/devtools.md",
    "references/features.md",
-   "references/getting-started.md",
    "references/neon-auth.md",
    "references/neon-cli.md",
    "references/neon-drizzle.md",
@@ -24610,11 +23626,7 @@
   "license": "MIT",
   "score": 7.656,
   "description": "Extract customer reviews from any e-commerce product page or reviews page. Returns reviewer name, star rating, date, review title, review body, verified purchase status, and helpful votes per review. Works on Amazon, WooCommerce, Shopify, and any site with standard review markup. Supports pagination",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/ecommerce-reviews",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/ecommerce-reviews"
  },
  {
   "name": "aws-cdk-development",
@@ -24623,12 +23635,7 @@
   "license": "MIT",
   "score": 7.654,
   "description": "AWS Cloud Development Kit (CDK) expert for building cloud infrastructure with TypeScript/Python.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/aws-cdk-development",
-  "incomplete": true,
-  "missing_files": [
-   "references/cdk-patterns.md",
-   "scripts/validate-stack.sh"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/aws-cdk-development"
  },
  {
   "name": "azure-keyvault-secrets-ts",
@@ -24657,11 +23664,7 @@
   "license": "MIT",
   "score": 7.651,
   "description": "Fetches complete Airbnb listing details for a given numeric listing ID via the internal GraphQL API, returning title, room type, description, amenities, photos, coordinates, city, house rules, highlights, ratings, review count, bedroom configuration, and property overview. Use when user mentions Air",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/airbnb-listing-detail",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/airbnb-listing-detail"
  },
  {
   "name": "azure-ai-voicelive-java",
@@ -24900,14 +23903,7 @@
   "license": "MIT",
   "score": 7.633,
   "description": "Autonomous research review loop using any OpenAI-compatible LLM API. Configure via llm-chat MCP server or environment variables. Trigger with \"auto review loop llm\" or \"llm review\".",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/auto-review-loop-llm",
-  "incomplete": true,
-  "missing_files": [
-   "references/external-cadence.md",
-   "references/output-language.md",
-   "references/output-manifest.md",
-   "references/output-versioning.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/auto-review-loop-llm"
  },
  {
   "name": "nanogpt",
@@ -24986,14 +23982,7 @@
   "license": "MIT",
   "score": 7.629,
   "description": "Build persistent agents on Azure AI Foundry using the Microsoft Agent Framework Python SDK.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/agent-framework-azure-ai-py",
-  "incomplete": true,
-  "missing_files": [
-   "references/advanced.md",
-   "references/mcp.md",
-   "references/threads.md",
-   "references/tools.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/agent-framework-azure-ai-py"
  },
  {
   "name": "youtube-influencer-finder-api-skill",
@@ -25012,11 +24001,7 @@
   "license": "MIT",
   "score": 7.628,
   "description": "Deploy and run ML experiments on local or remote GPU servers. Use when user says \\\"run experiment\\\", \\\"deploy to server\\\", \\\"\\u8dd1\\u5b9e\\u9a8c\\\", or needs to launch training jobs.",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/run-experiment",
-  "incomplete": true,
-  "missing_files": [
-   "references/compute-env-contract.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/run-experiment"
  },
  {
   "name": "boardroom",
@@ -25115,11 +24100,7 @@
   "license": "MIT",
   "score": 7.623,
   "description": "Rent, manage, and destroy GPU instances on vast.ai. Use when user says \\\"rent gpu\\\", \\\"vast.ai\\\", \\\"rent a server\\\", \\\"cloud gpu\\\", or needs on-demand GPU without owning hardware.",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/vast-gpu",
-  "incomplete": true,
-  "missing_files": [
-   "references/compute-env-contract.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/vast-gpu"
  },
  {
   "name": "prompt-engineering",
@@ -25258,13 +24239,7 @@
   "license": "MIT",
   "score": 7.614,
   "description": "SST v4 (Ion) expert for managing AWS resources as code with the Pulumi-backed framework.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/aws-sst-development",
-  "incomplete": true,
-  "missing_files": [
-   "references/authoring.md",
-   "references/deploy-and-troubleshoot.md",
-   "references/testing.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/aws-sst-development"
  },
  {
   "name": "flutter-expert",
@@ -25443,11 +24418,7 @@
   "license": "MIT",
   "score": 7.596,
   "description": "Dynamic multi-agent workflows — plan first, then orchestrate parallel agents with adversarial verification via the local odw daemon. Use when the user asks for a \"workflow\", says \"ultracode\", or hands you a task spanning many files/items that benefits from parallel agents.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/odw",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/daemon-bridge.js"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/odw"
  },
  {
   "name": "design-md",
@@ -25476,13 +24447,7 @@
   "license": "MIT",
   "score": 7.593,
   "description": "Azure Event Hubs SDK for Python streaming. Use for high-throughput event ingestion, producers, consumers, and checkpointing.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azure-eventhub-py",
-  "incomplete": true,
-  "missing_files": [
-   "references/checkpointing.md",
-   "references/partitions.md",
-   "scripts/setup_consumer.py"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azure-eventhub-py"
  },
  {
   "name": "typescript-mcp-server-generator",
@@ -25581,11 +24546,7 @@
   "license": "MIT",
   "score": 7.58,
   "description": "Read or configure the vault filing methodology and suggest destinations for planned knowledge creation under Generic, LYT, PARA, or Zettelkasten. Use for wiki mode, methodology mode, what is my vault mode, set vault mode, switch to PARA, use LYT, Zettelkasten setup, change mode, configure mode, or m",
-  "url": "https://github.com/AgriciDaniel/claude-obsidian/tree/HEAD/skills/wiki-mode",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/wiki-mode.py"
-  ]
+  "url": "https://github.com/AgriciDaniel/claude-obsidian/tree/HEAD/skills/wiki-mode"
  },
  {
   "name": "python-type-safety",
@@ -25604,13 +24565,7 @@
   "license": "MIT",
   "score": 7.579,
   "description": "Build real-time voice AI applications with bidirectional WebSocket communication.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azure-ai-voicelive-py",
-  "incomplete": true,
-  "missing_files": [
-   "references/api-reference.md",
-   "references/examples.md",
-   "references/models.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azure-ai-voicelive-py"
  },
  {
   "name": "azure-monitor-opentelemetry-ts",
@@ -25942,8 +24897,6 @@
   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azure-cosmos-py",
   "incomplete": true,
   "missing_files": [
-   "references/partitioning.md",
-   "references/query-patterns.md",
    "scripts/setup_cosmos_container.py"
   ]
  },
@@ -25987,8 +24940,16 @@
   "url": "https://github.com/github/awesome-copilot/tree/HEAD/skills/create-llms",
   "incomplete": true,
   "missing_files": [
-   "examples/advanced-usage.md",
-   "examples/basic-usage.md"
+   "CODE_OF_CONDUCT.md",
+   "CONTRIBUTING.md",
+   "README.md",
+   "docs/architecture.md",
+   "docs/decisions.md",
+   "docs/deployment.md",
+   "docs/setup.md",
+   "examples/basic-usage.md",
+   "spec/api-spec.md",
+   "spec/technical-spec.md"
   ]
  },
  {
@@ -26158,20 +25119,7 @@
   "license": "MIT",
   "score": 7.549,
   "description": "Build AI applications on Microsoft Foundry using the azure-ai-projects SDK.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azure-ai-projects-py",
-  "incomplete": true,
-  "missing_files": [
-   "references/agents.md",
-   "references/api-reference.md",
-   "references/async-patterns.md",
-   "references/built-in-evaluators.md",
-   "references/connections.md",
-   "references/custom-evaluators.md",
-   "references/datasets-indexes.md",
-   "references/deployments.md",
-   "references/evaluation.md",
-   "references/tools.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azure-ai-projects-py"
  },
  {
   "name": "bb-methodology",
@@ -26203,11 +25151,7 @@
   "license": "MIT",
   "score": 7.549,
   "description": "Delegate coding tasks to the OpenAI Codex CLI only when the user explicitly",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/codex-delegate",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/relay.mjs"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/codex-delegate"
  },
  {
   "name": "blue-green-deploy",
@@ -26533,11 +25477,7 @@
   "license": "MIT",
   "score": 7.539,
   "description": "Babysit a pull request through its bot review rounds: verify, fix, reply,",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/babysit-pr",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/threads.sh"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/babysit-pr"
  },
  {
   "name": "gcp-cloud-functions",
@@ -26613,11 +25553,7 @@
   "license": "MIT",
   "score": 7.539,
   "description": "Delegate coding tasks to the Z.AI ZCode CLI only when the user explicitly",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/zcode-delegate",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/relay.mjs"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/zcode-delegate"
  },
  {
   "name": "grok-delegate",
@@ -26626,11 +25562,7 @@
   "license": "MIT",
   "score": 7.539,
   "description": "Delegate coding tasks to the Grok Build CLI only when the user explicitly",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/grok-delegate",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/relay.mjs"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/grok-delegate"
  },
  {
   "name": "reverse-proxy",
@@ -26749,11 +25681,7 @@
   "license": "MIT",
   "score": 7.534,
   "description": "Delegate coding tasks to the Command Code CLI (`cmd`) only when the user",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/commandcode-delegate",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/relay.mjs"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/commandcode-delegate"
  },
  {
   "name": "cursor-delegate",
@@ -26762,11 +25690,7 @@
   "license": "MIT",
   "score": 7.534,
   "description": "Delegate coding tasks to the Cursor Agent CLI (`cursor-agent`) only when",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/cursor-delegate",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/relay.mjs"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/cursor-delegate"
  },
  {
   "name": "llmops-platform-engineering",
@@ -27072,11 +25996,7 @@
   "license": "MIT",
   "score": 7.529,
   "description": "Delegate coding tasks to the OpenCode CLI only when the user explicitly",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/opencode-delegate",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/relay.mjs"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/opencode-delegate"
  },
  {
   "name": "block-storage",
@@ -27145,11 +26065,7 @@
   "license": "MIT",
   "score": 7.529,
   "description": "Delegate coding tasks to Oh My Pi (`omp`) only when the user explicitly",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/omp-delegate",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/relay.mjs"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/omp-delegate"
  },
  {
   "name": "performance-tuning",
@@ -27273,11 +26189,7 @@
   "license": "MIT",
   "score": 7.524,
   "description": "Delegate coding tasks to Aider (`aider`) only when the user explicitly",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/aider-delegate",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/relay.mjs"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/aider-delegate"
  },
  {
   "name": "llm-inference-scaling",
@@ -27486,11 +26398,7 @@
   "license": "MIT",
   "score": 7.519,
   "description": "Fetches Instagram user profile metadata including bio, follower count, following count, post count, verification status and other profile details. Use when user mentions Instagram profile info, user stats, account details, follower count, bio scraping, Instagram user data, IG profile, check Instagra",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/instagram-profile-meta",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/instagram-profile-meta"
  },
  {
   "name": "claude-delegate",
@@ -27499,11 +26407,7 @@
   "license": "MIT",
   "score": 7.519,
   "description": "Delegate coding tasks to a separate Claude Code CLI process or Claude",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/claude-delegate",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/relay.mjs"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/claude-delegate"
  },
  {
   "name": "ai-pipeline-orchestration",
@@ -27522,11 +26426,7 @@
   "license": "MIT",
   "score": 7.519,
   "description": "Delegate coding tasks to the Google Antigravity CLI (`agy`) only when",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/agy-delegate",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/relay.mjs"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/agy-delegate"
  },
  {
   "name": "vpn-setup",
@@ -27615,11 +26515,7 @@
   "license": "MIT",
   "score": 7.519,
   "description": "Delegate coding tasks to the Warp Agent CLI (`oz`) only when the user",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/warp-delegate",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/relay.mjs"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/warp-delegate"
  },
  {
   "name": "cloudflare-workers",
@@ -27988,11 +26884,7 @@
   "license": "MIT",
   "score": 7.51,
   "description": "Structure a raw invention idea into a formal invention disclosure. Use when user says \\\"构建发明\\\", \\\"structure invention\\\", \\\"发明构建\\\", \\\"invention disclosure\\\", or wants to formalize a rough idea into a patent-ready structure.",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/invention-structuring",
-  "incomplete": true,
-  "missing_files": [
-   "references/patent-writing-principles.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/invention-structuring"
  },
  {
   "name": "bash-pro",
@@ -28241,11 +27133,7 @@
   "license": "MIT",
   "score": 7.494,
   "description": "Extract seller or merchant profile data from marketplace platform seller pages. Returns seller name, rating, review count, positive feedback percentage, joined date, and return policy. Works on Amazon seller pages, eBay seller pages, and any e-commerce site with seller profiles. Use when: seller inf",
-  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/ecommerce-seller-info",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/xxx.py"
-  ]
+  "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/ecommerce-seller-info"
  },
  {
   "name": "podman",
@@ -28778,13 +27666,7 @@
   "license": "MIT",
   "score": 7.462,
   "description": "Verify research idea novelty against recent literature. Use when user says \"查新\", \"novelty check\", \"有没有人做过\", \"check novelty\", or wants to verify a research idea is novel before implementing.",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/novelty-check",
-  "incomplete": true,
-  "missing_files": [
-   "references/citation-discipline.md",
-   "references/integration-contract.md",
-   "references/review-tracing.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/novelty-check"
  },
  {
   "name": "copilot-delegate",
@@ -28793,11 +27675,7 @@
   "license": "MIT",
   "score": 7.461,
   "description": "Delegate coding tasks to the GitHub Copilot CLI (`copilot`) only when",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/copilot-delegate",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/relay.mjs"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/copilot-delegate"
  },
  {
   "name": "agent-workflow-designer",
@@ -29072,10 +27950,7 @@
   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azure-mgmt-apimanagement-dotnet",
   "incomplete": true,
   "missing_files": [
-   "references/apis-operations.md",
-   "references/policies.md",
-   "references/products-subscriptions.md",
-   "references/service-management.md"
+   "references/policies.md"
   ]
  },
  {
@@ -29175,12 +28050,7 @@
   "license": "MIT",
   "score": 7.434,
   "description": "Diagnoses and improves Qdrant search relevance. Use when someone reports 'search results are bad', 'wrong results', 'low precision', 'low recall', 'irrelevant matches', 'missing expected results', or asks 'how to improve search quality?', 'which embedding model?', 'should I use hybrid search?', 'sho",
-  "url": "https://github.com/github/awesome-copilot/tree/HEAD/skills/qdrant-search-quality",
-  "incomplete": true,
-  "missing_files": [
-   "diagnosis/SKILL.md",
-   "search-strategies/SKILL.md"
-  ]
+  "url": "https://github.com/github/awesome-copilot/tree/HEAD/skills/qdrant-search-quality"
  },
  {
   "name": "mdm-device-management",
@@ -29339,13 +28209,7 @@
   "license": "MIT",
   "score": 7.419,
   "description": "Azure Resource Manager SDK for Azure SQL in .NET.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azure-resource-manager-sql-dotnet",
-  "incomplete": true,
-  "missing_files": [
-   "references/database-operations.md",
-   "references/elastic-pools.md",
-   "references/server-management.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azure-resource-manager-sql-dotnet"
  },
  {
   "name": "hunt-business-logic",
@@ -29384,12 +28248,7 @@
   "license": "MIT",
   "score": 7.418,
   "description": "Distill colleague, relationship, or celebrity source material into reusable Person Profiles for agents.",
-  "url": "https://github.com/titanwings/distilly/tree/HEAD/.",
-  "incomplete": true,
-  "missing_files": [
-   "references/celebrity_budget_unfriendly_framework.md",
-   "references/celebrity_budget_unfriendly_template.md"
-  ]
+  "url": "https://github.com/titanwings/distilly/tree/HEAD/."
  },
  {
   "name": "radix-ui-design-system",
@@ -29428,18 +28287,7 @@
   "license": "MIT",
   "score": 7.414,
   "description": "Polis Protocol: A Self-Optimizing City of Agents",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/polis-protocol-a-self-optimizing-city-of-agents",
-  "incomplete": true,
-  "missing_files": [
-   "references/amendments.md",
-   "references/protocol-spec.md",
-   "references/routing.md",
-   "references/templates.md",
-   "references/troubleshooting.md",
-   "scripts/init_polis.py",
-   "scripts/route_contract.py",
-   "templates/POLIS_CONSTITUTION.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/polis-protocol-a-self-optimizing-city-of-agents"
  },
  {
   "name": "gpu-server-management",
@@ -29538,13 +28386,7 @@
   "license": "MIT",
   "score": 7.406,
   "description": "Compile patent application into jurisdiction-specific filing format. Use when user says \\\"格式转换\\\", \\\"jurisdiction format\\\", \\\"国家格式\\\", \\\"compile patent\\\", or wants formatted patent documents for CN/US/EP filing.",
-  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/jurisdiction-format",
-  "incomplete": true,
-  "missing_files": [
-   "references/patent-format-cn.md",
-   "references/patent-format-ep.md",
-   "references/patent-format-us.md"
-  ]
+  "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/jurisdiction-format"
  },
  {
   "name": "cli-developer",
@@ -29866,10 +28708,7 @@
   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/polis-protocol",
   "incomplete": true,
   "missing_files": [
-   "examples/research-team/_polis/contracts/open/parent-newsletter-issue-3.md",
-   "scripts/demo.sh",
-   "scripts/init_polis.py",
-   "scripts/route_contract.py"
+   "scripts/demo.sh"
   ]
  },
  {
@@ -29899,13 +28738,7 @@
   "license": "MIT",
   "score": 7.382,
   "description": "Azure Resource Manager SDK for Cosmos DB in .NET.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azure-resource-manager-cosmosdb-dotnet",
-  "incomplete": true,
-  "missing_files": [
-   "references/account-management.md",
-   "references/sql-resources.md",
-   "references/throughput.md"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azure-resource-manager-cosmosdb-dotnet"
  },
  {
   "name": "tech-stack-evaluator",
@@ -30584,11 +29417,7 @@
   "license": "MIT",
   "score": 7.325,
   "description": "Delegate coding tasks to the Pi coding agent CLI (`pi`) only when the",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/pi-delegate",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/relay.mjs"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/pi-delegate"
  },
  {
   "name": "agent-harness-construction",
@@ -30867,11 +29696,7 @@
   "license": "MIT",
   "score": 7.299,
   "description": "Evaluate, adapt, and safely install Context Kit personal context artifacts for Claude Code or adjacent agent workflows.",
-  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/context-kit",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/install.sh"
-  ]
+  "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/context-kit"
  },
  {
   "name": "hunt-grpc",
@@ -31220,11 +30045,7 @@
   "path": "skills/engineering/wizard",
   "license": "MIT",
   "description": "Generate an interactive bash wizard that walks a human through steps only they can perform. Use when provisioning infrastructure, setting up credentials or CI s",
-  "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/engineering/wizard",
-  "incomplete": true,
-  "missing_files": [
-   "template.sh"
-  ]
+  "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/engineering/wizard"
  },
  {
   "name": "git-guardrails-claude-code",
@@ -31232,11 +30053,7 @@
   "path": "skills/misc/git-guardrails-claude-code",
   "license": "MIT",
   "description": "Set up Claude Code hooks to block dangerous git commands (push, reset --hard, clean, branch -D, etc.) before they execute. Use when user wants to prevent destru",
-  "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/misc/git-guardrails-claude-code",
-  "incomplete": true,
-  "missing_files": [
-   "scripts/block-dangerous-git.sh"
-  ]
+  "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/misc/git-guardrails-claude-code"
  },
  {
   "name": "migrate-to-shoehorn",

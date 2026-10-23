@@ -4,8 +4,8 @@
   "skills": 6029,
   "triggers": 30203,
   "colliding_triggers": 0,
-  "incomplete_skills": 284,
-  "routable_skills": 5745
+  "incomplete_skills": 65,
+  "routable_skills": 5964
  },
  "domains": {
   "agents-automation": 765,
@@ -39401,8 +39401,7 @@
     "Run the conversational ECC setup wizard inside the current harness: inventory the install, collect scope (user/project/l",
     "Run the conversational ECC setup wizard inside the current harness: inventory the install, collect scope (user/project/local) and hook mode (off/minimal/standar"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "eval-harness",
@@ -39415,8 +39414,7 @@
     "Eval-driven development (EDD) framework for AI coding sessions",
     "Eval-driven development (EDD) framework for AI coding sessions — define capability and regression evals before coding, grade with code-based, model-based, rule,"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "config-gc",
@@ -39637,8 +39635,7 @@
     "PreToolUse fact-forcing gate that denies the first Edit/Write/Bash (including MultiEdit) attempt until the agent present",
     "PreToolUse fact-forcing gate that denies the first Edit/Write/Bash (including MultiEdit) attempt until the agent presents concrete facts (importers, data schema"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "diagnosing-superpowers",
@@ -40353,8 +40350,7 @@
     "Browser automation CLI for AI agents.",
     "Browser automation CLI for AI agents. Use when the user needs to interact with websites, including navigating pages, filling forms, clicking buttons, taking scr"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "incremental-implementation",
@@ -40640,8 +40636,7 @@
     "Prepares bulk RNA-seq FASTQ, Salmon, STAR or featureCounts output for gene-level differential expression.",
     "Prepares bulk RNA-seq FASTQ, Salmon, STAR or featureCounts output for gene-level differential expression. Covers nf-core/rnaseq and standalone quantification, b"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "autoskill",
@@ -41408,8 +41403,7 @@
     "Share durable, inspectable context and handoffs between Claude, Codex, Hermes, Cursor, OpenCode, and other agents throug",
     "Share durable, inspectable context and handoffs between Claude, Codex, Hermes, Cursor, OpenCode, and other agents through the local ECC Memory Vault. Use when a"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "github-issues",
@@ -42648,8 +42642,7 @@
     "Patterns and architectures for autonomous Claude Code loops",
     "Patterns and architectures for autonomous Claude Code loops — from simple sequential pipelines to RFC-driven multi-agent DAG systems. Retained for compatibility"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "competitor-ad-intelligence",
@@ -44287,8 +44280,7 @@
     "Atlassian Confluence expert for creating and managing spaces, knowledge bases, and documentation.",
     "Atlassian Confluence expert for creating and managing spaces, knowledge bases, and documentation. Configures space permissions and hierarchies, creates page tem"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "commercial-forecaster",
@@ -46707,8 +46699,7 @@
     "Draft a structured grant proposal from research ideas and literature.",
     "Draft a structured grant proposal from research ideas and literature. Supports KAKENHI (Japan), NSF (US), NSFC (China, including 面上/青年/优青/杰青/海外优青/重点), ERC (EU),"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "kill-argument",
@@ -46721,8 +46712,7 @@
     "Two-thread adversarial review: a fresh reviewer constructs the strongest 200-word rejection memo, then a second fresh re",
     "Two-thread adversarial review: a fresh reviewer constructs the strongest 200-word rejection memo, then a second fresh reviewer defends the paper point-by-point"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "formula-derivation",
@@ -46761,8 +46751,7 @@
     "Workflow 5: orchestrate a text-only resubmit of a polished paper to a different venue under hard constraints (no new exp",
     "Workflow 5: orchestrate a text-only resubmit of a polished paper to a different venue under hard constraints (no new experiments, no bib edits, no framework cha"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "paper-talk",
@@ -46775,8 +46764,7 @@
     "End-to-end conference talk pipeline: paper → slide outline → Beamer + PPTX → per-page polish → assurance checks (claim /",
     "End-to-end conference talk pipeline: paper → slide outline → Beamer + PPTX → per-page polish → assurance checks (claim / citation / anonymity) → final export an"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "idea-discovery-robot",
@@ -46789,8 +46777,7 @@
     "Workflow 1 adaptation for robotics and embodied AI.",
     "Workflow 1 adaptation for robotics and embodied AI. Orchestrates robotics-aware literature survey, idea generation, novelty check, and critical review to go fro"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "proof-checker",
@@ -46803,8 +46790,7 @@
     "Rigorous mathematical proof verification and fixing workflow.",
     "Rigorous mathematical proof verification and fixing workflow. Reads a LaTeX proof, identifies gaps via fresh-agent Codex GPT-6-Astra ultra review, fixes each ga"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "research-implement-feature",
@@ -46831,8 +46817,7 @@
     "Per-page Codex review + targeted python-pptx / Beamer fixes for academic talk slides.",
     "Per-page Codex review + targeted python-pptx / Beamer fixes for academic talk slides. Use AFTER /paper-slides (or any externally generated PPTX/Beamer) when the"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "citation-audit",
@@ -46845,8 +46830,7 @@
     "Zero-context verification that every bibliographic entry in the paper is real, correctly attributed, and used in a conte",
     "Zero-context verification that every bibliographic entry in the paper is real, correctly attributed, and used in a context the cited paper actually supports — c"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "research-refine",
@@ -46859,8 +46843,7 @@
     "Turn a vague research direction into a problem-anchored, elegant, frontier-aware, implementation-oriented method plan vi",
     "Turn a vague research direction into a problem-anchored, elegant, frontier-aware, implementation-oriented method plan via iterative GPT-6-Astra review. Use when"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "comm-lit-review",
@@ -46886,8 +46869,7 @@
     "Run the Anti-Autoresearch integrity-forensics sweep (span-anchored evidence ledger → GPT auditors propose findings → a r",
     "Run the Anti-Autoresearch integrity-forensics sweep (span-anchored evidence ledger → GPT auditors propose findings → a rules-only reporter that lists every prop"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "paper-writing",
@@ -46900,8 +46882,7 @@
     "Workflow 3: Full paper writing pipeline.",
     "Workflow 3: Full paper writing pipeline. Orchestrates paper-plan \\u2192 paper-figure \\u2192 paper-write \\u2192 paper-compile \\u2192 auto-paper-improvement-loop"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "paper-poster-html",
@@ -46914,8 +46895,7 @@
     "DEFAULT poster pipeline",
     "DEFAULT poster pipeline — build an academic conference poster (ICML/NeurIPS/ICLR/CVPR/...) as a single HTML/CSS file with measurement-driven hard gates, real pa"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "code-simplification",
@@ -47032,8 +47012,7 @@
     "Multi-agent orchestration using dmux (tmux pane manager for AI agents).",
     "Multi-agent orchestration using dmux (tmux pane manager for AI agents). Patterns for parallel agent workflows across Claude Code, Codex, OpenCode, and other har"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "team-composition-analysis",
@@ -47176,8 +47155,7 @@
     "Workflow 1: Full idea discovery pipeline.",
     "Workflow 1: Full idea discovery pipeline. Orchestrates research-lit \\u2192 idea-creator \\u2192 novelty-check \\u2192 research-review to go from a broad research"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "torchdrug",
@@ -47476,8 +47454,7 @@
     "Generate deterministic publication-quality architecture, workflow, and pipeline diagrams from structured JSON (FigureSpe",
     "Generate deterministic publication-quality architecture, workflow, and pipeline diagrams from structured JSON (FigureSpec) into editable SVG. Use when user says"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "continuous-learning",
@@ -47724,8 +47701,7 @@
     "Answer questions about ECC by reading the live repo surface",
     "Answer questions about ECC by reading the live repo surface — agents, skills, commands, hooks, rules, install profiles, and docs — instead of memory. Use when t"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "experiment-audit",
@@ -47738,8 +47714,7 @@
     "Audit experiment integrity before claiming results.",
     "Audit experiment integrity before claiming results. Uses fresh-agent GPT-6-Astra review (same-family provisional in the base Codex mirror) to check for fake gro"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "high-end-visual-design",
@@ -47778,8 +47753,7 @@
     "Fast in-memory DataFrame library for datasets that fit in RAM.",
     "Fast in-memory DataFrame library for datasets that fit in RAM. Use when pandas is too slow but data still fits in memory. Lazy evaluation, parallel execution, A"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "javascript-testing-patterns",
@@ -47922,8 +47896,7 @@
     "Turn a refined research proposal or method idea into a detailed, claim-driven experiment roadmap.",
     "Turn a refined research proposal or method idea into a detailed, claim-driven experiment roadmap. Use after `research-refine`, or when the user asks for a detai"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "clinical-reports",
@@ -49473,8 +49446,7 @@
     "Render an ARIS Markdown / JSON artifact (IDEA_REPORT, AUTO_REVIEW, KILL_ARGUMENT, PAPER_PLAN, research-wiki state, etc.)",
     "Render an ARIS Markdown / JSON artifact (IDEA_REPORT, AUTO_REVIEW, KILL_ARGUMENT, PAPER_PLAN, research-wiki state, etc.) into a single-file HTML view designed f"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "integrate-context-matic",
@@ -49656,8 +49628,7 @@
     "Analyze ARIS usage logs and propose optimizations to SKILL.md files, reviewer prompts, and workflow defaults.",
     "Analyze ARIS usage logs and propose optimizations to SKILL.md files, reviewer prompts, and workflow defaults. Outer-loop harness optimization inspired by Meta-H"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "labarchive-integration",
@@ -49826,8 +49797,7 @@
     "Autonomous design space exploration loop for computer architecture and EDA.",
     "Autonomous design space exploration loop for computer architecture and EDA. Runs a program, analyzes results, tunes parameters, and iterates until objective is"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "paper-claim-audit",
@@ -49840,8 +49810,7 @@
     "Zero-context verification that every number, comparison, and scope claim in the paper matches raw result files.",
     "Zero-context verification that every number, comparison, and scope claim in the paper matches raw result files. Uses a fresh Codex reviewer with no prior contex"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "astropy",
@@ -49932,8 +49901,7 @@
     "Creates devcontainers with Claude Code, language-specific tooling (Python/Node/Rust/Go), and persistent volumes.",
     "Creates devcontainers with Claude Code, language-specific tooling (Python/Node/Rust/Go), and persistent volumes. Use when adding devcontainer support to a proje"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "pytdc",
@@ -50207,8 +50175,7 @@
     "AWS Bedrock AgentCore comprehensive expert for deploying and managing AI agents at scale.",
     "AWS Bedrock AgentCore comprehensive expert for deploying and managing AI agents at scale. Use when working with any AgentCore service including Gateway, Runtime"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "benchmark-optimization-loop",
@@ -50234,8 +50201,7 @@
     "Export a promoted fine-tuned model in the right deployment format",
     "Export a promoted fine-tuned model in the right deployment format — merged safetensors, LoRA-only, GGUF with imatrix, or FP8. Use after a checkpoint passes prom"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "meta-apply",
@@ -50248,8 +50214,7 @@
     "Privileged applier that LANDS meta-optimize / corpus-audit patches the user approved",
     "Privileged applier that LANDS meta-optimize / corpus-audit patches the user approved — the ONLY skill permitted to mutate the skill corpus from a self-modificat"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "api-onboarding",
@@ -50327,8 +50292,7 @@
     "Diagnoses pipeline performance issues -- slow jobs, expensive queries, latency trends -- using Monte Carlo's cross-platf",
     "Diagnoses pipeline performance issues -- slow jobs, expensive queries, latency trends -- using Monte Carlo's cross-platform observability. Uses a tiered investi"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "semantic-scholar",
@@ -50341,8 +50305,7 @@
     "Search published venue papers (IEEE, ACM, Springer, etc.) via Semantic Scholar API.",
     "Search published venue papers (IEEE, ACM, Springer, etc.) via Semantic Scholar API. Complements /arxiv (preprints) with citation counts, venue metadata, and TLD"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "tiledbvcf",
@@ -51058,8 +51021,7 @@
     "Investigate and remediate data quality alerts using Monte Carlo MCP tools.",
     "Investigate and remediate data quality alerts using Monte Carlo MCP tools. Runs root cause analysis, assesses blast radius, discovers available tools (MCP/CLI/A"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "burp-suite-testing",
@@ -51098,8 +51060,7 @@
     "Generate publication-quality AI illustrations for academic papers using Gemini image generation.",
     "Generate publication-quality AI illustrations for academic papers using Gemini image generation. Creates architecture diagrams, method illustrations with Claude"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "pymoo",
@@ -51296,8 +51257,7 @@
     "Workflow 4: Submission rebuttal pipeline.",
     "Workflow 4: Submission rebuttal pipeline. Parses external reviews, enforces coverage and grounding, drafts a safe text-only rebuttal under venue limits, and man"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "result-to-claim",
@@ -51310,8 +51270,7 @@
     "Use when experiments complete to judge what claims the results support, what they don't, and what evidence is still miss",
     "Use when experiments complete to judge what claims the results support, what they don't, and what evidence is still missing. A secondary Codex agent evaluates r"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "zarr-python",
@@ -51389,8 +51348,7 @@
     "Persistent research knowledge base that accumulates papers, ideas, experiments, claims, and their relationships across t",
     "Persistent research knowledge base that accumulates papers, ideas, experiments, claims, and their relationships across the entire research lifecycle. Inspired b"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "offensive-shellcode",
@@ -51885,8 +51843,7 @@
     "Run GPU workloads on Modal",
     "Run GPU workloads on Modal — training, fine-tuning, inference, batch processing. Zero-config serverless: no SSH, no Docker, auto scale-to-zero. Use when user sa"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "crewai-multi-agent",
@@ -51977,8 +51934,7 @@
     "SSH job queue for multi-seed/multi-config ML experiments with OOM-aware retry, stale-screen cleanup, and wave-transition",
     "SSH job queue for multi-seed/multi-config ML experiments with OOM-aware retry, stale-screen cleanup, and wave-transition race prevention. Use when user says \"ba"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "microservices-architect",
@@ -52200,8 +52156,7 @@
     "Generates optimized prompts for AI tools.",
     "Generates optimized prompts for AI tools. Activates only when the user explicitly asks to write, fix, improve, or adapt a prompt for a specific AI tool (LLM, Cu"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "linkedin-content",
@@ -52279,8 +52234,7 @@
     "All pods run in namespace crs.",
     "All pods run in namespace crs. Use when pods in the crs namespace are in CrashLoopBackOff, OOMKilled, or restarting, multiple services restart simultaneously (c"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "monte-carlo-storage-cost-analysis",
@@ -52293,8 +52247,7 @@
     "Analyze a warehouse for stale, unused, or redundant tables via the analyze_storage_costs MCP tool.",
     "Analyze a warehouse for stale, unused, or redundant tables via the analyze_storage_costs MCP tool. Classifies waste patterns and table categories, computes safe"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "code-review-excellence",
@@ -52478,8 +52431,7 @@
     "Align a fine-tuned model with preference data using DPO, ORPO, KTO, or SimPO.",
     "Align a fine-tuned model with preference data using DPO, ORPO, KTO, or SimPO. Use when preference pairs or thumbs-up/down feedback exist, when choosing between"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "pysam",
@@ -52531,8 +52483,7 @@
     "AWS cost optimization, monitoring, and operational excellence expert.",
     "AWS cost optimization, monitoring, and operational excellence expert. Use when analyzing AWS bills, estimating costs, setting up CloudWatch alarms, querying log"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "cohesivity",
@@ -52610,8 +52561,7 @@
     "Trustpilot customer reviews scraper for any company listed on trustpilot.com",
     "Trustpilot customer reviews scraper for any company listed on trustpilot.com — given a company domain (e.g. shopify.com, apple.com, shopwagandtail.com) plus opt"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "facebook-page-posts",
@@ -52624,8 +52574,7 @@
     "Scrapes posts from any public Facebook Page timeline, returning structured data including post text, author info, engage",
     "Scrapes posts from any public Facebook Page timeline, returning structured data including post text, author info, engagement metrics (likes/comments/shares), re"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "facebook-groups-scrape-posts",
@@ -52638,8 +52587,7 @@
     "Scrapes posts from a Facebook group given a group URL, sort order, and desired count",
     "Scrapes posts from a Facebook group given a group URL, sort order, and desired count — returns structured post metadata including post_id, permalink, author, ti"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "xiaohongshu-search",
@@ -52652,8 +52600,7 @@
     "Search Xiaohongshu (RedNote / xhs) notes by keyword and return a paginated list with title, author, engagement stats (li",
     "Search Xiaohongshu (RedNote / xhs) notes by keyword and return a paginated list with title, author, engagement stats (likes, collects, comments), cover image UR"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "x-tweet-by-handle",
@@ -52705,8 +52652,7 @@
     "Trustpilot company profile lookup on trustpilot.com",
     "Trustpilot company profile lookup on trustpilot.com — input a company domain (e.g. apple.com, shopify.com, shopwagandtail.com) and extract company metadata: off"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "threads-user-posts",
@@ -52719,8 +52665,7 @@
     "Fetches public posts from a Threads user's profile page, extracting post text, engagement metrics, and media info from S",
     "Fetches public posts from a Threads user's profile page, extracting post text, engagement metrics, and media info from SSR-embedded JSON. Use when user asks to"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "xiaohongshu-auto-posting",
@@ -52760,8 +52705,7 @@
     "Fetch Xiaohongshu (RedNote / xhs) user profile information and their published notes list by user ID, returning nickname",
     "Fetch Xiaohongshu (RedNote / xhs) user profile information and their published notes list by user ID, returning nickname, bio, follower/following counts, engage"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "facebook-ads-library-search",
@@ -52774,8 +52718,7 @@
     "Searches Meta Ad Library (Facebook/Instagram/WhatsApp ads) by keyword or Facebook page ID and extracts ad details includ",
     "Searches Meta Ad Library (Facebook/Instagram/WhatsApp ads) by keyword or Facebook page ID and extracts ad details including creatives, copy, CTA, publisher plat"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "xiaohongshu-note-detail",
@@ -52788,8 +52731,7 @@
     "Fetch Xiaohongshu (RedNote / xhs) note detail and comments by note ID, returning title, description, author info, engage",
     "Fetch Xiaohongshu (RedNote / xhs) note detail and comments by note ID, returning title, description, author info, engagement stats, tags, and paginated comment"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "facebook-page-profile-posts",
@@ -52802,8 +52744,7 @@
     "Scrapes posts from any public Facebook Page or personal Profile timeline, returning structured data including post text,",
     "Scrapes posts from any public Facebook Page or personal Profile timeline, returning structured data including post text, author info with profile picture, engag"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "x-tweet-by-conversation",
@@ -52843,8 +52784,7 @@
     "Search Xiaohongshu (XHS / RedNote) notes by keyword with full field extraction including body text, topics/tags, image l",
     "Search Xiaohongshu (XHS / RedNote) notes by keyword with full field extraction including body text, topics/tags, image list URLs, video stream URL, publish time"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "x-tweet-search",
@@ -52857,8 +52797,7 @@
     "Scrapes tweets from X (Twitter) by search query, user handle, or direct URL",
     "Scrapes tweets from X (Twitter) by search query, user handle, or direct URL — returns full tweet data including text, author info, engagement metrics, media, an"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "google-search-serp",
@@ -52871,8 +52810,7 @@
     "Extracts Google Search results page (SERP) data including organic results, paid ads, related searches, People Also Ask q",
     "Extracts Google Search results page (SERP) data including organic results, paid ads, related searches, People Also Ask questions, AI Overview text, and total re"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "webcrawler-deep-crawl",
@@ -52885,8 +52823,7 @@
     "Deep-crawl any website from start URLs, return per-page LLM-ready text/markdown/HTML plus metadata (title, description,",
     "Deep-crawl any website from start URLs, return per-page LLM-ready text/markdown/HTML plus metadata (title, description, author, language, canonical URL, OG) and"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "producthunt-launches",
@@ -52899,8 +52836,7 @@
     "Scrape Product Hunt daily/weekly/monthly/yearly leaderboard launches with full product details, maker profiles, and webs",
     "Scrape Product Hunt daily/weekly/monthly/yearly leaderboard launches with full product details, maker profiles, and website contact info. Use when user mentions"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "youtube-channel-business-email",
@@ -52913,8 +52849,7 @@
     "YouTube channel business email and contact extractor: accepts a channel id (UCxxx), handle (@name), or URL",
     "YouTube channel business email and contact extractor: accepts a channel id (UCxxx), handle (@name), or URL; navigates the channel About view; extracts the busin"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "google-maps-contact-extract",
@@ -52927,8 +52862,7 @@
     "Extracts business contact details from Google Maps search results and place detail pages, then visits each business webs",
     "Extracts business contact details from Google Maps search results and place detail pages, then visits each business website to collect emails, phone numbers, an"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "linkedin-jobs-search",
@@ -52941,8 +52875,7 @@
     "Search LinkedIn job listings and extract full job details.",
     "Search LinkedIn job listings and extract full job details. Supports filtering by work type (remote/on-site/hybrid), contract type (full-time/part-time/contract/"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "indeed-job-search",
@@ -52955,8 +52888,7 @@
     "Scrape job listings from Indeed.com by keyword, location, and country.",
     "Scrape job listings from Indeed.com by keyword, location, and country. Returns job title, company, salary, rating, description, benefits, and apply links. Use w"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "amazon-product-detail",
@@ -52969,8 +52901,7 @@
     "Amazon product detail page scraper: extract full product data from any open Amazon product detail URL (any /dp/{asin} or",
     "Amazon product detail page scraper: extract full product data from any open Amazon product detail URL (any /dp/{asin} or /gp/product/{asin} page across all Amaz"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "amazon-bestseller-listing",
@@ -52983,8 +52914,7 @@
     "Amazon Best Sellers listing scraper: extract product cards from any Amazon Best Sellers (zgbs) or /gp/bestsellers/ categ",
     "Amazon Best Sellers listing scraper: extract product cards from any Amazon Best Sellers (zgbs) or /gp/bestsellers/ category page — returns rank (position on cha"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "amazon-alexa-qa",
@@ -52997,8 +52927,7 @@
     "Amazon Alexa for Shopping Q&A automation: submits questions to Amazon's Alexa/Rufus AI shopping assistant and collects r",
     "Amazon Alexa for Shopping Q&A automation: submits questions to Amazon's Alexa/Rufus AI shopping assistant and collects response text; supports optional keyword"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "goofish-search-list",
@@ -53011,8 +52940,7 @@
     "Scrapes second-hand item search results from Goofish (闲鱼/xianyu, goofish.com)",
     "Scrapes second-hand item search results from Goofish (闲鱼/xianyu, goofish.com) — China's largest second-hand marketplace. Input: keyword, optional sort/filter pa"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "amazon-listing-competitor-analysis-skill",
@@ -53038,8 +52966,7 @@
     "Extracts full item detail from any open eBay item URL, returning JSON with url, itemNumber, title, subTitle, categories,",
     "Extracts full item detail from any open eBay item URL, returning JSON with url, itemNumber, title, subTitle, categories, price, priceWithCurrency, currency, was"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "ebay-search-listing",
@@ -53052,8 +52979,7 @@
     "Extracts product listings from any eBay search or category page URL, returning per-item cards (itemNumber, url, title, s",
     "Extracts product listings from any eBay search or category page URL, returning per-item cards (itemNumber, url, title, subtitle, caption, price, priceWithCurren"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "etsy-product-detail",
@@ -53066,8 +52992,7 @@
     "Etsy product detail scraper: given an Etsy listing URL, returns full product detail including listingId, title, priceCur",
     "Etsy product detail scraper: given an Etsy listing URL, returns full product detail including listingId, title, priceCurrent, priceOriginal, currency, images (a"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "amazon-search-listing",
@@ -53080,8 +53005,7 @@
     "Amazon search and category listing scraper: extract product listings from any Amazon search results page, keyword search",
     "Amazon search and category listing scraper: extract product listings from any Amazon search results page, keyword search URL, or category browse page and return"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "etsy-keyword-search",
@@ -53094,8 +53018,7 @@
     "Etsy keyword search scraper: given a search keyword and optional page number, returns paginated product listings with li",
     "Etsy keyword search scraper: given a search keyword and optional page number, returns paginated product listings with listingId, shopId, title, url, image, sale"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "etsy-category-listing",
@@ -53108,8 +53031,7 @@
     "Etsy category page scraper: given an Etsy category URL (e.g.",
     "Etsy category page scraper: given an Etsy category URL (e.g. https://www.etsy.com/c/jewelry) and optional page number, returns paginated product listings with l"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "ebay-sold-listings-search",
@@ -53122,8 +53044,7 @@
     "eBay sold-listings scraper across 8 marketplaces (ebay.com/.co.uk/.de/.fr/.it/.es/.ca/.com.au).",
     "eBay sold-listings scraper across 8 marketplaces (ebay.com/.co.uk/.de/.fr/.it/.es/.ca/.com.au). Takes keyword plus filters (category, price range, item conditio"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "1688-product-detail",
@@ -53136,8 +53057,7 @@
     "Extracts comprehensive wholesale product data from 1688.com product detail pages: title, tiered pricing, SKU variants wi",
     "Extracts comprehensive wholesale product data from 1688.com product detail pages: title, tiered pricing, SKU variants with dimensions/weight, product images, se"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "walmart-product-detail",
@@ -53150,8 +53070,7 @@
     "Walmart product detail page extractor: given a walmart.com product URL (walmart.com/ip/...), extract full product data i",
     "Walmart product detail page extractor: given a walmart.com product URL (walmart.com/ip/...), extract full product data including itemId, title, brand, model, UP"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "youtube-transcript",
@@ -53164,8 +53083,7 @@
     "YouTube transcript extraction and content reformatting: given a YouTube video URL, opens the video's transcript panel, e",
     "YouTube transcript extraction and content reformatting: given a YouTube video URL, opens the video's transcript panel, extracts all timestamped segments, and tr"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "youtube-transcript-analysis-api-skill",
@@ -53517,8 +53435,7 @@
     "Generate, refine, validate, and render diagrams from natural language, notes, code, schemas, or existing diagram sources",
     "Generate, refine, validate, and render diagrams from natural language, notes, code, schemas, or existing diagram sources: flowcharts, swimlanes, attack-path gra"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "fine-tuning-expert",
@@ -53583,8 +53500,7 @@
     "Generate publication-quality academic illustrations through a local Codex app-server bridge that uses Codex native image",
     "Generate publication-quality academic illustrations through a local Codex app-server bridge that uses Codex native image generation. This is a separate experime"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "chroma",
@@ -53727,8 +53643,7 @@
     "Fill in the per-paper TODO sections of research-wiki/papers/<slug>.md pages that literature-ingest skills leave as bare",
     "Fill in the per-paper TODO sections of research-wiki/papers/<slug>.md pages that literature-ingest skills leave as bare scaffolds. Use when user says 'enrich wi"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "llamaindex",
@@ -53754,8 +53669,7 @@
     "TikTok hashtag video scraper: input a hashtag name → output paginated video list with full metadata (author profile, eng",
     "TikTok hashtag video scraper: input a hashtag name → output paginated video list with full metadata (author profile, engagement stats, music, video meta, hashta"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "ejentum-reasoning-harness",
@@ -53807,8 +53721,7 @@
     "Workflow 1.5: Bridge between idea discovery and auto review.",
     "Workflow 1.5: Bridge between idea discovery and auto review. Reads EXPERIMENT_PLAN.md, implements experiment code, deploys to GPU, collects initial results. Use"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "qdrant-model-migration",
@@ -54042,8 +53955,7 @@
     "Fine-tune vision-language models (VLMs) with supervised learning on image+text data.",
     "Fine-tune vision-language models (VLMs) with supervised learning on image+text data. Use when adapting a VLM to a visual domain or task, configuring frozen-visi"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "etsy-shop-catalog",
@@ -54056,8 +53968,7 @@
     "Etsy shop catalog scraper: given an Etsy shop URL (e.g.",
     "Etsy shop catalog scraper: given an Etsy shop URL (e.g. https://www.etsy.com/shop/{shop-name}) and optional page number, returns paginated product listings from"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "linkedin-strategy",
@@ -54083,8 +53994,7 @@
     "Create stunning, animation-rich HTML presentations from scratch or by converting PowerPoint files. (github-skills)",
     "Create stunning, animation-rich HTML presentations from scratch or by converting PowerPoint files. Use when the user wants to build a presentation, convert a PP (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "auto-review-loop",
@@ -54097,8 +54007,7 @@
     "Autonomous multi-round research review loop.",
     "Autonomous multi-round research review loop. Repeatedly reviews using Claude Code via claude-review MCP, implements fixes, and re-reviews until positive assessm"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "homelab-network-setup",
@@ -54124,8 +54033,7 @@
     "Financial statements, business segments, dividends, valuation multiples (PE/PB/PS), industry comparison, operating data,",
     "Financial statements, business segments, dividends, valuation multiples (PE/PB/PS), industry comparison, operating data, corporate actions, company and executiv"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "karpathy-coder",
@@ -54216,8 +54124,7 @@
     "Real-time quotes, K-line charts, order book, trade ticks, intraday capital flow, market sentiment temperature, trading s",
     "Real-time quotes, K-line charts, order book, trade ticks, intraday capital flow, market sentiment temperature, trading session schedule, security lists, exchang"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "skill-developer",
@@ -54347,8 +54254,7 @@
     "Analyze a Monte Carlo monitor and recommend config changes to reduce alert noise.",
     "Analyze a Monte Carlo monitor and recommend config changes to reduce alert noise. Supports metric, custom SQL, validation, and table monitors. Fetches the repor"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "wellally-tech",
@@ -54595,8 +54501,7 @@
     "Full end-to-end research pipeline: from a broad research direction through idea discovery, experiments, and review all t",
     "Full end-to-end research pipeline: from a broad research direction through idea discovery, experiments, and review all the way to a polished paper PDF. Use when"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "monetization",
@@ -55457,8 +55362,7 @@
     "Scrapes Instagram posts tagged at a specific location or place, returning media items with captions, like/comment counts",
     "Scrapes Instagram posts tagged at a specific location or place, returning media items with captions, like/comment counts, media URLs and user info. Use when use"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "deepread",
@@ -55861,8 +55765,7 @@
     "Comprehensive market sizing methodologies for calculating Total Addressable Market (TAM), Serviceable Available Market (",
     "Comprehensive market sizing methodologies for calculating Total Addressable Market (TAM), Serviceable Available Market (SAM), and Serviceable Obtainable Market"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "python-pro",
@@ -56148,8 +56051,7 @@
     "Searches Douyin (douyin.com) for videos by keyword and returns structured video data including author info, stats, cover",
     "Searches Douyin (douyin.com) for videos by keyword and returns structured video data including author info, stats, cover, description, hashtags, and download UR"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "legacy-modernizer",
@@ -56410,8 +56312,7 @@
     "Generate SEO-focused images such as OG cards, hero images, schema assets, product visuals, and infographics.",
     "Generate SEO-focused images such as OG cards, hero images, schema assets, product visuals, and infographics. Use when image generation is part of an SEO workflo"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "mtls-configuration",
@@ -56489,8 +56390,7 @@
     "Fetch customer reviews for a Taobao or Tmall product by itemId, returning reviewer name, date, purchased variant, review",
     "Fetch customer reviews for a Taobao or Tmall product by itemId, returning reviewer name, date, purchased variant, review text, and photo URLs. Use when user ask"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "baoyu-slide-deck",
@@ -56750,8 +56650,7 @@
     "AWS serverless and event-driven architecture expert based on Well-Architected Framework.",
     "AWS serverless and event-driven architecture expert based on Well-Architected Framework. Use when building serverless APIs, Lambda functions, REST APIs, microse"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "leave-management",
@@ -57038,8 +56937,7 @@
     "Triage Monte Carlo alerts interactively or build an automated workflow.",
     "Triage Monte Carlo alerts interactively or build an automated workflow. Fetch, score, and troubleshoot alerts using MCP tools now, or design a reusable workflow"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "azure-eventhub-java",
@@ -57390,8 +57288,7 @@
     "Microsoft 365 Agents SDK for Python.",
     "Microsoft 365 Agents SDK for Python. Build multichannel agents for Teams/M365/Copilot Studio with aiohttp hosting, AgentApplication routing, streaming responses"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "budget-cash-flow",
@@ -57495,8 +57392,7 @@
     "Discovers Threads user accounts by keyword, extracting profile data including username, display name, verification statu",
     "Discovers Threads user accounts by keyword, extracting profile data including username, display name, verification status, biography, and follower count. Use wh"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "marketplace-rbac-audit",
@@ -57522,8 +57418,7 @@
     "Turn a repository into a cited HTML slide deck and detect the day it drifts from the code.",
     "Turn a repository into a cited HTML slide deck and detect the day it drifts from the code. Citations record file, lines, and hash; a stdlib check reports CURREN"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "setup-matt-pocock-skills",
@@ -57796,8 +57691,7 @@
     "Reverse engineer binaries with IDA Pro: decompilation, disassembly, data-flow tracking, cross-references, and IDA MCP au",
     "Reverse engineer binaries with IDA Pro: decompilation, disassembly, data-flow tracking, cross-references, and IDA MCP automation for deep static analysis of PE/"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "shellcheck-configuration",
@@ -57928,8 +57822,7 @@
     "Quick single-paper lookup via AlphaXiv LLM-optimized summaries with tiered source fallback.",
     "Quick single-paper lookup via AlphaXiv LLM-optimized summaries with tiered source fallback. Use when user says \"explain this paper\", \"summarize paper\", pastes a"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "openalex",
@@ -57942,8 +57835,7 @@
     "Search academic papers via OpenAlex API for open citation data, institutional affiliations, and funding information.",
     "Search academic papers via OpenAlex API for open citation data, institutional affiliations, and funding information. Use when user says \"openalex search\", \"sear"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "swift-expert",
@@ -57969,8 +57861,7 @@
     "Walmart category page scraper: input a walmart.com browse or category URL with optional page number, extract paginated p",
     "Walmart category page scraper: input a walmart.com browse or category URL with optional page number, extract paginated product listings with itemId, url, title,"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "ml-paper-writing",
@@ -58087,8 +57978,7 @@
     "Install and use the official Beatra AI Video Studio package, pinned by digest, for paid text-to-video, image-to-video, a",
     "Install and use the official Beatra AI Video Studio package, pinned by digest, for paid text-to-video, image-to-video, and video edit or extend jobs on the host"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "linkedin-content-generator",
@@ -58192,8 +58082,7 @@
     "Walmart keyword search scraper: input a search keyword and page number, navigate to walmart.com search results, extract",
     "Walmart keyword search scraper: input a search keyword and page number, navigate to walmart.com search results, extract paginated product listings with itemId,"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "azure-security-keyvault-secrets-java",
@@ -58649,8 +58538,7 @@
     "Walmart product reviews scraper: given a walmart.com product item ID, navigate to the reviews page and extract paginated",
     "Walmart product reviews scraper: given a walmart.com product item ID, navigate to the reviews page and extract paginated customer reviews including reviewId, ra"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "image-annotations",
@@ -58781,8 +58669,7 @@
     "TikTok user profile video scraper: input a TikTok username → output the user's profile info plus paginated video list wi",
     "TikTok user profile video scraper: input a TikTok username → output the user's profile info plus paginated video list with full metadata (engagement stats, musi"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "understand",
@@ -58990,8 +58877,7 @@
     "Create or register a canvas extension in the awesome-copilot repository.",
     "Create or register a canvas extension in the awesome-copilot repository. Use when asked to scaffold a new canvas extension, create its plugin.json, add a reusab"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "interaction-design",
@@ -59199,8 +59085,7 @@
     "Find exploitable vulnerabilities in GitHub Actions workflows.",
     "Find exploitable vulnerabilities in GitHub Actions workflows. Every finding MUST include a concrete exploitation scenario — if you can't build the attack, don't"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "linktree-link-hub",
@@ -59369,8 +59254,7 @@
     "Generate a structured paper outline from review conclusions and experiment results.",
     "Generate a structured paper outline from review conclusions and experiment results. Use when user says \\\\\\\"\\u5199\\u5927\\u7eb2\\\\\\\", \\\\\\\"paper outline\\\\\\\", \\\\\\\"pl"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "ecommerce-listing",
@@ -59383,8 +59267,7 @@
     "Extract product list from any e-commerce category page, search results page, or keyword search with filters.",
     "Extract product list from any e-commerce category page, search results page, or keyword search with filters. Returns paginated product arrays with URL, name, pr"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "antigravity-skill-orchestrator",
@@ -59410,8 +59293,7 @@
     "Master on-call shift handoffs with context transfer, escalation procedures, and documentation.",
     "Master on-call shift handoffs with context transfer, escalation procedures, and documentation. Use this skill when transitioning on-call responsibilities betwee"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "run-without-you",
@@ -59658,8 +59540,7 @@
     "Manage GPU compute jobs on the Qizhi (启智) platform using qzcli",
     "Manage GPU compute jobs on the Qizhi (启智) platform using qzcli — a kubectl-style CLI tool. Use when user says \"qzcli\", \"启智平台\", \"submit job\", \"stop job\", \"查计算组\","
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "orch-build-mvp",
@@ -59946,8 +59827,7 @@
     "CSV Manual Export: a UTF-8 CSV template from a confirmed field list, empty by default, with no invented columns or value",
     "CSV Manual Export: a UTF-8 CSV template from a confirmed field list, empty by default, with no invented columns or values. Use for an import, staging or handoff"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "accounting-software-selection",
@@ -59973,8 +59853,7 @@
     "Scrapes posts from an Instagram user's profile feed including captions, media URLs, like/comment counts, timestamps and",
     "Scrapes posts from an Instagram user's profile feed including captions, media URLs, like/comment counts, timestamps and location tags. Use when user mentions sc"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "finance-billing-ops",
@@ -60117,8 +59996,7 @@
     "Autonomously improve a generated paper via Claude review through claude-review MCP → implement fixes → recompile, for 2",
     "Autonomously improve a generated paper via Claude review through claude-review MCP → implement fixes → recompile, for 2 rounds. Use when user says \\\"改论文\\\", \\\"im"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "pre-ship-gate",
@@ -60196,8 +60074,7 @@
     "Microsoft 365 Agents SDK for .NET.",
     "Microsoft 365 Agents SDK for .NET. Build multichannel agents for Teams/M365/Copilot Studio with ASP.NET Core hosting, AgentApplication routing, and MSAL-based a"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "maximalism",
@@ -60236,8 +60113,7 @@
     "Drive the radare2 CLI for binary reconnaissance, disassembly, analysis, function locating, export, and lightweight patch",
     "Drive the radare2 CLI for binary reconnaissance, disassembly, analysis, function locating, export, and lightweight patching (r2/rabin2/rasm2/radiff2) without a"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "coda-automation",
@@ -60328,8 +60204,7 @@
     "Analyze data coverage, create monitors for warehouse tables and AI agents.",
     "Analyze data coverage, create monitors for warehouse tables and AI agents. Covers coverage gaps, use-case analysis, data monitor creation, and agent observabili"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "spatial-design",
@@ -60447,8 +60322,7 @@
     "Get a deep critical review of research from an external reviewer backend (Codex or manual).",
     "Get a deep critical review of research from an external reviewer backend (Codex or manual). Use when user says \"review my research\", \"help me review\", \"get exte"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "evolving-ai-agents",
@@ -60682,8 +60556,7 @@
     "Run an end-to-end workflow that chains `research-refine` and `experiment-plan`.",
     "Run an end-to-end workflow that chains `research-refine` and `experiment-plan`. Use when the user wants a one-shot pipeline from vague research direction to foc"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "block-no-verify-hook",
@@ -61321,8 +61194,7 @@
     "Scaffold, write, debug, and enhance enterprise-grade Playwright E2E tests in Java using Page Object Model, JUnit 5, Allu",
     "Scaffold, write, debug, and enhance enterprise-grade Playwright E2E tests in Java using Page Object Model, JUnit 5, Allure reporting, and parallel execution."
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "presentation-deck",
@@ -61465,8 +61337,7 @@
     "Searches Google to discover social media profiles associated with a person, brand, or username",
     "Searches Google to discover social media profiles associated with a person, brand, or username; returns platform name, profile URL, username, bio snippet, and f"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "azure-ai-translation-text-py",
@@ -61557,8 +61428,7 @@
     "Geracao de imagens humanizadas via Google AI Studio (Gemini).",
     "Geracao de imagens humanizadas via Google AI Studio (Gemini). Fotos realistas estilo influencer ou educacional com iluminacao natural e imperfeicoes sutis."
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "editorial-design",
@@ -61897,8 +61767,7 @@
     "Fetches comments from an Instagram post including comment text, username, timestamp, like count and reply count.",
     "Fetches comments from an Instagram post including comment text, username, timestamp, like count and reply count. Use when user mentions Instagram comments scrap"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "threads-keyword-search",
@@ -61911,8 +61780,7 @@
     "Searches Threads posts by keyword or hashtag and returns matching posts with engagement metrics, extracted from SSR-embe",
     "Searches Threads posts by keyword or hashtag and returns matching posts with engagement metrics, extracted from SSR-embedded JSON. Use when user asks to search"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "brendangregg-use-tsa",
@@ -62669,8 +62537,7 @@
     "Scrapes Instagram posts by hashtag, returning media items with captions, like/comment counts, media URLs and user info f",
     "Scrapes Instagram posts by hashtag, returning media items with captions, like/comment counts, media URLs and user info from the hashtag explore feed. Use when u"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "ui-screenshots",
@@ -62709,8 +62576,7 @@
     "Operate and extend NanoClaw, ECC's zero-dependency session-aware REPL, with persistent markdown-backed sessions and slas",
     "Operate and extend NanoClaw, ECC's zero-dependency session-aware REPL, with persistent markdown-backed sessions and slash commands for model switching, skill lo"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "email-drafter",
@@ -62892,8 +62758,7 @@
     "Your purpose is now is to create reusable command line scripts and utilities for using the Hugging Face API, allowing ch",
     "Your purpose is now is to create reusable command line scripts and utilities for using the Hugging Face API, allowing chaining, piping and intermediate processi"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "soc2-compliance",
@@ -63351,8 +63216,7 @@
     "Azure Speech to Text REST API for short audio (Python).",
     "Azure Speech to Text REST API for short audio (Python). Use for simple speech recognition of audio files up to 60 seconds without the Speech SDK."
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "tax-register",
@@ -63378,8 +63242,7 @@
     "Deploy containerized frontend + backend applications to Azure Container Apps with remote builds, managed identity, and i",
     "Deploy containerized frontend + backend applications to Azure Container Apps with remote builds, managed identity, and idempotent infrastructure."
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "python-observability",
@@ -63496,8 +63359,7 @@
     "Azure AI Search SDK for .NET (Azure.Search.Documents).",
     "Azure AI Search SDK for .NET (Azure.Search.Documents). Use for building search applications with full-text, vector, semantic, and hybrid search."
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "code-refactoring-tech-debt",
@@ -63732,8 +63594,7 @@
     "Generate and rank research ideas given a broad direction.",
     "Generate and rank research ideas given a broad direction. Use when user says \\\"\\u627eidea\\\", \\\"brainstorm ideas\\\", \\\"generate research ideas\\\", \\\"what can we wo"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "arxiv",
@@ -63746,8 +63607,7 @@
     "Search, download, and summarize academic papers from arXiv.",
     "Search, download, and summarize academic papers from arXiv. Use when user says \"search arxiv\", \"download paper\", \"fetch arxiv\", \"arxiv search\", \"get paper pdf\","
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "migrating-oracle-to-postgres-stored-procedures",
@@ -64242,8 +64102,7 @@
     "Extract complete product information from any e-commerce product page.",
     "Extract complete product information from any e-commerce product page. Returns name, price, currency, brand, images, description, SKU/ASIN/EAN/UPC/GTIN/MPN iden"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "tiktok-search-videos",
@@ -64256,8 +64115,7 @@
     "TikTok keyword search video scraper: input search keyword → output paginated video list with full metadata (author, enga",
     "TikTok keyword search video scraper: input search keyword → output paginated video list with full metadata (author, engagement stats, music, video meta). Use wh"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "java-architect",
@@ -64387,8 +64245,7 @@
     "Search Taobao and Tmall product listings by keyword, returning paginated product cards with title, price, shop, image, s",
     "Search Taobao and Tmall product listings by keyword, returning paginated product cards with title, price, shop, image, sales, and tags. Use when user asks to se"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "golang-pro",
@@ -64987,8 +64844,7 @@
     "Draft LaTeX paper section by section from an outline.",
     "Draft LaTeX paper section by section from an outline. Use when user says \\\\\\\"\\u5199\\u8bba\\u6587\\\\\\\", \\\\\\\"write paper\\\\\\\", \\\\\\\"draft LaTeX\\\\\\\", \\\\\\\"\\u5f00\\u59cb\\"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "accesslint-diff",
@@ -65261,8 +65117,7 @@
     "Fetch full product detail from a Taobao or Tmall product page by itemId, returning title, price, shop info, images, SKU",
     "Fetch full product detail from a Taobao or Tmall product page by itemId, returning title, price, shop info, images, SKU variants, and product attributes. Use wh"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "research-lit",
@@ -65275,8 +65130,7 @@
     "Search and analyze research papers, find related work, summarize key ideas.",
     "Search and analyze research papers, find related work, summarize key ideas. Use when user says \\\"find papers\\\", \\\"related work\\\", \\\"literature review\\\", \\\"what"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "wiki-vitepress",
@@ -65445,8 +65299,7 @@
     "Extracts full detail data from a single Goofish (闲鱼/xianyu, goofish.com) second-hand item page.",
     "Extracts full detail data from a single Goofish (闲鱼/xianyu, goofish.com) second-hand item page. Input: item URL or item ID. Output: title, price, seller info (n"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "reports-analytics",
@@ -65719,8 +65572,7 @@
     "Find logic bugs in a single file or function via semi-formal execution tracing (Premises → Trace → Divergence → Trigger",
     "Find logic bugs in a single file or function via semi-formal execution tracing (Premises → Trace → Divergence → Trigger → Remedy)."
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "design-taste-frontend",
@@ -66240,8 +66092,7 @@
     "Write the full patent specification from claims and invention disclosure.",
     "Write the full patent specification from claims and invention disclosure. Use when user says \\\"撰写说明书\\\", \\\"write specification\\\", \\\"写说明书\\\", \\\"patent description\\"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "beachhead-segment",
@@ -66436,8 +66287,7 @@
     "Install and use the official Ecommerce Product Images package, pinned by digest, for paid hosted work on the Beatra serv",
     "Install and use the official Ecommerce Product Images package, pinned by digest, for paid hosted work on the Beatra service."
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "youtube-summarizer",
@@ -66489,8 +66339,7 @@
     "Master comprehensive evaluation strategies for LLM applications, from automated metrics to human evaluation and A/B test",
     "Master comprehensive evaluation strategies for LLM applications, from automated metrics to human evaluation and A/B testing."
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "multi-agent-architect",
@@ -66672,8 +66521,7 @@
     "Install and use the official AI Voiceover Generator package, pinned by digest, for paid hosted work on the Beatra servic",
     "Install and use the official AI Voiceover Generator package, pinned by digest, for paid hosted work on the Beatra service."
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "mlops-engineer",
@@ -66725,8 +66573,7 @@
     "Install and use the official Multilingual Voiceover package, pinned by digest, for paid hosted work on the Beatra servic",
     "Install and use the official Multilingual Voiceover package, pinned by digest, for paid hosted work on the Beatra service."
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "use-dom",
@@ -66752,8 +66599,7 @@
     "Install and use the official AI Product Photography package, pinned by digest, for paid hosted work on the Beatra servic",
     "Install and use the official AI Product Photography package, pinned by digest, for paid hosted work on the Beatra service."
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "n8n-binary-and-data",
@@ -66988,8 +66834,7 @@
     "Install and use the official AI Podcast Voiceover package, pinned by digest, for paid hosted work on the Beatra service.",
     "Install and use the official AI Podcast Voiceover package, pinned by digest, for paid hosted work on the Beatra service. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "onboarding-playbook",
@@ -67015,8 +66860,7 @@
     "Install and use the official Talking Avatar Video package, pinned by digest, for paid hosted work on the Beatra service.",
     "Install and use the official Talking Avatar Video package, pinned by digest, for paid hosted work on the Beatra service. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "azure-cosmos-db-py",
@@ -67029,8 +66873,7 @@
     "Build production-grade Azure Cosmos DB NoSQL services following clean code, security best practices, and TDD principles.",
     "Build production-grade Azure Cosmos DB NoSQL services following clean code, security best practices, and TDD principles. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "deployment-engineer",
@@ -67303,8 +67146,7 @@
     "Install and use the official AI Music Generator package, pinned by digest, for paid hosted work on the Beatra service.",
     "Install and use the official AI Music Generator package, pinned by digest, for paid hosted work on the Beatra service. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "beatra",
@@ -67317,8 +67159,7 @@
     "Install and use the official AI Media Generator package, pinned by digest, for paid hosted work on the Beatra service.",
     "Install and use the official AI Media Generator package, pinned by digest, for paid hosted work on the Beatra service. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "viral-video-teardown-remake",
@@ -67331,8 +67172,7 @@
     "Install and use the official Viral Video Remake package, pinned by digest, for paid hosted work on the Beatra service.",
     "Install and use the official Viral Video Remake package, pinned by digest, for paid hosted work on the Beatra service. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "network-engineer",
@@ -67384,8 +67224,7 @@
     "Install and use the official AI Image Generator package, pinned by digest, for paid hosted work on the Beatra service.",
     "Install and use the official AI Image Generator package, pinned by digest, for paid hosted work on the Beatra service. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "mdpr-skill",
@@ -67555,8 +67394,7 @@
     "Azure Service Bus SDK for Python messaging.",
     "Azure Service Bus SDK for Python messaging. Use for queues, topics, subscriptions, and enterprise messaging patterns."
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "azure-mgmt-botservice-py",
@@ -67687,8 +67525,7 @@
     "One API and one credential for frontier and open-source LLMs, built into your Neon branch and powered by Databricks.",
     "One API and one credential for frontier and open-source LLMs, built into your Neon branch and powered by Databricks. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "database-optimizer",
@@ -67728,8 +67565,7 @@
     "Install and use the official AI Voice Cloning package, pinned by digest, for paid hosted work on the Beatra service.",
     "Install and use the official AI Voice Cloning package, pinned by digest, for paid hosted work on the Beatra service. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "flowhunt-skill",
@@ -67924,8 +67760,7 @@
     "Install and use the official AI Poster Maker package, pinned by digest, for paid hosted work on the Beatra service.",
     "Install and use the official AI Poster Maker package, pinned by digest, for paid hosted work on the Beatra service. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "security-scanning-security-hardening",
@@ -68081,8 +67916,7 @@
     "Install and use the official Lyrics to Song package, pinned by digest, for paid hosted work on the Beatra service.",
     "Install and use the official Lyrics to Song package, pinned by digest, for paid hosted work on the Beatra service. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "backend-architect",
@@ -68108,8 +67942,7 @@
     "Install and use the official Photo to Anime package, pinned by digest, for paid hosted work on the Beatra service.",
     "Install and use the official Photo to Anime package, pinned by digest, for paid hosted work on the Beatra service. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "azure-mgmt-applicationinsights-dotnet",
@@ -68214,8 +68047,7 @@
     "Install and use the official AI Logo Maker package, pinned by digest, for paid hosted work on the Beatra service.",
     "Install and use the official AI Logo Maker package, pinned by digest, for paid hosted work on the Beatra service. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "azure-compute-batch-java",
@@ -68267,8 +68099,7 @@
     "Autonomous multi-round research review loop using MiniMax API.",
     "Autonomous multi-round research review loop using MiniMax API. Use when you want to use MiniMax instead of Codex MCP for external review. Trigger with \\\"auto re"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "aws-well-architected-review",
@@ -68321,8 +68152,7 @@
     "TikTok single video detail scraper: input a TikTok video URL → output full video metadata (author profile, engagement st",
     "TikTok single video detail scraper: input a TikTok video URL → output full video metadata (author profile, engagement stats, music, video meta, hashtags, mentio"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "dotnet-timezone",
@@ -68374,8 +68204,7 @@
     "Browse a Taobao or Tmall shop's product catalog by shopId, returning paginated product listings with itemId and title.",
     "Browse a Taobao or Tmall shop's product catalog by shopId, returning paginated product listings with itemId and title. Use when user asks to scrape a Taobao sho"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "azure-ai-vision-imageanalysis-py",
@@ -68505,8 +68334,7 @@
     "Search and progressively read open-access academic papers through DeepXiv.",
     "Search and progressively read open-access academic papers through DeepXiv. Use when the user wants layered paper access, section-level reading, trending papers,"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "dropthehassle-publish",
@@ -68558,8 +68386,7 @@
     "Instrument browser/web apps with the Application Insights JavaScript SDK (@microsoft/applicationinsights-web).",
     "Instrument browser/web apps with the Application Insights JavaScript SDK (@microsoft/applicationinsights-web). (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "database-admin",
@@ -68741,8 +68568,7 @@
     "Extracts Airbnb accommodation search results from a destination query via SSR-embedded data, returning listing ID, URL,",
     "Extracts Airbnb accommodation search results from a destination query via SSR-embedded data, returning listing ID, URL, name, coordinates, rating, price, photos"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "writing-great-skills",
@@ -68989,8 +68815,7 @@
     "Analyze cryptographic code to detect operations that leak secret data through execution timing variations.",
     "Analyze cryptographic code to detect operations that leak secret data through execution timing variations. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "security-auditor",
@@ -69016,8 +68841,7 @@
     "Curated upstream guidance for Monte Carlo Analyze Root Cause",
     "Curated upstream guidance for Monte Carlo Analyze Root Cause; use when the workflow matches the user goal."
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "docs-as-marketing",
@@ -69082,8 +68906,7 @@
     "Audit SQL for the cost & performance anti-patterns that burn warehouse credits.",
     "Audit SQL for the cost & performance anti-patterns that burn warehouse credits. Scores warehouse health 0-100 and outputs a prioritized cost-reduction plan for"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "webdriverio-skill",
@@ -69473,8 +69296,7 @@
     "Draft patent claims for an invention.",
     "Draft patent claims for an invention. Use when user says \\\"撰写权利要求\\\", \\\"draft claims\\\", \\\"写权利要求书\\\", \\\"claim drafting\\\", or wants to create patent claims. The cor"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "weather-pipeline-performance-diagnosis",
@@ -69644,8 +69466,7 @@
     "Curated upstream guidance for Monte Carlo Asset Health",
     "Curated upstream guidance for Monte Carlo Asset Health; use when the workflow matches the user goal."
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "python-configuration",
@@ -69987,8 +69808,7 @@
     "Extract customer reviews from any e-commerce product page or reviews page.",
     "Extract customer reviews from any e-commerce product page or reviews page. Returns reviewer name, star rating, date, review title, review body, verified purchas"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "aws-cdk-development",
@@ -70001,8 +69821,7 @@
     "AWS Cloud Development Kit (CDK) expert for building cloud infrastructure with TypeScript/Python.",
     "AWS Cloud Development Kit (CDK) expert for building cloud infrastructure with TypeScript/Python. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "azure-keyvault-secrets-ts",
@@ -70041,8 +69860,7 @@
     "Fetches complete Airbnb listing details for a given numeric listing ID via the internal GraphQL API, returning title, ro",
     "Fetches complete Airbnb listing details for a given numeric listing ID via the internal GraphQL API, returning title, room type, description, amenities, photos,"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "azure-ai-voicelive-java",
@@ -70354,8 +70172,7 @@
     "Autonomous research review loop using any OpenAI-compatible LLM API.",
     "Autonomous research review loop using any OpenAI-compatible LLM API. Configure via llm-chat MCP server or environment variables. Trigger with \"auto review loop"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "nanogpt",
@@ -70459,8 +70276,7 @@
     "Build persistent agents on Azure AI Foundry using the Microsoft Agent Framework Python SDK.",
     "Build persistent agents on Azure AI Foundry using the Microsoft Agent Framework Python SDK. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "youtube-influencer-finder-api-skill",
@@ -70486,8 +70302,7 @@
     "Deploy and run ML experiments on local or remote GPU servers.",
     "Deploy and run ML experiments on local or remote GPU servers. Use when user says \\\"run experiment\\\", \\\"deploy to server\\\", \\\"\\u8dd1\\u5b9e\\u9a8c\\\", or needs to l"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "boardroom",
@@ -70617,8 +70432,7 @@
     "Rent, manage, and destroy GPU instances on vast.ai.",
     "Rent, manage, and destroy GPU instances on vast.ai. Use when user says \\\"rent gpu\\\", \\\"vast.ai\\\", \\\"rent a server\\\", \\\"cloud gpu\\\", or needs on-demand GPU witho"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "prompt-engineering",
@@ -70800,8 +70614,7 @@
     "SST v4 (Ion) expert for managing AWS resources as code with the Pulumi-backed framework.",
     "SST v4 (Ion) expert for managing AWS resources as code with the Pulumi-backed framework. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "flutter-expert",
@@ -71035,8 +70848,7 @@
     "Dynamic multi-agent workflows",
     "Dynamic multi-agent workflows — plan first, then orchestrate parallel agents with adversarial verification via the local odw daemon. Use when the user asks for"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "design-md",
@@ -71075,8 +70887,7 @@
     "Azure Event Hubs SDK for Python streaming.",
     "Azure Event Hubs SDK for Python streaming. Use for high-throughput event ingestion, producers, consumers, and checkpointing."
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "typescript-mcp-server-generator",
@@ -71206,8 +71017,7 @@
     "Read or configure the vault filing methodology and suggest destinations for planned knowledge creation under Generic, LY",
     "Read or configure the vault filing methodology and suggest destinations for planned knowledge creation under Generic, LYT, PARA, or Zettelkasten. Use for wiki m"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "python-type-safety",
@@ -71233,8 +71043,7 @@
     "Build real-time voice AI applications with bidirectional WebSocket communication.",
     "Build real-time voice AI applications with bidirectional WebSocket communication. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "azure-monitor-opentelemetry-ts",
@@ -71938,8 +71747,7 @@
     "Build AI applications on Microsoft Foundry using the azure-ai-projects SDK.",
     "Build AI applications on Microsoft Foundry using the azure-ai-projects SDK. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "bb-methodology",
@@ -71979,8 +71787,7 @@
     "Delegate coding tasks to the OpenAI Codex CLI only when the user explicitly",
     "Delegate coding tasks to the OpenAI Codex CLI only when the user explicitly (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "blue-green-deploy",
@@ -72398,8 +72205,7 @@
     "Babysit a pull request through its bot review rounds: verify, fix, reply,",
     "Babysit a pull request through its bot review rounds: verify, fix, reply, (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "gcp-cloud-functions",
@@ -72491,8 +72297,7 @@
     "Delegate coding tasks to the Z.AI ZCode CLI only when the user explicitly",
     "Delegate coding tasks to the Z.AI ZCode CLI only when the user explicitly (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "grok-delegate",
@@ -72505,8 +72310,7 @@
     "Delegate coding tasks to the Grok Build CLI only when the user explicitly",
     "Delegate coding tasks to the Grok Build CLI only when the user explicitly (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "reverse-proxy",
@@ -72662,8 +72466,7 @@
     "Delegate coding tasks to the Command Code CLI (`cmd`) only when the user",
     "Delegate coding tasks to the Command Code CLI (`cmd`) only when the user (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "cursor-delegate",
@@ -72676,8 +72479,7 @@
     "Delegate coding tasks to the Cursor Agent CLI (`cursor-agent`) only when",
     "Delegate coding tasks to the Cursor Agent CLI (`cursor-agent`) only when (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "llmops-platform-engineering",
@@ -73069,8 +72871,7 @@
     "Delegate coding tasks to the OpenCode CLI only when the user explicitly",
     "Delegate coding tasks to the OpenCode CLI only when the user explicitly (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "block-storage",
@@ -73161,8 +72962,7 @@
     "Delegate coding tasks to Oh My Pi (`omp`) only when the user explicitly",
     "Delegate coding tasks to Oh My Pi (`omp`) only when the user explicitly (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "performance-tuning",
@@ -73319,8 +73119,7 @@
     "Delegate coding tasks to Aider (`aider`) only when the user explicitly",
     "Delegate coding tasks to Aider (`aider`) only when the user explicitly (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "llm-inference-scaling",
@@ -73593,8 +73392,7 @@
     "Fetches Instagram user profile metadata including bio, follower count, following count, post count, verification status",
     "Fetches Instagram user profile metadata including bio, follower count, following count, post count, verification status and other profile details. Use when user"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "claude-delegate",
@@ -73607,8 +73405,7 @@
     "Delegate coding tasks to a separate Claude Code CLI process or Claude",
     "Delegate coding tasks to a separate Claude Code CLI process or Claude (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "ai-pipeline-orchestration",
@@ -73634,8 +73431,7 @@
     "Delegate coding tasks to the Google Antigravity CLI (`agy`) only when",
     "Delegate coding tasks to the Google Antigravity CLI (`agy`) only when (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "vpn-setup",
@@ -73752,8 +73548,7 @@
     "Delegate coding tasks to the Warp Agent CLI (`oz`) only when the user",
     "Delegate coding tasks to the Warp Agent CLI (`oz`) only when the user (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "cloudflare-workers",
@@ -74234,8 +74029,7 @@
     "Structure a raw invention idea into a formal invention disclosure.",
     "Structure a raw invention idea into a formal invention disclosure. Use when user says \\\"构建发明\\\", \\\"structure invention\\\", \\\"发明构建\\\", \\\"invention disclosure\\\", or"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "bash-pro",
@@ -74560,8 +74354,7 @@
     "Extract seller or merchant profile data from marketplace platform seller pages.",
     "Extract seller or merchant profile data from marketplace platform seller pages. Returns seller name, rating, review count, positive feedback percentage, joined"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "podman",
@@ -75250,8 +75043,7 @@
     "Verify research idea novelty against recent literature.",
     "Verify research idea novelty against recent literature. Use when user says \"查新\", \"novelty check\", \"有没有人做过\", \"check novelty\", or wants to verify a research idea"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "copilot-delegate",
@@ -75264,8 +75056,7 @@
     "Delegate coding tasks to the GitHub Copilot CLI (`copilot`) only when",
     "Delegate coding tasks to the GitHub Copilot CLI (`copilot`) only when (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "agent-workflow-designer",
@@ -75748,8 +75539,7 @@
     "Diagnoses and improves Qdrant search relevance.",
     "Diagnoses and improves Qdrant search relevance. Use when someone reports 'search results are bad', 'wrong results', 'low precision', 'low recall', 'irrelevant m"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "mdm-device-management",
@@ -75957,8 +75747,7 @@
     "Azure Resource Manager SDK for Azure SQL in .NET.",
     "Azure Resource Manager SDK for Azure SQL in .NET. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "hunt-business-logic",
@@ -76010,8 +75799,7 @@
     "Distill colleague, relationship, or celebrity source material into reusable Person Profiles for agents.",
     "Distill colleague, relationship, or celebrity source material into reusable Person Profiles for agents. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "radix-ui-design-system",
@@ -76063,8 +75851,7 @@
     "Polis Protocol: A Self-Optimizing City of Agents",
     "Polis Protocol: A Self-Optimizing City of Agents (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "gpu-server-management",
@@ -76194,8 +75981,7 @@
     "Compile patent application into jurisdiction-specific filing format.",
     "Compile patent application into jurisdiction-specific filing format. Use when user says \\\"格式转换\\\", \\\"jurisdiction format\\\", \\\"国家格式\\\", \\\"compile patent\\\", or want"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "cli-developer",
@@ -76651,8 +76437,7 @@
     "Azure Resource Manager SDK for Cosmos DB in .NET.",
     "Azure Resource Manager SDK for Cosmos DB in .NET. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "tech-stack-evaluator",
@@ -77536,8 +77321,7 @@
     "Delegate coding tasks to the Pi coding agent CLI (`pi`) only when the",
     "Delegate coding tasks to the Pi coding agent CLI (`pi`) only when the (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "agent-harness-construction",
@@ -77901,8 +77685,7 @@
     "Evaluate, adapt, and safely install Context Kit personal context artifacts for Claude Code or adjacent agent workflows.",
     "Evaluate, adapt, and safely install Context Kit personal context artifacts for Claude Code or adjacent agent workflows. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "hunt-grpc",
@@ -78369,8 +78152,7 @@
     "Generate an interactive bash wizard that walks a human throu",
     "Generate an interactive bash wizard that walks a human through steps only they can perform. Use when provisioning infrastructure, setting up credentials or CI s"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "git-guardrails-claude-code",
@@ -78383,8 +78165,7 @@
     "Set up Claude Code hooks to block dangerous git commands (pu",
     "Set up Claude Code hooks to block dangerous git commands (push, reset --hard, clean, branch -D, etc.) before they execute. Use when user wants to prevent destru"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "migrate-to-shoehorn",
