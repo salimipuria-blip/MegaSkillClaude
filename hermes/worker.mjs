@@ -10,7 +10,7 @@ import { login, sessionUser, changePassword } from './auth.mjs';
 import { USERS } from './users.mjs';
 import { listAccounts, createAccount, setDisabled, resetPassword, accountCommand } from './accounts.mjs';
 import { projectKnowledge, portfolioText } from './knowledge.mjs';
-import { githubCommand } from './github.mjs';
+import { githubCommand, repoIntent, langOf } from './github.mjs';
 import { codeFiles } from './coding.mjs';
 import { STYLE, SYSTEM, askGemini } from './brain.mjs';
 import { appKey, webhookSecret, setupKey } from './security.mjs';
@@ -432,6 +432,14 @@ async function api(request, url, env) {
         const { image, mime, model, prompt } = await picture(env, historyKey(env, who), message, wanted);
         return json({ reply: `🖼️ ساخته شد (${model}).\n\n${prompt}`, image: `data:${mime};base64,${image}` });
       }
+      // The owner's repository questions are answered from GitHub itself, never by the model guessing.
+      if (who.role === 'owner' && !photo && (/^\/(ci|prs|file|review|repo)\b/i.test(message) || repoIntent(message))) {
+        let gh = null;
+        try { gh = await githubCommand(env, message); } catch (err) { return json({ reply: err.message }); }
+        if (gh && gh.reply) return json({ reply: gh.reply });
+        if (gh && gh.file) return json({ reply: `${gh.file.caption}\n\n\`\`\`${langOf(gh.file.name)}\n${gh.file.text.slice(0, 20000)}\n\`\`\`` });
+        if (gh && gh.review) return json({ reply: await converse(env, historyKey(env, who), gh.review, SYSTEM, [], null) });
+      }
       const system = who.role === 'owner' ? SYSTEM + await projectKnowledge(env, message) : teamSystem(who);
       const tools = who.role === 'owner' ? await googleTools(env) : null;
       return json({ reply: await converse(env, historyKey(env, who), message, system, photo ? [photo] : [], tools) });
@@ -589,7 +597,7 @@ async function handle(msg, env, origin) {
       return send(env, chatId, err.message);
     }
   }
-  if (/^\/(ci|prs|file|review)\b/i.test(input)) {
+  if (/^\/(ci|prs|file|review|repo)\b/i.test(input) || repoIntent(input)) {
     let gh;
     try {
       gh = await githubCommand(env, input);
@@ -630,7 +638,7 @@ async function handle(msg, env, origin) {
       'بعد از آن متن با پیام هم جابه‌جا می‌شود: «بالاتر ببر»، «کمی پایین‌تر»، «وسطش بذار»، «سفیدش کن»، «درشت‌ترش کن»، «بدون نوار»، «متن رو بردار».\n' +
       'ویس بفرست تا گوش بدهم، عکس بفرست تا ببینم؛ برای خبرها و چیزهای روز در گوگل جست‌وجو می‌کنم.\n' +
       'یادآور: بنویس «یادم بنداز ساعت ۹: تماس با بانک» یا «یادم بنداز فردا ۱۰: قرار دکتر» یا «remind me in 30 minutes: call Bob» — سر وقت بهت پیام می‌دم و هر صبح لیست روزت را می‌فرستم. لیست و حذف: /reminders\n' +
-      'کدنویسی: هر سؤال کد، باگ یا ریویو را بفرست؛ کد کامل + تست + دستور اجرا می‌گیری و کد بلند به‌صورت فایل می‌آید. ریپو: /ci وضعیت CI · /prs PRهای باز · /file مسیر · /review مسیر (بازبینی حرفه‌ای فایل)\n' +
+      'کدنویسی: هر سؤال کد، باگ یا ریویو را بفرست؛ کد کامل + تست + دستور اجرا می‌گیری و کد بلند به‌صورت فایل می‌آید. ریپو: «وضعیت ریپو» یا /repo (کامیت‌ها + CI + PR) · /ci وضعیت CI · /prs PRهای باز · /file مسیر · /review مسیر (بازبینی حرفه‌ای فایل)\n' +
       'پروژه‌ها: /projects نقشهٔ همهٔ پروژه‌ها و ریپوها؛ دربارهٔ هر پروژه (هرمس، چام، وایکینگ، لیتوس…) بپرس تا از روی مستنداتش جواب بدهم\n' +
       'مشتری‌ها (Hermes Business): /client_new <نام کسب‌وکار> فضای کاری + کد عضویت مدیر؛ /clients فهرست و مصرف\n' +
       'حساب‌های تیم: /users فهرست؛ /user_add نام‌کاربری member نام؛ /user_off و /user_on؛ /user_reset رمز جدید\n' +
