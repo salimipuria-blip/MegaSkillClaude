@@ -9,7 +9,8 @@
 |---|---|---|---|---|
 | 1 | 🟠 | نقشهٔ توانایی‌ها بعد از کشیدن صفحه کوچک و به چپ رانده می‌ماند و نوار STANDBY غیب می‌شد | اسکرین‌شات مالک در مرورگر داخلی تلگرام (iOS): `layout()` اندازه را از `innerWidth/innerHeight` در میانهٔ ژست (کشیدن شیت/جمع‌شدن نوار ابزار) می‌خواند و رویداد `resize` بعدی نمی‌آمد | ✅ رفع: اندازه از `#stage` ثابت، رد اندازهٔ گذرا (<240×300)، `ResizeObserver` روی صفحه + `visualViewport` + `pageshow` + نگهبان ثانیه‌ای |
 | 2 | 🟡 | خود صفحه قابل کشیدن/ارتجاعی بود | `body { overflow: hidden }` روی iOS جلوی pan را نمی‌گیرد؛ `#log` با `translateX(105%)` بیرون کادر بود | ✅ رفع: `html, body` ثابت + `overscroll-behavior: none`، `touchmove` فقط داخل عنصر واقعاً اسکرول‌شدنی، `#log` بسته `visibility: hidden`، همه‌چیز داخل `#stage { overflow: hidden }` |
-| 4 | 🟠 | هرمس کار ناممکن وعده می‌داد (آپلود ZIP، اجرای `git status`) | اسکرین‌شات مالک از اپ | ✅ رفع: `repoIntent` + `/repo` در اپ و تلگرام، بند CANNOT در `STYLE`؛ تست در `coding.test.mjs` و `worker.test.mjs` |
+| 4 | 🟠 | هرمس کار ناممکن وعده می‌داد (آپلود ZIP، اجرای `git status`) | اسکرین‌شات مالک از اپ | ✅ رفع: ابزارهای مدل `githubTools` (با function calling در Gemini و همهٔ سرویس‌های OpenAI-compatible) + `/repo`، بند CANNOT در `STYLE`؛ تست در `coding.test.mjs` و `worker.test.mjs` |
+| 5 | 🟡 | ابزارها فقط به Gemini می‌رسید | `askProviders` هرگز `tools` نمی‌فرستاد؛ با قطع Gemini، جیمیل/تقویم هم از کار می‌افتاد | ✅ رفع: حلقهٔ `tool_calls` در `providers.mjs` |
 | 3 | ✨ | اتصال زنده | — | `GET /api/pulse` (نیازمند کلید، فقط booleanها): توانایی سیم‌نشده کم‌رنگ، نشانگر `LIVE · ms` و ضربان هر ۲۰ ثانیه |
 
 تست Playwright (iPhone 14 Pro Max): سه ژست کشیدن، ویوپورت گذرای 180×260 و برگشت → مرکز هسته همیشه 215 (وسط صفحه)، `scrollX/Y = 0`. `npm test` 264 → **265**، `worker.test.mjs` 79 → **80**، integration 10/10.

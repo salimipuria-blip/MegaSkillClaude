@@ -226,6 +226,7 @@ export می‌شود** (چیزی که تست قبلی نمی‌سنجید). هم
   - زنده: `GET /api/pulse` (فقط booleanها، با کلید) هر ۲۰ ثانیه؛ توانایی سیم‌نشده کم‌رنگ، نشانگر `LIVE · ms`/`OFFLINE`، ضربان ذره‌ها به همهٔ توانایی‌های زنده.
   - **تأیید:** Playwright روی iPhone 14 Pro Max (سه ژست + ویوپورت گذرای 180×260 → مرکز ثابت 215، بدون اسکرول)؛ `npm test` **۲۶۵/۲۶۵**، integration ۱۰/۱۰، `worker.test.mjs` **۸۰/۸۰**.
 - **۲۰۲۶-۱۰-۲۴ — هرمس وعدهٔ کار ناممکن می‌داد.** در اپ، «git status» → «فایل ZIP پروژه را آپلود کنید، git status اجرا می‌کنم» (هرمس نه فایل فشرده می‌گیرد نه فرمان اجرا می‌کند). رفع: `repoIntent` سؤال عادی دربارهٔ ریپو را به ابزار فقط‌خواندنی GitHub می‌برد (`/repo` = کامیت‌ها + CI + PRها، هر بخش جدا خطا می‌دهد) در اپ و تلگرام؛ بند «CANNOT» در `STYLE`. `npm test` ۲۶۵ → **۲۶۷**، `worker.test.mjs` **۸۱/۸۱**، integration ۱۰/۱۰.
+- **۲۰۲۶-۱۰-۲۴ — ابزار واقعی GitHub برای خود مدل، نه فهرست عبارت.** مالک گفت راه‌حل قبلی (`repoIntent`) «جواب پیش‌فرض» است؛ درست بود. حالا `githubTools` (`repo_status`، `repo_read_file`، `repo_pull_request`) مثل ابزار گوگل به مغز داده می‌شود و هر جمله‌بندی را خودش می‌فهمد. function calling علاوه بر Gemini به همهٔ سرویس‌های رایگان OpenAI-compatible (GitHub Models، Groq، Cerebras، Mistral، HF، OpenRouter) هم وصل شد؛ `repoIntent` حذف شد و `/repo` ماند. `npm test` **۲۶۹/۲۶۹**، `worker.test.mjs` **۸۲/۸۲**، integration ۱۰/۱۰.
 
 ## Professional guide
 See `PROFESSIONAL_GUIDE.md` in this folder for performance improvements, debugging playbook, and next steps. Update it whenever behavior changes.

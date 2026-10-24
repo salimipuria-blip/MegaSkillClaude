@@ -227,7 +227,7 @@ test('weather endpoint needs the key and falls back to Tehran', async () => {
   assert.deepEqual((await callApi(baseEnv(), '/api/weather')).body, { city: 'Tehran', temp: 21.4, code: 0 });
 });
 
-test('app: «git status» is answered from GitHub, never by the model promising to run it', async () => {
+test('app: /repo answers straight from GitHub, no model involved', async () => {
   const urls = [];
   globalThis.fetch = async (url) => {
     const u = String(url); urls.push(u);
@@ -236,10 +236,37 @@ test('app: «git status» is answered from GitHub, never by the model promising 
     if (u.includes('/pulls')) return new Response(JSON.stringify([]));
     throw new Error('unexpected fetch ' + u);
   };
-  const res = await callApi(baseEnv({ GITHUB_REPO_TOKEN: 'tok' }), '/api/chat', { message: 'git status' });
+  const res = await callApi({ ...baseEnv(), GITHUB_REPO_TOKEN: 'tok' }, '/api/chat', { message: '/repo' });
   assert.equal(res.status, 200);
   assert.match(res.body.reply, /abc1234 feat: live pulse/);
-  assert.equal(urls.some((u) => /generativelanguage|ai\.run|chat\/completions/.test(u)), false);
+  assert.equal(urls.some((u) => u.includes('generativelanguage')), false);
+});
+
+test('app: any wording about the repo reaches GitHub through the brain\'s own tool call', async () => {
+  const geminiBodies = [], urls = [];
+  globalThis.fetch = async (url, init = {}) => {
+    const u = String(url); urls.push(u);
+    if (u.includes('generativelanguage')) {
+      const body = JSON.parse(init.body); geminiBodies.push(body);
+      const answered = body.contents.some((c) => (c.parts || []).some((p) => p.functionResponse));
+      const parts = answered ? [{ text: 'آخرین تغییر: feat: live pulse (abc1234)' }] : [{ functionCall: { name: 'repo_status', args: { commits: 3 } } }];
+      return new Response(JSON.stringify({ candidates: [{ content: { role: 'model', parts } }] }));
+    }
+    if (u.includes('/commits?')) return new Response(JSON.stringify([{ sha: 'abc1234def', commit: { message: 'feat: live pulse' } }]));
+    if (u.includes('/actions/runs')) return new Response(JSON.stringify({ workflow_runs: [] }));
+    if (u.includes('/pulls')) return new Response(JSON.stringify([]));
+    return new Response('{}', { status: 404 });
+  };
+  const res = await callApi({ ...baseEnv(), GITHUB_REPO_TOKEN: 'tok' }, '/api/chat', { message: 'آخرین تغییرات پروژه چی بود؟' });
+  assert.equal(res.body.reply, 'آخرین تغییر: feat: live pulse (abc1234)');
+  const fns = geminiBodies[0].tools.find((t) => t.functionDeclarations).functionDeclarations.map((d) => d.name);
+  assert.deepEqual(fns, ['repo_status', 'repo_read_file', 'repo_pull_request']);
+  assert.match(geminiBodies[0].systemInstruction.parts[0].text, /REPOSITORY \(owner\)/);
+  assert.ok(urls.some((u) => u.includes('/commits?sha=main&per_page=3')));
+  // Without a read token the model is not offered tools it could not use.
+  geminiBodies.length = 0;
+  await callApi(baseEnv(), '/api/chat', { message: 'وضعیت ریپو؟' });
+  assert.equal((geminiBodies[0].tools || []).some((t) => t.functionDeclarations), false);
 });
 
 test('pulse endpoint needs the key and reports presence only', async () => {
