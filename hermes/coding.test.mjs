@@ -5,7 +5,7 @@ import worker, { webhookSecret } from './worker.mjs';
 import { askWorkersAI } from './brain.mjs';
 import { askProviders } from './providers.mjs';
 import { isCodeRequest, codeSkillNames, codeFiles, CODE_PLAYBOOK } from './coding.mjs';
-import { safePath, readFile, ciStatus, openPRs, githubCommand, reviewPrompt, FILE_CHARS, repoIntent, repoStatus } from './github.mjs';
+import { safePath, readFile, ciStatus, openPRs, githubCommand, reviewPrompt, FILE_CHARS, repoStatus, githubTools, joinTools, pullRequest } from './github.mjs';
 
 const OWNER = '123456789';
 
@@ -209,21 +209,55 @@ test('github: a file over 1 MB is reported, never sent as an empty file', async 
   await assert.rejects(readFile({ GITHUB_REPO_TOKEN: 'tok' }, 'big.json'), /۱ مگابایت/);
 });
 
-test('github: plain-language repo questions route to read-only answers, everyday words do not', async () => {
-  assert.equal(repoIntent('git status'), 'status');
-  assert.equal(repoIntent('وضعیت ریپو چیه؟'), 'status');
-  assert.equal(repoIntent('مخزن چه خبر'), 'status');
-  assert.equal(repoIntent('وضعیت CI'), '/ci');
-  assert.equal(repoIntent('PRهای باز'), '/prs');
-  for (const t of ['وضعیت', 'وضعیت هوا', 'متن معرفی تور', 'git یعنی چی؟ ' + 'x'.repeat(200)]) assert.equal(repoIntent(t), null, t);
+test('github: repo status keeps its parts when one fails; tools only with a token; joined sets route calls', async () => {
   mockFetch({
     'commits?': [200, [{ sha: 'c3e581b94e3', commit: { message: 'hermes app: fix scroll (#126)\n\nbody' } }]],
     'actions/runs': [200, { workflow_runs: [{ name: 'CI', status: 'completed', conclusion: 'failure', head_sha: 'c3e581b', display_title: 'x' }] }],
+    'pulls/126/files': [200, [{ status: 'modified', filename: 'hermes/app.mjs', additions: 120, deletions: 9 }]],
+    'pulls/126': [200, { title: 'Fix scroll', state: 'closed', merged_at: '2026-10-24T01:21:00Z', user: { login: 'puria' }, body: 'why' }],
     pulls: [403, {}],
   });
   const out = await repoStatus({ GITHUB_REPO_TOKEN: 'tok' });
   assert.match(out, /c3e581b hermes app: fix scroll \(#126\)/);
   assert.match(out, /❌ CI/);
-  assert.match(out, /⚠️ GitHub فعلاً اجازه نداد/); // one failing part does not hide the others
-  assert.match((await githubCommand({ GITHUB_REPO_TOKEN: 'tok' }, 'git status')).reply, /c3e581b/);
+  assert.match(out, /⚠️ GitHub فعلاً اجازه نداد/);
+  assert.equal(githubTools({}), null);
+  const tools = joinTools(null, githubTools({ GITHUB_REPO_TOKEN: 'tok' }));
+  const pr = await tools.run('repo_pull_request', { number: 126 });
+  assert.equal(pr.state, 'merged');
+  assert.deepEqual(pr.files, ['modified hermes/app.mjs (+120/-9)']);
+  await assert.rejects(pullRequest({ GITHUB_REPO_TOKEN: 'tok' }, 'x'), /شمارهٔ PR/);
+  assert.throws(() => tools.run('nope', {}), /ابزار ناشناخته/);
+  assert.match((await tools.run('repo_status', {})).commits, /c3e581b/);
+});
+
+test('free providers: OpenAI-style tool calls are run and answered; a model that refuses tools is asked without', async () => {
+  const bodies = [];
+  globalThis.fetch = async (url, init = {}) => {
+    const body = JSON.parse(init.body); bodies.push(body);
+    if (body.model === 'llama-3.3-70b-versatile' && body.tools) return new Response(JSON.stringify({ error: { message: 'tools not supported' } }), { status: 400 });
+    const toolMsg = body.messages.find((m) => m.role === 'tool');
+    if (body.tools && !toolMsg) {
+      return new Response(JSON.stringify({ choices: [{ finish_reason: 'tool_calls', message: { content: null,
+        tool_calls: [{ id: 'c1', type: 'function', function: { name: 'repo_status', arguments: '{"commits":2}' } }] } }] }));
+    }
+    return new Response(JSON.stringify({ choices: [{ message: { content: toolMsg ? `از گیت‌هاب: ${toolMsg.content}` : 'بدون ابزار' } }] }));
+  };
+  const ran = [];
+  const tools = { declarations: [{ name: 'repo_status', description: 'd', parameters: { type: 'object', properties: {} } }],
+    run: async (name, args) => { ran.push([name, args]); return { commits: 'abc1234 feat' }; } };
+  const env = { GROQ_API_KEY: 'k', GROQ_MODELS: 'llama-3.3-70b-versatile,openai/gpt-oss-120b' };
+  const contents = [{ role: 'user', parts: [{ text: 'تغییرات اخیر؟' }] }];
+  // First model rejects tools → answered without them (still an answer, no crash).
+  assert.equal(await askProviders(env, contents, 'sys', { tools }), 'بدون ابزار');
+  // A tool-capable model: the call is run and its result goes back as a tool message.
+  const out = await askProviders({ ...env, GROQ_MODELS: 'openai/gpt-oss-120b' }, contents, 'sys', { tools });
+  assert.match(out, /abc1234 feat/);
+  assert.deepEqual(ran, [['repo_status', { commits: 2 }]]);
+  const withTools = bodies.find((b) => b.model === 'openai/gpt-oss-120b' && b.tools);
+  assert.equal(withTools.tools[0].type, 'function');
+  assert.equal(withTools.tools[0].function.name, 'repo_status');
+  const followUp = bodies.filter((b) => b.model === 'openai/gpt-oss-120b').pop();
+  assert.equal(followUp.messages.at(-2).tool_calls[0].id, 'c1');
+  assert.equal(followUp.messages.at(-1).tool_call_id, 'c1');
 });

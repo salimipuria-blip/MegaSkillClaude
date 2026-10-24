@@ -10,7 +10,7 @@ import { login, sessionUser, changePassword } from './auth.mjs';
 import { USERS } from './users.mjs';
 import { listAccounts, createAccount, setDisabled, resetPassword, accountCommand } from './accounts.mjs';
 import { projectKnowledge, portfolioText } from './knowledge.mjs';
-import { githubCommand, repoIntent, langOf } from './github.mjs';
+import { githubCommand, langOf } from './github.mjs';
 import { codeFiles } from './coding.mjs';
 import { STYLE, SYSTEM, askGemini } from './brain.mjs';
 import { appKey, webhookSecret, setupKey } from './security.mjs';
@@ -30,7 +30,7 @@ import { transcribe, telegramFile, parseDataUrl } from './media.mjs';
 import { tripPage, createBooking, onContact } from './booking.mjs';
 import { configuredProviders } from './providers.mjs';
 import { historyKey as wsHistoryKey, membership, joinWorkspace, clientCommand, ownerCommand, businessSystem, getKnowledge, spend, IMAGE_UNITS } from './workspaces.mjs';
-import { googleConfigured, googleConnected, googleTools, connectUrl, finishConnect, disconnect } from './google.mjs';
+import { googleConfigured, googleConnected, connectUrl, finishConnect, disconnect } from './google.mjs';
 import { liveness, readiness, fullHealth, pulse } from './health.mjs';
 import { diagnose, formatDiagnosis } from './diagnose.mjs';
 import { recordRequest, snapshot as metricsSnapshot, prometheusText } from './metrics.mjs';
@@ -432,8 +432,8 @@ async function api(request, url, env) {
         const { image, mime, model, prompt } = await picture(env, historyKey(env, who), message, wanted);
         return json({ reply: `🖼️ ساخته شد (${model}).\n\n${prompt}`, image: `data:${mime};base64,${image}` });
       }
-      // The owner's repository questions are answered from GitHub itself, never by the model guessing.
-      if (who.role === 'owner' && !photo && (/^\/(ci|prs|file|review|repo)\b/i.test(message) || repoIntent(message))) {
+      // Slash commands for the repository answer straight from GitHub; plain questions go to the brain, which has repo tools.
+      if (who.role === 'owner' && !photo && (/^\/(ci|prs|file|review|repo)\b/i.test(message))) {
         let gh = null;
         try { gh = await githubCommand(env, message); } catch (err) { return json({ reply: err.message }); }
         if (gh && gh.reply) return json({ reply: gh.reply });
@@ -441,7 +441,7 @@ async function api(request, url, env) {
         if (gh && gh.review) return json({ reply: await converse(env, historyKey(env, who), gh.review, SYSTEM, [], null) });
       }
       const system = who.role === 'owner' ? SYSTEM + await projectKnowledge(env, message) : teamSystem(who);
-      const tools = who.role === 'owner' ? await googleTools(env) : null;
+      const tools = who.role === 'owner' ? true : null; // Google + GitHub tools, built inside the conversation actor
       return json({ reply: await converse(env, historyKey(env, who), message, system, photo ? [photo] : [], tools) });
     } catch (err) {
       return json({ error: err.message }, 502);
@@ -597,7 +597,7 @@ async function handle(msg, env, origin) {
       return send(env, chatId, err.message);
     }
   }
-  if (/^\/(ci|prs|file|review|repo)\b/i.test(input) || repoIntent(input)) {
+  if (/^\/(ci|prs|file|review|repo)\b/i.test(input)) {
     let gh;
     try {
       gh = await githubCommand(env, input);
@@ -804,7 +804,7 @@ async function handle(msg, env, origin) {
   await tg(env, 'sendChatAction', { chat_id: chatId, action: 'typing' });
   let reply;
   try {
-    reply = await converse(env, key, input, SYSTEM + await projectKnowledge(env, input), images, await googleTools(env));
+    reply = await converse(env, key, input, SYSTEM + await projectKnowledge(env, input), images, true);
   } catch (err) {
     return send(env, chatId, `خطا: ${err.message}`);
   }

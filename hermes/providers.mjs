@@ -33,7 +33,7 @@ export const PROVIDERS = [
     codeModels: ['qwen/qwen3-coder:free'] },
   // No key needed: Pollinations' free public text API (set FREE_TEXT=off to disable). Last, as it is slower and public.
   { name: 'Pollinations', key: null, off: 'FREE_TEXT', list: 'POLLINATIONS_MODELS', url: 'https://text.pollinations.ai/openai',
-    budget: 9000, models: ['openai', 'mistral', 'deepseek'] },
+    budget: 9000, models: ['openai', 'mistral', 'deepseek'], noTools: true },
 ];
 
 // Preferred families when discovering, best first; chat models only.
@@ -178,11 +178,16 @@ export function fitContext(messages, budget) {
 
 const tooLarge = (r) => r.status === 413 || (r.status === 400 && /token|too large|context|length/i.test(r.why || ''));
 
-async function callModel(env, p, model, messages, maxTokens = 2048) {
+// OpenAI-style function definitions from the shared declarations (the same ones Gemini gets).
+export const openAITools = (tools) => tools.declarations.map((d) => ({ type: 'function', function: { name: d.name, description: d.description, parameters: d.parameters } }));
+const TOOL_ROUNDS = 4;
+const TOOL_RESULT_CHARS = 8000;
+
+async function callModel(env, p, model, messages, maxTokens = 2048, tools = null) {
   const res = await fetchWithTimeout(p.url, {
     method: 'POST',
     headers: { 'content-type': 'application/json', ...authHeader(env, p) },
-    body: JSON.stringify({ model, messages, max_tokens: maxTokens }),
+    body: JSON.stringify({ model, messages, max_tokens: maxTokens, ...(tools ? { tools: openAITools(tools), tool_choice: 'auto' } : {}) }),
   });
   if (!res.ok) {
     const data = await res.json().catch(() => null);
@@ -194,11 +199,25 @@ async function callModel(env, p, model, messages, maxTokens = 2048) {
   const choice = data && data.choices && data.choices[0];
   const raw = choice && choice.message && choice.message.content;
   const text = Array.isArray(raw) ? raw.map((x) => (x && x.text) || '').join('') : raw;
-  return { status: 200, finish: (choice && choice.finish_reason) || '', text: text ? String(text).replace(/<think>[\s\S]*?<\/think>/g, '').trim() : '' };
+  const toolCalls = (choice && choice.message && Array.isArray(choice.message.tool_calls) && choice.message.tool_calls) || [];
+  return { status: 200, finish: (choice && choice.finish_reason) || '', toolCalls,
+    text: text ? String(text).replace(/<think>[\s\S]*?<\/think>/g, '').trim() : '' };
 }
 
 // Tries every configured provider; returns the first non-empty answer, or throws with every model's reason.
-export async function askProviders(env, contents, system, { code = false } = {}) {
+// Runs the functions a model asked for and returns the tool messages that answer them.
+async function toolMessages(tools, calls) {
+  return Promise.all(calls.map(async (c) => {
+    let result;
+    try {
+      const args = c.function && c.function.arguments ? JSON.parse(c.function.arguments) : {};
+      result = await tools.run(c.function.name, args);
+    } catch (err) { result = { error: err.message }; }
+    return { role: 'tool', tool_call_id: c.id, content: JSON.stringify(result).slice(0, TOOL_RESULT_CHARS) };
+  }));
+}
+
+export async function askProviders(env, contents, system, { code = false, tools = null } = {}) {
   const all = toMessages(contents, system);
   const errors = [];
   let total = 0;
@@ -230,8 +249,17 @@ export async function askProviders(env, contents, system, { code = false } = {})
         try {
           calls++; total++;
           const maxTokens = code ? 4096 : 2048;
-          let r = await callModel(env, p, model, full, maxTokens);
-          if (tooLarge(r)) { calls++; total++; r = await callModel(env, p, model, small, maxTokens); }
+          // Tools ride along when offered; a model that refuses them (400) is asked again without.
+          let fns = tools && !p.noTools ? tools : null;
+          let convo = full;
+          let r = await callModel(env, p, model, convo, maxTokens, fns);
+          if (fns && r.status === 400 && !tooLarge(r)) { calls++; total++; fns = null; r = await callModel(env, p, model, convo, maxTokens); }
+          if (tooLarge(r)) { calls++; total++; convo = small; r = await callModel(env, p, model, convo, maxTokens, fns); }
+          for (let round = 0; fns && r.status === 200 && r.toolCalls.length && round < TOOL_ROUNDS && total < MAX_TOTAL; round++) {
+            convo = [...convo, { role: 'assistant', content: r.text || '', tool_calls: r.toolCalls }, ...await toolMessages(fns, r.toolCalls)];
+            calls++; total++;
+            r = await callModel(env, p, model, convo, maxTokens, fns);
+          }
           if (isAuthStatus(r.status)) {
             reasons.push(`کلید پذیرفته نشد (${r.status})`);
             if (park) await park.failAuth(p.name, r.status);
