@@ -31,7 +31,7 @@ import { tripPage, createBooking, onContact } from './booking.mjs';
 import { configuredProviders } from './providers.mjs';
 import { historyKey as wsHistoryKey, membership, joinWorkspace, clientCommand, ownerCommand, businessSystem, getKnowledge, spend, IMAGE_UNITS } from './workspaces.mjs';
 import { googleConfigured, googleConnected, googleTools, connectUrl, finishConnect, disconnect } from './google.mjs';
-import { liveness, readiness, fullHealth } from './health.mjs';
+import { liveness, readiness, fullHealth, pulse } from './health.mjs';
 import { diagnose, formatDiagnosis } from './diagnose.mjs';
 import { recordRequest, snapshot as metricsSnapshot, prometheusText } from './metrics.mjs';
 export { liveness, readiness, fullHealth } from './health.mjs';
@@ -264,6 +264,7 @@ async function api(request, url, env) {
     try { requireConversationBinding(env); } catch (error) { return json({ error: error.message }, 503); }
   }
   if (request.method === 'GET' && url.pathname === '/api/me') return json(who);
+  if (request.method === 'GET' && url.pathname === '/api/pulse') return json(pulse(env));
   if (request.method === 'GET' && url.pathname === '/api/team') {
     if (who.role !== 'owner' && who.role !== 'admin') return json({ error: 'forbidden' }, 403);
     const team = env.MEMORY ? await listAccounts(env) : Object.entries(USERS).map(([username, u]) => ({ username, name: u.name, role: u.role }));
