@@ -227,6 +227,15 @@ test('weather endpoint needs the key and falls back to Tehran', async () => {
   assert.deepEqual((await callApi(baseEnv(), '/api/weather')).body, { city: 'Tehran', temp: 21.4, code: 0 });
 });
 
+test('pulse endpoint needs the key and reports presence only', async () => {
+  assert.equal((await callApi(baseEnv(), '/api/pulse', undefined, 'nope')).status, 401);
+  const res = await callApi(baseEnv(), '/api/pulse');
+  assert.equal(res.status, 200);
+  assert.equal(res.body.abilities.telegram, true);
+  assert.equal(res.body.abilities.app, true);
+  assert.equal(JSON.stringify(res.body).includes(baseEnv().TELEGRAM_BOT_TOKEN), false);
+});
+
 test('/app in Telegram sends the private link with the derived key', async () => {
   const env = baseEnv();
   const calls = mockFetch();

@@ -56,7 +56,9 @@ export const APP_HTML = String.raw`<!doctype html>
     --safe-b: env(safe-area-inset-bottom, 0px); --safe-t: env(safe-area-inset-top, 0px);
   }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  html, body { height: 100%; margin: 0; overflow: hidden; }
+  /* The page never scrolls: in Telegram's in-app browser and iOS Safari a drag on the page used to
+     pan/rubber-band it and report a transient viewport, which left the map shrunk and off-centre. */
+  html, body { position: fixed; inset: 0; width: 100%; height: 100%; margin: 0; overflow: hidden; overscroll-behavior: none; touch-action: manipulation; }
   body { background: #07111f; color: var(--text); font-family: var(--sans); -webkit-font-smoothing: antialiased; -webkit-user-select: none; user-select: none; }
   .fa { font-family: var(--fa); direction: rtl; }
   button { font: inherit; color: inherit; }
@@ -67,7 +69,9 @@ export const APP_HTML = String.raw`<!doctype html>
   #cast { position: fixed; inset: 0; pointer-events: none; mix-blend-mode: screen; transition: opacity .6s; opacity: .18; }
 
   /* The world: 680x480 design units, scaled into the free area by layout() */
-  #world { position: fixed; left: 0; top: 0; width: 680px; height: 480px; transform-origin: 0 0; transition: transform .8s cubic-bezier(.2,.9,.2,1); }
+  #stage { position: fixed; inset: 0; overflow: hidden; contain: layout paint; }
+  #cam { position: absolute; inset: 0; transform-origin: var(--ox, 50%) var(--oy, 50%); will-change: transform; }
+  #world { position: absolute; left: 0; top: 0; width: 680px; height: 480px; transform-origin: 0 0; transition: transform .8s cubic-bezier(.2,.9,.2,1); }
   body.instant #world { transition: none; }
   #web { position: absolute; inset: 0; width: 680px; height: 480px; overflow: visible; }
   .lbl { font-family: var(--sans); fill: var(--label); paint-order: stroke; stroke: rgba(7,17,31,.6); stroke-width: 3px; }
@@ -79,6 +83,23 @@ export const APP_HTML = String.raw`<!doctype html>
   .node.locked .ring { stroke: #ff6b6b; stroke-dasharray: 2 2.4; opacity: .7; }
   .node.locked .lbl { fill: #8a5560; }
   .node.locked .pulse { animation: none; }
+  .node.down .ring { stroke: var(--grey); stroke-dasharray: 2 2.4; opacity: .5; }
+  .node.down .lbl { fill: var(--dorm); }
+  .node.down .pulse { animation: none; }
+  .spoke.down { opacity: .18 !important; }
+  /* Live link to the backend (GET /api/pulse) */
+  .live { display: inline-flex; align-items: center; gap: 6px; margin-left: 12px; font: 9.5px/1 var(--mono); letter-spacing: .22em; color: rgba(52,211,153,.85); }
+  .live i { width: 6px; height: 6px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 8px var(--ok); }
+  .live.beat i { animation: beat .9s ease-out; }
+  .live.off { color: rgba(255,107,107,.85); } .live.off i { background: #ff6b6b; box-shadow: 0 0 8px #ff6b6b; }
+  .live.wait { color: var(--dorm); } .live.wait i { background: var(--dorm); box-shadow: none; }
+  @keyframes beat { 0% { transform: scale(1); } 30% { transform: scale(2.1); } 100% { transform: scale(1); } }
+  /* Opening shot: letterbox bars + a veil that lifts while the camera pushes in */
+  .bars { position: fixed; left: 0; right: 0; height: 0; background: #02060c; z-index: 90; pointer-events: none; }
+  .bars.t { top: 0; } .bars.b { bottom: 0; }
+  #veil { position: fixed; inset: 0; z-index: 89; pointer-events: none; opacity: 0; background: radial-gradient(circle at 50% 46%, rgba(2,6,12,.2), #02060c 70%); }
+  .shock { position: absolute; left: 50%; top: 50%; width: 100%; height: 100%; border-radius: 50%; border: 2px solid rgba(255,208,128,.9);
+    box-shadow: 0 0 40px rgba(245,166,35,.6), inset 0 0 30px rgba(245,166,35,.4); transform: translate(-50%,-50%) scale(.2); opacity: 0; pointer-events: none; }
   .halo { opacity: 0; transition: opacity .4s; }
   .node:focus { outline: none; } .node:focus-visible .ring { stroke: #fff; }
   .spoke { transition: stroke .4s, opacity .4s, stroke-width .4s; }
@@ -226,8 +247,8 @@ export const APP_HTML = String.raw`<!doctype html>
   /* Session log */
   #log { position: fixed; z-index: 70; top: 0; right: 0; bottom: 0; width: min(460px, 100vw); display: flex; flex-direction: column;
     background: rgba(4,9,20,.94); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); border-left: 1px solid rgba(0,229,255,.14);
-    transform: translateX(105%); transition: transform .5s cubic-bezier(.2,.9,.2,1); -webkit-user-select: text; user-select: text; }
-  #log.show { transform: none; }
+    transform: translateX(105%); visibility: hidden; transition: transform .5s cubic-bezier(.2,.9,.2,1), visibility 0s .5s; -webkit-user-select: text; user-select: text; }
+  #log.show { transform: none; visibility: visible; transition: transform .5s cubic-bezier(.2,.9,.2,1); }
   .lhead { display: flex; align-items: center; gap: 10px; padding: calc(var(--safe-t) + 16px) 18px 14px; border-bottom: 1px solid rgba(0,229,255,.12); }
   .lhead b { font: 600 11px/1 var(--mono); letter-spacing: .3em; color: var(--cyan-hi); }
   .lhead span { font: 10px/1 var(--mono); letter-spacing: .14em; color: var(--dorm); }
@@ -286,7 +307,7 @@ export const APP_HTML = String.raw`<!doctype html>
 <canvas id="bg" aria-hidden="true"></canvas>
 <div id="cast" aria-hidden="true"></div>
 
-<div id="world">
+<div id="stage"><div id="cam"><div id="world">
   <svg id="web" viewBox="0 0 680 480" aria-label="توانایی‌های هرمس"></svg>
   <div id="orb" role="button" tabindex="0" aria-label="Hermes core">
     <svg viewBox="0 0 400 400" fill="none" aria-hidden="true">
@@ -309,8 +330,10 @@ export const APP_HTML = String.raw`<!doctype html>
       <circle cx="200" cy="200" r="52" stroke="#f5a623" stroke-width="1" stroke-opacity=".12" stroke-dasharray="28 18" class="spin-ccw"/>
     </svg>
     <canvas id="core"></canvas>
+    <div class="shock" id="shock"></div>
   </div>
-</div>
+</div></div></div>
+<div class="bars t" id="barT"></div><div class="bars b" id="barB"></div><div id="veil"></div>
 
 <div class="overview" id="overview">
   <div class="cone"></div>
@@ -510,9 +533,24 @@ export const APP_HTML = String.raw`<!doctype html>
   Object.values(nodes).forEach((n) => { n.len = n.spoke.getTotalLength(); });
 
   // ── Layout: fit the 680x480 world into the free area between the HUD and the dock ──
-  let scale = 1;
+  // The size comes from the fixed #stage (the real layout viewport), never from a value read
+  // mid-gesture: Telegram's in-app browser and iOS report a shrunken innerWidth/innerHeight while
+  // its sheet is dragged or the toolbar collapses, and no resize event follows. A size that is
+  // obviously transient is skipped and re-measured on the next frame; a watchdog catches the rest.
+  let scale = 1, applied = '', pending = 0;
+  const stageEl = $('stage');
+  function viewport() {
+    const r = stageEl.getBoundingClientRect();
+    const W = Math.round(r.width || document.documentElement.clientWidth || innerWidth);
+    const H = Math.round(r.height || document.documentElement.clientHeight || innerHeight);
+    return { W, H };
+  }
   function layout() {
-    const W = innerWidth, H = innerHeight, narrow = W < 700, short = H < 540;
+    const { W, H } = viewport();
+    if (W < 240 || H < 300) { if (!pending) pending = requestAnimationFrame(() => { pending = 0; layout(); }); return; }
+    const sizeKey = W + 'x' + H, resized = applied && applied.split('|')[0] !== sizeKey;
+    if (resized) body.classList.add('instant');
+    const narrow = W < 700, short = H < 540;
     const dockH = $('dock').offsetHeight;
     const st = $('status'), stH = short ? 0 : narrow ? 92 : 104;
     st.style.display = short ? 'none' : '';
@@ -528,11 +566,32 @@ export const APP_HTML = String.raw`<!doctype html>
     scale = Math.min(aw / (narrow ? 690 : 640), ah / 430, 2.4);
     const cx = W / 2, cy = topY + ah / 2;
     $('world').style.transform = 'translate(' + (cx - AX * scale) + 'px,' + (cy - AY * scale) + 'px) scale(' + scale + ')';
+    $('cam').style.setProperty('--ox', cx + 'px'); $('cam').style.setProperty('--oy', cy + 'px');
+    applied = sizeKey + '|' + scale;
+    if (resized) requestAnimationFrame(() => requestAnimationFrame(() => body.classList.remove('instant')));
     const fs = Math.max(10.5, Math.min(13 * scale, 21)) / scale;
     web.querySelectorAll('.lbl').forEach((t) => { t.style.fontSize = fs + 'px'; });
     $('cast').style.background = 'radial-gradient(circle at 50% ' + (cy / H * 100) + '%, rgba(13,210,255,1) 0%, rgba(13,170,228,.45) ' + (130 * scale) + 'px, rgba(8,17,31,0) ' + (300 * scale) + 'px)';
   }
-  addEventListener('resize', layout);
+  const relayout = () => { if (!pending) pending = requestAnimationFrame(() => { pending = 0; layout(); }); };
+  addEventListener('resize', relayout);
+  addEventListener('orientationchange', relayout);
+  addEventListener('pageshow', relayout);
+  if (window.visualViewport) visualViewport.addEventListener('resize', relayout);
+  new ResizeObserver(relayout).observe(stageEl);
+  setInterval(() => { const { W, H } = viewport(); if (applied.split('|')[0] !== W + 'x' + H) relayout(); }, 1000);
+  // No page drag: a touch move is only allowed inside something that can actually scroll.
+  function scroller(el) {
+    for (; el && el !== body; el = el.parentElement) {
+      if (el.tagName === 'TEXTAREA' || el.tagName === 'INPUT') return true;
+      const o = getComputedStyle(el), y = o.overflowY, x = o.overflowX;
+      if (((y === 'auto' || y === 'scroll') && el.scrollHeight > el.clientHeight + 1) ||
+          ((x === 'auto' || x === 'scroll') && el.scrollWidth > el.clientWidth + 1)) return true;
+    }
+    return false;
+  }
+  document.addEventListener('touchmove', (e) => { if (e.touches.length > 1 || !scroller(e.target)) e.preventDefault(); }, { passive: false });
+  addEventListener('scroll', () => { if (scrollX || scrollY) scrollTo(0, 0); }, { passive: true });
   new ResizeObserver(layout).observe($('dock'));
   new ResizeObserver(layout).observe($('reply'));
   new ResizeObserver(layout).observe($('login'));
@@ -1182,10 +1241,74 @@ export const APP_HTML = String.raw`<!doctype html>
     } catch {}
   }
 
-  if (!key) body.classList.add('locked'); else loadMe();
+  // ── Opening shot (~2.6s, Web Animations; the UI is usable from the first frame) ──
+  // Letterbox → veil lifts while the camera pushes in → the core ignites with a shockwave →
+  // rings expand → spokes are drawn in a clockwise sweep → each ability flares on as its spoke
+  // arrives → the HUD settles in. Nothing here moves the layout, only transforms and opacity.
+  const EASE = 'cubic-bezier(.16,1,.3,1)', SOFT = 'cubic-bezier(.45,0,.2,1)';
+  function intro() {
+    if (reduced || !document.body.animate) return;
+    const A = (el, kf, o) => el && el.animate(kf, Object.assign({ fill: 'backwards', easing: EASE }, o));
+    const barH = Math.round(viewport().H * .11) + 'px';
+    [$('barT'), $('barB')].forEach((b) => A(b, [{ height: barH }, { height: barH, offset: .55 }, { height: '0px' }], { duration: 2200, easing: SOFT, fill: 'both' }));
+    A($('veil'), [{ opacity: 1 }, { opacity: 0 }], { duration: 1500, delay: 150, easing: SOFT, fill: 'both' });
+    A($('cam'), [{ transform: 'scale(.74)', opacity: 0 }, { transform: 'scale(1)', opacity: 1 }], { duration: 2300 });
+    A($('orb'), [{ transform: 'scale(.35)', opacity: 0 }, { transform: 'scale(1.06)', opacity: 1, offset: .6 }, { transform: 'scale(1)', opacity: 1 }], { duration: 1300, delay: 250 });
+    A($('shock'), [{ transform: 'translate(-50%,-50%) scale(.2)', opacity: 0 }, { transform: 'translate(-50%,-50%) scale(.5)', opacity: .95, offset: .15 }, { transform: 'translate(-50%,-50%) scale(2.4)', opacity: 0 }], { duration: 1400, delay: 620, easing: 'cubic-bezier(.2,.7,.3,1)', fill: 'both' });
+    setTimeout(() => { fx.voice = 1; cs.size = .2; }, 640);
+    gRings.querySelectorAll('circle').forEach((c, i) => {
+      c.style.transformBox = 'view-box'; c.style.transformOrigin = AX + 'px ' + AY + 'px';
+      A(c, [{ transform: 'scale(.4)', opacity: 0 }, { transform: 'scale(1)', opacity: .32 }], { duration: 1500, delay: 700 + i * 140 });
+    });
+    A(gPcb, [{ opacity: 0 }, { opacity: 1 }], { duration: 1600, delay: 1300, easing: SOFT });
+    A(gField, [{ opacity: 0 }, { opacity: 1 }], { duration: 1600, delay: 1500, easing: SOFT });
+    const order = Object.values(nodes).map((n) => ({ n, a: (Math.atan2(n.row[4] - AY, n.row[3] - AX) + Math.PI * 2.5) % (Math.PI * 2) })).sort((p, q) => p.a - q.a);
+    order.forEach(({ n }, i) => {
+      const d = 900 + i * 55;
+      A(n.spoke, [{ strokeDasharray: n.len + ' ' + n.len, strokeDashoffset: n.len }, { strokeDasharray: n.len + ' ' + n.len, strokeDashoffset: 0 }], { duration: 750, delay: d, easing: SOFT });
+      A(n.g, [{ opacity: 0 }, { opacity: 1 }], { duration: 500, delay: d + 560 });
+      const halo = n.g.querySelector('.halo');
+      A(halo, [{ opacity: 0 }, { opacity: .9, offset: .3 }, { opacity: 0 }], { duration: 900, delay: d + 560, easing: 'ease-out', fill: 'none' });
+      n.label.style.transformBox = 'fill-box';
+      A(n.label, [{ transform: 'translateX(' + (n.row[6] === 'l' ? 8 : n.row[6] === 'r' ? -8 : 0) + 'px)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 700, delay: d + 650 });
+    });
+    A($('overview'), [{ transform: 'translateX(-28px)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 1100, delay: 1500 });
+    A($('pill'), [{ transform: 'translateX(28px)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 1100, delay: 1600 });
+    A($('status'), [{ opacity: 0 }, { opacity: 1 }], { duration: 1000, delay: 1750, easing: SOFT });
+    A($('dock'), [{ transform: 'translate(-50%, 46px)', opacity: 0 }, { transform: 'translate(-50%, 0)', opacity: 1 }], { duration: 1100, delay: 1800 });
+  }
+
+  // ── Live link: GET /api/pulse every 20s. Abilities the deploy has not wired go dim; each
+  //    answer is a heartbeat (motes fly out to every live ability) and the round-trip is shown. ──
+  const liveEl = document.createElement('span');
+  liveEl.className = 'live wait'; liveEl.innerHTML = '<i></i><em style="font-style:normal">SYNC</em>';
+  let pulseTimer = 0, down = [];
+  async function beat() {
+    clearTimeout(pulseTimer);
+    if (!key || document.hidden) return;
+    const t0 = performance.now();
+    try {
+      const p = await api('/api/pulse');
+      const ms = Math.round(performance.now() - t0);
+      down = Object.keys(p.abilities || {}).filter((id) => p.abilities[id] === false && nodes[id]);
+      Object.values(nodes).forEach((n) => { const off = down.includes(n.row[0]); n.g.classList.toggle('down', off); n.spoke.classList.toggle('down', off); });
+      liveEl.className = 'live';
+      liveEl.lastChild.textContent = (p.status === 'ok' ? 'LIVE' : 'DEGRADED') + ' · ' + ms + 'ms';
+      void liveEl.offsetWidth; liveEl.classList.add('beat');
+      if (!reduced && body.dataset.state === 'idle') ROSTER.forEach((r) => { if (r[5] && !down.includes(r[0]) && !locks.includes(r[0])) spawnMote(r[0], true); });
+    } catch {
+      liveEl.className = 'live off'; liveEl.lastChild.textContent = 'OFFLINE · RETRY';
+    }
+    pulseTimer = setTimeout(beat, liveEl.classList.contains('off') ? 8000 : 20000);
+  }
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) { relayout(); beat(); } });
+  addEventListener('online', beat);
+
+  if (!key) body.classList.add('locked'); else loadMe().then(() => { $('who').append(liveEl); setTimeout(beat, 2600); });
   layout(); setState('idle');
   raf = requestAnimationFrame(frame);
   requestAnimationFrame(() => requestAnimationFrame(() => body.classList.remove('instant')));
+  intro();
   loadWeather(); setInterval(loadWeather, 1200000);
   if (!key) return;
   (async () => {

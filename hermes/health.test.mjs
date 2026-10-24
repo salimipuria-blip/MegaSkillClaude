@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
-import { liveness, readiness, fullHealth } from './health.mjs';
+import { liveness, readiness, fullHealth, pulse } from './health.mjs';
 import { CircuitBreaker, retryWithBackoff, isTransientStatus } from './resilience.mjs';
 import { recordRequest, snapshot, prometheusText } from './metrics.mjs';
 
@@ -98,3 +98,14 @@ test('guard: all transitive local .mjs imports from entry/worker are bundled in 
   }
 });
 
+
+test('pulse: abilities light up from wired bindings, values never leak', () => {
+  const env = { GEMINI_API_KEY: 'secret-gem', AI: {}, CONVERSATIONS: {}, MEMORY: {}, TELEGRAM_BOT_TOKEN: 'secret-tg' };
+  const p = pulse(env, 0);
+  assert.equal(p.status, 'ok'); assert.equal(p.brains, 2); assert.equal(p.ts, '1970-01-01T00:00:00.000Z');
+  assert.deepEqual(p.abilities, { brain: true, memory: true, telegram: true, edge: true, app: true, remind: true, calendar: false });
+  assert.equal(JSON.stringify(p).includes('secret'), false);
+  const bare = pulse({});
+  assert.equal(bare.status, 'degraded'); assert.equal(bare.abilities.brain, false); assert.equal(bare.abilities.memory, false);
+  assert.equal(pulse({ GEMINI_API_KEY: '  ' }).brains, 0);
+});
