@@ -1,6 +1,6 @@
 # هرمس (Hermes) — دستور کار Claude
 
-> وضعیت: زنده روی Cloudflare Worker `hermes`؛ ۲۶۵ تست واحد + ۱۰ رگرسیون workerd سبز · آخرین بازبینی: 2026-10-24
+> وضعیت: زنده روی Cloudflare Worker `hermes`؛ ۲۶۷ تست واحد + ۱۰ رگرسیون workerd سبز · آخرین بازبینی: 2026-10-24
 
 این فایل را Claude Code هنگام کار در `hermes/` خودکار می‌خواند. منبع حقیقت برای «چه چیزی، کجا، با چه دستوری» است؛ گزارش دورها در `PROGRESS.md`، ممیزی فنی در `PROFESSIONAL_GUIDE.md`، نقشهٔ راه در `ROADMAP.md`.
 
@@ -17,9 +17,9 @@ entrypoints:
   cron: worker.mjs#scheduled   # */5 * * * * → runReminders()
 commands:                      # همه در این بازبینی اجرا و سبز شدند (از hermes/ مگر خلافش گفته شود)
   install: npm ci --ignore-scripts --no-audit --no-fund
-  test: npm test                          # 265/265
+  test: npm test                          # 267/267
   test_integration: npm run test:integration   # 10/10 روی workerd محلی، بدون شبکه
-  test_worker_from_root: node --test hermes/worker.test.mjs   # 80/80 (از ریشهٔ مخزن)
+  test_worker_from_root: node --test hermes/worker.test.mjs   # 81/81 (از ریشهٔ مخزن)
   check: npm run check                    # node --check روی همهٔ ماژول‌ها
   shell: npm run lint:shell && npm run test:shell   # 0 failure
   doctor_from_root: node scripts/doctor.mjs hermes  # همه‌چیز + ساخت مهارت‌ها (~50s)
@@ -50,7 +50,7 @@ owner_actions:
 | `conversation.mjs` · `memory.mjs` | صف گفتگو و جفت پیام اتمیک در DO؛ بایگانی به‌جای حذف؛ یادداشت بلندمدت |
 | `brain.mjs` · `providers.mjs` | Gemini → سرویس‌های رایگان OpenAI-compatible → Workers AI؛ `codeModels` و `max_tokens` در حالت کد |
 | `skills.mjs` · `skill-router.mjs` · `build-skills.mjs` | بستهٔ مهارت داخلی + مسیریاب ~۶هزار مهارت از `public/skills` (ساخت در postinstall) |
-| `coding.mjs` · `github.mjs` | حالت کدنویسی (تشخیص، `CODE_PLAYBOOK`، مهارت Pro)؛ `/ci` `/prs` `/file` `/review` فقط‌خواندنی |
+| `coding.mjs` · `github.mjs` | حالت کدنویسی (تشخیص، `CODE_PLAYBOOK`، مهارت Pro)؛ `/repo` `/ci` `/prs` `/file` `/review` فقط‌خواندنی، در تلگرام و اپ؛ سؤال عادی («git status»، «وضعیت ریپو»، «PRهای باز») با `repoIntent` به همین‌ها می‌رود |
 | `knowledge.mjs` · `build-knowledge.mjs` | دانش پروژه‌ها فقط برای مالک: `PROJECTS` (id, dir, names, docs)، `focusDoc`، `projectKnowledge` |
 | `auth.mjs` · `users.mjs` · `accounts.mjs` · `security.mjs` | حساب تیم (PBKDF2)، توکن نشست HMAC، مدیریت حساب مالک، کلیدهای مشتق (`appKey`, `webhookSecret`, `setupKey`) |
 | `workspaces.mjs` | Hermes Business: `/join`، نقش، سهمیهٔ روزانه، پرامپت جدا برای هر مشتری |
@@ -91,6 +91,7 @@ owner_actions:
 | مدل جواب نمی‌دهد | سهمیهٔ رایگان تمام | `/status` یا `GET /health/deep` (Bearer HEALTH_KEY) | سرویس بعدی خودکار؛ کلید رایگان دیگر اضافه شود |
 | مهارت/دانش پروژه نیست | `public/` در deploy ساخته نشده | لاگ build: `[build-skills]` و `[build-knowledge] … projects` | `npm ci` بدون `--ignore-scripts` در Workers Builds |
 | نقشهٔ اپ روی موبایل کوچک/کج می‌ماند | اندازهٔ گذرای ویوپورت در مرورگر تلگرام | `app.mjs#viewport`/`layout` | (رفع شد ۲۰۲۶-۱۰-۲۴) اندازه را از `#stage` بخوان، هرگز از `innerWidth` |
+| هرمس می‌گوید «فایل ZIP پروژه را بفرست تا git status بگیرم» | مدل کاری را وعده می‌داد که نمی‌تواند | `brain.mjs#STYLE` (بند CANNOT)، `github.mjs#repoIntent` | (رفع شد ۲۰۲۶-۱۰-۲۴) جواب از GitHub می‌آید؛ اگر «GITHUB_REPO_TOKEN» خواست، secret را در Cloudflare بگذار |
 | تست coverage قرمز | ماژول جدید ثبت نشده | `coverage.test.mjs` | به `check`/`test`/`workerModuleNames` اضافه کن |
 
 ## صف کار

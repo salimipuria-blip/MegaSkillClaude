@@ -53,6 +53,32 @@ export async function openPRs(env) {
   return `PRهای باز (${repoOf(env)}):\n${lines.join('\n') || '—'}${bots.length ? `\n\n+ ${bots.length} PR خودکار (مثل Dependabot)` : ''}`;
 }
 
+/** The last commits on main: what «git status / git log» means for a repo Hermes can only read. */
+export async function recentCommits(env, n = 5) {
+  const list = await gh(env, `commits?sha=main&per_page=${n}`);
+  if (!list.length) return 'هیچ کامیتی روی main پیدا نشد.';
+  return `آخرین کامیت‌های main:\n${list.map((c) => `• ${String(c.sha).slice(0, 7)} ${String((c.commit && c.commit.message) || '').split('\n')[0].slice(0, 70)}`).join('\n')}`;
+}
+
+/** One answer for «git status»: commits, CI and open PRs, each part failing on its own. */
+export async function repoStatus(env) {
+  const parts = await Promise.all([recentCommits(env), ciStatus(env), openPRs(env)].map((p) => p.catch((err) => `⚠️ ${err.message}`)));
+  return `📦 ${repoOf(env)}\n\n${parts.join('\n\n')}\n\n(فقط‌خواندنی از GitHub؛ هرمس روی کامپیوتر تو فرمان اجرا نمی‌کند.)`;
+}
+
+// Plain-language questions about the repository, so the owner need not remember /ci or /prs.
+const ASK_STATUS = /\bgit\s*(?:status|log)\b|وضعیت\s*(?:ی\s*)?(?:ریپو|ریپازیتوری|مخزن|گیت(?:\s*هاب|‌هاب)?|github|repo)|(?:ریپو|مخزن)\s*(?:چه\s*خبر|در\s*چه\s*وضعیتی)/i;
+const ASK_CI = /وضعیت\s*(?:ی\s*)?(?:ci|سی\s*آی)|^\s*(?:ci|سی\s*آی)\s*(?:چطوره|چیه|سبزه|قرمزه)?\s*[؟?]?\s*$/i;
+const ASK_PRS = /(?:\bprs?\b|پی\s*آر)\s*(?:ها|‌ها|های)?\s*(?:ی\s*)?(?:باز|open)/i;
+export function repoIntent(text) {
+  const t = String(text || '');
+  if (t.length > 160) return null;
+  if (ASK_CI.test(t)) return '/ci';
+  if (ASK_PRS.test(t)) return '/prs';
+  if (ASK_STATUS.test(t)) return 'status';
+  return null;
+}
+
 const decode = (b64) => new TextDecoder().decode(Uint8Array.from(atob(String(b64).replace(/\s/g, '')), (c) => c.charCodeAt(0)));
 
 /** A file's text, or a directory listing, from the default branch. */
@@ -86,8 +112,11 @@ export function reviewPrompt(path, text) {
  * { reply } (plain text), { file: { name, text, caption } } (send as a document) or { review } (a prompt for the brain).
  */
 export async function githubCommand(env, input) {
-  const m = String(input).match(/^\/(ci|prs|file|review)(?:@\w+)?(?:\s+(\S+))?\s*$/i);
+  const intent = String(input).startsWith('/') ? null : repoIntent(input);
+  if (intent === 'status') return { reply: await repoStatus(env) };
+  const m = String(intent || input).match(/^\/(ci|prs|file|review|repo)(?:@\w+)?(?:\s+(\S+))?\s*$/i);
   if (!m) return null;
+  if (m[1].toLowerCase() === 'repo') return { reply: await repoStatus(env) };
   const cmd = m[1].toLowerCase();
   if (cmd === 'ci') return { reply: await ciStatus(env) };
   if (cmd === 'prs') return { reply: await openPRs(env) };

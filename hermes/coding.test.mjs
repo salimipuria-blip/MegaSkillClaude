@@ -5,7 +5,7 @@ import worker, { webhookSecret } from './worker.mjs';
 import { askWorkersAI } from './brain.mjs';
 import { askProviders } from './providers.mjs';
 import { isCodeRequest, codeSkillNames, codeFiles, CODE_PLAYBOOK } from './coding.mjs';
-import { safePath, readFile, ciStatus, openPRs, githubCommand, reviewPrompt, FILE_CHARS } from './github.mjs';
+import { safePath, readFile, ciStatus, openPRs, githubCommand, reviewPrompt, FILE_CHARS, repoIntent, repoStatus } from './github.mjs';
 
 const OWNER = '123456789';
 
@@ -207,4 +207,23 @@ test('Telegram: /ci, /file as a document, /review through coding mode; not a com
 test('github: a file over 1 MB is reported, never sent as an empty file', async () => {
   mockFetch({ 'contents/big.json': [200, { type: 'file', encoding: 'none', content: '', size: 2500000 }] });
   await assert.rejects(readFile({ GITHUB_REPO_TOKEN: 'tok' }, 'big.json'), /۱ مگابایت/);
+});
+
+test('github: plain-language repo questions route to read-only answers, everyday words do not', async () => {
+  assert.equal(repoIntent('git status'), 'status');
+  assert.equal(repoIntent('وضعیت ریپو چیه؟'), 'status');
+  assert.equal(repoIntent('مخزن چه خبر'), 'status');
+  assert.equal(repoIntent('وضعیت CI'), '/ci');
+  assert.equal(repoIntent('PRهای باز'), '/prs');
+  for (const t of ['وضعیت', 'وضعیت هوا', 'متن معرفی تور', 'git یعنی چی؟ ' + 'x'.repeat(200)]) assert.equal(repoIntent(t), null, t);
+  mockFetch({
+    'commits?': [200, [{ sha: 'c3e581b94e3', commit: { message: 'hermes app: fix scroll (#126)\n\nbody' } }]],
+    'actions/runs': [200, { workflow_runs: [{ name: 'CI', status: 'completed', conclusion: 'failure', head_sha: 'c3e581b', display_title: 'x' }] }],
+    pulls: [403, {}],
+  });
+  const out = await repoStatus({ GITHUB_REPO_TOKEN: 'tok' });
+  assert.match(out, /c3e581b hermes app: fix scroll \(#126\)/);
+  assert.match(out, /❌ CI/);
+  assert.match(out, /⚠️ GitHub فعلاً اجازه نداد/); // one failing part does not hide the others
+  assert.match((await githubCommand({ GITHUB_REPO_TOKEN: 'tok' }, 'git status')).reply, /c3e581b/);
 });

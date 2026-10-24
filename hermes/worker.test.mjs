@@ -227,6 +227,21 @@ test('weather endpoint needs the key and falls back to Tehran', async () => {
   assert.deepEqual((await callApi(baseEnv(), '/api/weather')).body, { city: 'Tehran', temp: 21.4, code: 0 });
 });
 
+test('app: «git status» is answered from GitHub, never by the model promising to run it', async () => {
+  const urls = [];
+  globalThis.fetch = async (url) => {
+    const u = String(url); urls.push(u);
+    if (u.includes('/commits?')) return new Response(JSON.stringify([{ sha: 'abc1234def', commit: { message: 'feat: live pulse' } }]));
+    if (u.includes('/actions/runs')) return new Response(JSON.stringify({ workflow_runs: [] }));
+    if (u.includes('/pulls')) return new Response(JSON.stringify([]));
+    throw new Error('unexpected fetch ' + u);
+  };
+  const res = await callApi(baseEnv({ GITHUB_REPO_TOKEN: 'tok' }), '/api/chat', { message: 'git status' });
+  assert.equal(res.status, 200);
+  assert.match(res.body.reply, /abc1234 feat: live pulse/);
+  assert.equal(urls.some((u) => /generativelanguage|ai\.run|chat\/completions/.test(u)), false);
+});
+
 test('pulse endpoint needs the key and reports presence only', async () => {
   assert.equal((await callApi(baseEnv(), '/api/pulse', undefined, 'nope')).status, 401);
   const res = await callApi(baseEnv(), '/api/pulse');
