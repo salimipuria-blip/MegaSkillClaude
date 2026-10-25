@@ -48,12 +48,13 @@
 همهٔ پروژه‌ها در همین مخزن‌اند؛ نقشهٔ پوشه‌ها و انتشار در `README.md`، وضعیت و کارهای بعدی در `ROADMAP.md`.
 
 **دستورکار هر پروژه:** هر پوشه یک `CLAUDE.md` دارد (spec یamlی، نقشهٔ کد، قواعد MUST/NEVER، جدول اشکال‌زدایی، صف کار P0–P2، پروتکل به‌روزرسانی) — قبل از کار در آن پوشه بخوان. بعد از هر تغییر: همان `CLAUDE.md` + `PROGRESS.md` (گزارش تاریخ‌دار) + `PROFESSIONAL_GUIDE.md` (ممیزی فنی) و در صورت تغییر وضعیت `docs/PORTFOLIO.md` را به‌روز کن. هرمس بخش spec و صف کار هر `CLAUDE.md` را در دانش مالک می‌خواند.
-فهرست: `hermes/` · `plugins/mega-skills-router/` · `psk/` · `lithos/` · `viking-team/` · `bison-brand-book/` · `orchestrator/` · `mobile/` · `fjcod/` (قدیمی؛ جانشین `POINT/fjcod`) · `library/` · `brands/`
+فهرست: `hermes/` · `plugins/mega-skills-router/` · `psk/` · `lithos/` · `viking-team/` · `bison-brand-book/` · `orchestrator/` · `mobile/` · `fjcod/` (قدیمی؛ جانشین `POINT/fjcod`) · `library/` · `brands/` · `riha-cafe/` (اکسل کافه ریحا)
 - `psk`: `npm run check && npm test`
 - `lithos`: `npm test && npm run build`
 - `fjcod` (فروشگاه چام): `npm ci && npm run check`
 - `bison-brand-book`: `npm ci && npm run build`
 - `viking-team`: `python3 -m unittest discover -s tests`
+- `riha-cafe`: `python3 build_riha_cafe_v4.py && python3 build_riha_cafe_v4.py --clean` (بعد بازمحاسبه با soffice و شمارش خطا)
 - `orchestrator`: `python scripts/audit/check_repository_contract.py` و pytest (فهرست فایل‌ها در CI)
 - مسیریاب مهارت‌ها: `python -m unittest discover -s tests`
 - `hermes` (از ریشه): `node --test hermes/worker.test.mjs` و `bash -n hermes/setup.sh`
