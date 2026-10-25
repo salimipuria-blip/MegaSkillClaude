@@ -18,6 +18,7 @@ Run:  python build_riha_cafe_v4.py --clean   (ready-to-start file)
 from __future__ import annotations
 
 import json
+import os
 import re
 import sys
 from datetime import date, datetime, time
@@ -37,6 +38,9 @@ from jalali_lib import jtext, jmonth, is_leap_j, jdays_in_month, j2g
 ROOT = Path(__file__).resolve().parent
 CLEAN = "--clean" in sys.argv          # clean = masters only, no sample transactions
 OUT = ROOT / ("سامانه_کافه_ریحا_v4_آماده_شروع.xlsx" if CLEAN else "سامانه_کافه_ریحا_v4_نمونه_دمو.xlsx")
+MACRO = "--macro" in sys.argv          # adds the order-entry sheet; make_xlsm.py turns the result into .xlsm
+if MACRO:
+    OUT = Path(os.environ.get("RIHA_OUT", ROOT / "riha_macro_base.xlsx"))
 TRANSACTIONAL = {"tblSales", "tblPurchases", "tblStockAdjust", "tblExpenses", "tblCash", "tblAttendance", "tblPayroll", "tblTargets"}
 DATA = json.loads((ROOT / "riha_data.json").read_text(encoding="utf-8"))
 
@@ -1332,7 +1336,93 @@ ws.add_chart(ch3, "A71")
 ws.freeze_panes = "A4"
 set_print(ws, "A1:L86", "portrait", tall=0)
 
-wb._sheets = [SHEETS[k] for k in ["dash", "sales", "inv", "stock", "menu", "cash", "hr", "base", "lists", "sup", "cal"]]
-wb.active = 0
+# ============================================================================ order form (macro version only)
+# The "ثبت" button runs RegisterOrder in RihaCafe_OrderForm.bas; cell addresses here must match that module.
+if MACRO:
+    ws = wb.create_sheet("ثبت سفارش")
+    ws.sheet_view.rightToLeft = True
+    ws.sheet_view.showGridLines = False
+    ws.sheet_properties.tabColor = GREEN
+    SHEETS["order"] = ws
+    title(ws, "کافه ریحا | ثبت سفارش", "محصول و تعداد را وارد کنید و «ثبت فاکتور» را بزنید. شمارهٔ فاکتور خودکار است و سفارش در شیت «فروش» ثبت می‌شود.", 7)
+    for col, w in zip("ABCDEFG", [6, 30, 10, 14, 16, 24, 18]):
+        ws.column_dimensions[col].width = w
+
+    def lab(ref, text):
+        c = ws[ref]
+        c.value = text
+        c.font = font(10, True, DARK)
+        c.alignment = Alignment(horizontal="right", vertical="center")
+
+    def box(ref, value=None, fmt=None):
+        c = ws[ref]
+        c.value = value
+        c.font = font(11, True)
+        c.fill = fill(IN_FILL)
+        c.border = Border(top=THIN, bottom=THIN, left=THIN, right=THIN)
+        c.alignment = Alignment(horizontal="center", vertical="center")
+        if fmt:
+            c.number_format = fmt
+
+    def calc(ref, value, fmt=None, size=11):
+        c = ws[ref]
+        c.value = value
+        c.font = font(size, True, DARK)
+        c.fill = fill(CALC_FILL)
+        c.border = Border(top=THIN, bottom=THIN, left=THIN, right=THIN)
+        c.alignment = Alignment(horizontal="center", vertical="center")
+        if fmt:
+            c.number_format = fmt
+
+    FORM_DATE = f'=IFERROR({jtxt("TODAY()")},"")'
+    lab("A4", "تاریخ"); box("B4", FORM_DATE, "@")
+    lab("A5", "پرداخت"); box("B5", "نقد")
+    lab("A6", "میز/سفارش"); box("B6")
+    lab("A7", "مشتری"); box("B7")
+    lab("C4", "تلفن"); ws.merge_cells("D4:E4"); box("D4")
+    lab("C5", "پرسنل"); ws.merge_cells("D5:E5"); box("D5")
+    lab("C6", "تخفیف"); ws.merge_cells("D6:E6"); box("D6", 0, "0%")
+    lab("C7", "فاکتور بعدی"); ws.merge_cells("D7:E7")
+    # helper cells (hidden column G): serial of the form date and the next number of that day
+    ws["G4"] = "=" + gd("$B$4", "TRUE")
+    ws["G5"] = f'=IF(ISNUMBER(G4),_xlfn.MAXIFS(tblSales[{DN}],tblSales[{GD}],G4)+1,"")'
+    ws["G6"] = '=IF(ISNUMBER(G4),INDEX(CalKey,MATCH(G4,CalSerial,0)),"")'
+    calc("D7", '=IF(ISNUMBER(G4),"R-"&G6&"-"&TEXT(G5,"00"),"تاریخ نامعتبر")', size=12)
+    ws.column_dimensions["G"].hidden = True
+    dv_list(ws, "B5", "PaymentMethods")
+    dv_list(ws, "D5", "StaffCodes")
+    dv_num(ws, "D6", "decimal", "between", 0, 1, "تخفیف بین 0% و 100% است.")
+
+    band(ws, 9, 1, 5, "اقلام سفارش (حداکثر ۱۴ قلم، هم‌اندازهٔ فاکتور چاپی)", GREEN)
+    for j, h in enumerate(["ردیف", "نام محصول", "تعداد", "قیمت واحد", "مبلغ"], 1):
+        c = ws.cell(10, j, h)
+        c.font = font(10, True, WHITE)
+        c.fill = fill(DARK)
+        c.alignment = Alignment(horizontal="center", vertical="center")
+    for r in range(11, 25):
+        calc(f"A{r}", r - 10, size=10)
+        box(f"B{r}"); ws[f"B{r}"].alignment = Alignment(horizontal="right", vertical="center")
+        box(f"C{r}", None, "General")
+        calc(f"D{r}", f'=IF(B{r}="","",IFERROR(INDEX(tblMenu[قیمت فروش],MATCH(B{r},tblMenu[نام محصول],0)),"{BAD_CODE}"))', MONEY)
+        calc(f"E{r}", f'=IF(OR(B{r}="",C{r}="",NOT(ISNUMBER(D{r}))),"",C{r}*D{r})', MONEY)
+    dv_list(ws, "B11:B24", "ProductNames")
+    dv_num(ws, "C11:C24", "decimal", "greaterThan", 0, msg="تعداد باید بزرگ‌تر از صفر باشد.")
+    lab("D26", "جمع اقلام"); calc("E26", "=SUM(E11:E24)", MONEY)
+    lab("D27", "تخفیف"); calc("E27", "=E26*N(D6)", MONEY)
+    lab("D28", "قابل پرداخت"); calc("E28", "=E26-E27", MONEY, 13)
+    lab("A26", "واحد مبالغ: " + UNIT)
+    ws.merge_cells("A30:E31")
+    ws["A30"] = "اگر دکمه‌ها کار نکردند، در نوار زرد بالای صفحه این را بزنید: Enable Content"
+    ws["A30"].font = font(11, True, DARK)
+    ws["A30"].fill = fill(CREAM)
+    ws["A30"].alignment = Alignment(horizontal="center", vertical="center", wrap_text=True)
+    for r in range(4, 8):
+        ws.row_dimensions[r].height = 24
+    for r in range(11, 25):
+        ws.row_dimensions[r].height = 22
+    set_print(ws, "A1:E31", "portrait")
+
+wb._sheets = [SHEETS[k] for k in (["dash", "order"] if MACRO else ["dash"]) + ["sales", "inv", "stock", "menu", "cash", "hr", "base", "lists", "sup", "cal"]]
+wb.active = 1 if MACRO else 0
 wb.save(OUT)
 print("Created", OUT)
