@@ -215,6 +215,23 @@ tr.cx td:last-child { text-decoration: none }
 .ed tbody tr:hover td { background: transparent }
 @media (max-width: 860px) { .setgrid, .frow { grid-template-columns: minmax(0, 1fr) } }
 
+/* sign-in gate & account chip */
+.who { background: transparent; color: var(--band-ink); border-color: color-mix(in srgb, var(--band-ink) 35%, transparent); white-space: nowrap }
+.who:hover { border-color: var(--band-ink) }
+#gate { position: fixed; inset: 0; z-index: 90; background: var(--band); color: var(--band-ink); overflow-y: auto; display: grid; place-items: center; padding-block: max(24px, env(safe-area-inset-top, 0px)) max(24px, env(safe-area-inset-bottom, 0px)); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)) }
+.gate-in { width: 100%; max-width: 400px; display: grid; gap: 18px }
+.gate-in .big { font-family: var(--display); font-size: 64px; line-height: .85; direction: ltr; text-align: center; font-weight: 500 }
+.gate-in .sub { text-align: center; color: var(--band-muted); font-size: 14px }
+.gate-card { background: var(--surface); color: var(--fg); border-radius: 18px; padding: 18px; display: grid; gap: 12px; box-shadow: var(--shadow) }
+.gate-card h2 { margin: 0; font-size: 18px; font-weight: 800 }
+.roles { display: grid; grid-template-columns: 1fr 1fr; gap: 8px }
+.roles .chip { min-height: 48px; font-size: 15px; font-weight: 700; border-radius: 12px }
+.err { color: var(--bad); font-size: 13px; min-height: 1.4em; margin: 0 }
+.code { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 26px; letter-spacing: .12em; direction: ltr; text-align: center; padding: 12px; border: 2px dashed var(--line); border-radius: 12px; background: var(--surface-2); user-select: all }
+.linkbtn { background: none; border: 0; color: var(--muted); text-decoration: underline; font-size: 13px; padding: 4px; justify-self: center }
+[data-owner-only] { }
+body.cashier [data-owner-only] { display: none !important }
+
 /* modal & toast */
 .modal { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; background: rgba(10,20,15,.5); padding: 16px }
 .dlg { background: var(--surface); border-radius: 18px; max-width: 480px; width: 100%; max-height: 90vh; overflow: auto; box-shadow: var(--shadow); padding: 18px; display: grid; gap: 14px }
@@ -253,10 +270,11 @@ tr.cx td:last-child { text-decoration: none }
   <nav class="nav" aria-label="بخش‌ها">
     <a href="#pos" data-v="pos">ثبت سفارش</a>
     <a href="#invoices" data-v="invoices">فاکتورها</a>
-    <a href="#report" data-v="report">گزارش</a>
-    <a href="#setup" data-v="setup">تنظیمات</a>
+    <a href="#report" data-v="report" data-owner-only>گزارش</a>
+    <a href="#setup" data-v="setup" data-owner-only>تنظیمات</a>
   </nav>
   <div class="today num" id="today"></div>
+  <button class="btn sm who" id="who" type="button" aria-label="حساب کاربری"></button>
 </div></header>
 
 <main class="wrap">
@@ -369,6 +387,29 @@ tr.cx td:last-child { text-decoration: none }
         <button class="btn danger" id="bk-wipe" type="button">پاک کردن همهٔ فاکتورها</button>
       </div>
       <div class="card full">
+        <h3>رمز عبور و دسترسی‌ها</h3>
+        <p class="hint">دو کاربر دارد. <b>مالک</b> به همه‌چیز دسترسی دارد. <b>صندوقدار</b> فقط می‌تواند سفارش ثبت و چاپ کند، سفارش نگه دارد و فاکتورهای امروز را ببیند. صندوقدار به گزارش، تنظیمات، ابطال فاکتور و پشتیبان دسترسی ندارد و تخفیفش سقف دارد.</p>
+        <div class="setgrid" style="gap:12px">
+          <div class="card" style="background:var(--surface-2)">
+            <h3 style="margin:0">تغییر رمز مالک</h3>
+            <label class="f">رمز فعلی<input class="in" id="sec-old" type="password" autocomplete="current-password"></label>
+            <label class="f">رمز جدید<input class="in" id="sec-new" type="password" autocomplete="new-password"></label>
+            <label class="f">تکرار رمز جدید<input class="in" id="sec-new2" type="password" autocomplete="new-password"></label>
+            <button class="btn primary" id="sec-own" type="button">تغییر رمز مالک</button>
+          </div>
+          <div class="card" style="background:var(--surface-2)">
+            <h3 style="margin:0">رمز صندوقدار</h3>
+            <p class="hint">اگر صندوقدار رمزش را فراموش کرد، مالک از اینجا رمز تازه می‌گذارد.</p>
+            <label class="f">رمز جدید صندوقدار<input class="in" id="sec-c1" type="password" autocomplete="new-password"></label>
+            <label class="f">تکرار<input class="in" id="sec-c2" type="password" autocomplete="new-password"></label>
+            <button class="btn" id="sec-cash" type="button">ذخیرهٔ رمز صندوقدار</button>
+            <label class="f">سقف تخفیف صندوقدار (درصد)<input class="in num" id="sec-cap" type="number" min="0" max="100" step="1"></label>
+          </div>
+        </div>
+        <div class="chips" style="align-items:center"><button class="btn sm" id="sec-rc" type="button">ساخت کد بازیابی تازه</button><span class="hint">برای ساخت کد تازه، رمز فعلی مالک را در خانهٔ «رمز فعلی» بالا بنویسید.</span></div>
+        <p class="err" id="sec-msg" role="status"></p>
+      </div>
+      <div class="card full">
         <div class="bar" style="margin:0"><h3 style="margin:0">منو و قیمت‌ها</h3><div class="grow"></div><button class="btn sm" id="m-add" type="button">افزودن قلم</button></div>
         <div class="tablewrap"><table class="ed num"><thead><tr><th>کد</th><th>نام</th><th>توضیح کوتاه</th><th>دسته</th><th>قیمت</th><th>فعال</th></tr></thead><tbody id="m-body"></tbody></table></div>
         <p class="hint">برای حذف یک قلم از منو، تیک «فعال» را بردارید تا فاکتورهای قبلی سالم بمانند.</p>
@@ -383,6 +424,7 @@ tr.cx td:last-child { text-decoration: none }
 
 <div class="cartbar num" id="cartbar"><div id="cb-t"></div><button class="btn" id="cb-open" type="button">مشاهده و ثبت</button></div>
 <div id="layer"></div>
+<div id="gate" hidden></div>
 <div id="print-root"></div>
 <style id="page-size"></style>
 
@@ -457,6 +499,106 @@ function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); storageOK 
 let S = load();
 if (!S || !S.settings || !Array.isArray(S.invoices)) { S = seed(); save(); }
 
+/* ---------- sign-in: two users (owner, cashier), salted SHA-256 hashes only ---------- */
+// Plain-JS SHA-256 so it also works where crypto.subtle is missing (opened as a local file on some browsers).
+function sha256(str) {
+  const K = [0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5, 0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174, 0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da, 0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147, 0x06ca6351, 0x14292967, 0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13, 0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85, 0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3, 0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070, 0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3, 0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2];
+  const b = new TextEncoder().encode(str); const l = b.length; const n = ((l + 9 + 63) >> 6) << 6;
+  const m = new Uint8Array(n); m.set(b); m[l] = 0x80; const dv = new DataView(m.buffer); dv.setUint32(n - 4, l * 8); dv.setUint32(n - 8, Math.floor(l / 0x20000000));
+  const H = [0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19]; const W = new Uint32Array(64);
+  const r = (x, k) => (x >>> k) | (x << (32 - k));
+  for (let o = 0; o < n; o += 64) {
+    for (let i = 0; i < 16; i++) W[i] = dv.getUint32(o + i * 4);
+    for (let i = 16; i < 64; i++) W[i] = (W[i - 16] + (r(W[i - 15], 7) ^ r(W[i - 15], 18) ^ (W[i - 15] >>> 3)) + W[i - 7] + (r(W[i - 2], 17) ^ r(W[i - 2], 19) ^ (W[i - 2] >>> 10))) >>> 0;
+    let [a, bb, c, d, e, f, g, h] = H;
+    for (let i = 0; i < 64; i++) {
+      const t1 = (h + (r(e, 6) ^ r(e, 11) ^ r(e, 25)) + ((e & f) ^ (~e & g)) + K[i] + W[i]) >>> 0;
+      const t2 = ((r(a, 2) ^ r(a, 13) ^ r(a, 22)) + ((a & bb) ^ (a & c) ^ (bb & c))) >>> 0;
+      h = g; g = f; f = e; e = (d + t1) >>> 0; d = c; c = bb; bb = a; a = (t1 + t2) >>> 0;
+    }
+    [a, bb, c, d, e, f, g, h].forEach((x, i) => { H[i] = (H[i] + x) >>> 0; });
+  }
+  return H.map(x => x.toString(16).padStart(8, '0')).join('');
+}
+const pwHash = (pw, salt) => { let h = salt + '|' + pw; for (let i = 0; i < 2000; i++) h = sha256(h + salt); return h; };
+function randHex(n) { const a = new Uint8Array(n); try { crypto.getRandomValues(a); } catch (e) { for (let i = 0; i < n; i++) a[i] = Math.floor(Math.random() * 256); } return [...a].map(x => x.toString(16).padStart(2, '0')).join(''); }
+const makeSecret = pw => { const salt = randHex(16); return { salt, hash: pwHash(pw, salt) }; };
+const checkSecret = (sec, pw) => !!sec && pwHash(pw, sec.salt) === sec.hash;
+function recoveryCode() { const A = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; const r = randHex(8); let c = ''; for (let i = 0; i < 8; i++) c += A[parseInt(r.slice(i * 2, i * 2 + 2), 16) % A.length]; return c.slice(0, 4) + '-' + c.slice(4); }
+const ROLE_NAME = { owner: 'مالک', cashier: 'صندوقدار' };
+// Default passwords were handed to the owner outside the project; only their salted hashes live here.
+// After the first change the new hashes are kept on this device only.
+const DEFAULT_AUTH = {"owner":{"salt":"9e9ccecb0bbcad2c1c9a066aa3cf65e6","hash":"abdd78a0e1775bf3c9df4afa9017058a959ad6a9f7d997fe2f4d27784e737aab"},"cashier":{"salt":"960731f1550cb2ed907c1c1402f5aa68","hash":"2af68f883a0a3c21389101040d5e0f94b039b3cae5d56277a4478cfca14f01dd"},"recovery":{"salt":"2c03c023577440d653b3b2a5c5882fd7","hash":"2a8d286b5ca550d67aaa5e751f236d33f6c2305f140cfa74704f2be7da5d445a"},"cap":10,"defaults":{"owner":true,"cashier":true}};
+if (!S.auth) { S.auth = JSON.parse(JSON.stringify(DEFAULT_AUTH)); save(); }
+const OWNER_IDLE_MIN = 15;
+let role = null;
+try { const r = sessionStorage.getItem('riha-role'); if ((r === 'owner' || r === 'cashier') && S.auth) role = r; } catch (e) { /* no session storage */ }
+let lastAct = Date.now(); let fails = 0; let lockUntil = 0;
+try { lockUntil = +localStorage.getItem('riha-lock') || 0; } catch (e) { /* ignore */ }
+const lockFor = ms => { lockUntil = Date.now() + ms; fails = 0; try { localStorage.setItem('riha-lock', String(lockUntil)); } catch (e) { /* ignore */ } };
+const isOwner = () => role === 'owner';
+const discCap = () => isOwner() ? 100 : Math.min(100, Math.max(0, +(S.auth?.cap ?? 10)));
+function setRole(r) { role = r; try { r ? sessionStorage.setItem('riha-role', r) : sessionStorage.removeItem('riha-role'); } catch (e) { /* ignore */ } lastAct = Date.now(); }
+function pwRule(a, b) { if ((a || '').length < 4) return 'رمز باید دست‌کم ۴ نویسه باشد.'; if (a !== b) return 'رمز و تکرار آن یکی نیستند.'; return ''; }
+function changePw(who, oldPw, n1, n2) {
+  if (!checkSecret(S.auth[who], oldPw)) return 'رمز فعلی درست نیست.';
+  const e = pwRule(n1, n2); if (e) return e;
+  const other = who === 'owner' ? 'cashier' : 'owner';
+  if (checkSecret(S.auth[other], n1)) return 'رمز مالک و صندوقدار نباید یکی باشند.';
+  S.auth[who] = makeSecret(n1); if (S.auth.defaults) S.auth.defaults[who] = false; save(); return '';
+}
+function gate(mode, extra) {
+  const g = $('#gate');
+  if (!mode) { g.hidden = true; g.innerHTML = ''; return; }
+  g.hidden = false; $('#layer').innerHTML = ''; closeSheet();
+  const head = `<div><div class="big">MENU</div><div class="sub">${esc(S.settings.name)} · صندوق فروش</div></div>`;
+  let body = '';
+  if (mode === 'code') body = `<div class="gate-card"><h2>کد بازیابی مالک</h2><p class="hint">اگر رمز مالک فراموش شود، فقط با این کد می‌شود رمز تازه گذاشت. آن را روی کاغذ بنویسید و جای امن نگه دارید. دیگر نشان داده نمی‌شود.</p><div class="code">${esc(extra)}</div><button class="btn primary" id="g-done" type="button" style="min-height:48px">نوشتم، ادامه</button></div>`;
+  if (mode === 'login') body = `<form class="gate-card" id="g-form"><h2>ورود</h2><div class="roles" role="radiogroup" aria-label="کاربر"><button class="chip" type="button" data-role="cashier" aria-pressed="true">صندوقدار</button><button class="chip" type="button" data-role="owner" aria-pressed="false">مالک</button></div>
+    <label class="f">رمز عبور<input class="in" id="g-pw" type="password" autocomplete="current-password" required></label><p class="err" id="g-err" role="alert"></p>
+    <button class="btn primary" type="submit" style="min-height:48px">ورود</button><button class="linkbtn" type="button" id="g-forgot">رمز مالک را فراموش کرده‌ام</button></form>`;
+  if (mode === 'recover') body = `<form class="gate-card" id="g-form"><h2>بازیابی رمز مالک</h2><p class="hint">کد بازیابی را که هنگام راه‌اندازی نوشتید وارد کنید و رمز تازه بگذارید.</p>
+    <label class="f">کد بازیابی<input class="in" id="g-rc" dir="ltr" autocomplete="off" required></label><label class="f">رمز تازهٔ مالک<input class="in" id="g-n1" type="password" autocomplete="new-password" required></label><label class="f">تکرار<input class="in" id="g-n2" type="password" autocomplete="new-password" required></label>
+    <p class="err" id="g-err" role="alert"></p><button class="btn primary" type="submit" style="min-height:48px">ذخیرهٔ رمز تازه</button><button class="linkbtn" type="button" id="g-back">بازگشت به ورود</button></form>`;
+  g.innerHTML = `<div class="gate-in">${head}${body}</div>`;
+  const err = t => { const e = $('#g-err'); if (e) e.textContent = t; };
+  const form = $('#g-form');
+  if (mode === 'code') $('#g-done').addEventListener('click', () => { setRole('owner'); gate(null); renderAll(); toast('خوش آمدید! وارد شدید: مالک'); });
+  if (mode === 'login') {
+    let who = 'cashier';
+    g.querySelectorAll('[data-role]').forEach(b => b.addEventListener('click', () => { who = b.dataset.role; g.querySelectorAll('[data-role]').forEach(x => x.setAttribute('aria-pressed', String(x === b))); $('#g-pw').focus(); }));
+    form.addEventListener('submit', ev => {
+      ev.preventDefault();
+      if (Date.now() < lockUntil) return err(`چند بار رمز اشتباه وارد شد. ${fa(Math.ceil((lockUntil - Date.now()) / 1000))} ثانیه دیگر دوباره امتحان کنید.`);
+      if (checkSecret(S.auth[who], $('#g-pw').value)) { fails = 0; setRole(who); gate(null); if (!isOwner() && ['report', 'setup'].includes(view())) location.hash = 'pos'; renderAll(); toast('وارد شدید: ' + ROLE_NAME[who]); return; }
+      fails++; $('#g-pw').value = '';
+      if (fails >= 5) { lockFor(30000); return err('۵ بار رمز اشتباه وارد شد. ۳۰ ثانیه صبر کنید.'); }
+      err('رمز درست نیست.');
+    });
+    $('#g-forgot').addEventListener('click', () => gate('recover'));
+    setTimeout(() => $('#g-pw')?.focus(), 50);
+  }
+  if (mode === 'recover') {
+    $('#g-back').addEventListener('click', () => gate('login'));
+    form.addEventListener('submit', ev => {
+      ev.preventDefault();
+      if (Date.now() < lockUntil) return err('کمی صبر کنید و دوباره امتحان کنید.');
+      const code = toEn($('#g-rc').value).toUpperCase().replace(/[^A-Z0-9]/g, '');
+      if (!checkSecret(S.auth.recovery, code)) { if (++fails >= 5) lockFor(30000); return err('کد بازیابی درست نیست.'); }
+      const n1 = $('#g-n1').value; const e = pwRule(n1, $('#g-n2').value) || (checkSecret(S.auth.cashier, n1) ? 'رمز مالک و صندوقدار نباید یکی باشند.' : '');
+      if (e) return err(e);
+      fails = 0; S.auth.owner = makeSecret(n1); if (S.auth.defaults) S.auth.defaults.owner = false; const nc = recoveryCode(); S.auth.recovery = makeSecret(nc.replace('-', '')); save();
+      gate('code', nc);
+    });
+  }
+}
+function logout() { setRole(null); cur = blank(); gate('login'); renderAll(); }
+function accountDialog() {
+  dialog(`<h3>حساب ${ROLE_NAME[role]}</h3><p class="hint">تغییر رمز خودتان (رمز فعلی لازم است).</p><label class="f">رمز فعلی<input class="in" id="a-old" type="password" autocomplete="current-password"></label><label class="f">رمز جدید<input class="in" id="a-n1" type="password" autocomplete="new-password"></label><label class="f">تکرار رمز جدید<input class="in" id="a-n2" type="password" autocomplete="new-password"></label><p class="err" id="a-err" role="alert"></p>`,
+    [{ label: 'تغییر رمز', cls: 'primary', on: () => { const e = changePw(role, $('#a-old').value, $('#a-n1').value, $('#a-n2').value); if (e) { $('#a-err').textContent = e; return false; } toast('رمز عوض شد'); } },
+     { label: 'خروج از حساب', cls: 'danger', on: () => { logout(); } }, { label: 'بستن', cls: 'ghost' }]);
+}
+
 /* ---------- state of the open order ---------- */
 const blank = () => ({ items: [], table: '', staff: (S.staff.find(p => p.active) || {}).code || '', customer: '', phone: '', note: '', disc: 0, pay: 'کارت', editing: null });
 let cur = blank();
@@ -495,13 +637,17 @@ function renderHeader() {
   const now = new Date(); const j = jp(now); const k = jkey(now);
   const today = S.invoices.filter(i => i.dateKey === k && i.status === 'نهایی');
   const sum = today.reduce((a, i) => a + invTotals(i).pay, 0);
-  $('#today').innerHTML = `<b>${WD[now.getDay()]} ${fa(j.d)} ${JMON[j.m - 1]}</b>فروش امروز ${money(sum)} · ${fa(today.length)} فاکتور`;
+  $('#today').innerHTML = `<b>${WD[now.getDay()]} ${fa(j.d)} ${JMON[j.m - 1]}</b>` + (isOwner() ? `فروش امروز ${money(sum)} · ${fa(today.length)} فاکتور` : `${fa(today.length)} فاکتور امروز`);
+  $('#who').textContent = role ? ROLE_NAME[role] + ' ▾' : '';
+  document.body.classList.toggle('cashier', !isOwner());
   document.documentElement.toggleAttribute('data-theme', !!s.theme);
   if (s.theme) document.documentElement.setAttribute('data-theme', s.theme);
 }
 function renderNotices() {
   const n = [];
   if (!storageOK) n.push(`<div class="notice"><b>ذخیره‌سازی در این مرورگر در دسترس نیست.</b><span class="sp">فاکتورها با بستن صفحه از بین می‌روند. حالت خصوصی (Incognito) را ببندید یا مرورگر دیگری را امتحان کنید.</span></div>`);
+  if (!isOwner()) { $('#notices').innerHTML = n.join(''); return; }
+  const df = S.auth.defaults || {}; if (df.owner || df.cashier) n.push(`<div class="notice"><b>رمزهای پیش‌فرض هنوز عوض نشده‌اند.</b><span class="sp">برای امنیت، رمز ${[df.owner && 'مالک', df.cashier && 'صندوقدار'].filter(Boolean).join(' و ')} را در «تنظیمات ← رمز عبور و دسترسی‌ها» عوض کنید.</span><a class="btn sm primary" href="#setup">عوض کردن رمز</a></div>`);
   if (S.invoices.some(i => i.sample)) n.push(`<div class="notice"><b>فاکتورهای نمونه</b><span class="sp">فاکتورهایی که برچسب «نمونه» دارند فقط برای آشنایی‌اند و در گزارش‌ها حساب می‌شوند. پیش از شروع کار پاکشان کنید. نام پرسنل هم نمونه است؛ در «تنظیمات» عوضشان کنید.</span><button class="btn sm primary" id="clr-sample" type="button">پاک کردن نمونه‌ها و شروع کار</button></div>`);
   else if (S.invoices.length && Date.now() - (S.lastBackup || 0) > 36e5 * 24) n.push(`<div class="notice"><b>پشتیبان امروز گرفته نشده.</b><span class="sp">داده‌ها فقط روی همین دستگاه‌اند.</span><a class="btn sm" href="#setup">رفتن به پشتیبان‌گیری</a></div>`);
   $('#notices').innerHTML = n.join('');
@@ -559,7 +705,7 @@ function commit(status, print) {
   if (!cur.items.length) return;
   const now = new Date();
   let inv = cur.editing && S.invoices.find(i => i.no === cur.editing);
-  const fields = { items: cur.items.map(l => ({ ...l })), table: cur.table.trim(), staff: cur.staff, customer: cur.customer.trim(), phone: toEn(cur.phone.trim()), note: cur.note.trim(), disc: Math.min(100, Math.max(0, +cur.disc || 0)), pay: cur.pay, tax: +S.settings.tax || 0, status };
+  const fields = { items: cur.items.map(l => ({ ...l })), table: cur.table.trim(), staff: cur.staff, customer: cur.customer.trim(), phone: toEn(cur.phone.trim()), note: cur.note.trim(), disc: Math.min(discCap(), Math.max(0, +cur.disc || 0)), pay: cur.pay, tax: +S.settings.tax || 0, status, by: role };
   if (inv) Object.assign(inv, fields, status === 'نهایی' ? { time: hhmm(now), ts: now.getTime() } : {});
   else { const k = jkey(now); const n = nextDayNo(k); inv = { no: invNo(k, n), dateKey: k, dayNo: n, time: hhmm(now), ts: now.getTime(), ...fields }; S.invoices.push(inv); }
   save(); cur = blank(); closeSheet(); renderAll();
@@ -604,7 +750,8 @@ function showInvoice(no) {
   const inv = S.invoices.find(i => i.no === no); if (!inv) return;
   const btns = [{ label: 'چاپ', cls: 'primary', on: () => printInvoice(inv) }];
   if (inv.status === 'باز') btns.push({ label: 'ادامهٔ سفارش', on: () => resume(inv.no) });
-  if (inv.status !== 'ابطال') btns.push({ label: 'ابطال فاکتور', cls: 'danger', on: () => { setTimeout(() => confirmBox('ابطال فاکتور ' + inv.no, 'فاکتور در فهرست می‌ماند ولی در فروش و گزارش‌ها حساب نمی‌شود. شماره‌اش دوباره استفاده نمی‌شود.', 'ابطال کن', () => { inv.status = 'ابطال'; save(); renderAll(); toast('فاکتور ابطال شد'); }), 0); } });
+  if (!isOwner()) { /* cancelling and restoring invoices is for the owner only */ }
+  else if (inv.status !== 'ابطال') btns.push({ label: 'ابطال فاکتور', cls: 'danger', on: () => { setTimeout(() => confirmBox('ابطال فاکتور ' + inv.no, 'فاکتور در فهرست می‌ماند ولی در فروش و گزارش‌ها حساب نمی‌شود. شماره‌اش دوباره استفاده نمی‌شود.', 'ابطال کن', () => { inv.status = 'ابطال'; inv.cancelledAt = Date.now(); save(); renderAll(); toast('فاکتور ابطال شد'); }), 0); } });
   else btns.push({ label: 'بازگرداندن', on: () => { inv.status = 'نهایی'; save(); renderAll(); toast('فاکتور بازگردانده شد'); } });
   btns.push({ label: 'بستن', cls: 'ghost' });
   dialog(receiptHTML(inv), btns);
@@ -624,12 +771,14 @@ const rangeChips = (id, val) => { $(id).innerHTML = Object.entries(RANGES).map((
 
 /* ---------- invoices view ---------- */
 function renderInvoices() {
+  if (!isOwner()) invRange = 'today';
   rangeChips('#inv-range', invRange);
+  if (!isOwner()) $('#inv-range').innerHTML = `<span class="chip" aria-pressed="true">امروز</span>`;
   const q = toEn($('#inv-q').value.trim());
   const list = S.invoices.filter(i => inRange(i, invRange)).filter(i => !q || [i.no, i.table, i.customer, i.phone, toEn(i.table)].some(x => String(x || '').includes(q))).sort((a, b) => b.ts - a.ts);
   const fin = list.filter(i => i.status === 'نهایی');
   const sum = fin.reduce((a, i) => a + invTotals(i).pay, 0);
-  $('#inv-kpis').innerHTML = kpi('فروش', money(sum), 'هزار تومان', true) + kpi('فاکتور نهایی', fa(fin.length)) + kpi('باز', fa(list.filter(i => i.status === 'باز').length)) + kpi('ابطال', fa(list.filter(i => i.status === 'ابطال').length));
+  $('#inv-kpis').innerHTML = (isOwner() ? kpi('فروش', money(sum), 'هزار تومان', true) : '') + kpi('فاکتور نهایی', fa(fin.length)) + kpi('باز', fa(list.filter(i => i.status === 'باز').length)) + kpi('ابطال', fa(list.filter(i => i.status === 'ابطال').length));
   $('#inv-body').innerHTML = list.length ? list.map(i => {
     const t = invTotals(i); const st = i.status === 'نهایی' ? 'ok' : i.status === 'ابطال' ? 'bad' : 'warn';
     return `<tr data-no="${esc(i.no)}" class="${i.status === 'ابطال' ? 'cx' : ''}" tabindex="0"><td><span class="mono">${esc(i.no)}</span></td><td>${fa(jtext(i.dateKey))}</td><td>${fa(i.time)}</td><td>${esc(fa(i.table || '—'))}</td><td>${fa(t.count)}</td><td>${esc(i.pay)}</td><td>${esc(staffName(i.staff) || '—')}</td><td><span class="pill ${st}">${esc(i.status === 'باز' ? 'باز (پرداخت‌نشده)' : i.status)}</span>${i.sample ? ' <span class="pill smp">نمونه</span>' : ''}</td><td class="l"><b>${money(t.pay)}</b></td></tr>`;
@@ -675,6 +824,7 @@ function renderReport() {
 /* ---------- settings ---------- */
 const SF = { '#s-name': 'name', '#s-ig': 'ig', '#s-phone': 'phone', '#s-addr': 'address', '#s-slogan': 'slogan', '#s-tax': 'tax', '#s-paper': 'paper', '#s-theme': 'theme' };
 function renderSetup() {
+  if (document.activeElement !== $('#sec-cap')) $('#sec-cap').value = S.auth?.cap ?? 10;
   for (const [sel, k] of Object.entries(SF)) if (document.activeElement !== $(sel)) $(sel).value = S.settings[k] ?? '';
   const lb = S.lastBackup ? new Date(S.lastBackup) : null;
   $('#bk-state').innerHTML = `${fa(S.invoices.length)} فاکتور ذخیره شده. آخرین پشتیبان: <b>${lb ? `${fa(jtext(jkey(lb)))} ساعت ${fa(hhmm(lb))}` : 'هنوز گرفته نشده'}</b>`;
@@ -701,6 +851,8 @@ function csv() {
 const VIEWS = ['pos', 'invoices', 'report', 'setup'];
 function view() { const v = location.hash.replace('#', ''); return VIEWS.includes(v) ? v : 'pos'; }
 function renderAll() {
+  if (!role) { if ($('#gate').hidden) gate('login'); return; }
+  if (!isOwner() && ['report', 'setup'].includes(view())) { location.hash = 'pos'; return; }
   const v = view();
   VIEWS.forEach(x => { $('#v-' + x).hidden = x !== v; });
   document.querySelectorAll('.nav a').forEach(a => a.dataset.v === v ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current'));
@@ -721,7 +873,7 @@ $('#items').addEventListener('click', e => { const b = e.target.closest('[data-d
 $('#pays').addEventListener('click', e => { const b = e.target.closest('[data-pay]'); if (b) { cur.pay = b.dataset.pay; renderTicket(); } });
 $('#parked').addEventListener('click', e => { const b = e.target.closest('[data-open]'); if (b) resume(b.dataset.open); });
 for (const [sel, k] of [['#o-table', 'table'], ['#o-staff', 'staff'], ['#o-cust', 'customer'], ['#o-phone', 'phone'], ['#o-note', 'note']]) $(sel).addEventListener('input', e => { cur[k] = e.target.value; });
-$('#o-disc').addEventListener('input', e => { cur.disc = Math.min(100, Math.max(0, +toEn(e.target.value) || 0)); const t = totals(cur.items, cur.disc, S.settings.tax); $('#sum .tot span:last-child').textContent = money(t.pay); });
+$('#o-disc').addEventListener('input', e => { cur.disc = Math.min(discCap(), Math.max(0, +toEn(e.target.value) || 0)); if (+toEn(e.target.value) > discCap()) toast(`سقف تخفیف صندوقدار ${fa(discCap())}٪ است`); const t = totals(cur.items, cur.disc, S.settings.tax); $('#sum .tot span:last-child').textContent = money(t.pay); });
 $('#o-disc').addEventListener('change', renderTicket);
 $('#b-final').addEventListener('click', () => commit('نهایی', true));
 $('#b-save').addEventListener('click', () => commit('نهایی', false));
@@ -775,11 +927,19 @@ $('#bk-in').addEventListener('change', e => {
   rd.onload = () => {
     let d; try { d = JSON.parse(rd.result); } catch (x) { toast('این فایل پشتیبان معتبر نیست'); return; }
     if (!d || !d.settings || !Array.isArray(d.invoices) || !Array.isArray(d.menu)) { toast('این فایل پشتیبان صندوق ریحا نیست'); return; }
-    confirmBox('بازگردانی پشتیبان', `${fa(d.invoices.length)} فاکتور از فایل جایگزین داده‌های فعلی این دستگاه می‌شود.`, 'جایگزین کن', () => { S = d; save(); cur = blank(); renderAll(); toast('پشتیبان بازگردانی شد'); });
+    confirmBox('بازگردانی پشتیبان', `${fa(d.invoices.length)} فاکتور از فایل جایگزین داده‌های فعلی این دستگاه می‌شود.`, 'جایگزین کن', () => { if (!d.auth) d.auth = S.auth; S = d; save(); cur = blank(); renderAll(); toast('پشتیبان بازگردانی شد'); });
   };
   rd.readAsText(f); e.target.value = '';
 });
 $('#bk-wipe').addEventListener('click', () => confirmBox('پاک کردن همهٔ فاکتورها', 'همهٔ فاکتورهای این دستگاه برای همیشه پاک می‌شوند. منو، پرسنل و تنظیمات می‌مانند. اگر پشتیبان ندارید، اول پشتیبان بگیرید.', 'همه را پاک کن', () => { S.invoices = []; save(); cur = blank(); renderAll(); toast('فاکتورها پاک شد'); }));
+$('#who').addEventListener('click', accountDialog);
+const secMsg = (t, ok) => { const m = $('#sec-msg'); m.textContent = t; m.style.color = ok ? 'var(--ok)' : ''; };
+$('#sec-own').addEventListener('click', () => { const e = changePw('owner', $('#sec-old').value, $('#sec-new').value, $('#sec-new2').value); if (e) return secMsg(e); ['#sec-old', '#sec-new', '#sec-new2'].forEach(x => { $(x).value = ''; }); secMsg('رمز مالک عوض شد.', true); });
+$('#sec-cash').addEventListener('click', () => { const a = $('#sec-c1').value; const e = pwRule(a, $('#sec-c2').value) || (checkSecret(S.auth.owner, a) ? 'رمز مالک و صندوقدار نباید یکی باشند.' : ''); if (e) return secMsg(e); S.auth.cashier = makeSecret(a); if (S.auth.defaults) S.auth.defaults.cashier = false; save(); $('#sec-c1').value = $('#sec-c2').value = ''; secMsg('رمز صندوقدار ذخیره شد.', true); });
+$('#sec-cap').addEventListener('change', e => { S.auth.cap = Math.min(100, Math.max(0, Math.round(+toEn(e.target.value) || 0))); save(); secMsg(`سقف تخفیف صندوقدار: ${fa(S.auth.cap)}٪`, true); });
+$('#sec-rc').addEventListener('click', () => { if (!checkSecret(S.auth.owner, $('#sec-old').value)) return secMsg('برای ساخت کد تازه، رمز فعلی مالک را درست بنویسید.'); const c = recoveryCode(); S.auth.recovery = makeSecret(c.replace('-', '')); save(); $('#sec-old').value = ''; secMsg(''); dialog(`<h3>کد بازیابی تازه</h3><p class="hint">کد قبلی دیگر کار نمی‌کند. این کد را بنویسید و جای امن نگه دارید.</p><div class="code">${esc(c)}</div>`, [{ label: 'نوشتم', cls: 'primary' }]); });
+['pointerdown', 'keydown'].forEach(t => document.addEventListener(t, () => { lastAct = Date.now(); }, { passive: true }));
+setInterval(() => { if (isOwner() && Date.now() - lastAct > OWNER_IDLE_MIN * 60000) { logout(); toast('به‌خاطر بی‌کاری از حساب مالک خارج شدید'); } }, 30000);
 document.addEventListener('keydown', e => {
   if (e.key === '/' && view() === 'pos' && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) { e.preventDefault(); $('#q').focus(); }
   if (e.key === 'Escape') { $('#layer').innerHTML = ''; closeSheet(); }
