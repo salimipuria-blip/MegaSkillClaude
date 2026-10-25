@@ -784,6 +784,9 @@ document.addEventListener('keydown', e => {
   if (e.key === '/' && view() === 'pos' && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) { e.preventDefault(); $('#q').focus(); }
   if (e.key === 'Escape') { $('#layer').innerHTML = ''; closeSheet(); }
 });
+// single-device register: ask the browser not to evict the data, and keep working offline on the website
+try { navigator.storage?.persist?.().catch(() => {}); } catch (e) { /* not supported */ }
+if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost') && !window.claude) navigator.serviceWorker.register('sw.js').catch(() => {});
 setInterval(renderHeader, 60000);
 renderAll();
 })();
