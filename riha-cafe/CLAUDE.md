@@ -16,5 +16,7 @@ check: python3 build_riha_cafe_v4.py && python3 build_riha_cafe_v4.py --clean
 - شمارهٔ فاکتور = `R-` + کلید تاریخ شمسی + `-` + «فاکتور روز» (دو رقمی).
 
 ## صف کار
+- P1: همگام‌سازی چنددستگاهی صندوق وب (Cloudflare Worker + D1 روی دامنهٔ اختصاصی؛ `workers.dev` در ایران فیلتر است).
+- قاعده: `web/index.html` فقط با `python3 web/build.py` از `web/app.html` ساخته شود.
 - P1: بعد از تست در OneDrive واقعی، اگر فهرست کشویی `OFFSET` مشکل داشت، فهرست ثابت جایگزین شود.
 - P2: هشدار شمارهٔ تکراری: یک «فاکتور روز» برای دو مشتری متفاوت.

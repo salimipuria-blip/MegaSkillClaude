@@ -1,0 +1,793 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1E4635">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>صندوق کافه ریحا</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="صندوق فروش و فاکتور کافه ریحا">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,700&family=Vazirmatn:wght@400;500;700;800&display=swap">
+<style>
+/* Layout: dark-green header band like the printed menu; POS = menu wall (cream tiles, green price discs) + order ticket on the side; bottom sheet on phones. */
+@font-face { font-family: "BodoniLocal"; src: url("fonts/BodoniModa-500.woff2") format("woff2"); font-weight: 400 700; font-display: swap; }
+@font-face { font-family: "VazirLocal"; src: local("Vazirmatn"), url("fonts/Vazirmatn-Variable.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+:root {
+  --bg: #F1EDE3; --surface: #FBF9F4; --surface-2: #E9E3D5; --fg: #18271F; --muted: #5C6A61; --line: #D9D2C2;
+  --band: #1E4635; --band-ink: #F3EFE5; --band-muted: #B9C8BE;
+  --accent: #1E4635; --accent-ink: #F3EFE5; --taupe: #8A7766; --chip: #E3EBE4;
+  --ok: #2D7A4E; --warn: #A86A12; --bad: #A93838; --bad-bg: #F6E1DE; --warn-bg: #F7EBD3; --ok-bg: #DDEDE2;
+  --shadow: 0 1px 0 rgba(24,39,31,.06), 0 8px 24px -14px rgba(24,39,31,.35);
+  --display: "BodoniLocal", "Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
+  --body: "VazirLocal", "Vazirmatn", Tahoma, "Segoe UI", sans-serif;
+  --r: 14px;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0E1914; --surface: #15231B; --surface-2: #1C2E24; --fg: #ECE6D8; --muted: #9CAAA0; --line: #2A3E32;
+  --band: #173628; --band-ink: #F1ECE0; --band-muted: #9FB3A6; --accent: #3C7A5C; --accent-ink: #F6F2E8; --taupe: #BBA794; --chip: #20372A;
+  --ok: #6BC28F; --warn: #E0A84A; --bad: #E07A72; --bad-bg: #3A1F1D; --warn-bg: #3A2D16; --ok-bg: #18382A;
+  --shadow: 0 1px 0 rgba(0,0,0,.3), 0 10px 26px -16px rgba(0,0,0,.8); color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0E1914; --surface: #15231B; --surface-2: #1C2E24; --fg: #ECE6D8; --muted: #9CAAA0; --line: #2A3E32;
+  --band: #173628; --band-ink: #F1ECE0; --band-muted: #9FB3A6; --accent: #3C7A5C; --accent-ink: #F6F2E8; --taupe: #BBA794; --chip: #20372A;
+  --ok: #6BC28F; --warn: #E0A84A; --bad: #E07A72; --bad-bg: #3A1F1D; --warn-bg: #3A2D16; --ok-bg: #18382A;
+  --shadow: 0 1px 0 rgba(0,0,0,.3), 0 10px 26px -16px rgba(0,0,0,.8); color-scheme: dark }
+
+* { box-sizing: border-box }
+html, body { height: 100% }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 15px; line-height: 1.7; direction: rtl; -webkit-font-smoothing: antialiased }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--band) }
+button, input, select, textarea { font: inherit; color: inherit }
+button { cursor: pointer }
+:focus-visible { outline: 2px solid var(--taupe); outline-offset: 2px }
+.num { font-variant-numeric: tabular-nums }
+.wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)) }
+
+/* header band */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--band); color: var(--band-ink) }
+.top-in { display: flex; align-items: center; gap: 18px; padding-block: 10px; flex-wrap: wrap }
+.brand { display: flex; align-items: center; gap: 12px; min-width: 0 }
+.brand img { width: 42px; height: 42px; object-fit: contain; border-radius: 50%; background: var(--band-ink) }
+.mark { font-weight: 800; font-size: 26px; line-height: 1; letter-spacing: -.5px }
+.mark-en { font-family: var(--display); font-size: 11px; letter-spacing: .42em; color: var(--band-muted); margin-top: 4px; direction: ltr; text-align: right }
+.nav { display: flex; gap: 4px; margin-inline-start: auto; overflow-x: auto; scrollbar-width: none }
+.nav a { color: var(--band-muted); text-decoration: none; padding: 7px 14px; border-radius: 999px; font-weight: 500; white-space: nowrap }
+.nav a[aria-current="page"] { background: var(--band-ink); color: var(--band) }
+.today { text-align: left; font-size: 12px; color: var(--band-muted); line-height: 1.5 }
+.today b { display: block; color: var(--band-ink); font-size: 14px }
+
+main { padding-block: 18px 110px }
+.view[hidden] { display: none !important }
+.notice { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; background: var(--warn-bg); color: var(--fg); border: 1px solid var(--line); border-radius: var(--r); padding: 10px 14px; margin-bottom: 16px; font-size: 13.5px }
+.notice b { color: var(--warn) }
+.notice .sp { flex: 1 1 200px }
+
+/* buttons & fields */
+.btn { border: 1px solid var(--line); background: var(--surface); border-radius: 10px; padding: 8px 14px; min-height: 40px; font-weight: 500 }
+.btn:hover { border-color: var(--taupe) }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 700 }
+.btn.ghost { background: transparent }
+.btn.danger { color: var(--bad); border-color: color-mix(in srgb, var(--bad) 40%, var(--line)) }
+.btn.sm { min-height: 32px; padding: 4px 10px; font-size: 13px }
+.btn:disabled { opacity: .45; cursor: not-allowed }
+label.f { display: grid; gap: 4px; font-size: 12.5px; color: var(--muted); min-width: 0 }
+.in { width: 100%; border: 1px solid var(--line); background: var(--surface); border-radius: 10px; padding: 8px 11px; min-height: 40px; color: var(--fg) }
+.in:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent) }
+.chips { display: flex; gap: 6px; flex-wrap: wrap }
+.chip { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 5px 13px; font-size: 13.5px; min-height: 34px }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink) }
+
+/* POS */
+.pos { display: grid; grid-template-columns: minmax(0, 1fr) 390px; gap: 20px; align-items: start }
+.menuhead { background: var(--band); color: var(--band-ink); border-radius: var(--r) var(--r) 0 0; padding: 16px 18px 14px; display: flex; align-items: end; gap: 16px; flex-wrap: wrap }
+.menuhead .big { font-family: var(--display); font-size: 54px; line-height: .8; letter-spacing: -1px; direction: ltr; font-weight: 500 }
+.menuhead .sub { font-size: 13px; color: var(--band-muted) }
+.menuhead .search { margin-inline-start: auto; flex: 0 1 260px; min-width: 0 }
+.menuhead .search .in { background: var(--band-ink); color: #18271F; border-color: transparent }
+.cats { background: var(--surface); border: 1px solid var(--line); border-top: 0; padding: 10px 14px; display: flex; gap: 6px; overflow-x: auto; scrollbar-width: thin }
+.cats .chip { white-space: nowrap }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(168px, 1fr)); gap: 12px; padding-top: 14px }
+.sec-t { grid-column: 1 / -1; display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 15px; margin-top: 6px }
+.sec-t::after { content: ""; flex: 1; height: 1px; background: var(--line) }
+.tile { position: relative; text-align: right; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 12px 14px 12px 62px; min-height: 84px; display: grid; align-content: start; gap: 2px; transition: transform .12s, border-color .12s }
+.tile:hover { border-color: var(--taupe) }
+.tile:active { transform: scale(.98) }
+.tile .nm { font-weight: 700; font-size: 15px; line-height: 1.45 }
+.tile .nt { font-size: 12px; color: var(--muted); line-height: 1.5 }
+.disc { position: absolute; left: 10px; top: 50%; translate: 0 -50%; width: 44px; height: 44px; border-radius: 50%; background: var(--accent); color: var(--accent-ink); display: grid; place-items: center; font-weight: 700; font-size: 14px; box-shadow: 0 0 0 3px var(--surface), 0 0 0 4px var(--line) }
+.tile .q { position: absolute; top: -7px; right: -7px; min-width: 24px; height: 24px; padding: 0 6px; border-radius: 12px; background: var(--taupe); color: #fff; font-size: 12.5px; font-weight: 700; display: grid; place-items: center }
+.tile.off { opacity: .45 }
+.empty { padding: 28px; text-align: center; color: var(--muted); border: 1px dashed var(--line); border-radius: var(--r); grid-column: 1 / -1 }
+
+/* ticket */
+.ticket { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 78px); background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow); display: flex; flex-direction: column; max-height: calc(100vh - 100px); overflow: hidden }
+.tk-h { padding: 14px 16px 10px; border-bottom: 1px dashed var(--line); display: grid; gap: 8px }
+.tk-no { display: flex; justify-content: space-between; align-items: baseline; gap: 8px }
+.tk-no .lbl { font-size: 12px; color: var(--muted) }
+.invno { font-weight: 800; font-size: 21px; direction: ltr; letter-spacing: .03em; color: var(--accent); font-variant-numeric: tabular-nums }
+.tk-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px }
+.tk-items { overflow-y: auto; padding: 6px 16px; flex: 1 1 auto; min-height: 90px }
+.li { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 10px; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--line) }
+.li:last-child { border-bottom: 0 }
+.li .nm { font-weight: 600; font-size: 14px; min-width: 0 }
+.li .pr { font-size: 12px; color: var(--muted) }
+.stepper { display: flex; align-items: center; border: 1px solid var(--line); border-radius: 999px; overflow: hidden }
+.stepper button { width: 32px; height: 32px; border: 0; background: transparent; font-size: 18px; line-height: 1 }
+.stepper button:hover { background: var(--surface-2) }
+.stepper span { min-width: 24px; text-align: center; font-weight: 700 }
+.li .amt { font-weight: 700; min-width: 54px; text-align: left }
+.tk-f { border-top: 1px dashed var(--line); padding: 12px 16px 14px; display: grid; gap: 10px; background: var(--surface) }
+.sum { display: grid; gap: 3px; font-size: 13.5px }
+.sum div { display: flex; justify-content: space-between }
+.sum .tot { font-size: 18px; font-weight: 800; padding-top: 6px; border-top: 1px solid var(--line); margin-top: 4px }
+.sum .tot span:last-child { color: var(--accent) }
+.acts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px }
+.acts .wide { grid-column: 1 / -1; min-height: 48px; font-size: 16px }
+.parked { display: flex; gap: 6px; flex-wrap: wrap }
+.parked .chip { font-size: 12.5px; background: var(--warn-bg) }
+details.more summary { cursor: pointer; font-size: 13px; color: var(--muted); list-style: none }
+details.more summary::-webkit-details-marker { display: none }
+details.more summary::before { content: "+ " }
+details.more[open] summary::before { content: "− " }
+details.more .tk-row { margin-top: 8px }
+
+/* phone bar */
+.cartbar { display: none }
+@media (max-width: 920px) {
+  .pos { grid-template-columns: minmax(0, 1fr) }
+  .ticket { position: fixed; inset: auto 0 0 0; top: auto; max-height: 88vh; border-radius: 18px 18px 0 0; translate: 0 105%; transition: translate .25s ease; z-index: 40; padding-bottom: env(safe-area-inset-bottom, 0px) }
+  .ticket.open { translate: 0 0 }
+  .cartbar { display: flex; position: fixed; inset: auto 0 0 0; z-index: 35; gap: 12px; align-items: center; background: var(--band); color: var(--band-ink); padding-block: 12px calc(12px + env(safe-area-inset-bottom, 0px)); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)) }
+  .cartbar .btn { margin-inline-start: auto; background: var(--band-ink); color: #18271F; border-color: transparent; font-weight: 700 }
+  .scrim { position: fixed; inset: 0; background: rgba(10,20,15,.45); z-index: 38 }
+  .menuhead .big { font-size: 40px }
+  .grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) }
+  .tk-close { display: inline-flex !important }
+}
+.tk-close { display: none }
+@media (max-width: 600px) {
+  .top-in { gap: 6px 10px; padding-block: 8px }
+  .today { display: none }
+  .nav { order: 3; width: 100%; margin: 0 }
+  .nav a { padding: 5px 12px }
+  .mark { font-size: 22px }
+  .ticket { top: auto }
+}
+
+/* invoices & report */
+.bar { display: flex; gap: 10px; align-items: end; flex-wrap: wrap; margin-bottom: 14px }
+.bar h2, .h2 { margin: 0; font-size: 22px; font-weight: 800 }
+.bar .grow { flex: 1 }
+.tablewrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r) }
+table { width: 100%; border-collapse: collapse; font-size: 14px }
+th, td { padding: 10px 12px; text-align: right; border-bottom: 1px solid var(--line); white-space: nowrap }
+th { font-size: 12px; color: var(--muted); font-weight: 500; background: var(--surface-2) }
+tbody tr { cursor: pointer }
+tbody tr:hover td { background: color-mix(in srgb, var(--surface-2) 55%, transparent) }
+tbody tr:last-child td { border-bottom: 0 }
+td.l { text-align: left }
+.mono { direction: ltr; display: inline-block; font-weight: 700; letter-spacing: .02em; font-variant-numeric: tabular-nums }
+.pill { display: inline-block; padding: 1px 10px; border-radius: 999px; font-size: 12px; font-weight: 600 }
+.pill.ok { background: var(--ok-bg); color: var(--ok) }
+.pill.bad { background: var(--bad-bg); color: var(--bad) }
+.pill.warn { background: var(--warn-bg); color: var(--warn) }
+.pill.smp { background: var(--surface-2); color: var(--muted) }
+tr.cx td { color: var(--muted); text-decoration: line-through; text-decoration-color: color-mix(in srgb, var(--bad) 60%, transparent) }
+tr.cx td:last-child { text-decoration: none }
+
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 16px }
+.kpi { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 14px 16px }
+.kpi .k { font-size: 12.5px; color: var(--muted) }
+.kpi .v { font-size: 26px; font-weight: 800; line-height: 1.3 }
+.kpi .u { font-size: 12px; color: var(--muted); font-weight: 400 }
+.kpi.hero { background: var(--band); color: var(--band-ink); border-color: var(--band) }
+.kpi.hero .k, .kpi.hero .u { color: var(--band-muted) }
+.cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 14px 16px; min-width: 0 }
+.card h3 { margin: 0 0 10px; font-size: 15px; font-weight: 800 }
+.card.full { grid-column: 1 / -1 }
+.cols { display: flex; align-items: flex-end; gap: 4px; height: 170px; padding-top: 20px; border-bottom: 1px solid var(--line); overflow-x: auto }
+.col { flex: 1 0 18px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; gap: 4px; min-width: 18px }
+.col i { display: block; width: 100%; max-width: 30px; background: var(--accent); border-radius: 5px 5px 0 0; min-height: 2px }
+.col.zero i { background: var(--line) }
+.col b { font-size: 10.5px; color: var(--muted); font-weight: 500 }
+.col .t { font-size: 10px; color: var(--fg); font-weight: 700; white-space: nowrap }
+.xlab { display: flex; gap: 4px; overflow: hidden }
+.hb { display: grid; grid-template-columns: 110px minmax(0, 1fr) 76px; gap: 10px; align-items: center; font-size: 13.5px; padding: 4px 0 }
+.hb .tr { height: 12px; background: var(--surface-2); border-radius: 6px; overflow: hidden }
+.hb .tr i { display: block; height: 100%; background: var(--taupe); border-radius: 6px }
+.hb .tr.g i { background: var(--accent) }
+.hb span:last-child { text-align: left; font-weight: 700 }
+.hb span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+@media (max-width: 760px) { .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)) } .cards { grid-template-columns: minmax(0, 1fr) } .hb { grid-template-columns: 92px minmax(0, 1fr) 64px } }
+
+/* settings */
+.setgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px }
+.setgrid .card { display: grid; gap: 12px; align-content: start }
+.frow { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px }
+.hint { font-size: 12.5px; color: var(--muted); margin: 0 }
+.ed td { padding: 6px 8px; cursor: default }
+.ed .in { min-height: 34px; padding: 4px 8px }
+.ed tbody tr { cursor: default }
+.ed tbody tr:hover td { background: transparent }
+@media (max-width: 860px) { .setgrid, .frow { grid-template-columns: minmax(0, 1fr) } }
+
+/* modal & toast */
+.modal { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; background: rgba(10,20,15,.5); padding: 16px }
+.dlg { background: var(--surface); border-radius: 18px; max-width: 480px; width: 100%; max-height: 90vh; overflow: auto; box-shadow: var(--shadow); padding: 18px; display: grid; gap: 14px }
+.dlg h3 { margin: 0; font-size: 18px }
+.dlg .acts { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-start }
+.toast { position: fixed; z-index: 70; left: 50%; translate: -50% 0; bottom: calc(84px + env(safe-area-inset-bottom, 0px)); background: var(--fg); color: var(--bg); padding: 10px 18px; border-radius: 999px; font-weight: 600; box-shadow: var(--shadow); max-width: calc(100% - 32px) }
+
+/* receipt (screen preview + print) */
+.rc { background: #fff; color: #111; border: 1px solid var(--line); border-radius: 10px; padding: 16px 14px; font-size: 13px; line-height: 1.6; max-width: 340px; margin-inline: auto; width: 100% }
+.rc .c { text-align: center }
+.rc .rn { font-weight: 800; font-size: 20px }
+.rc .re { font-family: var(--display); letter-spacing: .4em; font-size: 10px; direction: ltr }
+.rc img { width: 54px; height: 54px; object-fit: contain; display: block; margin: 0 auto 4px }
+.rc hr { border: 0; border-top: 1px dashed #999; margin: 8px 0 }
+.rc .kv { display: flex; justify-content: space-between; gap: 8px }
+.rc table { font-size: 12.5px }
+.rc th, .rc td { padding: 3px 2px; border: 0; background: none; color: #111; white-space: normal }
+.rc th { border-bottom: 1px solid #999; font-weight: 700 }
+.rc .tt { font-size: 16px; font-weight: 800 }
+.rc .cxs { border: 2px solid #A93838; color: #A93838; text-align: center; font-weight: 800; padding: 2px; margin: 6px 0 }
+#print-root { display: none }
+@media print {
+  body > *:not(#print-root) { display: none !important }
+  body::before { display: none }
+  #print-root { display: block }
+  #print-root .rc { border: 0; max-width: none; padding: 0 }
+  html, body { background: #fff }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important } }
+</style>
+
+</head>
+<body>
+<header class="top"><div class="top-in wrap">
+  <div class="brand" id="brand"></div>
+  <nav class="nav" aria-label="بخش‌ها">
+    <a href="#pos" data-v="pos">ثبت سفارش</a>
+    <a href="#invoices" data-v="invoices">فاکتورها</a>
+    <a href="#report" data-v="report">گزارش</a>
+    <a href="#setup" data-v="setup">تنظیمات</a>
+  </nav>
+  <div class="today num" id="today"></div>
+</div></header>
+
+<main class="wrap">
+  <div id="notices"></div>
+
+  <section class="view" id="v-pos">
+    <div class="pos">
+      <div>
+        <div class="menuhead">
+          <div><div class="big">MENU</div><div class="sub">برای افزودن به سفارش روی هر قلم بزنید</div></div>
+          <label class="search"><span hidden>جست‌وجو در منو</span><input class="in" id="q" type="search" placeholder="جست‌وجو… (کلید /)" autocomplete="off"></label>
+        </div>
+        <div class="cats" id="cats" role="toolbar" aria-label="دسته‌ها"></div>
+        <div class="grid" id="grid"></div>
+      </div>
+      <aside class="ticket" id="ticket" aria-label="سفارش جاری">
+        <div class="tk-h">
+          <div class="tk-no">
+            <div><div class="lbl" id="tk-lbl">فاکتور بعدی</div><div class="invno num" id="tk-no"></div></div>
+            <button class="btn sm ghost tk-close" id="tk-close" type="button">بستن</button>
+          </div>
+          <div class="parked" id="parked"></div>
+          <div class="tk-row">
+            <label class="f">میز / سفارش<input class="in" id="o-table" list="tables" placeholder="مثلاً ۴ یا بیرون‌بر"></label>
+            <label class="f">پرسنل<select class="in" id="o-staff"></select></label>
+          </div>
+          <details class="more"><summary>مشتری، تخفیف و یادداشت</summary>
+            <div class="tk-row">
+              <label class="f">نام مشتری<input class="in" id="o-cust" autocomplete="off"></label>
+              <label class="f">تلفن<input class="in" id="o-phone" inputmode="tel" autocomplete="off"></label>
+            </div>
+            <div class="tk-row">
+              <label class="f">تخفیف (درصد)<input class="in num" id="o-disc" type="number" min="0" max="100" step="1" value="0"></label>
+              <label class="f">یادداشت<input class="in" id="o-note" autocomplete="off"></label>
+            </div>
+          </details>
+        </div>
+        <div class="tk-items" id="items"></div>
+        <div class="tk-f">
+          <div class="chips" id="pays" role="radiogroup" aria-label="روش پرداخت"></div>
+          <div class="sum num" id="sum"></div>
+          <div class="acts">
+            <button class="btn primary wide" id="b-final" type="button">ثبت و چاپ فاکتور</button>
+            <button class="btn" id="b-save" type="button">ثبت بدون چاپ</button>
+            <button class="btn" id="b-park" type="button">نگه‌داشتن سفارش</button>
+            <button class="btn ghost danger" id="b-clear" type="button" style="grid-column:1/-1">پاک کردن سفارش</button>
+          </div>
+        </div>
+      </aside>
+    </div>
+    <datalist id="tables"><option value="بیرون‌بر"></option><option value="۱"></option><option value="۲"></option><option value="۳"></option><option value="۴"></option><option value="۵"></option><option value="۶"></option><option value="۷"></option><option value="۸"></option><option value="۹"></option><option value="۱۰"></option></datalist>
+  </section>
+
+  <section class="view" id="v-invoices" hidden>
+    <div class="bar">
+      <h2>فاکتورها</h2>
+      <div class="chips" id="inv-range"></div>
+      <div class="grow"></div>
+      <label class="f" style="flex:0 1 240px"><span>جست‌وجو (شماره، میز، مشتری)</span><input class="in" id="inv-q" type="search" autocomplete="off"></label>
+    </div>
+    <div class="kpis num" id="inv-kpis"></div>
+    <div class="tablewrap"><table class="num"><thead><tr><th>شماره</th><th>تاریخ</th><th>ساعت</th><th>میز</th><th>اقلام</th><th>پرداخت</th><th>پرسنل</th><th>وضعیت</th><th class="l">مبلغ</th></tr></thead><tbody id="inv-body"></tbody></table></div>
+  </section>
+
+  <section class="view" id="v-report" hidden>
+    <div class="bar"><h2>گزارش فروش</h2><div class="chips" id="rp-range"></div></div>
+    <div class="kpis num" id="rp-kpis"></div>
+    <div class="cards">
+      <div class="card full"><h3 id="rp-trend-t">روند فروش</h3><div class="cols num" id="rp-trend"></div></div>
+      <div class="card"><h3>پرفروش‌ترین اقلام</h3><div id="rp-top" class="num"></div></div>
+      <div class="card"><h3>فروش هر دسته</h3><div id="rp-cat" class="num"></div></div>
+      <div class="card"><h3>روش پرداخت</h3><div id="rp-pay" class="num"></div></div>
+      <div class="card"><h3>فروش هر پرسنل</h3><div id="rp-staff" class="num"></div></div>
+    </div>
+  </section>
+
+  <section class="view" id="v-setup" hidden>
+    <div class="bar"><h2>تنظیمات</h2></div>
+    <div class="setgrid">
+      <div class="card">
+        <h3>مشخصات کافه (روی فاکتور چاپ می‌شود)</h3>
+        <div class="frow">
+          <label class="f">نام کافه<input class="in" id="s-name"></label>
+          <label class="f">اینستاگرام<input class="in" id="s-ig" dir="ltr"></label>
+          <label class="f">تلفن<input class="in" id="s-phone" inputmode="tel"></label>
+          <label class="f">آدرس<input class="in" id="s-addr"></label>
+          <label class="f">شعار پایین فاکتور<input class="in" id="s-slogan"></label>
+          <label class="f">مالیات (درصد)<input class="in num" id="s-tax" type="number" min="0" max="100" step="0.5"></label>
+          <label class="f">اندازهٔ کاغذ چاپ<select class="in" id="s-paper"><option value="80">رسید ۸۰ میلی‌متری</option><option value="58">رسید ۵۸ میلی‌متری</option><option value="A5">A5</option></select></label>
+          <label class="f">ظاهر<select class="in" id="s-theme"><option value="">مطابق دستگاه</option><option value="light">روشن</option><option value="dark">تیره</option></select></label>
+        </div>
+        <div class="frow" style="align-items:end">
+          <label class="f">لوگو (عکس PNG یا JPG)<input class="in" id="s-logo" type="file" accept="image/*"></label>
+          <button class="btn sm" id="s-logo-x" type="button">حذف لوگو</button>
+        </div>
+        <p class="hint">مبالغ به «هزار تومان» است، مثل منوی چاپی.</p>
+      </div>
+      <div class="card">
+        <h3>پشتیبان و انتقال داده</h3>
+        <p class="hint" id="bk-state"></p>
+        <div class="chips">
+          <button class="btn primary" id="bk-json" type="button">دانلود فایل پشتیبان</button>
+          <button class="btn" id="bk-csv" type="button">خروجی اکسل (CSV فروش)</button>
+          <label class="btn" for="bk-in" style="display:inline-flex;align-items:center">بازگردانی از پشتیبان</label>
+          <input id="bk-in" type="file" accept=".json,application/json" hidden>
+        </div>
+        <p class="hint">داده‌ها فقط در همین مرورگرِ همین دستگاه ذخیره می‌شوند. هر شب پشتیبان بگیرید. پاک کردن تاریخچهٔ مرورگر یا خرابی دستگاه یعنی از دست رفتن داده‌ها.</p>
+        <p class="hint">ستون‌های خروجی CSV همان ستون‌های ورودی شیت «فروش» فایل اکسل است (تاریخ، فاکتور روز، کد محصول، تعداد…).</p>
+        <hr style="border:0;border-top:1px solid var(--line);width:100%">
+        <button class="btn danger" id="bk-wipe" type="button">پاک کردن همهٔ فاکتورها</button>
+      </div>
+      <div class="card full">
+        <div class="bar" style="margin:0"><h3 style="margin:0">منو و قیمت‌ها</h3><div class="grow"></div><button class="btn sm" id="m-add" type="button">افزودن قلم</button></div>
+        <div class="tablewrap"><table class="ed num"><thead><tr><th>کد</th><th>نام</th><th>توضیح کوتاه</th><th>دسته</th><th>قیمت</th><th>فعال</th></tr></thead><tbody id="m-body"></tbody></table></div>
+        <p class="hint">برای حذف یک قلم از منو، تیک «فعال» را بردارید تا فاکتورهای قبلی سالم بمانند.</p>
+      </div>
+      <div class="card full">
+        <div class="bar" style="margin:0"><h3 style="margin:0">پرسنل</h3><div class="grow"></div><button class="btn sm" id="p-add" type="button">افزودن نفر</button></div>
+        <div class="tablewrap"><table class="ed"><thead><tr><th>کد</th><th>نام</th><th>سمت</th><th>فعال</th></tr></thead><tbody id="p-body"></tbody></table></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="cartbar num" id="cartbar"><div id="cb-t"></div><button class="btn" id="cb-open" type="button">مشاهده و ثبت</button></div>
+<div id="layer"></div>
+<div id="print-root"></div>
+<style id="page-size"></style>
+
+<script>
+(() => {
+'use strict';
+/* ---------- helpers ---------- */
+const $ = s => document.querySelector(s);
+const FA = '۰۱۲۳۴۵۶۷۸۹';
+const fa = v => String(v).replace(/\d/g, d => FA[d]);
+const toEn = s => String(s ?? '').replace(/[۰-۹]/g, d => FA.indexOf(d)).replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+const money = n => (Math.round((+n || 0) * 10) / 10).toLocaleString('fa-IR', { maximumFractionDigits: 1 });
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const pad = n => String(n).padStart(2, '0');
+const JMON = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
+const WD = ['یکشنبه', 'دوشنبه', 'سه‌شنبه', 'چهارشنبه', 'پنجشنبه', 'جمعه', 'شنبه'];
+const JF = new Intl.DateTimeFormat('en-US-u-ca-persian-nu-latn', { year: 'numeric', month: 'numeric', day: 'numeric' });
+function jp(d) { const o = {}; for (const p of JF.formatToParts(d)) o[p.type] = p.value; return { y: +toEn(o.year), m: +toEn(o.month), d: +toEn(o.day) }; }
+const jkey = d => { const j = jp(d); return j.y * 10000 + j.m * 100 + j.d; };
+const jtext = k => `${Math.floor(k / 10000)}/${pad(Math.floor(k / 100) % 100)}/${pad(k % 100)}`;
+const dayStart = (d = new Date()) => { const x = new Date(d); x.setHours(0, 0, 0, 0); return x; };
+const addDays = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
+const hhmm = d => `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+const invNo = (k, n) => `R-${k}-${pad(n)}`;
+
+/* ---------- data ---------- */
+const KEY = 'riha-pos-v1';
+const CAT_LABEL = { 'چای و گرم': 'نوشیدنی گرم', 'ماکتل سرد': 'ماکتل و نوشیدنی سرد' };
+const PAYS = ['کارت', 'نقد', 'انتقال', 'آنلاین', 'نسیه'];
+const NOTES = { 'MOC-RIH': 'پاستیلی و ملس', 'MOC-BLU': 'استوایی و خنک', 'MOC-SRI': 'شیرین و میوه‌ای', 'MOC-SST': 'ملس و انرژی‌بخش', 'MOC-RML': 'مالت با عطر دارچین', 'MOC-MOJ': 'ترش و تازه‌کننده', 'MOC-RMO': 'ترش و شیرین', 'MOC-LEM': 'خالص و خنک', 'PAS-RIH': 'امضای ما؛ آلفردو و پستو + مرغ', 'PAS-DLR': 'سبز دلفریب؛ پستو + مرغ', 'PAS-HEM': 'آلفردو، مرغ، قارچ و خامه', 'SAL-CAE': 'با سس دست‌ساز', 'ADD-SYR': 'فندق، وانیل یا نارگیل' };
+const MENU0 = [
+  ['CFE-ESP', 'اسپرسو', 'قهوه گرم', 238], ['CFE-AMR', 'امریکانو', 'قهوه گرم', 248], ['CFE-CAP', 'کاپوچینو', 'قهوه گرم', 288], ['CFE-LAT', 'لاته', 'قهوه گرم', 298], ['CFE-CAR', 'کارامل ماکیاتو', 'قهوه گرم', 328], ['CFE-MOC', 'موکا', 'قهوه گرم', 338], ['CFE-COR', 'کورتادو', 'قهوه گرم', 288], ['CFE-AFF', 'آفوگاتو', 'قهوه گرم', 318],
+  ['IC-AMR', 'آیس امریکانو', 'قهوه سرد', 258], ['IC-LAT', 'آیس لته', 'قهوه سرد', 308], ['IC-CAR', 'آیس کارامل', 'قهوه سرد', 338], ['IC-MOC', 'آیس موکا', 'قهوه سرد', 348], ['IC-MAT', 'آیس ماچا لته', 'قهوه سرد', 308],
+  ['HOT-TEA', 'چای ساده', 'چای و گرم', 138], ['HOT-GRN', 'چای سبز', 'چای و گرم', 148], ['HOT-MAS', 'چای ماسالا', 'چای و گرم', 238], ['HOT-KRK', 'چای کرک', 'چای و گرم', 248], ['HOT-CHO', 'هات چاکلت', 'چای و گرم', 288], ['HOT-WCH', 'وایت چاکلت', 'چای و گرم', 288], ['HOT-MAT', 'ماچا لته', 'چای و گرم', 298], ['HOT-MLK', 'شیر کاکائو', 'چای و گرم', 188],
+  ['MS-VAN', 'میلک‌شیک وانیل', 'میلک‌شیک', 308], ['MS-CHO', 'میلک‌شیک شکلات', 'میلک‌شیک', 338], ['MS-NUT', 'میلک‌شیک نوتلا', 'میلک‌شیک', 388], ['MS-STR', 'میلک‌شیک توت‌فرنگی', 'میلک‌شیک', 348], ['MS-COF', 'میلک‌شیک قهوه', 'میلک‌شیک', 358], ['MS-PNT', 'میلک‌شیک بادام زمینی', 'میلک‌شیک', 348],
+  ['MOC-RIH', 'ماکتل ریحا', 'ماکتل سرد', 328], ['MOC-BLU', 'بلو اوشن', 'ماکتل سرد', 258], ['MOC-SRI', 'سان رایز', 'ماکتل سرد', 238], ['MOC-SST', 'سان ست', 'ماکتل سرد', 238], ['MOC-RML', 'رویال مالت', 'ماکتل سرد', 218], ['MOC-MOJ', 'موهیتو', 'ماکتل سرد', 198], ['MOC-RMO', 'رد موهیتو', 'ماکتل سرد', 198], ['MOC-LEM', 'لیموناد', 'ماکتل سرد', 188],
+  ['PAS-RIH', 'پاستا ریحا', 'غذا', 748], ['PAS-HEM', 'پاستا همون همیشگی', 'غذا', 678], ['PAS-DLR', 'پاستا دلبر', 'غذا', 558], ['SAL-CAE', 'سالاد سزار', 'غذا', 518], ['FR-FRY', 'فرنچ فرایز', 'غذا', 248], ['FR-CHF', 'چیز فرایز', 'غذا', 348], ['CAK-DAY', 'کیک روز', 'غذا', 348],
+  ['ADD-SYR', 'سیروپ', 'افزودنی', 60]
+];
+const STAFF0 = [['EMP-001', 'آرمان رضایی', 'مدیر'], ['EMP-002', 'سارا محمدی', 'صندوق‌دار'], ['EMP-003', 'محمد کریمی', 'باریستا'], ['EMP-004', 'نسترن رحیمی', 'سالن‌کار']];
+
+function sampleInvoices(menu) {
+  // a few marked examples so the screens show what they do; one click removes them
+  const pick = c => menu.find(m => m.code === c);
+  const plan = [
+    [0, '09:12', '۳', 'کارت', 'EMP-002', [['CFE-CAP', 2], ['CAK-DAY', 1]]], [0, '10:40', 'بیرون‌بر', 'نقد', 'EMP-002', [['IC-LAT', 1]]],
+    [0, '12:05', '۷', 'کارت', 'EMP-004', [['PAS-RIH', 1], ['MOC-LEM', 2], ['FR-FRY', 1]]], [0, '13:30', '۲', 'انتقال', 'EMP-004', [['SAL-CAE', 1], ['CFE-AMR', 1]]],
+    [-1, '11:20', '۵', 'کارت', 'EMP-002', [['MS-NUT', 2], ['HOT-KRK', 1]]], [-1, '17:45', '۸', 'کارت', 'EMP-004', [['PAS-HEM', 2], ['MOC-RIH', 2]]],
+    [-1, '19:10', 'بیرون‌بر', 'آنلاین', 'EMP-002', [['CFE-LAT', 3]]], [-2, '16:00', '۱', 'نقد', 'EMP-003', [['HOT-CHO', 2], ['CFE-ESP', 1]]],
+    [-3, '18:30', '۴', 'کارت', 'EMP-004', [['PAS-DLR', 1], ['IC-MOC', 1], ['FR-CHF', 1]]], [-5, '12:50', '۶', 'کارت', 'EMP-002', [['CFE-CAR', 2], ['MOC-BLU', 1]]]
+  ];
+  const out = []; const seq = {};
+  for (const [off, t, table, pay, staff, lines] of plan) {
+    const d = addDays(dayStart(), off); const [h, mi] = t.split(':'); d.setHours(+h, +mi);
+    const k = jkey(d); seq[k] = (seq[k] || 0) + 1;
+    out.push({ no: invNo(k, seq[k]), dateKey: k, dayNo: seq[k], time: t, ts: d.getTime(), table, pay, staff, customer: '', phone: '', note: '', disc: 0, tax: 0, status: 'نهایی', sample: true,
+      items: lines.map(([c, q]) => { const m = pick(c); return { code: c, name: m.name, cat: m.cat, price: m.price, qty: q }; }) });
+  }
+  return out;
+}
+function seed() {
+  const menu = MENU0.map(([code, name, cat, price]) => ({ code, name, cat, price, note: NOTES[code] || '', active: true }));
+  return {
+    v: 1, settings: { name: 'کافه ریحا', en: 'RIHA CAFE', phone: '', address: 'بام‌لند، ورودی A1', ig: 'caferiha', slogan: 'ریحا، طعم زندگی در لحظه', tax: 0, paper: '80', theme: '', logo: '' },
+    menu, staff: STAFF0.map(([code, name, role]) => ({ code, name, role, active: true, sample: true })),
+    invoices: sampleInvoices(menu), lastBackup: 0
+  };
+}
+let storageOK = true;
+function load() { try { const r = localStorage.getItem(KEY); return r ? JSON.parse(r) : null; } catch (e) { storageOK = false; return null; } }
+function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); storageOK = true; } catch (e) { storageOK = false; } }
+let S = load();
+if (!S || !S.settings || !Array.isArray(S.invoices)) { S = seed(); save(); }
+
+/* ---------- state of the open order ---------- */
+const blank = () => ({ items: [], table: '', staff: (S.staff.find(p => p.active) || {}).code || '', customer: '', phone: '', note: '', disc: 0, pay: 'کارت', editing: null });
+let cur = blank();
+let cat = 'همه';
+let invRange = 'today', rpRange = 'today';
+
+/* ---------- totals ---------- */
+function totals(items, disc, tax) {
+  const gross = items.reduce((a, l) => a + l.price * l.qty, 0);
+  const d = gross * (Math.min(100, Math.max(0, +disc || 0)) / 100);
+  const net = gross - d; const t = net * ((+tax || 0) / 100);
+  return { gross, d, net, t, pay: net + t, count: items.reduce((a, l) => a + l.qty, 0) };
+}
+const invTotals = inv => totals(inv.items, inv.disc, inv.tax);
+const nextDayNo = k => S.invoices.filter(i => i.dateKey === k).reduce((a, i) => Math.max(a, i.dayNo), 0) + 1;
+const staffName = c => (S.staff.find(p => p.code === c) || {}).name || '';
+const catLabel = c => CAT_LABEL[c] || c;
+
+/* ---------- toast & dialogs (in-page; the viewer blocks confirm()) ---------- */
+let toastT;
+function toast(msg) { const el = document.createElement('div'); el.className = 'toast'; el.setAttribute('role', 'status'); el.textContent = msg; document.querySelectorAll('.toast').forEach(t => t.remove()); document.body.appendChild(el); clearTimeout(toastT); toastT = setTimeout(() => el.remove(), 2600); }
+function dialog(html, buttons) {
+  const lay = $('#layer');
+  lay.innerHTML = `<div class="modal" role="dialog" aria-modal="true"><div class="dlg">${html}<div class="acts">${buttons.map((b, i) => `<button class="btn ${b.cls || ''}" data-i="${i}" type="button">${esc(b.label)}</button>`).join('')}</div></div></div>`;
+  const close = () => { lay.innerHTML = ''; };
+  lay.querySelector('.modal').addEventListener('click', e => { if (e.target.classList.contains('modal')) close(); });
+  lay.querySelectorAll('[data-i]').forEach(b => b.addEventListener('click', () => { const fn = buttons[+b.dataset.i].on; if (fn && fn() === false) return; close(); }));
+  lay.querySelector('[data-i]')?.focus();
+}
+const confirmBox = (title, text, label, on) => dialog(`<h3>${esc(title)}</h3><p class="hint" style="font-size:14px">${esc(text)}</p>`, [{ label, cls: 'primary', on }, { label: 'انصراف' }]);
+
+/* ---------- header ---------- */
+function renderHeader() {
+  const s = S.settings;
+  $('#brand').innerHTML = `${s.logo ? `<img src="${s.logo}" alt="">` : ''}<div><div class="mark">${esc(s.name.replace(/^کافه\s*/, '') || s.name)}</div><div class="mark-en">${esc(s.en || 'RIHA CAFE')}</div></div>`;
+  const now = new Date(); const j = jp(now); const k = jkey(now);
+  const today = S.invoices.filter(i => i.dateKey === k && i.status === 'نهایی');
+  const sum = today.reduce((a, i) => a + invTotals(i).pay, 0);
+  $('#today').innerHTML = `<b>${WD[now.getDay()]} ${fa(j.d)} ${JMON[j.m - 1]}</b>فروش امروز ${money(sum)} · ${fa(today.length)} فاکتور`;
+  document.documentElement.toggleAttribute('data-theme', !!s.theme);
+  if (s.theme) document.documentElement.setAttribute('data-theme', s.theme);
+}
+function renderNotices() {
+  const n = [];
+  if (!storageOK) n.push(`<div class="notice"><b>ذخیره‌سازی در این مرورگر در دسترس نیست.</b><span class="sp">فاکتورها با بستن صفحه از بین می‌روند. حالت خصوصی (Incognito) را ببندید یا مرورگر دیگری را امتحان کنید.</span></div>`);
+  if (S.invoices.some(i => i.sample)) n.push(`<div class="notice"><b>فاکتورهای نمونه</b><span class="sp">فاکتورهایی که برچسب «نمونه» دارند فقط برای آشنایی‌اند و در گزارش‌ها حساب می‌شوند. پیش از شروع کار پاکشان کنید. نام پرسنل هم نمونه است؛ در «تنظیمات» عوضشان کنید.</span><button class="btn sm primary" id="clr-sample" type="button">پاک کردن نمونه‌ها و شروع کار</button></div>`);
+  else if (S.invoices.length && Date.now() - (S.lastBackup || 0) > 36e5 * 24) n.push(`<div class="notice"><b>پشتیبان امروز گرفته نشده.</b><span class="sp">داده‌ها فقط روی همین دستگاه‌اند.</span><a class="btn sm" href="#setup">رفتن به پشتیبان‌گیری</a></div>`);
+  $('#notices').innerHTML = n.join('');
+  $('#clr-sample')?.addEventListener('click', () => confirmBox('پاک کردن نمونه‌ها', 'همهٔ فاکتورهای نمونه حذف می‌شوند. فاکتورهایی که خودتان ثبت کرده‌اید می‌مانند.', 'پاک کن', () => {
+    S.invoices = S.invoices.filter(i => !i.sample); S.staff.forEach(p => delete p.sample); save(); renderAll(); toast('نمونه‌ها پاک شد. آمادهٔ کار!');
+  }));
+}
+
+/* ---------- POS ---------- */
+function cats() { const c = []; for (const m of S.menu) if (m.active && !c.includes(m.cat)) c.push(m.cat); return c; }
+function renderCats() {
+  $('#cats').innerHTML = ['همه', ...cats()].map(c => `<button class="chip" type="button" aria-pressed="${c === cat}" data-c="${esc(c)}">${esc(c === 'همه' ? 'همهٔ منو' : catLabel(c))}</button>`).join('');
+}
+function renderGrid() {
+  const q = toEn($('#q').value.trim());
+  const list = S.menu.filter(m => m.active && (cat === 'همه' || m.cat === cat) && (!q || m.name.includes(q) || m.code.toLowerCase().includes(q.toLowerCase()) || (m.note || '').includes(q)));
+  if (!list.length) { $('#grid').innerHTML = `<div class="empty">قلمی با «${esc(q)}» در منو نیست.</div>`; return; }
+  const qty = c => (cur.items.find(l => l.code === c) || {}).qty || 0;
+  let html = '', last = '';
+  for (const m of list) {
+    if (cat === 'همه' && !q && m.cat !== last) { html += `<div class="sec-t">${esc(catLabel(m.cat))}</div>`; last = m.cat; }
+    const n = qty(m.code);
+    html += `<button class="tile" type="button" data-code="${esc(m.code)}"><span class="nm">${esc(m.name)}</span>${m.note ? `<span class="nt">${esc(m.note)}</span>` : ''}<span class="disc num">${fa(m.price)}</span>${n ? `<span class="q num">${fa(n)}</span>` : ''}</button>`;
+  }
+  $('#grid').innerHTML = html;
+}
+function addItem(code, d = 1) {
+  const m = S.menu.find(x => x.code === code); if (!m) return;
+  let l = cur.items.find(x => x.code === code);
+  if (!l) { if (d < 0) return; l = { code, name: m.name, cat: m.cat, price: m.price, qty: 0 }; cur.items.push(l); }
+  l.qty += d; if (l.qty <= 0) cur.items = cur.items.filter(x => x !== l);
+  renderGrid(); renderTicket();
+}
+function renderTicket() {
+  const k = jkey(new Date());
+  const ed = cur.editing && S.invoices.find(i => i.no === cur.editing);
+  $('#tk-lbl').textContent = ed ? 'ادامهٔ سفارش نگه‌داشته' : 'فاکتور بعدی';
+  $('#tk-no').textContent = ed ? ed.no : invNo(k, nextDayNo(k));
+  const open = S.invoices.filter(i => i.status === 'باز').sort((a, b) => a.ts - b.ts);
+  $('#parked').innerHTML = open.length ? `<span class="hint" style="align-self:center">سفارش‌های باز:</span>` + open.map(i => `<button class="chip" type="button" data-open="${esc(i.no)}">میز ${esc(i.table || '؟')} · ${money(invTotals(i).pay)}</button>`).join('') : '';
+  $('#o-staff').innerHTML = `<option value="">—</option>` + S.staff.filter(p => p.active || p.code === cur.staff).map(p => `<option value="${esc(p.code)}"${p.code === cur.staff ? ' selected' : ''}>${esc(p.name)}</option>`).join('');
+  $('#o-table').value = cur.table; $('#o-cust').value = cur.customer; $('#o-phone').value = cur.phone; $('#o-note').value = cur.note; $('#o-disc').value = cur.disc;
+  $('#items').innerHTML = cur.items.length ? cur.items.map(l => `<div class="li"><div class="nm">${esc(l.name)}<div class="pr num">${fa(l.price)} × ${fa(l.qty)}</div></div><div class="stepper num"><button type="button" data-d="-1" data-code="${esc(l.code)}" aria-label="کم کن">−</button><span>${fa(l.qty)}</span><button type="button" data-d="1" data-code="${esc(l.code)}" aria-label="زیاد کن">+</button></div><div class="amt num">${money(l.price * l.qty)}</div></div>`).join('')
+    : `<div class="empty" style="margin:14px 0">سفارش خالی است. از منو انتخاب کنید.</div>`;
+  $('#pays').innerHTML = PAYS.map(p => `<button class="chip" type="button" role="radio" aria-pressed="${p === cur.pay}" aria-checked="${p === cur.pay}" data-pay="${p}">${p}</button>`).join('');
+  const t = totals(cur.items, cur.disc, S.settings.tax);
+  $('#sum').innerHTML = `<div><span>جمع اقلام (${fa(t.count)})</span><span>${money(t.gross)}</span></div>` + (t.d ? `<div><span>تخفیف ${fa(cur.disc)}٪</span><span>− ${money(t.d)}</span></div>` : '') + (t.t ? `<div><span>مالیات ${fa(S.settings.tax)}٪</span><span>${money(t.t)}</span></div>` : '') + `<div class="tot"><span>قابل پرداخت <small style="font-weight:400;color:var(--muted)">هزار تومان</small></span><span>${money(t.pay)}</span></div>`;
+  const has = cur.items.length > 0;
+  ['#b-final', '#b-save', '#b-park'].forEach(s => $(s).disabled = !has);
+  $('#b-clear').disabled = !has && !cur.editing;
+  $('#cb-t').innerHTML = has ? `<b>${fa(t.count)} قلم</b> · ${money(t.pay)} هزار تومان` : 'سفارش خالی است';
+  $('#cartbar').style.visibility = location.hash.replace('#', '') === 'pos' || !location.hash ? 'visible' : 'hidden';
+}
+function commit(status, print) {
+  if (!cur.items.length) return;
+  const now = new Date();
+  let inv = cur.editing && S.invoices.find(i => i.no === cur.editing);
+  const fields = { items: cur.items.map(l => ({ ...l })), table: cur.table.trim(), staff: cur.staff, customer: cur.customer.trim(), phone: toEn(cur.phone.trim()), note: cur.note.trim(), disc: Math.min(100, Math.max(0, +cur.disc || 0)), pay: cur.pay, tax: +S.settings.tax || 0, status };
+  if (inv) Object.assign(inv, fields, status === 'نهایی' ? { time: hhmm(now), ts: now.getTime() } : {});
+  else { const k = jkey(now); const n = nextDayNo(k); inv = { no: invNo(k, n), dateKey: k, dayNo: n, time: hhmm(now), ts: now.getTime(), ...fields }; S.invoices.push(inv); }
+  save(); cur = blank(); closeSheet(); renderAll();
+  toast(status === 'باز' ? `سفارش ${inv.no} نگه داشته شد` : `فاکتور ${inv.no} ثبت شد`);
+  if (print) printInvoice(inv);
+}
+function resume(no) {
+  const inv = S.invoices.find(i => i.no === no); if (!inv) return;
+  const go = () => { cur = { items: inv.items.map(l => ({ ...l })), table: inv.table, staff: inv.staff, customer: inv.customer, phone: inv.phone, note: inv.note, disc: inv.disc, pay: inv.pay, editing: inv.no }; location.hash = 'pos'; renderAll(); openSheet(); };
+  if (cur.items.length && cur.editing !== no) confirmBox('سفارش جاری کنار گذاشته شود؟', 'سفارشی که الان باز است پاک می‌شود. اگر لازمش دارید، اول «نگه‌داشتن سفارش» را بزنید.', 'بله، ادامه', go); else go();
+}
+const openSheet = () => { if (matchMedia('(max-width: 920px)').matches) { $('#ticket').classList.add('open'); if (!$('.scrim')) { const s = document.createElement('div'); s.className = 'scrim'; s.addEventListener('click', closeSheet); document.body.appendChild(s); } } };
+function closeSheet() { $('#ticket').classList.remove('open'); $('.scrim')?.remove(); }
+
+/* ---------- receipt & print ---------- */
+function receiptHTML(inv) {
+  const s = S.settings; const t = invTotals(inv); const d = new Date(inv.ts);
+  return `<div class="rc">
+    <div class="c">${s.logo ? `<img src="${s.logo}" alt="">` : ''}<div class="rn">${esc(s.name)}</div><div class="re">${esc(s.en || '')}</div>
+    <div style="font-size:11.5px">${[s.address, s.phone && fa(s.phone), s.ig && '@' + s.ig].filter(Boolean).map(esc).join(' · ')}</div></div>
+    ${inv.status === 'ابطال' ? '<div class="cxs">این فاکتور ابطال شده است</div>' : ''}${inv.status === 'باز' ? '<div class="cxs" style="border-color:#A86A12;color:#A86A12">پیش‌فاکتور (پرداخت نشده)</div>' : ''}
+    <hr><div class="kv"><span>شماره</span><b style="direction:ltr">${esc(inv.no)}</b></div>
+    <div class="kv"><span>تاریخ</span><span>${fa(jtext(inv.dateKey))} · ${fa(inv.time)}</span></div>
+    ${inv.table ? `<div class="kv"><span>میز / سفارش</span><span>${esc(fa(inv.table))}</span></div>` : ''}${inv.customer ? `<div class="kv"><span>مشتری</span><span>${esc(inv.customer)}</span></div>` : ''}
+    ${inv.staff ? `<div class="kv"><span>پرسنل</span><span>${esc(staffName(inv.staff))}</span></div>` : ''}
+    <hr><table><thead><tr><th>شرح</th><th style="text-align:center">تعداد</th><th style="text-align:left">مبلغ</th></tr></thead><tbody>
+    ${inv.items.map(l => `<tr><td>${esc(l.name)}<br><small>${fa(l.price)}</small></td><td style="text-align:center">${fa(l.qty)}</td><td style="text-align:left">${money(l.price * l.qty)}</td></tr>`).join('')}</tbody></table>
+    <hr><div class="kv"><span>جمع</span><span>${money(t.gross)}</span></div>
+    ${t.d ? `<div class="kv"><span>تخفیف ${fa(inv.disc)}٪</span><span>− ${money(t.d)}</span></div>` : ''}${t.t ? `<div class="kv"><span>مالیات ${fa(inv.tax)}٪</span><span>${money(t.t)}</span></div>` : ''}
+    <div class="kv tt"><span>قابل پرداخت</span><span>${money(t.pay)}</span></div>
+    <div class="kv" style="font-size:11.5px"><span>مبالغ به هزار تومان</span><span>پرداخت: ${esc(inv.pay)}</span></div>
+    ${inv.note ? `<div style="font-size:11.5px">یادداشت: ${esc(inv.note)}</div>` : ''}
+    <hr><div class="c" style="font-size:12px">${esc(s.slogan || '')}</div></div>`;
+}
+function printInvoice(inv) {
+  const p = S.settings.paper;
+  $('#page-size').textContent = p === 'A5' ? '@page{size:A5;margin:10mm}' : `@page{size:${p}mm auto;margin:3mm} @media print{#print-root .rc{font-size:${p === '58' ? 11 : 12.5}px}}`;
+  $('#print-root').innerHTML = receiptHTML(inv);
+  try { window.print(); } catch (e) { toast('چاپ در این صفحه در دسترس نیست'); }
+}
+function showInvoice(no) {
+  const inv = S.invoices.find(i => i.no === no); if (!inv) return;
+  const btns = [{ label: 'چاپ', cls: 'primary', on: () => printInvoice(inv) }];
+  if (inv.status === 'باز') btns.push({ label: 'ادامهٔ سفارش', on: () => resume(inv.no) });
+  if (inv.status !== 'ابطال') btns.push({ label: 'ابطال فاکتور', cls: 'danger', on: () => { setTimeout(() => confirmBox('ابطال فاکتور ' + inv.no, 'فاکتور در فهرست می‌ماند ولی در فروش و گزارش‌ها حساب نمی‌شود. شماره‌اش دوباره استفاده نمی‌شود.', 'ابطال کن', () => { inv.status = 'ابطال'; save(); renderAll(); toast('فاکتور ابطال شد'); }), 0); } });
+  else btns.push({ label: 'بازگرداندن', on: () => { inv.status = 'نهایی'; save(); renderAll(); toast('فاکتور بازگردانده شد'); } });
+  btns.push({ label: 'بستن', cls: 'ghost' });
+  dialog(receiptHTML(inv), btns);
+}
+
+/* ---------- ranges ---------- */
+const RANGES = { today: 'امروز', yest: 'دیروز', week: '۷ روز اخیر', month: 'این ماه', all: 'همه' };
+function inRange(inv, r) {
+  const now = new Date(); const k = jkey(now);
+  if (r === 'today') return inv.dateKey === k;
+  if (r === 'yest') return inv.dateKey === jkey(addDays(now, -1));
+  if (r === 'week') return inv.ts >= addDays(dayStart(), -6).getTime();
+  if (r === 'month') return Math.floor(inv.dateKey / 100) === Math.floor(k / 100);
+  return true;
+}
+const rangeChips = (id, val) => { $(id).innerHTML = Object.entries(RANGES).map(([k, v]) => `<button class="chip" type="button" data-r="${k}" aria-pressed="${k === val}">${v}</button>`).join(''); };
+
+/* ---------- invoices view ---------- */
+function renderInvoices() {
+  rangeChips('#inv-range', invRange);
+  const q = toEn($('#inv-q').value.trim());
+  const list = S.invoices.filter(i => inRange(i, invRange)).filter(i => !q || [i.no, i.table, i.customer, i.phone, toEn(i.table)].some(x => String(x || '').includes(q))).sort((a, b) => b.ts - a.ts);
+  const fin = list.filter(i => i.status === 'نهایی');
+  const sum = fin.reduce((a, i) => a + invTotals(i).pay, 0);
+  $('#inv-kpis').innerHTML = kpi('فروش', money(sum), 'هزار تومان', true) + kpi('فاکتور نهایی', fa(fin.length)) + kpi('باز', fa(list.filter(i => i.status === 'باز').length)) + kpi('ابطال', fa(list.filter(i => i.status === 'ابطال').length));
+  $('#inv-body').innerHTML = list.length ? list.map(i => {
+    const t = invTotals(i); const st = i.status === 'نهایی' ? 'ok' : i.status === 'ابطال' ? 'bad' : 'warn';
+    return `<tr data-no="${esc(i.no)}" class="${i.status === 'ابطال' ? 'cx' : ''}" tabindex="0"><td><span class="mono">${esc(i.no)}</span></td><td>${fa(jtext(i.dateKey))}</td><td>${fa(i.time)}</td><td>${esc(fa(i.table || '—'))}</td><td>${fa(t.count)}</td><td>${esc(i.pay)}</td><td>${esc(staffName(i.staff) || '—')}</td><td><span class="pill ${st}">${esc(i.status === 'باز' ? 'باز (پرداخت‌نشده)' : i.status)}</span>${i.sample ? ' <span class="pill smp">نمونه</span>' : ''}</td><td class="l"><b>${money(t.pay)}</b></td></tr>`;
+  }).join('') : `<tr><td colspan="9"><div class="empty" style="border:0">در این بازه فاکتوری نیست.</div></td></tr>`;
+}
+const kpi = (k, v, u = '', hero = false) => `<div class="kpi${hero ? ' hero' : ''}"><div class="k">${k}</div><div class="v">${v} ${u ? `<span class="u">${u}</span>` : ''}</div></div>`;
+
+/* ---------- report ---------- */
+function hbars(rows, green) {
+  if (!rows.length) return `<div class="hint">داده‌ای نیست.</div>`;
+  const max = Math.max(...rows.map(r => r[1])) || 1;
+  return rows.map(([n, v, lab]) => `<div class="hb"><span title="${esc(n)}">${esc(n)}</span><div class="tr${green ? ' g' : ''}"><i style="width:${(v / max * 100).toFixed(1)}%"></i></div><span>${lab ?? money(v)}</span></div>`).join('');
+}
+function renderReport() {
+  rangeChips('#rp-range', rpRange);
+  const list = S.invoices.filter(i => i.status === 'نهایی' && inRange(i, rpRange));
+  const tt = list.map(invTotals); const sum = tt.reduce((a, t) => a + t.pay, 0); const items = tt.reduce((a, t) => a + t.count, 0);
+  $('#rp-kpis').innerHTML = kpi('فروش خالص', money(sum), 'هزار تومان', true) + kpi('تعداد فاکتور', fa(list.length)) + kpi('میانگین هر فاکتور', money(list.length ? sum / list.length : 0), 'هزار تومان') + kpi('اقلام فروخته‌شده', fa(items));
+  // trend: hours for a single day, days otherwise
+  let cols = [];
+  if (rpRange === 'today' || rpRange === 'yest') {
+    $('#rp-trend-t').textContent = 'فروش هر ساعت';
+    const by = {}; list.forEach(i => { const h = +i.time.slice(0, 2); by[h] = (by[h] || 0) + invTotals(i).pay; });
+    const hs = Object.keys(by).map(Number); const a = Math.min(8, ...hs), b = Math.max(23, ...hs);
+    for (let h = a; h <= b; h++) cols.push([fa(h), by[h] || 0]);
+  } else {
+    $('#rp-trend-t').textContent = 'فروش هر روز';
+    const by = {}; list.forEach(i => { by[i.dateKey] = (by[i.dateKey] || 0) + invTotals(i).pay; });
+    let start = rpRange === 'week' ? addDays(dayStart(), -6) : rpRange === 'month' ? (() => { let d = dayStart(); while (jp(addDays(d, -1)).m === jp(d).m) d = addDays(d, -1); return d; })() : (list.length ? dayStart(new Date(Math.min(...list.map(i => i.ts)))) : dayStart());
+    for (let d = start, n = 0; d <= new Date() && n < 120; d = addDays(d, 1), n++) { const k = jkey(d); cols.push([fa(k % 100), by[k] || 0]); }
+  }
+  const max = Math.max(1, ...cols.map(c => c[1]));
+  $('#rp-trend').innerHTML = cols.map(([l, v]) => `<div class="col${v ? '' : ' zero'}" title="${l}: ${money(v)}">${v ? `<span class="t">${money(v)}</span>` : ''}<i style="height:${(v / max * 82).toFixed(1)}%"></i><b>${l}</b></div>`).join('');
+  const agg = (keyFn) => { const m = {}; list.forEach(i => { const f = 1 - (i.disc || 0) / 100; i.items.forEach(l => { const k = keyFn(l, i); if (!k) return; m[k] = m[k] || [0, 0]; m[k][0] += l.qty; m[k][1] += l.price * l.qty * f; }); }); return Object.entries(m).sort((a, b) => b[1][1] - a[1][1]); };
+  $('#rp-top').innerHTML = hbars(agg(l => l.name).slice(0, 8).map(([n, [q, v]]) => [n, v, `${fa(q)} عدد`]), true);
+  $('#rp-cat').innerHTML = hbars(agg(l => catLabel(l.cat)).map(([n, [, v]]) => [n, v]));
+  const pm = {}; list.forEach(i => { pm[i.pay] = (pm[i.pay] || 0) + invTotals(i).pay; });
+  $('#rp-pay').innerHTML = hbars(Object.entries(pm).sort((a, b) => b[1] - a[1]).map(([n, v]) => [n, v, `${fa(Math.round(v / (sum || 1) * 100))}٪`]), true);
+  const sm = {}; list.forEach(i => { const n = staffName(i.staff) || 'نامشخص'; sm[n] = (sm[n] || 0) + invTotals(i).pay; });
+  $('#rp-staff').innerHTML = hbars(Object.entries(sm).sort((a, b) => b[1] - a[1]));
+}
+
+/* ---------- settings ---------- */
+const SF = { '#s-name': 'name', '#s-ig': 'ig', '#s-phone': 'phone', '#s-addr': 'address', '#s-slogan': 'slogan', '#s-tax': 'tax', '#s-paper': 'paper', '#s-theme': 'theme' };
+function renderSetup() {
+  for (const [sel, k] of Object.entries(SF)) if (document.activeElement !== $(sel)) $(sel).value = S.settings[k] ?? '';
+  const lb = S.lastBackup ? new Date(S.lastBackup) : null;
+  $('#bk-state').innerHTML = `${fa(S.invoices.length)} فاکتور ذخیره شده. آخرین پشتیبان: <b>${lb ? `${fa(jtext(jkey(lb)))} ساعت ${fa(hhmm(lb))}` : 'هنوز گرفته نشده'}</b>`;
+  const cs = [...new Set([...cats(), ...S.menu.map(m => m.cat)])];
+  $('#m-body').innerHTML = S.menu.map((m, i) => `<tr><td><span class="mono" style="font-size:12px">${esc(m.code)}</span></td><td><input class="in" data-m="${i}" data-k="name" value="${esc(m.name)}" aria-label="نام"></td><td><input class="in" data-m="${i}" data-k="note" value="${esc(m.note || '')}" aria-label="توضیح"></td><td><select class="in" data-m="${i}" data-k="cat" aria-label="دسته">${cs.map(c => `<option${c === m.cat ? ' selected' : ''} value="${esc(c)}">${esc(catLabel(c))}</option>`).join('')}</select></td><td><input class="in num" style="width:90px" type="number" min="0" step="1" data-m="${i}" data-k="price" value="${m.price}" aria-label="قیمت"></td><td><input type="checkbox" data-m="${i}" data-k="active"${m.active ? ' checked' : ''} aria-label="فعال"></td></tr>`).join('');
+  $('#p-body').innerHTML = S.staff.map((p, i) => `<tr><td><span class="mono" style="font-size:12px">${esc(p.code)}</span></td><td><input class="in" data-p="${i}" data-k="name" value="${esc(p.name)}" aria-label="نام"></td><td><input class="in" data-p="${i}" data-k="role" value="${esc(p.role || '')}" aria-label="سمت"></td><td><input type="checkbox" data-p="${i}" data-k="active"${p.active ? ' checked' : ''} aria-label="فعال"></td></tr>`).join('');
+}
+// Inside claude.ai the viewer offers files through the downloads capability; on the plain website a blob link works.
+const dlCap = window.claude?.use ? window.claude.use('downloads').catch(() => null) : Promise.resolve(null);
+async function download(name, text, type) {
+  const dl = await dlCap;
+  if (dl) { try { await dl.save({ filename: name, data: text }); return true; } catch (e) { if (e && e.code === 'declined') return null; return false; } }
+  try { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], { type })); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000); return true; } catch (e) { return false; }
+}
+function csv() {
+  const H = ['تاریخ', 'فاکتور روز', 'شماره فاکتور', 'کد محصول', 'نام محصول', 'تعداد', 'قیمت واحد', 'درصد تخفیف', 'روش پرداخت', 'وضعیت', 'کد پرسنل', 'ساعت', 'میز/سفارش', 'نام مشتری', 'تلفن', 'یادداشت'];
+  const q = v => { const s = String(v ?? ''); return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
+  const rows = [H];
+  [...S.invoices].filter(i => !i.sample).sort((a, b) => a.ts - b.ts).forEach(i => i.items.forEach(l => rows.push([jtext(i.dateKey), i.dayNo, i.no, l.code, l.name, l.qty, l.price, (i.disc || 0) / 100, i.pay, i.status === 'باز' ? 'پیش‌نویس' : i.status, i.staff, i.time, toEn(i.table), i.customer, i.phone, i.note])));
+  return '﻿' + rows.map(r => r.map(q).join(',')).join('\r\n');
+}
+
+/* ---------- routing & render ---------- */
+const VIEWS = ['pos', 'invoices', 'report', 'setup'];
+function view() { const v = location.hash.replace('#', ''); return VIEWS.includes(v) ? v : 'pos'; }
+function renderAll() {
+  const v = view();
+  VIEWS.forEach(x => { $('#v-' + x).hidden = x !== v; });
+  document.querySelectorAll('.nav a').forEach(a => a.dataset.v === v ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current'));
+  renderHeader(); renderNotices();
+  if (v === 'pos') { renderCats(); renderGrid(); }
+  renderTicket();
+  if (v === 'invoices') renderInvoices();
+  if (v === 'report') renderReport();
+  if (v === 'setup') renderSetup();
+}
+
+/* ---------- events ---------- */
+window.addEventListener('hashchange', () => { closeSheet(); renderAll(); scrollTo(0, 0); });
+$('#cats').addEventListener('click', e => { const b = e.target.closest('[data-c]'); if (!b) return; cat = b.dataset.c; renderCats(); renderGrid(); });
+$('#q').addEventListener('input', renderGrid);
+$('#grid').addEventListener('click', e => { const b = e.target.closest('[data-code]'); if (b) addItem(b.dataset.code); });
+$('#items').addEventListener('click', e => { const b = e.target.closest('[data-d]'); if (b) addItem(b.dataset.code, +b.dataset.d); });
+$('#pays').addEventListener('click', e => { const b = e.target.closest('[data-pay]'); if (b) { cur.pay = b.dataset.pay; renderTicket(); } });
+$('#parked').addEventListener('click', e => { const b = e.target.closest('[data-open]'); if (b) resume(b.dataset.open); });
+for (const [sel, k] of [['#o-table', 'table'], ['#o-staff', 'staff'], ['#o-cust', 'customer'], ['#o-phone', 'phone'], ['#o-note', 'note']]) $(sel).addEventListener('input', e => { cur[k] = e.target.value; });
+$('#o-disc').addEventListener('input', e => { cur.disc = Math.min(100, Math.max(0, +toEn(e.target.value) || 0)); const t = totals(cur.items, cur.disc, S.settings.tax); $('#sum .tot span:last-child').textContent = money(t.pay); });
+$('#o-disc').addEventListener('change', renderTicket);
+$('#b-final').addEventListener('click', () => commit('نهایی', true));
+$('#b-save').addEventListener('click', () => commit('نهایی', false));
+$('#b-park').addEventListener('click', () => commit('باز', false));
+$('#b-clear').addEventListener('click', () => confirmBox('پاک کردن سفارش', cur.editing ? 'تغییرات این سفارش ذخیره نمی‌شود؛ سفارش نگه‌داشته سر جایش می‌ماند.' : 'همهٔ اقلام سفارش جاری حذف می‌شوند.', 'پاک کن', () => { cur = blank(); renderAll(); }));
+$('#cb-open').addEventListener('click', openSheet);
+$('#tk-close').addEventListener('click', closeSheet);
+$('#inv-range').addEventListener('click', e => { const b = e.target.closest('[data-r]'); if (b) { invRange = b.dataset.r; renderInvoices(); } });
+$('#rp-range').addEventListener('click', e => { const b = e.target.closest('[data-r]'); if (b) { rpRange = b.dataset.r; renderReport(); } });
+$('#inv-q').addEventListener('input', renderInvoices);
+$('#inv-body').addEventListener('click', e => { const r = e.target.closest('[data-no]'); if (r) showInvoice(r.dataset.no); });
+$('#inv-body').addEventListener('keydown', e => { const r = e.target.closest('[data-no]'); if (r && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); showInvoice(r.dataset.no); } });
+for (const [sel, k] of Object.entries(SF)) $(sel).addEventListener('change', e => { S.settings[k] = k === 'tax' ? Math.min(100, Math.max(0, +toEn(e.target.value) || 0)) : e.target.value.trim(); save(); renderHeader(); renderTicket(); toast('ذخیره شد'); });
+$('#s-logo').addEventListener('change', e => {
+  const f = e.target.files[0]; if (!f) return;
+  const img = new Image(); const rd = new FileReader();
+  rd.onload = () => { img.onload = () => { const c = document.createElement('canvas'); const s = Math.min(1, 240 / Math.max(img.width, img.height)); c.width = img.width * s; c.height = img.height * s; c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); S.settings.logo = c.toDataURL('image/png'); save(); renderHeader(); toast('لوگو ذخیره شد'); }; img.src = rd.result; };
+  rd.readAsDataURL(f);
+});
+$('#s-logo-x').addEventListener('click', () => { S.settings.logo = ''; save(); renderHeader(); });
+$('#m-body').addEventListener('change', e => {
+  const el = e.target; const i = el.dataset.m; if (i == null) return; const m = S.menu[+i]; const k = el.dataset.k;
+  if (k === 'active') m.active = el.checked; else if (k === 'price') m.price = Math.max(0, +toEn(el.value) || 0); else m[k] = el.value.trim() || m[k];
+  save(); toast('منو به‌روز شد');
+});
+$('#p-body').addEventListener('change', e => {
+  const el = e.target; const i = el.dataset.p; if (i == null) return; const p = S.staff[+i];
+  if (el.dataset.k === 'active') p.active = el.checked; else p[el.dataset.k] = el.value.trim() || p[el.dataset.k];
+  delete p.sample; save(); toast('ذخیره شد');
+});
+$('#m-add').addEventListener('click', () => {
+  dialog(`<h3>افزودن قلم به منو</h3><div class="frow"><label class="f">نام<input class="in" id="n-name"></label><label class="f">قیمت (هزار تومان)<input class="in num" id="n-price" type="number" min="0"></label><label class="f">دسته<select class="in" id="n-cat">${[...new Set(S.menu.map(m => m.cat))].map(c => `<option value="${esc(c)}">${esc(catLabel(c))}</option>`).join('')}</select></label><label class="f">توضیح کوتاه<input class="in" id="n-note"></label></div><p class="hint" id="n-err"></p>`,
+    [{ label: 'افزودن', cls: 'primary', on: () => {
+      const name = $('#n-name').value.trim(); const price = +toEn($('#n-price').value);
+      if (!name || !(price > 0)) { $('#n-err').textContent = 'نام و قیمت بزرگ‌تر از صفر لازم است.'; return false; }
+      let n = S.menu.length + 1, code; do { code = 'ITM-' + String(n++).padStart(3, '0'); } while (S.menu.some(m => m.code === code));
+      S.menu.push({ code, name, price, cat: $('#n-cat').value, note: $('#n-note').value.trim(), active: true }); save(); renderAll(); toast('به منو اضافه شد');
+    } }, { label: 'انصراف' }]);
+});
+$('#p-add').addEventListener('click', () => {
+  let n = S.staff.length + 1, code; do { code = 'EMP-' + String(n++).padStart(3, '0'); } while (S.staff.some(p => p.code === code));
+  S.staff.push({ code, name: 'نفر جدید', role: '', active: true }); save(); renderSetup();
+});
+$('#bk-json').addEventListener('click', async () => {
+  const r = await download(`riha-backup-${jkey(new Date())}.json`, JSON.stringify(S), 'application/json');
+  if (r) { S.lastBackup = Date.now(); save(); renderAll(); toast('فایل پشتیبان دانلود شد'); } else if (r === false) toast('دانلود در این صفحه ممکن نیست');
+});
+$('#bk-csv').addEventListener('click', async () => { const r = await download(`riha-sales-${jkey(new Date())}.csv`, csv(), 'text/csv;charset=utf-8'); if (r) toast('فایل CSV دانلود شد'); else if (r === false) toast('دانلود در این صفحه ممکن نیست'); });
+$('#bk-in').addEventListener('change', e => {
+  const f = e.target.files[0]; if (!f) return; const rd = new FileReader();
+  rd.onload = () => {
+    let d; try { d = JSON.parse(rd.result); } catch (x) { toast('این فایل پشتیبان معتبر نیست'); return; }
+    if (!d || !d.settings || !Array.isArray(d.invoices) || !Array.isArray(d.menu)) { toast('این فایل پشتیبان صندوق ریحا نیست'); return; }
+    confirmBox('بازگردانی پشتیبان', `${fa(d.invoices.length)} فاکتور از فایل جایگزین داده‌های فعلی این دستگاه می‌شود.`, 'جایگزین کن', () => { S = d; save(); cur = blank(); renderAll(); toast('پشتیبان بازگردانی شد'); });
+  };
+  rd.readAsText(f); e.target.value = '';
+});
+$('#bk-wipe').addEventListener('click', () => confirmBox('پاک کردن همهٔ فاکتورها', 'همهٔ فاکتورهای این دستگاه برای همیشه پاک می‌شوند. منو، پرسنل و تنظیمات می‌مانند. اگر پشتیبان ندارید، اول پشتیبان بگیرید.', 'همه را پاک کن', () => { S.invoices = []; save(); cur = blank(); renderAll(); toast('فاکتورها پاک شد'); }));
+document.addEventListener('keydown', e => {
+  if (e.key === '/' && view() === 'pos' && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) { e.preventDefault(); $('#q').focus(); }
+  if (e.key === 'Escape') { $('#layer').innerHTML = ''; closeSheet(); }
+});
+setInterval(renderHeader, 60000);
+renderAll();
+})();
+</script>
+
+</body>
+</html>

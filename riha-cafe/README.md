@@ -24,3 +24,15 @@
 python3 build_riha_cafe_v4.py           # نسخهٔ دمو
 python3 build_riha_cafe_v4.py --clean   # نسخهٔ آماده شروع
 ```
+
+## نسخهٔ وب: صندوق کافه ریحا (`web/`)
+صندوق فروش آنلاین با هویت بصری منوی چاپی: ثبت سفارش از روی منو، شمارهٔ فاکتور خودکار با همان قالب اکسل (`R-yyyymmdd-NN`)، چاپ رسید ۸۰ یا ۵۸ میلی‌متری یا A5، نگه‌داشتن سفارش میز، ابطال، گزارش فروش، ویرایش منو و پرسنل، و پشتیبان JSON و خروجی CSV.
+- `web/app.html`: منبع اصلی (همان فایلی که به‌صورت Artifact منتشر می‌شود).
+- `web/index.html`: نسخهٔ کامل برای Vercel؛ با `python3 web/build.py` از `app.html` ساخته می‌شود. فایل `index.html` را دستی ویرایش نکنید.
+- `web/fonts/`: فونت‌های Vazirmatn و Bodoni Moda روی خود سایت‌اند، تا در ایران بدون Google Fonts هم درست نمایش داده شوند.
+- داده‌ها در مرورگر همان دستگاه ذخیره می‌شوند (localStorage). هر شب پشتیبان بگیرید.
+
+### انتشار روی Vercel
+1. Vercel ← Add New ← Project ← مخزن `MegaSkillClaude` را Import کنید.
+2. Root Directory را `riha-cafe/web` بگذارید، Framework را `Other` و Build Command را خالی.
+3. Deploy را بزنید. (اختیاری) در Settings ← Domains دامنهٔ خودتان را اضافه کنید.
