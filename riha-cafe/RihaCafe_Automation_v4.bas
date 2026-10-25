@@ -36,6 +36,10 @@ Private Function N_DAYNO() As String
     N_DAYNO = U("0641 0627 06A9 062A 0648 0631 0020 0631 0648 0632")   ' DAYNO (calc INV is built from DATE + DAYNO)
 End Function
 
+Private Function N_PNAME() As String
+    N_PNAME = U("0646 0627 0645 0020 0645 062D 0635 0648 0644")   ' PNAME (picked from a list; code is calculated)
+End Function
+
 Private Function N_PROD() As String
     N_PROD = U("06A9 062F 0020 0645 062D 0635 0648 0644")   ' PROD
 End Function
@@ -236,7 +240,7 @@ Private Sub AppendSaleLine(ByVal dayText As String, ByVal dayNo As Long, ByVal c
         Next k
     End If
     lo.Parent.Activate
-    If ColIdx(lo, N_PROD()) > 0 Then r.Range.Cells(1, ColIdx(lo, N_PROD())).Select
+    If ColIdx(lo, N_PNAME()) > 0 Then r.Range.Cells(1, ColIdx(lo, N_PNAME())).Select
 End Sub
 
 Public Sub NewInvoice()

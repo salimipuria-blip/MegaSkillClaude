@@ -484,7 +484,7 @@ def issue_count(tbl, col):
 ws = SHEETS["sales"]
 S = "tblSales"
 title(ws, "ثبت فروش | هر ردیف یک قلم فاکتور", LEGEND + " | اقلام هر فاکتور پشت‌سرهم و با شماره یکسان؛ وضعیت خالی = «" + FINAL + "». مبالغ به " + UNIT + ".", 26)
-has_s = f'OR({me("کد محصول")}<>"",{me(DN)}<>"")'
+has_s = f'OR({me("نام محصول")}<>"",{me(DN)}<>"")'
 # v4.1: the invoice number is no longer typed or created by a VBA button (macros do not run in Excel for the web).
 # The user types only the invoice's number of the day (1, 2, 3 ...); the full number R-yyyymmdd-NN and a numeric
 # sort key are formulas, so numbers are unique, stable under sorting/deleting and identical on every device.
@@ -494,8 +494,9 @@ sales_cols = [
     IN("تاریخ", 12, "@"),
     IN(DN, 9, "0"),
     CA("شماره فاکتور", 15, bal(f'IF(OR({me(DN)}="",NOT(ISNUMBER({me(GD)}))),"",IFERROR("R-"&{inv_dkey}&"-"&TEXT({me(DN)},"00"),""))')),
-    IN("کد محصول", 12),
-    CA("نام محصول", 24, f'IF({me("کد محصول")}="","",{lk("tblMenu", "نام محصول", "کد محصول", me("کد محصول"), chr(34) + BAD_CODE + chr(34))})'),
+    # v4.1: the product is picked by NAME from a dropdown (easy on a phone); the code is looked up
+    IN("نام محصول", 24),
+    CA("کد محصول", 12, f'IF({me("نام محصول")}="","",{lk("tblMenu", "کد محصول", "نام محصول", me("نام محصول"), chr(34) + BAD_CODE + chr(34))})'),
     IN("تعداد", 8, "General"),
     CA("قیمت واحد", 11, f'IF({me("کد محصول")}="","",{lk("tblMenu", "قیمت فروش", "کد محصول", me("کد محصول"), "0")})', MONEY),
     IN("درصد تخفیف", 9, "0%"),
@@ -523,6 +524,9 @@ sales_cols = [
     CA(IK, 13, bal(f'IF({me("شماره فاکتور")}="","",{inv_dkey}*1000+{me(DN)})'), "0"),
 ]
 sales_rows = rows_of("tblSales")
+_names = {m["کد محصول"]: m["نام محصول"] for m in DATA["tblMenu"]}
+for r in sales_rows:        # sample data stores product codes; the sheet takes names
+    r["نام محصول"] = _names[r.pop("کد محصول")]
 _seen = {}
 for r in sales_rows:        # sample data: old free-text invoice numbers -> number of the day
     day = _seen.setdefault(r["تاریخ"], {})
@@ -532,7 +536,7 @@ for r in sales_rows:
         r["میز/سفارش"] = int(r["میز/سفارش"])
 LS = add_table(ws, S, sales_cols, sales_rows, H0, 1)
 NO_INV = f'COUNTIFS({S}[کد محصول],"?*",{S}[شماره فاکتور],"")'
-band(ws, 4, 1, len(sales_cols), "دفتر فروش  |  ورودی‌ها: تاریخ، فاکتور روز (۱، ۲، ۳… شماره کامل خودکار)، کد محصول، تعداد، تخفیف، پرداخت، وضعیت  ←  نتیجه‌ها: نام، قیمت، فروش خالص، بهای تمام‌شده، سود")
+band(ws, 4, 1, len(sales_cols), "دفتر فروش  |  ورودی‌ها: تاریخ، فاکتور روز (۱، ۲، ۳… شماره کامل خودکار)، نام محصول (از فهرست)، تعداد، تخفیف، پرداخت، وضعیت  ←  نتیجه‌ها: نام، قیمت، فروش خالص، بهای تمام‌شده، سود")
 # BUG 7 FIX: counters use the same definitions as the dashboard (final lines, first final line per invoice);
 # the last two cards show the dashboard-period values so both places can be compared directly.
 strip(ws, 3, 1, [
@@ -540,13 +544,13 @@ strip(ws, 3, 1, [
     ("اقلام ثبت‌شده", f'=COUNTIF({S}[کد محصول],"?*")', INT),
     ("فاکتور نهایی (کل)", f"=COUNTIF({S}[شروع فاکتور],1)", INT),
     ("ردیف " + DRAFT, f'=COUNTIF({S}[{ES}],"{DRAFT}")', INT),
-    ("کد/تاریخ/شماره نامعتبر", f'=COUNTIF({S}[نام محصول],"{BAD_CODE}")+COUNTIF({S}[{GD}],"{DATE_BAD}")+{NO_INV}', INT),
+    ("کد/تاریخ/شماره نامعتبر", f'=COUNTIF({S}[کد محصول],"{BAD_CODE}")+COUNTIF({S}[{GD}],"{DATE_BAD}")+{NO_INV}', INT),
     ("فروش نهایی کل", f'=SUMIFS({S}[فروش خالص],{S}[{ES}],"{FINAL}")', MONEY),
     ("فاکتور بازه داشبورد", "=DashInvoices", INT),
     ("فروش بازه داشبورد", "=DashSales", MONEY),
 ])
 rng = lambda col: f"{LS[col]}{D0}:{LS[col]}{LAST}"
-dv_list(ws, rng("کد محصول"), "ProductCodes")
+dv_list(ws, rng("نام محصول"), "ProductNames")
 dv_list(ws, rng("کد پرسنل"), "StaffCodes")
 dv_list(ws, rng("روش پرداخت"), "PaymentMethods")
 dv_list(ws, rng("وضعیت"), "SaleStatus")
@@ -559,7 +563,7 @@ dv_num(ws, rng("درصد تخفیف"), "decimal", "between", 0, 1, "درصد ت�
 full = f"A{D0}:{CL(len(sales_cols))}{LAST}"
 cf(ws, full, f'${LS["وضعیت"]}{D0}="{CANCEL}"', RED_PALE)
 cf(ws, full, f'${LS["وضعیت"]}{D0}="{DRAFT}"', ORANGE_PALE)
-cf(ws, f'{LS["نام محصول"]}{D0}:{LS["نام محصول"]}{LAST}', f'${LS["نام محصول"]}{D0}="{BAD_CODE}"', "F4B6B6")
+cf(ws, f'{LS["نام محصول"]}{D0}:{LS["نام محصول"]}{LAST}', f'${LS["کد محصول"]}{D0}="{BAD_CODE}"', "F4B6B6")
 cf_baddate(ws, LS["تاریخ"], LS[GD])
 cf(ws, f'{LS[DN]}{D0}:{LS[DN]}{LAST}', f'AND(${LS["کد محصول"]}{D0}<>"",${LS[DN]}{D0}="")', "F4B6B6")
 ws.freeze_panes = f"A{D0}"
@@ -623,6 +627,7 @@ cf(ws, f'{LR["نام ماده"]}{D0}:{LR["نام ماده"]}{LAST}', f'${LR["ن�
 cf(ws, f'{LM["فعال؟"]}{D0}:{LM["فعال؟"]}{LAST}', f'${LM["فعال؟"]}{D0}="خیر"', "E5E5E5")
 ws.freeze_panes = f"A{D0}"
 define("ProductCodes", "tblMenu[کد محصول]")
+define("ProductNames", "tblMenu[نام محصول]")
 set_print(ws, None, titles=f"{H0}:{H0}")
 
 # ============================================================================ STOCK (ledger + ingredients)
@@ -1118,7 +1123,7 @@ BADC = '"' + BAD_CODE + '"'
 # BUG 8 FIX: duplicate counter counts UNIQUE duplicated codes (each code once), not every duplicated cell.
 dup = lambda t, c: f'SUMPRODUCT(({t}[{c}]<>"")*(COUNTIF({t}[{c}],{t}[{c}])>1)/COUNTIF({t}[{c}],{t}[{c}]&""))'
 ws["M3"] = bal(
-    f'=COUNTIF(tblSales[نام محصول],{BADC})+COUNTIF(tblSales[{GD}],"{DATE_BAD}")+{NO_INV}'
+    f'=COUNTIF(tblSales[کد محصول],{BADC})+COUNTIF(tblSales[{GD}],"{DATE_BAD}")+{NO_INV}'
     f'+{issue_count("tblStockLog", CHK)}+{issue_count(AT, CHK)}+{issue_count("tblPayroll", CHK)}'
     f'+COUNTIF(tblRecipe[نام ماده],{BADC})+COUNTIF(tblRecipe[نام محصول],{BADC})'
     f'+COUNTIF(tblExpenses[{GD}],"{DATE_BAD}")+COUNTIF(tblCash[{GD}],"{DATE_BAD}")+COUNTIF(tblTargets[شروع ماه],"{DATE_BAD}")'
