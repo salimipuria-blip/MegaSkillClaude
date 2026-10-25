@@ -41,7 +41,7 @@ html, body { height: 100% }
 body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 15px; line-height: 1.7; direction: rtl; -webkit-font-smoothing: antialiased }
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--band) }
 button, input, select, textarea { font: inherit; color: inherit }
-button { cursor: pointer }
+button { cursor: pointer; touch-action: manipulation }
 :focus-visible { outline: 2px solid var(--taupe); outline-offset: 2px }
 .num { font-variant-numeric: tabular-nums }
 .wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)) }
@@ -77,6 +77,8 @@ label.f { display: grid; gap: 4px; font-size: 12.5px; color: var(--muted); min-w
 .in { width: 100%; border: 1px solid var(--line); background: var(--surface); border-radius: 10px; padding: 8px 11px; min-height: 40px; color: var(--fg) }
 .in:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent) }
 .chips { display: flex; gap: 6px; flex-wrap: wrap }
+.chk { display: flex; align-items: center; gap: 8px; font-size: 14px; min-height: 40px; margin-top: 4px }
+.chk input { width: 20px; height: 20px }
 .chip { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 5px 13px; font-size: 13.5px; min-height: 34px }
 .chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink) }
 
@@ -532,7 +534,9 @@ function sha256(str) {
   }
   return H.map(x => x.toString(16).padStart(8, '0')).join('');
 }
-const pwHash = (pw, salt) => { let h = salt + '|' + pw; for (let i = 0; i < 2000; i++) h = sha256(h + salt); return h; };
+// Pasted text often carries spaces, and phone keyboards may type Persian digits.
+const normPw = pw => String(pw).trim().replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+const pwHash = (pw, salt) => { let h = salt + '|' + normPw(pw); for (let i = 0; i < 2000; i++) h = sha256(h + salt); return h; };
 function randHex(n) { const a = new Uint8Array(n); try { crypto.getRandomValues(a); } catch (e) { for (let i = 0; i < n; i++) a[i] = Math.floor(Math.random() * 256); } return [...a].map(x => x.toString(16).padStart(2, '0')).join(''); }
 const makeSecret = pw => { const salt = randHex(16); return { salt, hash: pwHash(pw, salt) }; };
 const checkSecret = (sec, pw) => !!sec && pwHash(pw, sec.salt) === sec.hash;
@@ -567,7 +571,7 @@ function gate(mode, extra) {
   let body = '';
   if (mode === 'code') body = `<div class="gate-card"><h2>کد بازیابی مالک</h2><p class="hint">اگر رمز مالک فراموش شود، فقط با این کد می‌شود رمز تازه گذاشت. آن را روی کاغذ بنویسید و جای امن نگه دارید. دیگر نشان داده نمی‌شود.</p><div class="code">${esc(extra)}</div><button class="btn primary" id="g-done" type="button" style="min-height:48px">نوشتم، ادامه</button></div>`;
   if (mode === 'login') body = `<form class="gate-card" id="g-form"><h2>ورود</h2><div class="roles" role="radiogroup" aria-label="کاربر"><button class="chip" type="button" data-role="cashier" aria-pressed="true">صندوقدار</button><button class="chip" type="button" data-role="owner" aria-pressed="false">مالک</button></div>
-    <label class="f">رمز عبور<input class="in" id="g-pw" type="password" autocomplete="current-password" required></label><p class="err" id="g-err" role="alert"></p>
+    <label class="f">رمز عبور<input class="in" id="g-pw" type="password" dir="ltr" autocomplete="current-password" autocapitalize="off" autocorrect="off" spellcheck="false" required></label><label class="chk"><input type="checkbox" id="g-show"> نمایش رمز</label><p class="err" id="g-err" role="alert"></p>
     <button class="btn primary" type="submit" style="min-height:48px">ورود</button><button class="linkbtn" type="button" id="g-forgot">رمز مالک را فراموش کرده‌ام</button></form>`;
   if (mode === 'recover') body = `<form class="gate-card" id="g-form"><h2>بازیابی رمز مالک</h2><p class="hint">کد بازیابی را که هنگام راه‌اندازی نوشتید وارد کنید و رمز تازه بگذارید.</p>
     <label class="f">کد بازیابی<input class="in" id="g-rc" dir="ltr" autocomplete="off" required></label><label class="f">رمز تازهٔ مالک<input class="in" id="g-n1" type="password" autocomplete="new-password" required></label><label class="f">تکرار<input class="in" id="g-n2" type="password" autocomplete="new-password" required></label>
@@ -590,6 +594,7 @@ function gate(mode, extra) {
       if (fails >= 5) { lockFor(30000); return err('۵ بار رمز اشتباه وارد شد. ۳۰ ثانیه صبر کنید.'); }
       err('رمز درست نیست.');
     });
+    $('#g-show').addEventListener('change', e => { $('#g-pw').type = e.target.checked ? 'text' : 'password'; });
     $('#g-forgot').addEventListener('click', () => gate('recover'));
     setTimeout(() => $('#g-pw')?.focus(), 50);
   }
@@ -964,7 +969,12 @@ function renderAll() {
 window.addEventListener('hashchange', () => { closeSheet(); renderAll(); scrollTo(0, 0); });
 $('#cats').addEventListener('click', e => { const b = e.target.closest('[data-c]'); if (!b) return; cat = b.dataset.c; renderCats(); renderGrid(); });
 $('#q').addEventListener('input', renderGrid);
-$('#grid').addEventListener('click', e => { const b = e.target.closest('[data-code]'); if (b) addItem(b.dataset.code); });
+let lastTap = { code: '', t: 0 };
+$('#grid').addEventListener('click', e => {
+  const b = e.target.closest('[data-code]'); if (!b) return;
+  const now = Date.now(); if (b.dataset.code === lastTap.code && now - lastTap.t < 350) return; // phones sometimes repeat one tap as two clicks
+  lastTap = { code: b.dataset.code, t: now }; addItem(b.dataset.code);
+});
 $('#items').addEventListener('click', e => { const b = e.target.closest('[data-d]'); if (b) addItem(b.dataset.code, +b.dataset.d); });
 $('#pays').addEventListener('click', e => { const b = e.target.closest('[data-pay]'); if (b) { cur.pay = b.dataset.pay; renderTicket(); } });
 $('#parked').addEventListener('click', e => { const b = e.target.closest('[data-open]'); if (b) resume(b.dataset.open); });
