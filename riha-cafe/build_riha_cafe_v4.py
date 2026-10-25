@@ -960,7 +960,7 @@ for r in range(1, 32):
         ws.cell(r, c).fill = fill(CREAM)
         ws.cell(r, c).font = font(10)
         ws.cell(r, c).alignment = Alignment(horizontal="right", vertical="center")
-for col, w in {"A": 7, "B": 30, "C": 11, "D": 15, "E": 15, "F": 17, "H": 3, "I": 34}.items():
+for col, w in {"A": 12, "B": 28, "C": 9, "D": 15, "E": 15, "F": 16, "H": 3, "I": 34}.items():
     ws.column_dimensions[col].width = w
 ws.merge_cells("A1:F1")
 ws["A1"] = '=Cfg_CafeName&" | فاکتور فروش"'
@@ -1031,7 +1031,8 @@ for r in range(10, 24):
     k = r - 9
     col_ = "tblSales[شماره فاکتور]"
     if k == 1:
-        ws.cell(r, 9, f'=IFERROR(MATCH(InvSel,{col_},0),"")')
+        # empty selection must not match the empty number of an unused table row
+        ws.cell(r, 9, f'=IF(InvSel="","",IFERROR(MATCH(InvSel,{col_},0),""))')
     else:
         ws.cell(r, 9, f'=IF($I{r - 1}="","",IFERROR($I{r - 1}+MATCH(InvSel,INDEX({col_},$I{r - 1}+1):INDEX({col_},ROWS({col_})),0),""))')
     ws.cell(r, 1, f'=IF($I{r}="","",{k})')
