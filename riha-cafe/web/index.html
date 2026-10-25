@@ -582,7 +582,10 @@ function gate(mode, extra) {
     form.addEventListener('submit', ev => {
       ev.preventDefault();
       if (Date.now() < lockUntil) return err(`چند بار رمز اشتباه وارد شد. ${fa(Math.ceil((lockUntil - Date.now()) / 1000))} ثانیه دیگر دوباره امتحان کنید.`);
-      if (checkSecret(S.auth[who], $('#g-pw').value)) { fails = 0; setRole(who); gate(null); if (!isOwner() && ['report', 'setup'].includes(view())) location.hash = 'pos'; renderAll(); toast('وارد شدید: ' + ROLE_NAME[who]); return; }
+      // The password identifies the user, so a wrong role chip never blocks login.
+      const pw = $('#g-pw').value, other = who === 'owner' ? 'cashier' : 'owner';
+      if (!checkSecret(S.auth[who], pw) && checkSecret(S.auth[other], pw)) who = other;
+      if (checkSecret(S.auth[who], pw)) { fails = 0; setRole(who); gate(null); if (!isOwner() && ['report', 'setup'].includes(view())) location.hash = 'pos'; renderAll(); toast('وارد شدید: ' + ROLE_NAME[who]); return; }
       fails++; $('#g-pw').value = '';
       if (fails >= 5) { lockFor(30000); return err('۵ بار رمز اشتباه وارد شد. ۳۰ ثانیه صبر کنید.'); }
       err('رمز درست نیست.');
