@@ -387,6 +387,17 @@ body.cashier [data-owner-only] { display: none !important }
         <button class="btn danger" id="bk-wipe" type="button">پاک کردن همهٔ فاکتورها</button>
       </div>
       <div class="card full">
+        <h3>گزارش شبانهٔ فاکتورها به ایمیل</h3>
+        <p class="hint">هر شب سر ساعتی که تعیین می‌کنید، فایل PDF فاکتورهای همان روز به ایمیل شما فرستاده می‌شود. صندوق باید در آن ساعت روی دستگاه باز باشد. اگر بسته بود، دفعهٔ بعد که باز شود، گزارش روز قبل را می‌فرستد. ارسال از سرویس رایگان FormSubmit انجام می‌شود. <b>بار اول</b> یک ایمیل تأیید به همین نشانی می‌آید؛ دکمهٔ تأیید (Activate) داخل آن را بزنید، وگرنه گزارش‌ها نمی‌رسند.</p>
+        <div class="frow">
+          <label class="f">نشانی ایمیل<input class="in" id="ml-to" type="email" dir="ltr" placeholder="name@gmail.com" autocomplete="email"></label>
+          <label class="f">ساعت ارسال<input class="in num" id="ml-time" type="time" value="23:30"></label>
+        </div>
+        <label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="ml-on"> ارسال خودکار هر شب روشن باشد</label>
+        <div class="chips"><button class="btn primary" id="ml-send" type="button">ارسال گزارش امروز همین الان</button><button class="btn" id="ml-pdf" type="button">دانلود PDF امروز</button></div>
+        <p class="hint" id="ml-state"></p>
+      </div>
+      <div class="card full">
         <h3>رمز عبور و دسترسی‌ها</h3>
         <p class="hint">دو کاربر دارد. <b>مالک</b> به همه‌چیز دسترسی دارد. <b>صندوقدار</b> فقط می‌تواند سفارش ثبت و چاپ کند، سفارش نگه دارد و فاکتورهای امروز را ببیند. صندوقدار به گزارش، تنظیمات، ابطال فاکتور و پشتیبان دسترسی ندارد و تخفیفش سقف دارد.</p>
         <div class="setgrid" style="gap:12px">
@@ -425,6 +436,7 @@ body.cashier [data-owner-only] { display: none !important }
 <div class="cartbar num" id="cartbar"><div id="cb-t"></div><button class="btn" id="cb-open" type="button">مشاهده و ثبت</button></div>
 <div id="layer"></div>
 <div id="gate" hidden></div>
+<iframe name="ml-frame" id="ml-frame" title="ارسال گزارش" hidden></iframe>
 <div id="print-root"></div>
 <style id="page-size"></style>
 
@@ -824,6 +836,7 @@ function renderReport() {
 /* ---------- settings ---------- */
 const SF = { '#s-name': 'name', '#s-ig': 'ig', '#s-phone': 'phone', '#s-addr': 'address', '#s-slogan': 'slogan', '#s-tax': 'tax', '#s-paper': 'paper', '#s-theme': 'theme' };
 function renderSetup() {
+  { const m = mailCfg(); if (document.activeElement !== $('#ml-to')) $('#ml-to').value = m.to || ''; if (document.activeElement !== $('#ml-time')) $('#ml-time').value = m.time || '23:30'; $('#ml-on').checked = !!m.on; renderMailState(); }
   if (document.activeElement !== $('#sec-cap')) $('#sec-cap').value = S.auth?.cap ?? 10;
   for (const [sel, k] of Object.entries(SF)) if (document.activeElement !== $(sel)) $(sel).value = S.settings[k] ?? '';
   const lb = S.lastBackup ? new Date(S.lastBackup) : null;
@@ -845,6 +858,86 @@ function csv() {
   const rows = [H];
   [...S.invoices].filter(i => !i.sample).sort((a, b) => a.ts - b.ts).forEach(i => i.items.forEach(l => rows.push([jtext(i.dateKey), i.dayNo, i.no, l.code, l.name, l.qty, l.price, (i.disc || 0) / 100, i.pay, i.status === 'باز' ? 'پیش‌نویس' : i.status, i.staff, i.time, toEn(i.table), i.customer, i.phone, i.note])));
   return '﻿' + rows.map(r => r.map(q).join(',')).join('\r\n');
+}
+
+/* ---------- nightly PDF report by email (FormSubmit, no account needed) ---------- */
+const loadScript = (src, alt) => new Promise((ok, bad) => {
+  const go = (u, next) => { const t = document.createElement('script'); t.src = u; t.onload = ok; t.onerror = () => next ? go(next) : bad(new Error('load ' + u)); document.head.appendChild(t); };
+  go(src, alt);
+});
+async function pdfLibs() {
+  if (!window.html2canvas) await loadScript('vendor/html2canvas.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js');
+  if (!window.jspdf) await loadScript('vendor/jspdf.umd.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js');
+}
+function dayReportHTML(k) {
+  const s = S.settings; const list = S.invoices.filter(i => i.dateKey === k && !i.sample).sort((a, b) => a.ts - b.ts);
+  const fin = list.filter(i => i.status === 'نهایی'); const tt = fin.map(invTotals);
+  const sum = tt.reduce((a, t) => a + t.pay, 0), disc = tt.reduce((a, t) => a + t.d, 0);
+  const pm = {}; fin.forEach((i, n) => { pm[i.pay] = (pm[i.pay] || 0) + tt[n].pay; });
+  const row = i => { const t = invTotals(i); return `<tr${i.status !== 'نهایی' ? ' style="color:#888"' : ''}><td style="direction:ltr;text-align:right">${esc(i.no)}</td><td>${fa(i.time)}</td><td>${esc(fa(i.table || '—'))}</td><td>${i.items.map(l => `${esc(l.name)} × ${fa(l.qty)}`).join('، ')}</td><td>${esc(i.pay)}</td><td>${esc(i.status)}</td><td style="text-align:left">${money(t.pay)}</td></tr>`; };
+  return `<div style="display:flex;justify-content:space-between;align-items:end;border-bottom:3px solid #1E4635;padding-bottom:10px">
+    <div><div style="font-size:26px;font-weight:800">${esc(s.name)}</div><div style="color:#555">گزارش فروش روزانه · ${fa(jtext(k))}</div></div>
+    <div style="font-family:var(--display);letter-spacing:.3em;color:#1E4635;direction:ltr">${esc(s.en || '')}</div></div>
+    <table style="width:100%;margin:16px 0;border-collapse:collapse;font-size:15px"><tr>
+    ${[['فروش خالص', money(sum) + ' هزار تومان'], ['فاکتور نهایی', fa(fin.length)], ['تخفیف', money(disc)], ['ابطال', fa(list.filter(i => i.status === 'ابطال').length)], ['باز (پرداخت‌نشده)', fa(list.filter(i => i.status === 'باز').length)]].map(([a, b]) => `<td style="border:1px solid #ddd;padding:8px"><div style="color:#666;font-size:12px">${a}</div><b>${b}</b></td>`).join('')}</tr></table>
+    <div style="margin-bottom:12px;font-size:14px">روش پرداخت: ${Object.entries(pm).map(([a, b]) => `${esc(a)} ${money(b)}`).join(' · ') || '—'}</div>
+    <table style="width:100%;border-collapse:collapse;font-size:13px" border="1" cellpadding="6"><thead style="background:#1E4635;color:#fff"><tr><th>شماره</th><th>ساعت</th><th>میز</th><th>اقلام</th><th>پرداخت</th><th>وضعیت</th><th>مبلغ</th></tr></thead>
+    <tbody>${list.map(row).join('') || '<tr><td colspan="7" style="text-align:center;padding:16px">در این روز فاکتوری ثبت نشده است.</td></tr>'}</tbody></table>
+    <div style="margin-top:14px;color:#777;font-size:12px">مبالغ به هزار تومان · ساخته‌شده در ${fa(jtext(jkey(new Date())))} ساعت ${fa(hhmm(new Date()))}</div>`;
+}
+async function dayReportPDF(k) {
+  await pdfLibs();
+  const box = document.createElement('div');
+  box.style.cssText = 'position:fixed;left:-12000px;top:0;width:794px;padding:36px;background:#fff;color:#111;direction:rtl;font-family:var(--body);line-height:1.7';
+  box.innerHTML = dayReportHTML(k); document.body.appendChild(box);
+  try {
+    const canvas = await window.html2canvas(box, { scale: 2, backgroundColor: '#ffffff' });
+    const { jsPDF } = window.jspdf; const pdf = new jsPDF({ unit: 'mm', format: 'a4' });
+    const pagePx = Math.floor(canvas.width * 297 / 210);
+    for (let y = 0, n = 0; y < canvas.height; y += pagePx, n++) {
+      const c = document.createElement('canvas'); c.width = canvas.width; c.height = Math.min(pagePx, canvas.height - y);
+      const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height); g.drawImage(canvas, 0, -y);
+      if (n) pdf.addPage();
+      pdf.addImage(c.toDataURL('image/jpeg', 0.92), 'JPEG', 0, 0, 210, c.height * 210 / c.width);
+    }
+    return pdf.output('blob');
+  } finally { box.remove(); }
+}
+const mailCfg = () => (S.settings.mail ||= { to: '', time: '23:30', on: false, last: 0 });
+const validMail = m => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(m || '');
+async function sendDayReport(k, manual) {
+  const m = mailCfg();
+  if (!validMail(m.to)) { if (manual) toast('اول نشانی ایمیل درست را در تنظیمات بنویسید'); return false; }
+  let blob; try { blob = await dayReportPDF(k); } catch (e) { if (manual) toast('ساخت PDF ممکن نشد'); return false; }
+  const list = S.invoices.filter(i => i.dateKey === k && i.status === 'نهایی' && !i.sample);
+  const sum = list.reduce((a, i) => a + invTotals(i).pay, 0);
+  const f = document.createElement('form');
+  f.method = 'POST'; f.enctype = 'multipart/form-data'; f.target = 'ml-frame'; f.hidden = true;
+  f.action = 'https://formsubmit.co/' + encodeURIComponent(m.to);
+  const add = (n, v) => { const i = document.createElement('input'); i.type = 'hidden'; i.name = n; i.value = v; f.appendChild(i); };
+  add('_subject', `گزارش فروش ${S.settings.name} - ${jtext(k)}`); add('_captcha', 'false'); add('_template', 'box');
+  add('گزارش', `${jtext(k)}: ${fa(list.length)} فاکتور نهایی، فروش ${money(sum)} هزار تومان. فایل PDF پیوست است.`);
+  const file = document.createElement('input'); file.type = 'file'; file.name = 'attachment';
+  try { const dt = new DataTransfer(); dt.items.add(new File([blob], `riha-${k}.pdf`, { type: 'application/pdf' })); file.files = dt.files; } catch (e) { if (manual) toast('این مرورگر پیوست فایل را پشتیبانی نمی‌کند'); return false; }
+  f.appendChild(file); document.body.appendChild(f);
+  try { f.submit(); } finally { setTimeout(() => f.remove(), 1000); }
+  m.last = Math.max(m.last || 0, k); m.lastAt = Date.now(); save(); renderMailState();
+  toast(`گزارش ${fa(jtext(k))} برای ارسال فرستاده شد`); return true;
+}
+let mailBusy = false;
+async function nightlyCheck() {
+  const m = mailCfg(); if (mailBusy || !m.on || !validMail(m.to)) return;
+  const now = new Date(); const k = jkey(now); const yk = jkey(addDays(now, -1));
+  const [h, mi] = (m.time || '23:30').split(':').map(Number);
+  let due = 0;
+  if ((m.last || 0) < yk && S.invoices.some(i => i.dateKey === yk && !i.sample)) due = yk;      // missed last night: send on next open
+  else if ((m.last || 0) < k && now.getHours() * 60 + now.getMinutes() >= h * 60 + mi) due = k;
+  if (!due) return;
+  mailBusy = true; try { await sendDayReport(due, false); } finally { mailBusy = false; }
+}
+function renderMailState() {
+  const m = mailCfg(); const el = $('#ml-state'); if (!el) return;
+  el.textContent = m.lastAt ? `آخرین ارسال: گزارش ${fa(jtext(m.last))} در ${fa(jtext(jkey(new Date(m.lastAt))))} ساعت ${fa(hhmm(new Date(m.lastAt)))}. رسیدن ایمیل را در صندوق جیمیل (و پوشهٔ اسپم) چک کنید.` : 'هنوز گزارشی فرستاده نشده است.';
 }
 
 /* ---------- routing & render ---------- */
@@ -933,6 +1026,11 @@ $('#bk-in').addEventListener('change', e => {
 });
 $('#bk-wipe').addEventListener('click', () => confirmBox('پاک کردن همهٔ فاکتورها', 'همهٔ فاکتورهای این دستگاه برای همیشه پاک می‌شوند. منو، پرسنل و تنظیمات می‌مانند. اگر پشتیبان ندارید، اول پشتیبان بگیرید.', 'همه را پاک کن', () => { S.invoices = []; save(); cur = blank(); renderAll(); toast('فاکتورها پاک شد'); }));
 $('#who').addEventListener('click', accountDialog);
+$('#ml-to').addEventListener('change', e => { const v = e.target.value.trim(); if (v && !validMail(v)) { toast('نشانی ایمیل درست نیست'); return; } mailCfg().to = v; save(); toast('ذخیره شد'); });
+$('#ml-time').addEventListener('change', e => { mailCfg().time = e.target.value || '23:30'; save(); toast('ساعت ارسال ذخیره شد'); });
+$('#ml-on').addEventListener('change', e => { const m = mailCfg(); if (e.target.checked && !validMail(m.to)) { e.target.checked = false; toast('اول نشانی ایمیل را بنویسید'); return; } m.on = e.target.checked; if (m.on && !m.last) m.last = jkey(addDays(new Date(), -1)); save(); toast(m.on ? 'ارسال شبانه روشن شد' : 'ارسال شبانه خاموش شد'); });
+$('#ml-send').addEventListener('click', async e => { e.target.disabled = true; try { await sendDayReport(jkey(new Date()), true); } finally { e.target.disabled = false; } });
+$('#ml-pdf').addEventListener('click', async e => { e.target.disabled = true; try { const k = jkey(new Date()); const b = await dayReportPDF(k); const r = await download(`riha-${k}.pdf`, b, 'application/pdf'); if (r === false) toast('دانلود در این صفحه ممکن نیست'); } catch (x) { toast('ساخت PDF ممکن نشد'); } finally { e.target.disabled = false; } });
 const secMsg = (t, ok) => { const m = $('#sec-msg'); m.textContent = t; m.style.color = ok ? 'var(--ok)' : ''; };
 $('#sec-own').addEventListener('click', () => { const e = changePw('owner', $('#sec-old').value, $('#sec-new').value, $('#sec-new2').value); if (e) return secMsg(e); ['#sec-old', '#sec-new', '#sec-new2'].forEach(x => { $(x).value = ''; }); secMsg('رمز مالک عوض شد.', true); });
 $('#sec-cash').addEventListener('click', () => { const a = $('#sec-c1').value; const e = pwRule(a, $('#sec-c2').value) || (checkSecret(S.auth.owner, a) ? 'رمز مالک و صندوقدار نباید یکی باشند.' : ''); if (e) return secMsg(e); S.auth.cashier = makeSecret(a); if (S.auth.defaults) S.auth.defaults.cashier = false; save(); $('#sec-c1').value = $('#sec-c2').value = ''; secMsg('رمز صندوقدار ذخیره شد.', true); });
@@ -947,7 +1045,8 @@ document.addEventListener('keydown', e => {
 // single-device register: ask the browser not to evict the data, and keep working offline on the website
 try { navigator.storage?.persist?.().catch(() => {}); } catch (e) { /* not supported */ }
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost') && !window.claude) navigator.serviceWorker.register('sw.js').catch(() => {});
-setInterval(renderHeader, 60000);
+setInterval(() => { renderHeader(); nightlyCheck(); }, 60000);
+setTimeout(nightlyCheck, 5000);
 renderAll();
 })();
 </script>

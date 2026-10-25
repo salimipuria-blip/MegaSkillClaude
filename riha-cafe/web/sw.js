@@ -1,6 +1,6 @@
 // Offline cache for the register: serve the saved copy at once, refresh it from the network in the background.
-const CACHE = 'riha-pos-v1';
-const CORE = ['./', 'index.html', 'fonts/Vazirmatn-Variable.woff2', 'fonts/BodoniModa-500.woff2'];
+const CACHE = 'riha-pos-v2';
+const CORE = ['./', 'index.html', 'fonts/Vazirmatn-Variable.woff2', 'fonts/BodoniModa-500.woff2', 'vendor/jspdf.umd.min.js', 'vendor/html2canvas.min.js'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE)).then(() => self.skipWaiting()));
