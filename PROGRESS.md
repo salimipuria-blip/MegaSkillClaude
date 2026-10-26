@@ -465,3 +465,8 @@ pushِ اولِ این دور (`4ccf6799`) سه job را قرمز کرد: `commi
 **گیت‌ها:** `discover` ⇒ **۱۸۰ تست** (تنها خطای محلی `test_commit_identity` است، تا وقتی HEAD هنوز commitِ squashِ GitHub باشد) · `sync --check` ⇒ ۰ · `check_skill_links` ⇒ `unflagged: []` با ۰ لینکِ مرده · `scan_third_party_skills --check` ⇒ ۲٬۹۴۹ فایل، ۱۶۷ یافته · `mobile/build-index.py --check` ⇒ ۵٬۹۶۴.
 
 **NOT RUN:** مجموعهٔ طلایی برای ۲۱۹ مهارتِ تازه‌فعال · zipِ claude.ai فقط `SKILL.md`ها را دارد، پس اسکریپت‌ها و مراجعِ همراه در claude.ai در دسترس نیستند.
+
+## 2026-10-26 — فونت کپشن «دایرکت» (brands/fonts/dayrekt)
+- فونت هندسی تک‌خطی فارسی/لاتین از روی رفرنس DIRECT/دایرکت؛ ۴ وزن (Light/Regular/Medium/Bold)، TTF + WOFF2، ۲۲۹ گلیف.
+- بررسی‌شده: اتصال حروف در Chromium (HarfBuzz) و libass/ffmpeg؛ پریست ASS سه‌سبکه و قالب کپشن کلمه‌به‌کلمه (`captions/`).
+- نکته: در libass تگ وسط خط فارسی ترتیب کلمه‌ها را به هم می‌زند؛ در README آمده.
