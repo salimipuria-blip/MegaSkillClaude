@@ -1,0 +1,28 @@
+[Script Info]
+; Dayrekt caption presets — vertical 1080x1920 video.
+; Burn in:  ffmpeg -i in.mp4 -vf "subtitles=dayrekt-captions.ass:fontsdir=../fonts" -c:a copy out.mp4
+; For 1920x1080 video change PlayResX/PlayResY to 1920/1080 and MarginV to ~140.
+Title: Dayrekt captions
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+; 1) Dash: white words with a soft shadow. Keep one style per line: libass in ffmpeg breaks
+;    Persian word order when override tags ({\k} {\c}) sit in the middle of a line.
+Style: Dayrekt-Dash,Dayrekt Medium,112,&H00FFFFFF,&H00FFFFFF,&H00000000,&H90000000,0,0,0,0,100,100,0,0,1,0,3,2,70,70,560,1
+; 2) Label: black text on a white box — the reference look.
+Style: Dayrekt-Label,Dayrekt,96,&H00111111,&H00111111,&H00FFFFFF,&H00FFFFFF,0,0,0,0,100,100,0,0,3,22,0,2,70,70,560,1
+; 3) Bold: heavy white with black outline, for busy footage.
+Style: Dayrekt-Bold,Dayrekt,116,&H00FFFFFF,&H00FFFFFF,&H00000000,&H80000000,-1,0,0,0,100,100,0,0,1,6,0,2,70,70,560,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.20,0:00:02.00,Dayrekt-Dash,,0,0,0,,امشب زیر آسمون پرستاره
+Dialogue: 0,0:00:02.00,0:00:04.00,Dayrekt-Label,,0,0,0,,همین الان دایرکت بده
+Dialogue: 0,0:00:04.00,0:00:06.00,Dayrekt-Bold,,0,0,0,,کمپ آخر هفته ۱۴ نفر
+; Accent: a whole line in orange is safe (the tag is at the start of the line).
+Dialogue: 0,0:00:06.00,0:00:08.00,Dayrekt-Dash,,0,0,0,,{\c&H001E8AF2&}الان ثبت‌نام کن
