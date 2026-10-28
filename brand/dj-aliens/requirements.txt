@@ -1,0 +1,8 @@
+# Runtime for brand/dj-aliens/render.py (the story/post renderer).
+# Kept out of package.json on purpose: this pipeline is Python + font shaping,
+# not a Node/Chromium job, so it renders identically on a laptop and in CI.
+pillow>=10.2
+fonttools>=4.47
+brotli>=1.1          # WOFF2 decoding for fonttools
+uharfbuzz>=0.37      # Persian shaping (Pillow's FreeType has no Raqm here)
+freetype-py>=2.4     # glyph rasterisation of HarfBuzz glyph ids

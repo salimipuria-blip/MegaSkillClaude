@@ -17,6 +17,7 @@
 | 10 | قالب محتوای وایکینگ | `brand/viking/` | [10-viking-content-renderer.md](10-viking-content-renderer.md) | پر کردنِ source برای ۱۱ ادعای کمپین در brief.json (رندر واقعی بسته شد) |
 | 11 | کنسول آیفون مگااسکیل | `mobile/` | [11-mobile-console.md](11-mobile-console.md) | آزمون Safari/iOS فیزیکی (بودجهٔ وزن و smoke مرورگری بسته شد) |
 | 12 | Viking Cinematic Motion Study | `viking-team/motion/` | [12-viking-motion-study.md](12-viking-motion-study.md) | تصمیم ادغام + reduced-motion/poster (قفل مشخصات بسته شد) |
+| 13 | استوری DJ Aliens × Viking | `brand/dj-aliens/` | [13-dj-aliens-story.md](13-dj-aliens-story.md) | تأیید معنای تگِ ۴:۲۰ و بازبینی بصری مالک (رندر و تست‌ها بسته شد) |
 
 برای تغییرات مشترکِ CI، `doctor` و فهرست پروژه‌ها از [دفتر جریان ریشه](../../PROGRESS.md) استفاده کن؛ دفتر محصول را برای تاریخچهٔ تغییر بین‌پروژه‌ای به‌جای آن بازنویسی نکن.
 
