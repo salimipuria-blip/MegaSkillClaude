@@ -1,0 +1,6 @@
+# Rendered deliverables are build output, not source: regenerate with
+# `python3 render.py`. They are kept in the workspace for hand-off but never committed.
+deliverables/
+out/
+__pycache__/
+*.pyc

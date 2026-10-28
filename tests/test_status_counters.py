@@ -278,6 +278,10 @@ DIRECTIVE_COUNTERS: dict[str, tuple[tuple[str, object], ...]] = {
         ("فریم", lambda: motion_spec()["frames"]),
         ("fps", lambda: motion_spec()["fps"]),
     ),
+    "13-dj-aliens-story.md": (
+        ("تست", lambda: python_test_count("brand/dj-aliens/tests/test_*.py")),
+        ("ادعا", lambda: len(json.loads(read(ROOT / "brand/dj-aliens/brief.json"))["claims"])),
+    ),
 }
 
 

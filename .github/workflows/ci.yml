@@ -30,13 +30,14 @@ jobs:
           node --check mobile/sw.js
           node --check mobile/search.mjs
           node --test mobile/search.test.mjs mobile/index.test.mjs
-      - name: Brand asset contracts, sticker manifest and renderer syntax
+      - name: Brand asset contracts, sticker manifest, renderer syntax and DJ Aliens contract
         run: |
           python3 scripts/check_brand_assets.py
           python3 scripts/build_sticker_manifest.py --check
           node --check brand/viking/render.mjs
           node --test brand/viking/tests/render.test.mjs
           node --test brand/viking/tests/content.test.mjs
+          python3 -m unittest discover -s brand/dj-aliens/tests -p "test_*.py"
       - name: Verify the project doctor really discovers quoted Python test patterns
         run: node --test tests/doctor.test.mjs
       - name: Supabase readiness checker (mocked fetch, no network, no credentials)

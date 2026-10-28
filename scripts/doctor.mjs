@@ -32,7 +32,11 @@ const tool = (name) => spawnSync('which', [name], {stdio: 'ignore'}).status === 
 // install command instead of reporting a failure that looks like a code regression.
 const hasModule = (name) =>
   spawnSync('python3', ['-c', `import ${name}`], {stdio: 'ignore'}).status === 0;
-const PYTHON_MODULE_HINT = {pytest: 'python3 -m pip install --user pytest'};
+const PYTHON_MODULE_HINT = {
+  pytest: 'python3 -m pip install --user pytest',
+  PIL: 'python3 -m pip install --user -r brand/dj-aliens/requirements.txt',
+  uharfbuzz: 'python3 -m pip install --user -r brand/dj-aliens/requirements.txt',
+};
 
 /** Every project: id, folder, why it exists, and the exact ordered checks. */
 const PROJECTS = [
@@ -113,6 +117,13 @@ const PROJECTS = [
     steps: [
       {name: 'asset-contract', cmd: 'python3 scripts/check_brand_assets.py --stickers', why: '۱۲ پک، ۳۶۰ PNG شفاف ۵۱۲×۵۱۲، preview و cover'},
       {name: 'manifest', cmd: 'python3 scripts/build_sticker_manifest.py --check', why: 'MANIFEST.json با سورس (packs.js + duos.js) و PNGها یکی است'},
+    ],
+  },
+  {
+    id: 'brand-dj-aliens', folder: 'brand/dj-aliens', label: 'استوری DJ Aliens × Viking (هالووین)',
+    steps: [
+      {name: 'content-contract', cmd: 'python3 -m unittest discover -s brand/dj-aliens/tests -p "test_*.py"', why: 'ادعاهای کمپین منبع دارند، assetها محلی‌اند و متن فارسی درست تفکیک می‌شود'},
+      {name: 'render', cmd: 'python3 brand/dj-aliens/render.py --out /tmp/dj-aliens-doctor', needsModule: 'PIL', optional: true, why: 'تولید واقعی story+post (نیازمند Pillow/HarfBuzz/FreeType)'},
     ],
   },
   {
