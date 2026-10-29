@@ -6,7 +6,7 @@
 - ۱۲ پروژه/زیرپروژهٔ مدیریت‌شده (به‌علاوهٔ خود مخزن)؛ دفتر هرکدام در جدول `README.md` و دستور توسعهٔ هرکدام در [`docs/directives/`](docs/directives/README.md) است.
 - `node scripts/doctor.mjs <id>` مرجع فرمان‌های دقیق هر پروژه است؛ `--list` فهرست کامل را نشان می‌دهد. اکنون **۴۳ گام در ۱۳ دامنه** (۳۸ تا پیش از ۲۰۲۶-۱۰-۱۴؛ گامِ `ai-guides` در ۲۰۲۶-۱۰-۲۹ اضافه شد).
 - Router canonical: **۵٬۹۶۴** مهارت = ۳٬۰۰۰ core + ۱۸ پروژه + ۲٬۹۴۶ GitHub؛ **۵٬۹۶۴ routable**، **۰ incomplete** و **۲۹٬۸۷۸ trigger**.
-- تست‌های ریشه: **۱۹۳ تست ریشه** (پایتون) با `python3 -m unittest discover -s tests -p "test_*.py"`. نگهبانِ همین اعداد `tests/test_status_counters.py` است: شمارنده‌های بخش «وضعیت مشترک» را به `triggers.json`، `library/github-skills/INDEX.json`، `scripts/doctor.mjs` و `mobile/skills-index.json` قفل می‌کند، ارجاع‌های `doctor.mjs <id>` و لینک/پوشه‌های `docs/directives/README.md` را resolve می‌کند، و اعداد داخل بخش‌های تاریخ‌دار را به‌عنوان snapshot دست نمی‌زند. قاعدهٔ انسانی‌اش بند ۷ «قواعد مشترک» در [`docs/directives/README.md`](docs/directives/README.md) است.
+- تست‌های ریشه: **۲۰۰ تست ریشه** (پایتون) با `python3 -m unittest discover -s tests -p "test_*.py"`. نگهبانِ همین اعداد `tests/test_status_counters.py` است: شمارنده‌های بخش «وضعیت مشترک» را به `triggers.json`، `library/github-skills/INDEX.json`، `scripts/doctor.mjs` و `mobile/skills-index.json` قفل می‌کند، ارجاع‌های `doctor.mjs <id>` و لینک/پوشه‌های `docs/directives/README.md` را resolve می‌کند، و اعداد داخل بخش‌های تاریخ‌دار را به‌عنوان snapshot دست نمی‌زند. قاعدهٔ انسانی‌اش بند ۷ «قواعد مشترک» در [`docs/directives/README.md`](docs/directives/README.md) است.
 - CI شامل typecheck/build/test، health، skill sync، PWA، دارایی‌های برند و typecheck زیرپروژهٔ Motion است.
 
 ## ۲) اصلاحات بین‌پروژه‌ای
@@ -477,3 +477,24 @@ pushِ اولِ این دور (`4ccf6799`) سه job را قرمز کرد: `commi
 - **یافته‌های P1 که هنوز بازند:** `lithos/api/buffer-sync.js` بخشِ «بازسازی‌شده» با کوئریِ تأییدنشدهٔ Buffer و URL/کلیدِ hard-code؛ هشِ رمزِ اعضای تیم و هشِ شمارهٔ تلفنِ مالک در Git؛ `fjcod` بدونِ Auth سروری؛ دوگانگیِ ۳۳۸ مگابایتیِ `library/`↔`plugins/`؛ نبودِ تولیدکنندهٔ `triggers.json` (منشأ ۶ تسکِ `BLOCKED/INDEX`).
 - **گیت‌های این دور:** `discover` ⇒ **۱۸۰ تست OK** · `sync --check` ⇒ ۰ · `scan_third_party_skills --check` ⇒ current (۲٬۹۴۹ فایل، ۱۶۷ یافته) · `check_skill_links` ⇒ `unflagged: []` · `report_skill_quality --check` ⇒ current · `scan_secrets.py` ⇒ ۰ یافته · `repo_health_check.sh` ⇒ exit 0 · `doctor.mjs --json` ⇒ **۰ خطا** (دو skipِ محیطی: Deno و Chromium).
 - **NOT RUN:** Deno، Chromium/Playwright (پس `fjcod e2e` صرفاً skip)، هیچ تماسِ زنده با Cloudflare/Supabase/Vercel/Gemini، و هیچ انتشار یا migration. `orchestrator` با pytest در venv موقت: ۲۱ pass + ۳ skipِ مستند.
+
+## ۱۶) لاگ جریان — ۲۰۲۶-۱۰-۲۹ (دورِ دوم: راهنمای سه‌پروژه‌ای + گیتِ آن + بک‌لاگِ سخت‌سازی)
+
+- **راهنمای بازبینی‌شدهٔ `docs/guides/ai-projects-3/`** ساخته و اجرا شد: نسخهٔ کدِ هر سه پروژه،
+  `README.md` فارسی، و `index.html` خودبسنده/RTL. جمعِ تست‌ها **۴۷** (۱۱ + ۱۵ + ۲۱)، همه آفلاین.
+- **دروازهٔ `scripts/verify_ai_projects.py`** (۱۲ بررسی: سینتکس نود، تست‌های نود، `py_compile`،
+  importِ تنبل، تست‌های پایتون، سطحِ import، JSONِ n8n، هم‌خوانیِ متن با کد، مجوزِ n8n، APIهای
+  حذف‌شده) در سه جا سیم‌کشی شد: `repo_health_check.sh`، گامِ تازهٔ `ai-guides` در `doctor`، و
+  jobِ `repo-health` در CI. `tests/test_ai_projects.py` خودِ این سیم‌کشی را قفل می‌کند.
+- **شمارنده‌ها به‌روز شد:** `doctor` ۴۲ → **۴۳ گام** (۱۳ دامنه)، تست‌های ریشه ۱۸۰ → **۱۹۳** → **۲۰۰**.
+  نگهبانِ `tests/test_status_counters.py` خودش اختلاف را گرفت و همین دلیلِ به‌روزرسانی بود.
+- **دو سندِ تازه:** `docs/REVIEW_3_PROJECTS_AI_GUIDE_2026-10-29.md` (۱۹ ادعا، ۱۲ کهنه/نادرست،
+  ۳ کدِ خراب، ۴ APIِ حذف‌شده، و بخشِ «اصلاحِ خود») و `docs/HARDENING_BACKLOG_2026-10-29.md`
+  (۹ یافتهٔ هرمس/fjcod با شاهدِ `فایل:خط`).
+- **قفلِ ضدِ rot:** `tests/test_review_documents.py` هر شاهدِ `فایل:خط` + قطعهٔ کد را دوباره
+  می‌خواند؛ اگر کد جابه‌جا شود یا تست‌ها کم/زیاد شوند، سند نمی‌تواند بی‌صدا کهنه بماند.
+- **اصلاحِ خود در همین دور:** ادعای «`OllamaEmbeddings` حذف شده» غلط بود (import می‌شود، منسوخ
+  است) → به فهرستِ `DEPRECATED` رفت؛ و ادعای «±۱ تومان اختلافِ مرجوعی» به کرانِ درستِ
+  «۰٫۵×تعداد در هر قلم + سقفِ بی‌صدای باقی‌مانده» اصلاح شد.
+- **گیت‌ها:** `python3 -m unittest discover -s tests` ⇒ **۲۰۰ تست OK** · `repo_health_check.sh` ⇒
+  exit 0 · `node scripts/doctor.mjs repo` ⇒ همه سبز (شاملِ `ai-guides`).

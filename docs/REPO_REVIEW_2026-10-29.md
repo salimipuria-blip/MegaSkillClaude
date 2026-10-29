@@ -44,7 +44,7 @@ PR #128 با **۱۴ چکِ قرمز** مرج شده و از آن روز به ب�
 
 | پروژه | تستِ اندازه‌گیری‌شده | نتیجه | ادعای مستندات |
 |---|---|---|---|
-| ریشه (پایتون) | **۱۹۳** | OK | ۱۸۰ در آن دور ✅ |
+| ریشه (پایتون) | **۱۹۳ → ۲۰۰** | OK | ۱۸۰ در آن دور ✅ |
 | `psk` | **۵۷** + golden ۱۰۸ کیس | pass | ۵۷ ✅ |
 | `hermes` واحد | **۲۶۹** (worker **۸۲**) | pass | ۲۶۹/۸۲ — **پیش از این دور ۲۶۳/۷۹ بود ❌** |
 | `hermes` integration (workerd) | **۱۰** | pass | ۱۰ ✅ |
@@ -161,7 +161,7 @@ commitهای مرج‌شده روی `main` تریلرِ `Co-authored-by: Claude 
   شاهد: `npm test --prefix hermes` = ۲۶۹/۲۶۹، `worker.test.mjs` = ۸۲، `npm run test:integration` = ۱۰/۱۰، `scripts.check` = ۳۸ فایل.
 - نتیجه: `python3 -m unittest discover -s tests -p "test_*.py"` از **۴ خطا → ۱۸۰/۱۸۰ OK** و `node scripts/doctor.mjs` از `failures: 2` → **۰**.
 - بخش‌های تاریخ‌دارِ snapshot (طبقِ بندِ ۷ قواعدِ مشترک) دست‌نخورده ماندند.
-- بعد از این گزارش، دورِ دومِ همان روز (بررسیِ عمیق‌تر + راهنمای `docs/guides/ai-projects-3`) یک گامِ جدید (`ai-guides`) به doctor و repo-health و CI اضافه کرد؛ عددها در `PROGRESS.md`، `docs/directives/00-monorepo.md` و همین سند به **۴۳ گام / ۱۹۳ تست ریشه** به‌روز شدند (نگهبان خودش اختلاف را گرفت).
+- بعد از این گزارش، دورِ دومِ همان روز (بررسیِ عمیق‌تر + راهنمای `docs/guides/ai-projects-3`) یک گامِ جدید (`ai-guides`) به doctor و repo-health و CI اضافه کرد؛ عددها در `PROGRESS.md`، `docs/directives/00-monorepo.md` و همین سند به **۴۳ گام / ۲۰۰ تست ریشه**؛ و دو سندِ تازه اضافه شد: [`REVIEW_3_PROJECTS_AI_GUIDE_2026-10-29.md`](REVIEW_3_PROJECTS_AI_GUIDE_2026-10-29.md) و [`HARDENING_BACKLOG_2026-10-29.md`](HARDENING_BACKLOG_2026-10-29.md) (۹ یافته با شاهدِ کد). به‌روز شدند (نگهبان خودش اختلاف را گرفت).
 
 ## ۸) ضمیمه: دستورهای بازتولید
 
