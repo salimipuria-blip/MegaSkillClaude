@@ -42,6 +42,7 @@ const PROJECTS = [
       {name: 'health', cmd: 'bash scripts/repo_health_check.sh', why: 'بررسی سبک بدون نصب وابستگی'},
       {name: 'common-tests', cmd: 'python3 -m unittest discover -s tests -p "test_*.py"', why: 'تست‌های مشترک ریشه'},
       {name: 'skill-library-sync', cmd: 'python3 scripts/sync_skill_library.py --check', why: 'کتابخانهٔ مهارت‌ها با منبعش یکسان است'},
+      {name: 'ai-guides', cmd: 'python3 scripts/verify_ai_projects.py', why: 'راهنمای سه‌پروژه‌ای: تست‌های نود و پایتون + هم‌خوانی متن با کد'},
     ],
   },
   {
@@ -95,7 +96,7 @@ const PROJECTS = [
     steps: [
       {name: 'shell-syntax', cmd: 'bash -n hermes/setup.sh hermes/config.sh hermes/logger.sh', why: 'سینتکس نصب‌کننده'},
       {name: 'check', cmd: 'npm run check --prefix hermes', why: 'سینتکس همهٔ ماژول‌ها'},
-      {name: 'tests', cmd: 'npm test --prefix hermes', why: '۲۶۳ تست واحد (استودیو، لایهٔ متن، fetch با timeout، یادآورها، کدنویسی و دانش پروژه‌ها)'},
+      {name: 'tests', cmd: 'npm test --prefix hermes', why: '۲۶۹ تست واحد (استودیو، لایهٔ متن، fetch با timeout، یادآورها، کدنویسی و دانش پروژه‌ها)'},
       {name: 'integration', cmd: 'npm run test:integration --prefix hermes', why: '۱۰ رگرسیون روی workerd محلی'},
       {name: 'skills-build', cmd: 'node hermes/build-skills.mjs', optional: true, why: 'ساخت دارایی‌های مهارت'},
     ],

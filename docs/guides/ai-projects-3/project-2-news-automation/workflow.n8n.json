@@ -1,0 +1,114 @@
+{
+  "name": "خبر → خلاصه با مدل محلی → تلگرام",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 6
+            }
+          ]
+        }
+      },
+      "id": "a1b2c3d4-0001-4a01-9c01-000000000001",
+      "name": "هر ۶ ساعت",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [-260, 0],
+      "notes": "زمان‌بندی: هر ۶ ساعت. برای تست، دستی اجرا کن (Execute workflow)."
+    },
+    {
+      "parameters": {
+        "url": "https://example.com/feed.xml",
+        "options": {}
+      },
+      "id": "a1b2c3d4-0002-4a02-9c02-000000000002",
+      "name": "خواندن فید RSS",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [-40, 0],
+      "notes": "آدرس فید را با فید واقعی خودت عوض کن. خروجی، یک آیتم برای هر خبر است."
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:11434/api/generate",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"llama3.1:8b\",\n  \"prompt\": \"این خبر را در ۳ خط فارسی خلاصه کن، بدون مقدمه:\\n\\n{{ $json.title }}\\n\\n{{ $json.contentSnippet || $json.content || '' }}\",\n  \"stream\": false,\n  \"options\": { \"temperature\": 0.2, \"num_predict\": 220 }\n}",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "id": "a1b2c3d4-0003-4a03-9c03-000000000003",
+      "name": "خلاصه با Ollama",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [180, 0],
+      "notes": "اگر n8n داخل Docker است، localhost یعنی خود کانتینر؛ host.docker.internal یا نام سرویس Ollama را بگذار. timeout حتماً تنظیم شود، وگرنه اجرای کند معلق می‌ماند."
+    },
+    {
+      "parameters": {
+        "operation": "sendMessage",
+        "chatId": "=-1000000000000",
+        "text": "=📰 <b>{{ $('خواندن فید RSS').item.json.title }}</b>\n\n{{ $json.response }}\n\n<a href=\"{{ $('خواندن فید RSS').item.json.link }}\">ادامهٔ خبر</a>",
+        "additionalFields": {
+          "parse_mode": "HTML",
+          "appendAttribution": false
+        }
+      },
+      "id": "a1b2c3d4-0004-4a04-9c04-000000000004",
+      "name": "ارسال به تلگرام",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [400, 0],
+      "notes": "chatId کانال با -۱۰۰ شروع می‌شود. ربات باید ادمین کانال باشد. parse_mode=HTML نیاز به escape دارد؛ اگر متن خبر تگ داشته باشد، متن را در Code node پاک کن."
+    }
+  ],
+  "connections": {
+    "هر ۶ ساعت": {
+      "main": [
+        [
+          {
+            "node": "خواندن فید RSS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "خواندن فید RSS": {
+      "main": [
+        [
+          {
+            "node": "خلاصه با Ollama",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "خلاصه با Ollama": {
+      "main": [
+        [
+          {
+            "node": "ارسال به تلگرام",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "active": false,
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "description": "شروع کار: بعد از Import، آدرس فید، chatId کانال و آدرس Ollama را عوض کن، سپس Execute workflow. این فایل با scripts/verify_ai_projects.py از نظر ساختار بررسی می‌شود."
+  }
+}

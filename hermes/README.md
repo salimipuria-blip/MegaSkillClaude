@@ -183,7 +183,7 @@ node hermes/add-user.mjs <username> "<نام>" member
 - KV حساب‌ها/دادهٔ قدیمی و SQLite Durable Objects گفتگو سهمیه‌های جدا دارند؛ سقف و شرایط فعلی سطح رایگان را در حساب Cloudflare بررسی کن. هیچ ارتقای پولی خودکار فعال نکن.
 - جمینی: سهمیهٔ رایگان AI Studio.
 
-تست واحد بدون وابستگی: `npm test --prefix hermes` (۱۷۹ تست: بات + CLI راه‌اندازی + استودیوی ویرایش عکس + لایهٔ متن و چرخاندنش با پیام).
+تست واحد بدون وابستگی: `npm test --prefix hermes` (۲۶۹ تست: بات + CLI راه‌اندازی + استودیوی ویرایش عکس + لایهٔ متن و چرخاندنش با پیام).
 تست واقعی ذخیره‌سازی/هم‌زمانی در workerd محلی: `npm ci --prefix hermes --ignore-scripts` و
 `npm run test:integration --prefix hermes`. `--ignore-scripts` مانع اجرای sync-secrets در تست می‌شود.
 تمام upstreamهای تست شبیه‌سازی شده‌اند؛ تست‌ها به بات/مدل/دادهٔ واقعی دست نمی‌زنند.

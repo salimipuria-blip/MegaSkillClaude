@@ -10,15 +10,15 @@
 
 ## ۲) دستور دقیق این پروژه
 ```bash
-node scripts/doctor.mjs hermes      # سینتکس shell + سینتکس ماژول‌ها + ۱۷۹ تست + ۹ رگرسیون + ساخت مهارت‌ها
+node scripts/doctor.mjs hermes      # سینتکس shell + سینتکس ماژول‌ها + ۲۶۹ تست + ۱۰ رگرسیون + ساخت مهارت‌ها
 ```
 معادل دستی (از ریشهٔ مخزن):
 ```bash
 bash -n hermes/setup.sh hermes/config.sh hermes/logger.sh
 npm ci --prefix hermes --ignore-scripts --no-audit --no-fund
 npm run check --prefix hermes
-npm test --prefix hermes               # ۱۷۹ تست (شامل ۵۲ تست استودیو + ۳۵ تست لایهٔ متن)
-npm run test:integration --prefix hermes   # ۹ رگرسیون روی workerd محلی، بدون شبکه
+npm test --prefix hermes               # ۲۶۹ تست (شامل ۸۲ تست worker + ۵۳ استودیو + ۳۵ لایهٔ متن)
+npm run test:integration --prefix hermes   # ۱۰ رگرسیون روی workerd محلی، بدون شبکه
 node hermes/build-skills.mjs | grep -Eq "\] [0-9]{4,} skills"
 ```
 

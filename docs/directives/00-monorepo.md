@@ -49,8 +49,8 @@ python3 -m unittest discover -s tests -v     # تست‌های ریشه (router/
 
 ## وضعیتِ جاری
 
-اندازه‌گیریِ واقعی در **۲۰۲۶-۱۰-۲۰** — این بخش با نگهبانِ `tests/test_status_counters.py` قفل است: هر عدد از منبعِ canonicalِ خودش در ریپو بازخوانی می‌شود، پس عددِ کهنه یا جابه‌جاییِ واژه قرمز می‌شود. بخش‌های تاریخ‌دارِ پایین/بالای همین سند snapshotِ همان دورند و دست نمی‌خورند (بندِ ۷ «قواعد مشترک»).
+اندازه‌گیریِ واقعی در **۲۰۲۶-۱۰-۲۹** — این بخش با نگهبانِ `tests/test_status_counters.py` قفل است: هر عدد از منبعِ canonicalِ خودش در ریپو بازخوانی می‌شود، پس عددِ کهنه یا جابه‌جاییِ واژه قرمز می‌شود. بخش‌های تاریخ‌دارِ پایین/بالای همین سند snapshotِ همان دورند و دست نمی‌خورند (بندِ ۷ «قواعد مشترک»).
 
-- `node scripts/doctor.mjs --json` ⇒ **۱۳ دامنه** و **۴۲ گام**؛ همین دو عدد از `scripts/doctor.mjs` خوانده می‌شوند (پارسِ ایستا، بدون subprocess).
-- تست‌های ریشهٔ پایتون: **۱۸۰ تست** با `python3 -m unittest discover -s tests -p "test_*.py"`.
+- `node scripts/doctor.mjs --json` ⇒ **۱۳ دامنه** و **۴۳ گام**؛ همین دو عدد از `scripts/doctor.mjs` خوانده می‌شوند (پارسِ ایستا، بدون subprocess).
+- تست‌های ریشهٔ پایتون: **۲۰۰ تست** با `python3 -m unittest discover -s tests -p "test_*.py"`.
 - **NOT RUN:** هر بررسیِ زنده (Vercel/Cloudflare/Supabase)، deploy و migration — بیرونِ allowlist و نیازمندِ تأییدِ مالک.
