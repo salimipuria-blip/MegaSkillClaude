@@ -1,6 +1,6 @@
 # MegaSkillClaude Monorepo — دفتر جریان مشترک
 
-> این دفتر فقط تغییرات cross-project (CI، doctor، نقشهٔ پروژه‌ها و قراردادهای مشترک) را نگه می‌دارد. هر محصول دفتر جداگانهٔ خودش را دارد. آخرین به‌روزرسانی: **۲۰۲۶-۱۰-۲۰**.
+> این دفتر فقط تغییرات cross-project (CI، doctor، نقشهٔ پروژه‌ها و قراردادهای مشترک) را نگه می‌دارد. هر محصول دفتر جداگانهٔ خودش را دارد. آخرین به‌روزرسانی: **۲۰۲۶-۱۰-۲۹**.
 
 ## ۱) وضعیت مشترک
 - ۱۲ پروژه/زیرپروژهٔ مدیریت‌شده (به‌علاوهٔ خود مخزن)؛ دفتر هرکدام در جدول `README.md` و دستور توسعهٔ هرکدام در [`docs/directives/`](docs/directives/README.md) است.
@@ -465,3 +465,15 @@ pushِ اولِ این دور (`4ccf6799`) سه job را قرمز کرد: `commi
 **گیت‌ها:** `discover` ⇒ **۱۸۰ تست** (تنها خطای محلی `test_commit_identity` است، تا وقتی HEAD هنوز commitِ squashِ GitHub باشد) · `sync --check` ⇒ ۰ · `check_skill_links` ⇒ `unflagged: []` با ۰ لینکِ مرده · `scan_third_party_skills --check` ⇒ ۲٬۹۴۹ فایل، ۱۶۷ یافته · `mobile/build-index.py --check` ⇒ ۵٬۹۶۴.
 
 **NOT RUN:** مجموعهٔ طلایی برای ۲۱۹ مهارتِ تازه‌فعال · zipِ claude.ai فقط `SKILL.md`ها را دارد، پس اسکریپت‌ها و مراجعِ همراه در claude.ai در دسترس نیستند.
+
+## ۱۵) لاگ جریان — ۲۰۲۶-۱۰-۲۹ (بازبینیِ عمیقِ مخزن + رفعِ driftِ شمارنده‌های هرمس)
+
+**گزارشِ کامل:** [`docs/REPO_REVIEW_2026-10-29.md`](docs/REPO_REVIEW_2026-10-29.md) — همهٔ عددها در همین checkout اندازه‌گیری شده‌اند.
+
+- **رفعِ drift (کارِ همین دور):** `docs/PORTFOLIO.md`، `docs/directives/02-hermes.md`، `hermes/PROGRESS.md` (بخشِ دستورهای امروز)، `hermes/README.md` و برچسبِ گامِ `tests` در `scripts/doctor.mjs` عددهای کهنهٔ **۲۶۳ تست واحد / ۷۹ worker / ۹ integration / ۱۵ ماژول** را داشتند. مقدارِ اندازه‌گیری‌شده: **۲۶۹ واحد / ۸۲ worker / ۱۰ integration / ۳۸ ماژول**. نگهبانِ `tests/test_status_counters.py` (تسک ۳۶ و ۹۷) همین را قرمز کرده بود: **۴ خطا → ۱۸۰/۱۸۰ OK** و `node scripts/doctor.mjs` از `failures: 2` → **۰**. بخش‌های تاریخ‌دار (snapshot) دست‌نخورده ماندند.
+- **چرا کسی ندید:** `CI` روی `main` از **۲۰۲۶-۱۰-۲۲** سبز نشده است. سه pushِ آخرِ `main` با پیامِ بودجهٔ Actions («recent account payments have failed or your spending limit needs to be increased») در ۲ ثانیه و **پیش از شروعِ هیچ جابی** شکست خورده‌اند و دو pushِ پیش‌تر با `commit-identity`، `router` و `repo-health` قرمز بوده‌اند. PR #128 در ۲۴ اکتبر با **۱۴ چکِ قرمز** مرج شده است.
+- **گیتِ `commit-identity` روی `main` ساختاری قرمز است:** commitهای مرج‌شده تریلرِ `Co-authored-by: Claude` دارند (`8bd5ae3b`، `d5aa4e15`، `67cbb1e1`، `527dbc59`) و اسکریپت روی push به `main` همین را می‌گیرد.
+- **اثرِ آبشاری بر Dependabot:** هر ۷ PRِ باز دقیقاً در `repo-health` و `router` (همان drift) قرمزند، نه به‌خاطر تغییرِ خودشان؛ ۴ تای آن‌ها major (`vite 8`, `typescript 7`) و بی‌گروهِ عدمِ‌پذیرش‌اند.
+- **یافته‌های P1 که هنوز بازند:** `lithos/api/buffer-sync.js` بخشِ «بازسازی‌شده» با کوئریِ تأییدنشدهٔ Buffer و URL/کلیدِ hard-code؛ هشِ رمزِ اعضای تیم و هشِ شمارهٔ تلفنِ مالک در Git؛ `fjcod` بدونِ Auth سروری؛ دوگانگیِ ۳۳۸ مگابایتیِ `library/`↔`plugins/`؛ نبودِ تولیدکنندهٔ `triggers.json` (منشأ ۶ تسکِ `BLOCKED/INDEX`).
+- **گیت‌های این دور:** `discover` ⇒ **۱۸۰ تست OK** · `sync --check` ⇒ ۰ · `scan_third_party_skills --check` ⇒ current (۲٬۹۴۹ فایل، ۱۶۷ یافته) · `check_skill_links` ⇒ `unflagged: []` · `report_skill_quality --check` ⇒ current · `scan_secrets.py` ⇒ ۰ یافته · `repo_health_check.sh` ⇒ exit 0 · `doctor.mjs --json` ⇒ **۰ خطا** (دو skipِ محیطی: Deno و Chromium).
+- **NOT RUN:** Deno، Chromium/Playwright (پس `fjcod e2e` صرفاً skip)، هیچ تماسِ زنده با Cloudflare/Supabase/Vercel/Gemini، و هیچ انتشار یا migration. `orchestrator` با pytest در venv موقت: ۲۱ pass + ۳ skipِ مستند.
