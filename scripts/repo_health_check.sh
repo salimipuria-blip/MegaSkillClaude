@@ -54,6 +54,8 @@ run_check hermes bash -n setup.sh
 run_check hermes npm --ignore-scripts run check
 run_check viking-team node --check --input-type=module < viking-team/team/app.js
 run_check orchestrator python3 scripts/audit/check_repository_contract.py
+# docs/guides/ai-projects-3: its Node/Python suites and the doc-vs-code gate, offline.
+run_check . python3 scripts/verify_ai_projects.py
 
 # Inspect tracked dotenv NAMES only. Never print matching lines or secret values,
 # and never recursively scan ignored/untracked local files. This is not a secret scanner.

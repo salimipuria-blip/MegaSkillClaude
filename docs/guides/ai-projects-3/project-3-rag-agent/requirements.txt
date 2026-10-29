@@ -1,0 +1,13 @@
+# Verified against PyPI on 2026-10-29: langchain 1.4.7, langchain-core 1.7.3,
+# langchain-community 0.4.2, langchain-chroma 1.1.0, langchain-ollama 1.1.0, chromadb 1.5.9.
+# Ranges, not pins: LangChain ships breaking majors quickly, and a hard pin rots in a month.
+# The code only uses APIs confirmed present in these versions (see check_imports.py).
+langchain>=1.4,<2
+langchain-community>=0.4,<1
+langchain-ollama>=1.1,<2
+langchain-chroma>=1.1,<2
+chromadb>=1.5,<2
+pypdf>=5
+
+# Optional: `streamlit run app.py` for the chat UI.
+streamlit>=1.66,<2

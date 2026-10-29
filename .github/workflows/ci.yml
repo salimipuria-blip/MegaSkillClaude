@@ -44,6 +44,8 @@ jobs:
           node --check scripts/check-supabase.mjs
           node scripts/check-supabase.mjs --expected-only
           node --test tests/check-supabase.test.mjs
+      - name: AI project guides (Node + Python suites and the doc-vs-code gate)
+        run: python3 scripts/verify_ai_projects.py
 
   psk:
     runs-on: ubuntu-latest

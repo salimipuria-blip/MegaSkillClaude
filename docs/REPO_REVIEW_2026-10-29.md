@@ -21,7 +21,7 @@ PR #128 با **۱۴ چکِ قرمز** مرج شده و از آن روز به ب�
 ## ۱) روش و محیط
 
 - بررسیِ ایستا: خواندنِ کدِ هستهٔ هر پروژه (`hermes/`, `psk/`, `fjcod/src`, `lithos/api`, `scripts/`, `.github/`).
-- بررسیِ اجرایی: `scripts/repo_health_check.sh`، `scripts/doctor.mjs` (۴۲ گام/۱۳ پروژه)، سوئیت‌های هر پروژه، اسکنرهای مخزن.
+- بررسیِ اجرایی: `scripts/repo_health_check.sh`، `scripts/doctor.mjs` (۴۳ گام/۱۳ پروژه)، سوئیت‌های هر پروژه، اسکنرهای مخزن.
 - نصبِ وابستگی‌ها برای ۵ پروژه‌ای که `node_modules` نداشتند (`npm ci --ignore-scripts`)، pytest در venv موقت.
 - بررسیِ وضعیتِ واقعیِ GitHub با `gh`: آخرین اجراها، چک‌های PRها، پیامِ commitهای `main`.
 - آنچه **انجام نشد** (و در این سند «تأییدنشده» حساب می‌شود): Deno، Chromium/Playwright، هیچ تماسِ شبکه‌ای با Cloudflare/Supabase/Vercel/Gemini، و هیچ انتشار یا migration.
@@ -44,7 +44,7 @@ PR #128 با **۱۴ چکِ قرمز** مرج شده و از آن روز به ب�
 
 | پروژه | تستِ اندازه‌گیری‌شده | نتیجه | ادعای مستندات |
 |---|---|---|---|
-| ریشه (پایتون) | **۱۸۰** | OK | ۱۸۰ ✅ |
+| ریشه (پایتون) | **۱۹۳** | OK | ۱۸۰ در آن دور ✅ |
 | `psk` | **۵۷** + golden ۱۰۸ کیس | pass | ۵۷ ✅ |
 | `hermes` واحد | **۲۶۹** (worker **۸۲**) | pass | ۲۶۹/۸۲ — **پیش از این دور ۲۶۳/۷۹ بود ❌** |
 | `hermes` integration (workerd) | **۱۰** | pass | ۱۰ ✅ |
@@ -61,7 +61,7 @@ PR #128 با **۱۴ چکِ قرمز** مرج شده و از آن روز به ب�
 | اسکنِ مهارتِ ثالث | ۲٬۹۴۹ فایل · ۱۶۷ یافته | current | current ✅ |
 | کیفیتِ مسیریابِ `psk` | top-1 **۱۰۰٪** روی ۱۰۰ کیس | pass | ۱۰۰٪ ✅ |
 | هم‌گام‌سازیِ کتابخانه | **۰ فایلِ متفاوت** | pass | ۰ ✅ |
-| `doctor.mjs` کامل | ۴۲ گام · **۲ خطا → ۰ پس از اصلاحِ همین دور** | — | — |
+| `doctor.mjs` کامل | ۴۳ گام · **۲ خطا → ۰ پس از اصلاحِ همین دور** | — | — |
 
 **نتیجه:** کد و تست‌ها سالم‌اند. تنها چیزی که قرمز بود، **دو سندِ کهنه** بود که نگهبانِ شمارنده‌ها را قرمز می‌کردند (§۷).
 
@@ -161,12 +161,13 @@ commitهای مرج‌شده روی `main` تریلرِ `Co-authored-by: Claude 
   شاهد: `npm test --prefix hermes` = ۲۶۹/۲۶۹، `worker.test.mjs` = ۸۲، `npm run test:integration` = ۱۰/۱۰، `scripts.check` = ۳۸ فایل.
 - نتیجه: `python3 -m unittest discover -s tests -p "test_*.py"` از **۴ خطا → ۱۸۰/۱۸۰ OK** و `node scripts/doctor.mjs` از `failures: 2` → **۰**.
 - بخش‌های تاریخ‌دارِ snapshot (طبقِ بندِ ۷ قواعدِ مشترک) دست‌نخورده ماندند.
+- بعد از این گزارش، دورِ دومِ همان روز (بررسیِ عمیق‌تر + راهنمای `docs/guides/ai-projects-3`) یک گامِ جدید (`ai-guides`) به doctor و repo-health و CI اضافه کرد؛ عددها در `PROGRESS.md`، `docs/directives/00-monorepo.md` و همین سند به **۴۳ گام / ۱۹۳ تست ریشه** به‌روز شدند (نگهبان خودش اختلاف را گرفت).
 
 ## ۸) ضمیمه: دستورهای بازتولید
 
 ```bash
 bash scripts/repo_health_check.sh
-node scripts/doctor.mjs --json            # ۴۲ گام / ۱۳ پروژه
+node scripts/doctor.mjs --json            # ۴۳ گام / ۱۳ پروژه
 python3 -m unittest discover -s tests -p "test_*.py"
 npm test --prefix hermes && npm run test:integration --prefix hermes && npm run check --prefix hermes
 npm test --prefix psk && node psk/scripts/routing-accuracy.mjs

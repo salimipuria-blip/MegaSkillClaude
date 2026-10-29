@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>خلاصه‌ساز درون‌مرورگری — Transformers.js</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <main class="card">
+    <header>
+      <h1>خلاصه‌ساز درون‌مرورگری</h1>
+      <p class="lead">
+        مدل زبانی با <strong>Transformers.js</strong> داخل مرورگر شما اجرا می‌شود: بدون سرور،
+        بدون API و بدون فرستادن متن به هیچ سرویسی.
+      </p>
+      <p class="notice" id="notice"></p>
+    </header>
+
+    <label for="input">متن ورودی</label>
+    <textarea id="input" rows="10" placeholder="متن فارسی یا انگلیسی را اینجا بچسبان…" aria-describedby="counter"></textarea>
+
+    <div class="row">
+      <span id="counter" class="muted">۰ کاراکتر</span>
+      <button type="button" id="sample" class="link">متن نمونه</button>
+    </div>
+
+    <label for="tokens">طول خلاصه</label>
+    <div class="row">
+      <input id="tokens" type="range" min="32" max="256" step="16" value="128" />
+      <span id="tokens-label" class="muted">۱۲۸ توکن</span>
+    </div>
+
+    <div class="actions">
+      <button type="button" id="run" class="primary">خلاصه کن</button>
+      <button type="button" id="stop" class="ghost" disabled>توقف</button>
+      <button type="button" id="copy" class="ghost" disabled>کپی</button>
+    </div>
+
+    <progress id="progress" max="100" value="0" hidden></progress>
+    <p id="status" role="status" aria-live="polite" class="muted">آماده.</p>
+
+    <section class="output" aria-labelledby="out-title">
+      <h2 id="out-title">خلاصه</h2>
+      <p id="output" class="summary" dir="auto"></p>
+    </section>
+
+    <footer>
+      <p class="muted">
+        همین صفحه بدون هیچ سروری کار می‌کند؛ برای اجرا فقط یک سرور استاتیک لازم است
+        (<code>python3 -m http.server</code>) چون ماژول ES و Web Worker از <code>file://</code> بارگذاری نمی‌شوند.
+      </p>
+    </footer>
+  </main>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

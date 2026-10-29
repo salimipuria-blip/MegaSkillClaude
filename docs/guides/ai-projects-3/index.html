@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>سه پروژهٔ عملی هوش مصنوعی — نسخهٔ بازبینی‌شده</title>
+<style>
+  :root{
+    color-scheme: dark;
+    --bg:#0b0e14; --bg2:#111722; --card:#151c29; --line:#243044;
+    --text:#e9eef7; --muted:#93a1b8; --accent:#5aa9ff; --accent2:#7ee0b8;
+    --warn:#ffb86b; --bad:#ff7b72; --good:#3ddc97;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:
+      radial-gradient(1200px 600px at 100% -10%, #1b2740 0%, transparent 60%),
+      radial-gradient(900px 500px at -10% 10%, #16243a 0%, transparent 55%),
+      var(--bg);
+    color:var(--text); line-height:1.95;
+    font-family:"Vazirmatn","IRANSans","Segoe UI",Tahoma,system-ui,sans-serif;
+  }
+  .wrap{max-width:1040px;margin:0 auto;padding:clamp(18px,4vw,56px) clamp(14px,4vw,32px) 96px}
+  header.hero{padding:clamp(8px,2vw,24px) 0 24px;border-bottom:1px solid var(--line)}
+  .eyebrow{display:inline-flex;gap:8px;align-items:center;font-size:.78rem;letter-spacing:.02em;
+    color:var(--accent2);background:color-mix(in oklab,var(--accent2) 12%,transparent);
+    border:1px solid color-mix(in oklab,var(--accent2) 30%,transparent);
+    padding:4px 12px;border-radius:999px}
+  h1{font-size:clamp(1.6rem,4vw,2.4rem);margin:16px 0 10px;line-height:1.4}
+  .sub{color:var(--muted);margin:0;max-width:72ch}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:26px 0 0}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+  .stat b{display:block;font-size:1.35rem;color:var(--accent)}
+  .stat span{font-size:.8rem;color:var(--muted)}
+  nav.toc{position:sticky;top:0;z-index:5;backdrop-filter:blur(10px);
+    background:color-mix(in oklab,var(--bg) 82%,transparent);border-bottom:1px solid var(--line);
+    margin:0 -4px;padding:10px 4px;display:flex;flex-wrap:wrap;gap:8px}
+  nav.toc a{color:var(--muted);text-decoration:none;font-size:.86rem;padding:5px 11px;border-radius:9px;border:1px solid transparent}
+  nav.toc a:hover,nav.toc a:focus-visible{color:var(--text);border-color:var(--line);background:var(--card)}
+  section{margin-top:clamp(34px,5vw,58px)}
+  h2{font-size:clamp(1.25rem,2.6vw,1.6rem);margin:0 0 6px;display:flex;align-items:center;gap:10px}
+  h2 .n{font:600 .8rem var(--mono);color:var(--bg);background:var(--accent);border-radius:8px;padding:2px 8px}
+  h3{font-size:1.02rem;margin:26px 0 8px;color:var(--accent2)}
+  p{margin:8px 0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:clamp(14px,2.5vw,22px)}
+  .grid{display:grid;gap:14px}
+  @media(min-width:820px){.grid.two{grid-template-columns:1fr 1fr}}
+  table{width:100%;border-collapse:collapse;font-size:.9rem;margin:10px 0;display:block;overflow-x:auto}
+  th,td{padding:9px 11px;border-bottom:1px solid var(--line);text-align:right;vertical-align:top}
+  th{color:var(--muted);font-weight:600;font-size:.82rem;white-space:nowrap}
+  code{font-family:var(--mono);font-size:.84em;background:color-mix(in oklab,var(--line) 65%,transparent);
+    padding:1px 6px;border-radius:6px;direction:ltr;display:inline-block}
+  pre{direction:ltr;text-align:left;background:#0a0d13;border:1px solid var(--line);border-radius:12px;
+    padding:14px 16px;overflow:auto;margin:12px 0;position:relative;font-size:.83rem;line-height:1.7}
+  pre code{background:none;padding:0;font-size:inherit;display:block;white-space:pre}
+  .copy{position:absolute;inset-inline-end:10px;inset-block-start:10px;font:inherit;font-size:.72rem;
+    background:#1b2536;color:var(--muted);border:1px solid var(--line);border-radius:7px;padding:3px 9px;cursor:pointer}
+  .copy:hover{color:var(--text)}
+  .pill{display:inline-block;font-size:.74rem;padding:2px 9px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+  .pill.bad{color:var(--bad);border-color:color-mix(in oklab,var(--bad) 45%,transparent);background:color-mix(in oklab,var(--bad) 10%,transparent)}
+  .pill.good{color:var(--good);border-color:color-mix(in oklab,var(--good) 45%,transparent);background:color-mix(in oklab,var(--good) 10%,transparent)}
+  .pill.warn{color:var(--warn);border-color:color-mix(in oklab,var(--warn) 45%,transparent);background:color-mix(in oklab,var(--warn) 10%,transparent)}
+  .note{border-inline-start:3px solid var(--accent);padding:6px 0 6px 0;padding-inline-start:14px;color:var(--muted);margin:14px 0}
+  .note.warn{border-color:var(--warn)}
+  .note.bad{border-color:var(--bad)}
+  ul,ol{padding-inline-start:22px}
+  li{margin:6px 0}
+  .kbd{font-family:var(--mono);font-size:.8rem;border:1px solid var(--line);border-bottom-width:2px;
+    border-radius:6px;padding:1px 7px;background:var(--bg2)}
+  footer{margin-top:64px;border-top:1px solid var(--line);padding-top:22px;color:var(--muted);font-size:.84rem}
+  a{color:var(--accent)}
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <span class="eyebrow">بازبینی فنی · اندازه‌گیری‌شده در ۲۹ اکتبر ۲۰۲۶</span>
+    <h1>سه پروژهٔ عملی هوش مصنوعی — نسخهٔ بازبینی‌شده و قابل اجرا</h1>
+    <p class="sub">
+      همین آموزش، اما با کدی که امروز اجرا می‌شود. هر ادعای فنی دوباره سنجیده شده، هر قطعه‌کد
+      در مخزن تست دارد، و هر جا آموزش اصلی اشتباه بود، خطا با شاهد مشخص شده است.
+    </p>
+    <div class="stats">
+      <div class="stat"><b>۴</b><span>خطای واقعی در نسخهٔ اصلی</span></div>
+      <div class="stat"><b>۴۷</b><span>تست خودکار (۱۱ + ۱۵ + ۲۱)</span></div>
+      <div class="stat"><b>۳۱۰ MB</b><span>حجم واقعی مدل با <code>q8</code></span></div>
+      <div class="stat"><b>۰</b><span>هزینهٔ پولی</span></div>
+    </div>
+  </header>
+
+  <nav class="toc" aria-label="فهرست">
+    <a href="#why">چرا بازنویسی</a>
+    <a href="#p1">۱ · خلاصه‌ساز مرورگری</a>
+    <a href="#p2">۲ · اتوماسیون خبر</a>
+    <a href="#p3">۳ · ایجنت RAG</a>
+    <a href="#tests">تست‌ها</a>
+    <a href="#limits">مرزهای تأیید</a>
+  </nav>
+
+  <section id="why">
+    <h2><span class="n">۰</span> چرا این نسخه بازنویسی شد</h2>
+    <p>نسخهٔ اصلی زیبا بود، ولی سه پروژه‌اش «طبق آموزش» بالا نمی‌آمد. چهار ادعا با واقعیت نمی‌خواند:</p>
+    <div class="card">
+      <table>
+        <thead><tr><th>ادعای نسخهٔ اصلی</th><th>واقعیت اندازه‌گیری‌شده</th><th>اثر</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><code>from langchain.chains import RetrievalQA</code></td>
+            <td><span class="pill bad">حذف شده</span> روی langchain 1.4.7 → <code>ModuleNotFoundError</code></td>
+            <td>پروژهٔ ۳ در خط اول می‌شکست</td>
+          </tr>
+          <tr>
+            <td><code>from langchain.memory import ConversationBufferMemory</code></td>
+            <td><span class="pill bad">حذف شده</span> کل ماژول <code>langchain.memory</code> نیست</td>
+            <td>همان</td>
+          </tr>
+          <tr>
+            <td><code>from langchain.text_splitter import RecursiveCharacterTextSplitter</code></td>
+            <td><span class="pill bad">جابه‌جا شده</span> به <code>langchain-text-splitters</code></td>
+            <td>همان</td>
+          </tr>
+          <tr>
+            <td>«مدل چند ده مگابایت است»</td>
+            <td><span class="pill warn">۱٫۱ گیگابایت</span> در حالت پیش‌فرض؛ ۳۱۰ MB با <code>dtype:'q8'</code></td>
+            <td>کاربر بعد از چند دقیقه تب را می‌بست</td>
+          </tr>
+          <tr>
+            <td>«همهٔ ابزارها رایگان و متن‌باز»</td>
+            <td><span class="pill warn">n8n متن‌باز نیست</span> مجوز <em>Sustainable Use</em> (fair-code)</td>
+            <td>ادعای حقوقی نادرست</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">
+      این اعداد از فهرست فایل‌های مخزن مدل در هاگینگ‌فیس (<code>encoder_model.onnx</code> = ۵۱۲ MB،
+      <code>decoder_model_merged.onnx</code> = ۶۱۴ MB، نسخه‌های <code>q8</code> = ۱۵۵ MB) و از اجرای واقعی
+      importها روی نسخه‌های نصب‌شده آمده‌اند.
+    </p>
+  </section>
+
+  <section id="p1">
+    <h2><span class="n">۱</span> وب‌سایت هوشمند: خلاصه‌ساز داخل مرورگر</h2>
+    <p class="sub">Transformers.js · بدون سرور · بدون API · مدل داخل مرورگر</p>
+
+    <div class="grid two">
+      <div class="card">
+        <h3>بارگذاری کتابخانه (پین‌شده)</h3>
+        <pre><code>import { pipeline } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.2/dist/transformers.min.js';</code></pre>
+        <p class="note">نسخه را پین کن. آخرین نسخه ۴٫۳٫۲ است؛ نسخهٔ ۳٫۵٫۱ آموزش اصلی هنوز روی CDN هست ولی قدیمی است.</p>
+      </div>
+      <div class="card">
+        <h3>مدل، با حجمِ صادقانه</h3>
+        <pre><code>const summarizer = await pipeline(
+  'summarization',
+  'Xenova/distilbart-cnn-6-6',
+  { dtype: 'q8' }        // ← ۳۱۰ MB به‌جای ۱٫۱ GB
+);</code></pre>
+      </div>
+    </div>
+
+    <h3>چهار نکته‌ای که در آموزش‌های معمول نیست</h3>
+    <ol>
+      <li><b>Worker جدا:</b> مدل باید در Web Worker اجرا شود، وگرنه صفحه در حین پردازش فریز می‌شود.</li>
+      <li><b>توقف واقعی:</b> فراخوانی ONNX قابل لغو نیست؛ تنها راه، <code>terminate()</code> روی Worker و ساختِ Worker تازه برای اجرای بعدی است.</li>
+      <li><b>خواندن خروجی:</b> BART مقدار <code>summary_text</code> می‌دهد، بعضی مدل‌ها <code>generated_text</code>؛ یک تابع <code>readSummary</code> هر دو را می‌پذیرد. علتِ رایجِ چاپ‌شدن <code>undefined</code> همین است.</li>
+      <li><b>برش در مرز جمله:</b> قطع‌کردن متن وسط جمله باعث می‌شود مدل ادامه‌بافی کند؛ برش فقط روی <code>. ! ? ؟ …</code> و با حفظ دست‌کم ۶۰٪ بودجه.</li>
+    </ol>
+
+    <p class="note warn">
+      «هیچ داده‌ای خارج نمی‌شود» درست است (متن شما جایی نمی‌رود)، ولی «هیچ درخواستی به اینترنت نمی‌رود»
+      درست نیست: خودِ مدل بار اول از CDN هاگینگ‌فیس دانلود می‌شود.
+    </p>
+  </section>
+
+  <section id="p2">
+    <h2><span class="n">۲</span> اتوماسیون هوشمند: خبر → خلاصهٔ محلی → تلگرام</h2>
+    <p class="sub">n8n + Ollama · یا نسخهٔ بدون وابستگی با Node استاندارد</p>
+
+    <div class="card">
+      <h3>مسیر گردش‌کار</h3>
+      <pre><code>[Schedule: هر ۶ ساعت] → [RSS Feed Read] → [HTTP Request → Ollama] → [Telegram: Send Message]</code></pre>
+      <p>همین مسیر در فایل <code>workflow.n8n.json</code> قابل Import است و از نظر ساختار (نودها، اتصال‌ها، نوع نود) اعتبارسنجی می‌شود.</p>
+    </div>
+
+    <h3>سه دامِ عملی</h3>
+    <ul>
+      <li>اگر n8n داخل Docker است، <code>localhost</code> یعنی خودِ کانتینر؛ آدرس Ollama باید <code>http://host.docker.internal:11434</code> باشد.</li>
+      <li>بدون <code>timeout</code> روی نود HTTP، اجرای کند معلق می‌ماند.</li>
+      <li>در <code>parse_mode: HTML</code> هر <code>&lt;</code> در متن خبر، پیام را می‌شکند؛ اول escape کن.</li>
+    </ul>
+
+    <p class="note warn">
+      <b>مجوز:</b> n8n تحت <em>Sustainable Use License</em> است و خودش را «fair-code» می‌نامد، نه open source:
+      استفاده برای کارِ خودت رایگان است، فروشِ آن به‌عنوان سرویس به مشتری ثالث نه. اگر این مرز برایت مهم است،
+      نسخهٔ بدون وابستگی همین پروژه (با Node استاندارد) را استفاده کن.
+    </p>
+  </section>
+
+  <section id="p3">
+    <h2><span class="n">۳</span> ایجنت هوشمند: پرسش از اسناد خودت (RAG)</h2>
+    <p class="sub">Ollama + LangChain 1.x + ChromaDB</p>
+
+    <div class="grid two">
+      <div class="card">
+        <h3>importهایی که امروز کار می‌کنند</h3>
+        <pre><code>from langchain_community.document_loaders import PyPDFLoader
+from langchain_chroma import Chroma
+from langchain_core.documents import Document
+from langchain_ollama import ChatOllama
+from langchain_ollama import OllamaEmbeddings</code></pre>
+        <p class="note">تأییدشده روی langchain 1.4.7 / langchain-core 1.7.3 / langchain-community 0.4.2 / langchain-chroma 1.1.0 / langchain-ollama 1.1.0.</p>
+      </div>
+      <div class="card">
+        <h3>چرخهٔ پاسخ</h3>
+        <pre><code>docs = retriever.invoke(question)      # k=4
+context = format_context(docs)         # شماره‌گذاری [۱] [۲] …
+reply = llm.invoke(build_messages(question, context))
+print(answer_question(q, retriever, llm).render())</code></pre>
+      </div>
+    </div>
+
+    <h3>سه تصمیمی که کیفیت را تعیین می‌کند</h3>
+    <ol>
+      <li><b>امتناع صریح:</b> اگر سندی پیدا نشد، مدل صدا زده نمی‌شود و پاسخ «در اسناد پیدا نکردم» است. ایجنت RAG با زمینهٔ خالی، فقط چت‌بات توهم‌زا با مراحل اضافه است.</li>
+      <li><b>ارجاعِ درست:</b> شماره‌گذاری متن و فهرست منابع از یک منبع می‌آیند؛ اگر بخشی به‌خاطر سقف کاراکتر حذف شود، شماره هم حذف می‌شود.</li>
+      <li><b>حافظه با فراخواننده:</b> تاریخچه یک لیست پیام است، نه یک <code>Memory</code> حذف‌شده.</li>
+    </ol>
+
+    <p class="note">
+      برش متن (chunking) در این پروژه ۲۵ خط قطعی و تست‌شده است: پاراگراف → جمله → کاراکتر، با overlap.
+      دلیلش فقط آموزشی نیست؛ کلاس آمادهٔ LangChain به بستهٔ جدا منتقل شده و این پیاده‌سازی بدون هیچ وابستگی تست می‌شود.
+    </p>
+  </section>
+
+  <section id="tests">
+    <h2><span class="n">✓</span> چه چیزی تست می‌شود</h2>
+    <div class="card">
+      <table>
+        <thead><tr><th>مجموعه</th><th>تعداد</th><th>موضوع</th></tr></thead>
+        <tbody>
+          <tr><td><code>summarizer-core.test.mjs</code></td><td>۱۱</td><td>برش مرزِ جمله، شکل‌های خروجی مدل، درصد پیشرفت، حجم‌ها، ZWNJ فارسی</td></tr>
+          <tr><td><code>feed-to-telegram.test.mjs</code></td><td>۱۵</td><td>پارس RSS/Atom، CDATA، escape، سقف طول پیام، شکست Ollama، dry-run بدون تلگرام</td></tr>
+          <tr><td><code>test_rag.py</code></td><td>۲۱</td><td>chunking، شماره‌گذاری زمینه، امتناع، ارجاع، سقف k، پاسخ خالی مدل</td></tr>
+          <tr><td><code>verify_ai_projects.py</code></td><td>۱۲ بررسی</td><td>سینتکس، تست‌ها، JSON گردش‌کار، و هم‌خوانی متن با کد</td></tr>
+        </tbody>
+      </table>
+      <pre><code>python3 scripts/verify_ai_projects.py</code></pre>
+    </div>
+  </section>
+
+  <section id="limits">
+    <h2><span class="n">!</span> مرزهای تأیید — چه چیزی «تأییدشده» نیست</h2>
+    <ul>
+      <li>دانلود و اجرای واقعی مدل در مرورگر و کیفیت خروجی آن: فقط روی دستگاه خودت قابل سنجش است.</li>
+      <li>اتصال واقعی به Ollama، تلگرام و n8n: در این بازبینی هیچ درخواست شبکه‌ای زده نشده است.</li>
+      <li>واردکردن گردش‌کار در n8n: ساختار فایل اعتبارسنجی شده، ولی Import و اجرای آن تست نشده است.</li>
+      <li>نسخه‌های آیندهٔ LangChain: <code>check_imports.py</code> را بعد از هر upgrade اجرا کن.</li>
+    </ul>
+    <p class="note">همین صداقت، تفاوت یک آموزش حرفه‌ای با یک آموزش زیباست: چیزی که تست نشده، «انجام شد» گفته نمی‌شود.</p>
+  </section>
+
+  <footer>
+    مسیر در مخزن: <code>docs/guides/ai-projects-3/</code> ·
+    دروازهٔ کیفیت: <code>python3 scripts/verify_ai_projects.py</code> ·
+    نسخهٔ متنی: <code>README.md</code>
+  </footer>
+</div>
+
+<script>
+  for (const button of document.querySelectorAll('.copy')) button.remove();
+  // Copy button per code block: added from JS so a no-JS reader still sees clean code.
+  for (const pre of document.querySelectorAll('pre')) {
+    const button = document.createElement('button');
+    button.className = 'copy';
+    button.type = 'button';
+    button.textContent = 'کپی';
+    button.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(pre.querySelector('code').textContent);
+        button.textContent = 'کپی شد';
+        setTimeout(() => { button.textContent = 'کپی'; }, 1500);
+      } catch { button.textContent = 'ناموفق'; }
+    });
+    pre.appendChild(button);
+  }
+</script>
+</body>
+</html>
