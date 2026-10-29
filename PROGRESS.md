@@ -498,3 +498,6 @@ pushِ اولِ این دور (`4ccf6799`) سه job را قرمز کرد: `commi
   «۰٫۵×تعداد در هر قلم + سقفِ بی‌صدای باقی‌مانده» اصلاح شد.
 - **گیت‌ها:** `python3 -m unittest discover -s tests` ⇒ **۲۰۰ تست OK** · `repo_health_check.sh` ⇒
   exit 0 · `node scripts/doctor.mjs repo` ⇒ همه سبز (شاملِ `ai-guides`).
+- **تأییدِ CI روی PR [#141](https://github.com/salimipuria-blip/MegaSkillClaude/pull/141):** همهٔ ۱۴ چک سبز، از جمله
+  `repo-health` و `router` — همان دو جابی که از ۲۰۲۶-۱۰-۲۲ روی **هر** PR قرمز بودند. یعنی ریشهٔ قرمزی
+  واقعاً همان driftِ شمارنده‌ها بود و رفع شد (نه دور زده شد).

@@ -181,3 +181,12 @@ python3 scripts/scan_secrets.py
 gh run list --branch main --workflow CI --limit 30
 gh pr checks 128 ; gh api repos/salimipuria-blip/MegaSkillClaude/commits?per_page=8
 ```
+
+## ۹) پس‌گفتِ CI — تأییدِ همین روز
+
+پس از pushِ این شاخه و باز شدن PR [#141](https://github.com/salimipuria-blip/MegaSkillClaude/pull/141)
+روی `main`، همهٔ ۱۴ چکِ گیت‌ها **pass** شدند — از جمله `repo-health` و `router`، همان دو جابی که از
+**۲۰۲۶-۱۰-۲۲** روی `main` و روی **هر** PRِ باز قرمز بودند. این تأیید می‌کند تشخیصِ §۵ درست بوده:
+قرمزی از driftِ شمارنده‌ها در دو سند بود، نه از کد؛ و با یکی‌کردنِ اعداد با منبعِ canonical
+(`tests/test_status_counters.py`) برطرف شد. تنها چکِ skip، `scheduled-health` است که فقط در
+زمان‌بندی اجرا می‌شود.
