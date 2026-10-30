@@ -36,7 +36,7 @@ $ node --test src/tests/*.test.mjs     # ۱۰ موجِ پیاپی
 wave 1..10: tests=97 pass=97 fail=0
 
 $ node tools/check.mjs   → checked 58 files · deployable 686.0 KB · ✓ static contract is clean
-$ node tools/make_zip.mjs → 58 files · 694.9 KB · sha256 e8035065…
+$ node tools/make_zip.mjs → 58 files · ۶۹۵ KB (sha256 را خودِ ابزار چاپ می‌کند؛ ثابت‌کردنش در سندِ داخلِ همان زیپ، سند را از بسته جدا می‌کند)
 $ python3 -m unittest discover -s tests → Ran 180 tests · OK
 ```
 
