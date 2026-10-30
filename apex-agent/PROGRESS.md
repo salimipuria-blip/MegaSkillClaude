@@ -15,6 +15,7 @@
 | ۱ | **سندباکس در مرورگرِ واقعی هیچ‌وقت بالا نمی‌آمد.** اسکریپتِ Worker همان اول `self.indexedDB = undefined` می‌نوشت؛ در `WorkerGlobalScope` این‌ها اکسسورِ فقط-خواندنی‌اند و در حالتِ strict استثنا می‌دهند ⇒ کلِ Worker قبل از نصبِ `onmessage` می‌مرد | `pageerror: Cannot set property indexedDB of #<WorkerGlobalScope> which has only a getter` | حذفِ گلوبال‌ها با `Object.defineProperty`/`delete` در `try` (تابعِ `__kill`) |
 | ۲ | **زیرِ CSPِ استقرار، سندباکس حتی با Workerِ سالم هم کار نمی‌کرد**: کدِ مدل با `new Function` ساخته می‌شد و `script-src 'self' blob:` بدونِ `unsafe-eval` آن را می‌بندد | `SyntaxError: Evaluating a string as JavaScript violates … 'unsafe-eval'` | سندباکس دیگر eval ندارد: برای هر اجرا یک Worker از **متنِ ساخته‌شده** (پیشوند + کدِ کاربر + اجراکنندهٔ کیس‌ها) ساخته می‌شود؛ آرگومان‌های تابع (`__fn`) هم به ایندکسِ `__FNS` تبدیل می‌شوند، نه رشتهٔ eval |
 | ۳ | **کنترل‌های موبایل زیرِ ۴۴px و فیلدها زیرِ ۱۶px**: `.pill` ۳۰px بود، `#goal` ۱۵px، هشت فیلد زیرِ ۱۶px (زومِ خودکارِ iOS)، `.seg` ۲۸px | `npm run render`: «۳۰×۴۴ ناقص» | بلوکِ «phones, measured not guessed» در انتهای `apex.css`؛ اندازه‌گیریِ دوباره در همان مرورگر |
+| ۴ | **نوارِ «در حال اجرا…» روی صفحهٔ بی‌کار هم دیده می‌شد**: `#runline` صفتِ `hidden` داشت ولی قاعدهٔ `.runline { display: flex }` بر `[hidden]`ِ مرورگر می‌چربید | اسکرین‌شاتِ موبایلِ صفحهٔ تازه | قاعدهٔ سراسریِ `[hidden] { display: none !important; }` و سنجهٔ «idle: the run bar is hidden» |
 
 ضمناً دو نقص در خودِ ابزارِ سنجش پیدا و رفع شد تا سبزیِ دروغ ندهد: چکِ «پنل باز شد» به `#pane-*` نگاه می‌کرد که در DOM وجود ندارد (همیشه true)، و کلیکِ Puppeteer روی دکمه‌ای که زیرِ نوارِ پایین بود بی‌صدا به نوار می‌خورد. اکنون هر کنترل با `scrollIntoView` به مرکزِ صفحه می‌آید و با `elementFromPoint` آزموده می‌شود.
 
@@ -22,7 +23,7 @@
 
 ```bash
 $ npm run render          # Chromium 153، CSPِ واقعیِ استقرار
-checks: 31/31 passed
+checks: 32/32 passed
 ✓ boot: under 3s — 832 ms          ✓ font: Vazirmatn loaded by the browser
 ✓ run: reflex produced a verified result — {"ok":true,...}
 ✓ sandbox: real Blob Worker ran the code   ✓ sandbox: a spinner is killed
@@ -34,11 +35,11 @@ $ node --test src/tests/*.test.mjs     # ۱۰ موجِ پیاپی
 wave 1..10: tests=97 pass=97 fail=0
 
 $ node tools/check.mjs   → checked 58 files · deployable 686.0 KB · ✓ static contract is clean
-$ node tools/make_zip.mjs → 58 files · 692.4 KB · sha256 5d79aec9…
+$ node tools/make_zip.mjs → 58 files · 693.4 KB · sha256 d6664331…
 $ python3 -m unittest discover -s tests → Ran 180 tests · OK
 ```
 
-شاهدِ چشمی: `../docs/screenshots/` — ۹ تصویر (خانه، پس از اجرا، پالت، چهار پنل، خودآزمایی و موبایل) و `render-report.json` با همین ۳۱ نتیجه. اسکرین‌شات‌ها عمداً بیرون از `apex-agent/` هستند تا وارد بستهٔ Netlify نشوند.
+شاهدِ چشمی: `../docs/screenshots/` — ۹ تصویر (خانه، پس از اجرا، پالت، چهار پنل، خودآزمایی و موبایل) و `render-report.json` با همین ۳۲ نتیجه. اسکرین‌شات‌ها عمداً بیرون از `apex-agent/` هستند تا وارد بستهٔ Netlify نشوند.
 
 **اجرا نشده (صادقانه):** فراخوانیِ زندهٔ مدل با کلیدِ واقعی، و درخواستِ بی‌نام به دامنهٔ Vercel (استقرار `public: false` است).
 

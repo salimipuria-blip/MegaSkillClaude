@@ -24,8 +24,8 @@
 | سخت‌سازی | `node --test src/tests/hardening.test.mjs` | ✅ ۱۰/۱۰ (ورودِ خصمانه، آلودگیِ prototype، دیالوگ با کیبورد، عدد فارسی، جبرگرایی، اسکریپتِ سندباکس بدون eval) |
 | کلِ مجموعه | `node --test src/tests/*.test.mjs` | ✅ ۹۷/۹۷ · ده موجِ پیاپی هر بار ۹۷/۹۷ |
 | پروکسی و استقرار | `node --test src/tests/proxy.test.mjs src/tests/deploy.test.mjs` | ✅ ۶/۶ (ردِ رلهٔ باز، هدرهای یکسانِ Netlify/Vercel) |
-| زیپ استقرار | `node tools/make_zip.mjs` | ✅ ۵۸ فایل، ۶۹۲.۴ KB، sha256 `5d79aec9…`، تأیید با `python3 -m zipfile` |
-| **رندر مرورگر واقعی** | `npm run render` (Chromium 153، CSPِ واقعیِ استقرار) | ✅ **۳۱/۳۱** — بوت ۰٫۸ ثانیه، فونت وزیرمتن، Reflex واقعی، Worker واقعی، ۳۰/۳۰ سنجهٔ درون‌اپ در مرورگر، موبایل ۳۹۰×۸۴۴ |
+| زیپ استقرار | `node tools/make_zip.mjs` | ✅ ۵۸ فایل، ۶۹۳.۴ KB، sha256 `d6664331…`، تأیید با `python3 -m zipfile` |
+| **رندر مرورگر واقعی** | `npm run render` (Chromium 153، CSPِ واقعیِ استقرار) | ✅ **۳۲/۳۲** — بوت ۰٫۸ ثانیه، فونت وزیرمتن، Reflex واقعی، Worker واقعی، ۳۰/۳۰ سنجهٔ درون‌اپ در مرورگر، موبایل ۳۹۰×۸۴۴ |
 | فراخوانی زندهٔ مدل | — | ❌ اجرا نشده (بدون کلیدِ ارائه‌دهنده) |
 | استقرار Vercel | `create_deployment` از همین برنچ | ✅ ساخته شد؛ لینک پشتِ Deployment Protection حساب |
 | استقرار Netlify | — | ❌ اجرا نشده (بدون توکن حساب) |
@@ -40,7 +40,7 @@ node tools/check.mjs                 # قرارداد ایستا
 node --test src/tests/*.test.mjs     # ۹۷ تست (۳۱ تستِ jsdom در نبودِ آن skip می‌شوند)
 node tools/make_zip.mjs              # release/apex-metacode-netlify.zip
 python3 -m http.server 8080          # پیش‌نمایش محلی
-npm run render                       # ۳۱ سنجه در کرومیومِ واقعی (نیاز به puppeteer-core)
+npm run render                       # ۳۲ سنجه در کرومیومِ واقعی (نیاز به puppeteer-core)
 node ../scripts/doctor.mjs apex      # همان گیت‌ها از ریشهٔ مخزن
 ```
 

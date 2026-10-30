@@ -188,6 +188,13 @@ async function main() {
     const external = [...new Set(report.requests)].filter((u) => !u.startsWith(base) && !u.startsWith('data:') && !u.startsWith('blob:'));
     check('network: zero third-party requests', external.length === 0, external.join(', '));
 
+    // An idle page must not look busy: the progress bar is hidden until a run starts.
+    const idle = await page.evaluate(() => {
+      const el = document.querySelector('#runline');
+      return { hidden: el.hasAttribute('hidden'), visible: el.getBoundingClientRect().height > 0 };
+    });
+    check('idle: the run bar is hidden before anything runs', idle.hidden && !idle.visible, JSON.stringify(idle));
+
     await shoot(page, 'desktop-01-home');
 
     // --- a real Reflex run, driven by real clicks ------------------------------------------

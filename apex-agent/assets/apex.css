@@ -199,6 +199,9 @@ body[data-orb="evolving"] .orb .ring { stroke: rgba(245, 166, 35, 0.5); }
 /* ---------- layout ---------- */
 main { padding: 18px 18px calc(var(--status-h) + 18px); max-width: 1680px; margin: 0 auto; }
 .view[hidden] { display: none !important; }
+/* `hidden` has to beat any layout rule. An author `display: flex` on the same element overrides the
+   UA stylesheet's [hidden] { display: none }, which kept the idle "در حال اجرا…" bar on screen. */
+[hidden] { display: none !important; }
 .panel {
   position: relative;
   background: var(--panel);
