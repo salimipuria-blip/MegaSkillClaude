@@ -95,7 +95,7 @@
             </div>
           </div>
           <label class="sr-only" for="goal">هدف را بنویس</label>
-          <textarea id="goal" rows="3" placeholder="هدف را بنویس؛ مثلاً: «تابع palindrome را کامل کن و تست‌ها را سبز کن»"></textarea>
+          <textarea id="goal" rows="3" aria-label="هدفِ اجرا" placeholder="هدف را بنویس؛ مثلاً: «تابع palindrome را کامل کن و تست‌ها را سبز کن»"></textarea>
           <div class="goal-actions">
             <div class="presets" id="presets">
               <button class="chip" data-goal="یک تابع جمع با تست بنویس">جمع با تست</button>
@@ -371,7 +371,7 @@
 <div class="dialog" id="palette" hidden role="dialog" aria-modal="true" aria-labelledby="paletteTitle">
   <div class="dialog-card">
     <h2 id="paletteTitle" class="sr-only">فرمان‌ها</h2>
-    <div class="palette-search"><svg><use href="#i-search"/></svg><input id="paletteInput" placeholder="فرمان یا فایل…" aria-label="جست‌وجوی فرمان" /></div>
+    <div class="palette-search"><svg aria-hidden="true"><use href="#i-search"/></svg><input id="paletteInput" placeholder="فرمان یا فایل…" aria-label="جست‌وجوی فرمان" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="paletteList" aria-activedescendant="" /></div>
     <div class="palette-list" id="paletteList" role="listbox" aria-label="فرمان‌ها"></div>
     <p class="fine">↑↓ جابه‌جایی · ↵ اجرا · Esc بستن</p>
   </div>

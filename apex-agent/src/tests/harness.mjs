@@ -60,6 +60,7 @@ export async function bootApp({ quietConsole = true } = {}) {
   // --- browser APIs jsdom does not implement, stubbed at the boundary -------------
   window.matchMedia = () => ({ matches: false, media: '', addEventListener() {}, removeEventListener() {} });
   window.scrollTo = () => {};
+  window.Element.prototype.scrollIntoView = function scrollIntoView() {};
   const gradient = { addColorStop() {} };
   const ctx = {
     clearRect() {}, fillRect() {}, beginPath() {}, arc() {}, fill() {}, moveTo() {}, lineTo() {}, stroke() {},

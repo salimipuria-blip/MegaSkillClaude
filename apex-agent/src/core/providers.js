@@ -400,25 +400,15 @@ export function mergeToolDeltas(state, deltas) {
 }
 
 /** Human-readable reason for the most common failure modes, in Persian. */
-/**
- * Provider error bodies sometimes quote the key that failed. That text ends up in a toast, the
- * settings panel and the exported bundle, so it is redacted before it goes anywhere.
- */
-export function redactSecrets(text) {
-  return String(text ?? '')
-    .replace(/\b(sk|rk|gsk|csk|xai|pplx|hf|ghp|glpat)[-_][A-Za-z0-9_-]{6,}/gi, '$1-***')
-    .replace(/\bAIza[0-9A-Za-z_-]{10,}/g, 'AIza***')
-    .replace(/\b(Bearer)\s+[A-Za-z0-9._~+/-]{8,}=*/gi, '$1 ***')
-    .replace(/([?&](?:key|api_key|token|access_token)=)[^&\s"']+/gi, '$1***')
-    .replace(/("(?:api_?key|key|token|authorization)"\s*:\s*")[^"]*(")/gi, '$1***$2');
-}
+export { redactSecrets } from './redact.js';
+import { redactSecrets } from './redact.js';
 
 /**
  * A request can fail before any HTTP status exists: offline, DNS, or a browser CORS block. Browsers
  * say only "Failed to fetch", which tells a user nothing — this turns it into a cause and a next step.
  */
 export function explainNetworkError(err) {
-  const raw = String(err?.message || err || '').slice(0, 80);
+  const raw = redactSecrets(String(err?.message || err || '')).slice(0, 80);
   return (
     `درخواست به شبکه نرسید${raw ? ` (${raw})` : ''}. سه علت رایج: قطع اینترنت، بلاک‌شدن درخواست ` +
     'توسط مرورگر به‌خاطر CORS، یا خاموش بودن سرور محلی. اگر کلید و اینترنت درست است، همین ارائه‌دهنده را ' +

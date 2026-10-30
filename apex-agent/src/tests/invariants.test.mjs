@@ -100,6 +100,13 @@ test('the zip is byte-stable and its CRCs are real', () => {
   assert.ok(makeZip(entries) instanceof Blob, 'the download path still gets a Blob');
   assert.equal(new DataView(one.buffer).getUint32(0, true), 0x04034b50, 'local file header signature');
   assert.equal(crc32(new TextEncoder().encode('hello')), 0x3610a686, 'known CRC32 vector');
+
+  // zip-slip: an entry that escapes the extraction folder must be refused, not written.
+  assert.throws(() => buildZipBytes([{ path: '../evil.sh', content: 'x' }]), /unsafe/);
+  assert.throws(() => buildZipBytes([{ path: 'C:/evil.sh', content: 'x' }]), /unsafe/);
+  assert.throws(() => buildZipBytes([{ path: '', content: 'x' }]), /unsafe/);
+  const abs = buildZipBytes([{ path: '/etc/evil.sh', content: 'x' }], { date: new Date('2026-01-01T00:00:00Z') });
+  assert.ok(abs.length > 0, 'a leading slash is stripped rather than rejected');
 });
 
 test('the filesystem versions, restores and exports symmetrically', () => {

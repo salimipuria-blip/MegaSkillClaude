@@ -4,13 +4,13 @@
 
 **مرزها:** کل محصول در `apex-agent/` است و خودکفاست. تنها وابستگیِ اختیاری، تابع `netlify/functions/llm.mjs` برای پروکسی مدل است (توکن‌محور، پیش‌فرض خاموش). هیچ داده‌ای از کاربر به سرور نمی‌رود مگر خودِ کاربر مدل را وصل کند.
 
-**منبع حقیقت:** `apex-agent/src/core/` (۱۶ ماژول خالص) و `apex-agent/src/app/` (۵ ماژول نمایش). مستندات: `README.md` (محصول)، `ARCHITECTURE.md`، `SECURITY.md`، `CLAUDE.md` (دستور کار)، `PROFESSIONAL_GUIDE.md` (ممیزی)، `REVIEW.md` (بازبینی سه‌پاسه)، `PROGRESS.md` (دفتر جریان).
+**منبع حقیقت:** `apex-agent/src/core/` (۱۷ ماژول خالص) و `apex-agent/src/app/` (۵ ماژول نمایش). مستندات: `README.md` (محصول)، `ARCHITECTURE.md`، `SECURITY.md`، `CLAUDE.md` (دستور کار)، `PROFESSIONAL_GUIDE.md` (ممیزی)، `REVIEW.md` (بازبینی سه‌پاسه)، `PROGRESS.md` (دفتر جریان).
 
 ## وضعیتِ جاری
 
 | سنجه | مقدار | منبع |
 |---|---|---|
-| هسته | ۱۶ ماژول خالص بدون DOM در `apex-agent/src/core/` | شمارش فایل |
+| هسته | ۱۷ ماژول خالص بدون DOM در `apex-agent/src/core/` | شمارش فایل |
 | نما | ۵ ماژول در `apex-agent/src/app/` | شمارش فایل |
 
 ## وضعیت تأییدشده (2026-10-30)
@@ -21,7 +21,9 @@
 | تست هستهٔ خالص | `node --test src/tests/core.test.mjs` | ✅ ۳۰/۳۰ |
 | تست مسیرِ مدل | `node --test src/tests/model.test.mjs` | ✅ ۵/۵ (سرور HTTP محلی: قرارداد درخواست، SSE، ۴۰۱، ۴۲۹، پاسخِ بی‌معنی) |
 | تست سرتاسری DOM | `node --test src/tests/dom.test.mjs` | ✅ ۶/۶ (jsdom: boot، شورا، بنچمارک، تست اتصال، خودکاوی، ویرایش/زیپ) |
-| زیپ استقرار | `node tools/make_zip.mjs` | ✅ ۳۲ فایل، ۳۶۶KB، تأیید با `python3 -m zipfile` |
+| کلِ مجموعه | `node --test src/tests/*.test.mjs` | ✅ ۸۷/۸۷ · ده موجِ پیاپی هر بار ۸۷/۸۷ |
+| پروکسی و استقرار | `node --test src/tests/proxy.test.mjs src/tests/deploy.test.mjs` | ✅ ۶/۶ (ردِ رلهٔ باز، هدرهای یکسانِ Netlify/Vercel) |
+| زیپ استقرار | `node tools/make_zip.mjs` | ✅ ۵۶ فایل، ۶۴۲KB، تأیید با `python3 -m zipfile` |
 | رندر مرورگر واقعی | — | ❌ اجرا نشده (در محیط ساخت هیچ مرورگری نصب نیست) |
 | فراخوانی زندهٔ مدل | — | ❌ اجرا نشده (بدون کلید) |
 | استقرار Vercel | `create_deployment` از همین برنچ | ✅ ساخته شد؛ لینک پشتِ Deployment Protection حساب |
@@ -32,7 +34,7 @@
 ```bash
 cd apex-agent
 node tools/check.mjs                 # قرارداد ایستا
-node --test src/tests/*.test.mjs     # ۳۵ تست (DOM نیازمند jsdom)
+node --test src/tests/*.test.mjs     # ۸۷ تست (۲۳ تستِ jsdom در نبودِ آن skip می‌شوند)
 node tools/make_zip.mjs              # release/apex-metacode-netlify.zip
 python3 -m http.server 8080          # پیش‌نمایش محلی
 node ../scripts/doctor.mjs apex      # همان گیت‌ها از ریشهٔ مخزن

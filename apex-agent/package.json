@@ -8,12 +8,19 @@
     "node": ">=20"
   },
   "scripts": {
-    "test": "node --test src/tests/core.test.mjs src/tests/model.test.mjs src/tests/dom.test.mjs src/tests/ui.test.mjs src/tests/security.test.mjs src/tests/providers.test.mjs src/tests/invariants.test.mjs src/tests/lifecycle.test.mjs",
+    "test": "node --test src/tests/core.test.mjs src/tests/model.test.mjs src/tests/dom.test.mjs src/tests/ui.test.mjs src/tests/security.test.mjs src/tests/providers.test.mjs src/tests/invariants.test.mjs src/tests/lifecycle.test.mjs src/tests/engine.test.mjs src/tests/ux.test.mjs src/tests/proxy.test.mjs src/tests/deploy.test.mjs",
     "check": "node tools/check.mjs",
     "serve": "python3 -m http.server 8080 --bind 0.0.0.0",
     "zip": "node tools/make_zip.mjs",
     "verify": "npm run check && npm test && npm run zip"
   },
-  "keywords": ["agent", "coding-agent", "self-improvement", "netlify", "static", "persian"],
+  "keywords": [
+    "agent",
+    "coding-agent",
+    "self-improvement",
+    "netlify",
+    "static",
+    "persian"
+  ],
   "license": "MIT"
 }

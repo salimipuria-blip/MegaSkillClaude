@@ -41,7 +41,13 @@ export function buildZipBytes(files, { date = new Date() } = {}) {
   let offset = 0;
 
   for (const file of files) {
-    const nameBytes = enc(file.path.replace(/^\/+/, ''));
+    const raw = String(file.path ?? '');
+    // A zip entry named "/etc/passwd" or "../x" can be extracted outside the chosen folder
+    // (zip-slip). The workspace already refuses such paths; the writer refuses them too.
+    if (!raw || raw.includes('..') || /^[a-zA-Z]:[\\/]/.test(raw)) {
+      throw new Error(`unsafe zip entry: ${raw}`);
+    }
+    const nameBytes = enc(raw.replace(/^\/+/, ''));
     const data = typeof file.content === 'string' ? enc(file.content) : file.content;
     const crc = crc32(data);
 

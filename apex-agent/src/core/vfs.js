@@ -73,6 +73,12 @@ export class VirtualFS {
     const p = VirtualFS.normalise(path);
     if (!p) throw new Error('empty path');
     if (p.includes('..')) throw new Error('path traversal is not allowed');
+    // An absolute path here becomes a zip entry like "/etc/passwd", which extractors may honour
+    // outside the target folder (zip-slip). Paths in this workspace are always relative.
+    if (p.startsWith('/') || /^[a-zA-Z]:\//.test(p)) {
+      throw new Error('مسیر باید نسبی باشد؛ مسیرِ مطلق مجاز نیست.');
+    }
+    if (p.endsWith('/')) throw new Error('مسیر به نامِ فایل ختم نمی‌شود.');
     const text = String(content ?? '');
     if (!allowEmpty && !text.trim()) throw new Error('refusing to write an empty file');
     const created = !this.files.has(p);

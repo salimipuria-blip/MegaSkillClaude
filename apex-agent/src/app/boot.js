@@ -252,10 +252,11 @@ function boot() {
     paletteIndex = 0;
     paletteList.innerHTML = paletteItems
       .map(
-        (a, i) => `<button class="palette-item" role="option" aria-selected="${i === 0}" data-action="${a.id}">
+        (a, i) => `<button class="palette-item" id="pal-${a.id}" role="option" aria-selected="${i === 0}" data-action="${a.id}">
           <svg aria-hidden="true"><use href="#${a.icon}"/></svg><span>${esc(a.label)}</span><small>${esc(a.hint || '')}</small></button>`,
       )
       .join('') || '<p class="dim" style="padding:14px">چیزی پیدا نشد.</p>';
+    paletteInput.setAttribute('aria-activedescendant', paletteItems.length ? `pal-${paletteItems[0].id}` : '');
     $$('.palette-item', paletteList).forEach((btn) =>
       btn.addEventListener('click', () => {
         const action = actions.find((a) => a.id === btn.dataset.action);
@@ -267,6 +268,7 @@ function boot() {
 
   function openPalette() {
     palette.hidden = false;
+    paletteInput.setAttribute('aria-expanded', 'true');
     paletteInput.value = '';
     renderPalette('');
     setTimeout(() => paletteInput.focus(), 20);
@@ -274,6 +276,8 @@ function boot() {
   }
   function closePalette() {
     palette.hidden = true;
+    paletteInput.setAttribute('aria-expanded', 'false');
+    paletteInput.setAttribute('aria-activedescendant', '');
     document.body.style.overflow = '';
     $('#btnPalette')?.focus();
   }
@@ -281,7 +285,9 @@ function boot() {
     if (!paletteItems.length) return;
     paletteIndex = (paletteIndex + delta + paletteItems.length) % paletteItems.length;
     $$('.palette-item', paletteList).forEach((btn, i) => btn.setAttribute('aria-selected', String(i === paletteIndex)));
-    $$('.palette-item', paletteList)[paletteIndex]?.scrollIntoView({ block: 'nearest' });
+    // The list itself never takes focus; the combobox carries the selection for screen readers.
+    paletteInput.setAttribute('aria-activedescendant', `pal-${paletteItems[paletteIndex].id}`);
+    $$('.palette-item', paletteList)[paletteIndex]?.scrollIntoView?.({ block: 'nearest' });
   }
   $('#btnPalette').addEventListener('click', openPalette);
   paletteInput.addEventListener('input', () => renderPalette(paletteInput.value));

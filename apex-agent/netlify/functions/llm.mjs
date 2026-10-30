@@ -5,6 +5,8 @@
 // relay is somebody else's bill. So: shared token required, host allowlist, no logging of content,
 // no key in the response, and a body size cap.
 
+import { redactSecrets } from '../../src/core/redact.js';
+
 const ALLOWED_HOSTS = new Set([
   'openrouter.ai',
   'api.groq.com',
@@ -85,7 +87,9 @@ export default async (request) => {
   try {
     res = await fetch(target, { method: 'POST', headers, body: text });
   } catch (err) {
-    return json(502, { error: `اتصال بالادست شکست خورد: ${err.message}` });
+    // A fetch failure can quote the URL it tried. For Google the key is in that URL, so the message
+    // is redacted before it is allowed to travel back to a browser.
+    return json(502, { error: `اتصال بالادست شکست خورد: ${redactSecrets(err?.message || err)}` });
   }
 
   // Stream through untouched; the browser parses SSE exactly as it would directly.
