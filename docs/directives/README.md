@@ -17,6 +17,7 @@
 | 10 | قالب محتوای وایکینگ | `brand/viking/` | [10-viking-content-renderer.md](10-viking-content-renderer.md) | پر کردنِ source برای ۱۱ ادعای کمپین در brief.json (رندر واقعی بسته شد) |
 | 11 | کنسول آیفون مگااسکیل | `mobile/` | [11-mobile-console.md](11-mobile-console.md) | آزمون Safari/iOS فیزیکی (بودجهٔ وزن و smoke مرورگری بسته شد) |
 | 12 | Viking Cinematic Motion Study | `viking-team/motion/` | [12-viking-motion-study.md](12-viking-motion-study.md) | تصمیم ادغام + reduced-motion/poster (قفل مشخصات بسته شد) |
+| 13 | مِتاکد / APEX-01 (ایجنت کدنویسِ خودتکامل) | `apex-agent/` | [13-apex-agent.md](13-apex-agent.md) | تأیید بصری در مرورگر واقعی + یک اجرای زندهٔ مدل (۳۵ تست و زیپ بسته شد) |
 
 برای تغییرات مشترکِ CI، `doctor` و فهرست پروژه‌ها از [دفتر جریان ریشه](../../PROGRESS.md) استفاده کن؛ دفتر محصول را برای تاریخچهٔ تغییر بین‌پروژه‌ای به‌جای آن بازنویسی نکن.
 

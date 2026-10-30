@@ -101,6 +101,15 @@ const PROJECTS = [
     ],
   },
   {
+    id: 'apex',
+    folder: 'apex-agent',
+    label: 'مِتاکد / APEX-01 (ایجنت کدنویسِ خودتکامل)',
+    steps: [
+      {name: 'contract', cmd: 'node tools/check.mjs', cwd: 'apex-agent', why: '۹ قرارداد ایستا: سلکتورها، آیکون‌ها، ایمپورت‌ها، CSP، بودجهٔ حجم'},
+      {name: 'tests', cmd: 'node --test src/tests/core.test.mjs src/tests/dom.test.mjs', cwd: 'apex-agent', why: '۳۰ تست هستهٔ خالص + ۵ تست DOM (jsdom اگر نصب باشد)'},
+    ],
+  },
+  {
     id: 'mobile', folder: 'mobile', label: 'کنسول آیفون مگااسکیل',
     steps: [
       {name: 'index-cache', cmd: 'python3 mobile/build-index.py --check', why: 'ایندکس و اثرانگشت همهٔ assetهای PWA تازه است'},
