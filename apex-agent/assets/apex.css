@@ -649,6 +649,29 @@ input[type="range"] { width: 100%; accent-color: var(--cyan); height: 18px; }
   .genes, .fields, .providers, .slider-grid { grid-template-columns: 1fr; }
 }
 
+
+/* ---------- in-app ask dialog (works inside sandboxed iframes) ---------- */
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+.ask-overlay {
+  position: fixed; inset: 0; z-index: 140; display: grid; place-items: center;
+  padding: 18px; background: rgba(3, 8, 15, 0.72); backdrop-filter: blur(6px);
+  animation: fade-in 0.16s var(--ease);
+}
+.ask-card {
+  width: min(420px, 100%); padding: 18px; border-radius: var(--r-lg);
+  border: 1px solid var(--line-strong); background: var(--panel-solid);
+  box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 10px;
+}
+.ask-card h2 { margin: 0; font-size: 14px; color: var(--label); }
+.ask-msg { margin: 0; font-size: 12.5px; color: var(--muted); line-height: 1.8; }
+.ask-input {
+  height: 40px; padding: 0 12px; border-radius: 10px; border: 1px solid var(--line);
+  background: rgba(3, 9, 16, 0.6); color: var(--text); font: inherit; font-size: 13px;
+  direction: ltr; text-align: left;
+}
+.ask-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 4px; }
+@media (max-width: 760px) { .ask-input { height: 44px; font-size: 16px; } }
+
 /* ---------- reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }

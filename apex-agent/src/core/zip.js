@@ -34,7 +34,7 @@ function dosDateTime(date = new Date()) {
  * @param {{date?: Date}} [opts]
  * @returns {Blob|Uint8Array} Blob in the browser, Uint8Array in Node
  */
-export function makeZip(files, { date = new Date() } = {}) {
+export function buildZipBytes(files, { date = new Date() } = {}) {
   const { time, day } = dosDateTime(date);
   const entries = [];
   const chunks = [];
@@ -107,12 +107,17 @@ export function makeZip(files, { date = new Date() } = {}) {
     out.set(c, cursor);
     cursor += c.length;
   }
+  return out;
+}
+
+/** The download helper wants a Blob; everywhere else wants bytes. Both come from one builder. */
+export function makeZip(files, { date = new Date() } = {}) {
+  const out = buildZipBytes(files, { date });
   if (typeof Blob !== 'undefined') return new Blob([out], { type: 'application/zip' });
   return out;
 }
 
 /** Bytes of a zip made from a path -> text map. */
-export function zipBytes(files) {
-  const zip = makeZip(Object.entries(files).map(([path, content]) => ({ path, content })));
-  return zip instanceof Uint8Array ? zip : null;
+export function zipBytes(files, opts = {}) {
+  return buildZipBytes(Object.entries(files).map(([path, content]) => ({ path, content })), opts);
 }

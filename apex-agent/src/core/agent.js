@@ -91,7 +91,7 @@ export async function executeTool(name, args, ctx) {
       }
       case 'read_file': {
         const content = vfs.read(args?.path);
-        return content === null
+        return content === ''
           ? { ok: false, text: `no such file: ${args?.path}` }
           : { ok: true, text: content, raw: content };
       }

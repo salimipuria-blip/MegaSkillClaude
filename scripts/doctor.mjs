@@ -106,7 +106,7 @@ const PROJECTS = [
     label: 'مِتاکد / APEX-01 (ایجنت کدنویسِ خودتکامل)',
     steps: [
       {name: 'contract', cmd: 'node tools/check.mjs', cwd: 'apex-agent', why: '۹ قرارداد ایستا: سلکتورها، آیکون‌ها، ایمپورت‌ها، CSP، بودجهٔ حجم'},
-      {name: 'tests', cmd: 'node --test src/tests/core.test.mjs src/tests/model.test.mjs src/tests/dom.test.mjs', cwd: 'apex-agent', why: '۴۱ تست: ۳۰ هسته + ۵ مسیر مدل (HTTP محلی) + ۶ DOM (jsdom)'},
+      {name: 'tests', cmd: 'node --test src/tests/core.test.mjs src/tests/model.test.mjs src/tests/dom.test.mjs src/tests/ui.test.mjs src/tests/security.test.mjs src/tests/providers.test.mjs src/tests/invariants.test.mjs src/tests/lifecycle.test.mjs', cwd: 'apex-agent', why: '۶۹ تست: ۴۱ پایه + ۵ رابط کاربری + ۴ امنیت + ۸ ارائه‌دهنده + ۷ ناوردا (فاز) + ۴ چرخهٔ عمر'},
     ],
   },
   {

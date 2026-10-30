@@ -101,7 +101,10 @@ export const TASKS = [
       'src/groupby.test.js': `import {groupBy} from './groupby.js';\nexport const cases = [\n  {name: 'by parity', expr: 'groupBy([1, 2, 3, 4], (n) => (n % 2 ? "odd" : "even"))', expect: {odd: [1, 3], even: [2, 4]}},\n];\n`,
     },
     entry: ['groupBy'],
-    cases: [{name: 'by parity', expr: 'groupBy([1, 2, 3, 4], (n) => (n % 2 ? "odd" : "even"))', expect: {odd: [1, 3], even: [2, 4]}}],
+    cases: [
+      {name: 'by parity', expr: 'groupBy([1, 2, 3, 4], (n) => (n % 2 ? "odd" : "even"))', expect: {odd: [1, 3], even: [2, 4]}},
+      {name: 'single bucket', expr: 'groupBy(["a", "b"], () => "same")', expect: {same: ['a', 'b']}},
+    ],
     hidden: [
       {name: 'empty list', expr: 'groupBy([], (n) => n)', expect: {}},
       {name: 'string keys', expr: 'groupBy(["a", "bb", "cc"], (s) => s.length)', expect: {1: ['a'], 2: ['bb', 'cc']}},
@@ -118,7 +121,10 @@ export const TASKS = [
       'src/flatten.test.js': `import {flatten} from './flatten.js';\nexport const cases = [\n  {name: 'two levels', fn: 'flatten', args: [[1, [2, 3], [4, [5]]]], expect: [1, 2, 3, 4, 5]},\n];\n`,
     },
     entry: ['flatten'],
-    cases: [{name: 'deep mix', fn: 'flatten', args: [[1, [2, 3], [4, [5]]]], expect: [1, 2, 3, 4, 5]}],
+    cases: [
+      {name: 'deep mix', fn: 'flatten', args: [[1, [2, 3], [4, [5]]]], expect: [1, 2, 3, 4, 5]},
+      {name: 'already flat', fn: 'flatten', args: [[1, 2, 3]], expect: [1, 2, 3]},
+    ],
     hidden: [
       {name: 'empty', fn: 'flatten', args: [[]], expect: []},
       {name: 'only empty arrays', fn: 'flatten', args: [[[], [[]]]], expect: []},

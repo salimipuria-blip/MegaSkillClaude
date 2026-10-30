@@ -22,10 +22,15 @@ project:
   source_of_truth: apex-agent/src/core
   commands:  # همه در 2026-10-30 اجرا شدند
     check:   node tools/check.mjs                  # "✓ static contract is clean"
-    test:    node --test src/tests/*.test.mjs      # 41/41 در ۹٬۱ ثانیه
+    test:    node --test src/tests/*.test.mjs      # 69/69 در ~۲۴ ثانیه (۱۰ موجِ پیاپی، همه سبز)
     core:    node --test src/tests/core.test.mjs   # 30/30
     model:   node --test src/tests/model.test.mjs  # 5/5 با سرور HTTP محلی (بدون کلید)
     dom:     node --test src/tests/dom.test.mjs    # 6/6 (نیازمند jsdom)
+    ui:      node --test src/tests/ui.test.mjs     # 5/5 (jsdom: کلیک‌های واقعی)
+    sec:     node --test src/tests/security.test.mjs   # 4/4 (XSS و تزریق)
+    prov:    node --test src/tests/providers.test.mjs  # 8/8 (۱۳ ارائه‌دهنده، ۴ پروتکل)
+    inv:     node --test src/tests/invariants.test.mjs # 7/7 (فازِ دیف/زیپ/ژنوم)
+    life:    node --test src/tests/lifecycle.test.mjs  # 4/4 (ذخیره، صدور، شبکهٔ قطع)
     zip:     node tools/make_zip.mjs               # release/apex-metacode-netlify.zip
     serve:   python3 -m http.server 8080           # همان پوشه
     doctor:  node scripts/doctor.mjs apex          # check + test

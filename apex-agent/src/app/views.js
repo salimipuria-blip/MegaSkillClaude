@@ -10,7 +10,7 @@ import { validateGenome, diffGenomes } from '../core/genome.js';
 import { memoryToMarkdown } from '../core/memory.js';
 import { auditReport, loadSelfSource } from './self.js';
 import { buildExport, download, parseImport, storageInfo } from './state.js';
-import { $, $$, esc, h, faNum, pct, timeAgo, toast, testBrain } from './ui.js';
+import { $, $$, esc, h, faNum, pct, timeAgo, toast, testBrain, askConfirm } from './ui.js';
 
 const GENE_LABELS = {
   temperature: ['دما', (v) => Number(v).toFixed(2)],
@@ -212,9 +212,6 @@ export function mountEvolve(app) {
               row.suite = event.suite;
             }
             renderMutants(collected);
-          }
-          if (event.phase === 'select') {
-            if (out?.accepted) void 0;
           }
         },
       });
@@ -629,8 +626,8 @@ export function mountSettings(app) {
       toast(err.message, 'bad');
     }
   });
-  $('#btnReset').addEventListener('click', () => {
-    if (!confirm('همه‌چیز پاک شود؟ فایل‌ها، ژنوم، حافظه و کلید حذف می‌شوند.')) return;
+  $('#btnReset').addEventListener('click', async () => {
+    if (!(await askConfirm('همه‌چیز پاک شود؟ فایل‌ها، ژنوم، حافظه و کلید حذف می‌شوند.', 'پاک‌سازی'))) return;
     app.reset();
   });
 

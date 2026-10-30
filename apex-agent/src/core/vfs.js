@@ -41,7 +41,9 @@ export class VirtualFS {
   }
 
   read(path) {
-    return this.files.get(VirtualFS.normalise(path))?.content ?? null;
+    // A missing file reads as empty text. `null` used to leak into template literals ("null") and
+    // into diff baselines; empty is the honest value for "no content yet".
+    return this.files.get(VirtualFS.normalise(path))?.content ?? '';
   }
 
   list(dir = '') {

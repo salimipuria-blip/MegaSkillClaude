@@ -19,9 +19,10 @@ export const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 const ESCAPES = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
 export const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ESCAPES[c]);
 
-export class RawHTML {
+export class RawHTML extends String {
   constructor(value) {
-    this.value = value;
+    super(String(value ?? ''));
+    this.value = String(value ?? '');
   }
   toString() {
     return this.value;
@@ -45,12 +46,68 @@ export function h(strings, ...values) {
       else out += esc(v);
     }
   });
-  return out;
+  // Returning RawHTML (a String subclass) is what makes nesting work: h`...${h`...`}...` keeps the
+  // inner markup instead of showing it as text. Forgetting raw() used to leak escaped tags onto
+  // the screen — the workspace file tree shipped that way once.
+  return new RawHTML(out);
 }
 
 export const faDigits = (input) => String(input).replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[Number(d)]);
 export const faNum = (n) => (Number.isFinite(Number(n)) ? faDigits(new Intl.NumberFormat('en-US').format(Number(n))) : '—');
 export const pct = (v) => `${Math.round(Math.max(0, Math.min(1, Number(v) || 0)) * 100)}٪`;
+
+
+// ---------------------------------------------------------------- in-app dialogs
+// A sandboxed iframe (every preview pane, including this repo's) ignores prompt()/confirm():
+// the call is dropped and the button quietly does nothing. These two helpers keep the same
+// questions inside the page, so they work everywhere and are testable without a browser modal.
+function askOverlay({ title, message, value = null, okLabel = 'تأیید' }) {
+  return new Promise((resolve) => {
+    const overlay = document.createElement('div');
+    overlay.className = 'ask-overlay';
+    overlay.innerHTML = h`<div class="ask-card" role="dialog" aria-modal="true" aria-labelledby="askTitle">
+      <h2 id="askTitle">${title}</h2>
+      ${message ? h`<p class="ask-msg">${message}</p>` : ''}
+      ${value !== null ? h`<input class="ask-input" aria-label="${title}" value="${value}" />` : ''}
+      <div class="ask-actions">
+        <button class="btn primary" data-ask="ok">${okLabel}</button>
+        <button class="btn ghost" data-ask="cancel">لغو</button>
+      </div>
+    </div>`;
+    const input = overlay.querySelector('.ask-input');
+    const finish = (result) => {
+      overlay.remove();
+      document.removeEventListener('keydown', onKey, true);
+      resolve(result);
+    };
+    const onKey = (event) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        finish(null);
+      }
+    };
+    overlay.querySelector('[data-ask="ok"]').addEventListener('click', () => finish(value === null ? true : input.value.trim()));
+    overlay.querySelector('[data-ask="cancel"]').addEventListener('click', () => finish(null));
+    overlay.addEventListener('click', (event) => {
+      if (event.target === overlay) finish(null);
+    });
+    if (input) {
+      input.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') finish(input.value.trim());
+      });
+    }
+    document.addEventListener('keydown', onKey, true);
+    document.body.appendChild(overlay);
+    input?.focus();
+    input?.select();
+  });
+}
+
+/** Ask a question in the page. Resolves true/false; never silently drops the click. */
+export const askConfirm = (message, title = 'تأیید') => askOverlay({ title, message }).then((v) => v === true);
+
+/** Ask for one line of text. Resolves the trimmed string, or null when cancelled. */
+export const askText = (message, value = '', title = 'ورودی') => askOverlay({ title, message, value });
 
 export function timeAgo(ts) {
   if (!ts) return '—';
@@ -506,7 +563,12 @@ export function mountWorkbench(app) {
       .join('');
     $$('.tree-file', dom.tree).forEach((btn) =>
       btn.addEventListener('click', () => {
-        if (isDirty && !confirm('تغییرات ذخیره نشده‌اند. ادامه؟')) return;
+        if (isDirty) {
+          askConfirm('تغییرات ذخیره نشده‌اند. ادامه؟').then((okay) => {
+            if (okay) openFile(btn.dataset.path);
+          });
+          return;
+        }
         openFile(btn.dataset.path);
       }),
     );
@@ -520,7 +582,7 @@ export function mountWorkbench(app) {
 
   function openFile(path) {
     const content = app.vfs.read(path);
-    if (content === null) return toast('فایل پیدا نشد.', 'bad');
+    if (!app.vfs.has(path)) return toast('فایل پیدا نشد.', 'bad');
     openPath = path;
     dom.code.value = content;
     dom.code.disabled = false;
@@ -642,8 +704,8 @@ export function mountWorkbench(app) {
     toast(`زیپ ${faNum(files.length)} فایل ساخته شد.`, 'ok');
   }
 
-  function newFile() {
-    const path = prompt('مسیر فایل تازه (مثلاً src/util.js):', 'src/util.js');
+  async function newFile() {
+    const path = await askText('مسیر فایل تازه را بنویس.', 'src/util.js', 'فایل تازه');
     if (!path) return;
     if (app.vfs.has(path)) return toast('این فایل از قبل هست.', 'bad');
     app.vfs.write(path, '// فایل تازه\n', 'create');

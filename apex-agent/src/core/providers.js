@@ -51,6 +51,7 @@ export const PROVIDERS = [
     free: false,
     browser: false,
     docs: 'https://console.mistral.ai/api-keys',
+    note: 'Codestral برای کد خوب است؛ سقف رایگان ندارد و کلیدش پولی است.',
   },
   {
     id: 'github',
@@ -74,6 +75,7 @@ export const PROVIDERS = [
     free: false,
     browser: true,
     docs: 'https://api.together.xyz/settings/api-keys',
+    note: 'مدل‌های باز بزرگ را ارزان می‌دهد؛ برای کد، Qwen2.5-Coder را امتحان کن.',
   },
   {
     id: 'deepseek',
@@ -85,6 +87,7 @@ export const PROVIDERS = [
     free: false,
     browser: true,
     docs: 'https://platform.deepseek.com/api_keys',
+    note: 'برای کد و استدلال خوب است؛ کلید از پلتفرم خودش و پرداختی.',
   },
   {
     id: 'openai',
@@ -96,6 +99,7 @@ export const PROVIDERS = [
     free: false,
     browser: true,
     docs: 'https://platform.openai.com/api-keys',
+    note: 'گران‌ترین گزینه؛ برای مقایسهٔ کیفیت خوب است، برای کار روزمره لازم نیست.',
   },
   {
     id: 'anthropic',
@@ -107,6 +111,7 @@ export const PROVIDERS = [
     free: false,
     browser: true,
     docs: 'https://console.anthropic.com/settings/keys',
+    note: 'کیفیت بالا در کد؛ هدر دسترسیِ مرورگر لازم است و در مرورگر کار می‌کند.',
   },
   {
     id: 'gemini',
@@ -154,6 +159,7 @@ export const PROVIDERS = [
     free: true,
     browser: true,
     docs: '',
+    note: 'هر آدرسی که با OpenAI سازگار است: پروکسی خودت، LM Studio یا درگاه سازمانی.',
   },
 ];
 
@@ -170,10 +176,17 @@ export function providerModels(id) {
 /** Resolve {baseUrl}/{model} placeholders and strip trailing slashes from custom bases. */
 export function resolveUrl({providerId, kind, baseUrl, model}) {
   const p = getProvider(providerId);
+  if (providerId === 'custom' && !baseUrl) {
+    // A relative URL would quietly hit this app's own origin and 404. Say what is missing instead.
+    throw new Error('برای ارائه‌دهندهٔ «دلخواه» آدرس پایه لازم است (مثلاً http://localhost:11434).');
+  }
   if (providerId === 'custom' || baseUrl) {
     const base = String(baseUrl || p.url).replace(/\/$/, '');
     if (base.endsWith('/chat/completions')) return base;
-    return `${base}/chat/completions`;
+    // A bare host (http://localhost:11434) needs the /v1 segment; a host that already has a path
+    // (…/v1) must not get a second one. Ollama users type the bare host, so this is the common case.
+    const bareHost = /^https?:\/\/[^/]+$/.test(base);
+    return `${base}${bareHost ? '/v1' : ''}/chat/completions`;
   }
   if (p.kind === 'gemini' || p.kind === 'anthropic') {
     return p.url.replace('{model}', encodeURIComponent(model));
@@ -239,7 +252,7 @@ export function buildRequest({
   // OpenAI, Ollama, the Netlify proxy, and anything else that speaks this shape.
   if (key) headers.authorization = `Bearer ${key}`;
   if (providerId === 'openrouter') {
-    headers['http-referer'] = typeof location !== 'undefined' ? location.origin : 'https://apex-agent.netlify.app';
+    headers['http-referer'] = typeof location !== 'undefined' ? location.origin : 'https://apex-metacode.vercel.app';
     headers['x-title'] = 'APEX MetaCode';
   }
   body = {
@@ -387,8 +400,34 @@ export function mergeToolDeltas(state, deltas) {
 }
 
 /** Human-readable reason for the most common failure modes, in Persian. */
+/**
+ * Provider error bodies sometimes quote the key that failed. That text ends up in a toast, the
+ * settings panel and the exported bundle, so it is redacted before it goes anywhere.
+ */
+export function redactSecrets(text) {
+  return String(text ?? '')
+    .replace(/\b(sk|rk|gsk|csk|xai|pplx|hf|ghp|glpat)[-_][A-Za-z0-9_-]{6,}/gi, '$1-***')
+    .replace(/\bAIza[0-9A-Za-z_-]{10,}/g, 'AIza***')
+    .replace(/\b(Bearer)\s+[A-Za-z0-9._~+/-]{8,}=*/gi, '$1 ***')
+    .replace(/([?&](?:key|api_key|token|access_token)=)[^&\s"']+/gi, '$1***')
+    .replace(/("(?:api_?key|key|token|authorization)"\s*:\s*")[^"]*(")/gi, '$1***$2');
+}
+
+/**
+ * A request can fail before any HTTP status exists: offline, DNS, or a browser CORS block. Browsers
+ * say only "Failed to fetch", which tells a user nothing — this turns it into a cause and a next step.
+ */
+export function explainNetworkError(err) {
+  const raw = String(err?.message || err || '').slice(0, 80);
+  return (
+    `درخواست به شبکه نرسید${raw ? ` (${raw})` : ''}. سه علت رایج: قطع اینترنت، بلاک‌شدن درخواست ` +
+    'توسط مرورگر به‌خاطر CORS، یا خاموش بودن سرور محلی. اگر کلید و اینترنت درست است، همین ارائه‌دهنده را ' +
+    'از مسیر پروکسی Netlify صدا بزن؛ برای Ollama سرور را با CORS اجرا کن.'
+  );
+}
+
 export function explainHttpError(status, bodyText = '') {
-  const snippet = String(bodyText || '').slice(0, 240);
+  const snippet = redactSecrets(String(bodyText || '')).slice(0, 240);
   if (status === 401 || status === 403) return `کلید رد شد (${status}). کلید و دسترسی مدل را بررسی کن. ${snippet}`;
   if (status === 404) return `مدل یا مسیر پیدا نشد (404). نام مدل را عوض کن. ${snippet}`;
   if (status === 429) return `سقف مصرف (429). کمی صبر کن یا مدل رایگان دیگر را انتخاب کن. ${snippet}`;
@@ -474,8 +513,16 @@ export async function chat(opts) {
       if (toolCalls.length && onDelta) onDelta({ type: 'tools', toolCalls });
       return { text, toolCalls, usage, kind: req.kind, streamed: true, stop };
     } catch (err) {
+      if (err?.name === 'AbortError') throw err;
+      // No status means the request never reached the provider (offline, DNS, CORS). Retrying cannot
+      // fix that and only delays the explanation, so fail fast with something the user can act on.
+      if (!err?.status) {
+        const explained = new Error(explainNetworkError(err));
+        explained.cause = err;
+        explained.offline = true;
+        throw explained;
+      }
       lastError = err;
-      if (err.name === 'AbortError') throw err;
       if (attempt >= retries || (err.status && err.status !== 429 && err.status < 500)) break;
       await new Promise((r) => setTimeout(r, retryDelay * (attempt + 1)));
     }

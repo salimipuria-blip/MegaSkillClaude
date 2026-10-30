@@ -58,11 +58,11 @@
   </div>
 
   <nav class="tabs" role="tablist" aria-label="نمای اصلی">
-    <button class="tab" role="tab" data-view="chat" aria-selected="true" aria-controls="view-chat"><svg><use href="#i-chat"/></svg><span>گفتگو</span><kbd>1</kbd></button>
-    <button class="tab" role="tab" data-view="workbench" aria-selected="false" aria-controls="view-workbench"><svg><use href="#i-code"/></svg><span>کارگاه</span><kbd>2</kbd></button>
-    <button class="tab" role="tab" data-view="evolve" aria-selected="false" aria-controls="view-evolve"><svg><use href="#i-dna"/></svg><span>تکامل</span><kbd>3</kbd></button>
-    <button class="tab" role="tab" data-view="memory" aria-selected="false" aria-controls="view-memory"><svg><use href="#i-brain"/></svg><span>حافظه</span><kbd>4</kbd></button>
-    <button class="tab" role="tab" data-view="settings" aria-selected="false" aria-controls="view-settings"><svg><use href="#i-gear"/></svg><span>تنظیمات</span><kbd>5</kbd></button>
+    <button class="tab" role="tab" id="tab-chat" data-view="chat" aria-selected="true" aria-controls="view-chat"><svg><use href="#i-chat"/></svg><span>گفتگو</span><kbd>1</kbd></button>
+    <button class="tab" role="tab" id="tab-workbench" data-view="workbench" aria-selected="false" aria-controls="view-workbench"><svg><use href="#i-code"/></svg><span>کارگاه</span><kbd>2</kbd></button>
+    <button class="tab" role="tab" id="tab-evolve" data-view="evolve" aria-selected="false" aria-controls="view-evolve"><svg><use href="#i-dna"/></svg><span>تکامل</span><kbd>3</kbd></button>
+    <button class="tab" role="tab" id="tab-memory" data-view="memory" aria-selected="false" aria-controls="view-memory"><svg><use href="#i-brain"/></svg><span>حافظه</span><kbd>4</kbd></button>
+    <button class="tab" role="tab" id="tab-settings" data-view="settings" aria-selected="false" aria-controls="view-settings"><svg><use href="#i-gear"/></svg><span>تنظیمات</span><kbd>5</kbd></button>
   </nav>
 
   <div class="status">
@@ -171,7 +171,7 @@
           <div class="row-gap">
             <button class="icon-btn sm" id="btnNewFile" aria-label="فایل جدید"><svg><use href="#i-plus"/></svg></button>
             <button class="icon-btn sm" id="btnImport" aria-label="بارگذاری فایل"><svg><use href="#i-upload"/></svg></button>
-            <input type="file" id="fileInput" multiple hidden />
+            <input type="file" id="fileInput" aria-label="افزودن فایل به فضای کاری" tabindex="-1" multiple hidden />
           </div>
         </div>
         <div class="search-row"><svg><use href="#i-search"/></svg><input id="fileSearch" placeholder="جست‌وجو در فایل‌ها…" aria-label="جست‌وجو در فایل‌ها" /></div>
@@ -283,7 +283,7 @@
       <section class="panel forge-panel">
         <div class="panel-head"><div><h2>کارگاه توکن</h2><p class="sub">فشرده‌سازی با عصارهٔ قابل‌ردیابی</p></div><span class="badge" id="forgeBadge">—</span></div>
         <p class="fine">متن نمونه را بچسبان؛ اتمیزه می‌شود، تکرار حذف می‌شود، بر اساس هدف مرتب می‌شود و زیر بودجه بسته‌بندی می‌شود.</p>
-        <textarea id="forgeInput" rows="6" placeholder="متن بلند را اینجا بگذار…"></textarea>
+        <textarea id="forgeInput" rows="6" aria-label="متن برای فشرده‌سازی" placeholder="متن بلند را اینجا بگذار…"></textarea>
         <div class="row-gap">
           <button class="btn sm primary" id="btnForge"><svg><use href="#i-bolt"/></svg><span>فشرده کن</span></button>
           <span class="fine" id="forgeStats">—</span>
@@ -330,7 +330,7 @@
         <div class="row-gap wrap">
           <button class="btn sm" id="btnExportAll"><svg><use href="#i-download"/></svg><span>صدور همه</span></button>
           <button class="btn sm ghost" id="btnImportAll"><svg><use href="#i-upload"/></svg><span>ورود</span></button>
-          <input type="file" id="importAllInput" accept="application/json" hidden />
+          <input type="file" id="importAllInput" aria-label="بارگذاری فایل صدور" tabindex="-1" accept="application/json" hidden />
           <button class="btn sm ghost danger" id="btnReset"><svg><use href="#i-x"/></svg><span>پاک‌سازی کامل</span></button>
         </div>
         <dl class="kv" id="dataStats"></dl>

@@ -237,7 +237,8 @@ export function compressContext({
     ? `\n\n[فشردهسازی کانتکست] ${dropped.length + rejected.length} واحد حذف شد. عصارهٔ حذفشدهها:\n- ${digestLines.join('\n- ')}`
     : '';
 
-  const packed = [...protectedMsgs.map((m) => ({ role: m.role, content: m.content })), ...rebuilt, ...recent.map((m) => ({ role: m.role, content: m.content }))];
+  // Keep the protection flag on the way out: a caller must be able to prove nothing was dropped.
+  const packed = [...protectedMsgs.map((m) => ({ ...m })), ...rebuilt, ...recent.map((m) => ({ ...m }))];
   if (note) {
     const lastUser = [...packed].reverse().find((m) => m.role === 'user');
     if (lastUser) lastUser.content += note;
