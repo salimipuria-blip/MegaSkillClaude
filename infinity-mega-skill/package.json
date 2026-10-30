@@ -8,13 +8,14 @@
     "node": ">=20"
   },
   "scripts": {
-    "test": "node --test src/tests/core.test.mjs src/tests/model.test.mjs src/tests/dom.test.mjs src/tests/ui.test.mjs src/tests/security.test.mjs src/tests/providers.test.mjs src/tests/invariants.test.mjs src/tests/lifecycle.test.mjs src/tests/engine.test.mjs src/tests/ux.test.mjs src/tests/proxy.test.mjs src/tests/deploy.test.mjs src/tests/hardening.test.mjs",
+    "test": "node --test src/tests/core.test.mjs src/tests/model.test.mjs src/tests/dom.test.mjs src/tests/ui.test.mjs src/tests/security.test.mjs src/tests/providers.test.mjs src/tests/invariants.test.mjs src/tests/lifecycle.test.mjs src/tests/engine.test.mjs src/tests/ux.test.mjs src/tests/proxy.test.mjs src/tests/deploy.test.mjs src/tests/hardening.test.mjs src/tests/supervisor.test.mjs",
     "check": "node tools/check.mjs",
     "serve": "node tools/serve.mjs",
     "zip": "node tools/make_zip.mjs",
     "verify": "npm run check && npm test && npm run zip",
     "render": "node tools/render.mjs",
-    "live": "node tools/live-check.mjs"
+    "live": "node tools/live-check.mjs",
+    "evolve": "node tools/evolve.mjs"
   },
   "keywords": [
     "agent",

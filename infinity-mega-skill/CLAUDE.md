@@ -18,7 +18,7 @@ project:
     views: infinity-mega-skill/src/app/views.js      # کارگاه، تکامل، حافظه، تنظیمات
     state: infinity-mega-skill/src/app/state.js      # ذخیره/بازیابی، مهاجرت نسخه، صدور
     self:  infinity-mega-skill/src/app/self.js       # خودکاوی: بارگیری و ممیزی کدِ خودِ اپ
-    core:  infinity-mega-skill/src/core/*.js         # ۱۶ ماژول خالص، بدون DOM
+    core:  infinity-mega-skill/src/core/*.js         # ۱۷ ماژول خالص، بدون DOM
   source_of_truth: infinity-mega-skill/src/core
   commands:  # همه در 2026-10-30 اجرا شدند
     check:   node tools/check.mjs                  # "✓ static contract is clean"
@@ -37,6 +37,7 @@ project:
     deploy:  node --test src/tests/deploy.test.mjs     # 3/3 (هدرها، پروکسی، صفر منبع بیرونی)
     harden:  node --test src/tests/hardening.test.mjs  # 8/8 (ورودیِ خصمانه، دیالوگِ صفحه‌کلیدی، قطعیت)
     zip:     node tools/make_zip.mjs               # release/infinity-mega-skill-netlify.zip
+    evolve:  node tools/evolve.mjs                 # حلقهٔ نظارت‌شدهٔ تکامل (headless، بودجه‌دار، دفتر تصمیم)
     serve:   python3 -m http.server 8080           # همان پوشه
     doctor:  node scripts/doctor.mjs infinity          # check + test
   deploy: netlify.toml (publish = ".", functions = "netlify/functions")
@@ -62,6 +63,7 @@ project:
 | `src/core/compress.js` | اتمیزه، حذف تکرار، بسته‌بندی | محافظت‌شده‌ها هرگز حذف نمی‌شوند |
 | `src/core/providers.js` | ۴ پروتکل سیم، ۱۳ ارائه‌دهنده | کلید فقط هدر/کوئری |
 | `src/core/genome.js` + `evolution.js` | ژن، جهش، تناسب اندام، نسل | پذیرش فقط با ε و بدون رگرسیون |
+| `src/core/supervisor.js` | حلقهٔ نظارت‌شده: تکرار نسل‌ها زیر watchdog | نامیرا (best هرگز رگرس نمی‌کند)؛ سقف زمان/توکن/نسل؛ فلات⇒توقف؛ خطا مهار؛ دفتر تصمیم |
 | `src/core/evals.js` | ۱۰ تسک + تست پنهان | تغییر تسک ⇒ اجرای دوبارهٔ همهٔ تست‌ها |
 | `src/core/reflex.js` | مغز بدون کلید | خارج از ۱۰ خانواده ⇒ اسکلتِ صادقانه، نه سبزِ قلابی |
 | `src/app/*.js` | رندر، رویداد، ذخیره | هیچ منطق هسته‌ای اینجا تکرار نشود |
@@ -104,6 +106,8 @@ project:
 - `P2` Service Worker برای اجرای کامل آفلاین.
 - `P2` وارد کردن چند فایلِ `self/` در یک چرخهٔ ترمیم.
 - `P2` گزارش هزینهٔ توکن به تفکیک اجرا در کارگاه.
+- `P1` رفع flakeِ نادر در تست «قطعیت مغز آفلاین» (`hardening.test.mjs`) زیر اجرای موازیِ `node --test`؛ در انزوا پایدار است. ناظر (`supervisor.js`) دخیل نیست — جداگانه و با fakeهای تزریقی قطعی است.
+- `P1` اتصال `supervisor.js` به تب «تکامل» با دکمهٔ Start/Stop و نمایش زندهٔ دفتر تصمیم (الان از طریق `npm run evolve` و هسته در دسترس است).
 
 ## پروتکل به‌روزرسانی
 

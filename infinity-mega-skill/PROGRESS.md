@@ -349,3 +349,10 @@ Ran 180 tests — OK
 - مسیر CI (`.github/workflows/ci.yml`) و ارجاع‌های docها به‌روز شد. «Apex» سیلزفورس و واژه‌های نامرتبط دست‌نخورده ماندند.
 - `LICENSE` (MIT، مطابق package.json) اضافه شد؛ `jsdom` به‌عنوان devDependency اعلام شد؛ `.gitignore` همگام شد.
 - گیت کیفی: `npm run check` تمیز، **۹۷/۹۷ تست سبز**، زیپ `release/infinity-mega-skill-netlify.zip` (۶۲ فایل، ۷۳۸KB) ساخته و تحویل داده شد.
+
+## ۱۴۰۵/۰۸/۰۸ — حلقه‌ی نظارت‌شده‌ی تکامل (supervisor)
+- `src/core/supervisor.js`: حلقهٔ پیوستهٔ `evolveOnce` زیر watchdog — نامیرا (best بدون رگرسیون)، سقف نسل/زمان/توکن، فلات‌یاب (`patience`)، مهارِ خطا (`maxErrors`)، دفتر تصمیم و `onTick`. خالصِ هسته (بدون DOM)، کلاک و بدنهٔ حلقه تزریق‌پذیر.
+- `src/tests/supervisor.test.mjs`: ۱۰ تستِ قطعی با fakeهای تزریقی (بدون sandbox) → **۱۰/۱۰ سبز**.
+- `tools/evolve.mjs` + اسکریپت `npm run evolve`: نمایشِ headless روی بنچمارکِ واقعی. خروجیِ دیده‌شده: ۲ نسل، هر دو rejected (ژنومِ پیش‌فرض بهتر از جهش‌هایش نشد — بدونِ سبزِ قلابی)، امتیاز قهرمان ۰٫۹۰۸، توقف روی فلات.
+- گیت: `node tools/check.mjs` تمیز (۶۵ فایل، ۷۴۷KB < ۹۰۰)؛ `npm test` → **۱۰۷/۱۰۷ سبز، سه بار پیاپی**.
+- مشاهدهٔ صادقانه: یک‌بار تستِ «قطعیت مغز آفلاین» (`hardening.test.mjs`) زیر اجرای موازی flake داد؛ در انزوا و در ۳ اجرای کاملِ بعدی پایدار بود. به‌عنوان P1 ثبت شد؛ از supervisor نیست.
