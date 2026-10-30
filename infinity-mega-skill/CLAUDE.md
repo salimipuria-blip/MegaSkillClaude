@@ -1,0 +1,110 @@
+# مِتاکد / Infinity Mega Skill (`infinity-mega-skill/`) — دستور کار Claude
+
+> وضعیت: کد سالم و تست‌شده (Node ۹۷/۹۷، قرارداد ایستا پاک، زیپ تأییدشده)؛ **در کرومیومِ واقعی رندر و آزموده شد** (۳۲ سنجه، زیرِ CSPِ استقرار، `npm run render`)؛ روی Vercel مستقر شده (`infinity-mega-skill-ps88.vercel.app`) و همچنان پشتِ Deployment Protection است — تنها چیزی که هنوز دیده نشده، همان صفحه از بیرون است. مسیرِ زندهٔ مدل با `npm run live` آماده و با `--mock` اثبات شده؛ اجرای واقعیِ آن به کلیدِ مالک نیاز دارد. آخرین بازبینی: 2026-10-30.
+
+```yaml
+project:
+  name: infinity-mega-skill
+  purpose: >
+    ایجنت کدنویسِ فارسی و خودتکامل که بدون سرور اجرا می‌شود: سه نامزد می‌سازد،
+    سه فرضیهٔ شکست را واقعاً اجرا می‌کند، برنده را با روبریکِ وزنی انتخاب می‌کند،
+    تغییر را در سندباکس مرورگر اثبات می‌کند و ژنومِ خودش را روی بنچمارک می‌سنجد.
+  stack: [HTML, CSS, "ES modules (no build step)", "Web Worker sandbox", "Netlify Functions (optional)"]
+  backend: optional   # فقط پروکسی LLM؛ پیش‌فرض خاموش و توکن‌محور
+  entrypoints:
+    page: infinity-mega-skill/index.html
+    boot: infinity-mega-skill/src/app/boot.js        # اتصال رویدادها، پالت، تم، میدان ذره‌ای
+    ui:   infinity-mega-skill/src/app/ui.js          # چت، اجرا، رویدادها، تأیید، فایل
+    views: infinity-mega-skill/src/app/views.js      # کارگاه، تکامل، حافظه، تنظیمات
+    state: infinity-mega-skill/src/app/state.js      # ذخیره/بازیابی، مهاجرت نسخه، صدور
+    self:  infinity-mega-skill/src/app/self.js       # خودکاوی: بارگیری و ممیزی کدِ خودِ اپ
+    core:  infinity-mega-skill/src/core/*.js         # ۱۶ ماژول خالص، بدون DOM
+  source_of_truth: infinity-mega-skill/src/core
+  commands:  # همه در 2026-10-30 اجرا شدند
+    check:   node tools/check.mjs                  # "✓ static contract is clean"
+    test:    node --test src/tests/*.test.mjs      # 95/95 در ~۳۰ ثانیه (۱۰ موجِ پیاپی، همه سبز)
+    core:    node --test src/tests/core.test.mjs   # 30/30
+    model:   node --test src/tests/model.test.mjs  # 5/5 با سرور HTTP محلی (بدون کلید)
+    dom:     node --test src/tests/dom.test.mjs    # 6/6 (نیازمند jsdom)
+    ui:      node --test src/tests/ui.test.mjs     # 5/5 (jsdom: کلیک‌های واقعی)
+    sec:     node --test src/tests/security.test.mjs   # 4/4 (XSS و تزریق)
+    prov:    node --test src/tests/providers.test.mjs  # 8/8 (۱۳ ارائه‌دهنده، ۴ پروتکل)
+    inv:     node --test src/tests/invariants.test.mjs # 7/7 (فازِ دیف/زیپ/ژنوم)
+    life:    node --test src/tests/lifecycle.test.mjs  # 4/4 (ذخیره، صدور، شبکهٔ قطع)
+    engine:  node --test src/tests/engine.test.mjs     # 8/8 (ابزارها، سندباکس، حلقهٔ ایجنت، حافظه)
+    ux:      node --test src/tests/ux.test.mjs         # 4/4 (صفحه‌کلید، ARIA، فضای کاری بزرگ)
+    proxy:   node --test src/tests/proxy.test.mjs      # 3/3 (ردِ رلهٔ باز، فوروارد بی‌نشت)
+    deploy:  node --test src/tests/deploy.test.mjs     # 3/3 (هدرها، پروکسی، صفر منبع بیرونی)
+    harden:  node --test src/tests/hardening.test.mjs  # 8/8 (ورودیِ خصمانه، دیالوگِ صفحه‌کلیدی، قطعیت)
+    zip:     node tools/make_zip.mjs               # release/infinity-mega-skill-netlify.zip
+    serve:   python3 -m http.server 8080           # همان پوشه
+    doctor:  node scripts/doctor.mjs infinity          # check + test
+  deploy: netlify.toml (publish = ".", functions = "netlify/functions")
+  secrets: INFINITY_PROXY_TOKEN + INFINITY_UPSTREAM_KEY (فقط اگر پروکسی روشن شود)
+  budgets: {zip_kb_max: 900, dom_per_case_ms: 1500, context_tokens: 2400}
+  status: code-ready, deployed-on-vercel(protected), browser-render-unverified
+  owner_actions:
+    - بازکردن پیش‌نمایش و تأیید بصری سه تب اصلی در موبایل واقعی
+    - انتخاب یک ارائه‌دهنده و یک اجرای زنده با کلید برای تأیید مسیر مدل
+    - انتشار روی Netlify Drop و ثبت URL در README
+```
+
+## نقشهٔ کد
+
+| فایل | مسئولیت | نکتهٔ حساس |
+|---|---|---|
+| `src/core/agent.js` | چرخهٔ اجرا، رویدادها، حلقهٔ ابزار، لغو | هر رویدادِ نمایشی باید از اینجا بگذرد؛ UI نباید وضعیت را حدس بزند |
+| `src/core/triad.js` | ۳ استراتژی، ۳ فرضیه، روبریک، انتخاب | وزن‌ها از ژنوم می‌آیند، نه از ثابت |
+| `src/core/evaluate.js` | اجرای تست/پروب، امتیازها | تست پنهان هرگز به نامزد نشان داده نمی‌شود |
+| `src/core/sandbox.js` | Worker + `node:vm`، مقایسهٔ ساختاری | تنها جای مجازِ `new Function` |
+| `src/core/diff.js` | LCS، دیف، اعمال سخت‌گیر | اعمال ناموفق باید صریح خطا بدهد، نه اعمال نصفه |
+| `src/core/vfs.js` | فایل، نسخه، عکس فوری | نوشتن بدون نسخه ممنوع |
+| `src/core/compress.js` | اتمیزه، حذف تکرار، بسته‌بندی | محافظت‌شده‌ها هرگز حذف نمی‌شوند |
+| `src/core/providers.js` | ۴ پروتکل سیم، ۱۳ ارائه‌دهنده | کلید فقط هدر/کوئری |
+| `src/core/genome.js` + `evolution.js` | ژن، جهش، تناسب اندام، نسل | پذیرش فقط با ε و بدون رگرسیون |
+| `src/core/evals.js` | ۱۰ تسک + تست پنهان | تغییر تسک ⇒ اجرای دوبارهٔ همهٔ تست‌ها |
+| `src/core/reflex.js` | مغز بدون کلید | خارج از ۱۰ خانواده ⇒ اسکلتِ صادقانه، نه سبزِ قلابی |
+| `src/app/*.js` | رندر، رویداد، ذخیره | هیچ منطق هسته‌ای اینجا تکرار نشود |
+
+## MUST
+
+- بعد از هر تغییر: `node tools/check.mjs && node --test src/tests/*.test.mjs`.
+- هر شناسهٔ DOM که در JS استفاده می‌شود باید در `index.html` باشد (تست ایستا می‌گیرد).
+- `src/core/**` بدون DOM، بدون `window`، بدون `location` بدون گارد.
+- هر رشتهٔ ورودی با `esc`؛ هر آتریبیوت با `h`.
+- متنِ رابط فارسی و راست‌به‌چپ؛ کد و دستور انگلیسی.
+- آمار و اعداد فقط از اجرای واقعی؛ در گزارش بنویس «اجرا نشد» اگر اجرا نشده.
+
+## NEVER
+
+- ادعای سبز بودن بدون خروجی تست.
+- نوشتن کلید در ZIP، صدور JSON، `memory.journal` یا لاگ کنسول.
+- `innerHTML` با دادهٔ خامِ مدل.
+- حذفِ تست برای سبز شدن؛ اگر تست شکست، کد را درست کن یا تست را با دلیل بازنویسی کن.
+- افزودن وابستگی اجرایی؛ پروژه باید بدون `npm install` کار کند.
+- تغییر `RELEASE_DATE` یا ساختار ZIP بدون تأیید مالک (خروجی باید تکرارپذیر بماند).
+
+## جدول اشکال‌زدایی
+
+| نشانه | علت | بررسی | رفع |
+|---|---|---|---|
+| `check.mjs` می‌گوید id گم است | شناسه در `index.html` نیست | پیام دقیق همان id را می‌دهد | به HTML اضافه کن یا در JS به شناسهٔ موجود وصل کن |
+| تست DOM تایم‌اوت می‌شود | ماژول کش شده و boot دوباره اجرا نشده | `?case=N` در ایمپورت | شمارندهٔ یکتا |
+| `Cannot set property navigator` | `Object.defineProperty` روی گلوبالِ فقط‌خواندنی | Node ≥ 22 | در `try/catch` بگذار |
+| `rows.slice is not a function` | شناسهٔ تکرارشده با کلیدِ وضعیت | `grep -n "journal" src/core/memory.js` | نام متد را عوض کن (`journalEntry`) |
+| تست‌ها می‌گذرند ولی اجرا بی‌نهایت طول می‌کشد | تایمر/انیمیشن آزاد نشده | `app.dispose()` صدا زده می‌شود؟ | `closeApp` در `finally` |
+| `Maximum call stack size exceeded` در تست | `closeApp` خودش را صدا می‌زند | بدنهٔ helper | `dom.window.close()` صریح |
+| تأیید قرمز ولی بنچمارک سبز | مسیر اجرا متفاوت است | پنل «اجرای واقعی» | آخرین `error` را بخوان |
+
+## صف کار
+
+- `P1` افزودن پنجرهٔ انتخابگر فایل در حالت مدل (الان یک فایلِ هدف).
+- `P1` پشتیبانی استریم برای Anthropic/Gemini با همان قرارداد `onDelta`.
+- `P1` تأیید بصری در مرورگر واقعی و ثبت اسکرین‌شات در `docs/`.
+- `P2` Service Worker برای اجرای کامل آفلاین.
+- `P2` وارد کردن چند فایلِ `self/` در یک چرخهٔ ترمیم.
+- `P2` گزارش هزینهٔ توکن به تفکیک اجرا در کارگاه.
+
+## پروتکل به‌روزرسانی
+
+بعد از هر تغییر: این فایل + `PROGRESS.md` (گزارش تاریخ‌دار با دستور و خروجی) + `PROFESSIONAL_GUIDE.md` (ممیزی) — و اگر وضعیت انتشار عوض شد، `README.md` و `docs/PORTFOLIO.md`.
