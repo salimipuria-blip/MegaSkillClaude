@@ -229,3 +229,40 @@ test('a junk genome or settings blob is repaired, not trusted', { skip, timeout:
     closeApp(dom, app);
   }
 });
+
+// The browser audit (tools/render.mjs) found that the sandbox died in real Chromium while every
+// Node test stayed green: the worker assigned to getter-only WorkerGlobalScope accessors, and it
+// built the model's code with new Function(), which the production CSP blocks. These tests pin the
+// generated script itself, so that class of bug cannot come back silently.
+test('sandbox worker script never needs eval, and never assigns over a global accessor', async () => {
+  const vm = await import('node:vm');
+  const { buildWorkerSource } = await import(`${root}src/core/sandbox.js`);
+  const src = buildWorkerSource({
+    // Module syntax is stripped before it reaches the builder (payloadFor does that).
+    code: 'const sum = (n) => n.reduce((a, b) => a + b, 0);',
+    entries: ['sum'],
+    cases: [
+      { name: 'adds', fn: 'sum', args: [[1, 2, 3]], expect: 6 },
+      { name: 'sorted by fn', fn: 'sum', args: [[3, 1, { __fn: '(a, b) => a - b' }]], expect: 0 },
+    ],
+    capture: ['sum'],
+  });
+  assert.ok(!/\bnew Function\b/.test(src), 'new Function is blocked by script-src without unsafe-eval');
+  assert.ok(!/\beval\s*\(/.test(src), 'eval is blocked by the same CSP');
+  assert.ok(!/^self\.(indexedDB|caches|fetch|WebSocket)\s*=/m.test(src), 'a getter-only worker global cannot be assigned');
+  assert.ok(/Object\.defineProperty\(self/.test(src), 'globals are removed through defineProperty');
+  assert.ok(src.includes('const sum = (n) => n.reduce((a, b) => a + b, 0);'), 'the model code is compiled as script source');
+  assert.ok(/"__fnRef":0/.test(src) && /\(a, b\) => a - b/.test(src), 'function arguments are inlined by index, not stringified into eval');
+  // Compiling is not running: this proves the generated text is valid script syntax in any engine.
+  assert.doesNotThrow(() => new vm.Script(src, { filename: 'generated-sandbox.js' }));
+});
+
+test('the worker prefix still closes the network and keeps a private postMessage handle', async () => {
+  const { buildWorkerSource } = await import(`${root}src/core/sandbox.js`);
+  const src = buildWorkerSource({ code: 'export const x = 1;', entries: ['x'], cases: [] });
+  for (const name of ['fetch', 'XMLHttpRequest', 'WebSocket', 'EventSource', 'importScripts', 'indexedDB', 'caches']) {
+    assert.ok(new RegExp(`__kill\\('${name}'`).test(src), `${name} must be removed inside the worker`);
+  }
+  assert.ok(/const __post = self\.postMessage\.bind\(self\);/.test(src), 'the only way out is a captured handle');
+  assert.ok(src.indexOf("__kill('postMessage')") > src.indexOf('const __post'), 'the global is dropped after the handle is kept');
+});

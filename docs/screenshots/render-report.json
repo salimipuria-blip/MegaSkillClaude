@@ -1,0 +1,287 @@
+{
+  "checks": [
+    {
+      "name": "boot: app mounted",
+      "ok": true,
+      "detail": "window.__apex missing"
+    },
+    {
+      "name": "boot: under 3s",
+      "ok": true,
+      "detail": "812 ms"
+    },
+    {
+      "name": "lang/dir",
+      "ok": true,
+      "detail": "fa/rtl"
+    },
+    {
+      "name": "font: Vazirmatn loaded by the browser",
+      "ok": true,
+      "detail": "Vazirmatn, \"Vazirmatn UI\", system-ui, -apple-system, Tahoma, sans-serif"
+    },
+    {
+      "name": "font: body really uses it",
+      "ok": true,
+      "detail": "Vazirmatn, \"Vazirmatn UI\", system-ui, -apple-system, Tahoma, sans-serif"
+    },
+    {
+      "name": "layout: no horizontal overflow",
+      "ok": true,
+      "detail": "1360 > 1360"
+    },
+    {
+      "name": "workspace: file tree rendered",
+      "ok": true,
+      "detail": "3 rows"
+    },
+    {
+      "name": "network: zero third-party requests",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "run: reflex produced a verified result",
+      "ok": true,
+      "detail": "{\"ok\":true,\"steps\":0,\"files\":4,\"banned\":true}"
+    },
+    {
+      "name": "run: sandbox worker executed (no error overlay)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "run: wrote files",
+      "ok": true,
+      "detail": "4"
+    },
+    {
+      "name": "view: workbench opens",
+      "ok": true,
+      "detail": "workbench"
+    },
+    {
+      "name": "view: workbench — every control can actually be hit",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "view: evolve opens",
+      "ok": true,
+      "detail": "evolve"
+    },
+    {
+      "name": "view: evolve — every control can actually be hit",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "view: memory opens",
+      "ok": true,
+      "detail": "memory"
+    },
+    {
+      "name": "view: memory — every control can actually be hit",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "view: settings opens",
+      "ok": true,
+      "detail": "settings"
+    },
+    {
+      "name": "view: settings — every control can actually be hit",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "self-test: the app's own suite passes in the browser",
+      "ok": true,
+      "detail": "۳۰/۳۰ (badge ok)"
+    },
+    {
+      "name": "sandbox: real Blob Worker ran the code",
+      "ok": true,
+      "detail": "\"\""
+    },
+    {
+      "name": "sandbox: runtime is the worker",
+      "ok": true,
+      "detail": "worker"
+    },
+    {
+      "name": "sandbox: a spinner is killed",
+      "ok": true,
+      "detail": "\"timeout after 400 ms\""
+    },
+    {
+      "name": "mobile: no horizontal overflow at 390px",
+      "ok": true,
+      "detail": "0px"
+    },
+    {
+      "name": "mobile: every control is at least 44×44",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile: fields are 16px (no iOS zoom)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "mobile: checkbox labels are a real target",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "console: no errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "page: no uncaught exceptions",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "network: no failed requests",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "csp: page rendered under the production policy",
+      "ok": true,
+      "detail": "default-src 'self'; script-src 'self' blob:; worker-src 'sel"
+    }
+  ],
+  "errors": [],
+  "screenshots": [
+    "../docs/screenshots/desktop-01-home.png",
+    "../docs/screenshots/desktop-02-after-run.png",
+    "../docs/screenshots/desktop-03-palette.png",
+    "../docs/screenshots/desktop-04-workbench.png",
+    "../docs/screenshots/desktop-05-evolve.png",
+    "../docs/screenshots/desktop-06-memory.png",
+    "../docs/screenshots/desktop-07-settings.png",
+    "../docs/screenshots/desktop-08-self-test.png",
+    "../docs/screenshots/mobile-01-home.png"
+  ],
+  "requests": [
+    "http://127.0.0.1:36715/",
+    "http://127.0.0.1:36715/assets/fonts/vazirmatn-var.woff2",
+    "http://127.0.0.1:36715/assets/apex.css",
+    "http://127.0.0.1:36715/src/app/boot.js",
+    "http://127.0.0.1:36715/src/core/vfs.js",
+    "http://127.0.0.1:36715/src/core/memory.js",
+    "http://127.0.0.1:36715/src/core/genome.js",
+    "http://127.0.0.1:36715/src/core/evals.js",
+    "http://127.0.0.1:36715/src/core/providers.js",
+    "http://127.0.0.1:36715/src/core/sandbox.js",
+    "http://127.0.0.1:36715/src/app/ui.js",
+    "http://127.0.0.1:36715/src/app/views.js",
+    "http://127.0.0.1:36715/src/app/state.js",
+    "http://127.0.0.1:36715/src/core/diff.js",
+    "http://127.0.0.1:36715/src/core/triad.js",
+    "http://127.0.0.1:36715/src/core/redact.js",
+    "http://127.0.0.1:36715/src/core/agent.js",
+    "http://127.0.0.1:36715/src/core/reflex.js",
+    "http://127.0.0.1:36715/src/core/compress.js",
+    "http://127.0.0.1:36715/src/core/tokens.js",
+    "http://127.0.0.1:36715/src/core/zip.js",
+    "http://127.0.0.1:36715/src/core/evolution.js",
+    "http://127.0.0.1:36715/src/core/selftest.js",
+    "http://127.0.0.1:36715/src/app/self.js",
+    "http://127.0.0.1:36715/src/core/evaluate.js",
+    "blob:http://127.0.0.1:36715/acb16852-762b-4f0e-aa52-087d548fb718",
+    "blob:http://127.0.0.1:36715/ea89a02c-a146-4133-9358-e9a1d1f86129",
+    "blob:http://127.0.0.1:36715/5a37202d-ba03-439d-95d9-2bce1669478f",
+    "blob:http://127.0.0.1:36715/5cee8db1-f88b-48bc-8bf0-c69e231c0786",
+    "blob:http://127.0.0.1:36715/225215b6-232f-43bb-9481-206368cc71d4",
+    "blob:http://127.0.0.1:36715/80ff9b07-df70-44ca-b490-5be4cb938968",
+    "blob:http://127.0.0.1:36715/b5a372db-e755-4138-b3c4-a3328c812f44",
+    "blob:http://127.0.0.1:36715/fa5e0845-7aac-4f3b-acf9-780318d68d0c",
+    "blob:http://127.0.0.1:36715/f301ebc0-5029-41d5-9a46-caabfc55ad62",
+    "blob:http://127.0.0.1:36715/c193b250-8f77-4c68-928e-1f8caee6405e",
+    "blob:http://127.0.0.1:36715/c1b400e3-6f67-4f68-a1cc-3706994ddc38",
+    "blob:http://127.0.0.1:36715/4d64e374-38c6-4d15-84a5-3a877012c0d5",
+    "blob:http://127.0.0.1:36715/a64a41b4-ca9e-4d0b-a330-660d6aa7f901",
+    "blob:http://127.0.0.1:36715/db1852d8-890d-4c33-9549-0e5bfdd5c029",
+    "blob:http://127.0.0.1:36715/a759a51b-2bf4-4d81-b567-345faed872d3",
+    "blob:http://127.0.0.1:36715/6843fb84-ba05-47ba-ad29-e4997cadf931",
+    "blob:http://127.0.0.1:36715/234e6fd7-1e2d-4bc4-aa8f-c31f288a1c79",
+    "blob:http://127.0.0.1:36715/a12b6809-84ec-44ec-9124-45e194f23582",
+    "blob:http://127.0.0.1:36715/4c084037-66cf-4daa-a9b4-f11f91efe71e",
+    "blob:http://127.0.0.1:36715/318c4b4d-2ec9-46a7-bf8e-e868d4ce4bed",
+    "blob:http://127.0.0.1:36715/92f393fb-6757-43b8-902a-068cb46596e4",
+    "blob:http://127.0.0.1:36715/695c8ddf-7976-4ab5-80d7-bee35f39f352",
+    "blob:http://127.0.0.1:36715/88433e11-47d1-4540-811a-92a5bac39f1c",
+    "blob:http://127.0.0.1:36715/aaae3b51-43ba-4764-853a-a2b35cd809e4",
+    "blob:http://127.0.0.1:36715/41cdc44d-e7d7-4e2c-9861-fb82733ee285",
+    "blob:http://127.0.0.1:36715/ce831015-3f02-4b7c-b02d-51d662770312",
+    "blob:http://127.0.0.1:36715/2b08bdee-5a36-44d6-8f45-f969d4fc670e",
+    "blob:http://127.0.0.1:36715/c97e0142-97c4-4948-b57f-de61415552cc",
+    "blob:http://127.0.0.1:36715/e67713d1-f385-4ed2-a7be-d8a2d6009144",
+    "blob:http://127.0.0.1:36715/518b4814-4919-4940-b5cf-939305907e45",
+    "blob:http://127.0.0.1:36715/a89a34e8-7837-454a-80db-5661469b98fb",
+    "blob:http://127.0.0.1:36715/aa98a3ea-7831-455d-bddc-feea21693a28",
+    "blob:http://127.0.0.1:36715/90e208c7-85e0-405f-a53e-ec1f5a9792ae",
+    "blob:http://127.0.0.1:36715/292f3258-a3b5-4da8-b550-688d7c2218ea",
+    "blob:http://127.0.0.1:36715/ef059d76-b074-4665-99e9-be36f2e14f84",
+    "blob:http://127.0.0.1:36715/f047cb25-4c31-4c47-9b55-b4f6eaba8a93",
+    "blob:http://127.0.0.1:36715/634dc66a-ff97-4afd-a97b-04c0f2f3418b",
+    "blob:http://127.0.0.1:36715/62820ea3-8b68-46b5-b01d-e363b75e13e7",
+    "blob:http://127.0.0.1:36715/6539858a-23cf-4681-b7d1-d32d363ed33f",
+    "http://127.0.0.1:36715/#settings",
+    "http://127.0.0.1:36715/assets/fonts/vazirmatn-var.woff2",
+    "http://127.0.0.1:36715/assets/apex.css",
+    "http://127.0.0.1:36715/src/app/boot.js",
+    "http://127.0.0.1:36715/src/core/vfs.js",
+    "http://127.0.0.1:36715/src/core/memory.js",
+    "http://127.0.0.1:36715/src/core/genome.js",
+    "http://127.0.0.1:36715/src/core/evals.js",
+    "http://127.0.0.1:36715/src/core/providers.js",
+    "http://127.0.0.1:36715/src/core/sandbox.js",
+    "http://127.0.0.1:36715/src/app/ui.js",
+    "http://127.0.0.1:36715/src/app/views.js",
+    "http://127.0.0.1:36715/src/app/state.js",
+    "http://127.0.0.1:36715/src/core/diff.js",
+    "http://127.0.0.1:36715/src/core/triad.js",
+    "http://127.0.0.1:36715/src/core/redact.js",
+    "http://127.0.0.1:36715/src/core/agent.js",
+    "http://127.0.0.1:36715/src/core/reflex.js",
+    "http://127.0.0.1:36715/src/core/compress.js",
+    "http://127.0.0.1:36715/src/core/tokens.js",
+    "http://127.0.0.1:36715/src/core/zip.js",
+    "http://127.0.0.1:36715/src/core/evolution.js",
+    "http://127.0.0.1:36715/src/core/selftest.js",
+    "http://127.0.0.1:36715/src/app/self.js",
+    "http://127.0.0.1:36715/src/core/evaluate.js",
+    "http://127.0.0.1:36715/#chat",
+    "http://127.0.0.1:36715/assets/fonts/vazirmatn-var.woff2",
+    "http://127.0.0.1:36715/assets/apex.css",
+    "http://127.0.0.1:36715/src/app/boot.js",
+    "http://127.0.0.1:36715/src/core/vfs.js",
+    "http://127.0.0.1:36715/src/core/memory.js",
+    "http://127.0.0.1:36715/src/core/genome.js",
+    "http://127.0.0.1:36715/src/core/evals.js",
+    "http://127.0.0.1:36715/src/core/providers.js",
+    "http://127.0.0.1:36715/src/core/sandbox.js",
+    "http://127.0.0.1:36715/src/app/ui.js",
+    "http://127.0.0.1:36715/src/app/views.js",
+    "http://127.0.0.1:36715/src/app/state.js",
+    "http://127.0.0.1:36715/src/core/diff.js",
+    "http://127.0.0.1:36715/src/core/triad.js",
+    "http://127.0.0.1:36715/src/core/redact.js",
+    "http://127.0.0.1:36715/src/core/agent.js",
+    "http://127.0.0.1:36715/src/core/reflex.js",
+    "http://127.0.0.1:36715/src/core/compress.js",
+    "http://127.0.0.1:36715/src/core/tokens.js",
+    "http://127.0.0.1:36715/src/core/zip.js",
+    "http://127.0.0.1:36715/src/core/evolution.js",
+    "http://127.0.0.1:36715/src/core/selftest.js",
+    "http://127.0.0.1:36715/src/app/self.js",
+    "http://127.0.0.1:36715/src/core/evaluate.js"
+  ]
+}

@@ -612,7 +612,7 @@ input[type="range"] { width: 100%; accent-color: var(--cyan); height: 18px; }
   .topbar { padding-inline: 12px; grid-template-columns: 1fr auto; }
   .tabs { display: none; }
   .brand-text span { display: none; }
-  .pill { max-width: 128px; font-size: 10.5px; height: 30px; }
+  .pill { max-width: 150px; font-size: 11px; height: 44px; }
   .pill span { display: none; }
   .pill span#pillBrainText { display: inline; }
   .icon-btn kbd { display: none; }
@@ -684,4 +684,18 @@ input[type="range"] { width: 100%; accent-color: var(--cyan); height: 18px; }
   .topbar, .statusbar, .mobile-nav, .toasts, #field, .dialog, .inspector { display: none !important; }
   body { background: #fff; color: #000; }
   .panel { border: 1px solid #ccc; box-shadow: none; background: #fff; }
+}
+
+/* ---------- phones, measured not guessed ----------
+   tools/render.mjs opens the page at 390x844 in real Chromium and fails the build if any control is
+   under 44x44 or any field is under 16px (iOS zooms the page on focus otherwise). These rules live
+   at the end of the file so they win against the desktop field styles by specificity and order. */
+@media (max-width: 760px) {
+  main input, main textarea, main select, .palette input, .ask-input { font-size: 16px; }
+  #goal, #paletteInput, #code, #forgeInput, #model, #apiKey, #baseUrl, #proxyToken, #rememberKey + span { font-size: 16px; }
+  main input, main select, .fieldset input, .search-row input, .add-law input { min-height: 44px; }
+  main textarea { min-height: 44px; }
+  .pill { height: 44px; max-width: 150px; font-size: 11px; }
+  .seg, .seg.active { min-height: 44px; min-width: 44px; font-size: 13px; }
+  .skip-link { display: inline-flex; align-items: center; min-height: 44px; }
 }

@@ -7,136 +7,190 @@
 
 const TIMEOUT_MS = 1500;
 
-export const SANDBOX_WORKER_SOURCE = `
+// The sandbox worker is generated from the payload and compiled as a *script*, never with
+// new Function(): the deployment CSP (script-src 'self' blob:) has no 'unsafe-eval', so anything
+// built from a string is blocked in the browser — which is exactly where it has to run.
+const WORKER_PREFIX = `
 'use strict';
-// Network and storage are not features of this sandbox; they are absent.
-self.fetch = () => Promise.reject(new Error('network disabled in sandbox'));
-self.XMLHttpRequest = undefined;
-self.WebSocket = undefined;
-self.EventSource = undefined;
-self.importScripts = () => { throw new Error('importScripts disabled in sandbox'); };
-self.indexedDB = undefined;
-self.caches = undefined;
+const __kill = (name, value) => {
+  try { Object.defineProperty(self, name, { value, configurable: true, writable: true }); }
+  catch (_) { try { delete self[name]; } catch (_) {} }
+};
+// Keep one private handle before the user code can touch the global.
+const __post = self.postMessage.bind(self);
+__kill('postMessage');
+__kill('fetch', () => Promise.reject(new Error('network disabled in sandbox')));
+__kill('XMLHttpRequest');
+__kill('WebSocket');
+__kill('EventSource');
+__kill('indexedDB');
+__kill('caches');
+__kill('importScripts', () => { throw new Error('importScripts disabled in sandbox'); });
 
-function deepEqual(a, b) {
+const __show = (v) => {
+  try {
+    if (typeof v === 'string') return JSON.stringify(v).slice(0, 200);
+    return JSON.stringify(v)?.slice(0, 200) ?? String(v).slice(0, 200);
+  } catch (_) { return String(v).slice(0, 200); }
+};
+const __deep = (a, b) => {
   if (Object.is(a, b)) return true;
   if (typeof a !== typeof b) return false;
   if (a === null || b === null || typeof a !== 'object') return false;
   if (Array.isArray(a) !== Array.isArray(b)) return false;
-  if (Array.isArray(a)) return a.length === b.length && a.every((v, i) => deepEqual(v, b[i]));
+  if (Array.isArray(a)) return a.length === b.length && a.every((v, i) => __deep(v, b[i]));
   const ka = Object.keys(a).sort();
   const kb = Object.keys(b).sort();
-  return ka.length === kb.length && ka.every((k, i) => k === kb[i] && deepEqual(a[k], b[k]));
-}
-
-function matchesExpect(value, expect) {
+  return ka.length === kb.length && ka.every((k, i) => k === kb[i] && __deep(a[k], b[k]));
+};
+const __match = (value, expect) => {
   if (expect === 'ANY' || expect === 'NO_THROW') return true;
   if (expect && typeof expect === 'object' && typeof expect.__type === 'string') {
     if (expect.__type === 'array') return Array.isArray(value);
     if (expect.__type === 'null') return value === null;
     return typeof value === expect.__type;
   }
-  return deepEqual(value, expect);
-}
-
-function hydrate(v) {
-  if (Array.isArray(v)) return v.map(hydrate);
+  return __deep(value, expect);
+};
+const __hydrate = (v) => {
+  if (Array.isArray(v)) return v.map(__hydrate);
   if (v && typeof v === 'object') {
-    if (typeof v.__fn === 'string') return new Function('return (' + v.__fn + ')')();
+    if (typeof v.__fnRef === 'number') return __FNS[v.__fnRef];
     const out = {};
-    for (const k of Object.keys(v)) out[k] = hydrate(v[k]);
+    for (const k of Object.keys(v)) out[k] = __hydrate(v[k]);
     return out;
   }
   return v;
-}
+};
+`;
 
-function show(v) {
-  try {
-    if (typeof v === 'string') return JSON.stringify(v).slice(0, 200);
-    return JSON.stringify(v)?.slice(0, 200) ?? String(v).slice(0, 200);
-  } catch (_) { return String(v).slice(0, 200); }
-}
-
-async function runOne(payload) {
-  const started = performance.now();
-  const logs = [];
-  const push = (level) => (...args) => logs.push({ level, text: args.map(show).join(' ') });
-  const fakeConsole = { log: push('log'), info: push('info'), warn: push('warn'), error: push('error'), debug: push('log') };
-  const entries = payload.entries || [];
-  const header = 'const console = arguments[0];\\n';
-  const footer = '\\n;return {' + entries
-    .map((e) => e + ': typeof ' + e + ' !== "undefined" ? ' + e + ' : undefined')
-    .join(', ') + '};';
-  let factory;
-  try {
-    factory = new Function(header + payload.code + footer);
-  } catch (err) {
-    return { ok: false, error: 'SyntaxError: ' + err.message, logs, results: [], ms: Math.round(performance.now() - started) };
-  }
-  let scope;
-  try {
-    scope = factory(fakeConsole);
-  } catch (err) {
-    return { ok: false, error: 'RuntimeError: ' + err.message, logs, results: [], ms: Math.round(performance.now() - started) };
-  }
-  const results = [];
-  const names = Object.keys(scope);
-  const vals = names.map((n) => scope[n]);
-  for (const c of payload.cases || []) {
-    const at = performance.now();
-    try {
-      let value;
-      if (c.expr) {
-        // Expression cases exist for higher-order APIs (once(fn), groupBy(items, key)) whose
-        // arguments cannot travel as JSON.
-        const f = new Function(...names, 'return (async () => (' + c.expr + '))();');
-        value = await f(...vals);
-      } else {
-        const fn = scope[c.fn];
-        if (typeof fn !== 'function') throw new Error('missing function: ' + c.fn);
-        value = await fn.apply(null, (c.args || []).map(hydrate));
-      }
-      results.push({
-        name: c.name || c.fn,
-        pass: matchesExpect(value, c.expect),
-        got: show(value),
-        expect: show(c.expect),
-        ms: Math.round(performance.now() - at),
-      });
-    } catch (err) {
-      results.push({
-        name: c.name || c.fn || 'case',
-        pass: c.expect === 'THROWS',
-        got: 'throws: ' + err.message,
-        expect: show(c.expect),
-        ms: Math.round(performance.now() - at),
-      });
+/** Turn any {__fn: "…"} inside case args into an index into __FNS (no eval, ever). */
+function liftFunctionArgs(value, fns) {
+  if (Array.isArray(value)) return value.map((v) => liftFunctionArgs(v, fns));
+  if (value && typeof value === 'object') {
+    if (typeof value.__fn === 'string') {
+      fns.push(value.__fn);
+      return { __fnRef: fns.length - 1 };
     }
+    const out = {};
+    for (const key of Object.keys(value)) out[key] = liftFunctionArgs(value[key], fns);
+    return out;
+  }
+  return value;
+}
+
+/** Build the whole worker script for one payload: prefix + user code + case runner. */
+export function buildWorkerSource(payload = {}) {
+  const fns = [];
+  const cases = (payload.cases || []).map((c) => {
+    const { expr, ...rest } = c;
+    return { ...rest, args: liftFunctionArgs(rest.args || [], fns) };
+  });
+  const exprs = (payload.cases || []).map((c) => c.expr || null);
+  const exportList = (payload.entries || [])
+    .map((n) => `${JSON.stringify(n)}: (typeof ${n} !== 'undefined' ? ${n} : undefined)`)
+    .join(', ');
+  return `${WORKER_PREFIX}
+const __FNS = [${fns.map((f) => '(' + f + ')').join(',')}];
+const __EXPRS = [${exprs.map((e) => (e ? 'async () => (' + e + ')' : 'null')).join(',')}];
+const __CASES = ${JSON.stringify(cases)};
+const __CAPTURE = ${JSON.stringify(payload.capture || [])};
+const __logs = [];
+const __push = (level) => (...args) => __logs.push({ level, text: args.map(__show).join(' ') });
+const console = { log: __push('log'), info: __push('info'), warn: __push('warn'), error: __push('error'), debug: __push('log') };
+const __started = performance.now();
+const __out = (async () => {
+  let scope = {};
+  const results = [];
+  try {
+    scope = await (async function () {
+${payload.code || ''}
+      const __exports = { ${exportList} };
+      for (let i = 0; i < __CASES.length; i += 1) {
+        const c = __CASES[i];
+        const at = performance.now();
+        try {
+          let value;
+          if (__EXPRS[i]) value = await __EXPRS[i]();
+          else {
+            const fn = __exports[c.fn];
+            if (typeof fn !== 'function') throw new Error('missing function: ' + c.fn);
+            value = await fn.apply(null, (c.args || []).map(__hydrate));
+          }
+          results.push({ name: c.name || c.fn, pass: __match(value, c.expect), got: __show(value), expect: __show(c.expect), ms: Math.round(performance.now() - at) });
+        } catch (err) {
+          results.push({ name: c.name || c.fn || 'case', pass: c.expect === 'THROWS', got: 'throws: ' + (err && err.message), expect: __show(c.expect), ms: Math.round(performance.now() - at) });
+        }
+      }
+      return __exports;
+    })();
+  } catch (err) {
+    return { ok: false, error: ((err && err.name) || 'Error') + ': ' + ((err && err.message) || String(err)), logs: __logs, results, ms: Math.round(performance.now() - __started) };
   }
   const captured = {};
-  for (const name of payload.capture || []) {
+  for (const name of __CAPTURE) {
     try { captured[name] = JSON.parse(JSON.stringify(scope[name])); } catch (_) { captured[name] = null; }
   }
   return {
     ok: results.every((r) => r.pass),
-    logs,
+    logs: __logs,
     results,
-    ms: Math.round(performance.now() - started),
+    ms: Math.round(performance.now() - __started),
     exported: Object.keys(scope),
     captured,
   };
+})();
+__out.then((result) => __post(result));
+`;
 }
 
-self.onmessage = async (event) => {
-  const { id, payload } = event.data || {};
-  try {
-    const result = await runOne(payload);
-    self.postMessage({ id, result });
-  } catch (err) {
-    self.postMessage({ id, result: { ok: false, error: String((err && err.message) || err), logs: [], results: [], ms: 0 } });
-  }
-};
-`;
+/**
+ * Run one payload in a fresh worker. One worker per run: the script has to contain the code, and a
+ * spinning worker is disposed by terminating it rather than by asking it to stop.
+ */
+function runInWorker(payload, timeoutMs) {
+  return new Promise((resolve) => {
+    let url = '';
+    let worker = null;
+    let settled = false;
+    const finish = (result) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      try { worker?.terminate(); } catch { /* already gone */ }
+      try { URL.revokeObjectURL(url); } catch { /* already revoked */ }
+      resolve(result);
+    };
+    const timer = setTimeout(
+      () => finish({ ok: false, error: `timeout after ${timeoutMs} ms`, logs: [], results: [], ms: timeoutMs }),
+      timeoutMs,
+    );
+    try {
+      url = URL.createObjectURL(new Blob([buildWorkerSource(payload)], { type: 'text/javascript' }));
+      worker = new Worker(url, { name: 'apex-sandbox' });
+    } catch (err) {
+      finish({ ok: false, error: `worker could not start: ${err?.message || err}`, logs: [], results: [], ms: 0 });
+      return;
+    }
+    worker.onmessage = (event) => finish(event.data || { ok: false, error: 'empty worker reply', logs: [], results: [], ms: 0 });
+    worker.onerror = (event) => {
+      event.preventDefault?.();
+      finish({
+        ok: false,
+        // A syntax error in the model's code lands here, with the engine's own message.
+        error: `${event?.error?.name || 'WorkerError'}: ${event?.message || 'worker crashed'}`,
+        logs: [],
+        results: [],
+        ms: 0,
+      });
+    };
+  });
+}
+
+/** Kept for callers that tore the old singleton down; workers are per-run now. */
+export function disposeSandbox() {
+  /* nothing persistent to dispose */
+}
 
 /** Remove module syntax so a plain script can be evaluated in the sandbox. */
 export function stripModuleSyntax(code) {
@@ -165,34 +219,6 @@ function payloadFor({ files, entry, cases, entries, capture }) {
   return payload;
 }
 
-let workerSingleton = null;
-let seq = 0;
-const pending = new Map();
-
-function getWorker() {
-  if (workerSingleton) return workerSingleton;
-  const blob = new Blob([SANDBOX_WORKER_SOURCE], { type: 'text/javascript' });
-  const url = URL.createObjectURL(blob);
-  const worker = new Worker(url, { name: 'apex-sandbox' });
-  worker.onmessage = (event) => {
-    const { id, result } = event.data || {};
-    const entry = pending.get(id);
-    if (!entry) return;
-    pending.delete(id);
-    clearTimeout(entry.timer);
-    entry.resolve(result);
-  };
-  worker.onerror = (event) => {
-    for (const [, entry] of pending) {
-      clearTimeout(entry.timer);
-      entry.resolve({ ok: false, error: `worker error: ${event.message || 'unknown'}`, logs: [], results: [], ms: 0 });
-    }
-    pending.clear();
-  };
-  workerSingleton = { worker, url };
-  return workerSingleton;
-}
-
 /**
  * Execute code + cases in the sandbox.
  * @returns {Promise<{ok:boolean, error?:string, logs:Array, results:Array, ms:number, runtime:string}>}
@@ -202,25 +228,7 @@ export async function runInSandbox({ files, entry, cases, entries, capture, time
   const hasWorker =
     typeof Worker !== 'undefined' && typeof Blob !== 'undefined' && typeof URL?.createObjectURL === 'function';
   if (hasWorker) {
-    const { worker } = getWorker();
-    const id = ++seq;
-    const result = await new Promise((resolve) => {
-      const timer = setTimeout(() => {
-        pending.delete(id);
-        // A spinning worker is replaced, not merely ignored: the next run gets a clean thread.
-        try {
-          worker.terminate();
-          URL.revokeObjectURL(workerSingleton.url);
-        } catch {
-          /* already gone */
-        }
-        workerSingleton = null;
-        resolve({ ok: false, error: `timeout after ${timeoutMs} ms`, logs: [], results: [], ms: timeoutMs });
-      }, timeoutMs);
-      pending.set(id, { resolve, timer });
-      worker.postMessage({ id, payload });
-    });
-    return { runtime: 'worker', ...result };
+    return { runtime: 'worker', ...(await runInWorker(payload, timeoutMs)) };
   }
   return { runtime: 'node', ...(await runInNode(payload, timeoutMs)) };
 }
@@ -333,15 +341,4 @@ export function deepEqual(a, b) {
   const ka = Object.keys(a).sort();
   const kb = Object.keys(b).sort();
   return ka.length === kb.length && ka.every((k, i) => k === kb[i] && deepEqual(a[k], b[k]));
-}
-
-/** Stop the shared worker (tab close, or a hard reset). */
-export function disposeSandbox() {
-  if (workerSingleton) {
-    workerSingleton.worker.terminate();
-    URL.revokeObjectURL(workerSingleton.url);
-    workerSingleton = null;
-  }
-  for (const [, entry] of pending) clearTimeout(entry.timer);
-  pending.clear();
 }

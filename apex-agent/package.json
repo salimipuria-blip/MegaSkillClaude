@@ -1,6 +1,6 @@
 {
   "name": "apex-metacode",
-  "version": "3.0.0",
+  "version": "3.1.1",
   "private": true,
   "type": "module",
   "description": "APEX-01 · متاکد — ایجنت کدنویسِ خودتکامل: سه نامزد، سه فرضیهٔ شکست، اجرای واقعی تست در مرورگر.",
@@ -12,7 +12,8 @@
     "check": "node tools/check.mjs",
     "serve": "python3 -m http.server 8080 --bind 0.0.0.0",
     "zip": "node tools/make_zip.mjs",
-    "verify": "npm run check && npm test && npm run zip"
+    "verify": "npm run check && npm test && npm run zip",
+    "render": "node tools/render.mjs"
   },
   "keywords": [
     "agent",

@@ -2,6 +2,46 @@
 
 > آخرین به‌روزرسانی: 2026-10-30 · لاگ جریان: جدیدترین پاس در بالا، تاریخ‌دار و با دستور و خروجی واقعی.
 
+## 2026-10-30 (پاس ششم) — یک مرورگرِ واقعی نصب شد، و همان اول مغزِ محصول را زمین زد
+
+**دستور مالک:** «یه مرورگر نصب کن همین الان.» کار همان‌جا که پاس پنجم ایستاده بود شروع شد: `رندر در مرورگر واقعی: اجرا نشده`.
+
+مرورگر در این محیط نصب نبود و `apt` به آینه‌های دبیان دسترسی ندارد، پس کرومیومِ بستهٔ npm (`@sparticuz/chromium` ۱۵۳) پیاده شد. این بسته کتابخانه‌هایش را فقط روی Amazon Linux باز می‌کند؛ استخراجِ دستیِ `bin/al2023.tar.br` (brotli) و `LD_LIBRARY_PATH` مشکلِ `libnspr4.so` را حل کرد. همین مسیر داخل `tools/render.mjs` کد شد تا در نشستِ بعد هم خودکار باشد.
+
+بعد `tools/render.mjs` نوشته شد: سرورِ محلی که **همان CSPِ `vercel.json`** را می‌فرستد، کرومیوم در ۱۳۶۰×۹۰۰ و ۳۹۰×۸۴۴، و ۳۱ ادعای اجراشدنی. اولین اجرا ۲۰/۲۵ بود و سه نقصِ واقعی را رو کرد که هیچ تستِ Node/jsdom نمی‌دید:
+
+| # | نقص | شاهدِ مرورگر | اصلاح |
+|---|---|---|---|
+| ۱ | **سندباکس در مرورگرِ واقعی هیچ‌وقت بالا نمی‌آمد.** اسکریپتِ Worker همان اول `self.indexedDB = undefined` می‌نوشت؛ در `WorkerGlobalScope` این‌ها اکسسورِ فقط-خواندنی‌اند و در حالتِ strict استثنا می‌دهند ⇒ کلِ Worker قبل از نصبِ `onmessage` می‌مرد | `pageerror: Cannot set property indexedDB of #<WorkerGlobalScope> which has only a getter` | حذفِ گلوبال‌ها با `Object.defineProperty`/`delete` در `try` (تابعِ `__kill`) |
+| ۲ | **زیرِ CSPِ استقرار، سندباکس حتی با Workerِ سالم هم کار نمی‌کرد**: کدِ مدل با `new Function` ساخته می‌شد و `script-src 'self' blob:` بدونِ `unsafe-eval` آن را می‌بندد | `SyntaxError: Evaluating a string as JavaScript violates … 'unsafe-eval'` | سندباکس دیگر eval ندارد: برای هر اجرا یک Worker از **متنِ ساخته‌شده** (پیشوند + کدِ کاربر + اجراکنندهٔ کیس‌ها) ساخته می‌شود؛ آرگومان‌های تابع (`__fn`) هم به ایندکسِ `__FNS` تبدیل می‌شوند، نه رشتهٔ eval |
+| ۳ | **کنترل‌های موبایل زیرِ ۴۴px و فیلدها زیرِ ۱۶px**: `.pill` ۳۰px بود، `#goal` ۱۵px، هشت فیلد زیرِ ۱۶px (زومِ خودکارِ iOS)، `.seg` ۲۸px | `npm run render`: «۳۰×۴۴ ناقص» | بلوکِ «phones, measured not guessed» در انتهای `apex.css`؛ اندازه‌گیریِ دوباره در همان مرورگر |
+
+ضمناً دو نقص در خودِ ابزارِ سنجش پیدا و رفع شد تا سبزیِ دروغ ندهد: چکِ «پنل باز شد» به `#pane-*` نگاه می‌کرد که در DOM وجود ندارد (همیشه true)، و کلیکِ Puppeteer روی دکمه‌ای که زیرِ نوارِ پایین بود بی‌صدا به نوار می‌خورد. اکنون هر کنترل با `scrollIntoView` به مرکزِ صفحه می‌آید و با `elementFromPoint` آزموده می‌شود.
+
+برای اینکه این کلاس از خطا دیگر بی‌صدا برنگردد، دو تستِ Node هم اضافه شد (`hardening.test.mjs`): متنِ Workerِ تولیدشده نباید `new Function`/`eval` داشته باشد، نباید به گلوبالِ فقط-خواندنی مقدار بدهد، و باید با `vm.Script` به‌عنوان اسکریپت کامپایل شود.
+
+```bash
+$ npm run render          # Chromium 153، CSPِ واقعیِ استقرار
+checks: 31/31 passed
+✓ boot: under 3s — 832 ms          ✓ font: Vazirmatn loaded by the browser
+✓ run: reflex produced a verified result — {"ok":true,...}
+✓ sandbox: real Blob Worker ran the code   ✓ sandbox: a spinner is killed
+✓ self-test: the app's own suite passes in the browser — ۳۰/۳۰
+✓ mobile: every control is at least 44×44  ✓ mobile: fields are 16px (no iOS zoom)
+✓ network: zero third-party requests       ✓ console: no errors
+
+$ node --test src/tests/*.test.mjs     # ۱۰ موجِ پیاپی
+wave 1..10: tests=97 pass=97 fail=0
+
+$ node tools/check.mjs   → checked 58 files · deployable 686.0 KB · ✓ static contract is clean
+$ node tools/make_zip.mjs → 58 files · 692.4 KB · sha256 5d79aec9…
+$ python3 -m unittest discover -s tests → Ran 180 tests · OK
+```
+
+شاهدِ چشمی: `../docs/screenshots/` — ۹ تصویر (خانه، پس از اجرا، پالت، چهار پنل، خودآزمایی و موبایل) و `render-report.json` با همین ۳۱ نتیجه. اسکرین‌شات‌ها عمداً بیرون از `apex-agent/` هستند تا وارد بستهٔ Netlify نشوند.
+
+**اجرا نشده (صادقانه):** فراخوانیِ زندهٔ مدل با کلیدِ واقعی، و درخواستِ بی‌نام به دامنهٔ Vercel (استقرار `public: false` است).
+
 ## 2026-10-30 (پاس پنجم) — ورودیِ خصمانه، دیالوگِ صفحه‌کلیدی، و «قطعی‌بودن» که واقعاً قطعی نبود
 
 **دستور مالک:** «عمیق بررسی کن. دقیق تست کن. حرفه‌ای اصلاح کن. دوباره انجامش بده. این پیامو ۱۰ بار اجرا کن. بعد از اجرای فرمان واقعی این تسک زیپ بده.»

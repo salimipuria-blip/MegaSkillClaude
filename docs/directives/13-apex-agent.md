@@ -13,30 +13,34 @@
 | هسته | ۱۷ ماژول خالص بدون DOM در `apex-agent/src/core/` | شمارش فایل |
 | نما | ۵ ماژول در `apex-agent/src/app/` | شمارش فایل |
 
-## وضعیت تأییدشده (2026-10-30)
+## وضعیت تأییدشده (2026-10-30، پاس سوم)
 
 | سطح بررسی | دستور | نتیجه |
 |---|---|---|
-| قرارداد ایستا | `node tools/check.mjs` | ✅ پاک (۹ قرارداد: سلکتورها، آیکون‌ها، ایمپورت‌ها، CSP، حجم) |
+| قرارداد ایستا | `node tools/check.mjs` | ✅ پاک — ۵۸ فایل، ۶۸۶ KB، ۹ قرارداد |
 | تست هستهٔ خالص | `node --test src/tests/core.test.mjs` | ✅ ۳۰/۳۰ |
 | تست مسیرِ مدل | `node --test src/tests/model.test.mjs` | ✅ ۵/۵ (سرور HTTP محلی: قرارداد درخواست، SSE، ۴۰۱، ۴۲۹، پاسخِ بی‌معنی) |
 | تست سرتاسری DOM | `node --test src/tests/dom.test.mjs` | ✅ ۶/۶ (jsdom: boot، شورا، بنچمارک، تست اتصال، خودکاوی، ویرایش/زیپ) |
-| کلِ مجموعه | `node --test src/tests/*.test.mjs` | ✅ ۸۷/۸۷ · ده موجِ پیاپی هر بار ۸۷/۸۷ |
+| سخت‌سازی | `node --test src/tests/hardening.test.mjs` | ✅ ۱۰/۱۰ (ورودِ خصمانه، آلودگیِ prototype، دیالوگ با کیبورد، عدد فارسی، جبرگرایی، اسکریپتِ سندباکس بدون eval) |
+| کلِ مجموعه | `node --test src/tests/*.test.mjs` | ✅ ۹۷/۹۷ · ده موجِ پیاپی هر بار ۹۷/۹۷ |
 | پروکسی و استقرار | `node --test src/tests/proxy.test.mjs src/tests/deploy.test.mjs` | ✅ ۶/۶ (ردِ رلهٔ باز، هدرهای یکسانِ Netlify/Vercel) |
-| زیپ استقرار | `node tools/make_zip.mjs` | ✅ ۵۶ فایل، ۶۴۲KB، تأیید با `python3 -m zipfile` |
-| رندر مرورگر واقعی | — | ❌ اجرا نشده (در محیط ساخت هیچ مرورگری نصب نیست) |
-| فراخوانی زندهٔ مدل | — | ❌ اجرا نشده (بدون کلید) |
+| زیپ استقرار | `node tools/make_zip.mjs` | ✅ ۵۸ فایل، ۶۹۲.۴ KB، sha256 `5d79aec9…`، تأیید با `python3 -m zipfile` |
+| **رندر مرورگر واقعی** | `npm run render` (Chromium 153، CSPِ واقعیِ استقرار) | ✅ **۳۱/۳۱** — بوت ۰٫۸ ثانیه، فونت وزیرمتن، Reflex واقعی، Worker واقعی، ۳۰/۳۰ سنجهٔ درون‌اپ در مرورگر، موبایل ۳۹۰×۸۴۴ |
+| فراخوانی زندهٔ مدل | — | ❌ اجرا نشده (بدون کلیدِ ارائه‌دهنده) |
 | استقرار Vercel | `create_deployment` از همین برنچ | ✅ ساخته شد؛ لینک پشتِ Deployment Protection حساب |
 | استقرار Netlify | — | ❌ اجرا نشده (بدون توکن حساب) |
+
+شاهدِ چشمی: `docs/screenshots/` (۹ تصویر + `render-report.json`)، بیرون از بستهٔ استقرار.
 
 ## دستورها
 
 ```bash
 cd apex-agent
 node tools/check.mjs                 # قرارداد ایستا
-node --test src/tests/*.test.mjs     # ۸۷ تست (۲۳ تستِ jsdom در نبودِ آن skip می‌شوند)
+node --test src/tests/*.test.mjs     # ۹۷ تست (۳۱ تستِ jsdom در نبودِ آن skip می‌شوند)
 node tools/make_zip.mjs              # release/apex-metacode-netlify.zip
 python3 -m http.server 8080          # پیش‌نمایش محلی
+npm run render                       # ۳۱ سنجه در کرومیومِ واقعی (نیاز به puppeteer-core)
 node ../scripts/doctor.mjs apex      # همان گیت‌ها از ریشهٔ مخزن
 ```
 
