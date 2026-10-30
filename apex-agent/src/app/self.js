@@ -19,6 +19,7 @@ export const SELF_FILES = [
   'src/app/views.js',
   'src/app/state.js',
   'src/core/agent.js',
+  'src/core/skills.js',
   'src/core/compress.js',
   'src/core/diff.js',
   'src/core/evals.js',

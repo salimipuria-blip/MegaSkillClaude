@@ -24,3 +24,7 @@ apex-agent/release/
 # Live-model credentials for apex-agent/tools/live-check.mjs — never committed.
 apex-agent/.apex-key
 apex-agent/.apex-live.json
+
+# Generated Netlify publish output
+apex-agent/dist/
+.netlify/

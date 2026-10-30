@@ -1,3 +1,5 @@
+import { createSkillLibrary } from '../core/skills.js';
+const skillLibrary = createSkillLibrary();
 // Chat + inspector + workbench. Rendering is plain DOM, escaping is centralised in `h`.
 //
 // The rule this file follows: the screen may only show what the core actually produced. Nothing is
@@ -42,7 +44,7 @@ export function h(strings, ...values) {
       const v = values[i];
       if (v instanceof RawHTML) out += v.value;
       else if (Array.isArray(v)) out += v.map((x) => (x instanceof RawHTML ? x.value : esc(x))).join('');
-      else if (v instanceof Node) out += v.outerHTML;
+      else if (typeof Node !== 'undefined' && v instanceof Node) out += v.outerHTML;
       else out += esc(v);
     }
   });
@@ -465,7 +467,17 @@ export function mountChat(app) {
     const llm = app.makeLLM();
     const controller = new AbortController();
     abortController = controller;
+    let skillReferences = [];
+    try {
+      const selected = await skillLibrary.select(goal, controller.signal);
+      skillReferences = selected.references;
+      message('system', `کتابخانهٔ ${selected.count.toLocaleString('fa-IR')} مهارت: ${skillReferences.map(r => r.name).join('، ') || 'مرجع مرتبط پیدا نشد'}`);
+    } catch (error) {
+      if (controller.signal.aborted) { setRunning(false); return; }
+      message('system', 'کتابخانه در دسترس نیست؛ اجرای درخواست بدون مرجع ادامه دارد.');
+    }
     currentAgent = createAgent({
+      skillReferences,
       vfs: app.vfs,
       genome: app.genome,
       memory: app.memory,

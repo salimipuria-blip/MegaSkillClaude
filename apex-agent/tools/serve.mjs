@@ -13,13 +13,14 @@ import { existsSync, readFileSync, statSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
+const APP_ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const argv = process.argv.slice(2);
 const arg = (name, fallback) => {
   const i = argv.indexOf(`--${name}`);
   return i >= 0 && argv[i + 1] && !argv[i + 1].startsWith('--') ? argv[i + 1] : fallback;
 };
 
+const ROOT = path.resolve(APP_ROOT, arg('root', '.'));
 const PORT = Number(arg('port', process.env.PORT || 8080));
 const HOST = arg('host', '0.0.0.0');
 const WITH_HEADERS = !argv.includes('--no-headers');
@@ -54,7 +55,7 @@ function deploymentRules() {
         '$',
     );
   try {
-    const conf = JSON.parse(readFileSync(path.join(ROOT, 'vercel.json'), 'utf8'));
+    const conf = JSON.parse(readFileSync(path.join(APP_ROOT, 'vercel.json'), 'utf8'));
     return (conf.headers || []).map((rule) => ({ match: toRegExp(rule.source), headers: rule.headers || [] }));
   } catch {
     return [];

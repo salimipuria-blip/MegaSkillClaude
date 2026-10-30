@@ -1,8 +1,10 @@
 # Netlify: static site, zero build step, one optional proxy function.
-# Drag this folder into Netlify Drop, or point a site at it with publish = ".".
+# Drag this folder into Netlify Drop, or point a site at it with command = "npm run build"
+  publish = "dist".
 
 [build]
-  publish = "."
+  command = "npm run build"
+  publish = "dist"
   functions = "netlify/functions"
 
 [build.environment]

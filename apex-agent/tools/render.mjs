@@ -55,8 +55,9 @@ function serve() {
   const server = createServer((req, res) => {
     const url = decodeURIComponent((req.url || '/').split('?')[0]);
     const rel = url === '/' ? '/index.html' : url;
-    const file = path.join(ROOT, path.normalize(rel).replace(/^([/\\])+/, ''));
-    if (!file.startsWith(ROOT) || !existsSync(file) || !statSync(file).isFile()) {
+    const webRoot = path.resolve(ROOT, argOf('root', '.'));
+    const file = path.join(webRoot, path.normalize(rel).replace(/^([/\\])+/, ''));
+    if (!file.startsWith(webRoot + path.sep) || !existsSync(file) || !statSync(file).isFile()) {
       res.writeHead(404, { 'content-type': 'text/plain' });
       res.end('not found');
       return;
@@ -133,7 +134,7 @@ async function main() {
   const base = externalBase ? externalBase.replace(/\/?$/, '/') : `http://127.0.0.1:${server.address().port}/`;
 
   const browser = await puppeteer.launch({
-    args: [...chromium.args, '--no-sandbox', '--disable-dev-shm-usage'],
+    args: [...chromium.args, '--no-sandbox', '--disable-dev-shm-usage', '--disable-background-timer-throttling', '--disable-backgrounding-occluded-windows', '--disable-renderer-backgrounding'],
     defaultViewport: { width: 1360, height: 900, deviceScaleFactor: 1 },
     executablePath: exe,
     headless: 'shell',
