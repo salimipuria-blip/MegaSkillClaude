@@ -1,6 +1,6 @@
 # مِتاکد / APEX-01 (`apex-agent/`) — دستور کار Claude
 
-> وضعیت: کد سالم و تست‌شده (Node ۳۵/۳۵، قرارداد ایستا پاک، زیپ تأییدشده)؛ **در محیطِ بدون مرورگر رندر نشده** و روی Netlify واقعی مستقر نشده. آخرین بازبینی: 2026-10-30.
+> وضعیت: کد سالم و تست‌شده (Node ۴۱/۴۱، قرارداد ایستا پاک، زیپ تأییدشده)؛ روی Vercel مستقر شده (`apex-metacode-ps88.vercel.app`) ولی پشتِ Deployment Protection؛ **رندر در مرورگر واقعی هنوز دیده نشده**. آخرین بازبینی: 2026-10-30.
 
 ```yaml
 project:
@@ -22,16 +22,17 @@ project:
   source_of_truth: apex-agent/src/core
   commands:  # همه در 2026-10-30 اجرا شدند
     check:   node tools/check.mjs                  # "✓ static contract is clean"
-    test:    node --test src/tests/*.test.mjs      # 35/35 در ۶٬۴ ثانیه
+    test:    node --test src/tests/*.test.mjs      # 41/41 در ۹٬۱ ثانیه
     core:    node --test src/tests/core.test.mjs   # 30/30
-    dom:     node --test src/tests/dom.test.mjs    # 5/5 (نیازمند jsdom)
+    model:   node --test src/tests/model.test.mjs  # 5/5 با سرور HTTP محلی (بدون کلید)
+    dom:     node --test src/tests/dom.test.mjs    # 6/6 (نیازمند jsdom)
     zip:     node tools/make_zip.mjs               # release/apex-metacode-netlify.zip
     serve:   python3 -m http.server 8080           # همان پوشه
     doctor:  node scripts/doctor.mjs apex          # check + test
   deploy: netlify.toml (publish = ".", functions = "netlify/functions")
   secrets: APEX_PROXY_TOKEN + APEX_UPSTREAM_KEY (فقط اگر پروکسی روشن شود)
   budgets: {zip_kb_max: 900, dom_per_case_ms: 1500, context_tokens: 2400}
-  status: code-ready, browser-render-unverified, not-deployed
+  status: code-ready, deployed-on-vercel(protected), browser-render-unverified
   owner_actions:
     - بازکردن پیش‌نمایش و تأیید بصری سه تب اصلی در موبایل واقعی
     - انتخاب یک ارائه‌دهنده و یک اجرای زنده با کلید برای تأیید مسیر مدل

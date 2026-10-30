@@ -633,6 +633,14 @@ input[type="range"] { width: 100%; accent-color: var(--cyan); height: 18px; }
   .triad-list, .mutants, .laws, .notes, .providers, .fields, .slider-grid, .genes { padding-inline: 10px; }
   .bench-row { grid-template-columns: 1.3fr repeat(3, 42px) 48px; font-size: 10px; }
   .statusbar .sb-spacer + .sb-item { display: none; }
+  /* Touch: every control clears 44px on a phone, not just the ones that already did. */
+  .btn, .btn.sm, .icon-btn, .icon-btn.sm, .tab, .provider, .chip, .tab-btn { min-height: 44px; }
+  .icon-btn, .icon-btn.sm { min-width: 44px; }
+  .mobile-nav button { min-height: 44px; }
+  /* iOS zooms any field under 16px on focus; keep the layout, kill the zoom. */
+  input, textarea, select { font-size: 16px; }
+  #goal { font-size: 15px; }
+  .search-row input, .add-law input, .fieldset input { font-size: 16px; }
 }
 @media (max-width: 420px) {
   .brand-text strong { font-size: 14px; }
