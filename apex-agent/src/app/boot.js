@@ -120,7 +120,7 @@ function boot() {
           : Boolean(app.settings.key);
     return {
       available: usable,
-      async complete({ messages, system, temperature, maxTokens, tools, onDelta }) {
+      async complete({ messages, system, temperature, maxTokens, tools, onDelta, signal }) {
         return chat({
           providerId: app.settings.providerId,
           model: app.settings.model,
@@ -132,6 +132,7 @@ function boot() {
           maxTokens,
           tools,
           onDelta,
+          signal,
         });
       },
     };

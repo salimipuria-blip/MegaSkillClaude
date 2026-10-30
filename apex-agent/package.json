@@ -8,7 +8,7 @@
     "node": ">=20"
   },
   "scripts": {
-    "test": "node --test src/tests/*.test.mjs",
+    "test": "node --test src/tests/core.test.mjs src/tests/model.test.mjs src/tests/dom.test.mjs",
     "check": "node tools/check.mjs",
     "serve": "python3 -m http.server 8080 --bind 0.0.0.0",
     "zip": "node tools/make_zip.mjs",

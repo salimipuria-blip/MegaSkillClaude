@@ -1,3 +1,14 @@
+/* Self-hosted variable font: no third-party request, works offline and behind a
+   national firewall. 112KB for every weight (100–900). Licensed OFL — see assets/fonts/OFL.txt. */
+@font-face {
+  font-family: Vazirmatn;
+  src: url("./fonts/vazirmatn-var.woff2") format("woff2-variations"),
+       url("./fonts/vazirmatn-var.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ============================================================================
    APEX UI · مِتاکد
    A control-room look: deep navy glass, a cyan instrument light, one gold accent.
@@ -15,7 +26,7 @@
   --text: #f0ede8;
   --label: #dfeaf3;
   --muted: #93a8ba;
-  --dorm: #5c7488;
+  --dorm: #7b94a8;
   --cyan: #00e5ff;
   --cyan-hi: #a5f3fc;
   --cyan-soft: rgba(0, 229, 255, 0.12);
@@ -408,7 +419,7 @@ main { padding: 18px 18px calc(var(--status-h) + 18px); max-width: 1680px; margi
 .editor-wrap { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
 .editor { display: grid; grid-template-columns: auto 1fr; min-height: 320px; max-height: 52vh; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: #030910; }
 .gutter {
-  margin: 0; padding: 12px 8px; text-align: right; color: #33506a; font-family: var(--mono);
+  margin: 0; padding: 12px 8px; text-align: right; color: #6b8aa0; font-family: var(--mono);
   font-size: 12px; line-height: 1.65; user-select: none; overflow: hidden; border-inline-end: 1px solid var(--line);
   min-width: 44px; background: rgba(7, 17, 31, 0.7);
 }

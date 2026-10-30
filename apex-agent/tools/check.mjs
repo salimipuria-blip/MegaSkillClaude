@@ -120,7 +120,45 @@ const size = files
 notes.push(`deployable size: ${(size / 1024).toFixed(1)} KB across ${files.length} files`);
 if (size > 900 * 1024) problems.push(`deployable size ${(size / 1024).toFixed(0)} KB exceeds the 900 KB budget`);
 
-// 9. count what the UI claims, so the copy and the code cannot drift.
+// 9. self-contained: nothing may be fetched from a third party at runtime.
+for (const m of html.matchAll(/(?:src|href)="(https?:\/\/[^"]+)"/g)) {
+  problems.push(`index.html loads a third-party resource: ${m[1]}`);
+}
+for (const m of css.matchAll(/url\(\s*["']?(https?:\/\/[^)"']+)/g)) {
+  problems.push(`apex.css loads a third-party resource: ${m[1]}`);
+}
+if (!/@font-face[\s\S]*vazirmatn-var\.woff2/.test(css)) problems.push('the self-hosted Vazirmatn face is missing from apex.css');
+if (!existsSync(path.join(ROOT, 'assets/fonts/vazirmatn-var.woff2'))) problems.push('missing font file: assets/fonts/vazirmatn-var.woff2');
+
+// 10. contrast: every text colour in :root must clear WCAG AA (4.5:1) on every surface.
+const rootBlock = css.slice(css.indexOf(':root'), css.indexOf('}', css.indexOf(':root')));
+const tokens = new Map();
+for (const m of rootBlock.matchAll(/(--[\w-]+)\s*:\s*(#[0-9a-fA-F]{3,8})\b/g)) tokens.set(m[1], m[2]);
+const rgb = (h) => {
+  let v = h.slice(1);
+  if (v.length === 3) v = [...v].map((c) => c + c).join('');
+  return [0, 2, 4].map((i) => parseInt(v.slice(i, i + 2), 16) / 255);
+};
+const lum = (h) => {
+  const [r, g, b] = rgb(h).map((c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4));
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+};
+const ratio = (a, b) => {
+  const l1 = Math.max(lum(a), lum(b));
+  const l2 = Math.min(lum(a), lum(b));
+  return (l1 + 0.05) / (l2 + 0.05);
+};
+const surfaces = ['--bg', '--panel-solid'].map((k) => tokens.get(k)).concat('#122c43');
+for (const name of ['--text', '--label', '--muted', '--dorm', '--cyan', '--gold', '--ok', '--warn', '--bad']) {
+  const colour = tokens.get(name);
+  if (!colour) continue;
+  for (const bg of surfaces) {
+    const r = ratio(colour, bg);
+    if (r < 4.5) problems.push(`contrast: ${name} on ${bg} is ${r.toFixed(2)}:1, below AA 4.5`);
+  }
+}
+
+// 11. count what the UI claims, so the copy and the code cannot drift.
 const caseCount = (readFileSync(path.join(ROOT, 'src/core/selftest.js'), 'utf8').match(/^\s{2}\{\n\s{4}id: '/gm) || []).length;
 const tasks = (readFileSync(path.join(ROOT, 'src/core/evals.js'), 'utf8').match(/^\s{4}id: '/gm) || []).length;
 notes.push(`self-test cases: ${caseCount}, benchmark tasks: ${tasks}`);

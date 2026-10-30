@@ -8,6 +8,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import http from 'node:http';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
@@ -148,6 +149,45 @@ test('the benchmark solves every task and the self-test panel is green', { timeo
   const failed = doc.querySelectorAll('#selfTests .st-row.bad').length;
   assert.equal(failed, 0, `self-tests failed: ${[...rows].filter((r) => r.classList.contains('bad')).map((r) => r.textContent).join(' | ')}`);
   closeApp(dom, app);
+});
+
+test('the connection test reaches a real endpoint and reports what came back', { timeout: 30000 }, async (t) => {
+  if (!JSDOM) return t.skip('jsdom not installed');
+  const { dom, window, app } = await bootApp();
+  let seenAuth = null;
+  const server = http.createServer((req, res) => {
+    let raw = '';
+    req.on('data', (c) => {
+      raw += c;
+    });
+    req.on('end', () => {
+      seenAuth = req.headers.authorization;
+      res.writeHead(200, { 'content-type': 'application/json' });
+      res.end(JSON.stringify({ choices: [{ message: { content: 'آماده' } }], usage: { prompt_tokens: 6, completion_tokens: 2 } }));
+    });
+  });
+  await new Promise((r) => server.listen(0, '127.0.0.1', r));
+  const { port } = server.address();
+  try {
+    app.settings.providerId = 'openai';
+    app.settings.key = 'ui-test-key';
+    app.settings.model = 'mock-coder';
+    app.settings.baseUrl = `http://127.0.0.1:${port}/v1`;
+    app.setView('settings');
+    window.document.querySelector('#btnTestBrain').click();
+    const note = await waitFor(
+      () => {
+        const text = window.document.querySelector('#brainNote').textContent;
+        return text && !text.includes('در حال تست') ? text : '';
+      },
+      { label: 'connection note' },
+    );
+    assert.match(note, /آماده/, `the endpoint reply should surface in the note, got ${note}`);
+    assert.equal(seenAuth, 'Bearer ui-test-key', 'the key travels in the Authorization header');
+  } finally {
+    await new Promise((r) => server.close(r));
+    closeApp(dom, app);
+  }
 });
 
 test('self-audit reads the app\'s own source into the workspace', { timeout: 30000 }, async (t) => {
