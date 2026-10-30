@@ -1,0 +1,15 @@
+{
+  "name": "infinity-loop",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "اجرای DeepSeekِ لوکال به‌عنوان بازبینِ مستقلِ پلن و بازرسِ کد — هرکس ساخت، خودش نمره نمی‌دهد. صفر وابستگیِ اجرا.",
+  "bin": { "infinity-loop": "bin/infinity-loop.mjs" },
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "doctor": "node bin/infinity-loop.mjs doctor"
+  },
+  "keywords": ["deepseek", "ollama", "lm-studio", "code-review", "self-hosted", "cross-model", "claude-code"],
+  "license": "MIT"
+}
