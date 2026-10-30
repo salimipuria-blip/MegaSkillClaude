@@ -1,3 +1,4 @@
+import { skillReferenceMessage } from './skills.js';
 // The agent loop. One code path, two brains:
 //   - model: propose three candidates in one call, measure them locally, repair once if needed
 //   - reflex: deterministic reference solver, same measurement, zero keys
@@ -260,7 +261,7 @@ async function capturedCases({ content, sandbox }) {
  * @param {(event:object)=>void} [deps.onEvent]
  * @param {Function} [deps.sandbox]
  */
-export function createAgent({ vfs, llm = null, genome, memory = null, onEvent = () => {}, sandbox = runInSandbox, signal = null }) {
+export function createAgent({ vfs, llm = null, genome, memory = null, onEvent = () => {}, sandbox = runInSandbox, signal = null, skillReferences = [] }) {
   const G = validateGenome(genome);
   const emit = (event) => {
     try {
@@ -460,7 +461,9 @@ ${files || '(خالی)'}
 
   async function runModel({ goal, task }) {
     const listing = vfs.list().slice(0, 24).map((f) => `### ${f.path}\n${String(vfs.read(f.path)).slice(0, 1200)}`).join('\n\n');
+    const reference = skillReferenceMessage(skillReferences);
     const messages = [
+      ...(reference ? [{ role: 'user', content: reference }] : []),
       { role: 'user', content: `هدف: ${goal}\n\nفایل‌های مرتبط:\n${listing || '(فضای کاری خالی)'}\n\nسه نامزد بده.` },
     ];
     emit({ type: 'phase', phase: 'plan', text: 'درخواست برنامه‌ریزی به مدل رفت؛ سه نامزد در یک فراخوانی.' });
@@ -571,7 +574,8 @@ ${files || '(خالی)'}
     systemPrompt,
     /** Tool-calling loop for multi-file work (used by the chat's "agent mode"). */
     async toolLoop({ goal, maxSteps = G.genes.maxSteps } = {}) {
-      const messages = [{ role: 'user', content: goal }];
+      const reference = skillReferenceMessage(skillReferences);
+      const messages = [...(reference ? [{ role: 'user', content: reference }] : []), { role: 'user', content: goal }];
       for (let step = 0; step < maxSteps; step += 1) {
         state.steps = step + 1;
         const res = await modelCall(messages, { tools: TOOL_SPECS });

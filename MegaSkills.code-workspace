@@ -1,0 +1,24 @@
+{
+  "folders": [{ "path": "." }],
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [{
+      "name": "Mega Skills: run and debug",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/apex-agent/tools/serve.mjs",
+      "args": ["--root", "dist", "--port", "8080"],
+      "cwd": "${workspaceFolder}/apex-agent",
+      "preLaunchTask": "Mega Skills: build",
+      "console": "integratedTerminal",
+      "serverReadyAction": { "pattern": "apex preview: (http://[^ ]+)", "uriFormat": "http://localhost:8080", "action": "openExternally" }
+    }]
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      { "label": "Mega Skills: build", "type": "shell", "command": "npm run build", "options": { "cwd": "${workspaceFolder}/apex-agent" }, "problemMatcher": [] },
+      { "label": "Mega Skills: test", "type": "shell", "command": "npm test", "options": { "cwd": "${workspaceFolder}/apex-agent" }, "group": "test", "problemMatcher": [] }
+    ]
+  }
+}

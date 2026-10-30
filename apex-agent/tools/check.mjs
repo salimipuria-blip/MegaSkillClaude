@@ -18,7 +18,7 @@ const rel = (p) => path.relative(ROOT, p);
 
 function walk(dir, out = []) {
   for (const name of readdirSync(dir)) {
-    if (['node_modules', '.git', 'release'].includes(name)) continue;
+    if (['node_modules', '.git', 'release', 'dist'].includes(name)) continue;
     const full = path.join(dir, name);
     const st = statSync(full);
     if (st.isDirectory()) walk(full, out);
