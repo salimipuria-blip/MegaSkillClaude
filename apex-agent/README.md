@@ -22,7 +22,7 @@
 
 ## ۳۰ ثانیه تا انتشار
 
-**نسخهٔ منتشرشده:** <https://apex-metacode-ps88.vercel.app> — روی Vercel با ریشهٔ `apex-agent` مستقر شده است. اگر باز نشد، محافظتِ استقرارِ Vercel روشن است: در داشبورد پروژه، Settings → Deployment Protection → Vercel Authentication را خاموش کن (یا با همان حساب وارد شو).
+**نسخهٔ منتشرشده:** <https://apex-metacode-ps88.vercel.app> (production، کامیت `a99d0648`) و <https://apex-metacode-4chhxsyh0-ps88.vercel.app> (آخرین کامیت `8f11964c`) — روی Vercel با ریشهٔ `apex-agent` و بدون build. اگر باز نشد، محافظتِ استقرارِ Vercel روشن است: در داشبورد پروژه، Settings → Deployment Protection → Vercel Authentication را خاموش کن (یا با همان حساب وارد شو).
 
 **راه اول — Netlify Drop:** پوشهٔ همین پروژه (یا فایل زیپِ `release/apex-metacode-netlify.zip`) را در <https://app.netlify.com/drop> رها کن. تمام. `netlify.toml` هدرهای امنیتی، کش و مسیر پروکسی را خودش تنظیم می‌کند.
 
