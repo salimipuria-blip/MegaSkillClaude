@@ -24,7 +24,7 @@
 | سخت‌سازی | `node --test src/tests/hardening.test.mjs` | ✅ ۱۰/۱۰ (ورودِ خصمانه، آلودگیِ prototype، دیالوگ با کیبورد، عدد فارسی، جبرگرایی، اسکریپتِ سندباکس بدون eval) |
 | کلِ مجموعه | `node --test src/tests/*.test.mjs` | ✅ ۹۷/۹۷ · ده موجِ پیاپی هر بار ۹۷/۹۷ |
 | پروکسی و استقرار | `node --test src/tests/proxy.test.mjs src/tests/deploy.test.mjs` | ✅ ۶/۶ (ردِ رلهٔ باز، هدرهای یکسانِ Netlify/Vercel) |
-| زیپ استقرار | `node tools/make_zip.mjs` | ✅ ۵۸ فایل، ۶۹۳.۴ KB، sha256 `d6664331…`، تأیید با `python3 -m zipfile` |
+| زیپ استقرار | `node tools/make_zip.mjs` | ✅ ۵۸ فایل، ۶۹۴.۹ KB، sha256 `e8035065…`، تأیید با `python3 -m zipfile` |
 | **رندر مرورگر واقعی** | `npm run render` (Chromium 153، CSPِ واقعیِ استقرار) | ✅ **۳۲/۳۲** — بوت ۰٫۸ ثانیه، فونت وزیرمتن، Reflex واقعی، Worker واقعی، ۳۰/۳۰ سنجهٔ درون‌اپ در مرورگر، موبایل ۳۹۰×۸۴۴ |
 | فراخوانی زندهٔ مدل | — | ❌ اجرا نشده (بدون کلیدِ ارائه‌دهنده) |
 | استقرار Vercel | `create_deployment` از همین برنچ | ✅ ساخته شد؛ لینک پشتِ Deployment Protection حساب |

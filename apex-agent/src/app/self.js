@@ -4,6 +4,13 @@
 // can review, export and redeploy — a human gate, exactly like the repository's self-improvement
 // skill requires. What is real here is the reading, the measurement and the patch.
 
+// Persian digits, locally: this module stays free of DOM imports so it can be read and tested in Node.
+const faDigits = (input) => String(input).replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[Number(d)]);
+const faNum = (n) =>
+  Number.isFinite(Number(n)) ? faDigits(new Intl.NumberFormat('en-US').format(Number(n))).replace(/,/g, '٬') : '—';
+const fixed = (n, digits = 2) =>
+  Number.isFinite(Number(n)) ? faDigits(Number(n).toFixed(digits)).replace('.', '٫') : '—';
+
 export const SELF_FILES = [
   'index.html',
   'assets/apex.css',
@@ -107,7 +114,7 @@ export function auditSelf(vfs, paths) {
       findings.push({
         severity: 1,
         path: path.replace(/^self\//, ''),
-        text: `پوشش کامنت ${(ratio * 100).toFixed(1)}٪ برای ${lines.length} خط.`,
+        text: `پوشش کامنت ${fixed(ratio * 100, 1)}٪ برای ${faNum(lines.length)} خط.`,
         action: 'دلیلِ تصمیم‌های غیربدیهی را یک خط بنویس، نه توضیحِ کد.',
       });
     }
@@ -152,7 +159,7 @@ export function auditSelf(vfs, paths) {
 export function auditReport(audit) {
   const t = audit.totals;
   const lines = [
-    `کدِ خودِ اپ خوانده شد: ${t.files} فایل · ${t.lines} خط · ${(t.bytes / 1024).toFixed(1)}KB · ${t.exports} صادرات · پوشش کامنت ${(t.docRatio * 100).toFixed(1)}٪.`,
+    `کدِ خودِ اپ خوانده شد: ${faNum(t.files)} فایل · ${faNum(t.lines)} خط · ${fixed(t.bytes / 1024, 1)}KB · ${faNum(t.exports)} صادرات · پوشش کامنت ${fixed(t.docRatio * 100, 1)}٪.`,
   ];
   if (!audit.findings.length) lines.push('هیچ یافتهٔ ساختاری پیدا نشد.');
   for (const f of audit.worst) {

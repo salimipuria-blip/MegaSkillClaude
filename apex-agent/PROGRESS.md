@@ -15,6 +15,7 @@
 | ۱ | **سندباکس در مرورگرِ واقعی هیچ‌وقت بالا نمی‌آمد.** اسکریپتِ Worker همان اول `self.indexedDB = undefined` می‌نوشت؛ در `WorkerGlobalScope` این‌ها اکسسورِ فقط-خواندنی‌اند و در حالتِ strict استثنا می‌دهند ⇒ کلِ Worker قبل از نصبِ `onmessage` می‌مرد | `pageerror: Cannot set property indexedDB of #<WorkerGlobalScope> which has only a getter` | حذفِ گلوبال‌ها با `Object.defineProperty`/`delete` در `try` (تابعِ `__kill`) |
 | ۲ | **زیرِ CSPِ استقرار، سندباکس حتی با Workerِ سالم هم کار نمی‌کرد**: کدِ مدل با `new Function` ساخته می‌شد و `script-src 'self' blob:` بدونِ `unsafe-eval` آن را می‌بندد | `SyntaxError: Evaluating a string as JavaScript violates … 'unsafe-eval'` | سندباکس دیگر eval ندارد: برای هر اجرا یک Worker از **متنِ ساخته‌شده** (پیشوند + کدِ کاربر + اجراکنندهٔ کیس‌ها) ساخته می‌شود؛ آرگومان‌های تابع (`__fn`) هم به ایندکسِ `__FNS` تبدیل می‌شوند، نه رشتهٔ eval |
 | ۳ | **کنترل‌های موبایل زیرِ ۴۴px و فیلدها زیرِ ۱۶px**: `.pill` ۳۰px بود، `#goal` ۱۵px، هشت فیلد زیرِ ۱۶px (زومِ خودکارِ iOS)، `.seg` ۲۸px | `npm run render`: «۳۰×۴۴ ناقص» | بلوکِ «phones, measured not guessed» در انتهای `apex.css`؛ اندازه‌گیریِ دوباره در همان مرورگر |
+| ۵ | **اعدادِ اعشاری با رقمِ لاتین** (امتیازِ نامزدها `0.80`، تناسبِ ژنوم `0.802`، دلتای جهش `+0.003`، درصدِ پوشش `42.0٪`) در رابطی که باقی‌اش فارسی است؛ جداکنندهٔ هزارگان هم `,` بود نه `٬` | اسکرین‌شاتِ مرورگر + `grep toFixed` | یک `fixed()` مشترک (رقم فارسی + `٫`) و `faNum` با جداکنندهٔ `٬`؛ هندسهٔ SVG دست‌نخورده ماند (مختصات نباید فارسی شوند) |
 | ۴ | **نوارِ «در حال اجرا…» روی صفحهٔ بی‌کار هم دیده می‌شد**: `#runline` صفتِ `hidden` داشت ولی قاعدهٔ `.runline { display: flex }` بر `[hidden]`ِ مرورگر می‌چربید | اسکرین‌شاتِ موبایلِ صفحهٔ تازه | قاعدهٔ سراسریِ `[hidden] { display: none !important; }` و سنجهٔ «idle: the run bar is hidden» |
 
 ضمناً دو نقص در خودِ ابزارِ سنجش پیدا و رفع شد تا سبزیِ دروغ ندهد: چکِ «پنل باز شد» به `#pane-*` نگاه می‌کرد که در DOM وجود ندارد (همیشه true)، و کلیکِ Puppeteer روی دکمه‌ای که زیرِ نوارِ پایین بود بی‌صدا به نوار می‌خورد. اکنون هر کنترل با `scrollIntoView` به مرکزِ صفحه می‌آید و با `elementFromPoint` آزموده می‌شود.
@@ -35,7 +36,7 @@ $ node --test src/tests/*.test.mjs     # ۱۰ موجِ پیاپی
 wave 1..10: tests=97 pass=97 fail=0
 
 $ node tools/check.mjs   → checked 58 files · deployable 686.0 KB · ✓ static contract is clean
-$ node tools/make_zip.mjs → 58 files · 693.4 KB · sha256 d6664331…
+$ node tools/make_zip.mjs → 58 files · 694.9 KB · sha256 e8035065…
 $ python3 -m unittest discover -s tests → Ran 180 tests · OK
 ```
 

@@ -124,8 +124,13 @@ test('formatting refuses to print NaN, Infinity or a broken date', { skip, timeo
       assert.equal(typeof out, 'string');
       assert.doesNotMatch(out, /NaN|Infinity|null|undefined/, `faNum(${String(value)}) -> ${out}`);
     }
-    assert.equal(ui.faNum(1234), '۱,۲۳۴');
+    assert.equal(ui.faNum(1234), '۱٬۲۳۴');
     assert.equal(ui.faNum(-5), '-۵');
+    // Decimals used to escape as Latin digits ("0.802") in a UI where everything else is Persian.
+    assert.equal(ui.fixed(0.802, 3), '۰٫۸۰۲');
+    assert.equal(ui.fixed(12, 0), '۱۲');
+    assert.equal(ui.fixed(Number.NaN), '—');
+    assert.doesNotMatch(ui.fixed(-0.5, 2), /[0-9]/, 'fixed() must not leak Latin digits');
     assert.equal(ui.pct(0.256), '۲۶٪');
     assert.equal(ui.pct('x'), '۰٪', 'junk becomes zero, not NaN');
     assert.equal(ui.pct(5), '۱۰۰٪');

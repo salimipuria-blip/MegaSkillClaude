@@ -10,10 +10,10 @@ import { validateGenome, diffGenomes } from '../core/genome.js';
 import { memoryToMarkdown } from '../core/memory.js';
 import { auditReport, loadSelfSource } from './self.js';
 import { buildExport, applyBundle, download, parseImport, storageInfo } from './state.js';
-import { $, $$, esc, h, faNum, pct, timeAgo, toast, testBrain, askConfirm } from './ui.js';
+import { $, $$, esc, h, faNum, fixed, pct, timeAgo, toast, testBrain, askConfirm } from './ui.js';
 
 const GENE_LABELS = {
-  temperature: ['دما', (v) => Number(v).toFixed(2)],
+  temperature: ['دما', (v) => fixed(v, 2)],
   maxSteps: ['سقف گام', (v) => faNum(v)],
   contextBudget: ['بودجهٔ کانتکست', (v) => formatTokens(v)],
   keepRecent: ['پیام‌های تازه', (v) => faNum(v)],
@@ -49,7 +49,7 @@ export function mountEvolve(app) {
   function renderGenome() {
     const g = validateGenome(app.genome);
     dom.sub.textContent = `نسل ${faNum(g.generation)} · ${g.id} · ${faNum(g.fragments.length)} قطعهٔ پرامپت`;
-    dom.fitness.textContent = g.fitness ? `${Number(g.fitness.score).toFixed(3)}` : 'بدون سنجش';
+    dom.fitness.textContent = g.fitness ? fixed(g.fitness.score, 3) : 'بدون سنجش';
     dom.fitness.className = `badge ${g.fitness ? 'ok' : ''}`;
     dom.genes.innerHTML = Object.entries(GENE_LABELS)
       .map(([key, [label, fmt]]) => {
@@ -101,7 +101,7 @@ export function mountEvolve(app) {
       ['پایداری', f.parts.stability],
       ['کارایی توکن', f.parts.efficiency],
     ];
-    dom.parts.innerHTML = rows.map(([label, value]) => h`<div><span>${label}</span><b>${Number(value).toFixed(2)}</b></div>`).join('') +
+    dom.parts.innerHTML = rows.map(([label, value]) => h`<div><span>${label}</span><b>${fixed(value, 2)}</b></div>`).join('') +
       h`<div><span>رگرسیون</span><b>${f.parts.regressionFree ? 'ندارد' : 'دارد'}</b></div>`;
   }
 
@@ -131,7 +131,7 @@ export function mountEvolve(app) {
           const cls = score > 0.85 ? '' : score > 0.5 ? 'mid' : 'low';
           return h`<div class="bench-row">
             <span>${r.title || r.id}</span>
-            <b>${score.toFixed(2)}</b>
+            <b>${fixed(score, 2)}</b>
             <b>${r.winner?.id || '—'}</b>
             <b>${faNum(Math.round(r.ms || 0))}ms</b>
             <span class="bar"><i class="${cls}" style="width:${Math.round(score * 100)}%"></i></span>
@@ -153,11 +153,11 @@ export function mountEvolve(app) {
         const changes = m.mutant?.genome ? diffGenomes(app.genome, m.mutant.genome) : [];
         return h`<div class="mutant ${m.accepted ? 'accepted' : ''}">
           <div class="mutant-head"><b>${m.mutant?.label || '—'}</b>
-            ${delta == null ? '<span class="dim">…</span>' : h`<span class="delta ${delta >= 0 ? 'up' : 'down'}">${delta >= 0 ? '+' : ''}${delta.toFixed(3)}</span>`}
+            ${delta == null ? '<span class="dim">…</span>' : h`<span class="delta ${delta >= 0 ? 'up' : 'down'}">${delta >= 0 ? '+' : '−'}${fixed(Math.abs(delta), 3)}</span>`}
           </div>
           <p class="fine">${m.mutant?.blurb || ''}</p>
           ${changes.length ? h`<p class="fine">${changes.slice(0, 3).map((c) => `${c.key}: ${String(c.from)}→${String(c.to)}`).join(' · ')}</p>` : ''}
-          ${fit ? h`<p class="fine">حل‌شده ${faNum(fit.suite?.solved ?? 0)}/${faNum(fit.suite?.total ?? 0)} · تناسب ${Number(fit.score).toFixed(3)}</p>` : ''}
+          ${fit ? h`<p class="fine">حل‌شده ${faNum(fit.suite?.solved ?? 0)}/${faNum(fit.suite?.total ?? 0)} · تناسب ${fixed(fit.score, 3)}</p>` : ''}
         </div>`;
       })
       .join('');
@@ -387,7 +387,7 @@ export function mountMemory(app) {
       ? rows
           .slice(0, 40)
           .map(
-            (j) => h`<div class="jrow"><time>${timeAgo(j.at)}</time><span>${j.goal || j.event || '—'}</span><b>${j.ok ? '✓' : '✕'}${j.score != null ? ` ${Number(j.score).toFixed(2)}` : ''}</b></div>`,
+            (j) => h`<div class="jrow"><time>${timeAgo(j.at)}</time><span>${j.goal || j.event || '—'}</span><b>${j.ok ? '✓' : '✕'}${j.score != null ? ` ${fixed(j.score, 2)}` : ''}</b></div>`,
           )
           .join('')
       : '<p class="dim">دفتر خالی است.</p>';

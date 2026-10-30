@@ -53,7 +53,10 @@ export function h(strings, ...values) {
 }
 
 export const faDigits = (input) => String(input).replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[Number(d)]);
-export const faNum = (n) => (Number.isFinite(Number(n)) ? faDigits(new Intl.NumberFormat('en-US').format(Number(n))) : '—');
+export const faNum = (n) =>
+  Number.isFinite(Number(n)) ? faDigits(new Intl.NumberFormat('en-US').format(Number(n))).replace(/,/g, '٬') : '—';
+export const fixed = (n, digits = 2) =>
+  Number.isFinite(Number(n)) ? faDigits(Number(n).toFixed(digits)).replace('.', '٫') : '—';
 export const pct = (v) => `${faDigits(String(Math.round(Math.max(0, Math.min(1, Number(v) || 0)) * 100)))}٪`;
 
 
@@ -311,7 +314,7 @@ export function mountChat(app) {
             <span class="cand-id">${s.id}</span>
             <div><div class="cand-title">${meta.label}</div>
               <div class="cand-sub">${s.candidate?.path || ''} · +${faNum(s.churn)} تغییر</div></div>
-            <span class="cand-score">${Number(s.total).toFixed(2)}</span>
+            <span class="cand-score">${fixed(s.total, 2)}</span>
           </div>
           <p class="cand-blurb">${meta.blurb || ''}</p>
           <div class="cand-parts">${raw(parts)}</div>
