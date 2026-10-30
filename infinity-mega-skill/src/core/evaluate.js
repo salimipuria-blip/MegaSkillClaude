@@ -96,6 +96,10 @@ export async function evaluateTriad({
     // A genome slightly prefers its own strategy weights; the effect is small and explicit.
     const bonus = ((genome?.strategyWeights?.[candidate.strategy] ?? 1) - 1) * 0.02;
     measured.total = round(Math.max(0, Math.min(1, measured.total + bonus)));
+    // The same deterministic bonus rides the ranking score, so the winner stays timing-independent.
+    if (typeof measured.decisionTotal === 'number') {
+      measured.decisionTotal = round(Math.max(0, Math.min(1, measured.decisionTotal + bonus)));
+    }
     measured.strategyBonus = round(bonus);
     scored.push(measured);
     onCandidate(measured);

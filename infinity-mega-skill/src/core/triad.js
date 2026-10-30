@@ -261,6 +261,19 @@ export function scoreCandidate({
       parts.efficiency * w.efficiency,
   );
 
+  // The winner has to be reproducible: the same goal must give the same code twice. Wall-clock
+  // speed belongs in the *reported* `efficiency`/`total`, but it must never pick the winner — the
+  // same candidate measures 5ms on an idle machine and 80ms on a busy one, and that scheduler noise
+  // once flipped the winner and broke the "same goal, same code" guarantee under load. So ranking
+  // uses `decisionTotal`: every axis except raw speed, with efficiency reduced to code size alone.
+  const decisionTotal = round(
+    parts.correctness * w.correctness +
+      parts.minimality * w.minimality +
+      parts.safety * w.safety +
+      parts.clarity * w.clarity +
+      round(clamp01(sizeScore)) * w.efficiency,
+  );
+
   const notes = [];
   if (pub.total && pub.pass === pub.total) notes.push(`همهٔ ${pub.total} تستِ عمومی سبز`);
   else if (pub.total) notes.push(`${pub.total - pub.pass} تستِ عمومی قرمز`);
@@ -274,6 +287,8 @@ export function scoreCandidate({
     id: candidate?.id,
     strategy: candidate?.strategy,
     total,
+    decisionTotal,
+    speedBucket,
     parts,
     weights: w,
     churn,
@@ -290,8 +305,12 @@ export function scoreCandidate({
  * then the declared strategy order. Ties are explained, never silent.
  */
 export function selectWinner(scored = []) {
+  // Rank on the timing-independent decisionTotal (falls back to total only if an older scored object
+  // lacks it), so the winner is reproducible; raw wall-clock never gets a vote. Ties fall through to
+  // fully deterministic keys: fewer confirmed failures, smaller diff, then the declared strategy.
+  const rankOf = (x) => (typeof x.decisionTotal === 'number' ? x.decisionTotal : x.total);
   const ranked = [...scored].sort((a, b) => {
-    if (b.total !== a.total) return b.total - a.total;
+    if (rankOf(b) !== rankOf(a)) return rankOf(b) - rankOf(a);
     if (a.confirmed !== b.confirmed) return a.confirmed - b.confirmed;
     if (a.churn !== b.churn) return a.churn - b.churn;
     return STRATEGY_ORDER.indexOf(a.strategy) - STRATEGY_ORDER.indexOf(b.strategy);

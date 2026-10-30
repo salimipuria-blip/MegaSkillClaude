@@ -1,6 +1,6 @@
 # مِتاکد / Infinity Mega Skill (`infinity-mega-skill/`) — دستور کار Claude
 
-> وضعیت: کد سالم و تست‌شده (Node ۹۷/۹۷، قرارداد ایستا پاک، زیپ تأییدشده)؛ **در کرومیومِ واقعی رندر و آزموده شد** (۳۲ سنجه، زیرِ CSPِ استقرار، `npm run render`)؛ روی Vercel مستقر شده (`infinity-mega-skill-ps88.vercel.app`) و همچنان پشتِ Deployment Protection است — تنها چیزی که هنوز دیده نشده، همان صفحه از بیرون است. مسیرِ زندهٔ مدل با `npm run live` آماده و با `--mock` اثبات شده؛ اجرای واقعیِ آن به کلیدِ مالک نیاز دارد. آخرین بازبینی: 2026-10-30.
+> وضعیت: کد سالم و تست‌شده (Node ۱۰۸/۱۰۸، قرارداد ایستا پاک، زیپ تأییدشده)؛ **در کرومیومِ واقعی رندر و آزموده شد** (۳۲ سنجه، زیرِ CSPِ استقرار، `npm run render`)؛ روی Vercel مستقر شده (`infinity-mega-skill-ps88.vercel.app`) و همچنان پشتِ Deployment Protection است — تنها چیزی که هنوز دیده نشده، همان صفحه از بیرون است. مسیرِ زندهٔ مدل با `npm run live` آماده و با `--mock` اثبات شده؛ اجرای واقعیِ آن به کلیدِ مالک نیاز دارد. آخرین بازبینی: 2026-10-30.
 
 ```yaml
 project:
@@ -22,7 +22,7 @@ project:
   source_of_truth: infinity-mega-skill/src/core
   commands:  # همه در 2026-10-30 اجرا شدند
     check:   node tools/check.mjs                  # "✓ static contract is clean"
-    test:    node --test src/tests/*.test.mjs      # 107/107 (۱۴ فایل؛ سه اجرای کاملِ پیاپی سبز، 2026-10-30)
+    test:    node --test src/tests/*.test.mjs      # 108/108 (۱۴ فایل؛ سه اجرای کاملِ پیاپی سبز، 2026-10-30)
     core:    node --test src/tests/core.test.mjs   # 30/30
     model:   node --test src/tests/model.test.mjs  # 5/5 با سرور HTTP محلی (بدون کلید)
     dom:     node --test src/tests/dom.test.mjs    # 6/6 (نیازمند jsdom)
@@ -106,7 +106,7 @@ project:
 - `P2` Service Worker برای اجرای کامل آفلاین.
 - `P2` وارد کردن چند فایلِ `self/` در یک چرخهٔ ترمیم.
 - `P2` گزارش هزینهٔ توکن به تفکیک اجرا در کارگاه.
-- `P1` رفع flakeِ نادر در تست «قطعیت مغز آفلاین» (`hardening.test.mjs`) زیر اجرای موازیِ `node --test`؛ در انزوا پایدار است. ناظر (`supervisor.js`) دخیل نیست — جداگانه و با fakeهای تزریقی قطعی است.
+- `x` رفع‌شد (۱۴۰۵/۰۸/۰۸): نامعین‌بودنِ برندهٔ `triad` که از wall-clock می‌آمد؛ حالا `decisionTotal`ِ مستقل از زمان رتبه می‌دهد. ۰ شکست در ۲۰ اجرا.
 - `P1` اتصال `supervisor.js` به تب «تکامل» با دکمهٔ Start/Stop و نمایش زندهٔ دفتر تصمیم (الان از طریق `npm run evolve` و هسته در دسترس است).
 
 ## پروتکل به‌روزرسانی

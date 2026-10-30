@@ -218,6 +218,32 @@ test('efficiency ignores timing noise but still prefers clearly faster code', as
   assert.ok(fast.total - slow.total < 0.15, 'but efficiency stays a tiebreaker, not the main axis');
 });
 
+test('the winner is timing-independent: wall-clock jitter never flips selectWinner', async () => {
+  const { scoreCandidate, selectWinner } = await import(`${root}src/core/triad.js?hard=1`);
+  // Two real, differently-shaped solutions that both pass — the exact situation that used to flip
+  // the "same goal, same code" guarantee when one candidate's ms crossed a speed bucket under load.
+  const mk = (id, strategy, content, churn) => ({
+    candidate: { id, strategy, content, diff: '', stats: { churn } },
+    publicRun: { ok: true, ms: 3, results: [{ pass: true }, { pass: true }] },
+    hiddenRun: { ok: true, ms: 2, results: [{ pass: true }] },
+    baselineChurn: 10,
+  });
+  const inline = 'export function p(t){const c=[...String(t)];for(let i=0,j=c.length-1;i<j;i++,j--)if(c[i]!==c[j])return false;return true;}\n';
+  const helper = '/** doc */\nexport function p(t){return n(t)===[...n(t)].reverse().join("");}\nfunction n(t){return String(t);}\n';
+  const score = (ms) => [
+    scoreCandidate({ ...mk('A', 'minimal', inline, 6), publicRun: { ok: true, ms, results: [{ pass: true }, { pass: true }] } }),
+    scoreCandidate(mk('B', 'structural', helper, 8)),
+  ];
+  // Sweep the first candidate's measured time across every speed bucket; the winner must not move.
+  const winners = new Set([3, 12, 80, 200, 800].map((ms) => selectWinner(score(ms)).winner.id));
+  assert.equal(winners.size, 1, `wall-clock changed the winner across buckets: ${[...winners]}`);
+  // And the decision score itself ignores wall-clock, even while the reported total tracks it.
+  const [slowA] = score(800);
+  const [fastA] = score(3);
+  assert.equal(slowA.decisionTotal, fastA.decisionTotal, 'decisionTotal must not depend on ms');
+  assert.ok(fastA.total >= slowA.total, 'reported total still reflects the measured speed');
+});
+
 test('a junk genome or settings blob is repaired, not trusted', { skip, timeout: 60000 }, async () => {
   const { dom, window, app } = await bootApp();
   try {
