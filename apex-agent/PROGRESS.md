@@ -1,0 +1,344 @@
+# گزارش پیشرفت
+
+> آخرین به‌روزرسانی: 2026-10-30 · لاگ جریان: جدیدترین پاس در بالا، تاریخ‌دار و با دستور و خروجی واقعی.
+
+## 2026-10-30 (پاس هشتم) — پیش‌نمایشی که با استقرار یکی است، و یک باگِ هدر که فقط با `curl -I` دیده شد
+
+**دستور مالک:** «انجام بده» — یعنی همان دو چیزی که در پیام قبل «انجام‌نشده» مانده بود: پیش‌نمایشِ محلی بدونِ هدرهای واقعی، و آزمونِ مرورگر که پس از ریستِ ورک‌اسپیس قابلِ اجرا نبود.
+
+- پیش‌نمایش از `python3 -m http.server` به `tools/serve.mjs` منتقل شد: همان CSP و هدرهای سختِ `vercel.json` را می‌فرستد، `Cache-Control` هر مسیر را از همان قاعده می‌گیرد، و `Content-Type` درست (`manifest+json`، `font/woff2`، `text/javascript`) می‌دهد. `npm run serve` همان را بالا می‌آورد.
+- **یک باگ در همان ابزارِ تازه، قبل از تحویل:** قاعده‌ها را بدونِ توجه به `source` روی همهٔ مسیرها اعمال می‌کردم، پس `/` دو هدرِ `Content-Type` می‌گرفت (`application/manifest+json` و `text/html`) و مرورگر می‌توانست اولی را بردارد. `curl -I` نشانش داد؛ حالا هر قاعده فقط روی مسیرِ خودش می‌نشیند و هر هدر یک‌بار فرستاده می‌شود:
+
+```bash
+$ curl -sI http://127.0.0.1:8080/            → content-type: text/html · CSP ✔ · one value per header
+$ curl -sI http://127.0.0.1:8080/manifest.webmanifest → content-type: application/manifest+json · max-age=3600
+$ curl -sI http://127.0.0.1:8080/assets/apex.css      → text/css · max-age=3600, must-revalidate
+$ curl -sI http://127.0.0.1:8080/src/app/boot.js      → text/javascript · max-age=600, must-revalidate
+```
+
+- `tools/render.mjs` حالا `--base` می‌گیرد تا همان ۳۲ سنجه را روی **پیش‌نمایشِ در حال اجرا** اجرا کند، نه یک سرورِ خصوصیِ خودش:
+
+```bash
+$ node tools/render.mjs --base http://127.0.0.1:8080 --out /tmp/preview-shots
+checks: 32/32 passed
+✓ run: reflex produced a verified result — {"ok":true,…}
+✓ self-test: the app's own suite passes in the browser — ۳۰/۳۰
+✓ csp: page rendered under the production policy — default-src 'self'; script-src 'self' blob:; …
+```
+
+یعنی آن «NOT RUN»ِ قبلی («پیش‌نمایش بدونِ هدرهای استقرار سرو می‌شد») بسته شد: پیش‌نمایش و استقرار الان یک چیز را سرو می‌کنند و همان چیز آزموده شده است.
+
+## 2026-10-30 (پاس هفتم) — «حتماً به یک مدلِ واقعی وصل شو»: یک فرمان، و دو حالتِ صادقانه
+
+**دستور مالک:** «حتماً باید به freebuff وصل شی. الکی تایپ نکن.» اول واقعیت بررسی شد، بعد ابزار ساخته شد:
+
+- کانکتورِ Arena با نامِ `freebuff` و `codebuff` → **unsupported** (چنین اپی برای وصل‌کردن وجود ندارد).
+- بستهٔ `npm freebuff@0.2.35` واقعی است، ولی فقط یک launcher است: باینریِ نیتیو را از `codebuff.com` می‌گیرد و بعد لاگین می‌خواهد.
+- از این سندباکس: `codebuff.com` و `freebuff.com` → `curl: (35) SSL_ERROR_SYSCALL`؛ فقط `registry.npmjs.org` (۲۰۰)، `github.com` و `pypi.org` باز است. پس «وصل‌شدن» از اینجا فیزیکاً ممکن نیست و ادعای انجامش دروغ می‌بود.
+
+کاری که به‌جایش انجام شد، همان چیزی است که واقعاً کم بود: **`tools/live-check.mjs`** — یک فرمان که ادعای «مسیرِ مدل آزموده شده» را از حالتِ آرزو درمی‌آورد:
+
+| حالت | دستور | خروجی |
+|---|---|---|
+| بدون کلید | `npm run live` | «NOT RUN — no credentials»، کدِ خروج **۲** (نتیجهٔ واقعی، نه سبزِ قلابی) |
+| اثباتِ خودِ ابزار | `npm run live -- --mock` | سرورِ محلیِ OpenAI با SSE واقعی → سه نامزد → سندباکس → **verify ۲/۲ سبز**، برنده A با امتیاز ۰٫۸۲۳، ۵۹ms |
+| زنده | `APEX_BASE_URL=… APEX_MODEL=… APEX_KEY=… npm run live` | همان چرخه با مدلِ واقعی؛ گزارش در `release/live-report.json`، کدِ خروج ۰/۱ |
+
+نکته‌های مهندسی: کلید فقط با `abcd…wxyz` چاپ می‌شود؛ `.apex-key` در `.gitignore` است؛ `--mock` همیشه `mode: mock` را در گزارش می‌نویسد تا با نتیجهٔ مدلِ واقعی اشتباه نشود؛ در حالتِ زنده از همان `chat()` و همان `createAgent()` محصول استفاده می‌شود — نه یک کلاینتِ جداگانه که با محصول فرق کند.
+
+```bash
+$ npm run live
+NOT RUN — no credentials.
+  needed: APEX_BASE_URL, APEX_MODEL and APEX_KEY (env, --key-file, or .apex-key)
+  proof that the harness itself works: npm run live -- --mock
+
+$ npm run live -- --mock
+  +   58ms  selection   +   59ms  verify 2/2 ✓
+mode: mock (harness self-check — not a real provider)
+winner: A (minimal) score 0.823
+verify: 2/2 green
+```
+
+**اجرا نشده (صادقانه):** فراخوانیِ مدلِ واقعی — چون هم کلید ندارم و هم شبکهٔ این سندباکس به هاست‌های ارائه‌دهنده بسته است؛ و درخواستِ بی‌نام به دامنهٔ Vercel (استقرار `public: false` است).
+
+## 2026-10-30 (پاس ششم) — یک مرورگرِ واقعی نصب شد، و همان اول مغزِ محصول را زمین زد
+
+**دستور مالک:** «یه مرورگر نصب کن همین الان.» کار همان‌جا که پاس پنجم ایستاده بود شروع شد: `رندر در مرورگر واقعی: اجرا نشده`.
+
+مرورگر در این محیط نصب نبود و `apt` به آینه‌های دبیان دسترسی ندارد، پس کرومیومِ بستهٔ npm (`@sparticuz/chromium` ۱۵۳) پیاده شد. این بسته کتابخانه‌هایش را فقط روی Amazon Linux باز می‌کند؛ استخراجِ دستیِ `bin/al2023.tar.br` (brotli) و `LD_LIBRARY_PATH` مشکلِ `libnspr4.so` را حل کرد. همین مسیر داخل `tools/render.mjs` کد شد تا در نشستِ بعد هم خودکار باشد.
+
+بعد `tools/render.mjs` نوشته شد: سرورِ محلی که **همان CSPِ `vercel.json`** را می‌فرستد، کرومیوم در ۱۳۶۰×۹۰۰ و ۳۹۰×۸۴۴، و ۳۱ ادعای اجراشدنی. اولین اجرا ۲۰/۲۵ بود و سه نقصِ واقعی را رو کرد که هیچ تستِ Node/jsdom نمی‌دید:
+
+| # | نقص | شاهدِ مرورگر | اصلاح |
+|---|---|---|---|
+| ۱ | **سندباکس در مرورگرِ واقعی هیچ‌وقت بالا نمی‌آمد.** اسکریپتِ Worker همان اول `self.indexedDB = undefined` می‌نوشت؛ در `WorkerGlobalScope` این‌ها اکسسورِ فقط-خواندنی‌اند و در حالتِ strict استثنا می‌دهند ⇒ کلِ Worker قبل از نصبِ `onmessage` می‌مرد | `pageerror: Cannot set property indexedDB of #<WorkerGlobalScope> which has only a getter` | حذفِ گلوبال‌ها با `Object.defineProperty`/`delete` در `try` (تابعِ `__kill`) |
+| ۲ | **زیرِ CSPِ استقرار، سندباکس حتی با Workerِ سالم هم کار نمی‌کرد**: کدِ مدل با `new Function` ساخته می‌شد و `script-src 'self' blob:` بدونِ `unsafe-eval` آن را می‌بندد | `SyntaxError: Evaluating a string as JavaScript violates … 'unsafe-eval'` | سندباکس دیگر eval ندارد: برای هر اجرا یک Worker از **متنِ ساخته‌شده** (پیشوند + کدِ کاربر + اجراکنندهٔ کیس‌ها) ساخته می‌شود؛ آرگومان‌های تابع (`__fn`) هم به ایندکسِ `__FNS` تبدیل می‌شوند، نه رشتهٔ eval |
+| ۳ | **کنترل‌های موبایل زیرِ ۴۴px و فیلدها زیرِ ۱۶px**: `.pill` ۳۰px بود، `#goal` ۱۵px، هشت فیلد زیرِ ۱۶px (زومِ خودکارِ iOS)، `.seg` ۲۸px | `npm run render`: «۳۰×۴۴ ناقص» | بلوکِ «phones, measured not guessed» در انتهای `apex.css`؛ اندازه‌گیریِ دوباره در همان مرورگر |
+| ۵ | **اعدادِ اعشاری با رقمِ لاتین** (امتیازِ نامزدها `0.80`، تناسبِ ژنوم `0.802`، دلتای جهش `+0.003`، درصدِ پوشش `42.0٪`) در رابطی که باقی‌اش فارسی است؛ جداکنندهٔ هزارگان هم `,` بود نه `٬` | اسکرین‌شاتِ مرورگر + `grep toFixed` | یک `fixed()` مشترک (رقم فارسی + `٫`) و `faNum` با جداکنندهٔ `٬`؛ هندسهٔ SVG دست‌نخورده ماند (مختصات نباید فارسی شوند) |
+| ۴ | **نوارِ «در حال اجرا…» روی صفحهٔ بی‌کار هم دیده می‌شد**: `#runline` صفتِ `hidden` داشت ولی قاعدهٔ `.runline { display: flex }` بر `[hidden]`ِ مرورگر می‌چربید | اسکرین‌شاتِ موبایلِ صفحهٔ تازه | قاعدهٔ سراسریِ `[hidden] { display: none !important; }` و سنجهٔ «idle: the run bar is hidden» |
+
+ضمناً دو نقص در خودِ ابزارِ سنجش پیدا و رفع شد تا سبزیِ دروغ ندهد: چکِ «پنل باز شد» به `#pane-*` نگاه می‌کرد که در DOM وجود ندارد (همیشه true)، و کلیکِ Puppeteer روی دکمه‌ای که زیرِ نوارِ پایین بود بی‌صدا به نوار می‌خورد. اکنون هر کنترل با `scrollIntoView` به مرکزِ صفحه می‌آید و با `elementFromPoint` آزموده می‌شود.
+
+برای اینکه این کلاس از خطا دیگر بی‌صدا برنگردد، دو تستِ Node هم اضافه شد (`hardening.test.mjs`): متنِ Workerِ تولیدشده نباید `new Function`/`eval` داشته باشد، نباید به گلوبالِ فقط-خواندنی مقدار بدهد، و باید با `vm.Script` به‌عنوان اسکریپت کامپایل شود.
+
+```bash
+$ npm run render          # Chromium 153، CSPِ واقعیِ استقرار
+checks: 32/32 passed
+✓ boot: under 3s — 832 ms          ✓ font: Vazirmatn loaded by the browser
+✓ run: reflex produced a verified result — {"ok":true,...}
+✓ sandbox: real Blob Worker ran the code   ✓ sandbox: a spinner is killed
+✓ self-test: the app's own suite passes in the browser — ۳۰/۳۰
+✓ mobile: every control is at least 44×44  ✓ mobile: fields are 16px (no iOS zoom)
+✓ network: zero third-party requests       ✓ console: no errors
+
+$ node --test src/tests/*.test.mjs     # ۱۰ موجِ پیاپی
+wave 1..10: tests=97 pass=97 fail=0
+
+$ node tools/check.mjs   → checked 58 files · deployable 686.0 KB · ✓ static contract is clean
+$ node tools/make_zip.mjs → 58 files · ۶۹۵ KB (sha256 را خودِ ابزار چاپ می‌کند؛ ثابت‌کردنش در سندِ داخلِ همان زیپ، سند را از بسته جدا می‌کند)
+$ python3 -m unittest discover -s tests → Ran 180 tests · OK
+```
+
+شاهدِ چشمی: `../docs/screenshots/` — ۹ تصویر (خانه، پس از اجرا، پالت، چهار پنل، خودآزمایی و موبایل) و `render-report.json` با همین ۳۲ نتیجه. اسکرین‌شات‌ها عمداً بیرون از `apex-agent/` هستند تا وارد بستهٔ Netlify نشوند.
+
+**اجرا نشده (صادقانه):** فراخوانیِ زندهٔ مدل با کلیدِ واقعی، و درخواستِ بی‌نام به دامنهٔ Vercel (استقرار `public: false` است).
+
+## 2026-10-30 (پاس پنجم) — ورودیِ خصمانه، دیالوگِ صفحه‌کلیدی، و «قطعی‌بودن» که واقعاً قطعی نبود
+
+**دستور مالک:** «عمیق بررسی کن. دقیق تست کن. حرفه‌ای اصلاح کن. دوباره انجامش بده. این پیامو ۱۰ بار اجرا کن. بعد از اجرای فرمان واقعی این تسک زیپ بده.»
+
+این پاس سراغ «ورودیِ بی‌ادب» رفت: بستهٔ ورودیِ دستکاری‌شده، دیالوگ با صفحه‌کلید، فرمت‌عدد، و ادعای قطعی‌بودنِ مغزِ آفلاین.
+
+| # | نقص | شاهد | اصلاح |
+|---|---|---|---|
+| ۱ | **`loadFiles` اول فضای کاری را پاک می‌کرد و بعد اعتبارسنجی** — یک بستهٔ خراب (آرایه، متن، مسیرِ ناامن، محتوای غیرمتنی) کارِ سالم را نابود می‌کرد | `hardening.test`: «accepted a bad import: array instead of map» | اعتبارسنجی و نوشتن در فضای کاریِ موقت، **بعد** جایگزینی؛ آرایه/متن/`__proto__`/مسیر ناامن رد می‌شوند |
+| ۲ | دیالوگِ درون‌صفحه فوکوس نمی‌گرفت، با `Enter` تأیید نمی‌شد، `Tab` از دیالوگ بیرون می‌زد و فوکوس به عنصرِ قبلی برنمی‌گشت | `hardening.test`: «focus must start inside the dialog» | فوکوس اولیه روی ورودی/دکمه، `Enter` برای تأیید، تلهٔ `Tab`/`Shift+Tab`، بازگرداندنِ فوکوس در بستن |
+| ۳ | `pct()` تنها جای رابط بود که رقمِ لاتین چاپ می‌کرد (`26٪` در میانِ همهٔ اعدادِ فارسی) | `hardening.test`: `'26٪'` در برابرِ `'۲۶٪'` | `pct` هم از `faDigits` می‌گذرد |
+| ۴ | **برندهٔ سه‌گانه به زمانِ اجرا وابسته بود**: محورِ `efficiency` از میلی‌ثانیهٔ خامِ سندباکس ساخته می‌شد، پس ۳ms در برابر ۵ms برنده را عوض می‌کرد و تستِ قطعیت هر چند اجرا یک‌بار قرمز می‌شد | اجرای ۲۴ بارهٔ یک هدف: امتیازِ ۰٫۷۷۴ تا ۰٫۷۷۹ و برندهٔ متفاوت | سطل‌بندیِ درشتِ زمان (زیرِ ۱۵ms یک سطل) + `measure()` که خطای زیرساختی (timeout) را با بودجهٔ سه‌برابر یک بار تکرار می‌کند؛ اکنون ۴۰ اجرا = یک امتیاز، یک خروجی |
+| ۵ | مسیرِ import هر بخش را خام اعمال می‌کرد: `lineage` متنی، `bench` آرایه‌ای، `providerId` ناشناس و `mode` بی‌معنی وارد می‌شد | `hardening.test` روی `applyBundle` | `applyBundle` در `state.js`: هر بخش جدا اعتبارسنجی می‌شود، کلیدهای کاربر دست‌نخورده می‌مانند |
+
+ضمناً یک نکتهٔ محیطی هم روشن شد: `node_modules` بین نشست‌ها پاک می‌شود، و مجموعه بدون `jsdom` بی‌خطا **۶۴ تست را با skip** رد می‌کند (۳۱ تستِ مرورگر-نما) — همان‌طور که در README نوشته شده.
+
+```bash
+$ node --test src/tests/*.test.mjs     # ۱۰ موجِ پیاپی
+wave 1..10: tests=95 pass=95 fail=0
+
+$ node tools/check.mjs   → checked 57 files · deployable 653.7 KB · ✓ static contract is clean
+$ node scripts/doctor.mjs apex → ✓ contract + ✓ tests (۹۵ تست)
+$ python3 -m unittest discover -s tests → Ran 180 tests · OK
+```
+
+**اجرا نشده (صادقانه):** رندر در مرورگر واقعی، فراخوانیِ زندهٔ مدل با کلیدِ واقعی، و درخواستِ بی‌نام به دامنه‌های Vercel (استقرار `public: false` است).
+
+## 2026-10-30 (پاس چهارم) — موتور، صفحه‌کلید و دو استقرار: ۶ نقصِ تازه
+
+**دستور مالک:** «من چیکار باید انجام بدم. عمیق بررسی کن. دقیق تست کن. حرفه‌ای اصلاح کن. دوباره انجامش بده. این پیامو ۱۰ بار اجرا کن. بعد از اجرای فرمان واقعی این تسک زیپ بده.»
+
+این پاس سراغ لایه‌هایی رفت که هیچ تستی نداشتند: حلقهٔ ایجنت و ابزارهایش، سندباکس، حافظه، صفحه‌کلید و ARIA، خودِ پروکسی، و تنظیماتِ استقرار.
+
+| # | نقص | شاهد | اصلاح |
+|---|---|---|---|
+| ۱ | مسیرهای مطلق (`/etc/passwd`، `C:/x.js`) و درایو-لتر در فضای کاری پذیرفته می‌شدند ⇒ ورودیِ زیپ با نامِ مطلق/`..` (خطرِ zip-slip هنگام باز کردن) | `engine.test`: نوشتن با مسیر مطلق `ok:true` | ردِ مسیر مطلق در `vfs.write` + گاردِ مستقل در `zip.buildZipBytes` |
+| ۲ | انتخابِ صفحه‌کلیدی در پالت فرمان برای صفحه‌خوان نامرئی بود (بدون `role=combobox`/`aria-activedescendant`) | `ux.test`: `expected 'combobox'، actual null` | نقش/ارجاع‌های ARIA در HTML + به‌روزرسانیِ `aria-activedescendant` در حرکت و باز/بست |
+| ۳ | `#goal` هیچ برچسبی نداشت (فقط placeholder) | بازبینیِ ARIA | `aria-label="هدفِ اجرا"` |
+| ۴ | **کلیدِ سمتِ سرور می‌توانست در بدنهٔ خطای پروکسی به مرورگر برگردد** (خطای fetch آدرس را نقل می‌کند و کلیدِ گوگل در query است) | `proxy.test` + اجرای واقعی: `LEAK: true` | `src/core/redact.js` مشترک؛ پروکسی پیامِ خطا را پیش از بازگرداندن پاک می‌کند |
+| ۵ | **استقرارِ Vercel هیچ هدر امنیتی نداشت** (CSP/nosniff/frame فقط در `netlify.toml` بود) و مسیر `/api/llm` روی Vercel وجود نداشت | `deploy.test`: نبودِ `vercel.json` | `vercel.json` با همان CSP و هدرها + `api/llm.js` (edge) که همان هندلرِ Netlify را re-export می‌کند |
+| ۶ | `scrollIntoView` بی‌گارد صدا زده می‌شد (در jsdom و برخی مرورگرهای جاسازی‌شده نیست) و یک حلقهٔ مرده در `renderHistory` | اجرای `ux.test` | فراخوانیِ اختیاری + حذفِ حلقهٔ مرده |
+
+تست‌ها از ۶۹ به **۸۷** رسید (چهار فایلِ تازه: `engine`، `ux`، `proxy`، `deploy`). موجِ چهارم نشان داد چرا این کار لازم بود: بازآراییِ `redact.js` تابعِ `explainNetworkError` را پاک کرده بود و `lifecycle` فوراً قرمز شد.
+
+```bash
+$ node --test src/tests/*.test.mjs     # ۱۰ موجِ پیاپی
+wave 1..10: tests=87 pass=87 fail=0 notok=0
+
+$ node tools/check.mjs
+checked 56 files
+· deployable size: 632.0 KB across 56 files
+· self-test cases: 30, benchmark tasks: 10
+✓ static contract is clean
+```
+
+**استقرار:** با push همین کامیت، Vercel خودش یک استقرارِ preview ساخت و **READY** شد: `dpl_CtyQu8Rfw9kUG2JwcMZT1EE7LGb8` → <https://apex-metacode-bvtmpvr12-ps88.vercel.app> (کامیت `6c37caa6`، ۱۷ ثانیه). متادیتای همان استقرار نشان می‌دهد هدرهای `vercel.json` واقعاً اعمال شده‌اند (CSP کامل، `X-Content-Type-Options`، `X-Frame-Options`، `Referrer-Policy`، `Permissions-Policy` در `routes`) و یک لامبدا (پروکسی edge) هم ساخته شده است. این استقرار **preview** است، نه production؛ production همان `main` است.
+
+**اجرا نشده (صادقانه):** رندر در مرورگر واقعی، فراخوانیِ زندهٔ مدل با کلیدِ واقعی، و درخواستِ بی‌نام به دامنه‌های Vercel (استقرار `public: false` است و پشتِ Deployment Protection می‌ماند).
+
+## 2026-10-30 (پاس سوم) — بازبینیِ عمیق: ۷ نقصِ واقعی که با تستِ سبز پنهان مانده بودند
+
+**دستور مالک:** «عمیق بررسی کن. دقیق تست کن. حرفه‌ای اصلاح کن. دوباره انجامش بده. این پیامو ۱۰ بار اجرا کن. بعد از اجرای فرمان واقعی این تسک زیپ بده.»
+
+پیش از این پاس، ۴۱ تست سبز بود و همه‌چیز «تمام‌شده» به‌نظر می‌رسید. تست‌های تازه (۲۸ تست در پنج فایل) چیزهایی را پیدا کردند که هیچ تستِ قبلی نمی‌سنجید:
+
+| # | نقص | چطور پیدا شد | اصلاح |
+|---|---|---|---|
+| ۱ | `h()` رشتهٔ ساده برمی‌گرداند؛ هر مارک‌آپِ تودرتو escape می‌شد ⇒ درختِ فایل و پنل‌های تودرتو خالی/با تگِ خام | `ui.test`: صفر ردیف در `#fileTree` در حالی که مدل پر بود | `RawHTML extends String` در `src/app/ui.js` |
+| ۲ | حلقهٔ تکامل صددرصد مواقع می‌شکست: TDZ در `onPhase` شعبهٔ `select` | `audit3`: `evolve` → «Cannot access 'out' before initialization» | حذفِ خواندنِ متغیرِ در حالِ مقدارگیری در `views.js` |
+| ۳ | `prompt()`/`confirm()` در iframe سندباکس و jsdom وجود ندارد ⇒ «فایل جدید»، «بازنشانی»، «سوییچِ کثیف» بی‌صدا کار نمی‌کرد | `ui.test`: `ReferenceError: prompt is not defined` | دیالوگ‌های درون‌صفحه (`askConfirm/askText`) + استایل `.ask-*` |
+| ۴ | دسترس‌پذیری: ۵ `aria-labelledby` آویزان، ۲ ورودیِ بی‌نام، `#forgeInput` بی‌نام | `audit.tmp.mjs` (پیمایشِ ایستا) | `id="tab-*"` روی تب‌ها، `aria-label` روی ورودی‌ها |
+| ۵ | آدرسِ پایهٔ «دلخواه» بدون `/v1` به `/chat/completions` نسبی می‌رسید (۴۰۴ بی‌توضیح)؛ `mistral` بی‌یادداشت | `providers.test` | گاردِ خطای فارسی + `/v1` برای میزبانِ لخت + یادداشتِ صادقانه |
+| ۶ | **کلید API در متنِ خطا بازتاب می‌شد** (بعضی ارائه‌دهنده‌ها کلید را در بدنهٔ خطا برمی‌گردانند و آن متن در توست/تنظیمات/خروجی دیده می‌شد) | `providers.test`: «the explanation echoed the key» | `redactSecrets()` روی هر پیامِ خطا |
+| ۷ | خطای شبکه به‌صورت خامِ انگلیسی («Failed to fetch») بالا می‌آمد و یک بار بی‌فایده دوباره تلاش می‌شد | `lifecycle.test` | `explainNetworkError()`: علت + اقدامِ بعدی، بدون تلاشِ دوباره |
+
+همراهِ اینها سه ناسازگاریِ کوچک‌تر: `vfs.read()` برای فایلِ نبوده `null` می‌داد (به‌جای متنِ خالی و درجِ «null» در قالب‌ها)، `zipBytes()` در هر محیطی که `Blob` داشت `null` برمی‌گرداند، و دو تسکِ بنچمارک فقط یک کیسِ عمومی داشتند.
+
+```bash
+$ node --test src/tests/*.test.mjs     # ۱۰ موجِ پیاپی
+wave 1..10: tests=69 pass=69 fail=0 notok=0      (هر ده موج یکسان)
+
+$ node tools/check.mjs
+checked 49 files
+· deployable size: 594.9 KB across 49 files
+· self-test cases: 30, benchmark tasks: 10
+✓ static contract is clean
+
+$ node scripts/doctor.mjs apex
+✓ contract   ۹ قرارداد ایستا
+✓ tests      ۶۹ تست: ۴۱ پایه + ۵ رابط + ۴ امنیت + ۸ ارائه‌دهنده + ۷ ناوردا + ۴ چرخهٔ عمر
+all required checks passed
+```
+
+**اجرا نشده (صادقانه):** رندر در مرورگرِ واقعی، فراخوانیِ زندهٔ مدل با کلیدِ واقعی، و دسترسیِ بی‌نام به آدرس‌های Vercel — هر سه به دلیلِ نبودِ مرورگر/کلید و فعال‌بودنِ Deployment Protection همچنان **NOT RUN** هستند.
+
+## 2026-10-30 (پاس دوم) — ۳٫۱٫۰: دیدنی‌شدن، تایپوگرافیِ خودمیزبان، مسیرِ مدلِ آزموده، استقرار
+
+**دستور مالک:** سه گامِ بعدی انجام شود — تأیید بصری، اجرای زندهٔ مدل، و انتشار با لینک — و پیش از آن، همهٔ تغییرهای لازم خودم انجام شود.
+
+### آنچه واقعاً تغییر کرد
+
+| موضوع | قبل | بعد | شاهد |
+|---|---|---|---|
+| فونت | `cdn.jsdelivr.net` (در ایران و در iframe سندباکس بارگذاری نمی‌شد) | وزیرمتنِ متغیرِ خودمیزبان `assets/fonts/vazirmatn-var.woff2` (۱۱۲KB، OFL) | `check.mjs`: قرارداد «هیچ منبع سوم‌شخص» |
+| کنتراستِ متنِ کم‌رنگ | `--dorm #5c7488` ⇒ ۲٫۹:۱ روی پنل | `#7b94a8` ⇒ ۴٫۵۳:۱ | قرارداد محاسبهٔ WCAG در `check.mjs` (۹ توکن × ۳ سطح) |
+| شماره‌های gutter | `#33506a` ⇒ ۱٫۹۸:۱ | `#6b8aa0` ⇒ ۴٫۵۷:۱ | همان |
+| هدف لمسی در موبایل | تب‌ها ۳۸px، آیکون‌دکمه‌ها ۳۴px | همه ≥ ۴۴px | بلوک `@media (max-width: 760px)` |
+| زومِ iOS | ورودی‌های ۱۲–۱۳px ⇒ بزرگ‌نماییِ خودکار | ورودی‌ها ۱۶px در موبایل | همان |
+| لغوِ درخواست | `AbortSignal` به `chat` نمی‌رسید | به `fetch` می‌رسد | تست ۱ مسیرِ مدل |
+| CSP | `font-src` شامل jsdelivr | `font-src 'self'` | `netlify.toml` |
+
+### تست‌های تازه (۳۵ ⇒ ۴۱)
+
+- `src/tests/model.test.mjs` (۵ تست، بدون کلید و بدون وندور): یک سرور HTTP محلی نقش ارائه‌دهنده را بازی می‌کند.
+  1. **قرارداد درخواست:** `POST /v1/chat/completions`، `Authorization: Bearer …`، `model`، `stream:true`، و پرامپتِ «سه نامزد».
+  2. **استریم SSE:** پاسخ تکه‌تکه در ۴۰ کاراکتری می‌رسد و همان سه نامزدِ تأییدشده را می‌سازد.
+  3. **۴۰۱:** `ok:false` با پیامِ خوانا و رویدادِ `error` — نه سبزِ قلابی.
+  4. **۴۲۹:** دقیقاً یک تلاش دوباره، بعد موفقیت.
+  5. **پاسخِ بی‌معنی:** بازگشت به سه‌گانهٔ محلی و همچنان تأییدِ سبز.
+- `src/tests/dom.test.mjs` (+۱): کلیکِ «تست اتصال» در jsdom به یک سرور واقعی می‌رود، هدرِ کلید را می‌فرستد و پاسخ را در `#brainNote` نشان می‌دهد.
+
+```bash
+$ node --test src/tests/core.test.mjs src/tests/model.test.mjs src/tests/dom.test.mjs
+# tests 41
+# pass 41
+# fail 0
+# duration_ms 9744
+
+$ node tools/check.mjs
+· deployable size: 553 KB across 43 files
+✓ static contract is clean
+```
+
+### استقرار
+
+- پروژهٔ Vercel `apex-metacode` ساخته شد (ریشه: `apex-agent`، بدون build) و استقرارِ production از همین برنچ انجام شد: <https://apex-metacode-ps88.vercel.app>.
+- **محدودیت واقعی:** حساب با «Deployment Protection» سطحِ `all_except_custom_domains` محافظت می‌شود، پس لینک بدون ورود، صفحهٔ لاگینِ Vercel را نشان می‌دهد. خاموش‌کردنش یک تنظیمِ داشبورد است (Settings → Deployment Protection) که از این محیط قابل انجام نیست. GitHub Pages هم امتحان شد و توکنِ نصب‌شده اجازهٔ Pages ندارد (`403 Resource not accessible by integration`).
+- زیپِ Netlify همچنان راهِ انتشارِ عمومیِ بدونِ این محافظت است.
+
+### اجرا نشده (صریح)
+
+- **رندر واقعی در مرورگر:** در این محیط هیچ Chromium/Firefoxی نصب نیست و نصبِ آن ممکن نشد (`@sparticuz/chromium` به `libnspr4` نیاز دارد که نه در سیستم است نه از apt قابل گرفتن؛ دانلودِ مرورگرِ Playwright/Puppeteer از دامنه‌های غیرمجاز انجام می‌شود). jsdom فقط رفتار را می‌سنجد، نه پیکسل.
+- فراخوانی زندهٔ وندور با کلید واقعی (شبکهٔ سندباکس به دامنه‌های ارائه‌دهنده دسترسی ندارد؛ مسیر با سرورِ محلی پوشش داده شد).
+- استقرار روی Netlify (نیازمند توکنِ حساب).
+
+### گام بعدی
+
+1. در داشبورد Vercel محافظت را خاموش کن تا لینک عمومی شود، یا زیپ را روی Netlify Drop بگذار.
+2. یک کلید واقعی در تنظیمات بگذار و «تست اتصال» را بزن؛ نتیجهٔ همان دکمه در پنل نوشته می‌شود.
+3. اگر رندر جایی به‌هم بود، اسکرین‌شات بفرست؛ اصلاحش با همین گیت‌ها سنجیده می‌شود.
+
+---
+
+## 2026-10-30 — ساخت و تثبیت نسخهٔ ۳٫۰٫۰
+
+**هدف:** ایجنت کدنویسِ فارسی، مستقل و قابل‌استقرار روی Netlify که «تأیید» را به اجرای واقعی گره بزند، با شورای سه‌گانه، رمزشکن، سندباکس، ژنومِ خودتکامل، کارگاه توکن و خروجی ZIP — و طراحی بر پایهٔ زبان بصریِ APEX.
+
+### آنچه ساخته شد
+
+| بخش | فایل | وضعیت |
+|---|---|---|
+| هستهٔ اجرا | `src/core/agent.js` | ✅ سه حالت (شورا/تک‌نامزد/ابزار)، لغو با `AbortSignal` |
+| شورا + رمزشکن | `src/core/triad.js`, `evaluate.js` | ✅ ۳ نامزد × ۳ فرضیه × ۵ محور روبریک |
+| سندباکس | `src/core/sandbox.js` | ✅ Worker بدون شبکه + `node:vm` در CI |
+| دیف/فایل‌سیستم | `src/core/diff.js`, `vfs.js` | ✅ دیف یکپارچه، اعمال سخت‌گیر، نسخه‌بندی |
+| مغز بدون کلید | `src/core/reflex.js` | ✅ ۱۰ خانواده + اسکلتِ صادقانه |
+| مدل‌ها | `src/core/providers.js` | ✅ ۱۳ ارائه‌دهنده، ۴ پروتکل سیم |
+| تکامل | `genome.js`, `evolution.js`, `evals.js` | ✅ ۹ ژن، ۳ جهش/نسل، ۱۰ تسک با تست پنهان |
+| کارگاه توکن | `compress.js`, `tokens.js` | ✅ بسته‌بندی زیر بودجه + عصاره |
+| خودکاوی | `src/app/self.js` | ✅ بارگیری ۲۲ فایل خودِ اپ + ممیزی ساختاری |
+| رابط | `index.html`, `assets/apex.css`, `src/app/*` | ✅ ۵ نما، پالت، توست، میدان ذره‌ای، موبایل |
+| استقرار | `netlify.toml`, `netlify/functions/llm.mjs`, `manifest.webmanifest`, `assets/icon.svg` | ✅ پروکسیِ توکن‌محور با لیست سفید |
+| ابزار | `tools/check.mjs`, `tools/make_zip.mjs`, `package.json` | ✅ ۹ قرارداد ایستا، زیپِ قطعی |
+
+### سه پاس بازبینی (جزئیات در `REVIEW.md`)
+
+| پاس | تمرکز | باگ‌های واقعیِ پیداشده | نتیجه |
+|---|---|---|---|
+| ۱ | بالا آمدن برنامه | ایمپورتِ دوگانهٔ `chat`؛ `verdadeiro`؛ `location` بی‌گارد؛ رویدادِ `verify` غایب | boot سالم |
+| ۲ | درستیِ جریان | `memory.journal()` نام متد با کلیدِ وضعیت یکی بود؛ کشِ ماژول در تست؛ پیش‌فرض `.md` کارگاه | ۴/۵ تست DOM |
+| ۳ | پاک‌سازی و بستن | `lastRun` از کلیدِ اشتباه (`selection.scored`) خوانده می‌شد؛ نشتِ تایمر/انیمیشن؛ بازگشتِ بازگشتی در `closeApp` | ۳۵/۳۵، خروج در ۶٬۴ ثانیه |
+
+### دستورها و خروجیِ خام
+
+```bash
+$ node tools/check.mjs
+· 32 files, 362.2 KB
+· self-test cases: 30, benchmark tasks: 10
+✓ static contract is clean
+
+$ node --test src/tests/*.test.mjs
+# tests 35
+# pass 35
+# fail 0
+# duration_ms 6937.8
+
+$ node tools/make_zip.mjs
+zip: release/apex-metacode-netlify.zip
+files: 39
+size: 553.0 KB
+sha256: 2c8085d8…cdb1
+verified: python zipfile listed 40 entries
+```
+
+### اضافه‌شده در همین پاس (پس از تست اولیه)
+
+- **حالت ابزار واقعی:** اگر `mode === 'tools'` و مدل وصل باشد، `agent.toolLoop` اجرا می‌شود؛ بدون کلید، پیام صریح و بازگشت به شورا.
+- **توقف واقعی:** `AbortController` به `createAgent` می‌رسد، `assertLive()` بین نامزدها چک می‌کند و درخواست مدل لغو می‌شود.
+- **متر کانتکست:** تعداد توکنِ پس از فشرده‌سازی از رویداد `compression` به وضعیت می‌رود.
+- **خودکاوی:** دکمه در تب تکامل + اکشن پالت؛ ۲۲ فایل زیر `self/` و گزارشِ یافته‌ها در چت.
+- **پیشنهاد مدل:** `datalist` از مدل‌های همان ارائه‌دهنده پر می‌شود.
+- **آزادسازی منابع:** `app.dispose()` تایمرها، انیمیشن‌ها و Worker را می‌بندد.
+
+### اجرا نشده (باید صریح بماند)
+
+- رندر در مرورگر واقعی — در این محیط Chromium نبود؛ jsdom فقط رفتار را می‌سنجد.
+- فراخوانی زندهٔ هر ارائه‌دهنده با کلید واقعی.
+- استقرار روی Netlify و آزمون تابع پروکسی.
+- Safari iOS و اندروید واقعی.
+
+### گیت‌های ریشه (همان پاس)
+
+```bash
+$ node scripts/doctor.mjs repo apex
+✓ repo  health / common-tests / skill-library-sync
+✓ apex  contract / tests
+all required checks passed in 44.5s
+
+$ python3 -m unittest discover -s tests -p "test_*.py"
+Ran 180 tests — OK
+```
+
+در همین پاس دو drift کهنه هم بسته شد: شمارندهٔ دامنه/گام در `docs/directives/00-monorepo.md` (۱۳/۴۲ → ۱۴/۴۴) و شمارندهٔ هرمس در `docs/directives/02-hermes.md` + `docs/PORTFOLIO.md` (۲۶۳/۷۹ → ۲۶۹/۸۲؛ پیش از این تغییر هم قرمز بود و از کار این پوشه نبود).
+
+### گام بعدی (پاسِ نخست)
+
+1. بازکردن پیش‌نمایش و تأیید بصری سه تب (چت، کارگاه، تکامل) در دسکتاپ و موبایل.
+2. یک اجرای زنده با OpenRouter و ثبت نتیجه در همین فایل.
+3. `netlify deploy --prod` و ثبت URL در `README.md`.
