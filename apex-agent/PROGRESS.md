@@ -30,7 +30,9 @@ checked 56 files
 ✓ static contract is clean
 ```
 
-**اجرا نشده (صادقانه):** رندر در مرورگر واقعی، فراخوانیِ زندهٔ مدل با کلیدِ واقعی، حضورِ هدرهای تازه روی استقرارِ فعلی (نیازمندِ یک استقرارِ تازه)، و دسترسیِ بی‌نام به Vercel.
+**استقرار:** با push همین کامیت، Vercel خودش یک استقرارِ preview ساخت و **READY** شد: `dpl_CtyQu8Rfw9kUG2JwcMZT1EE7LGb8` → <https://apex-metacode-bvtmpvr12-ps88.vercel.app> (کامیت `6c37caa6`، ۱۷ ثانیه). متادیتای همان استقرار نشان می‌دهد هدرهای `vercel.json` واقعاً اعمال شده‌اند (CSP کامل، `X-Content-Type-Options`، `X-Frame-Options`، `Referrer-Policy`، `Permissions-Policy` در `routes`) و یک لامبدا (پروکسی edge) هم ساخته شده است. این استقرار **preview** است، نه production؛ production همان `main` است.
+
+**اجرا نشده (صادقانه):** رندر در مرورگر واقعی، فراخوانیِ زندهٔ مدل با کلیدِ واقعی، و درخواستِ بی‌نام به دامنه‌های Vercel (استقرار `public: false` است و پشتِ Deployment Protection می‌ماند).
 
 ## 2026-10-30 (پاس سوم) — بازبینیِ عمیق: ۷ نقصِ واقعی که با تستِ سبز پنهان مانده بودند
 
