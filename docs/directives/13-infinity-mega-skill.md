@@ -10,7 +10,7 @@
 
 | سنجه | مقدار | منبع |
 |---|---|---|
-| هسته | ۱۷ ماژول خالص بدون DOM در `infinity-mega-skill/src/core/` | شمارش فایل |
+| هسته | ۱۸ ماژول خالص بدون DOM در `infinity-mega-skill/src/core/` | شمارش فایل |
 | نما | ۵ ماژول در `infinity-mega-skill/src/app/` | شمارش فایل |
 
 ## وضعیت تأییدشده (2026-10-30، پاس سوم)
@@ -45,7 +45,7 @@ npm run live                         # فراخوانیِ زندهٔ مدل (ک�
 npm run live -- --mock               # اثباتِ مسیر بدون شبکه
 node tools/serve.mjs --port 8080     # پیش‌نمایش با هدرهای واقعیِ استقرار
 node tools/render.mjs --base http://127.0.0.1:8080   # ۳۲ سنجه روی همان پیش‌نمایش
-node ../scripts/doctor.mjs apex      # همان گیت‌ها از ریشهٔ مخزن
+node ../scripts/doctor.mjs infinity      # همان گیت‌ها از ریشهٔ مخزن
 ```
 
 ## اولویت‌ها

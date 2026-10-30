@@ -18,11 +18,11 @@ project:
     views: infinity-mega-skill/src/app/views.js      # کارگاه، تکامل، حافظه، تنظیمات
     state: infinity-mega-skill/src/app/state.js      # ذخیره/بازیابی، مهاجرت نسخه، صدور
     self:  infinity-mega-skill/src/app/self.js       # خودکاوی: بارگیری و ممیزی کدِ خودِ اپ
-    core:  infinity-mega-skill/src/core/*.js         # ۱۷ ماژول خالص، بدون DOM
+    core:  infinity-mega-skill/src/core/*.js         # ۱۸ ماژول خالص، بدون DOM
   source_of_truth: infinity-mega-skill/src/core
   commands:  # همه در 2026-10-30 اجرا شدند
     check:   node tools/check.mjs                  # "✓ static contract is clean"
-    test:    node --test src/tests/*.test.mjs      # 95/95 در ~۳۰ ثانیه (۱۰ موجِ پیاپی، همه سبز)
+    test:    node --test src/tests/*.test.mjs      # 107/107 (۱۴ فایل؛ سه اجرای کاملِ پیاپی سبز، 2026-10-30)
     core:    node --test src/tests/core.test.mjs   # 30/30
     model:   node --test src/tests/model.test.mjs  # 5/5 با سرور HTTP محلی (بدون کلید)
     dom:     node --test src/tests/dom.test.mjs    # 6/6 (نیازمند jsdom)

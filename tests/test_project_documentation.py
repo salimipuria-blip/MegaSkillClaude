@@ -43,7 +43,7 @@ PROJECTS = {
         "docs/directives/10-viking-content-renderer.md",
     ),
     "mobile": ("mobile/PROGRESS.md", "mobile/README.md", "docs/directives/11-mobile-console.md"),
-    "apex": ("infinity-mega-skill/PROGRESS.md", "infinity-mega-skill/README.md", "docs/directives/13-infinity-mega-skill.md"),
+    "infinity": ("infinity-mega-skill/PROGRESS.md", "infinity-mega-skill/README.md", "docs/directives/13-infinity-mega-skill.md"),
 }
 
 

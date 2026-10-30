@@ -6,7 +6,7 @@
 - ۱۳ پروژه/زیرپروژهٔ مدیریت‌شده (به‌علاوهٔ خود مخزن)؛ دفتر هرکدام در جدول `README.md` و دستور توسعهٔ هرکدام در [`docs/directives/`](docs/directives/README.md) است.
 - `node scripts/doctor.mjs <id>` مرجع فرمان‌های دقیق هر پروژه است؛ `--list` فهرست کامل را نشان می‌دهد. اکنون **۴۴ گام در ۱۴ دامنه** (۳۸ تا پیش از ۲۰۲۶-۱۰-۱۴).
 - Router canonical: **۵٬۹۶۴** مهارت = ۳٬۰۰۰ core + ۱۸ پروژه + ۲٬۹۴۶ GitHub؛ **۵٬۹۶۴ routable**، **۰ incomplete** و **۲۹٬۸۷۸ trigger**.
-- تست‌های ریشه: **۱۸۰ تست ریشه** (پایتون) با `python3 -m unittest discover -s tests -p "test_*.py"`. نگهبانِ همین اعداد `tests/test_status_counters.py` است: شمارنده‌های بخش «وضعیت مشترک» را به `triggers.json`، `library/github-skills/INDEX.json`، `scripts/doctor.mjs` و `mobile/skills-index.json` قفل می‌کند، ارجاع‌های `doctor.mjs <id>` و لینک/پوشه‌های `docs/directives/README.md` را resolve می‌کند، و اعداد داخل بخش‌های تاریخ‌دار را به‌عنوان snapshot دست نمی‌زند. قاعدهٔ انسانی‌اش بند ۷ «قواعد مشترک» در [`docs/directives/README.md`](docs/directives/README.md) است.
+- تست‌های ریشه: **۱۸۴ تست ریشه** (پایتون) با `python3 -m unittest discover -s tests -p "test_*.py"`. نگهبانِ همین اعداد `tests/test_status_counters.py` است: شمارنده‌های بخش «وضعیت مشترک» را به `triggers.json`، `library/github-skills/INDEX.json`، `scripts/doctor.mjs` و `mobile/skills-index.json` قفل می‌کند، ارجاع‌های `doctor.mjs <id>` و لینک/پوشه‌های `docs/directives/README.md` را resolve می‌کند، و اعداد داخل بخش‌های تاریخ‌دار را به‌عنوان snapshot دست نمی‌زند. قاعدهٔ انسانی‌اش بند ۷ «قواعد مشترک» در [`docs/directives/README.md`](docs/directives/README.md) است.
 - CI شامل typecheck/build/test، health، skill sync، PWA، دارایی‌های برند و typecheck زیرپروژهٔ Motion است.
 
 ## ۲) اصلاحات بین‌پروژه‌ای
@@ -483,3 +483,11 @@ pushِ اولِ این دور (`4ccf6799`) سه job را قرمز کرد: `commi
 - **گیت‌ها:** `node tools/check.mjs` ⇒ پاک · `node --test src/tests/*.test.mjs` ⇒ **۴۱/۴۱** در ۹٫۱s · `node scripts/doctor.mjs apex` ⇒ سبز · `python3 -m unittest discover -s tests` ⇒ **۱۸۰/۱۸۰**.
 - **استقرار:** پروژهٔ Vercel `infinity-mega-skill` (ریشه `infinity-mega-skill`، بدون build) ساخته و از همین برنچ deploy شد: <https://infinity-mega-skill-ps88.vercel.app>. حساب با Deployment Protection (`all_except_custom_domains`) محافظت می‌شود، پس لینک بدون ورود صفحهٔ لاگین می‌دهد؛ خاموش‌کردنش تنظیمِ داشبورد است. GitHub Pages با توکنِ فعلی `403` داد.
 - **NOT RUN:** رندر واقعی در مرورگر (هیچ Chromium/Firefoxی در محیط نیست؛ نصبِ Chromium به `libnspr4` و دانلودِ مرورگر به دامنه‌های غیرمجاز نیاز دارد) · فراخوانی زندهٔ وندور با کلید · استقرار Netlify.
+
+## ۱۷) لاگ جریان — ۲۰۲۶-۱۰-۳۰ (تغییر نام به Infinity Mega Skill + دروازهٔ محلیِ CI)
+
+- **تغییر نام:** `apex-agent/` → `infinity-mega-skill/`، job `apex` → `infinity`، id doctor `apex` → `infinity`، directive ۱۳ → `13-infinity-mega-skill.md`. «APEX-UI» در `hermes/` (اعتبارِ پروژهٔ بیرونیِ MIT) و نام‌های تاریخیِ `orchestrator/` عمداً دست نخورد.
+- **چرا CI قرمز شد (PR #143):** (۱) `test_repo_normalization` نام job را `apex` می‌خواست؛ (۲) شمارندهٔ هسته در directive ۱۳ هنوز ۱۷ بود ولی `supervisor.js` آن را ۱۸ کرد؛ (۳) پیام کامیت‌ها trailerِ `Co-Authored-By` داشت که `check_commit_identity.py` رد می‌کند. هر سه پیش از push با اجرای محلیِ همان jobها قابل‌دیدن بود.
+- **دروازهٔ جدید `scripts/verify.mjs`:** فرمان‌ها را مستقیم از `ci.yml` می‌خواند (بدون کپی، پس انحراف ندارد)، هر بلوک `run:` را مثل GitHub با `bash -eo pipefail` در `working-directory` همان job اجرا می‌کند، jobهای سراسری را همیشه و jobهای پروژه را فقط با تغییرِ پوشه یا تعریفشان. ابزارِ غایب = skipِ قابل‌دیدن (`--strict` ردش می‌کند)؛ `fjcod-e2e` فقط با `--full`. jobی که دامنه‌اش تشخیص‌پذیر نباشد دروازه را با exit 2 می‌شکند.
+- **نگهبان:** `tests/test_verify_gate.py` (۴ تست): هر job ci.yml پوشش داده شده، تعدادِ stepهای استخراج‌شده با `run:`های فایل برابر است، jobهای سراسری همیشه انتخاب می‌شوند، دامنه‌ها پوشه‌های واقعی‌اند. تست‌های ریشه: **۱۸۴**.
+- **هوکِ pre-push نصب نشد:** فعال‌کردنِ خودکارِ اجرای کد روی push به اجازهٔ مالک نیاز دارد؛ دروازه فعلاً دستی است (`node scripts/verify.mjs` پیش از هر push).
