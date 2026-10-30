@@ -127,9 +127,10 @@ async function shoot(page, name) {
 async function main() {
   mkdirSync(OUT, { recursive: true });
   const { puppeteer, chromium, exe, libDir } = await ensureBrowser();
-  const server = await serve();
-  const port = server.address().port;
-  const base = `http://127.0.0.1:${port}/`;
+  // --base audits a server someone else is running (npm run serve); by default the tool hosts its own.
+  const externalBase = argOf('base', '');
+  const server = externalBase ? null : await serve();
+  const base = externalBase ? externalBase.replace(/\/?$/, '/') : `http://127.0.0.1:${server.address().port}/`;
 
   const browser = await puppeteer.launch({
     args: [...chromium.args, '--no-sandbox', '--disable-dev-shm-usage'],
@@ -335,11 +336,14 @@ async function main() {
 
     // The static server sends the same CSP as the real hosts, so this page was rendered under the
     // production policy: blob workers, fonts and the sandbox all had to survive it.
-    const cspHeader = deploymentHeaders()['Content-Security-Policy'] || '';
+    const cspHeader =
+      (externalBase
+        ? (await fetch(base, { method: 'HEAD' })).headers.get('content-security-policy') || ''
+        : deploymentHeaders()['Content-Security-Policy']) || '';
     check('csp: page rendered under the production policy', cspHeader.includes("default-src 'self'"), cspHeader.slice(0, 60));
   } finally {
     await browser.close();
-    server.close();
+    server?.close();
   }
 
   writeFileSync(path.join(OUT, 'render-report.json'), `${JSON.stringify(report, null, 2)}\n`);

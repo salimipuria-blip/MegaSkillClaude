@@ -2,6 +2,32 @@
 
 > آخرین به‌روزرسانی: 2026-10-30 · لاگ جریان: جدیدترین پاس در بالا، تاریخ‌دار و با دستور و خروجی واقعی.
 
+## 2026-10-30 (پاس هشتم) — پیش‌نمایشی که با استقرار یکی است، و یک باگِ هدر که فقط با `curl -I` دیده شد
+
+**دستور مالک:** «انجام بده» — یعنی همان دو چیزی که در پیام قبل «انجام‌نشده» مانده بود: پیش‌نمایشِ محلی بدونِ هدرهای واقعی، و آزمونِ مرورگر که پس از ریستِ ورک‌اسپیس قابلِ اجرا نبود.
+
+- پیش‌نمایش از `python3 -m http.server` به `tools/serve.mjs` منتقل شد: همان CSP و هدرهای سختِ `vercel.json` را می‌فرستد، `Cache-Control` هر مسیر را از همان قاعده می‌گیرد، و `Content-Type` درست (`manifest+json`، `font/woff2`، `text/javascript`) می‌دهد. `npm run serve` همان را بالا می‌آورد.
+- **یک باگ در همان ابزارِ تازه، قبل از تحویل:** قاعده‌ها را بدونِ توجه به `source` روی همهٔ مسیرها اعمال می‌کردم، پس `/` دو هدرِ `Content-Type` می‌گرفت (`application/manifest+json` و `text/html`) و مرورگر می‌توانست اولی را بردارد. `curl -I` نشانش داد؛ حالا هر قاعده فقط روی مسیرِ خودش می‌نشیند و هر هدر یک‌بار فرستاده می‌شود:
+
+```bash
+$ curl -sI http://127.0.0.1:8080/            → content-type: text/html · CSP ✔ · one value per header
+$ curl -sI http://127.0.0.1:8080/manifest.webmanifest → content-type: application/manifest+json · max-age=3600
+$ curl -sI http://127.0.0.1:8080/assets/apex.css      → text/css · max-age=3600, must-revalidate
+$ curl -sI http://127.0.0.1:8080/src/app/boot.js      → text/javascript · max-age=600, must-revalidate
+```
+
+- `tools/render.mjs` حالا `--base` می‌گیرد تا همان ۳۲ سنجه را روی **پیش‌نمایشِ در حال اجرا** اجرا کند، نه یک سرورِ خصوصیِ خودش:
+
+```bash
+$ node tools/render.mjs --base http://127.0.0.1:8080 --out /tmp/preview-shots
+checks: 32/32 passed
+✓ run: reflex produced a verified result — {"ok":true,…}
+✓ self-test: the app's own suite passes in the browser — ۳۰/۳۰
+✓ csp: page rendered under the production policy — default-src 'self'; script-src 'self' blob:; …
+```
+
+یعنی آن «NOT RUN»ِ قبلی («پیش‌نمایش بدونِ هدرهای استقرار سرو می‌شد») بسته شد: پیش‌نمایش و استقرار الان یک چیز را سرو می‌کنند و همان چیز آزموده شده است.
+
 ## 2026-10-30 (پاس هفتم) — «حتماً به یک مدلِ واقعی وصل شو»: یک فرمان، و دو حالتِ صادقانه
 
 **دستور مالک:** «حتماً باید به freebuff وصل شی. الکی تایپ نکن.» اول واقعیت بررسی شد، بعد ابزار ساخته شد:

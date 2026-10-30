@@ -17,14 +17,14 @@
 
 | سطح بررسی | دستور | نتیجه |
 |---|---|---|
-| قرارداد ایستا | `node tools/check.mjs` | ✅ پاک — ۵۸ فایل، ۶۸۶ KB، ۹ قرارداد |
+| قرارداد ایستا | `node tools/check.mjs` | ✅ پاک — ۶۰ فایل، ۷۰۸ KB، ۹ قرارداد |
 | تست هستهٔ خالص | `node --test src/tests/core.test.mjs` | ✅ ۳۰/۳۰ |
 | تست مسیرِ مدل | `node --test src/tests/model.test.mjs` | ✅ ۵/۵ (سرور HTTP محلی: قرارداد درخواست، SSE، ۴۰۱، ۴۲۹، پاسخِ بی‌معنی) |
 | تست سرتاسری DOM | `node --test src/tests/dom.test.mjs` | ✅ ۶/۶ (jsdom: boot، شورا، بنچمارک، تست اتصال، خودکاوی، ویرایش/زیپ) |
 | سخت‌سازی | `node --test src/tests/hardening.test.mjs` | ✅ ۱۰/۱۰ (ورودِ خصمانه، آلودگیِ prototype، دیالوگ با کیبورد، عدد فارسی، جبرگرایی، اسکریپتِ سندباکس بدون eval) |
 | کلِ مجموعه | `node --test src/tests/*.test.mjs` | ✅ ۹۷/۹۷ · ده موجِ پیاپی هر بار ۹۷/۹۷ |
 | پروکسی و استقرار | `node --test src/tests/proxy.test.mjs src/tests/deploy.test.mjs` | ✅ ۶/۶ (ردِ رلهٔ باز، هدرهای یکسانِ Netlify/Vercel) |
-| زیپ استقرار | `node tools/make_zip.mjs` | ✅ ۵۸ فایل، ≈۶۹۵ KB، تأیید با `python3 -m zipfile` (sha256 را ابزار در هر ساخت چاپ می‌کند) |
+| زیپ استقرار | `node tools/make_zip.mjs` | ✅ ۶۰ فایل، ۷۱۷.۵ KB، تأیید با `python3 -m zipfile` (sha256 را ابزار در هر ساخت چاپ می‌کند) |
 | **رندر مرورگر واقعی** | `npm run render` (Chromium 153، CSPِ واقعیِ استقرار) | ✅ **۳۲/۳۲** — بوت ۰٫۸ ثانیه، فونت وزیرمتن، Reflex واقعی، Worker واقعی، ۳۰/۳۰ سنجهٔ درون‌اپ در مرورگر، موبایل ۳۹۰×۸۴۴ |
 | فراخوانی زندهٔ مدل | `npm run live` | ⏳ ابزار آماده و با `--mock` اثبات‌شده (verify ۲/۲، SSE واقعی)؛ اجرای زندهٔ واقعی نیاز به کلید + ماشینِ مالک دارد (شبکهٔ ساخت به هاستِ ارائه‌دهنده بسته است) |
 | استقرار Vercel | `create_deployment` از همین برنچ | ✅ ساخته شد؛ لینک پشتِ Deployment Protection حساب |
@@ -43,6 +43,8 @@ python3 -m http.server 8080          # پیش‌نمایش محلی
 npm run render                       # ۳۲ سنجه در کرومیومِ واقعی (نیاز به puppeteer-core)
 npm run live                         # فراخوانیِ زندهٔ مدل (کلید)؛ بدون کلید: NOT RUN با کد ۲
 npm run live -- --mock               # اثباتِ مسیر بدون شبکه
+node tools/serve.mjs --port 8080     # پیش‌نمایش با هدرهای واقعیِ استقرار
+node tools/render.mjs --base http://127.0.0.1:8080   # ۳۲ سنجه روی همان پیش‌نمایش
 node ../scripts/doctor.mjs apex      # همان گیت‌ها از ریشهٔ مخزن
 ```
 
