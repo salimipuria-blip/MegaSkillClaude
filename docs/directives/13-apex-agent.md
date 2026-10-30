@@ -26,7 +26,7 @@
 | پروکسی و استقرار | `node --test src/tests/proxy.test.mjs src/tests/deploy.test.mjs` | ✅ ۶/۶ (ردِ رلهٔ باز، هدرهای یکسانِ Netlify/Vercel) |
 | زیپ استقرار | `node tools/make_zip.mjs` | ✅ ۵۸ فایل، ≈۶۹۵ KB، تأیید با `python3 -m zipfile` (sha256 را ابزار در هر ساخت چاپ می‌کند) |
 | **رندر مرورگر واقعی** | `npm run render` (Chromium 153، CSPِ واقعیِ استقرار) | ✅ **۳۲/۳۲** — بوت ۰٫۸ ثانیه، فونت وزیرمتن، Reflex واقعی، Worker واقعی، ۳۰/۳۰ سنجهٔ درون‌اپ در مرورگر، موبایل ۳۹۰×۸۴۴ |
-| فراخوانی زندهٔ مدل | — | ❌ اجرا نشده (بدون کلیدِ ارائه‌دهنده) |
+| فراخوانی زندهٔ مدل | `npm run live` | ⏳ ابزار آماده و با `--mock` اثبات‌شده (verify ۲/۲، SSE واقعی)؛ اجرای زندهٔ واقعی نیاز به کلید + ماشینِ مالک دارد (شبکهٔ ساخت به هاستِ ارائه‌دهنده بسته است) |
 | استقرار Vercel | `create_deployment` از همین برنچ | ✅ ساخته شد؛ لینک پشتِ Deployment Protection حساب |
 | استقرار Netlify | — | ❌ اجرا نشده (بدون توکن حساب) |
 
@@ -41,6 +41,8 @@ node --test src/tests/*.test.mjs     # ۹۷ تست (۳۱ تستِ jsdom در ن�
 node tools/make_zip.mjs              # release/apex-metacode-netlify.zip
 python3 -m http.server 8080          # پیش‌نمایش محلی
 npm run render                       # ۳۲ سنجه در کرومیومِ واقعی (نیاز به puppeteer-core)
+npm run live                         # فراخوانیِ زندهٔ مدل (کلید)؛ بدون کلید: NOT RUN با کد ۲
+npm run live -- --mock               # اثباتِ مسیر بدون شبکه
 node ../scripts/doctor.mjs apex      # همان گیت‌ها از ریشهٔ مخزن
 ```
 

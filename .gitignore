@@ -20,3 +20,7 @@ brands/viking-offroad/motion/*/frames/
 
 # Generated deploy artifact (rebuild with: cd apex-agent && node tools/make_zip.mjs)
 apex-agent/release/
+
+# Live-model credentials for apex-agent/tools/live-check.mjs — never committed.
+apex-agent/.apex-key
+apex-agent/.apex-live.json
