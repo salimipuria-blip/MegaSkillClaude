@@ -1,6 +1,6 @@
 # مِتاکد / APEX-01 (`apex-agent/`) — دستور کار Claude
 
-> وضعیت: کد سالم و تست‌شده (Node ۸۷/۸۷، قرارداد ایستا پاک، زیپ تأییدشده)؛ روی Vercel مستقر شده (`apex-metacode-ps88.vercel.app`) ولی پشتِ Deployment Protection؛ **رندر در مرورگر واقعی هنوز دیده نشده**. آخرین بازبینی: 2026-10-30.
+> وضعیت: کد سالم و تست‌شده (Node ۹۵/۹۵، قرارداد ایستا پاک، زیپ تأییدشده)؛ روی Vercel مستقر شده (`apex-metacode-ps88.vercel.app`) ولی پشتِ Deployment Protection؛ **رندر در مرورگر واقعی هنوز دیده نشده**. آخرین بازبینی: 2026-10-30.
 
 ```yaml
 project:
@@ -22,7 +22,7 @@ project:
   source_of_truth: apex-agent/src/core
   commands:  # همه در 2026-10-30 اجرا شدند
     check:   node tools/check.mjs                  # "✓ static contract is clean"
-    test:    node --test src/tests/*.test.mjs      # 87/87 در ~۲۹ ثانیه (۱۰ موجِ پیاپی، همه سبز)
+    test:    node --test src/tests/*.test.mjs      # 95/95 در ~۳۰ ثانیه (۱۰ موجِ پیاپی، همه سبز)
     core:    node --test src/tests/core.test.mjs   # 30/30
     model:   node --test src/tests/model.test.mjs  # 5/5 با سرور HTTP محلی (بدون کلید)
     dom:     node --test src/tests/dom.test.mjs    # 6/6 (نیازمند jsdom)
@@ -35,6 +35,7 @@ project:
     ux:      node --test src/tests/ux.test.mjs         # 4/4 (صفحه‌کلید، ARIA، فضای کاری بزرگ)
     proxy:   node --test src/tests/proxy.test.mjs      # 3/3 (ردِ رلهٔ باز، فوروارد بی‌نشت)
     deploy:  node --test src/tests/deploy.test.mjs     # 3/3 (هدرها، پروکسی، صفر منبع بیرونی)
+    harden:  node --test src/tests/hardening.test.mjs  # 8/8 (ورودیِ خصمانه، دیالوگِ صفحه‌کلیدی، قطعیت)
     zip:     node tools/make_zip.mjs               # release/apex-metacode-netlify.zip
     serve:   python3 -m http.server 8080           # همان پوشه
     doctor:  node scripts/doctor.mjs apex          # check + test

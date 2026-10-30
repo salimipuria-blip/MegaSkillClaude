@@ -233,8 +233,17 @@ export function scoreCandidate({
   const longFn = lines > 60;
   const clarity = clamp01(0.42 + (hasDoc ? 0.24 : 0) + (lines <= 24 ? 0.16 : 0) + (longFn ? -0.22 : 0));
 
+  // Efficiency is measured, then quantised. Raw wall-clock cannot decide a winner: two identical
+  // runs differ by a millisecond or two, and that used to flip the winner and make the whole
+  // "reproducible" claim false on a busy machine. Coarse buckets keep a real 3ms-vs-150ms signal
+  // while ignoring scheduling noise.
   const ms = pub.ms + hid.ms;
-  const efficiency = clamp01(1 - Math.min(1, ms / 120) * 0.6 - Math.min(1, lines / 220) * 0.4);
+  // The first bucket is wide on purpose: sub-15ms timings are dominated by scheduler noise, and a
+  // 3ms-vs-5ms difference must never decide a winner. Real slowness (150ms+) still registers.
+  const speedBucket = ms < 15 ? 0 : ms < 60 ? 1 : ms < 150 ? 2 : ms < 400 ? 3 : 4;
+  const speedScore = [1, 0.85, 0.7, 0.5, 0.3][speedBucket];
+  const sizeScore = lines <= 24 ? 1 : lines <= 60 ? 0.78 : lines <= 140 ? 0.55 : 0.3;
+  const efficiency = clamp01(speedScore * 0.6 + sizeScore * 0.4);
 
   const w = resolveWeights(weights);
   const parts = {

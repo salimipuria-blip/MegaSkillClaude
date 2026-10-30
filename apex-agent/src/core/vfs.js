@@ -171,10 +171,27 @@ export class VirtualFS {
     return Object.fromEntries([...this.files.entries()].map(([p, f]) => [p, f.content]));
   }
 
+  /**
+   * Replace the whole workspace from an imported bundle. Import is the one path where a bad file can
+   * destroy good work, so nothing is cleared until every entry has been validated and written to a
+   * scratch workspace first.
+   */
   loadFiles(obj) {
+    if (!obj || typeof obj !== 'object' || Array.isArray(obj)) {
+      throw new Error('فایل‌های وارد‌شده باید نقشهٔ «مسیر → متن» باشند، نه آرایه یا متن.');
+    }
+    const entries = Object.entries(obj).filter(([p]) => !['__proto__', 'constructor', 'prototype'].includes(p));
+    if (!entries.length) throw new Error('بستهٔ ورودی هیچ فایلی ندارد؛ برای پاک‌کردن، از «پاک‌سازی» استفاده کن.');
+    const staged = entries.map(([path, content]) => {
+      if (typeof content === 'string') return [path, content];
+      if (typeof content === 'number' || typeof content === 'boolean') return [path, String(content)];
+      throw new Error(`محتوای «${path}» متن نیست؛ ورودی رد شد و فضای کاری دست‌نخورده ماند.`);
+    });
+    const scratch = new VirtualFS();
+    for (const [path, content] of staged) scratch.write(path, content, 'load');
     this.files.clear();
     this.revisions.clear();
-    for (const [p, c] of Object.entries(obj || {})) this.write(p, c, 'load');
+    for (const [path, content] of staged) this.write(path, content, 'load');
     return this.files.size;
   }
 }

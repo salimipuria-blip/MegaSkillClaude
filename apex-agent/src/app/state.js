@@ -1,3 +1,5 @@
+import { validateGenome } from '../core/genome.js';
+import { PROVIDERS } from '../core/providers.js';
 // Persistence: one namespaced key for the workspace, one for credentials.
 //
 // Keys are separated on purpose. "صدور همه" leaves them behind, "پاک‌سازی" removes both, and the
@@ -97,6 +99,52 @@ export function buildExport({ files, genome, memory, settings, lineage, bench })
     bench,
     note: 'کلیدها عمداً صادر نشده‌اند. برای وصل‌کردن مدل، در مقصد کلید را دوباره وارد کن.',
   };
+}
+
+const KNOWN_SETTINGS = ['providerId', 'model', 'baseUrl', 'mode', 'rememberKey'];
+const KNOWN_MODES = ['triad', 'tools'];
+
+/**
+ * Apply an imported bundle to a live app. Every field is validated on its own: a bundle is a file
+ * someone may have hand-edited, and one bad field must not take the workspace down with it.
+ * @returns {string[]} the names of the sections that were actually applied
+ */
+export function applyBundle(app, data) {
+  if (!data || typeof data !== 'object') throw new Error('بستهٔ ورودی معتبر نیست.');
+  const applied = [];
+  if (data.files !== undefined) {
+    app.vfs.loadFiles(data.files);
+    applied.push('files');
+  }
+  if (data.genome) {
+    app.genome = validateGenome(data.genome);
+    applied.push('genome');
+  }
+  if (data.memory && typeof data.memory === 'object' && app.memory?.import?.(data.memory)) applied.push('memory');
+  if (data.settings && typeof data.settings === 'object') {
+    const next = {};
+    for (const key of KNOWN_SETTINGS) {
+      if (data.settings[key] === undefined) continue;
+      next[key] = data.settings[key];
+    }
+    if (next.providerId && !PROVIDERS.some((p) => p.id === next.providerId)) delete next.providerId;
+    if (next.baseUrl !== undefined) next.baseUrl = String(next.baseUrl).slice(0, 300);
+    if (next.model !== undefined) next.model = String(next.model).slice(0, 120);
+    if (next.mode !== undefined && !KNOWN_MODES.includes(next.mode)) delete next.mode;
+    if (next.rememberKey !== undefined) next.rememberKey = Boolean(next.rememberKey);
+    // Keys are never imported: they stay whatever the person typed into this browser.
+    app.settings = { ...app.settings, ...next, key: app.settings.key, proxyToken: app.settings.proxyToken };
+    applied.push('settings');
+  }
+  if (Array.isArray(data.lineage)) {
+    app.state.lineage = data.lineage.filter((p) => p && typeof p === 'object').slice(-200);
+    applied.push('lineage');
+  }
+  if (data.bench && typeof data.bench === 'object' && !Array.isArray(data.bench)) {
+    app.state.bench = data.bench;
+    applied.push('bench');
+  }
+  return applied;
 }
 
 export function parseImport(text) {

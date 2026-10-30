@@ -54,7 +54,7 @@ export function h(strings, ...values) {
 
 export const faDigits = (input) => String(input).replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[Number(d)]);
 export const faNum = (n) => (Number.isFinite(Number(n)) ? faDigits(new Intl.NumberFormat('en-US').format(Number(n))) : '—');
-export const pct = (v) => `${Math.round(Math.max(0, Math.min(1, Number(v) || 0)) * 100)}٪`;
+export const pct = (v) => `${faDigits(String(Math.round(Math.max(0, Math.min(1, Number(v) || 0)) * 100)))}٪`;
 
 
 // ---------------------------------------------------------------- in-app dialogs
@@ -63,6 +63,7 @@ export const pct = (v) => `${Math.round(Math.max(0, Math.min(1, Number(v) || 0))
 // questions inside the page, so they work everywhere and are testable without a browser modal.
 function askOverlay({ title, message, value = null, okLabel = 'تأیید' }) {
   return new Promise((resolve) => {
+    const opener = document.activeElement;
     const overlay = document.createElement('div');
     overlay.className = 'ask-overlay';
     overlay.innerHTML = h`<div class="ask-card" role="dialog" aria-modal="true" aria-labelledby="askTitle">
@@ -74,19 +75,52 @@ function askOverlay({ title, message, value = null, okLabel = 'تأیید' }) {
         <button class="btn ghost" data-ask="cancel">لغو</button>
       </div>
     </div>`;
+    const card = overlay.querySelector('.ask-card');
     const input = overlay.querySelector('.ask-input');
+    const okButton = overlay.querySelector('[data-ask="ok"]');
+    const focusables = () => [...overlay.querySelectorAll('button, input')].filter((el) => !el.disabled);
+
     const finish = (result) => {
       overlay.remove();
       document.removeEventListener('keydown', onKey, true);
+      // A dialog that swallows focus leaves the keyboard nowhere; hand it back where it came from.
+      try {
+        if (opener && document.contains(opener)) opener.focus();
+      } catch {
+        /* the opener may be gone */
+      }
       resolve(result);
     };
+
     const onKey = (event) => {
       if (event.key === 'Escape') {
         event.preventDefault();
         finish(null);
+        return;
+      }
+      if (event.key === 'Tab') {
+        const items = focusables();
+        if (!items.length) return;
+        const first = items[0];
+        const last = items[items.length - 1];
+        const inside = card.contains(document.activeElement);
+        if (event.shiftKey && (!inside || document.activeElement === first)) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && (!inside || document.activeElement === last)) {
+          event.preventDefault();
+          first.focus();
+        }
+        return;
+      }
+      // Confirm dialogs have no field, so Enter must answer from anywhere in the dialog.
+      if (event.key === 'Enter' && !input && card.contains(document.activeElement || card)) {
+        event.preventDefault();
+        finish(true);
       }
     };
-    overlay.querySelector('[data-ask="ok"]').addEventListener('click', () => finish(value === null ? true : input.value.trim()));
+
+    okButton.addEventListener('click', () => finish(value === null ? true : input.value.trim()));
     overlay.querySelector('[data-ask="cancel"]').addEventListener('click', () => finish(null));
     overlay.addEventListener('click', (event) => {
       if (event.target === overlay) finish(null);
@@ -98,7 +132,7 @@ function askOverlay({ title, message, value = null, okLabel = 'تأیید' }) {
     }
     document.addEventListener('keydown', onKey, true);
     document.body.appendChild(overlay);
-    input?.focus();
+    (input || okButton).focus();
     input?.select();
   });
 }

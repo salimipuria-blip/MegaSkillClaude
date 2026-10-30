@@ -9,7 +9,7 @@ import { estimateTokens, formatTokens } from '../core/tokens.js';
 import { validateGenome, diffGenomes } from '../core/genome.js';
 import { memoryToMarkdown } from '../core/memory.js';
 import { auditReport, loadSelfSource } from './self.js';
-import { buildExport, download, parseImport, storageInfo } from './state.js';
+import { buildExport, applyBundle, download, parseImport, storageInfo } from './state.js';
 import { $, $$, esc, h, faNum, pct, timeAgo, toast, testBrain, askConfirm } from './ui.js';
 
 const GENE_LABELS = {
@@ -613,15 +613,10 @@ export function mountSettings(app) {
     if (!file) return;
     try {
       const data = parseImport(await file.text());
-      if (data.files) app.vfs.loadFiles(data.files);
-      if (data.genome) app.genome = validateGenome(data.genome);
-      if (data.memory) app.memory.import(data.memory);
-      if (data.settings) app.settings = { ...app.settings, ...data.settings, key: app.settings.key, proxyToken: app.settings.proxyToken };
-      if (data.lineage) app.state.lineage = data.lineage;
-      if (data.bench) app.state.bench = data.bench;
+      const applied = applyBundle(app, data);
       app.save({ quiet: false });
       app.rerenderAll();
-      toast('داده‌ها وارد شد.', 'ok');
+      toast(`وارد شد: ${applied.length ? applied.join('، ') : 'هیچ بخشی معتبر نبود'}`, applied.length ? 'ok' : 'info');
     } catch (err) {
       toast(err.message, 'bad');
     }

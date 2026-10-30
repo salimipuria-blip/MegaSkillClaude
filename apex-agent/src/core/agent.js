@@ -330,6 +330,18 @@ ${files || '(خالی)'}
     }
   }
 
+  /**
+   * A measurement that never ran (sandbox timeout under load, worker killed) is not a failed test.
+   * Retry it once with a wider budget so a busy machine cannot silently change who wins.
+   */
+  async function measure(payload) {
+    const first = await sandbox(payload);
+    const infraFailure = first?.ok === false && !(first.results || []).length && /timeout|killed|no sandbox/i.test(String(first.error || ''));
+    if (!infraFailure) return first;
+    emit({ type: 'phase', phase: 'measure', text: 'سندباکس زیر فشار بود؛ همان اندازه‌گیری با بودجهٔ بیشتر تکرار می‌شود.' });
+    return sandbox({ ...payload, timeoutMs: (payload.timeoutMs || 1500) * 3 });
+  }
+
   async function evaluateCandidates({ candidates, task, baselinePath }) {
     const weights = resolveWeights(G.rubric);
     emit({ type: 'phase', phase: 'codebreak', text: `سه نامزد ساخته شد؛ برای هر کدام سه فرضیهٔ شکست و پروب اجرایی.` });
@@ -345,15 +357,15 @@ ${files || '(خالی)'}
       // Measure: public cases, hidden cases (both from the benchmark), then the probes.
       const entries = task?.entry;
       const publicRun = task?.cases?.length
-        ? await sandbox({ entry: candidate.content, cases: task.cases, entries })
+        ? await measure({ entry: candidate.content, cases: task.cases, entries })
         : { ok: false, results: [], ms: 0, error: 'no public cases' };
       const hiddenRun = task?.hidden?.length && G.genes.verifyHidden
-        ? await sandbox({ entry: candidate.content, cases: task.hidden, entries })
+        ? await measure({ entry: candidate.content, cases: task.hidden, entries })
         : { ok: false, results: [], ms: 0 };
 
       const probeCases = probesFor(hypotheses);
       const probeRun = probeCases.length
-        ? await sandbox({ entry: candidate.content, cases: probeCases, entries })
+        ? await measure({ entry: candidate.content, cases: probeCases, entries })
         : { ok: true, results: [], ms: 0 };
       const withVerdicts = applyProbeVerdicts(hypotheses, probeRun);
 
@@ -383,7 +395,7 @@ ${files || '(خالی)'}
 
     let verification = null;
     if (task?.cases?.length) {
-      verification = await sandbox({
+      verification = await measure({
         entry: vfs.read(winner.candidate.path),
         cases: task.cases,
         entries: task.entry,
@@ -401,7 +413,7 @@ ${files || '(خالی)'}
     } else if (winner.candidate.tests) {
       const cases = await capturedCases({ content: winner.candidate.tests, sandbox });
       if (cases.length) {
-        verification = await sandbox({
+        verification = await measure({
           entry: vfs.read(winner.candidate.path),
           cases,
           entries: task?.entry,
