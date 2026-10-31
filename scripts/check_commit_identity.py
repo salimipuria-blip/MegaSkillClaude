@@ -14,8 +14,11 @@ work under review — a revision range in CI (`origin/<base>...HEAD`), otherwise
 `--all-history` exists for audits, not for gating. A gate that is red on inherited history gets
 switched off, and then it protects nothing.
 
-Scanning nothing is never reported as a pass: an unresolvable or empty range falls back to `HEAD`,
-and only an empty repository (or empty `--stdin` without `--allow-empty`) is a usage error.
+An *unresolvable* range (a shallow CI clone that never fetched the base ref) falls back to `HEAD`,
+so a pull request's own commit is still scanned. An *empty but resolvable* range is different: it
+means HEAD is at or behind the base, so there is no work under review — CI on the default branch
+after a merge — and that is a clean pass, never a re-scan of the already-reviewed (and possibly
+squash-trailer-stamped) merge commit. An empty `--stdin` without `--allow-empty` is a usage error.
 
 Usage:
   python3 scripts/check_commit_identity.py --range origin/main...HEAD   # the pull request's commits
@@ -75,27 +78,33 @@ def git(*args: str) -> str:
     return result.stdout
 
 
-def collect_commits(revision_range: str | None, limit: int) -> tuple[list[dict[str, str]], str]:
-    """Commit messages to scan, plus a note about how they were chosen."""
+def collect_commits(revision_range: str | None, limit: int) -> tuple[list[dict[str, str]], str, bool]:
+    """Commit messages to scan, a note about how they were chosen, and whether the range resolved
+    cleanly to zero commits (nothing under review — a legitimate pass, not a usage error)."""
     separator = "\x1e"
     if revision_range:
         try:
             raw = git("log", f"--format=%H{separator}%B{separator}", revision_range)
         except RuntimeError as error:
-            raw = ""
-            note = f"range {revision_range!r} could not be resolved ({error}); "
-        else:
-            note = f"range {revision_range!r}; "
+            # The base ref could not be resolved — typically a shallow CI clone that never fetched it.
+            # Fall back to scanning HEAD so a pull request's own commit is still checked; this is the
+            # shallow-clone safety net, and it is NOT the empty-range case below.
+            scope = "every reachable commit" if not limit else f"the last {limit} commit(s) of this branch"
+            note = f"range {revision_range!r} could not be resolved ({error}); scanning {scope} instead"
+            raw = git("log", *(["-n", str(limit)] if limit else []), f"--format=%H{separator}%B{separator}")
+            return parse_log(raw, separator), note, False
         messages = parse_log(raw, separator)
         if messages:
-            return messages, note + f"{len(messages)} commit(s) scanned"
-        scope = "every reachable commit" if not limit else f"the last {limit} commit(s) of this branch"
-        note += f"it holds no commits, so {scope} were scanned instead"
-        raw = git("log", *(["-n", str(limit)] if limit else []), f"--format=%H{separator}%B{separator}")
-        return parse_log(raw, separator), note
+            return messages, f"range {revision_range!r}; {len(messages)} commit(s) scanned", False
+        # The range resolved but is empty: HEAD is at or behind the base, so there is no work under
+        # review. This is CI on the default branch after a merge — the merged history was already
+        # reviewed on its pull request, and GitHub's squash UI can stamp a `Co-authored-by` trailer
+        # onto the merge commit that we do not control. Re-scanning it here would be a false positive,
+        # so an empty resolvable range is a clean pass, not the scan-HEAD fallback.
+        return [], f"range {revision_range!r} is empty — no new commits under review", True
     scope = "every reachable commit" if not limit else f"the last {limit} commit(s) of the current branch"
     raw = git("log", *(["-n", str(limit)] if limit else []), f"--format=%H{separator}%B{separator}")
-    return parse_log(raw, separator), scope
+    return parse_log(raw, separator), scope, False
 
 
 def parse_log(raw: str, separator: str) -> list[dict[str, str]]:
@@ -125,6 +134,7 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     note = ""
+    resolved_empty = False
     revision_range = args.revision_range
     limit = 0 if args.all_history else args.limit
     if args.all_history:
@@ -141,12 +151,20 @@ def main(argv: list[str] | None = None) -> int:
         note = f"messages from {args.messages_file}"
     else:
         try:
-            messages, note = collect_commits(revision_range, limit)
+            messages, note, resolved_empty = collect_commits(revision_range, limit)
         except (RuntimeError, subprocess.SubprocessError) as error:
             print(f"could not read the git history: {error}", file=sys.stderr)
             return 2
 
     if not messages:
+        if resolved_empty:
+            # The range resolved to zero commits: nothing is under review, so this is a clean pass.
+            if args.json:
+                print(json.dumps({"scanned": 0, "note": note, "findings": []}, ensure_ascii=False, indent=2))
+            else:
+                print(f"commit/PR identity check — {note}")
+                print("clean: nothing under review")
+            return 0
         if args.allow_empty:
             print("nothing to scan; --allow-empty was given, so this is not a failure")
             return 0

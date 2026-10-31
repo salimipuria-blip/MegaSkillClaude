@@ -3,7 +3,7 @@
     {
       "name": "boot: app mounted",
       "ok": true,
-      "detail": "window.__apex missing"
+      "detail": "window.__infinity missing"
     },
     {
       "name": "boot: under 3s",
@@ -176,7 +176,7 @@
   "requests": [
     "http://127.0.0.1:46001/",
     "http://127.0.0.1:46001/assets/fonts/vazirmatn-var.woff2",
-    "http://127.0.0.1:46001/assets/apex.css",
+    "http://127.0.0.1:46001/assets/infinity.css",
     "http://127.0.0.1:46001/src/app/boot.js",
     "http://127.0.0.1:46001/src/core/vfs.js",
     "http://127.0.0.1:46001/src/core/memory.js",
@@ -240,7 +240,7 @@
     "blob:http://127.0.0.1:46001/685fd634-95ed-4d51-98d2-182784f8e848",
     "http://127.0.0.1:46001/#settings",
     "http://127.0.0.1:46001/assets/fonts/vazirmatn-var.woff2",
-    "http://127.0.0.1:46001/assets/apex.css",
+    "http://127.0.0.1:46001/assets/infinity.css",
     "http://127.0.0.1:46001/src/app/boot.js",
     "http://127.0.0.1:46001/src/core/vfs.js",
     "http://127.0.0.1:46001/src/core/memory.js",
@@ -265,7 +265,7 @@
     "http://127.0.0.1:46001/src/core/evaluate.js",
     "http://127.0.0.1:46001/#chat",
     "http://127.0.0.1:46001/assets/fonts/vazirmatn-var.woff2",
-    "http://127.0.0.1:46001/assets/apex.css",
+    "http://127.0.0.1:46001/assets/infinity.css",
     "http://127.0.0.1:46001/src/app/boot.js",
     "http://127.0.0.1:46001/src/core/vfs.js",
     "http://127.0.0.1:46001/src/core/memory.js",

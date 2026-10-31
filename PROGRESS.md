@@ -6,10 +6,17 @@
 - ۱۳ پروژه/زیرپروژهٔ مدیریت‌شده (به‌علاوهٔ خود مخزن)؛ دفتر هرکدام در جدول `README.md` و دستور توسعهٔ هرکدام در [`docs/directives/`](docs/directives/README.md) است.
 - `node scripts/doctor.mjs <id>` مرجع فرمان‌های دقیق هر پروژه است؛ `--list` فهرست کامل را نشان می‌دهد. اکنون **۴۴ گام در ۱۴ دامنه** (۳۸ تا پیش از ۲۰۲۶-۱۰-۱۴).
 - Router canonical: **۵٬۹۶۴** مهارت = ۳٬۰۰۰ core + ۱۸ پروژه + ۲٬۹۴۶ GitHub؛ **۵٬۹۶۴ routable**، **۰ incomplete** و **۲۹٬۸۷۸ trigger**.
-- تست‌های ریشه: **۱۸۴ تست ریشه** (پایتون) با `python3 -m unittest discover -s tests -p "test_*.py"`. نگهبانِ همین اعداد `tests/test_status_counters.py` است: شمارنده‌های بخش «وضعیت مشترک» را به `triggers.json`، `library/github-skills/INDEX.json`، `scripts/doctor.mjs` و `mobile/skills-index.json` قفل می‌کند، ارجاع‌های `doctor.mjs <id>` و لینک/پوشه‌های `docs/directives/README.md` را resolve می‌کند، و اعداد داخل بخش‌های تاریخ‌دار را به‌عنوان snapshot دست نمی‌زند. قاعدهٔ انسانی‌اش بند ۷ «قواعد مشترک» در [`docs/directives/README.md`](docs/directives/README.md) است.
+- تست‌های ریشه: **۱۸۶ تست ریشه** (پایتون) با `python3 -m unittest discover -s tests -p "test_*.py"`. نگهبانِ همین اعداد `tests/test_status_counters.py` است: شمارنده‌های بخش «وضعیت مشترک» را به `triggers.json`، `library/github-skills/INDEX.json`، `scripts/doctor.mjs` و `mobile/skills-index.json` قفل می‌کند، ارجاع‌های `doctor.mjs <id>` و لینک/پوشه‌های `docs/directives/README.md` را resolve می‌کند، و اعداد داخل بخش‌های تاریخ‌دار را به‌عنوان snapshot دست نمی‌زند. قاعدهٔ انسانی‌اش بند ۷ «قواعد مشترک» در [`docs/directives/README.md`](docs/directives/README.md) است.
 - CI شامل typecheck/build/test، health، skill sync، PWA، دارایی‌های برند و typecheck زیرپروژهٔ Motion است.
 
 ## ۲) اصلاحات بین‌پروژه‌ای
+
+**۲۰۲۶-۱۰-۳۱ — سبزکردن CI روی `main` پس از squash-merge، و پاک‌سازی باقی‌ماندهٔ apex.**
+- **علت قرمزی `main`:** کامیت squashِ PR #143 (`f35c4a74`) تریلرِ `Co-authored-by: Claude <noreply@anthropic.com>` را از UIِ squashِ گیت‌هاب گرفته بود. سه job (`repo-health`، `router`، `commit-identity`) آن را رد می‌کردند، چون همگی `check_commit_identity.py` را روی `origin/main...HEAD` اجرا می‌کنند و روی خودِ main این بازه خالی است.
+- **رفع:** در `check_commit_identity.py` بازهٔ **خالیِ قابل‌حل** (HEAD روی/پشتِ base — یعنی «چیزی زیرِ بازبینی نیست») حالا pass است، نه بازگشت به اسکنِ HEADِ ادغام‌شده. بازهٔ **غیرقابل‌حل** (clone کم‌عمق) همچنان به HEAD برمی‌گردد (تورِ ایمنی). دو regression در `tests/test_commit_identity.py` (بازهٔ خالی ⇒ scanned=0 و pass؛ بازهٔ ناموجود ⇒ fallback به HEAD). این محافظ را ضعیف نمی‌کند: روی PR بازه ناخالی است و کامیت‌ها اسکن می‌شوند.
+- **apex باقی‌مانده:** `docs/screenshots/render-report.json` هنوز `assets/apex.css` و `window.__apex` داشت (از رندرِ پیش از تغییر نام). رشته‌های مسیر به `infinity.css`/`__infinity` اصلاح شد — همان تغییر نامِ سراسری، بی‌دستکاریِ اعدادِ واقعیِ آن اجرا.
+- شمار تستِ ریشه ۱۸۴ → **۱۸۶** (در `00-monorepo.md` و بخش «وضعیت مشترک») هم‌گام شد. گیت محلی `node scripts/verify.mjs`: سه jobِ سراسری سبز.
+- **دامنهٔ apex که عمداً دست‌نخورده ماند:** «Apex» سیلزفورس و «capex» در مهارت‌های واردشده (`library/`, `plugins/`)، اعتبارِ خارجیِ «APEX-UI» (MIT) در `hermes/`، نام‌های تاریخیِ provenance در `orchestrator/`، کلیدهای مهاجرتِ legacy (`apex.metacode.*`) در `state.js` (رفعِ data-loss کدکس)، و گاردِ `psk/tests/about.test.mjs` که نبودِ APEX را تضمین می‌کند.
 
 **باگ «سبز کاذب» در doctor پیدا و اصلاح شد.** اجرای اولیه نشان داد `common-tests` در ۰٫۰ ثانیه سبز می‌شد: parser سادهٔ `split(' ')` کوتیشن‌های `-p "test_*.py"` را به آرگومان واقعی منتقل نمی‌کرد و Python بدون کشف تست، exit 0 می‌داد.
 - parser امنِ بدون shell جایگزین شد؛ آرگومان‌های quoted/escaped درست شکافته می‌شوند و فقط stepهای صریحاً shell از `bash -c` استفاده می‌کنند.
