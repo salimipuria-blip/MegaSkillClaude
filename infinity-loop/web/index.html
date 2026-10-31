@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Infinity Loop</title>
+<style>
+  :root{
+    --bg:#0b1220; --panel:#121a2b; --panel2:#0e1626; --line:#223049;
+    --text:#e8eefc; --muted:#9fb0cc; --cyan:#35c6f4; --gold:#f2b705;
+    --ok:#39d98a; --bad:#ff6b6b; --warn:#ffb020; --radius:14px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,sans-serif;line-height:1.7}
+  .wrap{max-width:900px;margin:0 auto;padding:16px}
+  h1{font-size:22px;margin:.3em 0 .1em}
+  .sub{color:var(--muted);font-size:13px;margin:0 0 14px}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:14px;margin:12px 0}
+  label{display:block;font-size:13px;color:var(--muted);margin:8px 0 4px}
+  input,textarea,select{width:100%;background:var(--panel2);color:var(--text);border:1px solid var(--line);
+    border-radius:10px;padding:10px;font-family:inherit;font-size:14px}
+  textarea{min-height:120px;resize:vertical;font-family:ui-monospace,Consolas,monospace;direction:ltr;text-align:left}
+  .row{display:flex;gap:10px;flex-wrap:wrap}
+  .row > *{flex:1;min-width:140px}
+  button{cursor:pointer;background:var(--cyan);color:#06121c;border:none;border-radius:10px;
+    padding:10px 16px;font-weight:700;font-size:14px}
+  button.ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+  button:disabled{opacity:.5;cursor:default}
+  .tabs{display:flex;gap:8px;margin:12px 0}
+  .tabs button{flex:0 0 auto;background:var(--panel2);color:var(--muted);border:1px solid var(--line)}
+  .tabs button.active{background:var(--cyan);color:#06121c}
+  .hide{display:none}
+  .dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--muted);margin-inline-end:6px;vertical-align:middle}
+  .dot.ok{background:var(--ok)} .dot.bad{background:var(--bad)}
+  .verdict{font-weight:800;font-size:18px;padding:8px 12px;border-radius:10px;display:inline-block;margin:6px 0}
+  .v-APPROVED,.v-PASS{background:rgba(57,217,138,.15);color:var(--ok)}
+  .v-REVISE{background:rgba(255,176,32,.15);color:var(--warn)}
+  .v-BLOCKED,.v-FAIL{background:rgba(255,107,107,.15);color:var(--bad)}
+  .finding{border-inline-start:3px solid var(--line);padding:4px 10px;margin:6px 0;font-size:14px}
+  .sev-BLOCKER{border-color:var(--bad)} .sev-MAJOR{border-color:var(--warn)}
+  .sev-MINOR{border-color:var(--cyan)} .sev-NIT{border-color:var(--muted)}
+  .tag{font-size:11px;font-weight:700;padding:1px 6px;border-radius:6px;background:var(--panel2);margin-inline-end:6px}
+  .mono{font-family:ui-monospace,Consolas,monospace;font-size:12px;color:var(--muted);direction:ltr;word-break:break-all}
+  details{margin-top:10px} summary{cursor:pointer;color:var(--cyan);font-size:13px}
+  pre{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px;overflow:auto;direction:ltr;text-align:left;font-size:12px}
+  .note{font-size:12px;color:var(--muted)}
+  .err{color:var(--bad);font-size:13px;margin-top:8px}
+  code{background:var(--panel2);padding:1px 5px;border-radius:5px;direction:ltr;display:inline-block}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Infinity Loop <span style="color:var(--gold)">∞</span></h1>
+  <p class="sub">DeepSeekِ لوکالت را به‌عنوان <b>بازبینِ مستقل</b> اجرا کن — هرکس ساخت، خودش نمره نمی‌دهد. تماماً در مرورگر، بدون نصب. تأییدِ ناسالم یا خطا = BLOCKED/FAIL، نه تأیید.</p>
+
+  <div class="panel">
+    <div class="row">
+      <div style="flex:2">
+        <label>Endpoint (سازگار با OpenAI)</label>
+        <input id="endpoint" value="http://localhost:11434/v1" dir="ltr" />
+      </div>
+      <div>
+        <label>Model</label>
+        <input id="model" placeholder="auto (اولین deepseek)" dir="ltr" />
+      </div>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <button id="btnTest" class="ghost">تست اتصال و تشخیص مدل</button>
+    </div>
+    <div id="connStatus" class="note" style="margin-top:8px"><span class="dot"></span>هنوز وصل نشده</div>
+    <div id="connErr" class="err hide"></div>
+  </div>
+
+  <div class="tabs">
+    <button id="tabReview" class="active">بازبینِ پلن</button>
+    <button id="tabInspect">بازرسِ دیف</button>
+  </div>
+
+  <div id="paneReview" class="panel">
+    <label>پلن (PLAN.md)</label>
+    <textarea id="plan" placeholder="هدف، معیارهای پذیرشِ قابل‌مشاهده، رویکرد، ریسک‌ها، دستورهای اثبات…"></textarea>
+    <div class="row" style="margin-top:10px">
+      <button id="btnReview">سخت‌کن (review)</button>
+      <div style="flex:0 0 auto;align-self:center" class="note">خروجی: APPROVED / REVISE / BLOCKED</div>
+    </div>
+    <div id="outReview"></div>
+  </div>
+
+  <div id="paneInspect" class="panel hide">
+    <label>پلنی که دیف ادعا می‌کند پیاده کرده (اختیاری)</label>
+    <textarea id="plan2" style="min-height:80px" placeholder="برای زمینه‌دادن به بازرس"></textarea>
+    <label>دیفِ یکپارچه (git diff)</label>
+    <textarea id="diff" placeholder="خروجی git diff را این‌جا بچسبان"></textarea>
+    <div class="row" style="margin-top:10px">
+      <button id="btnInspect">بازرسی (inspect)</button>
+      <div style="flex:0 0 auto;align-self:center" class="note">خروجی: PASS / FAIL</div>
+    </div>
+    <div id="outInspect"></div>
+  </div>
+
+  <div class="panel">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <b>دفتر تصمیم</b>
+      <button id="btnClear" class="ghost" style="flex:0 0 auto;padding:6px 10px">پاک‌کردن</button>
+    </div>
+    <div id="ledger" class="note">هنوز اجرایی ثبت نشده.</div>
+  </div>
+
+  <details>
+    <summary>راه‌اندازیِ DeepSeek روی سیستم خودت (ویندوز)</summary>
+    <div class="note" style="margin-top:8px">
+      <p><b>Ollama:</b> نصب از <code>ollama.com</code>، بعد <code>ollama run deepseek-r1</code>. چون این صفحه از دامنهٔ دیگری صداش می‌زند، باید CORS را باز کنی:</p>
+      <pre>setx OLLAMA_ORIGINS "*"
+# بعد Ollama را از System Tray ببند و دوباره باز کن</pre>
+      <p>Endpoint می‌ماند <code>http://localhost:11434/v1</code>.</p>
+      <p><b>LM Studio:</b> مدل را load کن، در تب Developer سرور را Start کن (CORS به‌صورت پیش‌فرض باز است). Endpoint را به <code>http://localhost:1234/v1</code> تغییر بده.</p>
+      <p>اگر «خطای اتصال/CORS» دیدی: مطمئن شو سرور روشن است و برای Ollama متغیر بالا را گذاشته‌ای.</p>
+    </div>
+  </details>
+</div>
+
+<script>
+"use strict";
+const $ = (id) => document.getElementById(id);
+const store = { get(k,d){ try{ return JSON.parse(localStorage.getItem(k)) ?? d }catch{ return d } }, set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)) }catch{} } };
+
+// ---- persisted endpoint/model ----
+$("endpoint").value = store.get("il.endpoint", $("endpoint").value);
+$("model").value = store.get("il.model", "");
+$("endpoint").addEventListener("change", () => store.set("il.endpoint", $("endpoint").value.trim()));
+$("model").addEventListener("change", () => store.set("il.model", $("model").value.trim()));
+
+// ---- rules (mirror of the Node loop: unsafe-by-default) ----
+const REVIEW_SYSTEM = `You are an independent, adversarial plan reviewer. You did NOT write this plan and you will NOT build it. Find what would make it fail BEFORE any code exists: unstated assumptions, missing acceptance criteria, untestable claims, hidden scope, missing proof commands, data-loss or security risk.
+Rules: do not rewrite the plan. Each finding on its own line starting with "- [BLOCKER]", "- [MAJOR]", "- [MINOR]" or "- [NIT]". Zero findings is allowed but is not proof of correctness. Your LAST line MUST be exactly one of: VERDICT: APPROVED / VERDICT: REVISE / VERDICT: BLOCKED. BLOCKED only for a flaw that makes the plan unsafe to build.`;
+const INSPECT_SYSTEM = `You are an independent code inspector. You did NOT write this diff. Decide whether it does what its plan promised, safely, without reading charitably: logic not matching the plan, regressions, missing/weakened tests, unhandled errors, injection or data-loss risk.
+Rules: name concrete defects. Each finding on its own line starting with "- [BLOCKER]", "- [MAJOR]", "- [MINOR]" or "- [NIT]". Your LAST line MUST be exactly one of: VERDICT: PASS / VERDICT: FAIL. FAIL if any [BLOCKER] or [MAJOR] stands.`;
+
+function parseVerdict(text, kind){
+  const allowed = kind === "inspect" ? ["PASS","FAIL"] : ["APPROVED","REVISE","BLOCKED"];
+  const unsafe = kind === "inspect" ? "FAIL" : "BLOCKED";
+  const lines = String(text||"").split("\n").map(l=>l.trim());
+  const findings = lines.filter(l=>/^-\s*\[(BLOCKER|MAJOR|MINOR|NIT)\]/i.test(l)).map(l=>{
+    const sev = l.match(/^-\s*\[(BLOCKER|MAJOR|MINOR|NIT)\]/i)[1].toUpperCase();
+    return { severity: sev, text: l.replace(/^-\s*\[[A-Za-z]+\]\s*/, "") };
+  });
+  // Fail-closed: take the verdict ONLY from the last non-empty line, which must be exactly
+  // "VERDICT: <one allowed word>" — rejects an echoed "VERDICT: PASS / FAIL" and never falls back.
+  const nonEmpty = lines.filter(l=>l.length);
+  const last = nonEmpty[nonEmpty.length-1] || "";
+  const m = last.match(new RegExp("^VERDICT:\\s*("+allowed.join("|")+")\\s*$","i"));
+  const verdict = m ? m[1].toUpperCase() : null;
+  return { verdict: verdict || unsafe, verdictFound: Boolean(verdict), findings };
+}
+const blocking = (f) => f.filter(x=>x.severity==="BLOCKER"||x.severity==="MAJOR");
+async function sha256(t){ const b=await crypto.subtle.digest("SHA-256", new TextEncoder().encode(t)); return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join(""); }
+
+// ---- client ----
+function cfg(){ return { base: $("endpoint").value.trim().replace(/\/$/,""), model: $("model").value.trim() }; }
+async function listModels(base){
+  const r = await fetch(base + "/models").catch(()=>null);
+  if(r && r.ok){ const d = await r.json(); return (d.data||[]).map(m=>m.id); }
+  // Ollama native fallback
+  const base2 = base.replace(/\/v1$/,"");
+  const r2 = await fetch(base2 + "/api/tags").catch(()=>null);
+  if(r2 && r2.ok){ const d = await r2.json(); return (d.models||[]).map(m=>m.name); }
+  throw new Error("endpoint پاسخ نداد");
+}
+async function pickModel(){
+  const { base, model } = cfg();
+  if(model) return model;
+  const ids = await listModels(base);
+  const m = ids.find(id=>/deepseek/i.test(id)) || ids[0];
+  if(!m) throw new Error("هیچ مدلی روی endpoint نیست");
+  return m;
+}
+async function chat(system, user){
+  const { base } = cfg();
+  const model = await pickModel();
+  const res = await fetch(base + "/chat/completions", {
+    method:"POST", headers:{ "Content-Type":"application/json" },
+    body: JSON.stringify({ model, temperature:0, stream:false, messages:[
+      { role:"system", content:system }, { role:"user", content:user } ] })
+  });
+  if(!res.ok) throw new Error("HTTP " + res.status + " — " + (await res.text().catch(()=>"")).slice(0,200));
+  const d = await res.json();
+  const c = d?.choices?.[0]?.message?.content;
+  if(typeof c !== "string") throw new Error("پاسخ محتوا نداشت");
+  return { content:c, model: d?.model || model };
+}
+
+// ---- ledger ----
+let ledger = store.get("il.ledger", []);
+function renderLedger(){
+  const el = $("ledger");
+  if(!ledger.length){ el.textContent = "هنوز اجرایی ثبت نشده."; return; }
+  el.innerHTML = ledger.slice(-12).reverse().map(e=>{
+    const mark = { APPROVED:"✓", PASS:"✓", REVISE:"·", BLOCKED:"✗", FAIL:"✗" }[e.verdict] || "?";
+    return `<div class="mono">${mark} ${e.phase} · ${e.verdict} · ${e.model||""} · ${new Date(e.at).toLocaleTimeString("fa-IR")}${e.sha? " · "+e.sha.slice(0,12):""}</div>`;
+  }).join("");
+}
+function log(entry){ ledger.push({ ...entry, at: Date.now() }); store.set("il.ledger", ledger); renderLedger(); }
+renderLedger();
+
+// ---- UI render of a result ----
+function renderResult(elId, r, extra){
+  const el = $(elId);
+  const findings = r.findings.map(f=>`<div class="finding sev-${f.severity}"><span class="tag">${f.severity}</span>${escapeHtml(f.text)}</div>`).join("") || `<div class="note">— بدون یافته —</div>`;
+  const warn = r.verdictFound ? "" : `<div class="err">! مدل خطِ VERDICT سالم نداد → نتیجه به‌صورت ناامن گرفته شد.</div>`;
+  el.innerHTML = `<div class="verdict v-${r.verdict}">${r.verdict}</div>${extra||""}${warn}${findings}
+    <details><summary>متن کاملِ بازبین</summary><pre>${escapeHtml(r.raw)}</pre></details>`;
+}
+function escapeHtml(s){ return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function showErr(elId, msg){ $(elId).innerHTML = `<div class="err">✗ ${escapeHtml(msg)}<br><span class="note">اگر خطای CORS/اتصال است: سرور DeepSeek روشن است؟ برای Ollama متغیر OLLAMA_ORIGINS را ببین (راهنمای پایین).</span></div>`; }
+
+// ---- actions ----
+$("btnTest").onclick = async () => {
+  const s = $("connStatus"); const e = $("connErr"); e.classList.add("hide");
+  s.innerHTML = `<span class="dot"></span>در حال بررسی…`;
+  try{
+    const ids = await listModels(cfg().base);
+    const chosen = cfg().model || ids.find(id=>/deepseek/i.test(id)) || ids[0] || "—";
+    s.innerHTML = `<span class="dot ok"></span>وصل شد · مدل: <b dir="ltr">${escapeHtml(chosen)}</b>` + (ids.length? ` · موجود: <span class="mono">${ids.map(escapeHtml).join(", ")}</span>`:"");
+  }catch(err){
+    s.innerHTML = `<span class="dot bad"></span>وصل نشد`;
+    e.classList.remove("hide"); e.textContent = err.message + " — سرور روشن است؟ CORS باز است؟ (راهنمای پایین)";
+  }
+};
+
+$("btnReview").onclick = async () => {
+  const plan = $("plan").value.trim();
+  if(!plan){ showErr("outReview","پلن خالی است."); return; }
+  const btn = $("btnReview"); btn.disabled = true; btn.textContent = "در حال بازبینی…";
+  try{
+    const { content, model } = await chat(REVIEW_SYSTEM, "Plan to review:\n\n" + plan);
+    const r = { ...parseVerdict(content,"review"), raw: content };
+    if(r.verdict==="APPROVED" && blocking(r.findings).length) r.verdict="BLOCKED"; // blocking overrides
+    const sha = await sha256(plan);
+    renderResult("outReview", r, `<div class="mono">plan sha256: ${sha}</div>`);
+    log({ phase:"review", verdict:r.verdict, model, sha });
+  }catch(err){ showErr("outReview", err.message); }
+  finally{ btn.disabled=false; btn.textContent="سخت‌کن (review)"; }
+};
+
+$("btnInspect").onclick = async () => {
+  const diff = $("diff").value.trim();
+  const plan = $("plan2").value.trim() || "(پلنی داده نشد)";
+  if(!diff){ showErr("outInspect","دیف خالی است."); return; }
+  const btn = $("btnInspect"); btn.disabled = true; btn.textContent = "در حال بازرسی…";
+  try{
+    const { content, model } = await chat(INSPECT_SYSTEM, "Plan the change claims to implement:\n\n"+plan+"\n\n---\nUnified diff to inspect:\n\n"+diff);
+    const r = { ...parseVerdict(content,"inspect"), raw: content };
+    if(r.verdict==="PASS" && blocking(r.findings).length) r.verdict="FAIL";
+    renderResult("outInspect", r, "");
+    log({ phase:"inspect", verdict:r.verdict, model });
+  }catch(err){ showErr("outInspect", err.message); }
+  finally{ btn.disabled=false; btn.textContent="بازرسی (inspect)"; }
+};
+
+$("btnClear").onclick = () => { ledger=[]; store.set("il.ledger",[]); renderLedger(); };
+
+// ---- tabs ----
+function tab(which){
+  const r = which==="review";
+  $("tabReview").classList.toggle("active", r); $("tabInspect").classList.toggle("active", !r);
+  $("paneReview").classList.toggle("hide", !r); $("paneInspect").classList.toggle("hide", r);
+}
+$("tabReview").onclick=()=>tab("review"); $("tabInspect").onclick=()=>tab("inspect");
+</script>
+</body>
+</html>

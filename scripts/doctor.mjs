@@ -101,12 +101,12 @@ const PROJECTS = [
     ],
   },
   {
-    id: 'apex',
-    folder: 'apex-agent',
-    label: 'مِتاکد / APEX-01 (ایجنت کدنویسِ خودتکامل)',
+    id: 'infinity',
+    folder: 'infinity-mega-skill',
+    label: 'مِتاکد / Infinity Mega Skill (ایجنت کدنویسِ خودتکامل)',
     steps: [
-      {name: 'contract', cmd: 'node tools/check.mjs', cwd: 'apex-agent', why: '۹ قرارداد ایستا: سلکتورها، آیکون‌ها، ایمپورت‌ها، CSP، بودجهٔ حجم'},
-      {name: 'tests', cmd: 'node --test src/tests/core.test.mjs src/tests/model.test.mjs src/tests/dom.test.mjs src/tests/ui.test.mjs src/tests/security.test.mjs src/tests/providers.test.mjs src/tests/invariants.test.mjs src/tests/lifecycle.test.mjs src/tests/engine.test.mjs src/tests/ux.test.mjs src/tests/proxy.test.mjs src/tests/deploy.test.mjs src/tests/hardening.test.mjs', cwd: 'apex-agent', why: '۹۷ تست: ۳۰ هسته + ۵ مسیرِ مدل + ۶ سرتاسری + ۵ رابط + ۴ امنیت + ۸ ارائه‌دهنده + ۷ ناوردا + ۴ چرخهٔ عمر + ۸ موتور + ۴ تجربهٔ کاربری + ۳ پروکسی + ۳ استقرار + ۱۰ سخت‌سازی'},
+      {name: 'contract', cmd: 'node tools/check.mjs', cwd: 'infinity-mega-skill', why: '۹ قرارداد ایستا: سلکتورها، آیکون‌ها، ایمپورت‌ها، CSP، بودجهٔ حجم'},
+      {name: 'tests', cmd: 'node --test src/tests/core.test.mjs src/tests/model.test.mjs src/tests/dom.test.mjs src/tests/ui.test.mjs src/tests/security.test.mjs src/tests/providers.test.mjs src/tests/invariants.test.mjs src/tests/lifecycle.test.mjs src/tests/engine.test.mjs src/tests/ux.test.mjs src/tests/proxy.test.mjs src/tests/deploy.test.mjs src/tests/hardening.test.mjs src/tests/supervisor.test.mjs', cwd: 'infinity-mega-skill', why: '۱۰۹ تست: ۳۰ هسته + ۵ مسیرِ مدل + ۶ سرتاسری + ۵ رابط + ۴ امنیت + ۸ ارائه‌دهنده + ۷ ناوردا + ۵ چرخهٔ عمر + ۸ موتور + ۴ تجربهٔ کاربری + ۳ پروکسی + ۳ استقرار + ۱۱ سخت‌سازی + ۱۰ ناظر'},
     ],
   },
   {

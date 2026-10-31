@@ -400,13 +400,13 @@ class NormalizationConfigTests(unittest.TestCase):
         jobs = set(re.findall(r'^  ([\w-]+):\n    runs-on:', ci, re.MULTILINE))
         self.assertEqual(jobs, {'repo-health', 'psk', 'lithos', 'router', 'fjcod', 'fjcod-e2e',
                                 'bison-brand-book', 'viking-team', 'viking-motion',
-                                'orchestrator', 'hermes', 'commit-identity', 'apex'})
-        # apex ships no runtime dependency, so its job has to prove the contract and the suite itself.
-        apex = ci.split('\n  apex:\n')[1].split('\n  fjcod:\n')[0]
-        self.assertIn('node tools/check.mjs', apex)
-        self.assertIn('npm install --no-save --no-audit --no-fund jsdom', apex)
-        self.assertIn('npm test', apex)
-        self.assertIn('node tools/make_zip.mjs', apex)
+                                'orchestrator', 'hermes', 'commit-identity', 'infinity'})
+        # infinity ships no runtime dependency, so its job has to prove the contract and the suite itself.
+        infinity = ci.split('\n  infinity:\n')[1].split('\n  fjcod:\n')[0]
+        self.assertIn('node tools/check.mjs', infinity)
+        self.assertIn('npm install --no-save --no-audit --no-fund jsdom', infinity)
+        self.assertIn('npm test', infinity)
+        self.assertIn('node tools/make_zip.mjs', infinity)
         health = ci.split('\n  repo-health:\n')[1].split('\n  psk:\n')[0]
         self.assertIn('bash scripts/repo_health_check.sh', health)
         self.assertNotIn('secrets.', health)

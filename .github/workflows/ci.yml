@@ -103,13 +103,13 @@ jobs:
         run: python3 scripts/report_skill_quality.py --check
       - run: python -m unittest discover -s tests -p "test_*.py" -v
 
-  # apex-agent has no build step and no runtime dependencies: the only install is the jsdom that the
+  # infinity-mega-skill has no build step and no runtime dependencies: the only install is the jsdom that the
   # DOM tests need, so this job is the whole contract — static contract, the 97 tests, and nothing else.
-  apex:
+  infinity:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: apex-agent
+        working-directory: infinity-mega-skill
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7

@@ -278,11 +278,11 @@ DIRECTIVE_COUNTERS: dict[str, tuple[tuple[str, object], ...]] = {
         ("فریم", lambda: motion_spec()["frames"]),
         ("fps", lambda: motion_spec()["fps"]),
     ),
-    # apex uses loops for its 35 cases, so a static `test(` count would under-report; the module
+    # infinity uses loops for its 35 cases, so a static `test(` count would under-report; the module
     # inventory is the honest, offline-checkable number for this project.
-    "13-apex-agent.md": (
-        ("هسته", lambda: len(list((ROOT / "apex-agent/src/core").glob("*.js")))),
-        ("نما", lambda: len(list((ROOT / "apex-agent/src/app").glob("*.js")))),
+    "13-infinity-mega-skill.md": (
+        ("هسته", lambda: len(list((ROOT / "infinity-mega-skill/src/core").glob("*.js")))),
+        ("نما", lambda: len(list((ROOT / "infinity-mega-skill/src/app").glob("*.js")))),
     ),
 }
 
