@@ -1,0 +1,2285 @@
+{
+  "generated_at": "2026-10-31T20:51:26.997Z",
+  "generator": "scripts/registry/refresh_free_models.mjs",
+  "sources": {
+    "openrouter": {
+      "status": "ok",
+      "models": 17
+    },
+    "huggingface": {
+      "status": "ok",
+      "models": 134
+    },
+    "groq": {
+      "status": "skipped",
+      "reason": "GROQ_API_KEY not set"
+    },
+    "cerebras": {
+      "status": "skipped",
+      "reason": "CEREBRAS_API_KEY not set"
+    },
+    "mistral": {
+      "status": "skipped",
+      "reason": "MISTRAL_API_KEY not set"
+    },
+    "nvidia-nim": {
+      "status": "skipped",
+      "reason": "NVIDIA_API_KEY not set"
+    },
+    "sambanova": {
+      "status": "skipped",
+      "reason": "SAMBANOVA_API_KEY not set"
+    }
+  },
+  "totals": {
+    "models": 151,
+    "free": 17
+  },
+  "models": [
+    {
+      "provider": "huggingface",
+      "model": "aisingapore/Gemma-SEA-LION-v4-27B-IT",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "publicai",
+      "tokens_per_sec": 56,
+      "first_token_ms": 1335,
+      "cheapest_input_usd_per_m": 0.2,
+      "context": 131072,
+      "input": [
+        "text"
+      ],
+      "tools": false
+    },
+    {
+      "provider": "huggingface",
+      "model": "aisingapore/Nemotron-SEA-LION-v4.8-120B-A12B",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "publicai",
+      "tokens_per_sec": 54,
+      "first_token_ms": 1599,
+      "cheapest_input_usd_per_m": 0.5,
+      "context": 262144,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "aisingapore/Qwen-SEA-LION-v4-32B-IT",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "publicai",
+      "tokens_per_sec": 48,
+      "first_token_ms": 1340,
+      "cheapest_input_usd_per_m": 0.25,
+      "context": 32000,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "aisingapore/Qwen-SEA-LION-v4.5-27B-IT",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "publicai",
+      "tokens_per_sec": 54,
+      "first_token_ms": 1512,
+      "cheapest_input_usd_per_m": 0.2,
+      "context": 262144,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "alpindale/WizardLM-2-8x22B",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "novita",
+      "tokens_per_sec": 19,
+      "first_token_ms": 2640,
+      "cheapest_input_usd_per_m": 0.62,
+      "context": 65535,
+      "input": [
+        "text"
+      ],
+      "tools": false
+    },
+    {
+      "provider": "huggingface",
+      "model": "BSC-LT/ALIA-40b-instruct-2606",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "publicai",
+      "tokens_per_sec": 26,
+      "first_token_ms": 1040,
+      "cheapest_input_usd_per_m": 0.3,
+      "context": 65536,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "CohereLabs/aya-expanse-32b",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "cohere",
+      "tokens_per_sec": 47,
+      "first_token_ms": 382,
+      "cheapest_input_usd_per_m": null,
+      "context": null,
+      "input": [
+        "text"
+      ],
+      "tools": false
+    },
+    {
+      "provider": "huggingface",
+      "model": "CohereLabs/aya-vision-32b",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "cohere",
+      "tokens_per_sec": 42,
+      "first_token_ms": 186,
+      "cheapest_input_usd_per_m": null,
+      "context": null,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": false
+    },
+    {
+      "provider": "huggingface",
+      "model": "CohereLabs/c4ai-command-a-03-2025",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "cohere",
+      "tokens_per_sec": 38,
+      "first_token_ms": 261,
+      "cheapest_input_usd_per_m": null,
+      "context": null,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "CohereLabs/c4ai-command-r-08-2024",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "cohere",
+      "tokens_per_sec": 11,
+      "first_token_ms": 424,
+      "cheapest_input_usd_per_m": null,
+      "context": null,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "CohereLabs/c4ai-command-r7b-12-2024",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "cohere",
+      "tokens_per_sec": 85,
+      "first_token_ms": 199,
+      "cheapest_input_usd_per_m": null,
+      "context": null,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "CohereLabs/c4ai-command-r7b-arabic-02-2025",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "cohere",
+      "tokens_per_sec": 115,
+      "first_token_ms": 217,
+      "cheapest_input_usd_per_m": null,
+      "context": null,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "CohereLabs/command-a-reasoning-08-2025",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "cohere",
+      "tokens_per_sec": 107,
+      "first_token_ms": 186,
+      "cheapest_input_usd_per_m": null,
+      "context": null,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "CohereLabs/command-a-translate-08-2025",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "cohere",
+      "tokens_per_sec": 71,
+      "first_token_ms": 259,
+      "cheapest_input_usd_per_m": null,
+      "context": null,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "CohereLabs/tiny-aya-earth",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "cohere",
+      "tokens_per_sec": 133,
+      "first_token_ms": 160,
+      "cheapest_input_usd_per_m": null,
+      "context": null,
+      "input": [
+        "text"
+      ],
+      "tools": false
+    },
+    {
+      "provider": "huggingface",
+      "model": "CohereLabs/tiny-aya-fire",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "cohere",
+      "tokens_per_sec": 134,
+      "first_token_ms": 164,
+      "cheapest_input_usd_per_m": null,
+      "context": null,
+      "input": [
+        "text"
+      ],
+      "tools": false
+    },
+    {
+      "provider": "huggingface",
+      "model": "CohereLabs/tiny-aya-global",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "cohere",
+      "tokens_per_sec": 134,
+      "first_token_ms": 155,
+      "cheapest_input_usd_per_m": null,
+      "context": null,
+      "input": [
+        "text"
+      ],
+      "tools": false
+    },
+    {
+      "provider": "huggingface",
+      "model": "CohereLabs/tiny-aya-water",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "cohere",
+      "tokens_per_sec": 134,
+      "first_token_ms": 164,
+      "cheapest_input_usd_per_m": null,
+      "context": null,
+      "input": [
+        "text"
+      ],
+      "tools": false
+    },
+    {
+      "provider": "huggingface",
+      "model": "deepseek-ai/DeepSeek-R1",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "novita",
+      "tokens_per_sec": 19,
+      "first_token_ms": 822,
+      "cheapest_input_usd_per_m": 0.7,
+      "context": 64000,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "deepseek-ai/DeepSeek-R1-0528",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "novita",
+      "tokens_per_sec": 21,
+      "first_token_ms": 1270,
+      "cheapest_input_usd_per_m": 0.5,
+      "context": 163840,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "deepseek-ai/DeepSeek-R1-Distill-Llama-8B",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "nscale",
+      "tokens_per_sec": 134,
+      "first_token_ms": 438,
+      "cheapest_input_usd_per_m": 0.05,
+      "context": 131072,
+      "input": [
+        "text"
+      ],
+      "tools": false
+    },
+    {
+      "provider": "huggingface",
+      "model": "deepseek-ai/DeepSeek-R1-Distill-Qwen-14B",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "nscale",
+      "tokens_per_sec": 86,
+      "first_token_ms": 451,
+      "cheapest_input_usd_per_m": 0.2,
+      "context": 131072,
+      "input": [
+        "text"
+      ],
+      "tools": false
+    },
+    {
+      "provider": "huggingface",
+      "model": "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "nscale",
+      "tokens_per_sec": 142,
+      "first_token_ms": 452,
+      "cheapest_input_usd_per_m": 0.15,
+      "context": 131072,
+      "input": [
+        "text"
+      ],
+      "tools": false
+    },
+    {
+      "provider": "huggingface",
+      "model": "deepseek-ai/DeepSeek-V3",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 11,
+      "first_token_ms": 522,
+      "cheapest_input_usd_per_m": 0.32,
+      "context": 163840,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "deepseek-ai/DeepSeek-V3-0324",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 118,
+      "first_token_ms": 284,
+      "cheapest_input_usd_per_m": 0.24000000000000002,
+      "context": 163840,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "deepseek-ai/DeepSeek-V3.1",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 38,
+      "first_token_ms": 301,
+      "cheapest_input_usd_per_m": 0.25,
+      "context": 163840,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "deepseek-ai/DeepSeek-V3.1-Terminus",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 32,
+      "first_token_ms": 319,
+      "cheapest_input_usd_per_m": 0.27,
+      "context": 163840,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "deepseek-ai/DeepSeek-V3.2",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 30,
+      "first_token_ms": 376,
+      "cheapest_input_usd_per_m": 0.26,
+      "context": 163840,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "deepseek-ai/DeepSeek-V4-Flash",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 39,
+      "first_token_ms": 290,
+      "cheapest_input_usd_per_m": 0.09,
+      "context": 1048576,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "deepseek-ai/DeepSeek-V4-Flash-0731",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "baseten",
+      "tokens_per_sec": 127,
+      "first_token_ms": 306,
+      "cheapest_input_usd_per_m": 0.060000000000000005,
+      "context": 1048576,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "deepseek-ai/DeepSeek-V4-Flash-Vision-Exp",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 43,
+      "first_token_ms": 2598,
+      "cheapest_input_usd_per_m": 0.43999999999999995,
+      "context": 1048576,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "deepseek-ai/DeepSeek-V4-Pro",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 85,
+      "first_token_ms": 436,
+      "cheapest_input_usd_per_m": 1.2999999999999998,
+      "context": 1048576,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "deepseek-ai/DeepSeek-V4-Pro-0813",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "baseten",
+      "tokens_per_sec": 98,
+      "first_token_ms": 426,
+      "cheapest_input_usd_per_m": 1.2999999999999998,
+      "context": 1048576,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "deepseek-ai/DeepSeek-V4.1-Flash",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "baseten",
+      "tokens_per_sec": 276,
+      "first_token_ms": 289,
+      "cheapest_input_usd_per_m": 0.2,
+      "context": 1048576,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "scaleway",
+      "tokens_per_sec": 165,
+      "first_token_ms": 584,
+      "cheapest_input_usd_per_m": 0.3,
+      "context": 1048576,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "google/gemma-3-12b-it",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 27,
+      "first_token_ms": 315,
+      "cheapest_input_usd_per_m": 0.05,
+      "context": 131072,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "google/gemma-3-27b-it",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 33,
+      "first_token_ms": 1131,
+      "cheapest_input_usd_per_m": 0.08,
+      "context": 131072,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "google/gemma-3-4b-it",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 50,
+      "first_token_ms": 383,
+      "cheapest_input_usd_per_m": 0.05,
+      "context": 131072,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "google/gemma-4-26B-A4B-it",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "scaleway",
+      "tokens_per_sec": 159,
+      "first_token_ms": 392,
+      "cheapest_input_usd_per_m": 0.07,
+      "context": 262144,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "google/gemma-4-31B-it",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 39,
+      "first_token_ms": 534,
+      "cheapest_input_usd_per_m": 0.14,
+      "context": 262144,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "ibm-granite/granite-4.2-30b",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 126,
+      "first_token_ms": 260,
+      "cheapest_input_usd_per_m": 0.16,
+      "context": 131072,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "ibm-granite/granite-4.2-3b",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 127,
+      "first_token_ms": 404,
+      "cheapest_input_usd_per_m": 0.030000000000000002,
+      "context": 131072,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "ibm-granite/granite-4.2-8b",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 129,
+      "first_token_ms": 272,
+      "cheapest_input_usd_per_m": 0.060000000000000005,
+      "context": 131072,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "inclusionAI/Ling-3.0-flash",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "novita",
+      "tokens_per_sec": 267,
+      "first_token_ms": 829,
+      "cheapest_input_usd_per_m": 0.06,
+      "context": 262144,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "inclusionAI/Ling-3.0-flash-Fin",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "novita",
+      "tokens_per_sec": 119,
+      "first_token_ms": 894,
+      "cheapest_input_usd_per_m": 0.060000000000000005,
+      "context": 262144,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "inclusionAI/Ling-3.0-flash-VL",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "novita",
+      "tokens_per_sec": 241,
+      "first_token_ms": 941,
+      "cheapest_input_usd_per_m": 0.060000000000000005,
+      "context": 262144,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "inclusionAI/Ling-3.1-flash",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "novita",
+      "tokens_per_sec": 86,
+      "first_token_ms": 961,
+      "cheapest_input_usd_per_m": 0.3,
+      "context": 1000000,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "meta-llama/Llama-3.1-8B-Instruct",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "novita",
+      "tokens_per_sec": 160,
+      "first_token_ms": 540,
+      "cheapest_input_usd_per_m": 0.02,
+      "context": 131072,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "meta-llama/Llama-3.3-70B-Instruct",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "scaleway",
+      "tokens_per_sec": 66,
+      "first_token_ms": 971,
+      "cheapest_input_usd_per_m": 0.135,
+      "context": 131072,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "meta-llama/Llama-4-Maverick-17B-128E-Instruct-FP8",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "novita",
+      "tokens_per_sec": 63,
+      "first_token_ms": 474,
+      "cheapest_input_usd_per_m": 0.27,
+      "context": 1048576,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": false
+    },
+    {
+      "provider": "huggingface",
+      "model": "meta-llama/Llama-4-Scout-17B-16E-Instruct",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "novita",
+      "tokens_per_sec": 82,
+      "first_token_ms": 725,
+      "cheapest_input_usd_per_m": 0.09,
+      "context": 890000,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "meta-llama/Llama-Guard-4-12B",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 8,
+      "first_token_ms": 325,
+      "cheapest_input_usd_per_m": 0.18,
+      "context": 163840,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": false
+    },
+    {
+      "provider": "huggingface",
+      "model": "meta-models/Muse-Glimmer-30B",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 79,
+      "first_token_ms": 189,
+      "cheapest_input_usd_per_m": 0.3,
+      "context": 131072,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "meta-models/Muse-Spark-Open-816B-A42B",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "baseten",
+      "tokens_per_sec": 155,
+      "first_token_ms": 285,
+      "cheapest_input_usd_per_m": 1.25,
+      "context": 1048576,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "microsoft/phi-4",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 107,
+      "first_token_ms": 333,
+      "cheapest_input_usd_per_m": 0.07,
+      "context": 16384,
+      "input": [
+        "text"
+      ],
+      "tools": false
+    },
+    {
+      "provider": "huggingface",
+      "model": "MiniMaxAI/MiniMax-M1-80k",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "novita",
+      "tokens_per_sec": 67,
+      "first_token_ms": 1045,
+      "cheapest_input_usd_per_m": 0.55,
+      "context": 1000000,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "MiniMaxAI/MiniMax-M2.5",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "novita",
+      "tokens_per_sec": 35,
+      "first_token_ms": 936,
+      "cheapest_input_usd_per_m": 0.3,
+      "context": 204800,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "MiniMaxAI/MiniMax-M2.7",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "novita",
+      "tokens_per_sec": 39,
+      "first_token_ms": 1076,
+      "cheapest_input_usd_per_m": 0.25,
+      "context": 204800,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "MiniMaxAI/MiniMax-M3",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "novita",
+      "tokens_per_sec": 91,
+      "first_token_ms": 1138,
+      "cheapest_input_usd_per_m": 0.28,
+      "context": 1000000,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "MiniMaxAI/MiniMax-M3.1-Flash",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "novita",
+      "tokens_per_sec": 72,
+      "first_token_ms": 897,
+      "cheapest_input_usd_per_m": 0.15,
+      "context": 1000000,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "moonshotai/Kimi-K2-Instruct",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "novita",
+      "tokens_per_sec": 72,
+      "first_token_ms": 1317,
+      "cheapest_input_usd_per_m": 0.57,
+      "context": 131072,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "moonshotai/Kimi-K2-Instruct-0905",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "novita",
+      "tokens_per_sec": 72,
+      "first_token_ms": 1314,
+      "cheapest_input_usd_per_m": 0.6,
+      "context": 262144,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "moonshotai/Kimi-K2.5",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "novita",
+      "tokens_per_sec": 45,
+      "first_token_ms": 1701,
+      "cheapest_input_usd_per_m": 0.45,
+      "context": 262144,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "moonshotai/Kimi-K2.6",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "novita",
+      "tokens_per_sec": 34,
+      "first_token_ms": 1714,
+      "cheapest_input_usd_per_m": 0.7499999999999999,
+      "context": 262144,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "moonshotai/Kimi-K2.7-Code",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 64,
+      "first_token_ms": 515,
+      "cheapest_input_usd_per_m": 0.6799999999999999,
+      "context": 262144,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "moonshotai/Kimi-K3",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "baseten",
+      "tokens_per_sec": 64,
+      "first_token_ms": 1004,
+      "cheapest_input_usd_per_m": 2.8499999999999996,
+      "context": 1048576,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "NousResearch/Hermes-3-Llama-3.1-70B",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 33,
+      "first_token_ms": 473,
+      "cheapest_input_usd_per_m": 0.7,
+      "context": 131072,
+      "input": [
+        "text"
+      ],
+      "tools": false
+    },
+    {
+      "provider": "huggingface",
+      "model": "nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B-BF16",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 96,
+      "first_token_ms": 379,
+      "cheapest_input_usd_per_m": 1,
+      "context": 262144,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-NVFP4",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "baseten",
+      "tokens_per_sec": 329,
+      "first_token_ms": 244,
+      "cheapest_input_usd_per_m": 0.2,
+      "context": 1048576,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "openai/gpt-oss-120b",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "cerebras",
+      "tokens_per_sec": 872,
+      "first_token_ms": 236,
+      "cheapest_input_usd_per_m": 0.037,
+      "context": 131072,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "openai/gpt-oss-20b",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "groq",
+      "tokens_per_sec": 656,
+      "first_token_ms": 326,
+      "cheapest_input_usd_per_m": 0.030000000000000002,
+      "context": 131072,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "openai/gpt-oss-safeguard-20b",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "groq",
+      "tokens_per_sec": 738,
+      "first_token_ms": 191,
+      "cheapest_input_usd_per_m": null,
+      "context": 131072,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "Qwen/Qwen2.5-Coder-32B-Instruct",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "nscale",
+      "tokens_per_sec": 33,
+      "first_token_ms": 389,
+      "cheapest_input_usd_per_m": 0.06,
+      "context": 131072,
+      "input": [
+        "text"
+      ],
+      "tools": false
+    },
+    {
+      "provider": "huggingface",
+      "model": "Qwen/Qwen2.5-Coder-3B-Instruct",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "nscale",
+      "tokens_per_sec": 180,
+      "first_token_ms": 375,
+      "cheapest_input_usd_per_m": 0.01,
+      "context": 32768,
+      "input": [
+        "text"
+      ],
+      "tools": false
+    },
+    {
+      "provider": "huggingface",
+      "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "nscale",
+      "tokens_per_sec": 146,
+      "first_token_ms": 366,
+      "cheapest_input_usd_per_m": 0.01,
+      "context": 131072,
+      "input": [
+        "text"
+      ],
+      "tools": false
+    },
+    {
+      "provider": "huggingface",
+      "model": "Qwen/Qwen2.5-VL-72B-Instruct",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "ovhcloud",
+      "tokens_per_sec": 30,
+      "first_token_ms": 372,
+      "cheapest_input_usd_per_m": 1.01,
+      "context": 32768,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": false
+    },
+    {
+      "provider": "huggingface",
+      "model": "Qwen/Qwen3-14B",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 96,
+      "first_token_ms": 192,
+      "cheapest_input_usd_per_m": 0.07,
+      "context": 40960,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "Qwen/Qwen3-235B-A22B",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "nscale",
+      "tokens_per_sec": 18,
+      "first_token_ms": 623,
+      "cheapest_input_usd_per_m": 0.2,
+      "context": 32000,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "Qwen/Qwen3-235B-A22B-Instruct-2507",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "scaleway",
+      "tokens_per_sec": 26,
+      "first_token_ms": 529,
+      "cheapest_input_usd_per_m": 0.09,
+      "context": 262144,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "Qwen/Qwen3-235B-A22B-Thinking-2507",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 15,
+      "first_token_ms": 491,
+      "cheapest_input_usd_per_m": 0.22999999999999998,
+      "context": 262144,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "Qwen/Qwen3-30B-A3B",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 114,
+      "first_token_ms": 190,
+      "cheapest_input_usd_per_m": 0.12000000000000001,
+      "context": 40960,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "Qwen/Qwen3-32B",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "nscale",
+      "tokens_per_sec": 47,
+      "first_token_ms": 479,
+      "cheapest_input_usd_per_m": 0.08,
+      "context": 40960,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "Qwen/Qwen3-4B-Instruct-2507",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "nscale",
+      "tokens_per_sec": 145,
+      "first_token_ms": 421,
+      "cheapest_input_usd_per_m": 0.01,
+      "context": 262144,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "Qwen/Qwen3-4B-Thinking-2507",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "nscale",
+      "tokens_per_sec": 158,
+      "first_token_ms": 260,
+      "cheapest_input_usd_per_m": 0.01,
+      "context": 262144,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "Qwen/Qwen3-8B",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "nscale",
+      "tokens_per_sec": 123,
+      "first_token_ms": 362,
+      "cheapest_input_usd_per_m": 0.07,
+      "context": 40960,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "Qwen/Qwen3-Next-80B-A3B-Instruct",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 133,
+      "first_token_ms": 584,
+      "cheapest_input_usd_per_m": 0.09,
+      "context": 262144,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "Qwen/Qwen3-VL-235B-A22B-Instruct",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 6,
+      "first_token_ms": 1729,
+      "cheapest_input_usd_per_m": 0.2,
+      "context": 262144,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "Qwen/Qwen3-VL-30B-A3B-Instruct",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 36,
+      "first_token_ms": 277,
+      "cheapest_input_usd_per_m": 0.15,
+      "context": 262144,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "Qwen/Qwen3.5-122B-A10B",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "novita",
+      "tokens_per_sec": 93,
+      "first_token_ms": 1046,
+      "cheapest_input_usd_per_m": 0.29,
+      "context": 262144,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "Qwen/Qwen3.5-27B",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 66,
+      "first_token_ms": 206,
+      "cheapest_input_usd_per_m": 0.26,
+      "context": 262144,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "Qwen/Qwen3.5-35B-A3B",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 83,
+      "first_token_ms": 563,
+      "cheapest_input_usd_per_m": 0.14,
+      "context": 262144,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "Qwen/Qwen3.5-397B-A17B",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "ovhcloud",
+      "tokens_per_sec": 83,
+      "first_token_ms": 500,
+      "cheapest_input_usd_per_m": 0.45,
+      "context": 262144,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "Qwen/Qwen3.5-9B",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "ovhcloud",
+      "tokens_per_sec": 37,
+      "first_token_ms": 493,
+      "cheapest_input_usd_per_m": 0.1,
+      "context": 262144,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "Qwen/Qwen3.6-27B",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 81,
+      "first_token_ms": 230,
+      "cheapest_input_usd_per_m": 0.32,
+      "context": 262144,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "Qwen/Qwen3.6-35B-A3B",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "scaleway",
+      "tokens_per_sec": 123,
+      "first_token_ms": 551,
+      "cheapest_input_usd_per_m": 0.1,
+      "context": 262144,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "Qwen/Qwen3.8-2.4T-A95B",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 82,
+      "first_token_ms": 267,
+      "cheapest_input_usd_per_m": 2,
+      "context": 1000000,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "Qwen/Qwen3.8-27B",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "cerebras",
+      "tokens_per_sec": 830,
+      "first_token_ms": 277,
+      "cheapest_input_usd_per_m": 0.2,
+      "context": 1048576,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "Qwen/Qwen3.8-Flash-Next-FP8",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "nscale",
+      "tokens_per_sec": 184,
+      "first_token_ms": 481,
+      "cheapest_input_usd_per_m": 0.15,
+      "context": 1048576,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "reflection/Beam-1.0-501B-A23B",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "baseten",
+      "tokens_per_sec": 306,
+      "first_token_ms": 338,
+      "cheapest_input_usd_per_m": 0.4,
+      "context": 1048576,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "Sao10K/L3-8B-Stheno-v3.2",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "novita",
+      "tokens_per_sec": 112,
+      "first_token_ms": 437,
+      "cheapest_input_usd_per_m": 0.05,
+      "context": 8192,
+      "input": [
+        "text"
+      ],
+      "tools": false
+    },
+    {
+      "provider": "huggingface",
+      "model": "speakleash/Bielik-11B-v3.0-Instruct",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "publicai",
+      "tokens_per_sec": 56,
+      "first_token_ms": 930,
+      "cheapest_input_usd_per_m": 0.4,
+      "context": null,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "stepfun-ai/Step-3.5-Flash",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 27,
+      "first_token_ms": 809,
+      "cheapest_input_usd_per_m": 0.1,
+      "context": 262144,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "stepfun-ai/Step-3.7-Flash",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 22,
+      "first_token_ms": 603,
+      "cheapest_input_usd_per_m": 0.2,
+      "context": 262144,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "swiss-ai/Apertus-v1.5-70B",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "publicai",
+      "tokens_per_sec": 58,
+      "first_token_ms": 610,
+      "cheapest_input_usd_per_m": 0.82,
+      "context": null,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "tencent/Hy3",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 37,
+      "first_token_ms": 355,
+      "cheapest_input_usd_per_m": 0.13,
+      "context": 262144,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "tencent/Hy4-preview",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 38,
+      "first_token_ms": 637,
+      "cheapest_input_usd_per_m": 0.834,
+      "context": 1048576,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "thinkingmachines/Inkling",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 170,
+      "first_token_ms": 420,
+      "cheapest_input_usd_per_m": 0.95,
+      "context": 524288,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "thinkingmachines/Inkling-Small",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 148,
+      "first_token_ms": 409,
+      "cheapest_input_usd_per_m": 0.45,
+      "context": 524288,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "XiaomiMiMo/MiMo-V2.5",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 25,
+      "first_token_ms": 1914,
+      "cheapest_input_usd_per_m": 0.14,
+      "context": 262144,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "XiaomiMiMo/MiMo-V2.5-Pro",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 28,
+      "first_token_ms": 1474,
+      "cheapest_input_usd_per_m": 1,
+      "context": 1048576,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "XiaomiMiMo/MiMo-V2.6-Flash-RL",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "novita",
+      "tokens_per_sec": 29,
+      "first_token_ms": 2168,
+      "cheapest_input_usd_per_m": 0.14,
+      "context": 1048576,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "XiaomiMiMo/MiMo-V2.6-Pro-RL",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "novita",
+      "tokens_per_sec": 24,
+      "first_token_ms": 1697,
+      "cheapest_input_usd_per_m": 0.435,
+      "context": 1048576,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "zai-org/AutoGLM-Phone-9B-Multilingual",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "novita",
+      "tokens_per_sec": 84,
+      "first_token_ms": 399,
+      "cheapest_input_usd_per_m": 0.035,
+      "context": 65536,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": false
+    },
+    {
+      "provider": "huggingface",
+      "model": "zai-org/GLM-4.5",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "zai-org",
+      "tokens_per_sec": 26,
+      "first_token_ms": 2886,
+      "cheapest_input_usd_per_m": null,
+      "context": null,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "zai-org/GLM-4.5-Air",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "novita",
+      "tokens_per_sec": 86,
+      "first_token_ms": 947,
+      "cheapest_input_usd_per_m": 0.13,
+      "context": 131072,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "zai-org/GLM-4.5V",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "novita",
+      "tokens_per_sec": 73,
+      "first_token_ms": 1322,
+      "cheapest_input_usd_per_m": 0.6,
+      "context": 65536,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "zai-org/GLM-4.5V-FP8",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "zai-org",
+      "tokens_per_sec": 52,
+      "first_token_ms": 1056,
+      "cheapest_input_usd_per_m": null,
+      "context": null,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "zai-org/GLM-4.6",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 26,
+      "first_token_ms": 282,
+      "cheapest_input_usd_per_m": 0.5,
+      "context": 204800,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "zai-org/GLM-4.6-FP8",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "zai-org",
+      "tokens_per_sec": 27,
+      "first_token_ms": 3242,
+      "cheapest_input_usd_per_m": null,
+      "context": null,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "zai-org/GLM-4.6V",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "zai-org",
+      "tokens_per_sec": 40,
+      "first_token_ms": 530,
+      "cheapest_input_usd_per_m": null,
+      "context": null,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "zai-org/GLM-4.6V-Flash",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "zai-org",
+      "tokens_per_sec": 87,
+      "first_token_ms": 398,
+      "cheapest_input_usd_per_m": 0.3,
+      "context": 131072,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "zai-org/GLM-4.6V-FP8",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "zai-org",
+      "tokens_per_sec": 50,
+      "first_token_ms": 2327,
+      "cheapest_input_usd_per_m": null,
+      "context": null,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "zai-org/GLM-4.7",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "zai-org",
+      "tokens_per_sec": 28,
+      "first_token_ms": 1792,
+      "cheapest_input_usd_per_m": 0.4,
+      "context": 204800,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "zai-org/GLM-4.7-Flash",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "zai-org",
+      "tokens_per_sec": 96,
+      "first_token_ms": 1028,
+      "cheapest_input_usd_per_m": 0.060000000000000005,
+      "context": 202752,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "zai-org/GLM-4.7-FP8",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "zai-org",
+      "tokens_per_sec": 28,
+      "first_token_ms": 2485,
+      "cheapest_input_usd_per_m": null,
+      "context": null,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "zai-org/GLM-5",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "novita",
+      "tokens_per_sec": 43,
+      "first_token_ms": 1533,
+      "cheapest_input_usd_per_m": 0.6,
+      "context": 202800,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "zai-org/GLM-5.1",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "deepinfra",
+      "tokens_per_sec": 81,
+      "first_token_ms": 368,
+      "cheapest_input_usd_per_m": 1.05,
+      "context": 202752,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "zai-org/GLM-5.1-FP8",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "zai-org",
+      "tokens_per_sec": 35,
+      "first_token_ms": 1614,
+      "cheapest_input_usd_per_m": null,
+      "context": null,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "zai-org/GLM-5.2",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "scaleway",
+      "tokens_per_sec": 122,
+      "first_token_ms": 483,
+      "cheapest_input_usd_per_m": 0.7499999999999999,
+      "context": 1048576,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "zai-org/GLM-5.2-FP8",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "zai-org",
+      "tokens_per_sec": 49,
+      "first_token_ms": 967,
+      "cheapest_input_usd_per_m": null,
+      "context": null,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "zai-org/GLM-5.3",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "scaleway",
+      "tokens_per_sec": 177,
+      "first_token_ms": 424,
+      "cheapest_input_usd_per_m": 0.9,
+      "context": 1048576,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "zai-org/GLM-5.3-BF16",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "zai-org",
+      "tokens_per_sec": 51,
+      "first_token_ms": 1072,
+      "cheapest_input_usd_per_m": null,
+      "context": null,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "zai-org/GLM-5.3-Flash",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "baseten",
+      "tokens_per_sec": 142,
+      "first_token_ms": 227,
+      "cheapest_input_usd_per_m": 0.15,
+      "context": 1048576,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "huggingface",
+      "model": "zai-org/GLM-5.3-Flash-BF16",
+      "free": false,
+      "free_via": [],
+      "fastest_via": "zai-org",
+      "tokens_per_sec": 43,
+      "first_token_ms": 822,
+      "cheapest_input_usd_per_m": null,
+      "context": null,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "openrouter",
+      "model": "cohere/north-mini-code:free",
+      "free": true,
+      "context": 256000,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "openrouter",
+      "model": "dots-studio/dots-3-note-preview:free",
+      "free": true,
+      "context": 512000,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "openrouter",
+      "model": "google/gemma-4-26b-a4b-it:free",
+      "free": true,
+      "context": 262144,
+      "input": [
+        "image",
+        "text",
+        "video"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "openrouter",
+      "model": "google/gemma-4-31b-it:free",
+      "free": true,
+      "context": 262144,
+      "input": [
+        "image",
+        "text",
+        "video"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "openrouter",
+      "model": "google/lyria-3-clip-preview",
+      "free": true,
+      "context": 1048576,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": false
+    },
+    {
+      "provider": "openrouter",
+      "model": "google/lyria-3-pro-preview",
+      "free": true,
+      "context": 1048576,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": false
+    },
+    {
+      "provider": "openrouter",
+      "model": "liquid/lfm-2.5-2.6b:free",
+      "free": true,
+      "context": 65536,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "openrouter",
+      "model": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+      "free": true,
+      "context": 256000,
+      "input": [
+        "text",
+        "audio",
+        "image",
+        "video"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "openrouter",
+      "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "free": true,
+      "context": 1000000,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "openrouter",
+      "model": "nvidia/nemotron-3.5-content-safety:free",
+      "free": true,
+      "context": 128000,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": false
+    },
+    {
+      "provider": "openrouter",
+      "model": "nvidia/nemotron-3.5-lightning:free",
+      "free": true,
+      "context": 1000000,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "openrouter",
+      "model": "nvidia/nemotron-3.5-super-vl:free",
+      "free": true,
+      "context": 1000000,
+      "input": [
+        "text",
+        "image",
+        "video"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "openrouter",
+      "model": "openrouter/free",
+      "free": true,
+      "context": 200000,
+      "input": [
+        "text",
+        "image"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "openrouter",
+      "model": "recursive/flint-v1.0:free",
+      "free": true,
+      "context": 262144,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "openrouter",
+      "model": "thinkingmachines/inkling-small:free",
+      "free": true,
+      "context": 1048576,
+      "input": [
+        "text",
+        "image",
+        "audio"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "openrouter",
+      "model": "thinkingmachines/inkling:free",
+      "free": true,
+      "context": 1048576,
+      "input": [
+        "text",
+        "image",
+        "audio"
+      ],
+      "tools": true
+    },
+    {
+      "provider": "openrouter",
+      "model": "xingchen-agi/xing4.0-29b-a4b:free",
+      "free": true,
+      "context": 262144,
+      "input": [
+        "text"
+      ],
+      "tools": true
+    }
+  ]
+}

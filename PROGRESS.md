@@ -1,15 +1,17 @@
 # MegaSkillClaude Monorepo — دفتر جریان مشترک
 
-> این دفتر فقط تغییرات cross-project (CI، doctor، نقشهٔ پروژه‌ها و قراردادهای مشترک) را نگه می‌دارد. هر محصول دفتر جداگانهٔ خودش را دارد. آخرین به‌روزرسانی: **۲۰۲۶-۱۰-۲۰**.
+> این دفتر فقط تغییرات cross-project (CI، doctor، نقشهٔ پروژه‌ها و قراردادهای مشترک) را نگه می‌دارد. هر محصول دفتر جداگانهٔ خودش را دارد. آخرین به‌روزرسانی: **۲۰۲۶-۱۰-۳۱**.
 
 ## ۱) وضعیت مشترک
 - ۱۳ پروژه/زیرپروژهٔ مدیریت‌شده (به‌علاوهٔ خود مخزن)؛ دفتر هرکدام در جدول `README.md` و دستور توسعهٔ هرکدام در [`docs/directives/`](docs/directives/README.md) است.
 - `node scripts/doctor.mjs <id>` مرجع فرمان‌های دقیق هر پروژه است؛ `--list` فهرست کامل را نشان می‌دهد. اکنون **۴۴ گام در ۱۴ دامنه** (۳۸ تا پیش از ۲۰۲۶-۱۰-۱۴).
 - Router canonical: **۵٬۹۶۴** مهارت = ۳٬۰۰۰ core + ۱۸ پروژه + ۲٬۹۴۶ GitHub؛ **۵٬۹۶۴ routable**، **۰ incomplete** و **۲۹٬۸۷۸ trigger**.
-- تست‌های ریشه: **۱۸۴ تست ریشه** (پایتون) با `python3 -m unittest discover -s tests -p "test_*.py"`. نگهبانِ همین اعداد `tests/test_status_counters.py` است: شمارنده‌های بخش «وضعیت مشترک» را به `triggers.json`، `library/github-skills/INDEX.json`، `scripts/doctor.mjs` و `mobile/skills-index.json` قفل می‌کند، ارجاع‌های `doctor.mjs <id>` و لینک/پوشه‌های `docs/directives/README.md` را resolve می‌کند، و اعداد داخل بخش‌های تاریخ‌دار را به‌عنوان snapshot دست نمی‌زند. قاعدهٔ انسانی‌اش بند ۷ «قواعد مشترک» در [`docs/directives/README.md`](docs/directives/README.md) است.
+- تست‌های ریشه: **۱۹۱ تست ریشه** (پایتون) با `python3 -m unittest discover -s tests -p "test_*.py"`. نگهبانِ همین اعداد `tests/test_status_counters.py` است: شمارنده‌های بخش «وضعیت مشترک» را به `triggers.json`، `library/github-skills/INDEX.json`، `scripts/doctor.mjs` و `mobile/skills-index.json` قفل می‌کند، ارجاع‌های `doctor.mjs <id>` و لینک/پوشه‌های `docs/directives/README.md` را resolve می‌کند، و اعداد داخل بخش‌های تاریخ‌دار را به‌عنوان snapshot دست نمی‌زند. قاعدهٔ انسانی‌اش بند ۷ «قواعد مشترک» در [`docs/directives/README.md`](docs/directives/README.md) است.
 - CI شامل typecheck/build/test، health، skill sync، PWA، دارایی‌های برند و typecheck زیرپروژهٔ Motion است.
 
 ## ۲) اصلاحات بین‌پروژه‌ای
+
+**۲۰۲۶-۱۰-۳۱ — Infinity Mega Skill: نقشهٔ واحد و بانک‌ها (فاز ۰).** نام پروژه برای همیشه Infinity Mega Skill شد (قانون در `CLAUDE.md`). نقشهٔ کل در `docs/INFINITY_BLUEPRINT.md` است. `registry/` اضافه شد: `providers.json` با ۱۷ ارائه‌دهندهٔ LLM رایگان/ارزان، `agents.json` با ۱۳ ایجنت و وزن ۷ جایگاه، و `models.json` که فهرست زندهٔ ۱۵۱ مدل است (۱۷ مدل رایگان OpenRouter و ۱۳۴ مدل Hugging Face با سرعت و قیمت). این فهرست را `scripts/registry/refresh_free_models.mjs` می‌سازد. نگهبان: `tests/test_infinity_registry.py` با ۷ تست (یکتایی، https، هم‌خوانی با `hermes/providers.mjs`، وجود دست‌کم یک نامزد رایگان برای هر جایگاه، نبود کلید). تست‌های ریشه از ۱۸۴ به ۱۹۱ رسید.
 
 **باگ «سبز کاذب» در doctor پیدا و اصلاح شد.** اجرای اولیه نشان داد `common-tests` در ۰٫۰ ثانیه سبز می‌شد: parser سادهٔ `split(' ')` کوتیشن‌های `-p "test_*.py"` را به آرگومان واقعی منتقل نمی‌کرد و Python بدون کشف تست، exit 0 می‌داد.
 - parser امنِ بدون shell جایگزین شد؛ آرگومان‌های quoted/escaped درست شکافته می‌شوند و فقط stepهای صریحاً shell از `bash -c` استفاده می‌کنند.
