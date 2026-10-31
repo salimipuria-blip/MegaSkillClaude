@@ -28,11 +28,13 @@ export function parseVerdict(text, { kind } = { kind: 'review' }) {
       const sev = l.match(/^-\s*\[(BLOCKER|MAJOR|MINOR|NIT)\]/i)[1].toUpperCase();
       return { severity: sev, text: l.replace(/^-\s*\[[A-Za-z]+\]\s*/, '') };
     });
-  let verdict = null;
-  for (const l of lines) {
-    const m = l.match(/^VERDICT:\s*([A-Z]+)/i);
-    if (m && allowed.includes(m[1].toUpperCase())) verdict = m[1].toUpperCase(); // last valid wins
-  }
+  // Fail-closed: the verdict is taken ONLY from the last non-empty line, and that line must be
+  // exactly "VERDICT: <one allowed word>" — so an echoed "VERDICT: PASS / FAIL" is rejected, and a
+  // malformed final line never falls back to an earlier valid-looking one.
+  const nonEmpty = lines.filter((l) => l.length);
+  const last = nonEmpty[nonEmpty.length - 1] || '';
+  const m = last.match(new RegExp(`^VERDICT:\\s*(${allowed.join('|')})\\s*$`, 'i'));
+  const verdict = m ? m[1].toUpperCase() : null;
   return { verdict: verdict || unsafe, verdictFound: Boolean(verdict), findings };
 }
 

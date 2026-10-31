@@ -24,7 +24,12 @@ const log = (line) => {
   const file = flag('log', 'LOOP-LEDGER.jsonl');
   try { appendFileSync(file, `${JSON.stringify({ ...line, ts: new Date().toISOString() })}\n`); } catch { /* ledger is best-effort */ }
 };
-const readStdin = () => { try { return readFileSync(0, 'utf8'); } catch { return ''; } };
+// Only read stdin when something is piped in. On an interactive terminal readFileSync(0) would block
+// waiting for EOF, so `inspect --base <ref>` would hang before reaching the git-diff fallback.
+const readStdin = () => {
+  if (process.stdin.isTTY) return '';
+  try { return readFileSync(0, 'utf8'); } catch { return ''; }
+};
 
 async function resolveClient() {
   const found = await probe();

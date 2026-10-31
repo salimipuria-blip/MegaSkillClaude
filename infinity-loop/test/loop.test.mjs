@@ -22,6 +22,18 @@ test('a missing or malformed verdict is unsafe-by-default, never silent approval
   assert.equal(parseVerdict('VERDICT: LGTM', { kind: 'review' }).verdictFound, false);
 });
 
+test('an echoed "VERDICT: PASS / FAIL" line is not an approval (exact final line only)', () => {
+  const r = parseVerdict('No issues.\nVERDICT: PASS / FAIL', { kind: 'inspect' });
+  assert.equal(r.verdictFound, false);
+  assert.equal(r.verdict, 'FAIL');
+});
+
+test('an earlier valid verdict never survives a malformed final line', () => {
+  const r = parseVerdict('VERDICT: PASS\n\nactually, let me reconsider…', { kind: 'inspect' });
+  assert.equal(r.verdictFound, false);
+  assert.equal(r.verdict, 'FAIL');
+});
+
 test('APPROVED with a lingering blocking finding is not an approval', async () => {
   const client = clientReturning(['- [BLOCKER] data loss on retry\nVERDICT: APPROVED']);
   const r = await reviewLoop({ client, planText: 'plan', now: () => 0 });

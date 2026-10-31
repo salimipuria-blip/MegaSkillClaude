@@ -7,6 +7,11 @@ import { PROVIDERS } from '../core/providers.js';
 
 const STATE_KEY = 'infinity.metacode.v3';
 const KEY_KEY = 'infinity.metacode.keys.v3';
+// Pre-rename keys and export id (apex-metacode). Kept so an existing deployment on the same origin
+// is migrated instead of starting empty, and so old backups still import. Removed after one migration.
+const LEGACY_STATE_KEY = 'apex.metacode.v3';
+const LEGACY_KEY_KEY = 'apex.metacode.keys.v3';
+const APP_IDS = ['infinity-mega-skill', 'apex-metacode'];
 
 export const DEFAULT_SETTINGS = {
   providerId: 'openrouter',
@@ -39,8 +44,23 @@ function storage() {
 export function loadPersisted() {
   const ls = storage();
   if (!ls) return { state: null, keys: null };
-  const state = safeParse(ls.getItem(STATE_KEY), null);
-  const keys = safeParse(ls.getItem(KEY_KEY), null);
+  let state = safeParse(ls.getItem(STATE_KEY), null);
+  let keys = safeParse(ls.getItem(KEY_KEY), null);
+  // One-time migration from the pre-rename namespace, so an upgraded deployment keeps its workspace.
+  if (state === null) {
+    const legacy = safeParse(ls.getItem(LEGACY_STATE_KEY), null);
+    if (legacy) {
+      state = legacy;
+      try { ls.setItem(STATE_KEY, JSON.stringify(legacy)); ls.removeItem(LEGACY_STATE_KEY); } catch { /* read-only is fine */ }
+    }
+  }
+  if (keys === null) {
+    const legacyKeys = safeParse(ls.getItem(LEGACY_KEY_KEY), null);
+    if (legacyKeys) {
+      keys = legacyKeys;
+      try { ls.setItem(KEY_KEY, JSON.stringify(legacyKeys)); ls.removeItem(LEGACY_KEY_KEY); } catch { /* read-only is fine */ }
+    }
+  }
   return { state, keys };
 }
 
@@ -149,7 +169,7 @@ export function applyBundle(app, data) {
 
 export function parseImport(text) {
   const data = typeof text === 'string' ? safeParse(text, null) : text;
-  if (!data || data.app !== 'infinity-mega-skill') throw new Error('این فایل، صدورِ مِتاکد نیست.');
+  if (!data || !APP_IDS.includes(data.app)) throw new Error('این فایل، صدورِ مِتاکد نیست.');
   if (Number(data.schema) > 3) throw new Error('نسخهٔ فایل جدیدتر از این برنامه است.');
   return data;
 }

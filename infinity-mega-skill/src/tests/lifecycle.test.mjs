@@ -145,3 +145,30 @@ test('a dead network gives a readable Persian error and leaves the app usable', 
     closeApp(dom, app);
   }
 });
+
+// Rename migration (Codex P1): a pre-rename deployment on the same origin must keep its workspace,
+// and a backup exported before the rename must still import. Pure test — no jsdom, mocked storage.
+function fakeLocalStorage() {
+  const m = new Map();
+  return { getItem: (k) => (m.has(k) ? m.get(k) : null), setItem: (k, v) => m.set(k, String(v)), removeItem: (k) => m.delete(k) };
+}
+
+test('a pre-rename workspace migrates, and a legacy apex-metacode backup still imports', async () => {
+  const ls = fakeLocalStorage();
+  ls.setItem('apex.metacode.v3', JSON.stringify({ hello: 'world' }));
+  ls.setItem('apex.metacode.keys.v3', JSON.stringify({ key: 'sk-legacy' }));
+  const prev = globalThis.localStorage;
+  globalThis.localStorage = ls;
+  try {
+    const { loadPersisted, parseImport } = await load('state.js');
+    const { state, keys } = loadPersisted();
+    assert.deepEqual(state, { hello: 'world' }, 'legacy workspace is migrated, not dropped');
+    assert.deepEqual(keys, { key: 'sk-legacy' }, 'legacy credentials migrate too');
+    assert.notEqual(ls.getItem('infinity.metacode.v3'), null, 'migrated into the new key');
+    assert.equal(ls.getItem('apex.metacode.v3'), null, 'legacy key cleaned up after migration');
+    assert.equal(parseImport(JSON.stringify({ app: 'apex-metacode', schema: 3, n: 7 })).n, 7, 'legacy export accepted');
+    assert.equal(parseImport(JSON.stringify({ app: 'infinity-mega-skill', schema: 3, n: 9 })).n, 9, 'current export accepted');
+  } finally {
+    globalThis.localStorage = prev;
+  }
+});

@@ -1,6 +1,6 @@
 # مِتاکد / Infinity Mega Skill (`infinity-mega-skill/`) — دستور کار Claude
 
-> وضعیت: کد سالم و تست‌شده (Node ۱۰۸/۱۰۸، قرارداد ایستا پاک، زیپ تأییدشده)؛ **در کرومیومِ واقعی رندر و آزموده شد** (۳۲ سنجه، زیرِ CSPِ استقرار، `npm run render`)؛ روی Vercel مستقر شده (`infinity-mega-skill-ps88.vercel.app`) و همچنان پشتِ Deployment Protection است — تنها چیزی که هنوز دیده نشده، همان صفحه از بیرون است. مسیرِ زندهٔ مدل با `npm run live` آماده و با `--mock` اثبات شده؛ اجرای واقعیِ آن به کلیدِ مالک نیاز دارد. آخرین بازبینی: 2026-10-30.
+> وضعیت: کد سالم و تست‌شده (Node ۱۰۹/۱۰۹، قرارداد ایستا پاک، زیپ تأییدشده)؛ **در کرومیومِ واقعی رندر و آزموده شد** (۳۲ سنجه، زیرِ CSPِ استقرار، `npm run render`)؛ روی Vercel مستقر شده (`infinity-mega-skill-ps88.vercel.app`) و همچنان پشتِ Deployment Protection است — تنها چیزی که هنوز دیده نشده، همان صفحه از بیرون است. مسیرِ زندهٔ مدل با `npm run live` آماده و با `--mock` اثبات شده؛ اجرای واقعیِ آن به کلیدِ مالک نیاز دارد. آخرین بازبینی: 2026-10-30.
 
 ```yaml
 project:
@@ -22,7 +22,7 @@ project:
   source_of_truth: infinity-mega-skill/src/core
   commands:  # همه در 2026-10-30 اجرا شدند
     check:   node tools/check.mjs                  # "✓ static contract is clean"
-    test:    node --test src/tests/*.test.mjs      # 108/108 (۱۴ فایل؛ سه اجرای کاملِ پیاپی سبز، 2026-10-30)
+    test:    node --test src/tests/*.test.mjs      # 109/109 (۱۴ فایل؛ سه اجرای کاملِ پیاپی سبز، 2026-10-30)
     core:    node --test src/tests/core.test.mjs   # 30/30
     model:   node --test src/tests/model.test.mjs  # 5/5 با سرور HTTP محلی (بدون کلید)
     dom:     node --test src/tests/dom.test.mjs    # 6/6 (نیازمند jsdom)
