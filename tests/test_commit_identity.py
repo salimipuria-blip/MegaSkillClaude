@@ -131,11 +131,30 @@ class CommitIdentityTests(unittest.TestCase):
                     self.assertIn("anthropic.com", payload["findings"][0]["context"])
 
     def test_the_work_under_review_is_clean(self):
-        """The range CI uses; it falls back to HEAD when the base ref was not fetched (shallow clone)."""
+        """The range CI uses. On a pull-request branch it scans the PR's commits, which must be clean.
+        On the default branch after a merge the range is empty — nothing new under review — and that
+        is a clean pass, not a scan of the already-merged HEAD (which GitHub's squash UI may have
+        stamped with a `Co-authored-by` trailer we do not control)."""
         code, out, _ = run_main(["--range", "origin/main...HEAD", "--json"])
         payload = json.loads(out)
         self.assertEqual(code, 0, f"this branch carries an identity claim: {payload['findings']}")
-        self.assertGreaterEqual(payload["scanned"], 1, "scanning nothing must not be reported as a pass")
+
+    def test_an_empty_resolvable_range_is_clean_without_rescanning_merged_head(self):
+        """A range that resolves to zero commits (HEAD at or behind the base — CI on the default
+        branch after a merge) is a clean pass, and must NOT fall back to scanning HEAD. `HEAD...HEAD`
+        is a deterministic stand-in for that case in any clone."""
+        code, out, _ = run_main(["--range", "HEAD...HEAD", "--json"])
+        payload = json.loads(out)
+        self.assertEqual(code, 0)
+        self.assertEqual(payload["scanned"], 0, "an empty range scans nothing; it does not re-scan HEAD")
+
+    def test_an_unresolvable_range_still_falls_back_to_head(self):
+        """The shallow-clone safety net: a base ref that cannot be resolved must not be a silent skip —
+        it falls back to scanning HEAD so a pull request's own commit is still checked."""
+        code, out, _ = run_main(["--range", "refs/does-not-exist-xyz...HEAD", "--json"])
+        payload = json.loads(out)
+        self.assertEqual(payload["scanned"], 1, "an unresolvable range falls back to HEAD, not to nothing")
+        self.assertIn(code, (0, 1))
 
     def test_scanning_nothing_is_a_usage_error_unless_it_is_declared_optional(self):
         code, _, err = run_main(["--stdin", "pull request"], stdin_text="   \n")
