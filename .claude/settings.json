@@ -45,5 +45,11 @@
         ]
       }
     ]
+  },
+  "permissions": {
+    "allow": [
+      "mcp__Remote_Desktop_Commander",
+      "mcp__plugin_desktop-commander_desktop-commander"
+    ]
   }
 }
