@@ -15,8 +15,8 @@ test('tokens does not remove stop-word letters or substrings inside other words'
 });
 
 test('tokens separates mixed-language words, punctuation and repeated whitespace',()=>{
- assert.deepEqual(tokens('  سلام، Hello!\tاین  WORLD؟\nتست؛ and API... ۱۲۳ 42 '),
-  ['سلام','hello','world','تست','api','۱۲۳','42']);
+ assert.deepEqual(tokens('  سلام، Hello!\tاین  WORLD؟\nتست؛ and API... '),
+  ['سلام','hello','world','تست','api']);
  assert.deepEqual(tokens('سلام/Hello—تست_API'),['سلام','hello','تست','api']);
 });
 
@@ -45,6 +45,15 @@ test('tokens returns no tokens for empty, nullish or separator-only input',()=>{
 });
 
 test('tokens preserves string coercion and the minimum token length',()=>{
- assert.deepEqual(tokens(123),['123']);
- assert.deepEqual(tokens('x ب 7 ab 12'),['ab','12']);
+ assert.deepEqual(tokens(123),[]);
+ assert.deepEqual(tokens('x ب 7 ab 12'),['ab']);
+});
+
+// A number carries no topic: "90 day roadmap" must not reach a skill named "...-90-langs",
+// and a numeric-only query must select nothing (see the edge cases in the corpus).
+test('tokens drops pure numbers, including Persian digits, but keeps mixed words',()=>{
+ for(const value of ['123','۱۲۳','42 456','۹۰','x ۹۰ 4?']){
+  assert.deepEqual(tokens(value).filter(t=>/^\p{N}+$/u.test(t)),[]);
+ }
+ assert.deepEqual(tokens('۹۰ روزه roadmap 2026'),['روزه','roadmap']);
 });

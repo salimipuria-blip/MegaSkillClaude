@@ -1,0 +1,3137 @@
+{
+ "schema": 1,
+ "generatedBy": "scripts/build_sticker_manifest.py",
+ "source": {
+  "copy": "brands/viking-offroad/stickers/src/packs.js",
+  "dialogues": "brands/viking-offroad/stickers/src/duos.js",
+  "renderer": "brands/viking-offroad/stickers/src/render.js"
+ },
+ "contract": {
+  "width": 512,
+  "height": 512,
+  "colorType": 6
+ },
+ "totals": {
+  "packs": 12,
+  "stickers": 360,
+  "bytes": 30603539
+ },
+ "cover": {
+  "file": "cover/viking-cover-sticker.png",
+  "sha256": "dcbf37f896f25972c65007e2c718672ef9ee61c002e0da008f0e9ec7d263173f",
+  "bytes": 431762,
+  "width": 1600,
+  "height": 1000,
+  "colorType": 6
+ },
+ "packs": [
+  {
+   "order": 1,
+   "id": "01-salam",
+   "name": "سلام و علیک",
+   "color": "#ff7a1a",
+   "count": 30,
+   "captions": 24,
+   "duos": 6,
+   "preview": {
+    "file": "preview-01-salam.png",
+    "sha256": "f2ad6a38499e7bf53b9ede55c6e47731a47da9009cdf5a7cf96a49c81aed3f41",
+    "bytes": 900507,
+    "width": 1652,
+    "height": 1479,
+    "colorType": 2
+   },
+   "files": [
+    {
+     "file": "01.png",
+     "sha256": "bc63b65549968221acd5c925e424a256a0f74475de7547f0cd3200b5beece4ec",
+     "bytes": 78963,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "02.png",
+     "sha256": "ec015a3f3ce964512c21437d556f4b8757b9b6300bb4b7db2085faef51574ac6",
+     "bytes": 82662,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "03.png",
+     "sha256": "c6bc52f9a515745499d203377d8653d87f4ea2e80ca1992f1ecea54d4bd86edf",
+     "bytes": 72065,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "04.png",
+     "sha256": "10f34813b40c5c3fc98ef175d963aca278cdf0b9dc49468b248063d285486a4e",
+     "bytes": 83493,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "05.png",
+     "sha256": "dc6b15b0d8702ba0004887f374a890a6925b0dea70963a00cf34cc71dbc79a81",
+     "bytes": 70350,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "06.png",
+     "sha256": "8f1b81a982f201760ea3773f92b89e3dee941ad993f4ac9fc7d0e4acc7bb6142",
+     "bytes": 85549,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "07.png",
+     "sha256": "139afcb493e2df8a14e3b53485cb9a2ee70fc745aa7a8d00038dbfa6aadeb4de",
+     "bytes": 70144,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "08.png",
+     "sha256": "75a392a4131f0ed6fa95f16c464bbc8f67f12060d4957d44f5a4ab6ad0abb1d2",
+     "bytes": 79588,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "09.png",
+     "sha256": "ecf278049cc2461b8e30029a6e8cb19aa19de42be5b5b2c10e0c7d1a0a4b2bc7",
+     "bytes": 83783,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "10.png",
+     "sha256": "df7924a2321c9e6d43b41cfb11ac27b7c281f985562b53b674833962599b7931",
+     "bytes": 60685,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "11.png",
+     "sha256": "83bf59a6ca84ac9df914453a24effdf7c166c338d84b4767ce1d00a6cb29051a",
+     "bytes": 82720,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "12.png",
+     "sha256": "2b19ffbf5329970e9703e31ee448e29732c0e89e1637c34ee12dfcd6efbb7cab",
+     "bytes": 79889,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "13.png",
+     "sha256": "0680b529b912938ca3018d3b93a7adffd0971406eac8b7d9b1f667a31f701c49",
+     "bytes": 64341,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "14.png",
+     "sha256": "530617e7018224f8c6fd3a54dd8a079311b1e3d0991d547f70ebb3f93bdf6fec",
+     "bytes": 67460,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "15.png",
+     "sha256": "f97ed65b9d8aaab19f9b9c271e54093018eb382a2f8f9fcf27c5eb8ca6f8ec65",
+     "bytes": 77545,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "16.png",
+     "sha256": "bdbb966b1618904690ea73d1682741989c65b941b9c4c8ad1a317741d7a2dd20",
+     "bytes": 72938,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "17.png",
+     "sha256": "db4892ccfb87f07738c534fd4a9f6153986a5b3049a38272c7206e989db024d4",
+     "bytes": 85465,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "18.png",
+     "sha256": "39975e5f5af7d4a59b3e1b6f85f63eb49127147ddca5dbcf055539598f8ae460",
+     "bytes": 71743,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "19.png",
+     "sha256": "6a86b347c10669bea25addeab458d677b1584014c8fc214165674a51ec4645d0",
+     "bytes": 67514,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "20.png",
+     "sha256": "d89d2922706b23fedd5185ba56ea19ac3673731c0fd0823ec576b5c3e413dc54",
+     "bytes": 72103,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "21.png",
+     "sha256": "50ad3b2d69fd173db0c95ced41bc3a8ff1fdc03c5a05ed47ce578cac7c527292",
+     "bytes": 62611,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "22.png",
+     "sha256": "0cb80a1c2d000b91e74fcac0c757bbea14cccc9ab94c118a308f0e6cc81a6925",
+     "bytes": 72025,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "23.png",
+     "sha256": "a1e12d9a6ae160b33be7e4fd66712bff6285a50f9f55675af66793965cb3bb77",
+     "bytes": 71562,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "24.png",
+     "sha256": "7ac27834909544ecc64800c90a70ce30221b3f41197c49d13429d6d0d61eb57c",
+     "bytes": 66940,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "25.png",
+     "sha256": "4c6e462394f04fe89ce6aa6e680e9618afd6d35e6a372e1ff98f1fba814787c3",
+     "bytes": 123054,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "26.png",
+     "sha256": "71e02548a356246d386f4829d5b26753344d6b9a8429e961daf399f330716387",
+     "bytes": 128891,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "27.png",
+     "sha256": "4c00a5eb95d2e879d8d6179c87c22ef03a4092cffc1ba62fa9a59f297edfee15",
+     "bytes": 120271,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "28.png",
+     "sha256": "e4efa35992242fe6c0b1032902b352c741da00a1f0e35c72ffa482968ee5ec2e",
+     "bytes": 126815,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "29.png",
+     "sha256": "7aa651eeba2497c5c72e4a1a9a7a03c20a552551c31c37014563f38f1d54f634",
+     "bytes": 119892,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "30.png",
+     "sha256": "4e335da8017c09f4c69ce7d3adbde4c4cdc6a290c2259f8d1e2d3de658b295c4",
+     "bytes": 132537,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    }
+   ]
+  },
+  {
+   "order": 2,
+   "id": "02-reaction",
+   "name": "ری_اکشن",
+   "color": "#ffcc00",
+   "count": 30,
+   "captions": 24,
+   "duos": 6,
+   "preview": {
+    "file": "preview-02-reaction.png",
+    "sha256": "ea11906af40d04fbc2740c1fb680f177010259b020ee0999d7e4b87ad84369a0",
+    "bytes": 928989,
+    "width": 1652,
+    "height": 1479,
+    "colorType": 2
+   },
+   "files": [
+    {
+     "file": "01.png",
+     "sha256": "b9a99665f64667302d57cf1fc7ee8809e2aa57272434113890cec716dea8f339",
+     "bytes": 67536,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "02.png",
+     "sha256": "292ce6e27ed978cca453ee3906f4bba9e1089af04e6ed136896210e3bfd0182b",
+     "bytes": 72343,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "03.png",
+     "sha256": "d117d32bfc4e2a433008770ce0fd3fd78e9c9452bd101bc7a93315714119b39f",
+     "bytes": 66204,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "04.png",
+     "sha256": "bb1fa291df0bc2600ef2c93b9ce84cc7ae0fa540e3e4ca083c9ff2c2f1b1b9fc",
+     "bytes": 81429,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "05.png",
+     "sha256": "ede9c9d0be8c2fa2c168320b2b30514aee10ea59477a001810d37a791de2a388",
+     "bytes": 73163,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "06.png",
+     "sha256": "ea1b376d3e0eb80753599b9c68817df39648d01b432481cf1f9b3982998d8d42",
+     "bytes": 67442,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "07.png",
+     "sha256": "79fd3150631a157d2344552736fcf421d3fe0aaa7f569b63f400d3248133ef71",
+     "bytes": 67079,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "08.png",
+     "sha256": "2785363adc891c7cc7f7ff44e47096b9bac60a4cb2f11ce74713ef6df363fea2",
+     "bytes": 71968,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "09.png",
+     "sha256": "074176d2a84af3de28b1863116bfffd265215b7b86ba527eec41acd2e81de194",
+     "bytes": 68432,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "10.png",
+     "sha256": "009184e7628d6bf3c67c50859233986427350d907b8c0d963f94eef7743c2fd0",
+     "bytes": 81467,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "11.png",
+     "sha256": "d31f6925957dfaada2b48ec88dda6a0c896111908e22c3234cf3fad486a939cc",
+     "bytes": 69975,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "12.png",
+     "sha256": "171202d980571abafe9fb82df0ba1b945c90441b3941f4147d80a89a4b5c433b",
+     "bytes": 72330,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "13.png",
+     "sha256": "e0573acbb99cef517a24b7579b0e7879ebe3dfa6cf176a6328706edfeec481ca",
+     "bytes": 74637,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "14.png",
+     "sha256": "f425758148ea471daced6abd09b59b90286567cc62b7cb0fdf426f364eced3f4",
+     "bytes": 64122,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "15.png",
+     "sha256": "80d063f3b21ce796cf93c64d2ad3369e1f55192d312743db19c188b6c6490405",
+     "bytes": 79509,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "16.png",
+     "sha256": "60c1e71c3ea1125d293b55fbb5a710a54b66ef5ac06c24373af5a6e6904525ec",
+     "bytes": 70122,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "17.png",
+     "sha256": "4e729d0457c7f8887ff9b8e9c56615e266085bb187136aa0da44a14d5092c2c4",
+     "bytes": 85446,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "18.png",
+     "sha256": "c0f80cb47d8c714edfd4a385cb736c7ecefe84d76a69be91832fbbe375ce6970",
+     "bytes": 62130,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "19.png",
+     "sha256": "12b8274a8175dabf51ca82e04d166937b7bd0b8ba65b3bb11d0aa6f83b347c1d",
+     "bytes": 68071,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "20.png",
+     "sha256": "d1ec02df6d8eec4bc501593693e71b074ac358238b1e3ab78263f71c6ee5f941",
+     "bytes": 83566,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "21.png",
+     "sha256": "9d6677c1d996d8d00dc5fe3e11afe1e71820d1008a7b968f5c5b47f37d3ee218",
+     "bytes": 61965,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "22.png",
+     "sha256": "d34615aed0141d1a7dfc5c7dca59b24cf990d8fb165bd2bcd66378cf0accc376",
+     "bytes": 65694,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "23.png",
+     "sha256": "e63305fc0c2493bc0b47d3fcc88abc242097091eb9420f8e0db18663f50b883c",
+     "bytes": 66806,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "24.png",
+     "sha256": "f49bcc53198a44f5bbc8d41c22d3882e95a183f9052ab3290db56717772f9cd7",
+     "bytes": 70701,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "25.png",
+     "sha256": "6f80a42a968874cc7317139919d8fd4ca9f697d56605717c3809e133c6eaa1be",
+     "bytes": 126441,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "26.png",
+     "sha256": "73d7a9630f7f823821424feb04f3caef8a83c7521f92c218514005c0e60de5cb",
+     "bytes": 139707,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "27.png",
+     "sha256": "e507e391fdc8b5253095f7c68c4a7f5614fd9e91d42c2c44bb5548f834533ab9",
+     "bytes": 135240,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "28.png",
+     "sha256": "fd6e3968ad717993de290d7fdcae9566b41757c29e49ee1e574f73041327a120",
+     "bytes": 127254,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "29.png",
+     "sha256": "9f9a03639ace87bbad385595486e64a311e218cf06db4b865ee50908010263f9",
+     "bytes": 136559,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "30.png",
+     "sha256": "781e6ee67ae67326cb004e52891accb3a856b590d17d84c442b3bfd0a0302176",
+     "bytes": 127771,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    }
+   ]
+  },
+  {
+   "order": 3,
+   "id": "03-offroad",
+   "name": "آفرود و رانندگی",
+   "color": "#e8402a",
+   "count": 30,
+   "captions": 24,
+   "duos": 6,
+   "preview": {
+    "file": "preview-03-offroad.png",
+    "sha256": "dbd269029a6fc335fb40722567b0922f6ea20988afb1b0624335fe3e01a6d98b",
+    "bytes": 981441,
+    "width": 1652,
+    "height": 1479,
+    "colorType": 2
+   },
+   "files": [
+    {
+     "file": "01.png",
+     "sha256": "416cec6d87366d998938518a9421e2e6513adf9d4174402cfe96294fb0703821",
+     "bytes": 89566,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "02.png",
+     "sha256": "fcaca594e89b8d06eefacda5f966b27b42d2112d6b37818e8e9b55e5cb76cd8b",
+     "bytes": 79798,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "03.png",
+     "sha256": "1825d3c283134c08499ca338a62c223a5d664f707207424fb10790ed2ff3c2ca",
+     "bytes": 69652,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "04.png",
+     "sha256": "3f812ecae8893095c4b58780600a3548675b59b2f56ae78a04833c3be9f43000",
+     "bytes": 73760,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "05.png",
+     "sha256": "68fbee37eb730527d28abb17fe9f240e4851523c93c6193f5c70e00d266d17e8",
+     "bytes": 87736,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "06.png",
+     "sha256": "a4b1fea91e33c3736b73ef5074e14a9f88dc0331f04166fb29a141b77ab8d8d7",
+     "bytes": 76406,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "07.png",
+     "sha256": "c3c77ed4e46d5d708ecb3e29f53607707013d8bb9342d09bc6e851f00a2c3b92",
+     "bytes": 91697,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "08.png",
+     "sha256": "d761b8a246ae075c4c3bd1269c1d66c97f30f1f8c5b58d7de5d7146b019973cc",
+     "bytes": 72573,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "09.png",
+     "sha256": "7d6f11431f11514c9f81109bb4ce9247cab654a83672834fd35179f6c40101ed",
+     "bytes": 76481,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "10.png",
+     "sha256": "10fe5e2bc4345061bf84ece66ca446907f99546b4a0b564d2020a03ab06f3dbf",
+     "bytes": 80240,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "11.png",
+     "sha256": "608f4c849476c5175331da623d7f55c11dd21c9f7193a003bace42daa14464e1",
+     "bytes": 88790,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "12.png",
+     "sha256": "be7421b8be7fbfb7600fb1a0c326fcc5e42a4c487ab11d1e6ccfccd3eceea6b1",
+     "bytes": 74169,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "13.png",
+     "sha256": "09c7ef7faaaa35175c496760b16df7812e7a64a1ab48589940d5dcf1c60616a6",
+     "bytes": 76588,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "14.png",
+     "sha256": "7e688129a4b874d4089a5d09a30cce218caa1edb691325c860e73d6ab3f56006",
+     "bytes": 87008,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "15.png",
+     "sha256": "4bbb897b8921f94db65eba5142710b13fe8ffc7488ee725239d313c5f6bfdf8b",
+     "bytes": 76168,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "16.png",
+     "sha256": "acc0a28aba9ed9704dafb44ec413f285c7b064dbde7901f9711c0531ff182305",
+     "bytes": 72152,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "17.png",
+     "sha256": "4b74b2e9f852eeb153e839c0ae3d064079e22be2e1c42e5157226e937240f897",
+     "bytes": 82184,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "18.png",
+     "sha256": "5f1f094718cb1610e7f8feaaac6d9c6c3314ea45c5e0f9ffe8e661cef7c3348a",
+     "bytes": 68228,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "19.png",
+     "sha256": "a85299ead226c954347892b048a1d4f0cffe3c7673fa38dbcfda8c5d87315d07",
+     "bytes": 76646,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "20.png",
+     "sha256": "f9fca5169e833b28bd6c2850dddd605be71eeed69536ae3c6b9cff444809fc7b",
+     "bytes": 90226,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "21.png",
+     "sha256": "725793c419f6eaf40af505fa7029e871798e14e2bd5312c63e16e6cb4b61f172",
+     "bytes": 85964,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "22.png",
+     "sha256": "e2a13f10c5effa04cc59f073d21f8d89aa37290bc31fb9137d577a46d60a6f47",
+     "bytes": 81532,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "23.png",
+     "sha256": "c445ee859932aea00159d8facad1229cec90d8e1752d97579316ce52b466757c",
+     "bytes": 84817,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "24.png",
+     "sha256": "f8e1dbd39ab43b930a1a60bded8f69eb07595bcd9be8d96eec60a3858577c7cf",
+     "bytes": 75708,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "25.png",
+     "sha256": "0133356f83431ab68a3db9629f18d1466d019af73a442889a2078ce15610b65e",
+     "bytes": 126496,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "26.png",
+     "sha256": "a95feeec41d3aa2563938cf5af213a83abe5e9b823f31db6c1d7ecb59981fe65",
+     "bytes": 135447,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "27.png",
+     "sha256": "f558ac3ea1ff28eb32e9539b70939e20657ed94a62cc5c827073c3ed749881fb",
+     "bytes": 131852,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "28.png",
+     "sha256": "ba47f9926e2185cea6e69e19b613d6a191eebb1e63c829835d39287da476312f",
+     "bytes": 125207,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "29.png",
+     "sha256": "3842ccb7d02a9d1f548d29891f9c59db8094e6671d978cc2cdaad27c852f1bf0",
+     "bytes": 131746,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "30.png",
+     "sha256": "5b8763a64e315c3d9ea9ea4d9e63875c9f65aa42ed7eb942eb4e67bcaf4c45ad",
+     "bytes": 144183,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    }
+   ]
+  },
+  {
+   "order": 4,
+   "id": "04-gir-kardim",
+   "name": "گیر و سوتی",
+   "color": "#8b5a2b",
+   "count": 30,
+   "captions": 24,
+   "duos": 6,
+   "preview": {
+    "file": "preview-04-gir-kardim.png",
+    "sha256": "09ad5147437584d566a8b391ed8aecc274ef0d41372bba5fcf150fcb21a2d2b4",
+    "bytes": 864938,
+    "width": 1652,
+    "height": 1479,
+    "colorType": 2
+   },
+   "files": [
+    {
+     "file": "01.png",
+     "sha256": "9208eddca4bcc3296da1aa417e67d49c4a95b4fa04f3adcfcd472f4d24ab0a5e",
+     "bytes": 78502,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "02.png",
+     "sha256": "de02c33674c9ada84e4ea66f501b77465762eb240c6631928c3f7459b581136b",
+     "bytes": 79805,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "03.png",
+     "sha256": "62062a4252d711bead53c6be5fb1cc2530cbc223077816b4551d8516d821883d",
+     "bytes": 70489,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "04.png",
+     "sha256": "ff274ef46fd9fa1c32c9276f3081b92ef8cd65f927b405672acb7b3f634366f1",
+     "bytes": 76578,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "05.png",
+     "sha256": "31ad1d1f842be34f0826cce73f0303721512e1755f57ad6cac91b97628db2530",
+     "bytes": 93274,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "06.png",
+     "sha256": "a3f83e68f9a016666539abc892685b05c902b64871a6970f3696d31308610252",
+     "bytes": 71523,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "07.png",
+     "sha256": "3386bcf9ff9858fafc21bd543b79b25cf6989101287de12b6297cf68fe509569",
+     "bytes": 66209,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "08.png",
+     "sha256": "11221e953afad2b8bfb94825293e9c17510bd74d27b377fe641c6fc4ee5f8bb4",
+     "bytes": 73692,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "09.png",
+     "sha256": "3c847824db1345d9d2dbf8e19eaee3afbbda5091a3ee7767d370305c2e51cdcd",
+     "bytes": 90046,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "10.png",
+     "sha256": "6e3e0e1f0dacabb34dcc3610daa4bb019976730413239eae7db6b0076ea0df97",
+     "bytes": 69524,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "11.png",
+     "sha256": "d6d065d098beef6b5408e4a13c4038e82bb302c3eb4d7971ec4289e4ac3464b2",
+     "bytes": 68751,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "12.png",
+     "sha256": "7f2989d5350e885ac66da45267357c5056cbdfd51e62bf8a9a83a5ba74c3e430",
+     "bytes": 70890,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "13.png",
+     "sha256": "9fbb44e6713f98bc6b45c077b184453f58980423ab6e4c92b89caf92de63c5ad",
+     "bytes": 68274,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "14.png",
+     "sha256": "19156b6985e7afa076e49a4e5a5522a742167dc1e50e15fb669e3cdb19dfcff6",
+     "bytes": 77478,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "15.png",
+     "sha256": "87ef27425f61f20e550d3bbc941b65a4dcc6e2e024ffa9cae099595ca21b34a4",
+     "bytes": 88887,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "16.png",
+     "sha256": "69b7c8150a7ca27121a77140a153222f7dbdea486c6de0e8f6d975b9e4307504",
+     "bytes": 86909,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "17.png",
+     "sha256": "9586df99362529d8746a7e2b9204d3cf30998a256ff97870ff633f26958b3fff",
+     "bytes": 81758,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "18.png",
+     "sha256": "4800e9686ff1e8dc268860e80ac81ed1657fe491683bd81518516de150e62df8",
+     "bytes": 77137,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "19.png",
+     "sha256": "efb5dbc81584db699f5799e7881ba1270aeeb868288a0fb8bc214fcb6863a0fb",
+     "bytes": 67924,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "20.png",
+     "sha256": "de9a8b589f6813e1106a5590220e6117491115605ed6e05e9a7270bf3884d8ac",
+     "bytes": 72440,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "21.png",
+     "sha256": "bb5eb842a7f763fb74c69c62d48f7e4ecc69dc6af020542042d744dda3a1d75e",
+     "bytes": 74871,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "22.png",
+     "sha256": "f9805596417b783563a4a6963a16fbef54a66b015f1239445c3c712531f4aea1",
+     "bytes": 75615,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "23.png",
+     "sha256": "efcd62c8bc12da33efe3b52085f50316635f3857e0da5d40ce29468b5d973ae5",
+     "bytes": 82111,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "24.png",
+     "sha256": "fc2d4fd63ff1359d2a3403e7ec04c798bd61d5237cb863cc2cfd420f336bee0d",
+     "bytes": 66815,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "25.png",
+     "sha256": "5c4133212f3e2d239877d6d2825be9039348bd8fbaee8913a4f6aab9d071b453",
+     "bytes": 129109,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "26.png",
+     "sha256": "c511e8a39fa34f7ea8821b0efee96ff35c2f030c7880f1b3cc1fa9c5e1eba17b",
+     "bytes": 135985,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "27.png",
+     "sha256": "f19e7d0120a801b95bc0079917c581532bda3dc96e14eaaf213ab8055682fdb8",
+     "bytes": 124595,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "28.png",
+     "sha256": "b3b16a911145b78bf04cbbb05312fe35514d731198f6a323c1e54a53f761b619",
+     "bytes": 124065,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "29.png",
+     "sha256": "bca8ac61b16d943181b9e108c22aa2440e92a38d3e263b0d10f0e34c8c177540",
+     "bytes": 128909,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "30.png",
+     "sha256": "d8d7067b8b659cd023e7f0397ccc1e042be35e352f5ce18193a1999d9f750788",
+     "bytes": 136235,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    }
+   ]
+  },
+  {
+   "order": 5,
+   "id": "05-camp-shab",
+   "name": "کمپ و شب",
+   "color": "#3f5bd0",
+   "count": 30,
+   "captions": 24,
+   "duos": 6,
+   "preview": {
+    "file": "preview-05-camp-shab.png",
+    "sha256": "c70a45f9ef3a6d962448020f2a512d73c6b8b7c0e788a315d734b7f2df588d0c",
+    "bytes": 962699,
+    "width": 1652,
+    "height": 1479,
+    "colorType": 2
+   },
+   "files": [
+    {
+     "file": "01.png",
+     "sha256": "6c266b6d03209fdac6abfdb75e46bd287b4a7499a6e50dacb2ff228be75bee24",
+     "bytes": 76788,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "02.png",
+     "sha256": "cd1dd59031fb760142dc457d1c905eaf1c579c2d5a17514be61f1b2ede8c1c79",
+     "bytes": 68582,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "03.png",
+     "sha256": "880640450b015d5b0ae36d0cabaa5691a974e6d0401649f3ec11a2fe457e164b",
+     "bytes": 85628,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "04.png",
+     "sha256": "36956eb43dcf7a61f24b2895e4f74f484b28539201df4e325a8b0b82f0567e38",
+     "bytes": 78750,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "05.png",
+     "sha256": "87c87b55dc8bbb190b69de23b7dce935008aaae7f1b54028fe2c4954d9ae3d93",
+     "bytes": 81014,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "06.png",
+     "sha256": "5243e089cdda8dd5a91c2c9ab97e9c213275c92526bdd193d4593d906939a26b",
+     "bytes": 77247,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "07.png",
+     "sha256": "220288bfb920f91b9e8982dec02577ed79758b2c6a179e83c6476971e596e0f4",
+     "bytes": 72796,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "08.png",
+     "sha256": "9b58150a9d8af27f605d1ae85410fa7f91861cef7f28fa8e074de4c2ea1f1287",
+     "bytes": 88213,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "09.png",
+     "sha256": "feecbbb47ede582a007ef265f0ef806d431d2bd40b31b64825badaff5afe47a0",
+     "bytes": 77717,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "10.png",
+     "sha256": "8b3020363dfbe0d181cc2a1e84c8bb65ef6e3385b0ba2380e96ba95c0cba068a",
+     "bytes": 73861,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "11.png",
+     "sha256": "2c1890636717659f747c76146b5389925e1bd073056809a80851907099843ea6",
+     "bytes": 70243,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "12.png",
+     "sha256": "6ca19d512dee3879195cbd985878452ebf31b1d9b7a32268d6e50b34eb4bcfcb",
+     "bytes": 59438,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "13.png",
+     "sha256": "480df534d0529a86a116cabd11cedb13dfe60af6b354823439a09eb3660a70b4",
+     "bytes": 76457,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "14.png",
+     "sha256": "bb001b2c1bc1e1be90a56d83d8f5487255f11211176f26cc5010742e76048d25",
+     "bytes": 72355,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "15.png",
+     "sha256": "63dc21a1bfb254957b7892e59305c37a700662b4846a554f43fc4c8d90fb4b07",
+     "bytes": 78519,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "16.png",
+     "sha256": "bef0b86599db816ce046e20311990ca26585ef69ffa29d27bfaad9d84e6f68cf",
+     "bytes": 80647,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "17.png",
+     "sha256": "ba98d7e8cc820d7270c38ed7cf169a052afd99977d827e52aedacea9c6d3e9e2",
+     "bytes": 67957,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "18.png",
+     "sha256": "741dc1996a43c672f9e5c54b22ee314f688a9a46efc7a8ebcf53ec38e23d0fff",
+     "bytes": 75775,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "19.png",
+     "sha256": "a24c8ab689147a2a4b1e8dbbed8e2e94aa993695f9d97a8453031d1c02936020",
+     "bytes": 73801,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "20.png",
+     "sha256": "57a52319a2bfc28dab122ab52c73ffa0f6f12dac4f104e8839324ce7ebf81aed",
+     "bytes": 72886,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "21.png",
+     "sha256": "2a015ddc0c6331488e6baf436c66921852e64c5e9995fac578e07d431f3c61f7",
+     "bytes": 78856,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "22.png",
+     "sha256": "d7dab6a3face46155c603f8479fee1142c3c600aafb9892a94e750a3c1c3bdb8",
+     "bytes": 64934,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "23.png",
+     "sha256": "30404c72d9a1ef27e75c0ad13937f29e5a757873d4133fe8e0a06a2a85403bcb",
+     "bytes": 82792,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "24.png",
+     "sha256": "56714d9abae85cb7ee79f42038068afcb3d648887601f6a0dac5a2677d615138",
+     "bytes": 87323,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "25.png",
+     "sha256": "188d3aa2f6d3291ef5a39a739c32e21a84d7edc233e858884f57d7167e3df275",
+     "bytes": 135471,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "26.png",
+     "sha256": "108a1e92c872af1728cf3691c4d449baa6de7caea46952295a94cbe63fcb778b",
+     "bytes": 126091,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "27.png",
+     "sha256": "64db1b43af0ac72ab81e71b7c81ca02ecbfb1f86b1756a37a9f22daa108fc81e",
+     "bytes": 130435,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "28.png",
+     "sha256": "ac5c23e057081e60503fd4a63361a4feedeaa5d0d50a9e0e2405681b65b8e9a0",
+     "bytes": 124674,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "29.png",
+     "sha256": "3608c899f8b8a6c07d5dbac60d4488abd4458ef2eb8d83fe4217845e4f49b99d",
+     "bytes": 125993,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "30.png",
+     "sha256": "8ae9b1d4953b8ae779e83c36b7451073a1a2118077399a8c859f4b1c0f9338b9",
+     "bytes": 125102,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    }
+   ]
+  },
+  {
+   "order": 6,
+   "id": "06-khoraki",
+   "name": "خوراکی و صبحونه",
+   "color": "#f2552c",
+   "count": 30,
+   "captions": 24,
+   "duos": 6,
+   "preview": {
+    "file": "preview-06-khoraki.png",
+    "sha256": "98454ad108689eaf69f9948e9631ef1302edb73f7b85245cef956dd9aae15c85",
+    "bytes": 849109,
+    "width": 1652,
+    "height": 1479,
+    "colorType": 2
+   },
+   "files": [
+    {
+     "file": "01.png",
+     "sha256": "6c4b3a92413a237e52efa586db29b6658a83d0d29806473fc0b103ca53433f9d",
+     "bytes": 72761,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "02.png",
+     "sha256": "7b6ee76d9f4ac965468a894d2b6ff3ad69e5287667aa072e01b567aa43399074",
+     "bytes": 71518,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "03.png",
+     "sha256": "ecdffd4841fd7b6234965bd4ea838ffa2c780792bb2212b44701b37cf5a2f39f",
+     "bytes": 73767,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "04.png",
+     "sha256": "00c743b0ec7b9ee4d3333179a4b9d1b699c2823d1daa397d17744c20970c92a1",
+     "bytes": 66684,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "05.png",
+     "sha256": "bf54ad11d2cda9ab27295109c18d9ac156b229ad1a8116c88e1e2cc08ada2ead",
+     "bytes": 72139,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "06.png",
+     "sha256": "9e5cecdf438f88eb03c33f2f8d3d7ba1fb22f84721028e937c82176cd55d441c",
+     "bytes": 73568,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "07.png",
+     "sha256": "e5d8c5a461fd2c6739360aa18d48cd5f62139d9f77522f4e20e308a4861e9de7",
+     "bytes": 69127,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "08.png",
+     "sha256": "974d9d753b8988a06fe564a34fed32c30a0ab0ffe106ee1f5002fac94a0d1c14",
+     "bytes": 67350,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "09.png",
+     "sha256": "1e6b5eee07f9278c19492bbdb7ecb1e18ab6f51bfead5638435cae9d9ca2324b",
+     "bytes": 67139,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "10.png",
+     "sha256": "7ebd55312b2daa8b87bc53571dd1fc7a9c6ac3a739bb595ca111859991a24891",
+     "bytes": 72877,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "11.png",
+     "sha256": "524124f91306e5c0f7983a76bf2eccbc62b49575caae98dcbdf32051762143b0",
+     "bytes": 79824,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "12.png",
+     "sha256": "252ea5c6704bd354ab0cd4c4cd3dd61c9282f688f5ca7fbc1e94542446e45ecb",
+     "bytes": 80000,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "13.png",
+     "sha256": "acf33a33b8fc84508b2a938fdc4d112b45d03bee31b17ffc435d724a03adf64b",
+     "bytes": 68578,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "14.png",
+     "sha256": "309acb01fc5e30ae58a6483397e574f277328b95ef8124c64ef5a75a47418e51",
+     "bytes": 69939,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "15.png",
+     "sha256": "f99347d56310c4e5ce98d9caaec8037262b9a4bb52dd193d595d224718eac1fc",
+     "bytes": 77015,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "16.png",
+     "sha256": "4dd917dfb31dba2716c24881fae1d3327627e8b423f0a823243e607786075095",
+     "bytes": 78700,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "17.png",
+     "sha256": "86681c5913e6e5ceeb18409b15144d8df5708b9e4265ec706413cd1d6d16fc5b",
+     "bytes": 69332,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "18.png",
+     "sha256": "f6dfa7e9a03b68e39f5e5fe620670ba39735d4a89d58ffc7b98f5305873a971a",
+     "bytes": 75716,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "19.png",
+     "sha256": "5049f1906556fef3b4a2df4233ce2fa38abc953e1ea86389705c885554313b5c",
+     "bytes": 82130,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "20.png",
+     "sha256": "f123bfe2f57ed76a23b0b10b45230f161a7ac99591caae47c0868c1aea8c9c01",
+     "bytes": 71736,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "21.png",
+     "sha256": "5251982f9513b7a09a05cba252e59ad0aebe5857ce052df9a864243a73f9e3b8",
+     "bytes": 84066,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "22.png",
+     "sha256": "6325ee48fe0d769cc5fd9f51507fb65da04cb23f1fa8e37617bcc7d42a9e891c",
+     "bytes": 68735,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "23.png",
+     "sha256": "b883cee72709c839477618413f6616f23c19d3b37cac1acddc6a19218e29fb5b",
+     "bytes": 76095,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "24.png",
+     "sha256": "669372e85a58cdc056e607da0ea950152065551f67b0b2a118f8e0e6fe22de6f",
+     "bytes": 65845,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "25.png",
+     "sha256": "c5d538e70a9a4813518d795eaadd6f602dae61887629436e494a71f61b123348",
+     "bytes": 133777,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "26.png",
+     "sha256": "582273d23852cf64e2e2268bcdb255d810b5629bf0eb4de7011d767c8078f1c3",
+     "bytes": 126367,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "27.png",
+     "sha256": "bf2ce8801135250ed140a8ea36ec00c39e2c7a4b9de9734781e66d4034fcd9e9",
+     "bytes": 130531,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "28.png",
+     "sha256": "a24fcc6497397357cdc0fd60193622893dba3c0dd04f684933811948b209ae30",
+     "bytes": 120682,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "29.png",
+     "sha256": "0063a5af4699e38d2c7fe3ace70ef9f19b119e9fbfb3e8213e636cc67f23c758",
+     "bytes": 128851,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "30.png",
+     "sha256": "92e814fafc40176c64b9d613de7f1abc5124790e501e2e1a762330ce59a089b7",
+     "bytes": 139267,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    }
+   ]
+  },
+  {
+   "order": 7,
+   "id": "07-refaghat",
+   "name": "رفاقت و تیم",
+   "color": "#18a058",
+   "count": 30,
+   "captions": 24,
+   "duos": 6,
+   "preview": {
+    "file": "preview-07-refaghat.png",
+    "sha256": "f06adaf5c988e604ba86174d1ef25dbdc0eb3515117717d8f3dd8a58e52806a5",
+    "bytes": 819777,
+    "width": 1652,
+    "height": 1479,
+    "colorType": 2
+   },
+   "files": [
+    {
+     "file": "01.png",
+     "sha256": "cb8836b948ac9a283bf593dbdcdfd850df98e6e83f26f371fd0ca79336c403d7",
+     "bytes": 77804,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "02.png",
+     "sha256": "e6513f7ec257ba6f526adc341a08798e4ecbfb6907e84ada9cb2e6875615549a",
+     "bytes": 78701,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "03.png",
+     "sha256": "a8b22d084d602a2e97af2a8d3b41e7fa0ea68d73f218662968dc22121f916a6a",
+     "bytes": 70348,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "04.png",
+     "sha256": "7a83954563351e16c9548d9c380e961f126463c82794d9984e54add3e92f38fb",
+     "bytes": 72574,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "05.png",
+     "sha256": "c58f4e24f6526802569ce7b8270178586827c1ed2b3258e599b06b5607db5dfa",
+     "bytes": 72460,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "06.png",
+     "sha256": "5b5b279cf1d296497efb08043df245829ee519ec733c765e68de1f8d6f731d34",
+     "bytes": 70893,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "07.png",
+     "sha256": "b6a7999ed0d57105028b3fc2932a59142f05fb6cc556a77b1be1d83f6c3aece4",
+     "bytes": 73287,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "08.png",
+     "sha256": "76ffb1352472490402a7a8833fbfae5b88b705c4a8fccd48b3e938014fc427fa",
+     "bytes": 69919,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "09.png",
+     "sha256": "5ea25499ebffbf761a53e21fac28e697d268226c679bdfc17d2be65a70c42c94",
+     "bytes": 76838,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "10.png",
+     "sha256": "352bf011d865c684e4e7d28b19a3a25729c000c02168f9d686483340ae3feec6",
+     "bytes": 78271,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "11.png",
+     "sha256": "1ea1439728f233f7d6a55143571005e0bd170b96e7bb8d08ebfac5fe0e38970d",
+     "bytes": 73045,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "12.png",
+     "sha256": "deafda04e1844465d18402949cd53a0cc1d919b4ec07bc2a0c867151a6731107",
+     "bytes": 69463,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "13.png",
+     "sha256": "d526523f47a7700c74a35646e9c0460e4849ddd4750a889edbf7f88b1b1b3bc0",
+     "bytes": 71533,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "14.png",
+     "sha256": "2e9f62aac97cfb9dcbadd4761b69e590fdeea022462ff359d970b6c5be4b9252",
+     "bytes": 72811,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "15.png",
+     "sha256": "010eb053da84f0de8c51a7bac5f4e3dba21e6a308ec4e70a3f2cde03703a1bba",
+     "bytes": 73692,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "16.png",
+     "sha256": "89a4f7485a95b300a1600d07971ceef11f21928c1a06bcf0a19e43e358fbfd64",
+     "bytes": 77490,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "17.png",
+     "sha256": "9a2e35b69e3e3caf2b77b1f7c7a34679b0f4d17450f7cb305ebf74df2c9ecf56",
+     "bytes": 77302,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "18.png",
+     "sha256": "2238456a4f2a50825608e25de1023aebae3a7fe23a2ebb796f2b4aef4bf40f7a",
+     "bytes": 75461,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "19.png",
+     "sha256": "b3f66408acbe01bb0fe224da022f808828a27f9ee4f1fd6d2e7cb3e6e52b393a",
+     "bytes": 68445,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "20.png",
+     "sha256": "8736211d65fe870129544c2ba296c022c6930e8af6db3736ed23316bff44209e",
+     "bytes": 70393,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "21.png",
+     "sha256": "df3422e2da70494a3dc4a6182f1b4a1f30f7565b559a8e19761305705ff850bb",
+     "bytes": 66871,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "22.png",
+     "sha256": "7423e7ba020b6522b0cbacc9290f8d1d622fe3c87c40bab11d8bd8d13f7c3d7a",
+     "bytes": 61736,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "23.png",
+     "sha256": "98c0c2fa05136835b04ba36ea133380b67d3bbf89dc96b12498a89ac19f8cee0",
+     "bytes": 70773,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "24.png",
+     "sha256": "dcfc41c9fdd382902cc931514e785ce0190f54654c3ca8ebce15c3d6ba0a06e3",
+     "bytes": 80421,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "25.png",
+     "sha256": "0bbb5c4c803ed298287ec72d31b0242ff953e48e9ed70b2108227e1851ae7dd3",
+     "bytes": 121028,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "26.png",
+     "sha256": "2500062045c5263c026b5f674a963f8a78fab4f0e7a993dd4042959ea36efd04",
+     "bytes": 116467,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "27.png",
+     "sha256": "41c5a964177958733a9509b408d8711538ff1cbadfcf8d9023c5a48bcacc7c24",
+     "bytes": 119841,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "28.png",
+     "sha256": "742e3618afb3c87c004dc5ba86158519e68b19fbc92d234046993533fc983256",
+     "bytes": 124189,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "29.png",
+     "sha256": "8bc1617ac37b470edcd30f443decfd564bdc32e7af353a19d69e36f9d04afc36",
+     "bytes": 132206,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "30.png",
+     "sha256": "6da2b3424980e66ff5191d34e4d0716bd257990b20e72f8acce52182fb164730",
+     "bytes": 113998,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    }
+   ]
+  },
+  {
+   "order": 8,
+   "id": "08-taarof",
+   "name": "تعارف و تشکر",
+   "color": "#c2357a",
+   "count": 30,
+   "captions": 24,
+   "duos": 6,
+   "preview": {
+    "file": "preview-08-taarof.png",
+    "sha256": "e6b46eda74aa1eaef73dae612855a994939548a6037895c16f05cfb76527b2af",
+    "bytes": 877510,
+    "width": 1652,
+    "height": 1479,
+    "colorType": 2
+   },
+   "files": [
+    {
+     "file": "01.png",
+     "sha256": "bed03c638db6083f8843862c094435cbbc8ccab906bbc5bbe7c29138003e5d68",
+     "bytes": 63885,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "02.png",
+     "sha256": "37fd0d802a54fb2cf0d782fb093f2e9a664b542bb3fc77b121c0a8e5aa3a06aa",
+     "bytes": 75387,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "03.png",
+     "sha256": "94fdad14c3c124a5db4b919cf0630664d3e23628f919cf7164d5d44f5d078864",
+     "bytes": 71760,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "04.png",
+     "sha256": "1f9edb185965d11ad267e99af040de497e7bcf1b77b1de396627a4d5c4e6c35f",
+     "bytes": 63940,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "05.png",
+     "sha256": "8f547745d8c010e1b228c81e3ef8a9023fdb6bc88f48a3c92173f969ad434666",
+     "bytes": 69370,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "06.png",
+     "sha256": "f26d8225aa6ee1009ab1ba98e7ec5f4b6b5f06fc47b2f9a265219275271a1214",
+     "bytes": 79656,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "07.png",
+     "sha256": "907b972c6ee38cd4169638432b5018eebd48de07a8dffa264d0155652c0d3182",
+     "bytes": 71317,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "08.png",
+     "sha256": "1865e0cdeaac24a05acc3cda8ad86efa584016c16aacf73cb3faed91b10e0b6b",
+     "bytes": 66061,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "09.png",
+     "sha256": "36e1d08f0d4c039ff095561640dd58f29180dd5e7c5872f1874add127cafa460",
+     "bytes": 66207,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "10.png",
+     "sha256": "6e9661a475caf158144a7e1c5920ba7ba0b0719d6c3f2c52f8fe79dfc4f4a824",
+     "bytes": 75213,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "11.png",
+     "sha256": "c9e32560cc1b652540730916a0bc79a36e9b1d22f4693757f08a6ff5bb74e4a1",
+     "bytes": 67459,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "12.png",
+     "sha256": "5c67e94d25cb23e5a7e48444bbf0d5223532dbf34b041a529e790ad0347be3a3",
+     "bytes": 60717,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "13.png",
+     "sha256": "37a33e880a5e41ca1e09d9e722fcd0d5257029dc649d84ecaa07fe6f2e79d84b",
+     "bytes": 73664,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "14.png",
+     "sha256": "0d0523d8259bcfc35346633944db833f6363e0aaea96e38f936eec315ba1d681",
+     "bytes": 72884,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "15.png",
+     "sha256": "9ddb59fe85430b01aef2538e6c97c1f210d3fe787a10a82f53c39ec45238a342",
+     "bytes": 68791,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "16.png",
+     "sha256": "11fe2004cca733e1e98c91f81ce3a2048b9af6e163c51f1369dd672a23500794",
+     "bytes": 68469,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "17.png",
+     "sha256": "51d7be29d0662a3a6d89482251dbfb527fcd61ea5a7424cc0662ea1ac67e5900",
+     "bytes": 67820,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "18.png",
+     "sha256": "1c2c274753880024a8b77f4a479cfdc352ed423f4f429502da86f4ad6a03d081",
+     "bytes": 74592,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "19.png",
+     "sha256": "4d4deacc7447e5d7c65ea1721b9c06782af8b4808f5879e7b64dca7005daf288",
+     "bytes": 72448,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "20.png",
+     "sha256": "4d78701162c96e0076a58685da0f96e32d3f6263b27cc8e4a9741afac2bb75f7",
+     "bytes": 72565,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "21.png",
+     "sha256": "c589944c07d1b49580e0f5b5152f2ef368b92d9786b24a6fc7c5f6c26fbe5089",
+     "bytes": 70797,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "22.png",
+     "sha256": "6f61e96da7c3917761bff17038018958dd76066423a24d9ba9a022f0666c5cc5",
+     "bytes": 73757,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "23.png",
+     "sha256": "82f6b25d682a2bfe6653669759fe6756f692b20b0b228f6ae2d69b876fd0800f",
+     "bytes": 68813,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "24.png",
+     "sha256": "650feaf3ee9fd30a758575de7ea9957c4827a3264a40c66aff1fd2c89164370c",
+     "bytes": 66709,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "25.png",
+     "sha256": "f4ca432ec73562f037090409314d18d8af38f5c197a5d834c7b4994e337e1bad",
+     "bytes": 118268,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "26.png",
+     "sha256": "b50b259703dd6970969fd8f482246e1b36f2f1640273aaead0382cccdc0f5abb",
+     "bytes": 133361,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "27.png",
+     "sha256": "55e92d89442b650c7696d1e8b24831f8c832126172b862d685c53b07bdd93e6f",
+     "bytes": 133685,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "28.png",
+     "sha256": "0f617f717cb5c7dbc8de22f4b2fddf698ef289d67f769a129204b17d026bdb80",
+     "bytes": 137219,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "29.png",
+     "sha256": "9f144aa07ecdf3c19235cc7ddf59749e4d12c1b5bef272deb428da6f98f9a2c6",
+     "bytes": 121871,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "30.png",
+     "sha256": "1580ed1dc105ba02c27f5d96441c1a0ef62d90960e1e9195551fd2f0c4a92e34",
+     "bytes": 113586,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    }
+   ]
+  },
+  {
+   "order": 9,
+   "id": "09-gharar",
+   "name": "قرار و وعده",
+   "color": "#00a0c8",
+   "count": 30,
+   "captions": 24,
+   "duos": 6,
+   "preview": {
+    "file": "preview-09-gharar.png",
+    "sha256": "d5d327972fad7d0953c5e1e6b58e8d75b7882901804f968b62590a4d628b8674",
+    "bytes": 876909,
+    "width": 1652,
+    "height": 1479,
+    "colorType": 2
+   },
+   "files": [
+    {
+     "file": "01.png",
+     "sha256": "8a4164daae127aa41242b857b13087355cd4b77aa40251cd98305dce3da5c100",
+     "bytes": 86856,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "02.png",
+     "sha256": "cc4f440d9cdac741e295ea92186f8e2ea44bf48a3c4f23bba1c7fc8e6979a882",
+     "bytes": 67716,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "03.png",
+     "sha256": "291173265c4bdee05ab25c99f2de88d18db8035acb8a100222ecf1b7ee92e416",
+     "bytes": 86476,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "04.png",
+     "sha256": "94539837350daa4f4152170fa3107e37e2f2febe22b4a7699c203f3ea07f9956",
+     "bytes": 84605,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "05.png",
+     "sha256": "153f03f08249285dbfa4b0204c80f13a56b3c04e143e7b78c4215bbffc3f726d",
+     "bytes": 73126,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "06.png",
+     "sha256": "1ac1e9f6937af732b72b93540b1a4bdd5ac80b60df4ea0d529e4eef438fef63f",
+     "bytes": 69718,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "07.png",
+     "sha256": "8f10ff0f1243210ac62341b08fd09da8c6e36db53c471f93a2d1ada1a9dd606e",
+     "bytes": 70580,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "08.png",
+     "sha256": "a15404b8222a6bf62bbe1c9db242c64db22ed72a2d93e7ec7b0499508968700f",
+     "bytes": 66394,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "09.png",
+     "sha256": "946217b46232fba0b33ef09861f0922863f1ae5df116ce04513105f796f5d684",
+     "bytes": 67768,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "10.png",
+     "sha256": "f1ad83374b5410a8b761a1a46f23fc722399a9077485209128079ee634fb20cf",
+     "bytes": 86696,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "11.png",
+     "sha256": "9043a11b48bf3fd0930b2d43ae53418ab009345d8801781b1161584e93ad97f8",
+     "bytes": 68104,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "12.png",
+     "sha256": "246548d0f70ffa396a592c24411094ad6ca081f138fc1a01dca5d3129adb6f3e",
+     "bytes": 74492,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "13.png",
+     "sha256": "b487cfc280fff1b17cecd058b569f54ec641e175b651b29566aa4dde80b8cad4",
+     "bytes": 70825,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "14.png",
+     "sha256": "f3058c78351b222a5086d22b6b10acde5c2bdf6c60ebecc00ad943eb2c06538e",
+     "bytes": 76164,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "15.png",
+     "sha256": "3235ed4c69ba30f8d3e9c6dd228c1895a5164ca87489aee3d437b590445ab66a",
+     "bytes": 81087,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "16.png",
+     "sha256": "58cf4f4d0fccef5126c899961b2a9d1aa12cfc38f70795ecac321e24bfe9a502",
+     "bytes": 65900,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "17.png",
+     "sha256": "460ad50a73b968eabc8e85f47b17e165a5de787132a7b94321d4212f3bafb8d2",
+     "bytes": 79551,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "18.png",
+     "sha256": "6472aca1f68dc84cda953956a1fc87c90c00439754b99471b68609f21ee46b6a",
+     "bytes": 74845,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "19.png",
+     "sha256": "a9a9475e44fc9c9d6c02c8b6a6fc29feffc2dad8030a84e39f3286471a4baa16",
+     "bytes": 67985,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "20.png",
+     "sha256": "27dea594bb25314f00329a0540566aca44d01b57870c3ff00ebbdba57c545a84",
+     "bytes": 69103,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "21.png",
+     "sha256": "d80777074913be62f10570b40bb6e0a21e092cefeb500b7db885247a03ac1f9d",
+     "bytes": 67490,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "22.png",
+     "sha256": "db3807ed13dcd68bcc4a4a42e65f0c99bb839f6d9132dd1f303813e6864167cc",
+     "bytes": 66995,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "23.png",
+     "sha256": "0e4cb409d24ab94b98df75f1d9ac81807b2ca51b90c365fbfed8773652fc2833",
+     "bytes": 71488,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "24.png",
+     "sha256": "a971e48694d379ea692e57ba0a310799ee99db3d30c507a74eb5150159ecf79c",
+     "bytes": 77206,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "25.png",
+     "sha256": "602f35ab57f0e22a486644b7a6e26d3cf26b826389a73cc46996364a1eb78ec1",
+     "bytes": 129902,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "26.png",
+     "sha256": "afa4089c1bcd61643ec4917c75d3acd2f709e1ba8c266eedc399746247c6e7bf",
+     "bytes": 121076,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "27.png",
+     "sha256": "093462823a03b7f60f98d4bf5081e2d7bfd4cde049715bfec61f85db5c293785",
+     "bytes": 126268,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "28.png",
+     "sha256": "92d497dae76a28119bd0c0cde03b17c8c687c89014352f0e795f247a63c6784f",
+     "bytes": 131266,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "29.png",
+     "sha256": "885e07af7fdb9feedebefe9acabab14fc45d7a5c99316f7a379b5ce9a19b806f",
+     "bytes": 129284,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "30.png",
+     "sha256": "cd59a6d2aa846c9c83a0edb44203778da887bae44a483024f305b9dcad136867",
+     "bytes": 134332,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    }
+   ]
+  },
+  {
+   "order": 10,
+   "id": "10-khastegi",
+   "name": "خستگی و غر",
+   "color": "#6c4bd8",
+   "count": 30,
+   "captions": 24,
+   "duos": 6,
+   "preview": {
+    "file": "preview-10-khastegi.png",
+    "sha256": "c301118e9ba916dca9095f8f05883b8cc1f124ad812bc9c7e2b74d30dacfd7aa",
+    "bytes": 814117,
+    "width": 1652,
+    "height": 1479,
+    "colorType": 2
+   },
+   "files": [
+    {
+     "file": "01.png",
+     "sha256": "c20c2060145f0bbe21fd006822dd08028c5ea9921bf235c8c2fd02fb6f8a0a99",
+     "bytes": 70569,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "02.png",
+     "sha256": "243a4f15868c0be8ec394eb11101e6aaf431cfd11f6246cd9b23535bd86da237",
+     "bytes": 74735,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "03.png",
+     "sha256": "74f8ef4edc0f5d915b5b1f7e3fc4faec717ee16ae543616ae1ec19bf2ea55536",
+     "bytes": 67474,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "04.png",
+     "sha256": "31521c26ce1e98e2bf1f237bf89c432e703f5ad88398e66661c2a37f11342515",
+     "bytes": 67353,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "05.png",
+     "sha256": "098af361220ed1dd2ac745b215e70ee73958e23f959c46045b7ab160912c313e",
+     "bytes": 62612,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "06.png",
+     "sha256": "21b571ec71d0150d4f19be82c621bc76ad577f5dbcaad11df52dddb70a93ed98",
+     "bytes": 67316,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "07.png",
+     "sha256": "9532c1ae260155f403b9577489802d4cc0833916e68f4e57a18495df9bc7bb88",
+     "bytes": 66880,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "08.png",
+     "sha256": "cf35aaa54668ea43c51694c4c5544d15fc8cff6295e31fdeffd9f4cd4440acf3",
+     "bytes": 69188,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "09.png",
+     "sha256": "8d0d59885a71178d39c19b4ad3fa0777dd4c09d3818e6d468090a8fc66ea9b2f",
+     "bytes": 70435,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "10.png",
+     "sha256": "51299b6d3a463d982af3624c27cdf5bf1b6584548ffa38369d2314e081d06e07",
+     "bytes": 73210,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "11.png",
+     "sha256": "9912cf0ef0c11100b7a5799db643767ea08f3c0139410c91e9591b9f68afc1db",
+     "bytes": 72964,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "12.png",
+     "sha256": "395661b0fbda92647031746ba21b713ae66871b2a1c9ba6d3f331ee9a6017110",
+     "bytes": 61890,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "13.png",
+     "sha256": "0698d6ccf662b5f08bb02cd8fbaf5d70d3806915f3b0f0161c3888a10bf905a1",
+     "bytes": 69875,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "14.png",
+     "sha256": "f4211e86b29f3f4f038b46c98c7841150a59e2b8b371140188b3224a57a3c931",
+     "bytes": 69184,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "15.png",
+     "sha256": "9b4e87d29f6e4ca39e7a76f586c9afec452efe00d3e2d5347a2b92d768304541",
+     "bytes": 69821,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "16.png",
+     "sha256": "864ebfb5cabb324fdc4c5091d13d7e9b39e4335dab1e2303d2834df94fa90e4a",
+     "bytes": 66387,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "17.png",
+     "sha256": "1f5894ace4315d22e12ae55e1b7bb41193fb23eecf3d72d1035bb132ddc264d6",
+     "bytes": 76317,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "18.png",
+     "sha256": "8e141769eefcf6f1014cc57e96003e08c6639a7ebaa07df1183e0e006c09acfb",
+     "bytes": 75733,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "19.png",
+     "sha256": "5595ca03c133741e1cfc388c8760e66e278f4405b213d962ef97b22fb07b7f88",
+     "bytes": 77361,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "20.png",
+     "sha256": "256a214ca378767ac040bed4dc094412bdeff887c599b802efe21c8e295ebdb5",
+     "bytes": 66644,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "21.png",
+     "sha256": "69439698fe04e03bb84a54668c67011735b6cb3e829333cc6742d3e56b69ef9f",
+     "bytes": 74075,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "22.png",
+     "sha256": "2d1ef22e1d157e52aa9fc3ad25b4678218a4d4614267069c2fd9ce094533098c",
+     "bytes": 67612,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "23.png",
+     "sha256": "2c7687496ec378f34ac7af5079e7a1badc6c572f27ab4bf56ac8e578e4ff9915",
+     "bytes": 68246,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "24.png",
+     "sha256": "610f838786dac110b10fd7f8b9a1145b2ab33ddd34c4f566753ed5253f183c9b",
+     "bytes": 87907,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "25.png",
+     "sha256": "54bcb006e3ae8ad6935bd0c9d0a87a56d22ce93645ee80f99903934efd9e0f13",
+     "bytes": 114099,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "26.png",
+     "sha256": "bec7ebf3a1a8965a124ab01712f636a063b270fad5ab3725dc504c8db164c6b4",
+     "bytes": 129510,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "27.png",
+     "sha256": "24fe3c902bf912b29d01a79f73b8359eb8777226348e56509cab36cdeda85f31",
+     "bytes": 122884,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "28.png",
+     "sha256": "91dd12026bb26b66c011525f63d775a8521ea1ff1702fac30c8c3a067af5b6e9",
+     "bytes": 124362,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "29.png",
+     "sha256": "599b8c7832a2af45cad8d8913bf780fb41a55b686c69dfe282c3a5e6fac47575",
+     "bytes": 121738,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "30.png",
+     "sha256": "15e848f2ab7eff58c53a25ae31073f7ccb334dd1770c5f42ff0fdffc2ec300e0",
+     "bytes": 134912,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    }
+   ]
+  },
+  {
+   "order": 11,
+   "id": "11-mobarak",
+   "name": "تبریک و مناسبت",
+   "color": "#e0a100",
+   "count": 30,
+   "captions": 24,
+   "duos": 6,
+   "preview": {
+    "file": "preview-11-mobarak.png",
+    "sha256": "4083ec894ec9d6897c554327ac541096a8b05605e31a21ae6ad5005ca62198d8",
+    "bytes": 903296,
+    "width": 1652,
+    "height": 1479,
+    "colorType": 2
+   },
+   "files": [
+    {
+     "file": "01.png",
+     "sha256": "90d244f286430078885fbc356ea2bb3ce8e76a5d0382ce41f3d8b530b7ea7fcb",
+     "bytes": 73685,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "02.png",
+     "sha256": "3a7e54d9097ce4320f31b844fddfbddc2079233a006efb613eca9dcad23b883a",
+     "bytes": 70313,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "03.png",
+     "sha256": "3a64d85a1a01d372d820691f460fdb1af68d2040ac46a23d967ccc50dd3cc77d",
+     "bytes": 72501,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "04.png",
+     "sha256": "72fd67d41731f60fd2a0278470285cb86b6a9f7fd2934c9499613da9f38028c3",
+     "bytes": 78101,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "05.png",
+     "sha256": "63f715b1e35aeac64f569f0b4159e348861349fb19da69cc164c6d413ab3f47c",
+     "bytes": 63432,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "06.png",
+     "sha256": "bac2bc7ac3b6d657330be2eff91c080a900e3e103c717181ac76f30327d3a2f4",
+     "bytes": 91484,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "07.png",
+     "sha256": "5d7369254bd9655d1500d0ee6964fab0a506e0c8d0999bf3224edc562901c5dc",
+     "bytes": 73213,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "08.png",
+     "sha256": "8412ab16db31bd73af158ff2078cf224e23f13f7e3119618e17415cd83d92584",
+     "bytes": 89811,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "09.png",
+     "sha256": "96a7077686434422301b8c918717e59ded6b8e9d51dcf026791f29bd0b8ca0aa",
+     "bytes": 84571,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "10.png",
+     "sha256": "f516774a94e6e1a5d25582957461c5bf6ea124a2a6839f849da949b4ce906096",
+     "bytes": 75927,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "11.png",
+     "sha256": "332b9217663bf1526ead0ce79312f4a70135430793b9fc081058b44c544648c0",
+     "bytes": 75199,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "12.png",
+     "sha256": "826cce4dc9830c1e1474aa3302e02cf50cdbb6bbd652fcd1a0fd05ac9bc49651",
+     "bytes": 67931,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "13.png",
+     "sha256": "85df31736d1edc7d80a8819a6bc430034988da803c64ee81db093c74efb1f1c7",
+     "bytes": 66952,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "14.png",
+     "sha256": "56e0d58957041497d1c9695a222a4571c4333f6ea77427b976a2e31084dc786d",
+     "bytes": 85553,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "15.png",
+     "sha256": "41b8ddf124d7b362c4a90ec83375b60478663958451a2f3922a37e99ee60eeed",
+     "bytes": 83657,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "16.png",
+     "sha256": "e93acae27d7d1c7d2f10b5f6dadefba31cdb154603b450d58b2e64507e11e13c",
+     "bytes": 77028,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "17.png",
+     "sha256": "57df6680e71981473671475ccb46840d95a3b943885920bb808cfdb3a116b9ab",
+     "bytes": 62695,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "18.png",
+     "sha256": "8d90cd348e64401b6ca330bbda0f44401da1b20444dbfbf6428a746a9d7cc663",
+     "bytes": 75223,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "19.png",
+     "sha256": "5b703ee937409d01d1cf44f067a28c4719e3cd5c1680d546a7e40ac1de6cfb80",
+     "bytes": 64399,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "20.png",
+     "sha256": "fe544135733be7b6beed52d38dcb8878898f15452d1513bd6e139b8c67467e57",
+     "bytes": 75012,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "21.png",
+     "sha256": "99936504ab2741f4e10fba6709827dc7d53c91fb876a2f286c15bbd89286b1bf",
+     "bytes": 71220,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "22.png",
+     "sha256": "3abb4db578e190d4756218803443befaaf87841aed394356d5ca355bb7d8bac9",
+     "bytes": 71096,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "23.png",
+     "sha256": "8b6e1fd8c28ea64f1a87e2906993d4130e7f72f45f5fa1997b813644ecce020c",
+     "bytes": 68360,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "24.png",
+     "sha256": "30d328e901a880aeb1b3df389863292d85bd0b00de0d9eda5eb895a169d197fa",
+     "bytes": 69957,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "25.png",
+     "sha256": "f86c37172dc4e2d5a49ae8fbd473d01a6f7c8c4ad0307b7dfab47c240af31c50",
+     "bytes": 134469,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "26.png",
+     "sha256": "542aea987ae85712a4a78d68da277dd4c1dea2c2ae2bde25c2106ea049fcd36b",
+     "bytes": 125340,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "27.png",
+     "sha256": "f0af1dbc712c0d2def0847b54a740cd634bbe6f45083918607f490b2b5d3311e",
+     "bytes": 133055,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "28.png",
+     "sha256": "54658b984b4dba832e423bf7cae68a16c01c5f3e0fbda43cfaa6207b89e0bcb4",
+     "bytes": 134775,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "29.png",
+     "sha256": "efa6825624941bdf91c4900a3833515adcdb4a2e306279ece4033a272c3306c7",
+     "bytes": 124767,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "30.png",
+     "sha256": "5230bace6b7391be45b69b3b281f907b52808d4bc32c487ddba02d67e1c895ed",
+     "bytes": 122728,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    }
+   ]
+  },
+  {
+   "order": 12,
+   "id": "12-rezerv",
+   "name": "رزرو و تور",
+   "color": "#ff3d71",
+   "count": 30,
+   "captions": 24,
+   "duos": 6,
+   "preview": {
+    "file": "preview-12-rezerv.png",
+    "sha256": "ff93294d3470621800f7e076ae67927389a8cddf9724fe60a54a0a227cafee4a",
+    "bytes": 918421,
+    "width": 1652,
+    "height": 1479,
+    "colorType": 2
+   },
+   "files": [
+    {
+     "file": "01.png",
+     "sha256": "f060256701a90fe3cac00bb86ca99e14b0148cf604e36afa719591cb10ba82ea",
+     "bytes": 71453,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "02.png",
+     "sha256": "dc6f90eaa40a9febb12c0b9f8e263519b133a4feee96053f0440076e27750e0c",
+     "bytes": 92874,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "03.png",
+     "sha256": "00b4816242147dd3d589b98a9834c085a06e18d3369dfc50a23dca46f61b6b7e",
+     "bytes": 82525,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "04.png",
+     "sha256": "d2c454ca80c1a1626543a27acaab5a3364b571fd7309a5f4a73f603169a73129",
+     "bytes": 69403,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "05.png",
+     "sha256": "cc60f92cbe7f9b90006034437d9fd4a4f4dded0e3e7f57e2a832924dfb8d666c",
+     "bytes": 87936,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "06.png",
+     "sha256": "c6af0064bcb69fcd9add51e44ebb21cf192476bd50834d3eeaa50c260d4a3851",
+     "bytes": 68835,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "07.png",
+     "sha256": "a24d4c583376620844981fff9047ce537826911454be2b26decdddfdec19b538",
+     "bytes": 64125,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "08.png",
+     "sha256": "d8d1c4462e1e1254388f76c730f2bbe3ebf0f4e004d0d43b8f8786d7a7fd0bb9",
+     "bytes": 72651,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "09.png",
+     "sha256": "6ad707029bf9cb4006131357d824fb0f440f35ca496a80440d316bfeacb7ce46",
+     "bytes": 75195,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "10.png",
+     "sha256": "fd7137d1153bb54c08e7ea27f979a01a1ff9f31b70c2097ad909f69bc7494f56",
+     "bytes": 81633,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "11.png",
+     "sha256": "84a0ded3f7fc120eaa7e317fadd2fb554799551f2d1f2efba1a5daf362353bf0",
+     "bytes": 68616,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "12.png",
+     "sha256": "8316060edc1081de58427489b68a07c33c73a414054fc7d73dd5ab19fb0d16b2",
+     "bytes": 75977,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "13.png",
+     "sha256": "5f88257122f9d5ae090191f74bad206cc30a9115e2680a83e0e0953a7175c010",
+     "bytes": 76748,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "14.png",
+     "sha256": "99de14b7ec5636053196e68047b5926a7824cb662499b5a23c8eabfd960c9888",
+     "bytes": 75435,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "15.png",
+     "sha256": "a296fdda81841c88b16cd1081526faf2f55940c683e2f20e6091468c652481b2",
+     "bytes": 69012,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "16.png",
+     "sha256": "ea2871e9146da2d561a051d57019726e833a018589a505580ea28664f0ab1637",
+     "bytes": 89691,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "17.png",
+     "sha256": "126921b541c5d70e75d04dd5d885beedad3daa01038978d2b413a2e21559e489",
+     "bytes": 68559,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "18.png",
+     "sha256": "ca50e0c84a51bbbaac35379b43f3ae044b92664e2ca7e9985ee5cb35edb45ac2",
+     "bytes": 69197,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "19.png",
+     "sha256": "3ebeb8b2ca5f5b5a6703a82875a91917e0d2083400db24fb1833e260d4bdc12e",
+     "bytes": 72631,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "20.png",
+     "sha256": "ec7e97203663159a0711fbb10b5680fd0a61f63a7c9fcd85651a363cf72d0e45",
+     "bytes": 76501,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "21.png",
+     "sha256": "f56ed367116bf8c530b118387939c3003d7ee41577af9cdbd4954b315be26153",
+     "bytes": 84078,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "22.png",
+     "sha256": "54bf19a4e0ecd8bd52a95a8e7b4f2986304995c459f80b4bf8ee43cac92bcddb",
+     "bytes": 77836,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "23.png",
+     "sha256": "7f1bec75b162267ed3c3b6b9e070a5ca1fe9bbf080f9e1f0072a9d0a58d74a6a",
+     "bytes": 70246,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "24.png",
+     "sha256": "c591040afb7aa3d3dc222e6c21387ee4fcd5e8fb9ffb8f313b020512783214e2",
+     "bytes": 158630,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "25.png",
+     "sha256": "68f9c092ceb0951dbef1cb37ebe13c9cc5b5b750dba55c379d2e15e53f0ee403",
+     "bytes": 121185,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "26.png",
+     "sha256": "1eaaa9a4946438e6ca8532b30a647065c73c1ad6ab6b9219dc3e056a8fe36bc6",
+     "bytes": 121245,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "27.png",
+     "sha256": "533a91dee0410859e54ed5550135be3b11eb94fb67a4015287eb6caaee4b04b8",
+     "bytes": 127073,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "28.png",
+     "sha256": "a09cdeca0d42c0b24c35d2ff6d05e0c589e9edadf27a25e2ee2d0571ae5699cc",
+     "bytes": 132589,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "29.png",
+     "sha256": "72d4bc037e08193d96b9f56529489d11b531f9614535a3ecc7f5076e518c96fd",
+     "bytes": 128202,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    },
+    {
+     "file": "30.png",
+     "sha256": "e30257ed21e657e5192971b9a0c34dcb3071aedabd5af1ae8f86427a45f94661",
+     "bytes": 123294,
+     "width": 512,
+     "height": 512,
+     "colorType": 6
+    }
+   ]
+  }
+ ]
+}

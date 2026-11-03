@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react';
 import { Eye, EyeOff, LogIn } from 'lucide-react';
 import { login, useStore } from '../core/store';
+import { forgetInitialPasswords, peekInitialPasswords } from '../core/initial-passwords';
 import { ROLES } from '../core/permissions';
 import { toast } from '../components/ui';
 import { LocalOnlyNotice } from '../components/LocalOnlyNotice';
@@ -12,6 +13,7 @@ export function Login({ onSuccess }: { onSuccess: (password: string, mustChange:
   const [show, setShow] = useState(false);
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
+  const [issued, setIssued] = useState(peekInitialPasswords);
 
   const submit = (e: FormEvent) => {
     e.preventDefault();
@@ -38,6 +40,25 @@ export function Login({ onSuccess }: { onSuccess: (password: string, mustChange:
         <div className="login-hero-en">{db.settings.storeNameEn}</div>
         <div className="login-rule" aria-hidden />
         <LocalOnlyNotice />
+        {issued && (
+          <section className="card card-pad" data-testid="initial-passwords" style={{ marginBottom: 12 }}>
+            <strong>رمزهای ورود اول — همین حالا یادداشت کنید</strong>
+            <p className="muted">این رمزها فقط همین یک بار نمایش داده می‌شوند و در ورود اول باید عوض شوند.</p>
+            <table style={{ width: "100%", tableLayout: "fixed" }}>
+              <tbody>
+                {db.users.filter((u) => issued[u.id]).map((u) => (
+                  <tr key={u.id}>
+                    <td>{u.name} · {ROLES[u.role].title}</td>
+                    <td dir="ltr" className="latin" data-initial-password={u.id}>{issued[u.id]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <button type="button" className="btn btn-ghost" onClick={() => { forgetInitialPasswords(); setIssued(null); }}>
+              یادداشت کردم، پنهان شود
+            </button>
+          </section>
+        )}
         <form onSubmit={submit}>
           <h1 className="sr-only">ورود به سامانهٔ {db.settings.storeName}</h1>
           <div style={{ position: 'relative' }}>

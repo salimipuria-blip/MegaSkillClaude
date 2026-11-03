@@ -31,6 +31,10 @@ try {
     writeFileSync(join(OUT, 's', `${id}.md`), `# ${s.name}\n${body}`);
     written++;
   });
+  // Named lookup for the curated Pro skills (coding mode picks them by name, not by search).
+  const names = {};
+  skills.forEach((s, id) => { if (/^pro-/.test(s.name)) names[s.name] = id; });
+  writeFileSync(join(OUT, 'names.json'), JSON.stringify(names));
   buildPostings(skills).forEach((shard, n) => writeFileSync(join(OUT, 't', `${n}.json`), JSON.stringify(shard)));
   const active = skills.filter((s) => !s.incomplete).length;
   writeFileSync(join(OUT, 'meta.json'), JSON.stringify({ total: active, packaged: skills.length, excludedIncomplete: skills.length - active }));

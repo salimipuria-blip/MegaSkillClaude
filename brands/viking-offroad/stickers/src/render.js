@@ -8,6 +8,11 @@ const vm = require('vm');
 const ctx = {}; vm.createContext(ctx);
 vm.runInContext(fs.readFileSync(path.join(dir, 'packs.js'), 'utf8') + ';this.PACKS=PACKS;', ctx);
 const PACKS = ctx.PACKS;
+// A pack is PACKS[i].items (single-character captions) followed by DUOS[i] (two-character scenes);
+// stickers.html composes them in exactly this order. The count is derived, never hard-coded, so
+// editing duos.js can no longer silently desync the rendered files from the source.
+vm.runInContext(fs.readFileSync(path.join(dir, 'duos.js'), 'utf8') + ';this.DUOS=DUOS;', ctx);
+const DUOS = ctx.DUOS;
 (async () => {
   const browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
   const page = await browser.newPage({ viewport: { width: 512, height: 512 } });
@@ -20,7 +25,9 @@ const PACKS = ctx.PACKS;
     const out = path.join(out0, `pack-${pack.id}`);
     fs.mkdirSync(out, { recursive: true });
     if (!sheetsOnly) {
-      for (let i = 0; i < pack.items.length + 6; i++) {
+      const total = pack.items.length + (Array.isArray(DUOS[pi]) ? DUOS[pi].length : 0);
+      if (total === 0) { console.error(`ERR pack ${pack.id} has no items`); continue; }
+      for (let i = 0; i < total; i++) {
         await page.goto(`file://${dir}/stickers.html#one,${pi},${i}`);
         await page.reload();
         await page.waitForSelector('body[data-ready="1"]');

@@ -22,11 +22,16 @@ layer, with Supabase auth (magic link) and a serverless Buffer sync endpoint.
 | Key | Purpose |
 |---|---|
 | `BUFFER_API_KEY` | Buffer access token used server-side by `api/buffer-sync.js`. **Secret.** Regenerate from the Buffer dashboard if the sync is disconnected. |
+| `LITHOS_OWNER_EMAILS` | Comma-separated owner emails allowed to call `POST /api/buffer-sync`. **Required** — unset means every call gets `403` (fail closed). |
 
 The Supabase URL and **publishable (anon)** key are embedded in the client on purpose — they are
 public by design; data access is protected by Supabase Row Level Security, not by hiding the key.
 
 ## Supabase schema (tables the frontend reads)
+A reconstructed, tested copy of the whole contract (tables, `lithos_owners`, owner-only RLS, both
+RPCs) lives in `supabase/schema.sql`; `bash supabase/tests/run.sh` checks it on a throwaway
+PostgreSQL (`DATABASE_URL=…`). Diff it against a live project before applying it there.
+
 - `lithos_insight_snapshots` — `followers, reach, impressions, saves, shares, comments, engagement_rate, avg_watch_time_seconds, metadata (jsonb, e.g. {followers_supported}), captured_at`
 - `lithos_kpi_snapshots` — `qualified_leads, conversion_rate, hot_leads, overdue_followups, revenue, response_sla_minutes, captured_at`
 - `lithos_leads` — lead rows (CRM)
@@ -42,5 +47,5 @@ Requires a Supabase project with the tables above (RLS enabled) and a Buffer tok
 
 ## Deploy (Vercel)
 1. Import this repo as a Vercel project (framework **Vite**, root = repo root, output `dist`).
-2. Add env var `BUFFER_API_KEY`.
+2. Add env vars `BUFFER_API_KEY` and `LITHOS_OWNER_EMAILS`.
 3. Deploy.

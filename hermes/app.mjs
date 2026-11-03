@@ -56,7 +56,9 @@ export const APP_HTML = String.raw`<!doctype html>
     --safe-b: env(safe-area-inset-bottom, 0px); --safe-t: env(safe-area-inset-top, 0px);
   }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  html, body { height: 100%; margin: 0; overflow: hidden; }
+  /* The page never scrolls: in Telegram's in-app browser and iOS Safari a drag on the page used to
+     pan/rubber-band it and report a transient viewport, which left the map shrunk and off-centre. */
+  html, body { position: fixed; inset: 0; width: 100%; height: 100%; margin: 0; overflow: hidden; overscroll-behavior: none; touch-action: manipulation; }
   body { background: #07111f; color: var(--text); font-family: var(--sans); -webkit-font-smoothing: antialiased; -webkit-user-select: none; user-select: none; }
   .fa { font-family: var(--fa); direction: rtl; }
   button { font: inherit; color: inherit; }
@@ -67,7 +69,9 @@ export const APP_HTML = String.raw`<!doctype html>
   #cast { position: fixed; inset: 0; pointer-events: none; mix-blend-mode: screen; transition: opacity .6s; opacity: .18; }
 
   /* The world: 680x480 design units, scaled into the free area by layout() */
-  #world { position: fixed; left: 0; top: 0; width: 680px; height: 480px; transform-origin: 0 0; transition: transform .8s cubic-bezier(.2,.9,.2,1); }
+  #stage { position: fixed; inset: 0; overflow: hidden; contain: layout paint; }
+  #cam { position: absolute; inset: 0; transform-origin: var(--ox, 50%) var(--oy, 50%); will-change: transform; }
+  #world { position: absolute; left: 0; top: 0; width: 680px; height: 480px; transform-origin: 0 0; transition: transform .8s cubic-bezier(.2,.9,.2,1); }
   body.instant #world { transition: none; }
   #web { position: absolute; inset: 0; width: 680px; height: 480px; overflow: visible; }
   .lbl { font-family: var(--sans); fill: var(--label); paint-order: stroke; stroke: rgba(7,17,31,.6); stroke-width: 3px; }
@@ -79,6 +83,23 @@ export const APP_HTML = String.raw`<!doctype html>
   .node.locked .ring { stroke: #ff6b6b; stroke-dasharray: 2 2.4; opacity: .7; }
   .node.locked .lbl { fill: #8a5560; }
   .node.locked .pulse { animation: none; }
+  .node.down .ring { stroke: var(--grey); stroke-dasharray: 2 2.4; opacity: .5; }
+  .node.down .lbl { fill: var(--dorm); }
+  .node.down .pulse { animation: none; }
+  .spoke.down { opacity: .18 !important; }
+  /* Live link to the backend (GET /api/pulse) */
+  .live { display: inline-flex; align-items: center; gap: 6px; margin-left: 12px; font: 9.5px/1 var(--mono); letter-spacing: .22em; color: rgba(52,211,153,.85); }
+  .live i { width: 6px; height: 6px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 8px var(--ok); }
+  .live.beat i { animation: beat .9s ease-out; }
+  .live.off { color: rgba(255,107,107,.85); } .live.off i { background: #ff6b6b; box-shadow: 0 0 8px #ff6b6b; }
+  .live.wait { color: var(--dorm); } .live.wait i { background: var(--dorm); box-shadow: none; }
+  @keyframes beat { 0% { transform: scale(1); } 30% { transform: scale(2.1); } 100% { transform: scale(1); } }
+  /* Opening shot: letterbox bars + a veil that lifts while the camera pushes in */
+  .bars { position: fixed; left: 0; right: 0; height: 0; background: #02060c; z-index: 90; pointer-events: none; }
+  .bars.t { top: 0; } .bars.b { bottom: 0; }
+  #veil { position: fixed; inset: 0; z-index: 89; pointer-events: none; opacity: 0; background: radial-gradient(circle at 50% 46%, rgba(2,6,12,.2), #02060c 70%); }
+  .shock { position: absolute; left: 50%; top: 50%; width: 100%; height: 100%; border-radius: 50%; border: 2px solid rgba(255,208,128,.9);
+    box-shadow: 0 0 40px rgba(245,166,35,.6), inset 0 0 30px rgba(245,166,35,.4); transform: translate(-50%,-50%) scale(.2); opacity: 0; pointer-events: none; }
   .halo { opacity: 0; transition: opacity .4s; }
   .node:focus { outline: none; } .node:focus-visible .ring { stroke: #fff; }
   .spoke { transition: stroke .4s, opacity .4s, stroke-width .4s; }
@@ -170,7 +191,16 @@ export const APP_HTML = String.raw`<!doctype html>
   .md pre code { background: none; color: #d6e6ee; padding: 0; font: 13px/1.6 var(--mono); }
   .md a { color: var(--cyan); text-decoration: none; border-bottom: 1px solid rgba(0,229,255,.35); }
   .md b { color: #fff; }
-  .pic { display: block; position: relative; margin: 2px 0 10px; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,.14); white-space: normal; }
+  .picbox { margin: 2px 0 10px; }
+  .pic { display: block; position: relative; margin: 0; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,.14); white-space: normal; }
+  .pick { display: block; width: 100%; margin: 6px 0 0; padding: 7px 10px; border-radius: 9px; background: rgba(245,166,35,.14); border: 1px solid rgba(245,166,35,.45); color: var(--gold-hi); font: 600 12.5px/1.5 var(--fa); cursor: pointer; }
+  .pick:active { background: rgba(245,166,35,.24); }
+  .pick[disabled] { opacity: .6; cursor: default; }
+  canvas.pic { width: 100%; height: auto; }
+  .pick.small { display: inline-block; width: auto; margin: 6px 4px 0 0; padding: 6px 11px; background: rgba(0,229,255,.10); border-color: rgba(0,229,255,.4); color: var(--cyan-hi); }
+  .pick.small.on { background: rgba(0,229,255,.26); border-color: var(--cyan); }
+  .lhint { margin-top: 6px; color: var(--minor); font: 500 11.5px/1.7 var(--fa); }
+  .lrow { display: flex; flex-wrap: wrap; align-items: center; }
   .pic img { display: block; width: 100%; height: auto; }
   .pic span { position: absolute; left: 8px; bottom: 8px; padding: 3px 9px; border-radius: 99px; background: rgba(0,0,0,.65); color: var(--gold); font: 600 11px/1.6 ui-monospace, monospace; letter-spacing: .08em; }
   .caret { display: inline-block; width: 7px; height: 1.05em; vertical-align: -3px; margin-right: 2px; background: var(--gold); box-shadow: 0 0 10px var(--gold); animation: blink .7s infinite; }
@@ -217,8 +247,8 @@ export const APP_HTML = String.raw`<!doctype html>
   /* Session log */
   #log { position: fixed; z-index: 70; top: 0; right: 0; bottom: 0; width: min(460px, 100vw); display: flex; flex-direction: column;
     background: rgba(4,9,20,.94); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); border-left: 1px solid rgba(0,229,255,.14);
-    transform: translateX(105%); transition: transform .5s cubic-bezier(.2,.9,.2,1); -webkit-user-select: text; user-select: text; }
-  #log.show { transform: none; }
+    transform: translateX(105%); visibility: hidden; transition: transform .5s cubic-bezier(.2,.9,.2,1), visibility 0s .5s; -webkit-user-select: text; user-select: text; }
+  #log.show { transform: none; visibility: visible; transition: transform .5s cubic-bezier(.2,.9,.2,1); }
   .lhead { display: flex; align-items: center; gap: 10px; padding: calc(var(--safe-t) + 16px) 18px 14px; border-bottom: 1px solid rgba(0,229,255,.12); }
   .lhead b { font: 600 11px/1 var(--mono); letter-spacing: .3em; color: var(--cyan-hi); }
   .lhead span { font: 10px/1 var(--mono); letter-spacing: .14em; color: var(--dorm); }
@@ -230,6 +260,11 @@ export const APP_HTML = String.raw`<!doctype html>
   .notes .nt button:hover { color: #ff8a8a; }
   .notes div.n { font: 13.5px/1.8 var(--fa); color: rgba(240,237,232,.85); }
   .notes div.n::before { content: "◆ "; color: var(--cyan); font-size: 9px; }
+  .notes div.n.rmrow { display: flex; align-items: baseline; gap: 6px; }
+  .notes div.n.rmrow::before { content: "⏰"; font-size: 10px; }
+  .notes .rtxt { flex: 1; }
+  .notes .rdel { background: none; border: 0; color: var(--dorm); cursor: pointer; font: 12px/1 var(--mono); padding: 2px 4px; }
+  .notes .rdel:hover { color: #ff8a8a; }
   .notes .hint { font: 12px/1.7 var(--fa); color: var(--dorm); }
   .lbody:empty::after { content: "NO MESSAGES YET"; font: 10px/1 var(--mono); letter-spacing: .3em; color: var(--dorm); text-align: center; margin-top: 30vh; }
   .m { font: 15px/1.85 var(--fa); direction: rtl; white-space: pre-wrap; overflow-wrap: anywhere; }
@@ -272,7 +307,7 @@ export const APP_HTML = String.raw`<!doctype html>
 <canvas id="bg" aria-hidden="true"></canvas>
 <div id="cast" aria-hidden="true"></div>
 
-<div id="world">
+<div id="stage"><div id="cam"><div id="world">
   <svg id="web" viewBox="0 0 680 480" aria-label="توانایی‌های هرمس"></svg>
   <div id="orb" role="button" tabindex="0" aria-label="Hermes core">
     <svg viewBox="0 0 400 400" fill="none" aria-hidden="true">
@@ -295,8 +330,10 @@ export const APP_HTML = String.raw`<!doctype html>
       <circle cx="200" cy="200" r="52" stroke="#f5a623" stroke-width="1" stroke-opacity=".12" stroke-dasharray="28 18" class="spin-ccw"/>
     </svg>
     <canvas id="core"></canvas>
+    <div class="shock" id="shock"></div>
   </div>
-</div>
+</div></div></div>
+<div class="bars t" id="barT"></div><div class="bars b" id="barB"></div><div id="veil"></div>
 
 <div class="overview" id="overview">
   <div class="cone"></div>
@@ -311,6 +348,7 @@ export const APP_HTML = String.raw`<!doctype html>
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M21 4 3 11l6 2 2 6 3-4 5 4z"/><path d="m9 13 8-6"/></svg>هرمس در تلگرام</a>
     <button class="tile" id="tNew"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>گفتگوی جدید (قبلی بایگانی می‌شود)</button>
     <button class="tile" id="tLog"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>تاریخچهٔ گفتگو</button>
+    <button class="tile hide" id="tTeam"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/></svg>حساب‌های تیم</button>
     <button class="tile hide" id="tPass"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="8" cy="15" r="4"/><path d="m11 12 9-9M17 6l3 3"/></svg>تغییر رمز</button>
     <button class="tile" id="tForget"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M7 11V8a5 5 0 0 1 10 0v3M5 11h14v10H5z"/></svg>خروج از حساب</button>
   </div>
@@ -417,8 +455,15 @@ export const APP_HTML = String.raw`<!doctype html>
     ['voice', 'Voice', 'skill', 118, 356, true, 'l', 6, 'پیام صوتی', 'online',
       ['ویس تلگرام را می‌فهمد', 'در اپ: دکمهٔ میکروفون، بزن و حرف بزن'], []],
     ['vision', 'Vision', 'skill', 256, 388, true, 't', 5.5, 'دیدن عکس', 'online',
-      ['عکس را تحلیل می‌کند', 'برای عکس کپشن می‌نویسد', 'در اپ: دکمهٔ دوربین کنار پیام'], []],
-    ['remind', 'Reminders', 'soon', 414, 392, true, 't', 5.5, 'یادآور و خلاصهٔ صبح', 'queued',
+      ['عکس را تحلیل می‌کند و توضیح می‌دهد', 'برای عکس کپشن می‌نویسد', 'در اپ: دکمهٔ دوربین کنار پیام'], []],
+    ['photolab', 'Photo Lab', 'core', 150, 418, true, 'l', 6.5, 'ویرایش حرفه‌ای عکس', 'online',
+      ['عکس خودت را بفرست و بگو چه تغییری می‌خواهی؛ قبل از خروج، عکس را یک ریتوشِر بازبینی می‌کند',
+       'متن هم می‌شود: «روی عکس بنویس: …» — با فونت واقعی وزیرمتن می‌نشیند و بالا/وسط/پایین و ذخیره دارد',
+       'همان متن با پیام هم می‌چرخد: «بالاتر ببر»، «سفیدش کن»، «درشت‌ترش کن»، «بدون نوار»، «متن رو عوض کن…»، «متن رو بردار»',
+       'ریتوش پرتره، پس‌زمینهٔ جدید، نورپردازی، گرید سینمایی، بازسازی عکس قدیمی، افزایش کیفیت، حذف شیء، عکس محصول استودیویی',
+       'هویت و چهره دست‌نخورده می‌ماند؛ متن را مدل تصویر نمی‌کشد (فارسی را خراب می‌کند) — فونت واقعی روی عکس می‌نشیند'],
+      ['این عکس رو ریتوش کن', 'این عکس قدیمی رو بازسازی کن', 'بالاتر ببر']],
+    ['remind', 'Reminders', 'skill', 414, 392, true, 't', 5.5, 'یادآور و خلاصهٔ صبح', 'online',
       ['یادآوری سر ساعت در تلگرام', 'هر صبح خلاصهٔ روز'], []],
     ['calendar', 'Calendar', 'soon', 560, 356, true, 'r', 5.5, 'تقویم و رزرو تور', 'planned',
       ['ثبت رزرو تورها', 'یادآوری قبل از حرکت'], []],
@@ -488,9 +533,24 @@ export const APP_HTML = String.raw`<!doctype html>
   Object.values(nodes).forEach((n) => { n.len = n.spoke.getTotalLength(); });
 
   // ── Layout: fit the 680x480 world into the free area between the HUD and the dock ──
-  let scale = 1;
+  // The size comes from the fixed #stage (the real layout viewport), never from a value read
+  // mid-gesture: Telegram's in-app browser and iOS report a shrunken innerWidth/innerHeight while
+  // its sheet is dragged or the toolbar collapses, and no resize event follows. A size that is
+  // obviously transient is skipped and re-measured on the next frame; a watchdog catches the rest.
+  let scale = 1, applied = '', pending = 0;
+  const stageEl = $('stage');
+  function viewport() {
+    const r = stageEl.getBoundingClientRect();
+    const W = Math.round(r.width || document.documentElement.clientWidth || innerWidth);
+    const H = Math.round(r.height || document.documentElement.clientHeight || innerHeight);
+    return { W, H };
+  }
   function layout() {
-    const W = innerWidth, H = innerHeight, narrow = W < 700, short = H < 540;
+    const { W, H } = viewport();
+    if (W < 240 || H < 300) { if (!pending) pending = requestAnimationFrame(() => { pending = 0; layout(); }); return; }
+    const sizeKey = W + 'x' + H, resized = applied && applied.split('|')[0] !== sizeKey;
+    if (resized) body.classList.add('instant');
+    const narrow = W < 700, short = H < 540;
     const dockH = $('dock').offsetHeight;
     const st = $('status'), stH = short ? 0 : narrow ? 92 : 104;
     st.style.display = short ? 'none' : '';
@@ -506,11 +566,32 @@ export const APP_HTML = String.raw`<!doctype html>
     scale = Math.min(aw / (narrow ? 690 : 640), ah / 430, 2.4);
     const cx = W / 2, cy = topY + ah / 2;
     $('world').style.transform = 'translate(' + (cx - AX * scale) + 'px,' + (cy - AY * scale) + 'px) scale(' + scale + ')';
+    $('cam').style.setProperty('--ox', cx + 'px'); $('cam').style.setProperty('--oy', cy + 'px');
+    applied = sizeKey + '|' + scale;
+    if (resized) requestAnimationFrame(() => requestAnimationFrame(() => body.classList.remove('instant')));
     const fs = Math.max(10.5, Math.min(13 * scale, 21)) / scale;
     web.querySelectorAll('.lbl').forEach((t) => { t.style.fontSize = fs + 'px'; });
     $('cast').style.background = 'radial-gradient(circle at 50% ' + (cy / H * 100) + '%, rgba(13,210,255,1) 0%, rgba(13,170,228,.45) ' + (130 * scale) + 'px, rgba(8,17,31,0) ' + (300 * scale) + 'px)';
   }
-  addEventListener('resize', layout);
+  const relayout = () => { if (!pending) pending = requestAnimationFrame(() => { pending = 0; layout(); }); };
+  addEventListener('resize', relayout);
+  addEventListener('orientationchange', relayout);
+  addEventListener('pageshow', relayout);
+  if (window.visualViewport) visualViewport.addEventListener('resize', relayout);
+  new ResizeObserver(relayout).observe(stageEl);
+  setInterval(() => { const { W, H } = viewport(); if (applied.split('|')[0] !== W + 'x' + H) relayout(); }, 1000);
+  // No page drag: a touch move is only allowed inside something that can actually scroll.
+  function scroller(el) {
+    for (; el && el !== body; el = el.parentElement) {
+      if (el.tagName === 'TEXTAREA' || el.tagName === 'INPUT') return true;
+      const o = getComputedStyle(el), y = o.overflowY, x = o.overflowX;
+      if (((y === 'auto' || y === 'scroll') && el.scrollHeight > el.clientHeight + 1) ||
+          ((x === 'auto' || x === 'scroll') && el.scrollWidth > el.clientWidth + 1)) return true;
+    }
+    return false;
+  }
+  document.addEventListener('touchmove', (e) => { if (e.touches.length > 1 || !scroller(e.target)) e.preventDefault(); }, { passive: false });
+  addEventListener('scroll', () => { if (scrollX || scrollY) scrollTo(0, 0); }, { passive: true });
   new ResizeObserver(layout).observe($('dock'));
   new ResizeObserver(layout).observe($('reply'));
   new ResizeObserver(layout).observe($('login'));
@@ -535,7 +616,8 @@ export const APP_HTML = String.raw`<!doctype html>
   function consultFor(text) {
     const t = text.toLowerCase(), ids = ['brain', 'memory'];
     const rules = [['captions', /کپشن|هشتگ|caption/], ['content', /محتوا|پست|ریلز|استوری|اینستا/], ['planner', /برنامه|کار|چک|لیست|امروز|فردا/],
-      ['viking', /وایکینگ|تور|آفرود|مشتری|viking/], ['translate', /ترجمه|انگلیسی|translate/], ['editor', /روان|ویرایش|متن|غلط/],
+      ['viking', /وایکینگ|تور|آفرود|مشتری|viking/], ['translate', /ترجمه|انگلیسی|translate/], ['editor', /روان|متن|غلط|املا|کلمه/],
+      ['photolab', /ریتوش|رتوش|ادیت|ویرایش(?:\s*عکس)?|پس\s*زمینه|بک\s*گراند|بازسازی|کیفیت عکس|وضوح|حذف کن|retouch|upscale|restore|background|edit/],
       ['research', /تحلیل|بازار|رقبا|بررسی|مقایسه|چیست|چرا/], ['search', /خبر|امروز|الان|قیمت|هوا|جدید|آخرین|news|latest/],
       ['vision', /عکس|تصویر|photo|image/]];
     rules.forEach(([id, re]) => { if (re.test(t)) ids.push(id); });
@@ -819,24 +901,152 @@ export const APP_HTML = String.raw`<!doctype html>
     });
   }
 
-  // A generated image with a save link (long-press also works on iPhone).
-  function picture(src) {
+  // A generated image with a save link (long-press also works on iPhone). A variations take also
+  // carries a button that asks the studio to refine that exact version.
+  function picture(src, pick) {
+    const box = document.createElement('div'); box.className = 'picbox';
     const a = document.createElement('a'); a.className = 'pic'; a.href = src; a.download = 'hermes-' + Date.now() + '.jpg';
-    const img = document.createElement('img'); img.src = src; img.alt = 'generated image';
+    const img = document.createElement('img'); img.src = src; img.alt = pick ? 'نسخهٔ ' + pick.take : 'generated image';
     const s = document.createElement('span'); s.textContent = 'SAVE ↓';
     a.append(img, s);
-    return a;
+    box.append(a);
+    if (pick) {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'pick';
+      b.textContent = 'همین را انتخاب کن' + (pick.label ? ' (' + pick.label + ')' : '');
+      b.onclick = () => pickThis(pick.take, b);
+      box.append(b);
+    }
+    return box;
+  }
+
+  // ── The text layer: a real font on a canvas, exactly what the server planned ──
+  // The server sends lines, geometry and style (displayList); this draws them with Vazirmatn, which
+  // shapes Persian properly. The user can move the words up/middle/down and save the PNG.
+  function drawLayerText(g, l, position, W, H) {
+    const scale = W / (l.width || W);
+    const centre = l.positions[position] || l.positions.bottom;
+    const top = centre - ((l.lines.length - 1) * l.lineHeight) / 2;
+    g.save();
+    g.textAlign = l.align || 'center';
+    g.direction = l.direction || 'rtl';
+    g.textBaseline = 'middle';
+    g.font = (l.weight || 600) + ' ' + (l.fontSize * scale) + 'px ' + l.font;
+    if (l.bar) {
+      g.fillStyle = l.barFill;
+      g.fillRect(0, centre - (l.barHeight * scale) / 2, W, l.barHeight * scale);
+    }
+    l.lines.forEach((line, i) => {
+      const y = top + i * l.lineHeight * scale;
+      g.lineWidth = Math.max(1, l.strokeWidth * scale);
+      g.strokeStyle = l.stroke;
+      g.shadowColor = l.shadow.color;
+      g.shadowBlur = l.shadow.blur * scale;
+      g.shadowOffsetY = l.shadow.dy * scale;
+      g.strokeText(line, l.x * scale, y);
+      g.shadowColor = 'transparent';
+      g.fillStyle = l.fill;
+      g.fillText(line, l.x * scale, y);
+    });
+    g.restore();
+  }
+
+  const LAYER_POSITIONS = ['top', 'middle', 'bottom'];
+  const LAYER_LABEL = { top: 'بالا', middle: 'وسط', bottom: 'پایین' };
+
+  // An editable picture: the server's layer is drawn on a canvas, with save + position buttons.
+  function layeredPicture(src, layer) {
+    const box = document.createElement('div'); box.className = 'picbox';
+    const canvas = document.createElement('canvas');
+    canvas.className = 'pic';
+    const title = document.createElement('div'); title.className = 'lhint';
+    title.textContent = '✍️ متن را بگذار روی عکس:';
+    const tune = document.createElement('div'); tune.className = 'lhint';
+    tune.textContent = 'با پیام هم می‌چرخد: «بالاتر ببر» · «کمی پایین‌تر» · «سفیدش کن» · «بدون نوار» · «متن رو بردار»';
+    const note = document.createElement('div'); note.className = 'lhint';
+    const bar = document.createElement('div'); bar.className = 'lrow';
+    const save = document.createElement('a'); save.className = 'pick'; save.textContent = 'ذخیرهٔ عکس با متن ↓';
+    let position = layer.position || 'bottom';
+    const im = new Image();
+    const paint = () => {
+      const W = im.naturalWidth || 1024, H = im.naturalHeight || 1024;
+      canvas.width = W; canvas.height = H;
+      const g = canvas.getContext('2d');
+      g.drawImage(im, 0, 0, W, H);
+      drawLayerText(g, layer, position, W, H);
+      save.href = canvas.toDataURL('image/png');
+      save.download = 'hermes-text-' + Date.now() + '.png';
+      note.textContent = 'متن: «' + layer.text + '» · ' + (LAYER_LABEL[position] || '');
+    };
+    const buttons = LAYER_POSITIONS.map((p) => {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'pick small';
+      b.textContent = LAYER_LABEL[p];
+      b.onclick = () => { position = p; paint(); buttons.forEach((x) => x.classList.remove('on')); b.classList.add('on'); };
+      bar.append(b); return b;
+    });
+    bar.append(save);
+    im.onload = () => { buttons[LAYER_POSITIONS.indexOf(position)]?.classList.add('on'); paint(); };
+    im.onerror = () => { note.textContent = 'این عکس باز نشد.'; };
+    im.src = src;
+    box.append(canvas, title, tune, bar, note);
+    return box;
+  }
+
+  // Ask the studio to continue the chosen take; the refined picture replaces the pick buttons.
+  async function pickThis(take, btn) {
+    if (busy) return;
+    busy = true; btn.disabled = true; btn.textContent = 'در حال دقیق‌تر کردن…';
+    setState('thinking', ['photolab']); eqLevel(true); showReply('thinking');
+    try {
+      const { reply: answer, image } = await api('/api/pick', { take });
+      messages.push({ role: 'assistant', text: answer, image, textLayer });
+      showReply('reply', '', hhmm());
+      setState('speaking');
+      await reveal(answer);
+      if (image) { rbody.prepend(picture(image)); layout(); }
+      replyText = answer;
+    } catch (err) {
+      showReply('error', err.message);
+      btn.disabled = false; btn.textContent = 'همین را انتخاب کن';
+    } finally {
+      busy = false; eqLevel(false);
+    }
   }
   function renderLog() {
     const lb = $('lbody'); lb.innerHTML = '';
     messages.forEach((m) => {
       const d = document.createElement('div'); d.className = 'm ' + (m.role === 'user' ? 'me' : 'bot md');
       if (m.role === 'user') d.textContent = m.text; else d.innerHTML = md(m.text);
-      if (m.image) d.prepend(picture(m.image));
+      if (m.textLayer && m.image) d.prepend(layeredPicture(m.image, m.textLayer));
+      else if (m.images && m.images.length) m.images.slice().reverse().forEach((src) => d.prepend(picture(src)));
+      else if (m.image) d.prepend(picture(m.image));
       lb.append(d);
     });
     $('lcount').textContent = messages.length ? messages.length + ' MSG' : '';
     $('pill').textContent = (innerWidth < 500 ? 'Log' : 'Session log') + (messages.length ? ' · ' + messages.length : '') + ' ↗';
+  }
+  async function renderReminders() {
+    let list = [];
+    try { list = (await api('/api/reminders')).reminders || []; } catch { return; }
+    const box = document.createElement('div'); box.className = 'notes';
+    const head = document.createElement('div'); head.className = 'nt';
+    head.textContent = 'REMINDERS · ' + list.length;
+    box.append(head);
+    list.forEach((r) => {
+      const row = document.createElement('div'); row.className = 'n rmrow';
+      const when = document.createElement('span');
+      when.textContent = new Date(r.due).toLocaleString('fa-IR', { timeZone: 'Asia/Tehran', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+      const txt = document.createElement('span'); txt.className = 'rtxt'; txt.textContent = ' ' + r.text;
+      const del = document.createElement('button'); del.textContent = '✕'; del.className = 'rdel';
+      del.onclick = async () => { try { await api('/api/reminders/delete', { id: r.id }); row.remove(); } catch (err) { alert(err.message); } };
+      row.append(when, txt, del);
+      box.append(row);
+    });
+    if (!list.length) {
+      const h = document.createElement('div'); h.className = 'hint';
+      h.textContent = 'یادآوری بگذار با «یادم بنداز ساعت ۹: ...» — هم در اپ، هم در تلگرام.';
+      box.append(h);
+    }
+    $('lbody').prepend(box);
   }
   async function renderNotes() {
     let notes = [];
@@ -853,7 +1063,7 @@ export const APP_HTML = String.raw`<!doctype html>
     if (!notes.length) { const h = document.createElement('div'); h.className = 'hint'; h.textContent = 'بنویس «یادت باشه ...» تا برای همیشه به خاطر بسپارم.'; box.append(h); }
     $('lbody').prepend(box);
   }
-  const openLog = () => { renderLog(); renderNotes(); $('log').classList.add('show'); const lb = $('lbody'); lb.scrollTop = lb.scrollHeight; };
+  const openLog = () => { renderLog(); renderReminders(); renderNotes(); $('log').classList.add('show'); const lb = $('lbody'); lb.scrollTop = lb.scrollHeight; };
   $('pill').onclick = openLog; $('tLog').onclick = () => { toggleLamp(); openLog(); };
   $('lclose').onclick = () => $('log').classList.remove('show');
 
@@ -878,12 +1088,20 @@ export const APP_HTML = String.raw`<!doctype html>
     setState('thinking', consultFor(text)); eqLevel(true);
     showReply('thinking');
     try {
-      const { reply: answer, image } = await api('/api/chat', photo ? { message: text, image: photo } : { message: text });
+      const { reply: answer, image, images, picks, textLayer } = await api('/api/chat', photo ? { message: text, image: photo } : { message: text });
       messages.push({ role: 'assistant', text: answer, image });
       showReply('reply', '', hhmm());
       setState('speaking');
       await reveal(answer);
-      if (image) { rbody.prepend(picture(image)); layout(); }
+      // A text layer gets the canvas tools (move up/middle/down, save the PNG).
+      if (textLayer && image) { rbody.prepend(layeredPicture(image, textLayer)); layout(); }
+      // An edit sends the best version; a variations turn sends the whole studio set with pick buttons.
+      else if (images && images.length) {
+        const labels = (picks && picks.length) ? picks : images.map((_, i) => 'نسخهٔ ' + (i + 1));
+        const frag = document.createDocumentFragment();
+        images.forEach((src, i) => frag.prepend(picture(src, { take: i + 1, label: labels[i] })));
+        rbody.prepend(frag); layout();
+      } else if (image) { rbody.prepend(picture(image)); layout(); }
       replyText = answer;
     } catch (err) {
       showReply('error', err.message);
@@ -899,7 +1117,7 @@ export const APP_HTML = String.raw`<!doctype html>
   let pendingImage = null;
   function setImage(src) {
     pendingImage = src; $('attach').classList.toggle('on', !!src);
-    input.placeholder = src ? 'عکس آماده است؛ سؤالت را بنویس یا بفرست…' : 'به هرمس بگو…'; resize();
+    input.placeholder = src ? 'عکس آماده است — چه تغییری می‌خواهی؟ (ریتوش، پس‌زمینه، نور، یا «روی عکس بنویس: …»)' : 'به هرمس بگو…'; resize();
   }
   $('attach').onclick = () => { if (pendingImage) setImage(null); else $('file').click(); };
   $('file').onchange = () => {
@@ -950,6 +1168,46 @@ export const APP_HTML = String.raw`<!doctype html>
     catch (err) { showReply('error', err.message); }
   };
   $('tForget').onclick = () => { if (confirm('از حساب خارج شوی؟')) { store.del('hermes-key'); store.del('hermes-session'); location.reload(); } };
+  // Owner only: team accounts (create, disable/enable, new password) — shown in the log panel.
+  async function renderTeam() {
+    let data;
+    try { data = await api('/api/admin/accounts'); } catch (err) { alert(err.message); return; }
+    const box = document.createElement('div'); box.className = 'notes';
+    const head = document.createElement('div'); head.className = 'nt'; head.textContent = 'TEAM · ' + data.accounts.length;
+    const add = document.createElement('button'); add.textContent = '+ NEW';
+    add.onclick = async () => {
+      const username = prompt('نام کاربری (انگلیسی کوچک، مثلاً sara):'); if (!username) return;
+      const name = prompt('نام نمایشی:'); if (!name) return;
+      const role = confirm('مدیر (admin) باشد؟ «Cancel» = عضو عادی') ? 'admin' : 'member';
+      try {
+        const r = (await api('/api/admin/accounts', { username, name, role })).account;
+        prompt('حساب ساخته شد. این رمز فقط یک بار نشان داده می‌شود؛ خصوصی به خودش بده:', r.password);
+        box.remove(); renderTeam();
+      } catch (err) { alert(err.message); }
+    };
+    head.prepend(add); box.append(head);
+    data.accounts.forEach((a) => {
+      const row = document.createElement('div'); row.className = 'n rmrow';
+      const txt = document.createElement('span'); txt.className = 'rtxt';
+      txt.textContent = (a.disabled ? '⛔ ' : '') + a.name + ' · ' + a.username + ' · ' + a.role + (a.locks.length ? ' 🔒' + a.locks.join(',') : '');
+      const reset = document.createElement('button'); reset.textContent = 'رمز'; reset.className = 'rdel';
+      reset.onclick = async () => {
+        if (!confirm('رمز تازه برای ' + a.name + '؟ از همهٔ دستگاه‌ها خارج می‌شود.')) return;
+        try { const r = await api('/api/admin/accounts/reset', { username: a.username }); prompt('رمز جدید (یک بار نشان داده می‌شود):', r.password); }
+        catch (err) { alert(err.message); }
+      };
+      const tog = document.createElement('button'); tog.textContent = a.disabled ? 'فعال' : 'غیرفعال'; tog.className = 'rdel';
+      tog.onclick = async () => {
+        if (!a.disabled && !confirm(a.name + ' غیرفعال شود؟')) return;
+        try { await api('/api/admin/accounts/disable', { username: a.username, disabled: !a.disabled }); box.remove(); renderTeam(); }
+        catch (err) { alert(err.message); }
+      };
+      row.append(txt, reset, tog); box.append(row);
+    });
+    $('lbody').prepend(box);
+  }
+  $('tTeam').onclick = () => { toggleLamp(); renderLog(); renderTeam(); $('log').classList.add('show'); };
+
   $('tPass').onclick = async () => {
     const old = prompt('رمز فعلی:'); if (!old) return;
     const next = prompt('رمز جدید (حداقل ۸ حرف):'); if (!next) return;
@@ -977,15 +1235,80 @@ export const APP_HTML = String.raw`<!doctype html>
       const b = document.createElement('b'); b.textContent = me.role === 'owner' ? 'پوریا' : me.name; w.prepend(b);
       $('tTg').classList.toggle('hide', me.role !== 'owner');
       $('tPass').classList.toggle('hide', me.role === 'owner');
+      $('tTeam').classList.toggle('hide', me.role !== 'owner');
       locks = me.locks || [];
       locks.forEach((id) => { const n = nodes[id]; if (!n) return; n.g.classList.add('locked'); n.label.textContent = n.row[1] + ' 🔒'; });
     } catch {}
   }
 
-  if (!key) body.classList.add('locked'); else loadMe();
+  // ── Opening shot (~2.6s, Web Animations; the UI is usable from the first frame) ──
+  // Letterbox → veil lifts while the camera pushes in → the core ignites with a shockwave →
+  // rings expand → spokes are drawn in a clockwise sweep → each ability flares on as its spoke
+  // arrives → the HUD settles in. Nothing here moves the layout, only transforms and opacity.
+  const EASE = 'cubic-bezier(.16,1,.3,1)', SOFT = 'cubic-bezier(.45,0,.2,1)';
+  function intro() {
+    if (reduced || !document.body.animate) return;
+    const A = (el, kf, o) => el && el.animate(kf, Object.assign({ fill: 'backwards', easing: EASE }, o));
+    const barH = Math.round(viewport().H * .11) + 'px';
+    [$('barT'), $('barB')].forEach((b) => A(b, [{ height: barH }, { height: barH, offset: .55 }, { height: '0px' }], { duration: 2200, easing: SOFT, fill: 'both' }));
+    A($('veil'), [{ opacity: 1 }, { opacity: 0 }], { duration: 1500, delay: 150, easing: SOFT, fill: 'both' });
+    A($('cam'), [{ transform: 'scale(.74)', opacity: 0 }, { transform: 'scale(1)', opacity: 1 }], { duration: 2300 });
+    A($('orb'), [{ transform: 'scale(.35)', opacity: 0 }, { transform: 'scale(1.06)', opacity: 1, offset: .6 }, { transform: 'scale(1)', opacity: 1 }], { duration: 1300, delay: 250 });
+    A($('shock'), [{ transform: 'translate(-50%,-50%) scale(.2)', opacity: 0 }, { transform: 'translate(-50%,-50%) scale(.5)', opacity: .95, offset: .15 }, { transform: 'translate(-50%,-50%) scale(2.4)', opacity: 0 }], { duration: 1400, delay: 620, easing: 'cubic-bezier(.2,.7,.3,1)', fill: 'both' });
+    setTimeout(() => { fx.voice = 1; cs.size = .2; }, 640);
+    gRings.querySelectorAll('circle').forEach((c, i) => {
+      c.style.transformBox = 'view-box'; c.style.transformOrigin = AX + 'px ' + AY + 'px';
+      A(c, [{ transform: 'scale(.4)', opacity: 0 }, { transform: 'scale(1)', opacity: .32 }], { duration: 1500, delay: 700 + i * 140 });
+    });
+    A(gPcb, [{ opacity: 0 }, { opacity: 1 }], { duration: 1600, delay: 1300, easing: SOFT });
+    A(gField, [{ opacity: 0 }, { opacity: 1 }], { duration: 1600, delay: 1500, easing: SOFT });
+    const order = Object.values(nodes).map((n) => ({ n, a: (Math.atan2(n.row[4] - AY, n.row[3] - AX) + Math.PI * 2.5) % (Math.PI * 2) })).sort((p, q) => p.a - q.a);
+    order.forEach(({ n }, i) => {
+      const d = 900 + i * 55;
+      A(n.spoke, [{ strokeDasharray: n.len + ' ' + n.len, strokeDashoffset: n.len }, { strokeDasharray: n.len + ' ' + n.len, strokeDashoffset: 0 }], { duration: 750, delay: d, easing: SOFT });
+      A(n.g, [{ opacity: 0 }, { opacity: 1 }], { duration: 500, delay: d + 560 });
+      const halo = n.g.querySelector('.halo');
+      A(halo, [{ opacity: 0 }, { opacity: .9, offset: .3 }, { opacity: 0 }], { duration: 900, delay: d + 560, easing: 'ease-out', fill: 'none' });
+      n.label.style.transformBox = 'fill-box';
+      A(n.label, [{ transform: 'translateX(' + (n.row[6] === 'l' ? 8 : n.row[6] === 'r' ? -8 : 0) + 'px)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 700, delay: d + 650 });
+    });
+    A($('overview'), [{ transform: 'translateX(-28px)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 1100, delay: 1500 });
+    A($('pill'), [{ transform: 'translateX(28px)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 1100, delay: 1600 });
+    A($('status'), [{ opacity: 0 }, { opacity: 1 }], { duration: 1000, delay: 1750, easing: SOFT });
+    A($('dock'), [{ transform: 'translate(-50%, 46px)', opacity: 0 }, { transform: 'translate(-50%, 0)', opacity: 1 }], { duration: 1100, delay: 1800 });
+  }
+
+  // ── Live link: GET /api/pulse every 20s. Abilities the deploy has not wired go dim; each
+  //    answer is a heartbeat (motes fly out to every live ability) and the round-trip is shown. ──
+  const liveEl = document.createElement('span');
+  liveEl.className = 'live wait'; liveEl.innerHTML = '<i></i><em style="font-style:normal">SYNC</em>';
+  let pulseTimer = 0, down = [];
+  async function beat() {
+    clearTimeout(pulseTimer);
+    if (!key || document.hidden) return;
+    const t0 = performance.now();
+    try {
+      const p = await api('/api/pulse');
+      const ms = Math.round(performance.now() - t0);
+      down = Object.keys(p.abilities || {}).filter((id) => p.abilities[id] === false && nodes[id]);
+      Object.values(nodes).forEach((n) => { const off = down.includes(n.row[0]); n.g.classList.toggle('down', off); n.spoke.classList.toggle('down', off); });
+      liveEl.className = 'live';
+      liveEl.lastChild.textContent = (p.status === 'ok' ? 'LIVE' : 'DEGRADED') + ' · ' + ms + 'ms';
+      void liveEl.offsetWidth; liveEl.classList.add('beat');
+      if (!reduced && body.dataset.state === 'idle') ROSTER.forEach((r) => { if (r[5] && !down.includes(r[0]) && !locks.includes(r[0])) spawnMote(r[0], true); });
+    } catch {
+      liveEl.className = 'live off'; liveEl.lastChild.textContent = 'OFFLINE · RETRY';
+    }
+    pulseTimer = setTimeout(beat, liveEl.classList.contains('off') ? 8000 : 20000);
+  }
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) { relayout(); beat(); } });
+  addEventListener('online', beat);
+
+  if (!key) body.classList.add('locked'); else loadMe().then(() => { $('who').append(liveEl); setTimeout(beat, 2600); });
   layout(); setState('idle');
   raf = requestAnimationFrame(frame);
   requestAnimationFrame(() => requestAnimationFrame(() => body.classList.remove('instant')));
+  intro();
   loadWeather(); setInterval(loadWeather, 1200000);
   if (!key) return;
   (async () => {

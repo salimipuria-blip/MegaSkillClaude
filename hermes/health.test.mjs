@@ -1,8 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { liveness, readiness, fullHealth } from './health.mjs';
+import { readFileSync, existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
+import { liveness, readiness, fullHealth, pulse } from './health.mjs';
 import { CircuitBreaker, retryWithBackoff, isTransientStatus } from './resilience.mjs';
 import { recordRequest, snapshot, prometheusText } from './metrics.mjs';
+
+const here = dirname(fileURLToPath(import.meta.url));
 
 test('liveness never depends on config', () => {
   assert.equal(liveness().status, 'ok');
@@ -51,4 +56,56 @@ test('metrics render as Prometheus text and JSON snapshot', () => {
   const snap = snapshot();
   assert.ok(snap.requests_total >= 2 && snap.errors_total >= 1);
   assert.match(prometheusText(), /hermes_requests_total \d+/);
+});
+
+test('guard: all transitive local .mjs imports from entry/worker are bundled in conversation.test.mjs', () => {
+  const visited = new Set();
+  const queue = ['entry.mjs', 'worker.mjs'];
+  const importRegex = /(?:import|export)\s+(?:(?:(?:\*\s+as\s+\w+)|(?:\{[^}]*\})|(?:\w+))\s+from\s+)?['"](\.\/[^'"]+\.mjs)['"]/g;
+
+  while (queue.length > 0) {
+    const file = queue.shift();
+    if (visited.has(file)) continue;
+    visited.add(file);
+    const fullPath = join(here, file);
+    if (!existsSync(fullPath)) continue;
+    const content = readFileSync(fullPath, 'utf8');
+    let match;
+    while ((match = importRegex.exec(content)) !== null) {
+      const dep = match[1].replace('./', '');
+      if (!visited.has(dep)) {
+        queue.push(dep);
+      }
+    }
+  }
+
+  const conversationTestContent = readFileSync(join(here, 'conversation.test.mjs'), 'utf8');
+  const matchModules = conversationTestContent.match(/workerModuleNames\s*=\s*\[([\s\S]*?)\]/);
+  assert.ok(matchModules, 'workerModuleNames array must exist in conversation.test.mjs');
+  const declaredNames = new Set(
+    matchModules[1]
+      .split(',')
+      .map((s) => s.replace(/['"\s]/g, ''))
+      .filter(Boolean)
+  );
+
+  for (const dep of visited) {
+    const baseName = dep.replace(/\.mjs$/, '');
+    assert.ok(
+      declaredNames.has(baseName),
+      `Transitive dependency "${dep}" is imported by worker but missing from conversation.test.mjs workerModuleNames bundle!`
+    );
+  }
+});
+
+
+test('pulse: abilities light up from wired bindings, values never leak', () => {
+  const env = { GEMINI_API_KEY: 'secret-gem', AI: {}, CONVERSATIONS: {}, MEMORY: {}, TELEGRAM_BOT_TOKEN: 'secret-tg' };
+  const p = pulse(env, 0);
+  assert.equal(p.status, 'ok'); assert.equal(p.brains, 2); assert.equal(p.ts, '1970-01-01T00:00:00.000Z');
+  assert.deepEqual(p.abilities, { brain: true, memory: true, telegram: true, edge: true, app: true, remind: true, calendar: false });
+  assert.equal(JSON.stringify(p).includes('secret'), false);
+  const bare = pulse({});
+  assert.equal(bare.status, 'degraded'); assert.equal(bare.abilities.brain, false); assert.equal(bare.abilities.memory, false);
+  assert.equal(pulse({ GEMINI_API_KEY: '  ' }).brains, 0);
 });

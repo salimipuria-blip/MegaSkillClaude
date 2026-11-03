@@ -1,7 +1,7 @@
 from pathlib import Path
 import re
 
-SRC = Path('supabase/functions/github-llm-verifier/index.ts')
+SRC = Path(__file__).resolve().parents[1] / 'supabase/functions/github-llm-verifier/index.ts'
 
 
 def compact(text: str) -> str:

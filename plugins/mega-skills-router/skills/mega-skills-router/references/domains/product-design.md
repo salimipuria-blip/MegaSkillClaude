@@ -1,6 +1,6 @@
 # product-design
 
-Skills: 144
+Skills: 145
 
 - `academy-checkout-pack` → `references/skills/academy-checkout-pack/INSTRUCTIONS.md`
 - `academy-empty-state-autopilot` → `references/skills/academy-empty-state-autopilot/INSTRUCTIONS.md`
@@ -75,7 +75,7 @@ Skills: 144
 - `itil-expert` → `references/skills/itil-expert/INSTRUCTIONS.md`
 - `journey-map-camper` → `references/skills/journey-map-camper/INSTRUCTIONS.md`
 - `julia-pro` → `references/skills/julia-pro/INSTRUCTIONS.md`
-- `jurisdiction-format` → `references/skills/jurisdiction-format/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `jurisdiction-format` → `references/skills/jurisdiction-format/INSTRUCTIONS.md`
 - `leiloeiro-ia` → `references/skills/leiloeiro-ia/INSTRUCTIONS.md`
 - `logistics-exception-management` → `references/skills/logistics-exception-management/INSTRUCTIONS.md`
 - `loyalty-ui-kit` → `references/skills/loyalty-ui-kit/INSTRUCTIONS.md`
@@ -100,6 +100,7 @@ Skills: 144
 - `playwright-skill` → `references/skills/playwright-skill/INSTRUCTIONS.md`
 - `postmortem` → `references/skills/postmortem/INSTRUCTIONS.md`
 - `pricing-page-ux-kit` → `references/skills/pricing-page-ux-kit/INSTRUCTIONS.md`
+- `pro-ux-design` → `references/skills/pro-ux-design/INSTRUCTIONS.md`
 - `production-scheduling` → `references/skills/production-scheduling/INSTRUCTIONS.md`
 - `promotion-upgrade-requests` → `references/skills/promotion-upgrade-requests/INSTRUCTIONS.md`
 - `prototype-test-plan` → `references/skills/prototype-test-plan/INSTRUCTIONS.md`
@@ -128,7 +129,7 @@ Skills: 144
 - `stepper-progress-kit` → `references/skills/stepper-progress-kit/INSTRUCTIONS.md`
 - `strategic-alignment` → `references/skills/strategic-alignment/INSTRUCTIONS.md`
 - `table-mobile-patterns` → `references/skills/table-mobile-patterns/INSTRUCTIONS.md`
-- `taobao-shop-catalog` → `references/skills/taobao-shop-catalog/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `taobao-shop-catalog` → `references/skills/taobao-shop-catalog/INSTRUCTIONS.md`
 - `toast-alert-patterns` → `references/skills/toast-alert-patterns/INSTRUCTIONS.md`
 - `tour-a11y-monitor` → `references/skills/tour-a11y-monitor/INSTRUCTIONS.md`
 - `tour-empty-state-assistant` → `references/skills/tour-empty-state-assistant/INSTRUCTIONS.md`

@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>مِتاکد · Infinity Mega Skill — ایجنت کدنویسِ خودتکامل</title>
+<meta name="description" content="ایجنت کدنویسِ خودتکامل: هر تغییر با سه نامزد، سه فرضیهٔ شکست، اجرای واقعی تست در سندباکس مرورگر و انتخابِ اندازه‌گیری‌شده. بدون سرور، آمادهٔ Netlify." />
+<meta name="theme-color" content="#050b14" />
+<meta name="color-scheme" content="dark" />
+<link rel="icon" href="./assets/icon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="./assets/icon.svg" />
+<link rel="manifest" href="./manifest.webmanifest" />
+<link rel="preload" href="./assets/fonts/vazirmatn-var.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="./assets/infinity.css" />
+</head>
+<body data-view="chat">
+<a class="skip-link" href="#main">پرش به محتوای اصلی</a>
+
+<canvas id="field" aria-hidden="true"></canvas>
+
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></symbol>
+  <symbol id="i-stop" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="1.5"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="M9 7 4.5 12 9 17M15 7l4.5 5L15 17" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+  <symbol id="i-dna" viewBox="0 0 24 24"><path d="M7 3c0 6 10 12 10 18M17 3c0 6-10 12-10 18M8.5 7h7M8.5 17h7M10 12h4" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+  <symbol id="i-brain" viewBox="0 0 24 24"><path d="M9 4a3 3 0 0 0-3 3 3 3 0 0 0-1 5.8V16a3 3 0 0 0 4 2.8V4zM15 4a3 3 0 0 1 3 3 3 3 0 0 1 1 5.8V16a3 3 0 0 1-4 2.8V4z" fill="none" stroke="currentColor" stroke-width="1.4"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1" stroke="currentColor" stroke-width="1.4"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m16 16 4 4" stroke="currentColor" stroke-width="1.7"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v10m0 0 4-4m-4 4-4-4M5 19h14" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 20V9m0 0 4 4m-4-4-4 4M5 5h14" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8"/></symbol>
+  <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 3 2.5 20h19z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 9v5M12 17h.01" stroke="currentColor" stroke-width="1.8"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M14 3v4h4" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 6h6l2 2h10v11H3z" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.6M20 4v4h-4" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.8"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 10V7a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></symbol>
+</svg>
+
+<header class="topbar" id="topbar">
+  <div class="brand">
+    <div class="orb" id="orb" role="img" aria-label="هستهٔ ایجنت؛ آبی یعنی آماده، طلایی یعنی در حال تکامل">
+      <svg class="rings" viewBox="0 0 120 120" aria-hidden="true">
+        <circle class="ring r1" cx="60" cy="60" r="52" />
+        <circle class="ring r2" cx="60" cy="60" r="44" />
+        <circle class="ring r3" cx="60" cy="60" r="34" />
+        <g class="ticks" id="ticks"></g>
+      </svg>
+      <canvas id="orbCanvas" width="240" height="240" aria-hidden="true"></canvas>
+    </div>
+    <div class="brand-text">
+      <strong>مِتاکد</strong>
+      <span>INFINITY·01 · ایجنت کدنویسِ خودتکامل</span>
+    </div>
+  </div>
+
+  <nav class="tabs" role="tablist" aria-label="نمای اصلی">
+    <button class="tab" role="tab" id="tab-chat" data-view="chat" aria-selected="true" aria-controls="view-chat"><svg><use href="#i-chat"/></svg><span>گفتگو</span><kbd>1</kbd></button>
+    <button class="tab" role="tab" id="tab-workbench" data-view="workbench" aria-selected="false" aria-controls="view-workbench"><svg><use href="#i-code"/></svg><span>کارگاه</span><kbd>2</kbd></button>
+    <button class="tab" role="tab" id="tab-evolve" data-view="evolve" aria-selected="false" aria-controls="view-evolve"><svg><use href="#i-dna"/></svg><span>تکامل</span><kbd>3</kbd></button>
+    <button class="tab" role="tab" id="tab-memory" data-view="memory" aria-selected="false" aria-controls="view-memory"><svg><use href="#i-brain"/></svg><span>حافظه</span><kbd>4</kbd></button>
+    <button class="tab" role="tab" id="tab-settings" data-view="settings" aria-selected="false" aria-controls="view-settings"><svg><use href="#i-gear"/></svg><span>تنظیمات</span><kbd>5</kbd></button>
+  </nav>
+
+  <div class="status">
+    <button class="pill" id="pillBrain" title="مغز فعال">
+      <i class="dot" data-tone="cyan"></i><span id="pillBrainText">Reflex · بدون کلید</span>
+    </button>
+    <div class="meter" id="ctxMeter" title="فشار کانتکست">
+      <svg viewBox="0 0 36 36" aria-hidden="true"><circle class="track" cx="18" cy="18" r="15"/><circle class="fill" id="ctxArc" cx="18" cy="18" r="15"/></svg>
+      <b id="ctxPct">۰٪</b>
+    </div>
+    <button class="icon-btn" id="btnPalette" aria-label="فرمان‌ها (Ctrl+K)"><svg><use href="#i-search"/></svg><kbd>⌘K</kbd></button>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+
+  <!-- ══════════════════════════════ گفتگو ══════════════════════════════ -->
+  <section class="view" id="view-chat" role="tabpanel" aria-labelledby="tab-chat">
+    <div class="chat-grid">
+      <div class="chat-main">
+        <div class="goal-panel panel">
+          <div class="panel-head">
+            <div>
+              <h2>هدف</h2>
+              <p class="sub">سه نامزد · سه فرضیهٔ شکست برای هر نامزد · تست واقعی در سندباکس</p>
+            </div>
+            <div class="mode-switch" role="group" aria-label="حالت اجرا">
+              <button class="seg active" data-mode="triad" title="شورای سه‌گانه: سه نامزد، سنجش، انتخاب">شورا</button>
+              <button class="seg" data-mode="tools" title="حلقهٔ ابزار: خواندن/نوشتن/تست گام‌به‌گام (نیازمند مدل)">ابزار</button>
+            </div>
+          </div>
+          <label class="sr-only" for="goal">هدف را بنویس</label>
+          <textarea id="goal" rows="3" aria-label="هدفِ اجرا" placeholder="هدف را بنویس؛ مثلاً: «تابع palindrome را کامل کن و تست‌ها را سبز کن»"></textarea>
+          <div class="goal-actions">
+            <div class="presets" id="presets">
+              <button class="chip" data-goal="یک تابع جمع با تست بنویس">جمع با تست</button>
+              <button class="chip" data-goal="تابع palindrome را کامل کن">پالیندروم</button>
+              <button class="chip" data-goal="باگ clamp را با کمترین تغییر رفع کن">رفع باگ clamp</button>
+              <button class="chip" data-goal="تابع groupBy را بساز">groupBy</button>
+            </div>
+            <div class="run-group">
+              <button class="btn primary" id="btnRun"><svg><use href="#i-play"/></svg><span>اجرا</span><kbd>⌘↵</kbd></button>
+              <button class="btn ghost" id="btnStop" disabled><svg><use href="#i-stop"/></svg><span>توقف</span></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="transcript panel" id="transcript" aria-live="polite" aria-relevant="additions">
+          <div class="empty-state" id="emptyChat">
+            <div class="empty-orb" aria-hidden="true"><span></span></div>
+            <h3>آمادهٔ کار</h3>
+            <p>بدون کلید هم کار می‌کند: Reflex خانوادهٔ تسک را می‌شناسد، سه نسخه می‌سازد، تست‌ها را در سندباکس اجرا می‌کند و فقط نسخه‌ای را می‌نویسد که از پیش‌بینیِ شکست خودش جان سالم به در برده باشد.</p>
+            <div class="empty-hints">
+              <span><svg><use href="#i-check"/></svg> اجرای واقعی، نه ادعا</span>
+              <span><svg><use href="#i-check"/></svg> بازگشت با یک کلیک</span>
+              <span><svg><use href="#i-check"/></svg> حافظهٔ ماندگار</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="runline panel" id="runline" hidden>
+          <span class="spinner" aria-hidden="true"></span>
+          <b id="runlineText">در حال اجرا…</b>
+          <div class="runline-bar"><i id="runlineBar"></i></div>
+        </div>
+      </div>
+
+      <aside class="inspector" aria-label="بازرس">
+        <section class="panel" id="triadPanel">
+          <div class="panel-head">
+            <div><h2>شورای سه‌گانه</h2><p class="sub" id="triadSub">هنوز نامزدی ساخته نشده</p></div>
+            <span class="badge" id="triadBadge">۳ × ۳</span>
+          </div>
+          <div class="triad-list" id="triadList">
+            <div class="skeleton-card"><i></i><i></i><i></i></div>
+            <div class="skeleton-card"><i></i><i></i><i></i></div>
+            <div class="skeleton-card"><i></i><i></i><i></i></div>
+          </div>
+          <div class="selection-note" id="selectionNote" hidden></div>
+        </section>
+
+        <section class="panel" id="verifyPanel">
+          <div class="panel-head"><div><h2>اجرای واقعی</h2><p class="sub">سندباکس مرورگر · بدون شبکه</p></div><span class="badge" id="verifyBadge">—</span></div>
+          <div class="console" id="console" role="log" aria-live="polite"><span class="dim">منتظر اجرا…</span></div>
+        </section>
+
+        <section class="panel" id="ctxPanel">
+          <div class="panel-head"><div><h2>کانتکست</h2><p class="sub">کارگاه توکن · فشرده‌سازیِ قابل‌ردیابی</p></div><span class="badge" id="ctxBadge">۰</span></div>
+          <div class="ctx-stats" id="ctxStats">
+            <div><span>ورودی</span><b id="ctxBefore">۰</b></div>
+            <div><span>بعد از بسته‌بندی</span><b id="ctxAfter">۰</b></div>
+            <div><span>صرفه‌جویی</span><b id="ctxSaved">۰٪</b></div>
+          </div>
+          <div class="budget-bar"><i id="budgetBar"></i></div>
+          <p class="fine" id="ctxFine">قوانین و پیام‌های محافظت‌شده هرگز حذف نمی‌شوند؛ حذف‌شده‌ها عصاره می‌گیرند.</p>
+        </section>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════ کارگاه ══════════════════════════════ -->
+  <section class="view" id="view-workbench" role="tabpanel" aria-labelledby="tab-workbench" hidden>
+    <div class="workbench">
+      <aside class="panel files-panel">
+        <div class="panel-head"><div><h2>فضای کاری</h2><p class="sub" id="filesSub">۰ فایل</p></div>
+          <div class="row-gap">
+            <button class="icon-btn sm" id="btnNewFile" aria-label="فایل جدید"><svg><use href="#i-plus"/></svg></button>
+            <button class="icon-btn sm" id="btnImport" aria-label="بارگذاری فایل"><svg><use href="#i-upload"/></svg></button>
+            <input type="file" id="fileInput" aria-label="افزودن فایل به فضای کاری" tabindex="-1" multiple hidden />
+          </div>
+        </div>
+        <div class="search-row"><svg><use href="#i-search"/></svg><input id="fileSearch" placeholder="جست‌وجو در فایل‌ها…" aria-label="جست‌وجو در فایل‌ها" /></div>
+        <div class="file-tree" id="fileTree" role="tree" aria-label="فایل‌ها"></div>
+        <div class="panel-foot">
+          <button class="btn sm" id="btnZip"><svg><use href="#i-download"/></svg><span>دریافت ZIP</span></button>
+          <button class="btn sm ghost" id="btnSnapshot"><svg><use href="#i-refresh"/></svg><span>عکس فوری</span></button>
+        </div>
+      </aside>
+
+      <div class="editor-wrap">
+        <section class="panel editor-panel">
+          <div class="panel-head">
+            <div><h2 id="editorPath">—</h2><p class="sub" id="editorMeta">فایلی انتخاب نشده</p></div>
+            <div class="row-gap">
+              <button class="btn sm ghost" id="btnRevert" disabled><svg><use href="#i-refresh"/></svg><span>بازگردانی</span></button>
+              <button class="btn sm primary" id="btnSave" disabled><svg><use href="#i-check"/></svg><span>ذخیره</span><kbd>⌘S</kbd></button>
+            </div>
+          </div>
+          <div class="editor">
+            <pre class="gutter" id="gutter" aria-hidden="true">1</pre>
+            <textarea id="code" spellcheck="false" dir="ltr" aria-label="ویرایشگر کد" disabled></textarea>
+          </div>
+          <div class="panel-foot spread">
+            <span class="fine" id="editorStatus">—</span>
+            <span class="fine" id="editorDirty"></span>
+          </div>
+        </section>
+
+        <section class="panel diff-panel">
+          <div class="panel-head"><div><h2>آخرین تغییر</h2><p class="sub" id="diffSub">دیفِ یکپارچه، آمادهٔ بازبینی</p></div>
+            <div class="row-gap"><button class="icon-btn sm" id="btnCopyDiff" aria-label="کپی دیف"><svg><use href="#i-code"/></svg></button></div>
+          </div>
+          <pre class="diff" id="diffView" tabindex="0"><span class="dim">هنوز تغییری ثبت نشده…</span></pre>
+        </section>
+      </div>
+
+      <aside class="panel history-panel">
+        <div class="panel-head"><div><h2>تاریخچه</h2><p class="sub">نسخه‌ها و عکس‌های فوری</p></div></div>
+        <div id="history" class="history"></div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════ تکامل ══════════════════════════════ -->
+  <section class="view" id="view-evolve" role="tabpanel" aria-labelledby="tab-evolve" hidden>
+    <div class="evolve-grid">
+      <section class="panel genome-panel">
+        <div class="panel-head"><div><h2>ژنوم فعال</h2><p class="sub" id="genomeSub">نسل ۰ · بدون سنجش</p></div>
+          <span class="badge gold" id="genomeFitness">—</span></div>
+        <div class="genes" id="genes"></div>
+        <div class="genome-foot">
+          <button class="btn primary" id="btnEvolve"><svg><use href="#i-bolt"/></svg><span>یک نسل تکامل</span></button>
+          <button class="btn ghost" id="btnInfinite"><svg><use href="#i-refresh"/></svg><span>حالت بی‌نهایت</span></button>
+          <button class="btn ghost" id="btnRollback" disabled><span>بازگشت به قهرمان قبلی</span></button>
+          <button class="btn ghost" id="btnSelfAudit"><svg><use href="#i-search"/></svg><span>خودکاوی</span></button>
+        </div>
+      </section>
+
+      <section class="panel fitness-panel">
+        <div class="panel-head"><div><h2>تناسب اندام</h2><p class="sub">سنجیده‌شده روی بنچمارک اجرایی</p></div><span class="badge" id="fitnessBadge">—</span></div>
+        <div class="chart-wrap"><svg id="fitnessChart" viewBox="0 0 480 180" role="img" aria-label="نمودار تناسب اندام در نسل‌ها"></svg></div>
+        <div class="fitness-parts" id="fitnessParts"></div>
+      </section>
+
+      <section class="panel mutants-panel">
+        <div class="panel-head"><div><h2>سه جهش‌یافتهٔ این نسل</h2><p class="sub" id="mutantsSub">هنوز نسلی اجرا نشده</p></div></div>
+        <div class="mutants" id="mutants"><p class="dim">دکمهٔ «یک نسل تکامل» را بزن: سه جهش ساخته، سنجیده و با قهرمان مقایسه می‌شوند.</p></div>
+      </section>
+
+      <section class="panel bench-panel">
+        <div class="panel-head"><div><h2>بنچمارک</h2><p class="sub" id="benchSub">۱۰ تسک واقعی · تست عمومی و پنهان</p></div>
+          <button class="icon-btn sm" id="btnBench" aria-label="اجرای بنچمارک"><svg><use href="#i-play"/></svg></button></div>
+        <div class="bench-table" id="benchTable"><p class="dim">اجرا نشده.</p></div>
+      </section>
+
+      <section class="panel log-panel">
+        <div class="panel-head"><div><h2>گزارش تکامل</h2><p class="sub">قبول/رد با دلیل، بدون رگرسیون</p></div></div>
+        <div class="evo-log" id="evoLog"><p class="dim">—</p></div>
+      </section>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════ حافظه ══════════════════════════════ -->
+  <section class="view" id="view-memory" role="tabpanel" aria-labelledby="tab-memory" hidden>
+    <div class="memory-grid">
+      <section class="panel laws-panel">
+        <div class="panel-head"><div><h2>قوانین</h2><p class="sub">قفل‌شده · قابل حذف نیستند</p></div><span class="badge gold" id="lawsBadge">—</span></div>
+        <div class="laws" id="laws"></div>
+        <div class="add-law">
+          <input id="lawInput" placeholder="قانون تازه…" aria-label="قانون تازه" />
+          <button class="btn sm" id="btnAddLaw"><svg><use href="#i-plus"/></svg><span>افزودن</span></button>
+        </div>
+      </section>
+
+      <section class="panel notes-panel">
+        <div class="panel-head"><div><h2>یادداشت‌ها</h2><p class="sub" id="notesSub">—</p></div></div>
+        <div class="search-row"><svg><use href="#i-search"/></svg><input id="noteSearch" placeholder="جست‌وجو…" aria-label="جست‌وجوی یادداشت" /></div>
+        <div class="notes" id="notes"></div>
+        <div class="add-law"><input id="noteInput" placeholder="یادداشت تازه…" aria-label="یادداشت تازه" /><button class="btn sm" id="btnAddNote"><svg><use href="#i-plus"/></svg><span>ثبت</span></button></div>
+      </section>
+
+      <section class="panel journal-panel">
+        <div class="panel-head"><div><h2>دفتر جریان</h2><p class="sub">هر اجرا یک ردیف؛ قابل صدور</p></div>
+          <button class="icon-btn sm" id="btnExportJournal" aria-label="صدور دفتر جریان"><svg><use href="#i-download"/></svg></button></div>
+        <div class="journal" id="journal"></div>
+      </section>
+
+      <section class="panel forge-panel">
+        <div class="panel-head"><div><h2>کارگاه توکن</h2><p class="sub">فشرده‌سازی با عصارهٔ قابل‌ردیابی</p></div><span class="badge" id="forgeBadge">—</span></div>
+        <p class="fine">متن نمونه را بچسبان؛ اتمیزه می‌شود، تکرار حذف می‌شود، بر اساس هدف مرتب می‌شود و زیر بودجه بسته‌بندی می‌شود.</p>
+        <textarea id="forgeInput" rows="6" aria-label="متن برای فشرده‌سازی" placeholder="متن بلند را اینجا بگذار…"></textarea>
+        <div class="row-gap">
+          <button class="btn sm primary" id="btnForge"><svg><use href="#i-bolt"/></svg><span>فشرده کن</span></button>
+          <span class="fine" id="forgeStats">—</span>
+        </div>
+        <pre class="forge-out" id="forgeOut" dir="auto"></pre>
+      </section>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════ تنظیمات ══════════════════════════════ -->
+  <section class="view" id="view-settings" role="tabpanel" aria-labelledby="tab-settings" hidden>
+    <div class="settings-grid">
+      <section class="panel">
+        <div class="panel-head"><div><h2>مغز</h2><p class="sub">کلید فقط در همین مرورگر می‌ماند</p></div><span class="badge" id="brainBadge">Reflex</span></div>
+        <div class="providers" id="providers"></div>
+        <div class="fields">
+          <label>مدل<input id="model" list="modelList" placeholder="نام مدل" /></label>
+          <datalist id="modelList"></datalist>
+          <label>کلید API<input id="apiKey" type="password" autocomplete="off" placeholder="sk-…" /></label>
+          <label>آدرس پایه (برای «دلخواه»)<input id="baseUrl" dir="ltr" placeholder="https://…/v1" /></label>
+          <label>توکن پروکسی Netlify<input id="proxyToken" type="password" autocomplete="off" placeholder="اختیاری" /></label>
+        </div>
+        <div class="row-gap">
+          <label class="check"><input type="checkbox" id="rememberKey" /> ذخیرهٔ کلید در این مرورگر</label>
+          <button class="btn sm" id="btnTestBrain"><svg><use href="#i-bolt"/></svg><span>تست اتصال</span></button>
+        </div>
+        <p class="fine" id="brainNote">بدون کلید، Reflex کار می‌کند: ۱۰ خانوادهٔ تسک، اجرای واقعی تست، بدون شبکه.</p>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head"><div><h2>رفتار ایجنت</h2><p class="sub">همان ژنومی که سنجیده می‌شود</p></div></div>
+        <div class="slider-grid" id="sliders"></div>
+        <p class="fine">تغییر دمای مدل و بودجهٔ کانتکست روی ژنوم می‌نشیند و در تکامل هم سنجیده می‌شود.</p>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head"><div><h2>خودآزمایی</h2><p class="sub">همان تست‌هایی که CI اجرا می‌کند</p></div><span class="badge" id="selfBadge">—</span></div>
+        <button class="btn sm primary" id="btnSelfTest"><svg><use href="#i-play"/></svg><span>اجرای خودآزمایی</span></button>
+        <div class="selftests" id="selfTests"><p class="dim">اجرا نشده.</p></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head"><div><h2>داده</h2><p class="sub">صدور، ورود، پاک‌سازی</p></div></div>
+        <div class="row-gap wrap">
+          <button class="btn sm" id="btnExportAll"><svg><use href="#i-download"/></svg><span>صدور همه</span></button>
+          <button class="btn sm ghost" id="btnImportAll"><svg><use href="#i-upload"/></svg><span>ورود</span></button>
+          <input type="file" id="importAllInput" aria-label="بارگذاری فایل صدور" tabindex="-1" accept="application/json" hidden />
+          <button class="btn sm ghost danger" id="btnReset"><svg><use href="#i-x"/></svg><span>پاک‌سازی کامل</span></button>
+        </div>
+        <dl class="kv" id="dataStats"></dl>
+        <p class="fine">صدور، کلیدها را بیرون می‌گذارد. زیپِ خروجی فقط فایل‌های فضای کاری است.</p>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head"><div><h2>دربارهٔ امنیت</h2><p class="sub">صادقانه، نه بازاری</p></div></div>
+        <ul class="security">
+          <li>کدِ تولیدشده در Worker جدا اجرا می‌شود؛ <code>fetch</code>، <code>XHR</code>، <code>WebSocket</code> و <code>importScripts</code> در آن وجود ندارند.</li>
+          <li>سقف اجرا ۱٫۵ ثانیه است و Workerِ قفل‌شده کشته و جایگزین می‌شود.</li>
+          <li>کلید API در <code>localStorage</code> همین مرورگر است؛ برای دستگاه مشترک، گزینهٔ ذخیره را خاموش بگذار.</li>
+          <li>اگر ارائه‌دهنده CORS ببندد، از پروکسی Netlify با توکن استفاده کن؛ کلید آن‌وقت سمت سرور می‌ماند.</li>
+        </ul>
+      </section>
+    </div>
+  </section>
+</main>
+
+<footer class="statusbar">
+  <span class="sb-item"><i class="dot" id="sbDot" data-tone="ok"></i><b id="sbState">آماده</b></span>
+  <span class="sb-item">گام <b id="sbSteps">۰</b></span>
+  <span class="sb-item">توکن <b id="sbTokens">۰</b></span>
+  <span class="sb-item">فایل <b id="sbFiles">۰</b></span>
+  <span class="sb-item"><span id="sbVersion">v3.1.1</span></span>
+  <span class="sb-spacer"></span>
+  <span class="sb-item dim">هر ادعا با اجرا · هر تغییر با دیف · هر دیف با بازگشت</span>
+</footer>
+
+<nav class="mobile-nav" aria-label="نمای موبایل">
+  <button data-view="chat" class="active"><svg><use href="#i-chat"/></svg><span>گفتگو</span></button>
+  <button data-view="workbench"><svg><use href="#i-code"/></svg><span>کارگاه</span></button>
+  <button data-view="evolve"><svg><use href="#i-dna"/></svg><span>تکامل</span></button>
+  <button data-view="memory"><svg><use href="#i-brain"/></svg><span>حافظه</span></button>
+  <button data-view="settings"><svg><use href="#i-gear"/></svg><span>تنظیمات</span></button>
+</nav>
+
+<div class="dialog" id="palette" hidden role="dialog" aria-modal="true" aria-labelledby="paletteTitle">
+  <div class="dialog-card">
+    <h2 id="paletteTitle" class="sr-only">فرمان‌ها</h2>
+    <div class="palette-search"><svg aria-hidden="true"><use href="#i-search"/></svg><input id="paletteInput" placeholder="فرمان یا فایل…" aria-label="جست‌وجوی فرمان" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="paletteList" aria-activedescendant="" /></div>
+    <div class="palette-list" id="paletteList" role="listbox" aria-label="فرمان‌ها"></div>
+    <p class="fine">↑↓ جابه‌جایی · ↵ اجرا · Esc بستن</p>
+  </div>
+</div>
+
+<div class="toasts" id="toasts" aria-live="polite" aria-atomic="false"></div>
+
+<script type="module" src="./src/app/boot.js"></script>
+</body>
+</html>

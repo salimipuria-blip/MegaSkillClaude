@@ -1,3 +1,4 @@
+import { fetchWithTimeout } from './resilience.mjs';
 // Google connectors for the OWNER only: Gmail (read + drafts, never sends), Calendar, Drive (read) and Sheets.
 // One-time setup: secrets GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET, then the owner opens /connect/google?k=<app key>
 // (Telegram: /google). The refresh token lives in KV, never in the repo or chat.
@@ -38,7 +39,7 @@ export async function connectUrl(env, origin) {
 export async function finishConnect(env, origin, code, state) {
   if (!state || !(await env.MEMORY.get(`google:state:${state}`))) throw new Error('لینک اتصال منقضی شده؛ دوباره /google را بزن.');
   await env.MEMORY.delete(`google:state:${state}`);
-  const res = await fetch(TOKEN, {
+  const res = await fetchWithTimeout(TOKEN, {
     method: 'POST', headers: { 'content-type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams({ code, client_id: env.GOOGLE_CLIENT_ID, client_secret: env.GOOGLE_CLIENT_SECRET,
       redirect_uri: redirectUri(origin), grant_type: 'authorization_code' }),
@@ -59,7 +60,7 @@ async function accessToken(env) {
   if (cached && cached.exp > Date.now()) return cached.token;
   const refresh = await env.MEMORY.get('google:refresh');
   if (!refresh) throw new Error('گوگل وصل نیست؛ در تلگرام /google را بزن.');
-  const res = await fetch(TOKEN, {
+  const res = await fetchWithTimeout(TOKEN, {
     method: 'POST', headers: { 'content-type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams({ refresh_token: refresh, client_id: env.GOOGLE_CLIENT_ID, client_secret: env.GOOGLE_CLIENT_SECRET, grant_type: 'refresh_token' }),
   });
@@ -73,7 +74,7 @@ async function accessToken(env) {
 }
 
 async function g(env, url, init = {}) {
-  const res = await fetch(url, { ...init, headers: { authorization: `Bearer ${await accessToken(env)}`, ...(init.body ? { 'content-type': 'application/json' } : {}), ...init.headers } });
+  const res = await fetchWithTimeout(url, { ...init, headers: { authorization: `Bearer ${await accessToken(env)}`, ...(init.body ? { 'content-type': 'application/json' } : {}), ...init.headers } });
   const data = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error((data.error && data.error.message) || `Google ${res.status}`);
   return data;

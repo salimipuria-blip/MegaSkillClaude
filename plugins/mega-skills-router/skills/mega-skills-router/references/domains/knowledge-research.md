@@ -14,7 +14,7 @@ Skills: 329
 - `api-json-to-table` → `references/skills/api-json-to-table/INSTRUCTIONS.md`
 - `ara-research-manager` → `references/skills/ara-research-manager/INSTRUCTIONS.md`
 - `archivebox-self-archive` → `references/skills/archivebox-self-archive/INSTRUCTIONS.md`
-- `arxiv` → `references/skills/arxiv/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `arxiv` → `references/skills/arxiv/INSTRUCTIONS.md`
 - `audio-meeting-import-pack` → `references/skills/audio-meeting-import-pack/INSTRUCTIONS.md`
 - `autoresearch` → `references/skills/autoresearch/INSTRUCTIONS.md`
 - `awesome-lint-validator` → `references/skills/awesome-lint-validator/INSTRUCTIONS.md`
@@ -50,7 +50,7 @@ Skills: 329
 - `catalog-versioning-git` → `references/skills/catalog-versioning-git/INSTRUCTIONS.md`
 - `changelog-directory-writer` → `references/skills/changelog-directory-writer/INSTRUCTIONS.md`
 - `chart-to-data-ocr` → `references/skills/chart-to-data-ocr/INSTRUCTIONS.md`
-- `citation-audit` → `references/skills/citation-audit/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `citation-audit` → `references/skills/citation-audit/INSTRUCTIONS.md`
 - `clinic-backup-planner` → `references/skills/clinic-backup-planner/INSTRUCTIONS.md`
 - `clinic-badge-auditor` → `references/skills/clinic-badge-auditor/INSTRUCTIONS.md`
 - `clinic-dedupe-pack` → `references/skills/clinic-dedupe-pack/INSTRUCTIONS.md`
@@ -83,7 +83,7 @@ Skills: 329
 - `deep-research` → `references/skills/deep-research/INSTRUCTIONS.md`
 - `deepread` → `references/skills/deepread/INSTRUCTIONS.md`
 - `deepspot-m` → `references/skills/deepspot-m/INSTRUCTIONS.md`
-- `deepxiv` → `references/skills/deepxiv/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `deepxiv` → `references/skills/deepxiv/INSTRUCTIONS.md`
 - `dental-backup-generator` → `references/skills/dental-backup-generator/INSTRUCTIONS.md`
 - `dental-backup-planner` → `references/skills/dental-backup-planner/INSTRUCTIONS.md`
 - `dental-crawl-pack` → `references/skills/dental-crawl-pack/INSTRUCTIONS.md`
@@ -102,7 +102,7 @@ Skills: 329
 - `docusaurus-knowledge-portal` → `references/skills/docusaurus-knowledge-portal/INSTRUCTIONS.md`
 - `docx-fa-style-normalizer` → `references/skills/docx-fa-style-normalizer/INSTRUCTIONS.md`
 - `easyocr-fa-en-pack` → `references/skills/easyocr-fa-en-pack/INSTRUCTIONS.md`
-- `ebay-item-detail` → `references/skills/ebay-item-detail/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `ebay-item-detail` → `references/skills/ebay-item-detail/INSTRUCTIONS.md`
 - `ecolodge-archive-monitor` → `references/skills/ecolodge-archive-monitor/INSTRUCTIONS.md`
 - `ecolodge-badge-analyzer` → `references/skills/ecolodge-badge-analyzer/INSTRUCTIONS.md`
 - `ecolodge-badge-optimizer` → `references/skills/ecolodge-badge-optimizer/INSTRUCTIONS.md`
@@ -141,8 +141,8 @@ Skills: 329
 - `genomic-coordinates` → `references/skills/genomic-coordinates/INSTRUCTIONS.md`
 - `glossary-registry-fa` → `references/skills/glossary-registry-fa/INSTRUCTIONS.md`
 - `gmail-takeout-threader` → `references/skills/gmail-takeout-threader/INSTRUCTIONS.md`
-- `google-social-media-finder` → `references/skills/google-social-media-finder/INSTRUCTIONS.md` [incomplete: excluded from default routing]
-- `grant-proposal` → `references/skills/grant-proposal/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `google-social-media-finder` → `references/skills/google-social-media-finder/INSTRUCTIONS.md`
+- `grant-proposal` → `references/skills/grant-proposal/INSTRUCTIONS.md`
 - `gym-audio-autopilot` → `references/skills/gym-audio-autopilot/INSTRUCTIONS.md`
 - `gym-dedupe-assistant` → `references/skills/gym-dedupe-assistant/INSTRUCTIONS.md`
 - `gym-normalize-planner` → `references/skills/gym-normalize-planner/INSTRUCTIONS.md`
@@ -155,7 +155,7 @@ Skills: 329
 - `hotel-search-pack` → `references/skills/hotel-search-pack/INSTRUCTIONS.md`
 - `hotel-versioning-reporter` → `references/skills/hotel-versioning-reporter/INSTRUCTIONS.md`
 - `human-verification-gates` → `references/skills/human-verification-gates/INSTRUCTIONS.md`
-- `idea-creator` → `references/skills/idea-creator/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `idea-creator` → `references/skills/idea-creator/INSTRUCTIONS.md`
 - `ig-post-image-spec-extractor` → `references/skills/ig-post-image-spec-extractor/INSTRUCTIONS.md`
 - `inbox-setup` → `references/skills/inbox-setup/INSTRUCTIONS.md`
 - `inbox-to-catalog-triage` → `references/skills/inbox-to-catalog-triage/INSTRUCTIONS.md`
@@ -167,7 +167,7 @@ Skills: 329
 - `jewelry-versioning-auditor` → `references/skills/jewelry-versioning-auditor/INSTRUCTIONS.md`
 - `joplin-notebook-importer` → `references/skills/joplin-notebook-importer/INSTRUCTIONS.md`
 - `json-schema-catalog-contract` → `references/skills/json-schema-catalog-contract/INSTRUCTIONS.md`
-- `kill-argument` → `references/skills/kill-argument/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `kill-argument` → `references/skills/kill-argument/INSTRUCTIONS.md`
 - `latex-paper-conversion` → `references/skills/latex-paper-conversion/INSTRUCTIONS.md`
 - `latex-posters` → `references/skills/latex-posters/INSTRUCTIONS.md`
 - `linktree-link-hub` → `references/skills/linktree-link-hub/INSTRUCTIONS.md`
@@ -190,7 +190,7 @@ Skills: 329
 - `nocodb-base-designer` → `references/skills/nocodb-base-designer/INSTRUCTIONS.md`
 - `notion-export-normalizer` → `references/skills/notion-export-normalizer/INSTRUCTIONS.md`
 - `nougat-scientific-pdf` → `references/skills/nougat-scientific-pdf/INSTRUCTIONS.md`
-- `novelty-check` → `references/skills/novelty-check/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `novelty-check` → `references/skills/novelty-check/INSTRUCTIONS.md`
 - `nuts-archive-auditor` → `references/skills/nuts-archive-auditor/INSTRUCTIONS.md`
 - `nuts-badge-generator` → `references/skills/nuts-badge-generator/INSTRUCTIONS.md`
 - `nuts-crawl-library` → `references/skills/nuts-crawl-library/INSTRUCTIONS.md`
@@ -204,10 +204,10 @@ Skills: 329
 - `paddleocr-production-pack` → `references/skills/paddleocr-production-pack/INSTRUCTIONS.md`
 - `paper-compile` → `references/skills/paper-compile/INSTRUCTIONS.md`
 - `paper-figure` → `references/skills/paper-figure/INSTRUCTIONS.md`
-- `paper-illustration` → `references/skills/paper-illustration/INSTRUCTIONS.md` [incomplete: excluded from default routing]
-- `paper-plan` → `references/skills/paper-plan/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `paper-illustration` → `references/skills/paper-illustration/INSTRUCTIONS.md`
+- `paper-plan` → `references/skills/paper-plan/INSTRUCTIONS.md`
 - `paper-slides` → `references/skills/paper-slides/INSTRUCTIONS.md`
-- `paper-write` → `references/skills/paper-write/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `paper-write` → `references/skills/paper-write/INSTRUCTIONS.md`
 - `paperzilla` → `references/skills/paperzilla/INSTRUCTIONS.md`
 - `patch-diff-exploit` → `references/skills/patch-diff-exploit/INSTRUCTIONS.md`
 - `pdf-form-field-extractor` → `references/skills/pdf-form-field-extractor/INSTRUCTIONS.md`
@@ -227,10 +227,10 @@ Skills: 329
 - `realestate-transcribe-planner` → `references/skills/realestate-transcribe-planner/INSTRUCTIONS.md`
 - `realestate-vision-planner` → `references/skills/realestate-vision-planner/INSTRUCTIONS.md`
 - `research-grants` → `references/skills/research-grants/INSTRUCTIONS.md`
-- `research-lit` → `references/skills/research-lit/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `research-lit` → `references/skills/research-lit/INSTRUCTIONS.md`
 - `research-lookup` → `references/skills/research-lookup/INSTRUCTIONS.md`
-- `research-pipeline` → `references/skills/research-pipeline/INSTRUCTIONS.md` [incomplete: excluded from default routing]
-- `research-refine` → `references/skills/research-refine/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `research-pipeline` → `references/skills/research-pipeline/INSTRUCTIONS.md`
+- `research-refine` → `references/skills/research-refine/INSTRUCTIONS.md`
 - `restaurant-archive-autopilot` → `references/skills/restaurant-archive-autopilot/INSTRUCTIONS.md`
 - `restaurant-backup-analyzer` → `references/skills/restaurant-backup-analyzer/INSTRUCTIONS.md`
 - `restaurant-badge-monitor` → `references/skills/restaurant-badge-monitor/INSTRUCTIONS.md`
@@ -281,7 +281,7 @@ Skills: 329
 - `syllabus` → `references/skills/syllabus/INSTRUCTIONS.md`
 - `synonym-ring-builder` → `references/skills/synonym-ring-builder/INSTRUCTIONS.md`
 - `tag-governance-policy` → `references/skills/tag-governance-policy/INSTRUCTIONS.md`
-- `taobao-keyword-search` → `references/skills/taobao-keyword-search/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `taobao-keyword-search` → `references/skills/taobao-keyword-search/INSTRUCTIONS.md`
 - `taxonomy-architect` → `references/skills/taxonomy-architect/INSTRUCTIONS.md`
 - `telegram-channel-export` → `references/skills/telegram-channel-export/INSTRUCTIONS.md`
 - `tesseract-ocr-pipeline` → `references/skills/tesseract-ocr-pipeline/INSTRUCTIONS.md`
@@ -314,10 +314,10 @@ Skills: 329
 - `whisper-transcriber-fa` → `references/skills/whisper-transcriber-fa/INSTRUCTIONS.md`
 - `whisperx-diarization` → `references/skills/whisperx-diarization/INSTRUCTIONS.md`
 - `wiki` → `references/skills/wiki/INSTRUCTIONS.md`
-- `wiki-enrich` → `references/skills/wiki-enrich/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `wiki-enrich` → `references/skills/wiki-enrich/INSTRUCTIONS.md`
 - `wiki-fold` → `references/skills/wiki-fold/INSTRUCTIONS.md`
 - `wiki-ingest` → `references/skills/wiki-ingest/INSTRUCTIONS.md`
-- `wiki-mode` → `references/skills/wiki-mode/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `wiki-mode` → `references/skills/wiki-mode/INSTRUCTIONS.md`
 - `wiki-query` → `references/skills/wiki-query/INSTRUCTIONS.md`
 - `wiki-researcher` → `references/skills/wiki-researcher/INSTRUCTIONS.md`
 - `wiki-retrieve` → `references/skills/wiki-retrieve/INSTRUCTIONS.md`

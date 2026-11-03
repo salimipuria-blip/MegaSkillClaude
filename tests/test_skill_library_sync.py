@@ -71,6 +71,27 @@ class SkillLibrarySyncTest(unittest.TestCase):
             self.assertEqual(target.read_text(), 'fixture provenance\n')
             self.assertEqual(custom.read_text(), 'do not delete')
 
+    def test_a_removed_skill_and_notice_are_pruned_from_the_plugin(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            index = fixture(root)
+            synchronize(root)
+            data = json.loads(index.read_text())
+            data['skills'] = [skill for skill in data['skills'] if skill['name'] != 'github-fixture']
+            index.write_text(json.dumps(data))
+            (root / 'library/github-skills/_licenses/fixture_LICENSE').unlink()
+            removed = root / PLUGIN / 'references/skills/github-fixture'
+            notice = root / PLUGIN / 'references/licenses/fixture_LICENSE'
+            stale = synchronize(root, check=True)
+            self.assertIn(str(removed.relative_to(root)), stale)
+            self.assertIn(str(notice.relative_to(root)), stale)
+            self.assertTrue(removed.is_dir(), '--check must not delete')
+            synchronize(root)
+            self.assertFalse(removed.exists())
+            self.assertFalse(notice.exists())
+            self.assertTrue((root / PLUGIN / 'references/skills/core-fixture/INSTRUCTIONS.md').is_file())
+            self.assertEqual(synchronize(root, check=True), [])
+
     def test_invalid_sources_are_rejected_before_writing(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

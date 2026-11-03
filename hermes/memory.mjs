@@ -16,9 +16,15 @@ export function requireConversationBinding(env) {
 export async function conversationCall(env, key, action, payload = {}) {
   requireConversationBinding(env);
   const stub = env.CONVERSATIONS.get(env.CONVERSATIONS.idFromName(key));
-  const response = await stub.fetch(new Request(`https://conversation.internal/${action}`, {
-    method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ ...payload, key }),
-  }));
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 30000);
+  let response;
+  try {
+    response = await stub.fetch(new Request(`https://conversation.internal/${action}`, {
+      method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ ...payload, key }),
+      signal: controller.signal,
+    }));
+  } finally { clearTimeout(timer); }
   const data = await response.json();
   if (!response.ok) throw new Error(data.error || 'حافظهٔ گفتگو در دسترس نیست.');
   return data;

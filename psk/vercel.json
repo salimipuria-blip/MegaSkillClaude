@@ -1,72 +1,77 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "cleanUrls": true,
-  "trailingSlash": false,
-  "functions": {
-    "api/*.js": {
-      "maxDuration": 60,
-      "includeFiles": "data/**"
+ "$schema": "https://openapi.vercel.sh/vercel.json",
+ "cleanUrls": true,
+ "functions": {
+  "api/*.js": {
+   "maxDuration": 60,
+   "includeFiles": "data/**"
+  }
+ },
+ "headers": [
+  {
+   "source": "/(.*)",
+   "headers": [
+    {
+     "key": "X-Content-Type-Options",
+     "value": "nosniff"
+    },
+    {
+     "key": "Referrer-Policy",
+     "value": "strict-origin-when-cross-origin"
+    },
+    {
+     "key": "Strict-Transport-Security",
+     "value": "max-age=63072000; includeSubDomains; preload"
+    },
+    {
+     "key": "X-Frame-Options",
+     "value": "DENY"
+    },
+    {
+     "key": "Content-Security-Policy",
+     "value": "frame-ancestors 'none'"
+    },
+    {
+     "key": "Cross-Origin-Opener-Policy",
+     "value": "same-origin"
+    },
+    {
+     "key": "Permissions-Policy",
+     "value": "accelerometer=(), autoplay=(), camera=(), display-capture=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=(), interest-cohort=()"
+    },
+    {
+     "key": "X-Permitted-Cross-Domain-Policies",
+     "value": "none"
     }
+   ]
   },
-  "headers": [
+  {
+   "source": "/((?!api/).*)",
+   "headers": [
     {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "Referrer-Policy",
-          "value": "strict-origin-when-cross-origin"
-        },
-        {
-          "key": "Strict-Transport-Security",
-          "value": "max-age=63072000; includeSubDomains; preload"
-        },
-        {
-          "key": "X-Frame-Options",
-          "value": "DENY"
-        },
-        {
-          "key": "Cross-Origin-Opener-Policy",
-          "value": "same-origin"
-        },
-        {
-          "key": "Permissions-Policy",
-          "value": "accelerometer=(), autoplay=(), camera=(), display-capture=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=(), interest-cohort=()"
-        },
-        {
-          "key": "X-Permitted-Cross-Domain-Policies",
-          "value": "none"
-        }
-      ]
-    },
-    {
-      "source": "/((?!api/).*)",
-      "headers": [
-        {
-          "key": "Content-Security-Policy",
-          "value": "default-src 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; worker-src 'self' blob:; manifest-src 'self'; upgrade-insecure-requests"
-        }
-      ]
-    },
-    {
-      "source": "/api/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "no-store, max-age=0"
-        },
-        {
-          "key": "Cross-Origin-Resource-Policy",
-          "value": "same-origin"
-        },
-        {
-          "key": "Content-Security-Policy",
-          "value": "default-src 'none'; frame-ancestors 'none'; sandbox"
-        }
-      ]
+     "key": "Content-Security-Policy",
+     "value": "default-src 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; img-src 'self' data: blob:; media-src 'self' blob:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; worker-src 'self' blob:; manifest-src 'self'; upgrade-insecure-requests"
     }
-  ]
+   ]
+  },
+  {
+   "source": "/api/(.*)",
+   "headers": [
+    {
+     "key": "Cache-Control",
+     "value": "no-store, max-age=0"
+    },
+    {
+     "key": "Cross-Origin-Resource-Policy",
+     "value": "same-origin"
+    },
+    {
+     "key": "Content-Security-Policy",
+     "value": "default-src 'none'; frame-ancestors 'none'; sandbox"
+    }
+   ]
+  }
+ ],
+ "ignoreCommand": "P=\"$VERCEL_GIT_PREVIOUS_SHA\"; [ -n \"$P\" ] && git cat-file -e \"$P^{commit}\" 2>/dev/null && git diff --quiet \"$P\" HEAD -- . && exit 0; exit 1",
+ "trailingSlash": false
 }

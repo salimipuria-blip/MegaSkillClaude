@@ -1,28 +1,28 @@
 {
  "schema_version": 1,
  "counts": {
-  "skills": 6017,
-  "triggers": 30065,
+  "skills": 5964,
+  "triggers": 29878,
   "colliding_triggers": 0,
-  "incomplete_skills": 281,
-  "routable_skills": 5736
+  "incomplete_skills": 0,
+  "routable_skills": 5964
  },
  "domains": {
-  "agents-automation": 764,
-  "business-sales": 487,
+  "agents-automation": 746,
+  "business-sales": 485,
   "content-writing": 161,
-  "data-spreadsheets": 297,
-  "general": 248,
-  "graphic-design": 229,
+  "data-spreadsheets": 296,
+  "general": 247,
+  "graphic-design": 230,
   "image-ai": 117,
   "knowledge-research": 329,
-  "product-design": 144,
+  "product-design": 145,
   "prompt-requirements": 338,
   "skill-development": 249,
-  "social-media": 260,
+  "social-media": 259,
   "travel-outdoors": 439,
   "video-ai": 123,
-  "web-development": 1832
+  "web-development": 1800
  },
  "collisions": [],
  "skills": [
@@ -39401,8 +39401,7 @@
     "Run the conversational ECC setup wizard inside the current harness: inventory the install, collect scope (user/project/l",
     "Run the conversational ECC setup wizard inside the current harness: inventory the install, collect scope (user/project/local) and hook mode (off/minimal/standar"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "eval-harness",
@@ -39415,8 +39414,7 @@
     "Eval-driven development (EDD) framework for AI coding sessions",
     "Eval-driven development (EDD) framework for AI coding sessions — define capability and regression evals before coding, grade with code-based, model-based, rule,"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "config-gc",
@@ -39637,8 +39635,7 @@
     "PreToolUse fact-forcing gate that denies the first Edit/Write/Bash (including MultiEdit) attempt until the agent present",
     "PreToolUse fact-forcing gate that denies the first Edit/Write/Bash (including MultiEdit) attempt until the agent presents concrete facts (importers, data schema"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "diagnosing-superpowers",
@@ -40353,8 +40350,7 @@
     "Browser automation CLI for AI agents.",
     "Browser automation CLI for AI agents. Use when the user needs to interact with websites, including navigating pages, filling forms, clicking buttons, taking scr"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "incremental-implementation",
@@ -40640,8 +40636,7 @@
     "Prepares bulk RNA-seq FASTQ, Salmon, STAR or featureCounts output for gene-level differential expression.",
     "Prepares bulk RNA-seq FASTQ, Salmon, STAR or featureCounts output for gene-level differential expression. Covers nf-core/rnaseq and standalone quantification, b"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "autoskill",
@@ -41408,8 +41403,7 @@
     "Share durable, inspectable context and handoffs between Claude, Codex, Hermes, Cursor, OpenCode, and other agents throug",
     "Share durable, inspectable context and handoffs between Claude, Codex, Hermes, Cursor, OpenCode, and other agents through the local ECC Memory Vault. Use when a"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "github-issues",
@@ -41709,34 +41703,6 @@
     "Handles LLM-as-judge evaluation workflows on Arize including creating/updating evaluators, running evaluations on spans or experiments, managing tasks, trigger-"
    ],
    "origin": "github"
-  },
-  {
-   "name": "gdpr-compliant",
-   "domain": "web-development",
-   "source_path": "references/skills/gdpr-compliant/INSTRUCTIONS.md",
-   "triggers": [
-    "gdpr-compliant",
-    "gdpr compliant",
-    "web development gdpr compliant",
-    "Apply GDPR-compliant engineering practices across your codebase.",
-    "Apply GDPR-compliant engineering practices across your codebase. Use this skill whenever you are designing APIs, writing data models, building authentication fl"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
-   "name": "d365-solution-blueprint",
-   "domain": "web-development",
-   "source_path": "references/skills/d365-solution-blueprint/INSTRUCTIONS.md",
-   "triggers": [
-    "d365-solution-blueprint",
-    "d365 solution blueprint",
-    "web development d365 solution blueprint",
-    "Authors a Dynamics 365 Finance and Supply Chain Management Solution Blueprint from scratch through a structured, section",
-    "Authors a Dynamics 365 Finance and Supply Chain Management Solution Blueprint from scratch through a structured, section-by-section architect interview, establi"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "dotnet-mcp-builder",
@@ -42480,20 +42446,6 @@
    "origin": "github"
   },
   {
-   "name": "book-to-skill",
-   "domain": "web-development",
-   "source_path": "references/skills/book-to-skill/INSTRUCTIONS.md",
-   "triggers": [
-    "book-to-skill",
-    "book to skill",
-    "web development book to skill",
-    "Converts books and documents (PDF, EPUB, DOCX, HTML, Markdown, plain text, RTF, MOBI/AZW with Calibre) into structured a",
-    "Converts books and documents (PDF, EPUB, DOCX, HTML, Markdown, plain text, RTF, MOBI/AZW with Calibre) into structured agent skills, extracting frameworks, ment"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "kotlin-exposed-patterns",
    "domain": "general",
    "source_path": "references/skills/kotlin-exposed-patterns/INSTRUCTIONS.md",
@@ -42624,20 +42576,6 @@
    "origin": "github"
   },
   {
-   "name": "generate-image",
-   "domain": "web-development",
-   "source_path": "references/skills/generate-image/INSTRUCTIONS.md",
-   "triggers": [
-    "generate-image",
-    "generate image",
-    "web development generate image",
-    "Generates or edits images with AI models through the OpenRouter Image API (Gemini, Seedream, Recraft, GPT-Image, Riverfl",
-    "Generates or edits images with AI models through the OpenRouter Image API (Gemini, Seedream, Recraft, GPT-Image, Riverflow). Use for photos, illustrations, artw"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "autonomous-loops",
    "domain": "web-development",
    "source_path": "references/skills/autonomous-loops/INSTRUCTIONS.md",
@@ -42648,8 +42586,7 @@
     "Patterns and architectures for autonomous Claude Code loops",
     "Patterns and architectures for autonomous Claude Code loops — from simple sequential pipelines to RFC-driven multi-agent DAG systems. Retained for compatibility"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "competitor-ad-intelligence",
@@ -44287,8 +44224,7 @@
     "Atlassian Confluence expert for creating and managing spaces, knowledge bases, and documentation.",
     "Atlassian Confluence expert for creating and managing spaces, knowledge bases, and documentation. Configures space permissions and hierarchies, creates page tem"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "commercial-forecaster",
@@ -46371,20 +46307,6 @@
    "origin": "github"
   },
   {
-   "name": "tm7-threat-model",
-   "domain": "agents-automation",
-   "source_path": "references/skills/tm7-threat-model/INSTRUCTIONS.md",
-   "triggers": [
-    "tm7-threat-model",
-    "tm7 threat model",
-    "agents automation tm7 threat model",
-    "Creates valid Microsoft Threat Modeling Tool (.tm7) files compatible with the Microsoft Threat Modeling Tool v7.3+.",
-    "Creates valid Microsoft Threat Modeling Tool (.tm7) files compatible with the Microsoft Threat Modeling Tool v7.3+. Use this skill whenever asked to create, gen"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "primekg",
    "domain": "data-spreadsheets",
    "source_path": "references/skills/primekg/INSTRUCTIONS.md",
@@ -46707,8 +46629,7 @@
     "Draft a structured grant proposal from research ideas and literature.",
     "Draft a structured grant proposal from research ideas and literature. Supports KAKENHI (Japan), NSF (US), NSFC (China, including 面上/青年/优青/杰青/海外优青/重点), ERC (EU),"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "kill-argument",
@@ -46721,8 +46642,7 @@
     "Two-thread adversarial review: a fresh reviewer constructs the strongest 200-word rejection memo, then a second fresh re",
     "Two-thread adversarial review: a fresh reviewer constructs the strongest 200-word rejection memo, then a second fresh reviewer defends the paper point-by-point"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "formula-derivation",
@@ -46761,8 +46681,7 @@
     "Workflow 5: orchestrate a text-only resubmit of a polished paper to a different venue under hard constraints (no new exp",
     "Workflow 5: orchestrate a text-only resubmit of a polished paper to a different venue under hard constraints (no new experiments, no bib edits, no framework cha"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "paper-talk",
@@ -46775,8 +46694,7 @@
     "End-to-end conference talk pipeline: paper → slide outline → Beamer + PPTX → per-page polish → assurance checks (claim /",
     "End-to-end conference talk pipeline: paper → slide outline → Beamer + PPTX → per-page polish → assurance checks (claim / citation / anonymity) → final export an"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "idea-discovery-robot",
@@ -46789,8 +46707,7 @@
     "Workflow 1 adaptation for robotics and embodied AI.",
     "Workflow 1 adaptation for robotics and embodied AI. Orchestrates robotics-aware literature survey, idea generation, novelty check, and critical review to go fro"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "proof-checker",
@@ -46803,22 +46720,7 @@
     "Rigorous mathematical proof verification and fixing workflow.",
     "Rigorous mathematical proof verification and fixing workflow. Reads a LaTeX proof, identifies gaps via fresh-agent Codex GPT-6-Astra ultra review, fixes each ga"
    ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
-   "name": "research-implement-feature",
-   "domain": "web-development",
-   "source_path": "references/skills/research-implement-feature/INSTRUCTIONS.md",
-   "triggers": [
-    "research-implement-feature",
-    "research implement feature",
-    "web development research implement feature",
-    "Build a working artifact from a plain \\\"implement X for me\\\" request: a running end-to-end spine first, then one feature",
-    "Build a working artifact from a plain \\\"implement X for me\\\" request: a running end-to-end spine first, then one feature per rung, with every under-determined d"
-   ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "slides-polish",
@@ -46831,8 +46733,7 @@
     "Per-page Codex review + targeted python-pptx / Beamer fixes for academic talk slides.",
     "Per-page Codex review + targeted python-pptx / Beamer fixes for academic talk slides. Use AFTER /paper-slides (or any externally generated PPTX/Beamer) when the"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "citation-audit",
@@ -46845,8 +46746,7 @@
     "Zero-context verification that every bibliographic entry in the paper is real, correctly attributed, and used in a conte",
     "Zero-context verification that every bibliographic entry in the paper is real, correctly attributed, and used in a context the cited paper actually supports — c"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "research-refine",
@@ -46859,8 +46759,7 @@
     "Turn a vague research direction into a problem-anchored, elegant, frontier-aware, implementation-oriented method plan vi",
     "Turn a vague research direction into a problem-anchored, elegant, frontier-aware, implementation-oriented method plan via iterative GPT-6-Astra review. Use when"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "comm-lit-review",
@@ -46886,8 +46785,7 @@
     "Run the Anti-Autoresearch integrity-forensics sweep (span-anchored evidence ledger → GPT auditors propose findings → a r",
     "Run the Anti-Autoresearch integrity-forensics sweep (span-anchored evidence ledger → GPT auditors propose findings → a rules-only reporter that lists every prop"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "paper-writing",
@@ -46900,8 +46798,7 @@
     "Workflow 3: Full paper writing pipeline.",
     "Workflow 3: Full paper writing pipeline. Orchestrates paper-plan \\u2192 paper-figure \\u2192 paper-write \\u2192 paper-compile \\u2192 auto-paper-improvement-loop"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "paper-poster-html",
@@ -46914,8 +46811,7 @@
     "DEFAULT poster pipeline",
     "DEFAULT poster pipeline — build an academic conference poster (ICML/NeurIPS/ICLR/CVPR/...) as a single HTML/CSS file with measurement-driven hard gates, real pa"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "code-simplification",
@@ -47032,8 +46928,7 @@
     "Multi-agent orchestration using dmux (tmux pane manager for AI agents).",
     "Multi-agent orchestration using dmux (tmux pane manager for AI agents). Patterns for parallel agent workflows across Claude Code, Codex, OpenCode, and other har"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "team-composition-analysis",
@@ -47176,8 +47071,7 @@
     "Workflow 1: Full idea discovery pipeline.",
     "Workflow 1: Full idea discovery pipeline. Orchestrates research-lit \\u2192 idea-creator \\u2192 novelty-check \\u2192 research-review to go from a broad research"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "torchdrug",
@@ -47476,8 +47370,7 @@
     "Generate deterministic publication-quality architecture, workflow, and pipeline diagrams from structured JSON (FigureSpe",
     "Generate deterministic publication-quality architecture, workflow, and pipeline diagrams from structured JSON (FigureSpec) into editable SVG. Use when user says"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "continuous-learning",
@@ -47724,8 +47617,7 @@
     "Answer questions about ECC by reading the live repo surface",
     "Answer questions about ECC by reading the live repo surface — agents, skills, commands, hooks, rules, install profiles, and docs — instead of memory. Use when t"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "experiment-audit",
@@ -47738,8 +47630,7 @@
     "Audit experiment integrity before claiming results.",
     "Audit experiment integrity before claiming results. Uses fresh-agent GPT-6-Astra review (same-family provisional in the base Codex mirror) to check for fake gro"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "high-end-visual-design",
@@ -47778,8 +47669,7 @@
     "Fast in-memory DataFrame library for datasets that fit in RAM.",
     "Fast in-memory DataFrame library for datasets that fit in RAM. Use when pandas is too slow but data still fits in memory. Lazy evaluation, parallel execution, A"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "javascript-testing-patterns",
@@ -47922,8 +47812,7 @@
     "Turn a refined research proposal or method idea into a detailed, claim-driven experiment roadmap.",
     "Turn a refined research proposal or method idea into a detailed, claim-driven experiment roadmap. Use after `research-refine`, or when the user asks for a detai"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "clinical-reports",
@@ -47937,20 +47826,6 @@
     "Creates safety-bounded draft structures and runs local deterministic checks for clinical case, diagnostic, trial, safety, and aggregate research reports. Use on"
    ],
    "origin": "github"
-  },
-  {
-   "name": "fine-tuning-openvla-oft",
-   "domain": "web-development",
-   "source_path": "references/skills/fine-tuning-openvla-oft/INSTRUCTIONS.md",
-   "triggers": [
-    "fine-tuning-openvla-oft",
-    "fine tuning openvla oft",
-    "web development fine tuning openvla oft",
-    "Fine-tunes and evaluates OpenVLA-OFT and OpenVLA-OFT+ policies for robot action generation with continuous action heads,",
-    "Fine-tunes and evaluates OpenVLA-OFT and OpenVLA-OFT+ policies for robot action generation with continuous action heads, LoRA adaptation, and FiLM conditioning"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "ml-training-recipes",
@@ -49214,20 +49089,6 @@
    "origin": "github"
   },
   {
-   "name": "speculative-decoding",
-   "domain": "web-development",
-   "source_path": "references/skills/speculative-decoding/INSTRUCTIONS.md",
-   "triggers": [
-    "speculative-decoding",
-    "speculative decoding",
-    "web development speculative decoding",
-    "Accelerate LLM inference using speculative decoding, Medusa multiple heads, and lookahead decoding techniques.",
-    "Accelerate LLM inference using speculative decoding, Medusa multiple heads, and lookahead decoding techniques. Use when optimizing inference speed (1.5-3.6× spe"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "multi-advisor",
    "domain": "agents-automation",
    "source_path": "references/skills/multi-advisor/INSTRUCTIONS.md",
@@ -49265,20 +49126,6 @@
     "Framework for building LLM-powered applications with agents, chains, and RAG. Supports multiple providers (OpenAI, Anthropic, Google), 500+ integrations, ReAct"
    ],
    "origin": "github"
-  },
-  {
-   "name": "long-context",
-   "domain": "agents-automation",
-   "source_path": "references/skills/long-context/INSTRUCTIONS.md",
-   "triggers": [
-    "long-context",
-    "long context",
-    "agents automation long context",
-    "Extend context windows of transformer models using RoPE, YaRN, ALiBi, and position interpolation techniques.",
-    "Extend context windows of transformer models using RoPE, YaRN, ALiBi, and position interpolation techniques. Use when processing long documents (32k-128k+ token"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "swift-protocol-di-testing",
@@ -49473,8 +49320,7 @@
     "Render an ARIS Markdown / JSON artifact (IDEA_REPORT, AUTO_REVIEW, KILL_ARGUMENT, PAPER_PLAN, research-wiki state, etc.)",
     "Render an ARIS Markdown / JSON artifact (IDEA_REPORT, AUTO_REVIEW, KILL_ARGUMENT, PAPER_PLAN, research-wiki state, etc.) into a single-file HTML view designed f"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "integrate-context-matic",
@@ -49656,8 +49502,7 @@
     "Analyze ARIS usage logs and propose optimizations to SKILL.md files, reviewer prompts, and workflow defaults.",
     "Analyze ARIS usage logs and propose optimizations to SKILL.md files, reviewer prompts, and workflow defaults. Outer-loop harness optimization inspired by Meta-H"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "labarchive-integration",
@@ -49826,8 +49671,7 @@
     "Autonomous design space exploration loop for computer architecture and EDA.",
     "Autonomous design space exploration loop for computer architecture and EDA. Runs a program, analyzes results, tunes parameters, and iterates until objective is"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "paper-claim-audit",
@@ -49840,8 +49684,7 @@
     "Zero-context verification that every number, comparison, and scope claim in the paper matches raw result files.",
     "Zero-context verification that every number, comparison, and scope claim in the paper matches raw result files. Uses a fresh Codex reviewer with no prior contex"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "astropy",
@@ -49932,8 +49775,7 @@
     "Creates devcontainers with Claude Code, language-specific tooling (Python/Node/Rust/Go), and persistent volumes.",
     "Creates devcontainers with Claude Code, language-specific tooling (Python/Node/Rust/Go), and persistent volumes. Use when adding devcontainer support to a proje"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "pytdc",
@@ -49999,20 +49841,6 @@
     "Diagnose and accelerate large data movement — ingestion, backfill, export, ETL, warehouse loading, manifest catch-up, and table synchronization — by isolating t"
    ],
    "origin": "github"
-  },
-  {
-   "name": "writing-skills",
-   "domain": "web-development",
-   "source_path": "references/skills/writing-skills/INSTRUCTIONS.md",
-   "triggers": [
-    "writing-skills",
-    "writing skills",
-    "web development writing skills",
-    "Use when creating new skills, editing existing skills, or verifying skills work before deployment",
-    "Use when creating new skills, editing existing skills, or verifying skills work before deployment (github-skills)"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "ux-researcher-designer",
@@ -50207,8 +50035,7 @@
     "AWS Bedrock AgentCore comprehensive expert for deploying and managing AI agents at scale.",
     "AWS Bedrock AgentCore comprehensive expert for deploying and managing AI agents at scale. Use when working with any AgentCore service including Gateway, Runtime"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "benchmark-optimization-loop",
@@ -50234,8 +50061,7 @@
     "Export a promoted fine-tuned model in the right deployment format",
     "Export a promoted fine-tuned model in the right deployment format — merged safetensors, LoRA-only, GGUF with imatrix, or FP8. Use after a checkpoint passes prom"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "meta-apply",
@@ -50248,8 +50074,7 @@
     "Privileged applier that LANDS meta-optimize / corpus-audit patches the user approved",
     "Privileged applier that LANDS meta-optimize / corpus-audit patches the user approved — the ONLY skill permitted to mutate the skill corpus from a self-modificat"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "api-onboarding",
@@ -50327,8 +50152,7 @@
     "Diagnoses pipeline performance issues -- slow jobs, expensive queries, latency trends -- using Monte Carlo's cross-platf",
     "Diagnoses pipeline performance issues -- slow jobs, expensive queries, latency trends -- using Monte Carlo's cross-platform observability. Uses a tiered investi"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "semantic-scholar",
@@ -50341,8 +50165,7 @@
     "Search published venue papers (IEEE, ACM, Springer, etc.) via Semantic Scholar API.",
     "Search published venue papers (IEEE, ACM, Springer, etc.) via Semantic Scholar API. Complements /arxiv (preprints) with citation counts, venue metadata, and TLD"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "tiledbvcf",
@@ -50774,20 +50597,6 @@
    "origin": "github"
   },
   {
-   "name": "shopify-expert",
-   "domain": "web-development",
-   "source_path": "references/skills/shopify-expert/INSTRUCTIONS.md",
-   "triggers": [
-    "shopify-expert",
-    "shopify expert",
-    "web development shopify expert",
-    "Builds and debugs Shopify themes (.liquid files, theme.json, sections), develops custom Shopify apps (shopify.app.toml,",
-    "Builds and debugs Shopify themes (.liquid files, theme.json, sections), develops custom Shopify apps (shopify.app.toml, OAuth, webhooks), and implements Storefr"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "commit-message-storyteller",
    "domain": "content-writing",
    "source_path": "references/skills/commit-message-storyteller/INSTRUCTIONS.md",
@@ -51058,8 +50867,7 @@
     "Investigate and remediate data quality alerts using Monte Carlo MCP tools.",
     "Investigate and remediate data quality alerts using Monte Carlo MCP tools. Runs root cause analysis, assesses blast radius, discovers available tools (MCP/CLI/A"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "burp-suite-testing",
@@ -51098,8 +50906,7 @@
     "Generate publication-quality AI illustrations for academic papers using Gemini image generation.",
     "Generate publication-quality AI illustrations for academic papers using Gemini image generation. Creates architecture diagrams, method illustrations with Claude"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "pymoo",
@@ -51128,20 +50935,6 @@
    "origin": "github"
   },
   {
-   "name": "fine-tuning-serving-openpi",
-   "domain": "web-development",
-   "source_path": "references/skills/fine-tuning-serving-openpi/INSTRUCTIONS.md",
-   "triggers": [
-    "fine-tuning-serving-openpi",
-    "fine tuning serving openpi",
-    "web development fine tuning serving openpi",
-    "Fine-tune and serve Physical Intelligence OpenPI models (pi0, pi0-fast, pi0.5) using JAX or PyTorch backends for robot p",
-    "Fine-tune and serve Physical Intelligence OpenPI models (pi0, pi0-fast, pi0.5) using JAX or PyTorch backends for robot policy inference across ALOHA, DROID, and"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "huggingface-tokenizers",
    "domain": "web-development",
    "source_path": "references/skills/huggingface-tokenizers/INSTRUCTIONS.md",
@@ -51166,20 +50959,6 @@
     "Design, create, review, migrate, or troubleshoot Azure Developer CLI (azd) projects using current Microsoft guidance. Use for azd, azure.yaml, AZD templates, Bi"
    ],
    "origin": "github"
-  },
-  {
-   "name": "pubmed-database",
-   "domain": "web-development",
-   "source_path": "references/skills/pubmed-database/INSTRUCTIONS.md",
-   "triggers": [
-    "pubmed-database",
-    "pubmed database",
-    "web development pubmed database",
-    "Direct REST API access to PubMed.",
-    "Direct REST API access to PubMed. Advanced Boolean/MeSH queries, E-utilities API, batch processing, citation management. For Python workflows, prefer biopython"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "lovable-cleanup",
@@ -51296,8 +51075,7 @@
     "Workflow 4: Submission rebuttal pipeline.",
     "Workflow 4: Submission rebuttal pipeline. Parses external reviews, enforces coverage and grounding, drafts a safe text-only rebuttal under venue limits, and man"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "result-to-claim",
@@ -51310,8 +51088,7 @@
     "Use when experiments complete to judge what claims the results support, what they don't, and what evidence is still miss",
     "Use when experiments complete to judge what claims the results support, what they don't, and what evidence is still missing. A secondary Codex agent evaluates r"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "zarr-python",
@@ -51389,8 +51166,7 @@
     "Persistent research knowledge base that accumulates papers, ideas, experiments, claims, and their relationships across t",
     "Persistent research knowledge base that accumulates papers, ideas, experiments, claims, and their relationships across the entire research lifecycle. Inspired b"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "offensive-shellcode",
@@ -51783,20 +51559,6 @@
    "origin": "github"
   },
   {
-   "name": "llava",
-   "domain": "web-development",
-   "source_path": "references/skills/llava/INSTRUCTIONS.md",
-   "triggers": [
-    "llava",
-    "llava (github-skills)",
-    "web development llava",
-    "Large Language and Vision Assistant.",
-    "Large Language and Vision Assistant. Enables visual instruction tuning and image-based conversations. Combines CLIP vision encoder with Vicuna/LLaMA language mo"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "simpy",
    "domain": "web-development",
    "source_path": "references/skills/simpy/INSTRUCTIONS.md",
@@ -51885,8 +51647,7 @@
     "Run GPU workloads on Modal",
     "Run GPU workloads on Modal — training, fine-tuning, inference, batch processing. Zero-config serverless: no SSH, no Docker, auto scale-to-zero. Use when user sa"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "crewai-multi-agent",
@@ -51977,8 +51738,7 @@
     "SSH job queue for multi-seed/multi-config ML experiments with OOM-aware retry, stale-screen cleanup, and wave-transition",
     "SSH job queue for multi-seed/multi-config ML experiments with OOM-aware retry, stale-screen cleanup, and wave-transition race prevention. Use when user says \"ba"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "microservices-architect",
@@ -52070,20 +51830,6 @@
     "Generates images and text via reverse-engineered Gemini Web API. Supports text generation, image generation from prompts, reference images for vision input, and"
    ],
    "origin": "github"
-  },
-  {
-   "name": "grounded-vault",
-   "domain": "web-development",
-   "source_path": "references/skills/grounded-vault/INSTRUCTIONS.md",
-   "triggers": [
-    "grounded-vault",
-    "grounded vault",
-    "web development grounded vault",
-    "Use when maintaining a durable Markdown knowledge store that agents compile from sources, when every number or quote in",
-    "Use when maintaining a durable Markdown knowledge store that agents compile from sources, when every number or quote in a wiki page must trace back to an immuta"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "atlas-ledger",
@@ -52200,8 +51946,7 @@
     "Generates optimized prompts for AI tools.",
     "Generates optimized prompts for AI tools. Activates only when the user explicitly asks to write, fix, improve, or adapt a prompt for a specific AI tool (LLM, Cu"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "linkedin-content",
@@ -52279,8 +52024,7 @@
     "All pods run in namespace crs.",
     "All pods run in namespace crs. Use when pods in the crs namespace are in CrashLoopBackOff, OOMKilled, or restarting, multiple services restart simultaneously (c"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "monte-carlo-storage-cost-analysis",
@@ -52293,8 +52037,7 @@
     "Analyze a warehouse for stale, unused, or redundant tables via the analyze_storage_costs MCP tool.",
     "Analyze a warehouse for stale, unused, or redundant tables via the analyze_storage_costs MCP tool. Classifies waste patterns and table categories, computes safe"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "code-review-excellence",
@@ -52388,20 +52131,6 @@
    "origin": "github"
   },
   {
-   "name": "optimizing-attention-flash",
-   "domain": "agents-automation",
-   "source_path": "references/skills/optimizing-attention-flash/INSTRUCTIONS.md",
-   "triggers": [
-    "optimizing-attention-flash",
-    "optimizing attention flash",
-    "agents automation optimizing attention flash",
-    "Optimizes transformer attention with Flash Attention for 2-4x speedup and 10-20x memory reduction.",
-    "Optimizes transformer attention with Flash Attention for 2-4x speedup and 10-20x memory reduction. Use when training/running transformers with long sequences (>"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "baoyu-comic",
    "domain": "knowledge-research",
    "source_path": "references/skills/baoyu-comic/INSTRUCTIONS.md",
@@ -52413,20 +52142,6 @@
     "Knowledge comic creator supporting multiple art styles and tones. Creates original educational comics with detailed panel layouts and batch-capable image genera"
    ],
    "origin": "github"
-  },
-  {
-   "name": "uniprot-database",
-   "domain": "web-development",
-   "source_path": "references/skills/uniprot-database/INSTRUCTIONS.md",
-   "triggers": [
-    "uniprot-database",
-    "uniprot database",
-    "web development uniprot database",
-    "Direct REST API access to UniProt.",
-    "Direct REST API access to UniProt. Protein searches, FASTA retrieval, ID mapping, Swiss-Prot/TrEMBL. For Python workflows with multiple databases, prefer bioser"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "cc-skill-security-review",
@@ -52478,8 +52193,7 @@
     "Align a fine-tuned model with preference data using DPO, ORPO, KTO, or SimPO.",
     "Align a fine-tuned model with preference data using DPO, ORPO, KTO, or SimPO. Use when preference pairs or thumbs-up/down feedback exist, when choosing between"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "pysam",
@@ -52531,8 +52245,7 @@
     "AWS cost optimization, monitoring, and operational excellence expert.",
     "AWS cost optimization, monitoring, and operational excellence expert. Use when analyzing AWS bills, estimating costs, setting up CloudWatch alarms, querying log"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "cohesivity",
@@ -52610,8 +52323,7 @@
     "Trustpilot customer reviews scraper for any company listed on trustpilot.com",
     "Trustpilot customer reviews scraper for any company listed on trustpilot.com — given a company domain (e.g. shopify.com, apple.com, shopwagandtail.com) plus opt"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "facebook-page-posts",
@@ -52624,8 +52336,7 @@
     "Scrapes posts from any public Facebook Page timeline, returning structured data including post text, author info, engage",
     "Scrapes posts from any public Facebook Page timeline, returning structured data including post text, author info, engagement metrics (likes/comments/shares), re"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "facebook-groups-scrape-posts",
@@ -52638,8 +52349,7 @@
     "Scrapes posts from a Facebook group given a group URL, sort order, and desired count",
     "Scrapes posts from a Facebook group given a group URL, sort order, and desired count — returns structured post metadata including post_id, permalink, author, ti"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "xiaohongshu-search",
@@ -52652,8 +52362,7 @@
     "Search Xiaohongshu (RedNote / xhs) notes by keyword and return a paginated list with title, author, engagement stats (li",
     "Search Xiaohongshu (RedNote / xhs) notes by keyword and return a paginated list with title, author, engagement stats (likes, collects, comments), cover image UR"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "x-tweet-by-handle",
@@ -52705,8 +52414,7 @@
     "Trustpilot company profile lookup on trustpilot.com",
     "Trustpilot company profile lookup on trustpilot.com — input a company domain (e.g. apple.com, shopify.com, shopwagandtail.com) and extract company metadata: off"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "threads-user-posts",
@@ -52719,22 +52427,7 @@
     "Fetches public posts from a Threads user's profile page, extracting post text, engagement metrics, and media info from S",
     "Fetches public posts from a Threads user's profile page, extracting post text, engagement metrics, and media info from SSR-embedded JSON. Use when user asks to"
    ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
-   "name": "xiaohongshu-auto-posting",
-   "domain": "agents-automation",
-   "source_path": "references/skills/xiaohongshu-auto-posting/INSTRUCTIONS.md",
-   "triggers": [
-    "xiaohongshu-auto-posting",
-    "xiaohongshu auto posting",
-    "agents automation xiaohongshu auto posting",
-    "Automates the complete Xiaohongshu (XHS / Little Red Book) content operation workflow: pain-point topic collection → sty",
-    "Automates the complete Xiaohongshu (XHS / Little Red Book) content operation workflow: pain-point topic collection → style case collection → topic selection → c"
-   ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "x-tweet-search-by-query",
@@ -52760,8 +52453,7 @@
     "Fetch Xiaohongshu (RedNote / xhs) user profile information and their published notes list by user ID, returning nickname",
     "Fetch Xiaohongshu (RedNote / xhs) user profile information and their published notes list by user ID, returning nickname, bio, follower/following counts, engage"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "facebook-ads-library-search",
@@ -52774,8 +52466,7 @@
     "Searches Meta Ad Library (Facebook/Instagram/WhatsApp ads) by keyword or Facebook page ID and extracts ad details includ",
     "Searches Meta Ad Library (Facebook/Instagram/WhatsApp ads) by keyword or Facebook page ID and extracts ad details including creatives, copy, CTA, publisher plat"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "xiaohongshu-note-detail",
@@ -52788,8 +52479,7 @@
     "Fetch Xiaohongshu (RedNote / xhs) note detail and comments by note ID, returning title, description, author info, engage",
     "Fetch Xiaohongshu (RedNote / xhs) note detail and comments by note ID, returning title, description, author info, engagement stats, tags, and paginated comment"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "facebook-page-profile-posts",
@@ -52802,8 +52492,7 @@
     "Scrapes posts from any public Facebook Page or personal Profile timeline, returning structured data including post text,",
     "Scrapes posts from any public Facebook Page or personal Profile timeline, returning structured data including post text, author info with profile picture, engag"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "x-tweet-by-conversation",
@@ -52819,20 +52508,6 @@
    "origin": "github"
   },
   {
-   "name": "x-keyword-comment",
-   "domain": "business-sales",
-   "source_path": "references/skills/x-keyword-comment/INSTRUCTIONS.md",
-   "triggers": [
-    "x-keyword-comment",
-    "x keyword comment",
-    "business sales x keyword comment",
-    "X (Twitter) keyword-based reply posting: search tweets by keyword, read each tweet's content, generate contextual replie",
-    "X (Twitter) keyword-based reply posting: search tweets by keyword, read each tweet's content, generate contextual replies from a configured brand persona, and p"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "xiaohongshu-search-full",
    "domain": "web-development",
    "source_path": "references/skills/xiaohongshu-search-full/INSTRUCTIONS.md",
@@ -52843,8 +52518,7 @@
     "Search Xiaohongshu (XHS / RedNote) notes by keyword with full field extraction including body text, topics/tags, image l",
     "Search Xiaohongshu (XHS / RedNote) notes by keyword with full field extraction including body text, topics/tags, image list URLs, video stream URL, publish time"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "x-tweet-search",
@@ -52857,8 +52531,7 @@
     "Scrapes tweets from X (Twitter) by search query, user handle, or direct URL",
     "Scrapes tweets from X (Twitter) by search query, user handle, or direct URL — returns full tweet data including text, author info, engagement metrics, media, an"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "google-search-serp",
@@ -52871,8 +52544,7 @@
     "Extracts Google Search results page (SERP) data including organic results, paid ads, related searches, People Also Ask q",
     "Extracts Google Search results page (SERP) data including organic results, paid ads, related searches, People Also Ask questions, AI Overview text, and total re"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "webcrawler-deep-crawl",
@@ -52885,8 +52557,7 @@
     "Deep-crawl any website from start URLs, return per-page LLM-ready text/markdown/HTML plus metadata (title, description,",
     "Deep-crawl any website from start URLs, return per-page LLM-ready text/markdown/HTML plus metadata (title, description, author, language, canonical URL, OG) and"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "producthunt-launches",
@@ -52899,8 +52570,7 @@
     "Scrape Product Hunt daily/weekly/monthly/yearly leaderboard launches with full product details, maker profiles, and webs",
     "Scrape Product Hunt daily/weekly/monthly/yearly leaderboard launches with full product details, maker profiles, and website contact info. Use when user mentions"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "youtube-channel-business-email",
@@ -52913,8 +52583,7 @@
     "YouTube channel business email and contact extractor: accepts a channel id (UCxxx), handle (@name), or URL",
     "YouTube channel business email and contact extractor: accepts a channel id (UCxxx), handle (@name), or URL; navigates the channel About view; extracts the busin"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "google-maps-contact-extract",
@@ -52927,8 +52596,7 @@
     "Extracts business contact details from Google Maps search results and place detail pages, then visits each business webs",
     "Extracts business contact details from Google Maps search results and place detail pages, then visits each business website to collect emails, phone numbers, an"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "linkedin-jobs-search",
@@ -52941,8 +52609,7 @@
     "Search LinkedIn job listings and extract full job details.",
     "Search LinkedIn job listings and extract full job details. Supports filtering by work type (remote/on-site/hybrid), contract type (full-time/part-time/contract/"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "indeed-job-search",
@@ -52955,8 +52622,7 @@
     "Scrape job listings from Indeed.com by keyword, location, and country.",
     "Scrape job listings from Indeed.com by keyword, location, and country. Returns job title, company, salary, rating, description, benefits, and apply links. Use w"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "amazon-product-detail",
@@ -52969,8 +52635,7 @@
     "Amazon product detail page scraper: extract full product data from any open Amazon product detail URL (any /dp/{asin} or",
     "Amazon product detail page scraper: extract full product data from any open Amazon product detail URL (any /dp/{asin} or /gp/product/{asin} page across all Amaz"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "amazon-bestseller-listing",
@@ -52983,8 +52648,7 @@
     "Amazon Best Sellers listing scraper: extract product cards from any Amazon Best Sellers (zgbs) or /gp/bestsellers/ categ",
     "Amazon Best Sellers listing scraper: extract product cards from any Amazon Best Sellers (zgbs) or /gp/bestsellers/ category page — returns rank (position on cha"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "amazon-alexa-qa",
@@ -52997,8 +52661,7 @@
     "Amazon Alexa for Shopping Q&A automation: submits questions to Amazon's Alexa/Rufus AI shopping assistant and collects r",
     "Amazon Alexa for Shopping Q&A automation: submits questions to Amazon's Alexa/Rufus AI shopping assistant and collects response text; supports optional keyword"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "goofish-search-list",
@@ -53011,8 +52674,7 @@
     "Scrapes second-hand item search results from Goofish (闲鱼/xianyu, goofish.com)",
     "Scrapes second-hand item search results from Goofish (闲鱼/xianyu, goofish.com) — China's largest second-hand marketplace. Input: keyword, optional sort/filter pa"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "amazon-listing-competitor-analysis-skill",
@@ -53038,8 +52700,7 @@
     "Extracts full item detail from any open eBay item URL, returning JSON with url, itemNumber, title, subTitle, categories,",
     "Extracts full item detail from any open eBay item URL, returning JSON with url, itemNumber, title, subTitle, categories, price, priceWithCurrency, currency, was"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "ebay-search-listing",
@@ -53052,8 +52713,7 @@
     "Extracts product listings from any eBay search or category page URL, returning per-item cards (itemNumber, url, title, s",
     "Extracts product listings from any eBay search or category page URL, returning per-item cards (itemNumber, url, title, subtitle, caption, price, priceWithCurren"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "etsy-product-detail",
@@ -53066,8 +52726,7 @@
     "Etsy product detail scraper: given an Etsy listing URL, returns full product detail including listingId, title, priceCur",
     "Etsy product detail scraper: given an Etsy listing URL, returns full product detail including listingId, title, priceCurrent, priceOriginal, currency, images (a"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "amazon-search-listing",
@@ -53080,8 +52739,7 @@
     "Amazon search and category listing scraper: extract product listings from any Amazon search results page, keyword search",
     "Amazon search and category listing scraper: extract product listings from any Amazon search results page, keyword search URL, or category browse page and return"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "etsy-keyword-search",
@@ -53094,8 +52752,7 @@
     "Etsy keyword search scraper: given a search keyword and optional page number, returns paginated product listings with li",
     "Etsy keyword search scraper: given a search keyword and optional page number, returns paginated product listings with listingId, shopId, title, url, image, sale"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "etsy-category-listing",
@@ -53108,8 +52765,7 @@
     "Etsy category page scraper: given an Etsy category URL (e.g.",
     "Etsy category page scraper: given an Etsy category URL (e.g. https://www.etsy.com/c/jewelry) and optional page number, returns paginated product listings with l"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "ebay-sold-listings-search",
@@ -53122,8 +52778,7 @@
     "eBay sold-listings scraper across 8 marketplaces (ebay.com/.co.uk/.de/.fr/.it/.es/.ca/.com.au).",
     "eBay sold-listings scraper across 8 marketplaces (ebay.com/.co.uk/.de/.fr/.it/.es/.ca/.com.au). Takes keyword plus filters (category, price range, item conditio"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "1688-product-detail",
@@ -53136,8 +52791,7 @@
     "Extracts comprehensive wholesale product data from 1688.com product detail pages: title, tiered pricing, SKU variants wi",
     "Extracts comprehensive wholesale product data from 1688.com product detail pages: title, tiered pricing, SKU variants with dimensions/weight, product images, se"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "walmart-product-detail",
@@ -53150,8 +52804,7 @@
     "Walmart product detail page extractor: given a walmart.com product URL (walmart.com/ip/...), extract full product data i",
     "Walmart product detail page extractor: given a walmart.com product URL (walmart.com/ip/...), extract full product data including itemId, title, brand, model, UP"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "youtube-transcript",
@@ -53164,8 +52817,7 @@
     "YouTube transcript extraction and content reformatting: given a YouTube video URL, opens the video's transcript panel, e",
     "YouTube transcript extraction and content reformatting: given a YouTube video URL, opens the video's transcript panel, extracts all timestamped segments, and tr"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "youtube-transcript-analysis-api-skill",
@@ -53441,20 +53093,6 @@
    "origin": "github"
   },
   {
-   "name": "training-llms-megatron",
-   "domain": "agents-automation",
-   "source_path": "references/skills/training-llms-megatron/INSTRUCTIONS.md",
-   "triggers": [
-    "training-llms-megatron",
-    "training llms megatron",
-    "agents automation training llms megatron",
-    "Trains large language models (2B-462B parameters) using NVIDIA Megatron-Core with advanced parallelism strategies.",
-    "Trains large language models (2B-462B parameters) using NVIDIA Megatron-Core with advanced parallelism strategies. Use when training models >1B parameters, need"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "baoyu-infographic",
    "domain": "content-writing",
    "source_path": "references/skills/baoyu-infographic/INSTRUCTIONS.md",
@@ -53517,8 +53155,7 @@
     "Generate, refine, validate, and render diagrams from natural language, notes, code, schemas, or existing diagram sources",
     "Generate, refine, validate, and render diagrams from natural language, notes, code, schemas, or existing diagram sources: flowcharts, swimlanes, attack-path gra"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "fine-tuning-expert",
@@ -53583,8 +53220,7 @@
     "Generate publication-quality academic illustrations through a local Codex app-server bridge that uses Codex native image",
     "Generate publication-quality academic illustrations through a local Codex app-server bridge that uses Codex native image generation. This is a separate experime"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "chroma",
@@ -53727,8 +53363,7 @@
     "Fill in the per-paper TODO sections of research-wiki/papers/<slug>.md pages that literature-ingest skills leave as bare",
     "Fill in the per-paper TODO sections of research-wiki/papers/<slug>.md pages that literature-ingest skills leave as bare scaffolds. Use when user says 'enrich wi"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "llamaindex",
@@ -53754,8 +53389,7 @@
     "TikTok hashtag video scraper: input a hashtag name → output paginated video list with full metadata (author profile, eng",
     "TikTok hashtag video scraper: input a hashtag name → output paginated video list with full metadata (author profile, engagement stats, music, video meta, hashta"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "ejentum-reasoning-harness",
@@ -53807,8 +53441,7 @@
     "Workflow 1.5: Bridge between idea discovery and auto review.",
     "Workflow 1.5: Bridge between idea discovery and auto review. Reads EXPERIMENT_PLAN.md, implements experiment code, deploys to GPU, collects initial results. Use"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "qdrant-model-migration",
@@ -54042,8 +53675,7 @@
     "Fine-tune vision-language models (VLMs) with supervised learning on image+text data.",
     "Fine-tune vision-language models (VLMs) with supervised learning on image+text data. Use when adapting a VLM to a visual domain or task, configuring frozen-visi"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "etsy-shop-catalog",
@@ -54056,8 +53688,7 @@
     "Etsy shop catalog scraper: given an Etsy shop URL (e.g.",
     "Etsy shop catalog scraper: given an Etsy shop URL (e.g. https://www.etsy.com/shop/{shop-name}) and optional page number, returns paginated product listings from"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "linkedin-strategy",
@@ -54083,8 +53714,7 @@
     "Create stunning, animation-rich HTML presentations from scratch or by converting PowerPoint files. (github-skills)",
     "Create stunning, animation-rich HTML presentations from scratch or by converting PowerPoint files. Use when the user wants to build a presentation, convert a PP (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "auto-review-loop",
@@ -54097,8 +53727,7 @@
     "Autonomous multi-round research review loop.",
     "Autonomous multi-round research review loop. Repeatedly reviews using Claude Code via claude-review MCP, implements fixes, and re-reviews until positive assessm"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "homelab-network-setup",
@@ -54124,8 +53753,7 @@
     "Financial statements, business segments, dividends, valuation multiples (PE/PB/PS), industry comparison, operating data,",
     "Financial statements, business segments, dividends, valuation multiples (PE/PB/PS), industry comparison, operating data, corporate actions, company and executiv"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "karpathy-coder",
@@ -54216,8 +53844,7 @@
     "Real-time quotes, K-line charts, order book, trade ticks, intraday capital flow, market sentiment temperature, trading s",
     "Real-time quotes, K-line charts, order book, trade ticks, intraday capital flow, market sentiment temperature, trading session schedule, security lists, exchang"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "skill-developer",
@@ -54347,8 +53974,7 @@
     "Analyze a Monte Carlo monitor and recommend config changes to reduce alert noise.",
     "Analyze a Monte Carlo monitor and recommend config changes to reduce alert noise. Supports metric, custom SQL, validation, and table monitors. Fetches the repor"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "wellally-tech",
@@ -54595,8 +54221,7 @@
     "Full end-to-end research pipeline: from a broad research direction through idea discovery, experiments, and review all t",
     "Full end-to-end research pipeline: from a broad research direction through idea discovery, experiments, and review all the way to a polished paper PDF. Use when"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "monetization",
@@ -54703,20 +54328,6 @@
    "origin": "github"
   },
   {
-   "name": "code-review-ai-ai-review",
-   "domain": "web-development",
-   "source_path": "references/skills/code-review-ai-ai-review/INSTRUCTIONS.md",
-   "triggers": [
-    "code-review-ai-ai-review",
-    "code review ai ai review",
-    "web development code review ai ai review",
-    "You are an expert AI-powered code review specialist combining automated static analysis, intelligent pattern recognition",
-    "You are an expert AI-powered code review specialist combining automated static analysis, intelligent pattern recognition, and modern DevOps practices. Leverage"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "framework-migration-legacy-modernize",
    "domain": "agents-automation",
    "source_path": "references/skills/framework-migration-legacy-modernize/INSTRUCTIONS.md",
@@ -54780,20 +54391,6 @@
     "You are a React component architecture expert specializing in scaffolding production-ready, accessible, and performant components. Generate complete component i"
    ],
    "origin": "github"
-  },
-  {
-   "name": "performance-testing-review-ai-review",
-   "domain": "web-development",
-   "source_path": "references/skills/performance-testing-review-ai-review/INSTRUCTIONS.md",
-   "triggers": [
-    "performance-testing-review-ai-review",
-    "performance testing review ai review",
-    "web development performance testing review ai review",
-    "You are an expert AI-powered code review specialist combining automated static analysis, intelligent pattern recognition (github-skills)",
-    "You are an expert AI-powered code review specialist combining automated static analysis, intelligent pattern recognition, and modern DevOps practices. Leverage (github-skills)"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "javascript-typescript-typescript-scaffold",
@@ -55329,20 +54926,6 @@
    "origin": "github"
   },
   {
-   "name": "implementing-llms-litgpt",
-   "domain": "agents-automation",
-   "source_path": "references/skills/implementing-llms-litgpt/INSTRUCTIONS.md",
-   "triggers": [
-    "implementing-llms-litgpt",
-    "implementing llms litgpt",
-    "agents automation implementing llms litgpt",
-    "Implements and trains LLMs using Lightning AI's LitGPT with 20+ pretrained architectures (Llama, Gemma, Phi, Qwen, Mistr",
-    "Implements and trains LLMs using Lightning AI's LitGPT with 20+ pretrained architectures (Llama, Gemma, Phi, Qwen, Mistral). Use when need clean model implement"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "gptq",
    "domain": "web-development",
    "source_path": "references/skills/gptq/INSTRUCTIONS.md",
@@ -55457,8 +55040,7 @@
     "Scrapes Instagram posts tagged at a specific location or place, returning media items with captions, like/comment counts",
     "Scrapes Instagram posts tagged at a specific location or place, returning media items with captions, like/comment counts, media URLs and user info. Use when use"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "deepread",
@@ -55861,8 +55443,7 @@
     "Comprehensive market sizing methodologies for calculating Total Addressable Market (TAM), Serviceable Available Market (",
     "Comprehensive market sizing methodologies for calculating Total Addressable Market (TAM), Serviceable Available Market (SAM), and Serviceable Obtainable Market"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "python-pro",
@@ -56148,8 +55729,7 @@
     "Searches Douyin (douyin.com) for videos by keyword and returns structured video data including author info, stats, cover",
     "Searches Douyin (douyin.com) for videos by keyword and returns structured video data including author info, stats, cover, description, hashtags, and download UR"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "legacy-modernizer",
@@ -56228,20 +55808,6 @@
     "Build real-time web applications with Azure Web PubSub SDK for Java. Use when implementing WebSocket-based messaging, live updates, chat applications, or server"
    ],
    "origin": "github"
-  },
-  {
-   "name": "defi-protocol-templates",
-   "domain": "business-sales",
-   "source_path": "references/skills/defi-protocol-templates/INSTRUCTIONS.md",
-   "triggers": [
-    "defi-protocol-templates",
-    "defi protocol templates",
-    "business sales defi protocol templates",
-    "Implement DeFi protocols with production-ready templates for staking, AMMs, governance, and lending systems.",
-    "Implement DeFi protocols with production-ready templates for staking, AMMs, governance, and lending systems. Use when building decentralized finance application"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "calendly-automation",
@@ -56410,8 +55976,7 @@
     "Generate SEO-focused images such as OG cards, hero images, schema assets, product visuals, and infographics.",
     "Generate SEO-focused images such as OG cards, hero images, schema assets, product visuals, and infographics. Use when image generation is part of an SEO workflo"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "mtls-configuration",
@@ -56489,8 +56054,7 @@
     "Fetch customer reviews for a Taobao or Tmall product by itemId, returning reviewer name, date, purchased variant, review",
     "Fetch customer reviews for a Taobao or Tmall product by itemId, returning reviewer name, date, purchased variant, review text, and photo URLs. Use when user ask"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "baoyu-slide-deck",
@@ -56750,8 +56314,7 @@
     "AWS serverless and event-driven architecture expert based on Well-Architected Framework.",
     "AWS serverless and event-driven architecture expert based on Well-Architected Framework. Use when building serverless APIs, Lambda functions, REST APIs, microse"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "leave-management",
@@ -56791,20 +56354,6 @@
     "Performs pandas DataFrame operations for data analysis, manipulation, and transformation. Use when working with pandas DataFrames, data cleaning, aggregation, m"
    ],
    "origin": "github"
-  },
-  {
-   "name": "iterate-pr",
-   "domain": "social-media",
-   "source_path": "references/skills/iterate-pr/INSTRUCTIONS.md",
-   "triggers": [
-    "iterate-pr",
-    "iterate pr",
-    "social media iterate pr",
-    "Iterate on a PR until CI passes.",
-    "Iterate on a PR until CI passes. Use when you need to fix CI failures, address review feedback, or continuously push fixes until all checks are green. Automates"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "audit-integrity",
@@ -57038,8 +56587,7 @@
     "Triage Monte Carlo alerts interactively or build an automated workflow.",
     "Triage Monte Carlo alerts interactively or build an automated workflow. Fetch, score, and troubleshoot alerts using MCP tools now, or design a reusable workflow"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "azure-eventhub-java",
@@ -57390,8 +56938,7 @@
     "Microsoft 365 Agents SDK for Python.",
     "Microsoft 365 Agents SDK for Python. Build multichannel agents for Teams/M365/Copilot Studio with aiohttp hosting, AgentApplication routing, streaming responses"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "budget-cash-flow",
@@ -57495,8 +57042,7 @@
     "Discovers Threads user accounts by keyword, extracting profile data including username, display name, verification statu",
     "Discovers Threads user accounts by keyword, extracting profile data including username, display name, verification status, biography, and follower count. Use wh"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "marketplace-rbac-audit",
@@ -57522,8 +57068,7 @@
     "Turn a repository into a cited HTML slide deck and detect the day it drifts from the code.",
     "Turn a repository into a cited HTML slide deck and detect the day it drifts from the code. Citations record file, lines, and hash; a stdlib check reports CURREN"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "setup-matt-pocock-skills",
@@ -57796,8 +57341,7 @@
     "Reverse engineer binaries with IDA Pro: decompilation, disassembly, data-flow tracking, cross-references, and IDA MCP au",
     "Reverse engineer binaries with IDA Pro: decompilation, disassembly, data-flow tracking, cross-references, and IDA MCP automation for deep static analysis of PE/"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "shellcheck-configuration",
@@ -57811,20 +57355,6 @@
     "Master ShellCheck static analysis configuration and usage for shell script quality. Use when setting up linting infrastructure, fixing code issues, or ensuring"
    ],
    "origin": "github"
-  },
-  {
-   "name": "cowork-to-code-bridge",
-   "domain": "web-development",
-   "source_path": "references/skills/cowork-to-code-bridge/INSTRUCTIONS.md",
-   "triggers": [
-    "cowork-to-code-bridge",
-    "cowork to code bridge",
-    "web development cowork to code bridge",
-    "Use an already-installed, independently verified cowork-to-code bridge to run narrowly approved actions on the user's ow",
-    "Use an already-installed, independently verified cowork-to-code bridge to run narrowly approved actions on the user's own macOS, Linux, or WSL2 machine through"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "workflow-orchestration-patterns",
@@ -57928,8 +57458,7 @@
     "Quick single-paper lookup via AlphaXiv LLM-optimized summaries with tiered source fallback.",
     "Quick single-paper lookup via AlphaXiv LLM-optimized summaries with tiered source fallback. Use when user says \"explain this paper\", \"summarize paper\", pastes a"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "openalex",
@@ -57942,8 +57471,7 @@
     "Search academic papers via OpenAlex API for open citation data, institutional affiliations, and funding information.",
     "Search academic papers via OpenAlex API for open citation data, institutional affiliations, and funding information. Use when user says \"openalex search\", \"sear"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "swift-expert",
@@ -57969,8 +57497,7 @@
     "Walmart category page scraper: input a walmart.com browse or category URL with optional page number, extract paginated p",
     "Walmart category page scraper: input a walmart.com browse or category URL with optional page number, extract paginated product listings with itemId, url, title,"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "ml-paper-writing",
@@ -58087,8 +57614,7 @@
     "Install and use the official Beatra AI Video Studio package, pinned by digest, for paid text-to-video, image-to-video, a",
     "Install and use the official Beatra AI Video Studio package, pinned by digest, for paid text-to-video, image-to-video, and video edit or extend jobs on the host"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "linkedin-content-generator",
@@ -58192,8 +57718,7 @@
     "Walmart keyword search scraper: input a search keyword and page number, navigate to walmart.com search results, extract",
     "Walmart keyword search scraper: input a search keyword and page number, navigate to walmart.com search results, extract paginated product listings with itemId,"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "azure-security-keyvault-secrets-java",
@@ -58560,20 +58085,6 @@
    "origin": "github"
   },
   {
-   "name": "appdeploy",
-   "domain": "web-development",
-   "source_path": "references/skills/appdeploy/INSTRUCTIONS.md",
-   "triggers": [
-    "appdeploy",
-    "appdeploy (github-skills)",
-    "web development appdeploy",
-    "Deploy web apps with backend APIs, database, and file storage.",
-    "Deploy web apps with backend APIs, database, and file storage. Use when the user asks to deploy or publish a website or web app and wants a public URL. Uses HTT"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "webflow-automation",
    "domain": "web-development",
    "source_path": "references/skills/webflow-automation/INSTRUCTIONS.md",
@@ -58649,8 +58160,7 @@
     "Walmart product reviews scraper: given a walmart.com product item ID, navigate to the reviews page and extract paginated",
     "Walmart product reviews scraper: given a walmart.com product item ID, navigate to the reviews page and extract paginated customer reviews including reviewId, ra"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "image-annotations",
@@ -58744,20 +58254,6 @@
    "origin": "github"
   },
   {
-   "name": "ml-pipeline-workflow",
-   "domain": "web-development",
-   "source_path": "references/skills/ml-pipeline-workflow/INSTRUCTIONS.md",
-   "triggers": [
-    "ml-pipeline-workflow",
-    "ml pipeline workflow",
-    "web development ml pipeline workflow",
-    "Build end-to-end MLOps pipelines from data preparation through model training, validation, and production deployment.",
-    "Build end-to-end MLOps pipelines from data preparation through model training, validation, and production deployment. Use when creating ML pipelines, implementi"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "interview",
    "domain": "web-development",
    "source_path": "references/skills/interview/INSTRUCTIONS.md",
@@ -58781,8 +58277,7 @@
     "TikTok user profile video scraper: input a TikTok username → output the user's profile info plus paginated video list wi",
     "TikTok user profile video scraper: input a TikTok username → output the user's profile info plus paginated video list with full metadata (engagement stats, musi"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "understand",
@@ -58990,8 +58485,7 @@
     "Create or register a canvas extension in the awesome-copilot repository.",
     "Create or register a canvas extension in the awesome-copilot repository. Use when asked to scaffold a new canvas extension, create its plugin.json, add a reusab"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "interaction-design",
@@ -59199,8 +58693,7 @@
     "Find exploitable vulnerabilities in GitHub Actions workflows.",
     "Find exploitable vulnerabilities in GitHub Actions workflows. Every finding MUST include a concrete exploitation scenario — if you can't build the attack, don't"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "linktree-link-hub",
@@ -59369,8 +58862,7 @@
     "Generate a structured paper outline from review conclusions and experiment results.",
     "Generate a structured paper outline from review conclusions and experiment results. Use when user says \\\\\\\"\\u5199\\u5927\\u7eb2\\\\\\\", \\\\\\\"paper outline\\\\\\\", \\\\\\\"pl"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "ecommerce-listing",
@@ -59383,8 +58875,7 @@
     "Extract product list from any e-commerce category page, search results page, or keyword search with filters.",
     "Extract product list from any e-commerce category page, search results page, or keyword search with filters. Returns paginated product arrays with URL, name, pr"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "antigravity-skill-orchestrator",
@@ -59410,8 +58901,7 @@
     "Master on-call shift handoffs with context transfer, escalation procedures, and documentation.",
     "Master on-call shift handoffs with context transfer, escalation procedures, and documentation. Use this skill when transitioning on-call responsibilities betwee"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "run-without-you",
@@ -59658,8 +59148,7 @@
     "Manage GPU compute jobs on the Qizhi (启智) platform using qzcli",
     "Manage GPU compute jobs on the Qizhi (启智) platform using qzcli — a kubectl-style CLI tool. Use when user says \"qzcli\", \"启智平台\", \"submit job\", \"stop job\", \"查计算组\","
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "orch-build-mvp",
@@ -59857,20 +59346,6 @@
    "origin": "github"
   },
   {
-   "name": "constitutional-ai",
-   "domain": "agents-automation",
-   "source_path": "references/skills/constitutional-ai/INSTRUCTIONS.md",
-   "triggers": [
-    "constitutional-ai",
-    "constitutional ai",
-    "agents automation constitutional ai",
-    "Anthropic's method for training harmless AI through self-improvement.",
-    "Anthropic's method for training harmless AI through self-improvement. Two-phase approach - supervised learning with self-critique/revision, then RLAIF (RL from"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "entra-agent-user",
    "domain": "web-development",
    "source_path": "references/skills/entra-agent-user/INSTRUCTIONS.md",
@@ -59946,8 +59421,7 @@
     "CSV Manual Export: a UTF-8 CSV template from a confirmed field list, empty by default, with no invented columns or value",
     "CSV Manual Export: a UTF-8 CSV template from a confirmed field list, empty by default, with no invented columns or values. Use for an import, staging or handoff"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "accounting-software-selection",
@@ -59973,8 +59447,7 @@
     "Scrapes posts from an Instagram user's profile feed including captions, media URLs, like/comment counts, timestamps and",
     "Scrapes posts from an Instagram user's profile feed including captions, media URLs, like/comment counts, timestamps and location tags. Use when user mentions sc"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "finance-billing-ops",
@@ -60117,8 +59590,7 @@
     "Autonomously improve a generated paper via Claude review through claude-review MCP → implement fixes → recompile, for 2",
     "Autonomously improve a generated paper via Claude review through claude-review MCP → implement fixes → recompile, for 2 rounds. Use when user says \\\"改论文\\\", \\\"im"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "pre-ship-gate",
@@ -60196,8 +59668,7 @@
     "Microsoft 365 Agents SDK for .NET.",
     "Microsoft 365 Agents SDK for .NET. Build multichannel agents for Teams/M365/Copilot Studio with ASP.NET Core hosting, AgentApplication routing, and MSAL-based a"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "maximalism",
@@ -60236,8 +59707,7 @@
     "Drive the radare2 CLI for binary reconnaissance, disassembly, analysis, function locating, export, and lightweight patch",
     "Drive the radare2 CLI for binary reconnaissance, disassembly, analysis, function locating, export, and lightweight patching (r2/rabin2/rasm2/radiff2) without a"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "coda-automation",
@@ -60328,22 +59798,7 @@
     "Analyze data coverage, create monitors for warehouse tables and AI agents.",
     "Analyze data coverage, create monitors for warehouse tables and AI agents. Covers coverage gaps, use-case analysis, data monitor creation, and agent observabili"
    ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
-   "name": "spatial-design",
-   "domain": "web-development",
-   "source_path": "references/skills/spatial-design/INSTRUCTIONS.md",
-   "triggers": [
-    "spatial-design",
-    "spatial design",
-    "web development spatial design",
-    "Web and App implementation guide for Spatial Design.",
-    "Web and App implementation guide for Spatial Design. Trigger when user wants environment-aware layouts, Apple Vision Pro inspiration, and mixed reality aestheti"
-   ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "events-activities",
@@ -60447,8 +59902,7 @@
     "Get a deep critical review of research from an external reviewer backend (Codex or manual).",
     "Get a deep critical review of research from an external reviewer backend (Codex or manual). Use when user says \"review my research\", \"help me review\", \"get exte"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "evolving-ai-agents",
@@ -60682,8 +60136,7 @@
     "Run an end-to-end workflow that chains `research-refine` and `experiment-plan`.",
     "Run an end-to-end workflow that chains `research-refine` and `experiment-plan`. Use when the user wants a one-shot pipeline from vague research direction to foc"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "block-no-verify-hook",
@@ -61219,20 +60672,6 @@
    "origin": "github"
   },
   {
-   "name": "llamaguard",
-   "domain": "web-development",
-   "source_path": "references/skills/llamaguard/INSTRUCTIONS.md",
-   "triggers": [
-    "llamaguard",
-    "llamaguard (github-skills)",
-    "web development llamaguard",
-    "Meta's 7-8B specialized moderation model for LLM input/output filtering.",
-    "Meta's 7-8B specialized moderation model for LLM input/output filtering. 6 safety categories - violence/hate, sexual content, weapons, substances, self-harm, cr"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "offensive-wpa3-sae",
    "domain": "web-development",
    "source_path": "references/skills/offensive-wpa3-sae/INSTRUCTIONS.md",
@@ -61321,8 +60760,7 @@
     "Scaffold, write, debug, and enhance enterprise-grade Playwright E2E tests in Java using Page Object Model, JUnit 5, Allu",
     "Scaffold, write, debug, and enhance enterprise-grade Playwright E2E tests in Java using Page Object Model, JUnit 5, Allure reporting, and parallel execution."
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "presentation-deck",
@@ -61465,8 +60903,7 @@
     "Searches Google to discover social media profiles associated with a person, brand, or username",
     "Searches Google to discover social media profiles associated with a person, brand, or username; returns platform name, profile URL, username, bio snippet, and f"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "azure-ai-translation-text-py",
@@ -61557,8 +60994,7 @@
     "Geracao de imagens humanizadas via Google AI Studio (Gemini).",
     "Geracao de imagens humanizadas via Google AI Studio (Gemini). Fotos realistas estilo influencer ou educacional com iluminacao natural e imperfeicoes sutis."
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "editorial-design",
@@ -61730,20 +61166,6 @@
    "origin": "github"
   },
   {
-   "name": "spatial-computing-ui",
-   "domain": "web-development",
-   "source_path": "references/skills/spatial-computing-ui/INSTRUCTIONS.md",
-   "triggers": [
-    "spatial-computing-ui",
-    "spatial computing ui",
-    "web development spatial computing ui",
-    "Web and App implementation guide for Spatial Computing UI.",
-    "Web and App implementation guide for Spatial Computing UI. Trigger when user wants floating elements, environmental awareness, and Apple Vision Pro style."
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "neo-brutalism",
    "domain": "web-development",
    "source_path": "references/skills/neo-brutalism/INSTRUCTIONS.md",
@@ -61897,8 +61319,7 @@
     "Fetches comments from an Instagram post including comment text, username, timestamp, like count and reply count.",
     "Fetches comments from an Instagram post including comment text, username, timestamp, like count and reply count. Use when user mentions Instagram comments scrap"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "threads-keyword-search",
@@ -61911,8 +61332,7 @@
     "Searches Threads posts by keyword or hashtag and returns matching posts with engagement metrics, extracted from SSR-embe",
     "Searches Threads posts by keyword or hashtag and returns matching posts with engagement metrics, extracted from SSR-embedded JSON. Use when user asks to search"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "brendangregg-use-tsa",
@@ -62227,20 +61647,6 @@
    "origin": "github"
   },
   {
-   "name": "duotone-design",
-   "domain": "web-development",
-   "source_path": "references/skills/duotone-design/INSTRUCTIONS.md",
-   "triggers": [
-    "duotone-design",
-    "duotone design",
-    "web development duotone design",
-    "Web and App implementation guide for Duotone Design.",
-    "Web and App implementation guide for Duotone Design. Trigger when user wants two-color schemes, striking imagery, and Spotify-like playlist aesthetics."
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "filesystem-context",
    "domain": "prompt-requirements",
    "source_path": "references/skills/filesystem-context/INSTRUCTIONS.md",
@@ -62527,20 +61933,6 @@
    "origin": "github"
   },
   {
-   "name": "synthwave",
-   "domain": "web-development",
-   "source_path": "references/skills/synthwave/INSTRUCTIONS.md",
-   "triggers": [
-    "synthwave",
-    "synthwave (github-skills)",
-    "web development synthwave",
-    "Web and App implementation guide for Synthwave.",
-    "Web and App implementation guide for Synthwave. Trigger when user wants 80s-inspired neon, dark backgrounds, outrun grids, and Miami Vice aesthetics."
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "amplitude-automation",
    "domain": "agents-automation",
    "source_path": "references/skills/amplitude-automation/INSTRUCTIONS.md",
@@ -62645,20 +62037,6 @@
    "origin": "github"
   },
   {
-   "name": "distributed-llm-pretraining-torchtitan",
-   "domain": "agents-automation",
-   "source_path": "references/skills/distributed-llm-pretraining-torchtitan/INSTRUCTIONS.md",
-   "triggers": [
-    "distributed-llm-pretraining-torchtitan",
-    "distributed llm pretraining torchtitan",
-    "agents automation distributed llm pretraining torchtitan",
-    "Provides PyTorch-native distributed LLM pretraining using torchtitan with 4D parallelism (FSDP2, TP, PP, CP).",
-    "Provides PyTorch-native distributed LLM pretraining using torchtitan with 4D parallelism (FSDP2, TP, PP, CP). Use when pretraining Llama 3.1, DeepSeek V3, or cu"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "instagram-hashtag-posts",
    "domain": "web-development",
    "source_path": "references/skills/instagram-hashtag-posts/INSTRUCTIONS.md",
@@ -62669,8 +62047,7 @@
     "Scrapes Instagram posts by hashtag, returning media items with captions, like/comment counts, media URLs and user info f",
     "Scrapes Instagram posts by hashtag, returning media items with captions, like/comment counts, media URLs and user info from the hashtag explore feed. Use when u"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "ui-screenshots",
@@ -62709,8 +62086,7 @@
     "Operate and extend NanoClaw, ECC's zero-dependency session-aware REPL, with persistent markdown-backed sessions and slas",
     "Operate and extend NanoClaw, ECC's zero-dependency session-aware REPL, with persistent markdown-backed sessions and slash commands for model switching, skill lo"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "email-drafter",
@@ -62892,8 +62268,7 @@
     "Your purpose is now is to create reusable command line scripts and utilities for using the Hugging Face API, allowing ch",
     "Your purpose is now is to create reusable command line scripts and utilities for using the Hugging Face API, allowing chaining, piping and intermediate processi"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "soc2-compliance",
@@ -63117,20 +62492,6 @@
    "origin": "github"
   },
   {
-   "name": "retro-design",
-   "domain": "web-development",
-   "source_path": "references/skills/retro-design/INSTRUCTIONS.md",
-   "triggers": [
-    "retro-design",
-    "retro design",
-    "web development retro design",
-    "Web and App implementation guide for Retro Design (60s-80s).",
-    "Web and App implementation guide for Retro Design (60s-80s). Trigger when user wants vintage aesthetics, warm muted colors, and nostalgic layouts."
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "vaporwave",
    "domain": "web-development",
    "source_path": "references/skills/vaporwave/INSTRUCTIONS.md",
@@ -63157,20 +62518,6 @@
    "origin": "github"
   },
   {
-   "name": "task-intelligence",
-   "domain": "agents-automation",
-   "source_path": "references/skills/task-intelligence/INSTRUCTIONS.md",
-   "triggers": [
-    "task-intelligence",
-    "task intelligence",
-    "agents automation task intelligence",
-    "Protocolo de Inteligência Pré-Tarefa",
-    "Protocolo de Inteligência Pré-Tarefa — ativa TODOS os agentes relevantes do ecossistema ANTES de executar qualquer tarefa solicitada pelo usuário."
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "canva-automation",
    "domain": "agents-automation",
    "source_path": "references/skills/canva-automation/INSTRUCTIONS.md",
@@ -63182,20 +62529,6 @@
     "Automate Canva tasks via Rube MCP (Composio): designs, exports, folders, brand templates, autofill. Always search tools first for current schemas."
    ],
    "origin": "github"
-  },
-  {
-   "name": "skyvern-browser-automation",
-   "domain": "web-development",
-   "source_path": "references/skills/skyvern-browser-automation/INSTRUCTIONS.md",
-   "triggers": [
-    "skyvern-browser-automation",
-    "skyvern browser automation",
-    "web development skyvern browser automation",
-    "AI-powered browser automation",
-    "AI-powered browser automation — navigate sites, fill forms, extract structured data, log in with stored credentials, and build reusable workflows."
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "comfyui-gateway",
@@ -63351,8 +62684,7 @@
     "Azure Speech to Text REST API for short audio (Python).",
     "Azure Speech to Text REST API for short audio (Python). Use for simple speech recognition of audio files up to 60 seconds without the Speech SDK."
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "tax-register",
@@ -63378,8 +62710,7 @@
     "Deploy containerized frontend + backend applications to Azure Container Apps with remote builds, managed identity, and i",
     "Deploy containerized frontend + backend applications to Azure Container Apps with remote builds, managed identity, and idempotent infrastructure."
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "python-observability",
@@ -63496,8 +62827,7 @@
     "Azure AI Search SDK for .NET (Azure.Search.Documents).",
     "Azure AI Search SDK for .NET (Azure.Search.Documents). Use for building search applications with full-text, vector, semantic, and hybrid search."
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "code-refactoring-tech-debt",
@@ -63589,20 +62919,6 @@
     "Creates custom Semgrep rules for detecting security vulnerabilities, bug patterns, and code patterns. Use when writing Semgrep rules or building custom static a"
    ],
    "origin": "github"
-  },
-  {
-   "name": "update-llms",
-   "domain": "agents-automation",
-   "source_path": "references/skills/update-llms/INSTRUCTIONS.md",
-   "triggers": [
-    "update-llms",
-    "update llms",
-    "agents automation update llms",
-    "Update the llms.txt file in the root folder to reflect changes in documentation or specifications following the llms.txt",
-    "Update the llms.txt file in the root folder to reflect changes in documentation or specifications following the llms.txt specification at https://llmstxt.org/"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "power-bi-performance-troubleshooting",
@@ -63732,8 +63048,7 @@
     "Generate and rank research ideas given a broad direction.",
     "Generate and rank research ideas given a broad direction. Use when user says \\\"\\u627eidea\\\", \\\"brainstorm ideas\\\", \\\"generate research ideas\\\", \\\"what can we wo"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "arxiv",
@@ -63746,8 +63061,7 @@
     "Search, download, and summarize academic papers from arXiv.",
     "Search, download, and summarize academic papers from arXiv. Use when user says \"search arxiv\", \"download paper\", \"fetch arxiv\", \"arxiv search\", \"get paper pdf\","
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "migrating-oracle-to-postgres-stored-procedures",
@@ -63969,20 +63283,6 @@
     "Go from reverse engineering to a working exploit: stack/heap/kernel pwn workflows with pwntools, libc-database, ROP, and stabilization from CTF to authorized re"
    ],
    "origin": "github"
-  },
-  {
-   "name": "layered-design",
-   "domain": "web-development",
-   "source_path": "references/skills/layered-design/INSTRUCTIONS.md",
-   "triggers": [
-    "layered-design",
-    "layered design",
-    "web development layered design",
-    "Web and App implementation guide for Layered Design.",
-    "Web and App implementation guide for Layered Design. Trigger when user wants multiple depth levels, floating panels, and overlapping content."
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "skill-sentinel",
@@ -64242,8 +63542,7 @@
     "Extract complete product information from any e-commerce product page.",
     "Extract complete product information from any e-commerce product page. Returns name, price, currency, brand, images, description, SKU/ASIN/EAN/UPC/GTIN/MPN iden"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "tiktok-search-videos",
@@ -64256,8 +63555,7 @@
     "TikTok keyword search video scraper: input search keyword → output paginated video list with full metadata (author, enga",
     "TikTok keyword search video scraper: input search keyword → output paginated video list with full metadata (author, engagement stats, music, video meta). Use wh"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "java-architect",
@@ -64387,8 +63685,7 @@
     "Search Taobao and Tmall product listings by keyword, returning paginated product cards with title, price, shop, image, s",
     "Search Taobao and Tmall product listings by keyword, returning paginated product cards with title, price, shop, image, sales, and tags. Use when user asks to se"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "golang-pro",
@@ -64428,20 +63725,6 @@
     "Azure AI Document Translation SDK for batch translation of documents with format preservation. Use for translating Word, PDF, Excel, PowerPoint, and other docum"
    ],
    "origin": "github"
-  },
-  {
-   "name": "humanize-chinese",
-   "domain": "agents-automation",
-   "source_path": "references/skills/humanize-chinese/INSTRUCTIONS.md",
-   "triggers": [
-    "humanize-chinese",
-    "humanize chinese",
-    "agents automation humanize chinese",
-    "Detect and rewrite AI-like Chinese text with a practical workflow for scoring, humanization, academic AIGC reduction, an",
-    "Detect and rewrite AI-like Chinese text with a practical workflow for scoring, humanization, academic AIGC reduction, and style conversion. Use when the user as"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "sendblue-cli",
@@ -64987,8 +64270,7 @@
     "Draft LaTeX paper section by section from an outline.",
     "Draft LaTeX paper section by section from an outline. Use when user says \\\\\\\"\\u5199\\u8bba\\u6587\\\\\\\", \\\\\\\"write paper\\\\\\\", \\\\\\\"draft LaTeX\\\\\\\", \\\\\\\"\\u5f00\\u59cb\\"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "accesslint-diff",
@@ -65261,8 +64543,7 @@
     "Fetch full product detail from a Taobao or Tmall product page by itemId, returning title, price, shop info, images, SKU",
     "Fetch full product detail from a Taobao or Tmall product page by itemId, returning title, price, shop info, images, SKU variants, and product attributes. Use wh"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "research-lit",
@@ -65275,8 +64556,7 @@
     "Search and analyze research papers, find related work, summarize key ideas.",
     "Search and analyze research papers, find related work, summarize key ideas. Use when user says \\\"find papers\\\", \\\"related work\\\", \\\"literature review\\\", \\\"what"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "wiki-vitepress",
@@ -65445,8 +64725,7 @@
     "Extracts full detail data from a single Goofish (闲鱼/xianyu, goofish.com) second-hand item page.",
     "Extracts full detail data from a single Goofish (闲鱼/xianyu, goofish.com) second-hand item page. Input: item URL or item ID. Output: title, price, seller info (n"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "reports-analytics",
@@ -65719,8 +64998,7 @@
     "Find logic bugs in a single file or function via semi-formal execution tracing (Premises → Trace → Divergence → Trigger",
     "Find logic bugs in a single file or function via semi-formal execution tracing (Premises → Trace → Divergence → Trigger → Remedy)."
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "design-taste-frontend",
@@ -66240,8 +65518,7 @@
     "Write the full patent specification from claims and invention disclosure.",
     "Write the full patent specification from claims and invention disclosure. Use when user says \\\"撰写说明书\\\", \\\"write specification\\\", \\\"写说明书\\\", \\\"patent description\\"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "beachhead-segment",
@@ -66436,8 +65713,7 @@
     "Install and use the official Ecommerce Product Images package, pinned by digest, for paid hosted work on the Beatra serv",
     "Install and use the official Ecommerce Product Images package, pinned by digest, for paid hosted work on the Beatra service."
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "youtube-summarizer",
@@ -66489,8 +65765,7 @@
     "Master comprehensive evaluation strategies for LLM applications, from automated metrics to human evaluation and A/B test",
     "Master comprehensive evaluation strategies for LLM applications, from automated metrics to human evaluation and A/B testing."
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "multi-agent-architect",
@@ -66672,8 +65947,7 @@
     "Install and use the official AI Voiceover Generator package, pinned by digest, for paid hosted work on the Beatra servic",
     "Install and use the official AI Voiceover Generator package, pinned by digest, for paid hosted work on the Beatra service."
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "mlops-engineer",
@@ -66725,8 +65999,7 @@
     "Install and use the official Multilingual Voiceover package, pinned by digest, for paid hosted work on the Beatra servic",
     "Install and use the official Multilingual Voiceover package, pinned by digest, for paid hosted work on the Beatra service."
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "use-dom",
@@ -66752,8 +66025,7 @@
     "Install and use the official AI Product Photography package, pinned by digest, for paid hosted work on the Beatra servic",
     "Install and use the official AI Product Photography package, pinned by digest, for paid hosted work on the Beatra service."
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "n8n-binary-and-data",
@@ -66925,20 +66197,6 @@
    "origin": "github"
   },
   {
-   "name": "emergency-card",
-   "domain": "general",
-   "source_path": "references/skills/emergency-card/INSTRUCTIONS.md",
-   "triggers": [
-    "emergency-card",
-    "emergency card",
-    "general emergency card",
-    "生成紧急情况下快速访问的医疗信息摘要卡片。当用户需要旅行、就诊准备、紧急情况或询问\"紧急信息\"、\"医疗卡片\"、\"急救信息\"时使用此技能。提取关键信息（过敏、用药、急症、植入物），支持多格式输出（JSON、文本、二维码），用于急救或快速就医。",
-    "生成紧急情况下快速访问的医疗信息摘要卡片。当用户需要旅行、就诊准备、紧急情况或询问\"紧急信息\"、\"医疗卡片\"、\"急救信息\"时使用此技能。提取关键信息（过敏、用药、急症、植入物），支持多格式输出（JSON、文本、二维码），用于急救或快速就医。 (github-skills)"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "frontend-optimistic-mutations",
    "domain": "web-development",
    "source_path": "references/skills/frontend-optimistic-mutations/INSTRUCTIONS.md",
@@ -66988,8 +66246,7 @@
     "Install and use the official AI Podcast Voiceover package, pinned by digest, for paid hosted work on the Beatra service.",
     "Install and use the official AI Podcast Voiceover package, pinned by digest, for paid hosted work on the Beatra service. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "onboarding-playbook",
@@ -67015,8 +66272,7 @@
     "Install and use the official Talking Avatar Video package, pinned by digest, for paid hosted work on the Beatra service.",
     "Install and use the official Talking Avatar Video package, pinned by digest, for paid hosted work on the Beatra service. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "azure-cosmos-db-py",
@@ -67029,8 +66285,7 @@
     "Build production-grade Azure Cosmos DB NoSQL services following clean code, security best practices, and TDD principles.",
     "Build production-grade Azure Cosmos DB NoSQL services following clean code, security best practices, and TDD principles. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "deployment-engineer",
@@ -67303,8 +66558,7 @@
     "Install and use the official AI Music Generator package, pinned by digest, for paid hosted work on the Beatra service.",
     "Install and use the official AI Music Generator package, pinned by digest, for paid hosted work on the Beatra service. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "beatra",
@@ -67317,8 +66571,7 @@
     "Install and use the official AI Media Generator package, pinned by digest, for paid hosted work on the Beatra service.",
     "Install and use the official AI Media Generator package, pinned by digest, for paid hosted work on the Beatra service. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "viral-video-teardown-remake",
@@ -67331,8 +66584,7 @@
     "Install and use the official Viral Video Remake package, pinned by digest, for paid hosted work on the Beatra service.",
     "Install and use the official Viral Video Remake package, pinned by digest, for paid hosted work on the Beatra service. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "network-engineer",
@@ -67384,8 +66636,7 @@
     "Install and use the official AI Image Generator package, pinned by digest, for paid hosted work on the Beatra service.",
     "Install and use the official AI Image Generator package, pinned by digest, for paid hosted work on the Beatra service. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "mdpr-skill",
@@ -67438,20 +66689,6 @@
     "Vision-language pre-training framework bridging frozen image encoders and LLMs. Use when you need image captioning, visual question answering, image-text retrie"
    ],
    "origin": "github"
-  },
-  {
-   "name": "mailtrap-testing-with-sandbox",
-   "domain": "web-development",
-   "source_path": "references/skills/mailtrap-testing-with-sandbox/INSTRUCTIONS.md",
-   "triggers": [
-    "mailtrap-testing-with-sandbox",
-    "mailtrap testing with sandbox",
-    "web development mailtrap testing with sandbox",
-    "Capture outbound email in Mailtrap Email Sandbox for development, staging, CI, HTML inspection, spam checks, and fake in",
-    "Capture outbound email in Mailtrap Email Sandbox for development, staging, CI, HTML inspection, spam checks, and fake inbox tests."
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "flat-design",
@@ -67555,8 +66792,7 @@
     "Azure Service Bus SDK for Python messaging.",
     "Azure Service Bus SDK for Python messaging. Use for queues, topics, subscriptions, and enterprise messaging patterns."
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "azure-mgmt-botservice-py",
@@ -67650,20 +66886,6 @@
    "origin": "github"
   },
   {
-   "name": "verl-rl-training",
-   "domain": "web-development",
-   "source_path": "references/skills/verl-rl-training/INSTRUCTIONS.md",
-   "triggers": [
-    "verl-rl-training",
-    "verl rl training",
-    "web development verl rl training",
-    "Provides guidance for training LLMs with reinforcement learning using verl (Volcano Engine RL).",
-    "Provides guidance for training LLMs with reinforcement learning using verl (Volcano Engine RL). Use when implementing RLHF, GRPO, PPO, or other RL algorithms fo"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "case-review",
    "domain": "agents-automation",
    "source_path": "references/skills/case-review/INSTRUCTIONS.md",
@@ -67687,8 +66909,7 @@
     "One API and one credential for frontier and open-source LLMs, built into your Neon branch and powered by Databricks.",
     "One API and one credential for frontier and open-source LLMs, built into your Neon branch and powered by Databricks. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "database-optimizer",
@@ -67704,20 +66925,6 @@
    "origin": "github"
   },
   {
-   "name": "paypal-integration",
-   "domain": "agents-automation",
-   "source_path": "references/skills/paypal-integration/INSTRUCTIONS.md",
-   "triggers": [
-    "paypal-integration",
-    "paypal integration",
-    "agents automation paypal integration",
-    "Master PayPal payment integration including Express Checkout, IPN handling, recurring billing, and refund workflows.",
-    "Master PayPal payment integration including Express Checkout, IPN handling, recurring billing, and refund workflows. (github-skills)"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "voice-cloning-studio",
    "domain": "video-ai",
    "source_path": "references/skills/voice-cloning-studio/INSTRUCTIONS.md",
@@ -67728,8 +66935,7 @@
     "Install and use the official AI Voice Cloning package, pinned by digest, for paid hosted work on the Beatra service.",
     "Install and use the official AI Voice Cloning package, pinned by digest, for paid hosted work on the Beatra service. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "flowhunt-skill",
@@ -67924,8 +67130,7 @@
     "Install and use the official AI Poster Maker package, pinned by digest, for paid hosted work on the Beatra service.",
     "Install and use the official AI Poster Maker package, pinned by digest, for paid hosted work on the Beatra service. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "security-scanning-security-hardening",
@@ -68081,8 +67286,7 @@
     "Install and use the official Lyrics to Song package, pinned by digest, for paid hosted work on the Beatra service.",
     "Install and use the official Lyrics to Song package, pinned by digest, for paid hosted work on the Beatra service. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "backend-architect",
@@ -68108,8 +67312,7 @@
     "Install and use the official Photo to Anime package, pinned by digest, for paid hosted work on the Beatra service.",
     "Install and use the official Photo to Anime package, pinned by digest, for paid hosted work on the Beatra service. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "azure-mgmt-applicationinsights-dotnet",
@@ -68136,20 +67339,6 @@
     "Automate Close CRM tasks via Rube MCP (Composio): create leads, manage calls/SMS, handle tasks, and track notes. Always search tools first for current schemas."
    ],
    "origin": "github"
-  },
-  {
-   "name": "mamba-architecture",
-   "domain": "agents-automation",
-   "source_path": "references/skills/mamba-architecture/INSTRUCTIONS.md",
-   "triggers": [
-    "mamba-architecture",
-    "mamba architecture",
-    "agents automation mamba architecture",
-    "State-space model with O(n) complexity vs Transformers' O(n²).",
-    "State-space model with O(n) complexity vs Transformers' O(n²). 5× faster inference, million-token sequences, no KV cache. Selective SSM with hardware-aware desi"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "acreadiness-assess",
@@ -68214,8 +67403,7 @@
     "Install and use the official AI Logo Maker package, pinned by digest, for paid hosted work on the Beatra service.",
     "Install and use the official AI Logo Maker package, pinned by digest, for paid hosted work on the Beatra service. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "azure-compute-batch-java",
@@ -68267,8 +67455,7 @@
     "Autonomous multi-round research review loop using MiniMax API.",
     "Autonomous multi-round research review loop using MiniMax API. Use when you want to use MiniMax instead of Codex MCP for external review. Trigger with \\\"auto re"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "aws-well-architected-review",
@@ -68297,20 +67484,6 @@
    "origin": "github"
   },
   {
-   "name": "slime-rl-training",
-   "domain": "agents-automation",
-   "source_path": "references/skills/slime-rl-training/INSTRUCTIONS.md",
-   "triggers": [
-    "slime-rl-training",
-    "slime rl training",
-    "agents automation slime rl training",
-    "Provides guidance for LLM post-training with RL using slime, a Megatron+SGLang framework.",
-    "Provides guidance for LLM post-training with RL using slime, a Megatron+SGLang framework. Use when training GLM models, implementing custom data generation work"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "tiktok-video-detail",
    "domain": "data-spreadsheets",
    "source_path": "references/skills/tiktok-video-detail/INSTRUCTIONS.md",
@@ -68321,8 +67494,7 @@
     "TikTok single video detail scraper: input a TikTok video URL → output full video metadata (author profile, engagement st",
     "TikTok single video detail scraper: input a TikTok video URL → output full video metadata (author profile, engagement stats, music, video meta, hashtags, mentio"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "dotnet-timezone",
@@ -68374,8 +67546,7 @@
     "Browse a Taobao or Tmall shop's product catalog by shopId, returning paginated product listings with itemId and title.",
     "Browse a Taobao or Tmall shop's product catalog by shopId, returning paginated product listings with itemId and title. Use when user asks to scrape a Taobao sho"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "azure-ai-vision-imageanalysis-py",
@@ -68505,8 +67676,7 @@
     "Search and progressively read open-access academic papers through DeepXiv.",
     "Search and progressively read open-access academic papers through DeepXiv. Use when the user wants layered paper access, section-level reading, trending papers,"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "dropthehassle-publish",
@@ -68558,8 +67728,7 @@
     "Instrument browser/web apps with the Application Insights JavaScript SDK (@microsoft/applicationinsights-web).",
     "Instrument browser/web apps with the Application Insights JavaScript SDK (@microsoft/applicationinsights-web). (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "database-admin",
@@ -68741,8 +67910,7 @@
     "Extracts Airbnb accommodation search results from a destination query via SSR-embedded data, returning listing ID, URL,",
     "Extracts Airbnb accommodation search results from a destination query via SSR-embedded data, returning listing ID, URL, name, coordinates, rating, price, photos"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "writing-great-skills",
@@ -68989,8 +68157,7 @@
     "Analyze cryptographic code to detect operations that leak secret data through execution timing variations.",
     "Analyze cryptographic code to detect operations that leak secret data through execution timing variations. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "security-auditor",
@@ -69016,8 +68183,7 @@
     "Curated upstream guidance for Monte Carlo Analyze Root Cause",
     "Curated upstream guidance for Monte Carlo Analyze Root Cause; use when the workflow matches the user goal."
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "docs-as-marketing",
@@ -69082,8 +68248,7 @@
     "Audit SQL for the cost & performance anti-patterns that burn warehouse credits.",
     "Audit SQL for the cost & performance anti-patterns that burn warehouse credits. Scores warehouse health 0-100 and outputs a prioritized cost-reduction plan for"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "webdriverio-skill",
@@ -69473,8 +68638,7 @@
     "Draft patent claims for an invention.",
     "Draft patent claims for an invention. Use when user says \\\"撰写权利要求\\\", \\\"draft claims\\\", \\\"写权利要求书\\\", \\\"claim drafting\\\", or wants to create patent claims. The cor"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "weather-pipeline-performance-diagnosis",
@@ -69488,20 +68652,6 @@
     "Diagnose slow weather-data workflows by measuring discovery, transfer, parsing, scientific processing, and rendering separately before changing code."
    ],
    "origin": "github"
-  },
-  {
-   "name": "segment-anything-model",
-   "domain": "agents-automation",
-   "source_path": "references/skills/segment-anything-model/INSTRUCTIONS.md",
-   "triggers": [
-    "segment-anything-model",
-    "segment anything model",
-    "agents automation segment anything model",
-    "Foundation model for image segmentation with zero-shot transfer.",
-    "Foundation model for image segmentation with zero-shot transfer. Use when you need to segment any object in images using points, boxes, or masks as prompts, or"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "google-maps-api-skill",
@@ -69644,8 +68794,7 @@
     "Curated upstream guidance for Monte Carlo Asset Health",
     "Curated upstream guidance for Monte Carlo Asset Health; use when the workflow matches the user goal."
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "python-configuration",
@@ -69843,34 +68992,6 @@
    "origin": "github"
   },
   {
-   "name": "cmux",
-   "domain": "agents-automation",
-   "source_path": "references/skills/cmux/INSTRUCTIONS.md",
-   "triggers": [
-    "cmux",
-    "cmux (github-skills)",
-    "agents automation cmux",
-    "Control cmux workspaces, panes, surfaces, and agent sessions safely from macOS terminal workflows.",
-    "Control cmux workspaces, panes, surfaces, and agent sessions safely from macOS terminal workflows. (github-skills)"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
-   "name": "using-neon",
-   "domain": "web-development",
-   "source_path": "references/skills/using-neon/INSTRUCTIONS.md",
-   "triggers": [
-    "using-neon",
-    "using neon",
-    "web development using neon",
-    "Neon is a serverless Postgres platform that separates compute and storage to offer autoscaling, branching, instant resto",
-    "Neon is a serverless Postgres platform that separates compute and storage to offer autoscaling, branching, instant restore, and scale-to-zero. It's fully compat"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "terraform-module-library",
    "domain": "web-development",
    "source_path": "references/skills/terraform-module-library/INSTRUCTIONS.md",
@@ -69897,20 +69018,6 @@
    "origin": "github"
   },
   {
-   "name": "sast-configuration",
-   "domain": "web-development",
-   "source_path": "references/skills/sast-configuration/INSTRUCTIONS.md",
-   "triggers": [
-    "sast-configuration",
-    "sast configuration",
-    "web development sast configuration",
-    "Static Application Security Testing (SAST) tool setup, configuration, and custom rule creation for comprehensive securit",
-    "Static Application Security Testing (SAST) tool setup, configuration, and custom rule creation for comprehensive security scanning across multiple programming l"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "monorepo-management",
    "domain": "graphic-design",
    "source_path": "references/skills/monorepo-management/INSTRUCTIONS.md",
@@ -69922,20 +69029,6 @@
     "Master monorepo management with Turborepo, Nx, and pnpm workspaces to build efficient, scalable multi-package repositories with optimized builds and dependency"
    ],
    "origin": "github"
-  },
-  {
-   "name": "prometheus-configuration",
-   "domain": "data-spreadsheets",
-   "source_path": "references/skills/prometheus-configuration/INSTRUCTIONS.md",
-   "triggers": [
-    "prometheus-configuration",
-    "prometheus configuration",
-    "data spreadsheets prometheus configuration",
-    "Complete guide to Prometheus setup, metric collection, scrape configuration, and recording rules.",
-    "Complete guide to Prometheus setup, metric collection, scrape configuration, and recording rules. (github-skills)"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "frontend-observability",
@@ -69987,8 +69080,7 @@
     "Extract customer reviews from any e-commerce product page or reviews page.",
     "Extract customer reviews from any e-commerce product page or reviews page. Returns reviewer name, star rating, date, review title, review body, verified purchas"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "aws-cdk-development",
@@ -70001,8 +69093,7 @@
     "AWS Cloud Development Kit (CDK) expert for building cloud infrastructure with TypeScript/Python.",
     "AWS Cloud Development Kit (CDK) expert for building cloud infrastructure with TypeScript/Python. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "azure-keyvault-secrets-ts",
@@ -70041,8 +69132,7 @@
     "Fetches complete Airbnb listing details for a given numeric listing ID via the internal GraphQL API, returning title, ro",
     "Fetches complete Airbnb listing details for a given numeric listing ID via the internal GraphQL API, returning title, room type, description, amenities, photos,"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "azure-ai-voicelive-java",
@@ -70354,8 +69444,7 @@
     "Autonomous research review loop using any OpenAI-compatible LLM API.",
     "Autonomous research review loop using any OpenAI-compatible LLM API. Configure via llm-chat MCP server or environment variables. Trigger with \"auto review loop"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "nanogpt",
@@ -70459,8 +69548,7 @@
     "Build persistent agents on Azure AI Foundry using the Microsoft Agent Framework Python SDK.",
     "Build persistent agents on Azure AI Foundry using the Microsoft Agent Framework Python SDK. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "youtube-influencer-finder-api-skill",
@@ -70486,8 +69574,7 @@
     "Deploy and run ML experiments on local or remote GPU servers.",
     "Deploy and run ML experiments on local or remote GPU servers. Use when user says \\\"run experiment\\\", \\\"deploy to server\\\", \\\"\\u8dd1\\u5b9e\\u9a8c\\\", or needs to l"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "boardroom",
@@ -70617,8 +69704,7 @@
     "Rent, manage, and destroy GPU instances on vast.ai.",
     "Rent, manage, and destroy GPU instances on vast.ai. Use when user says \\\"rent gpu\\\", \\\"vast.ai\\\", \\\"rent a server\\\", \\\"cloud gpu\\\", or needs on-demand GPU witho"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "prompt-engineering",
@@ -70800,8 +69886,7 @@
     "SST v4 (Ion) expert for managing AWS resources as code with the Pulumi-backed framework.",
     "SST v4 (Ion) expert for managing AWS resources as code with the Pulumi-backed framework. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "flutter-expert",
@@ -71035,8 +70120,7 @@
     "Dynamic multi-agent workflows",
     "Dynamic multi-agent workflows — plan first, then orchestrate parallel agents with adversarial verification via the local odw daemon. Use when the user asks for"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "design-md",
@@ -71075,8 +70159,7 @@
     "Azure Event Hubs SDK for Python streaming.",
     "Azure Event Hubs SDK for Python streaming. Use for high-throughput event ingestion, producers, consumers, and checkpointing."
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "typescript-mcp-server-generator",
@@ -71206,8 +70289,7 @@
     "Read or configure the vault filing methodology and suggest destinations for planned knowledge creation under Generic, LY",
     "Read or configure the vault filing methodology and suggest destinations for planned knowledge creation under Generic, LYT, PARA, or Zettelkasten. Use for wiki m"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "python-type-safety",
@@ -71233,8 +70315,7 @@
     "Build real-time voice AI applications with bidirectional WebSocket communication.",
     "Build real-time voice AI applications with bidirectional WebSocket communication. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "azure-monitor-opentelemetry-ts",
@@ -71653,20 +70734,6 @@
    "origin": "github"
   },
   {
-   "name": "azure-cosmos-py",
-   "domain": "web-development",
-   "source_path": "references/skills/azure-cosmos-py/INSTRUCTIONS.md",
-   "triggers": [
-    "azure-cosmos-py",
-    "azure cosmos py",
-    "web development azure cosmos py",
-    "Azure Cosmos DB SDK for Python (NoSQL API).",
-    "Azure Cosmos DB SDK for Python (NoSQL API). Use for document CRUD, queries, containers, and globally distributed data."
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "rag-observability-evals",
    "domain": "agents-automation",
    "source_path": "references/skills/rag-observability-evals/INSTRUCTIONS.md",
@@ -71704,20 +70771,6 @@
     "OpenInference semantic conventions and instrumentation for Phoenix AI observability. Use when implementing LLM tracing, creating custom spans, or deploying to p"
    ],
    "origin": "github"
-  },
-  {
-   "name": "create-llms",
-   "domain": "agents-automation",
-   "source_path": "references/skills/create-llms/INSTRUCTIONS.md",
-   "triggers": [
-    "create-llms",
-    "create llms",
-    "agents automation create llms",
-    "Create an llms.txt file from scratch based on repository structure following the llms.txt specification at https://llmst",
-    "Create an llms.txt file from scratch based on repository structure following the llms.txt specification at https://llmstxt.org/"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "azure-appconfiguration-ts",
@@ -71938,8 +70991,7 @@
     "Build AI applications on Microsoft Foundry using the azure-ai-projects SDK.",
     "Build AI applications on Microsoft Foundry using the azure-ai-projects SDK. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "bb-methodology",
@@ -71955,20 +71007,6 @@
    "origin": "github"
   },
   {
-   "name": "platform-engineering",
-   "domain": "graphic-design",
-   "source_path": "references/skills/platform-engineering/INSTRUCTIONS.md",
-   "triggers": [
-    "platform-engineering",
-    "platform engineering",
-    "graphic design platform engineering",
-    "Build internal developer platforms (IDPs) with self-service infrastructure,",
-    "Build internal developer platforms (IDPs) with self-service infrastructure, (github-skills)"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "codex-delegate",
    "domain": "web-development",
    "source_path": "references/skills/codex-delegate/INSTRUCTIONS.md",
@@ -71979,8 +71017,7 @@
     "Delegate coding tasks to the OpenAI Codex CLI only when the user explicitly",
     "Delegate coding tasks to the OpenAI Codex CLI only when the user explicitly (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "blue-green-deploy",
@@ -72150,20 +71187,6 @@
     "Implement GDPR data protection requirements. Configure consent management,"
    ],
    "origin": "github"
-  },
-  {
-   "name": "model-serving-kubernetes",
-   "domain": "web-development",
-   "source_path": "references/skills/model-serving-kubernetes/INSTRUCTIONS.md",
-   "triggers": [
-    "model-serving-kubernetes",
-    "model serving kubernetes",
-    "web development model serving kubernetes",
-    "Deploy ML models on Kubernetes with KServe (formerly KFServing) and NVIDIA",
-    "Deploy ML models on Kubernetes with KServe (formerly KFServing) and NVIDIA (github-skills)"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "terraform-azure",
@@ -72348,20 +71371,6 @@
    "origin": "github"
   },
   {
-   "name": "hugging-face-datasets",
-   "domain": "web-development",
-   "source_path": "references/skills/hugging-face-datasets/INSTRUCTIONS.md",
-   "triggers": [
-    "hugging-face-datasets",
-    "hugging face datasets",
-    "web development hugging face datasets",
-    "Create and manage datasets on Hugging Face Hub.",
-    "Create and manage datasets on Hugging Face Hub. Supports initializing repos, defining configs/system prompts, streaming row updates, and SQL-based dataset query"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "llm-prompt-optimizer",
    "domain": "agents-automation",
    "source_path": "references/skills/llm-prompt-optimizer/INSTRUCTIONS.md",
@@ -72398,8 +71407,7 @@
     "Babysit a pull request through its bot review rounds: verify, fix, reply,",
     "Babysit a pull request through its bot review rounds: verify, fix, reply, (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "gcp-cloud-functions",
@@ -72454,20 +71462,6 @@
    "origin": "github"
   },
   {
-   "name": "helm-charts",
-   "domain": "web-development",
-   "source_path": "references/skills/helm-charts/INSTRUCTIONS.md",
-   "triggers": [
-    "helm-charts",
-    "helm charts",
-    "web development helm charts",
-    "Create, manage, and deploy Helm charts for Kubernetes package management.",
-    "Create, manage, and deploy Helm charts for Kubernetes package management. (github-skills)"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "opentelemetry",
    "domain": "general",
    "source_path": "references/skills/opentelemetry/INSTRUCTIONS.md",
@@ -72491,8 +71485,7 @@
     "Delegate coding tasks to the Z.AI ZCode CLI only when the user explicitly",
     "Delegate coding tasks to the Z.AI ZCode CLI only when the user explicitly (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "grok-delegate",
@@ -72505,8 +71498,7 @@
     "Delegate coding tasks to the Grok Build CLI only when the user explicitly",
     "Delegate coding tasks to the Grok Build CLI only when the user explicitly (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "reverse-proxy",
@@ -72662,8 +71654,7 @@
     "Delegate coding tasks to the Command Code CLI (`cmd`) only when the user",
     "Delegate coding tasks to the Command Code CLI (`cmd`) only when the user (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "cursor-delegate",
@@ -72676,8 +71667,7 @@
     "Delegate coding tasks to the Cursor Agent CLI (`cursor-agent`) only when",
     "Delegate coding tasks to the Cursor Agent CLI (`cursor-agent`) only when (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "llmops-platform-engineering",
@@ -72797,20 +71787,6 @@
    "origin": "github"
   },
   {
-   "name": "azure-devops",
-   "domain": "web-development",
-   "source_path": "references/skills/azure-devops/INSTRUCTIONS.md",
-   "triggers": [
-    "azure-devops",
-    "azure devops",
-    "web development azure devops",
-    "Set up Azure Pipelines for CI/CD, configure build and release pipelines,",
-    "Set up Azure Pipelines for CI/CD, configure build and release pipelines, (github-skills)"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "multi-tenant-llm-hosting",
    "domain": "agents-automation",
    "source_path": "references/skills/multi-tenant-llm-hosting/INSTRUCTIONS.md",
@@ -72913,20 +71889,6 @@
     "Simulate a structured peer-review process using multiple specialized agents to validate designs, surface hidden assumptions, and identify failure modes before i"
    ],
    "origin": "github"
-  },
-  {
-   "name": "nsfw-ai-spicyapi",
-   "domain": "web-development",
-   "source_path": "references/skills/nsfw-ai-spicyapi/INSTRUCTIONS.md",
-   "triggers": [
-    "nsfw-ai-spicyapi",
-    "nsfw ai spicyapi",
-    "web development nsfw ai spicyapi",
-    "Generate adult (18+) images, image-to-video clips and image edits through the SpicyAPI API, with a cost quote before eve",
-    "Generate adult (18+) images, image-to-video clips and image edits through the SpicyAPI API, with a cost quote before every paid run and adults-only / consent ru"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "browser-cdp",
@@ -73069,8 +72031,7 @@
     "Delegate coding tasks to the OpenCode CLI only when the user explicitly",
     "Delegate coding tasks to the OpenCode CLI only when the user explicitly (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "block-storage",
@@ -73161,8 +72122,7 @@
     "Delegate coding tasks to Oh My Pi (`omp`) only when the user explicitly",
     "Delegate coding tasks to Oh My Pi (`omp`) only when the user explicitly (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "performance-tuning",
@@ -73282,20 +72242,6 @@
    "origin": "github"
   },
   {
-   "name": "cloudformation",
-   "domain": "web-development",
-   "source_path": "references/skills/cloudformation/INSTRUCTIONS.md",
-   "triggers": [
-    "cloudformation",
-    "cloudformation (github-skills)",
-    "web development cloudformation",
-    "Deploy AWS resources with CloudFormation templates.",
-    "Deploy AWS resources with CloudFormation templates. Create stacks, use"
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "us-property-data",
    "domain": "data-spreadsheets",
    "source_path": "references/skills/us-property-data/INSTRUCTIONS.md",
@@ -73319,8 +72265,7 @@
     "Delegate coding tasks to Aider (`aider`) only when the user explicitly",
     "Delegate coding tasks to Aider (`aider`) only when the user explicitly (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "llm-inference-scaling",
@@ -73593,8 +72538,7 @@
     "Fetches Instagram user profile metadata including bio, follower count, following count, post count, verification status",
     "Fetches Instagram user profile metadata including bio, follower count, following count, post count, verification status and other profile details. Use when user"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "claude-delegate",
@@ -73607,8 +72551,7 @@
     "Delegate coding tasks to a separate Claude Code CLI process or Claude",
     "Delegate coding tasks to a separate Claude Code CLI process or Claude (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "ai-pipeline-orchestration",
@@ -73634,8 +72577,7 @@
     "Delegate coding tasks to the Google Antigravity CLI (`agy`) only when",
     "Delegate coding tasks to the Google Antigravity CLI (`agy`) only when (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "vpn-setup",
@@ -73752,8 +72694,7 @@
     "Delegate coding tasks to the Warp Agent CLI (`oz`) only when the user",
     "Delegate coding tasks to the Warp Agent CLI (`oz`) only when the user (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "cloudflare-workers",
@@ -74234,8 +73175,7 @@
     "Structure a raw invention idea into a formal invention disclosure.",
     "Structure a raw invention idea into a formal invention disclosure. Use when user says \\\"构建发明\\\", \\\"structure invention\\\", \\\"发明构建\\\", \\\"invention disclosure\\\", or"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "bash-pro",
@@ -74560,8 +73500,7 @@
     "Extract seller or merchant profile data from marketplace platform seller pages.",
     "Extract seller or merchant profile data from marketplace platform seller pages. Returns seller name, rating, review count, positive feedback percentage, joined"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "podman",
@@ -74614,20 +73553,6 @@
     "IAM policy review, hardening, and least privilege implementation (github-skills)"
    ],
    "origin": "github"
-  },
-  {
-   "name": "makepad-deployment",
-   "domain": "web-development",
-   "source_path": "references/skills/makepad-deployment/INSTRUCTIONS.md",
-   "triggers": [
-    "makepad-deployment",
-    "makepad deployment",
-    "web development makepad deployment",
-    "CRITICAL: Use for Makepad packaging and deployment.",
-    "CRITICAL: Use for Makepad packaging and deployment. Triggers on:"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "google-no-code",
@@ -75250,8 +74175,7 @@
     "Verify research idea novelty against recent literature.",
     "Verify research idea novelty against recent literature. Use when user says \"查新\", \"novelty check\", \"有没有人做过\", \"check novelty\", or wants to verify a research idea"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "copilot-delegate",
@@ -75264,8 +74188,7 @@
     "Delegate coding tasks to the GitHub Copilot CLI (`copilot`) only when",
     "Delegate coding tasks to the GitHub Copilot CLI (`copilot`) only when (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "agent-workflow-designer",
@@ -75409,20 +74332,6 @@
     "Configure Grafana Loki for log aggregation and analysis. (github-skills)"
    ],
    "origin": "github"
-  },
-  {
-   "name": "simpo-training",
-   "domain": "agents-automation",
-   "source_path": "references/skills/simpo-training/INSTRUCTIONS.md",
-   "triggers": [
-    "simpo-training",
-    "simpo training",
-    "agents automation simpo training",
-    "Simple Preference Optimization for LLM alignment.",
-    "Simple Preference Optimization for LLM alignment. Reference-free alternative to DPO with better performance (+6.4 points on AlpacaEval 2.0). No reference model"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "conductor-status",
@@ -75605,20 +74514,6 @@
     "Use when working with comprehensive review full review (github-skills)"
    ],
    "origin": "github"
-  },
-  {
-   "name": "azure-mgmt-apimanagement-dotnet",
-   "domain": "web-development",
-   "source_path": "references/skills/azure-mgmt-apimanagement-dotnet/INSTRUCTIONS.md",
-   "triggers": [
-    "azure-mgmt-apimanagement-dotnet",
-    "azure mgmt apimanagement dotnet",
-    "web development azure mgmt apimanagement dotnet",
-    "Azure Resource Manager SDK for API Management in .NET.",
-    "Azure Resource Manager SDK for API Management in .NET. (github-skills)"
-   ],
-   "origin": "github",
-   "incomplete": true
   },
   {
    "name": "database-schema-designer",
@@ -75956,8 +74851,7 @@
     "Azure Resource Manager SDK for Azure SQL in .NET.",
     "Azure Resource Manager SDK for Azure SQL in .NET. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "hunt-business-logic",
@@ -76009,8 +74903,7 @@
     "Distill colleague, relationship, or celebrity source material into reusable Person Profiles for agents.",
     "Distill colleague, relationship, or celebrity source material into reusable Person Profiles for agents. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "radix-ui-design-system",
@@ -76062,8 +74955,7 @@
     "Polis Protocol: A Self-Optimizing City of Agents",
     "Polis Protocol: A Self-Optimizing City of Agents (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "gpu-server-management",
@@ -76193,8 +75085,7 @@
     "Compile patent application into jurisdiction-specific filing format.",
     "Compile patent application into jurisdiction-specific filing format. Use when user says \\\"格式转换\\\", \\\"jurisdiction format\\\", \\\"国家格式\\\", \\\"compile patent\\\", or want"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "cli-developer",
@@ -76600,20 +75491,6 @@
    "origin": "github"
   },
   {
-   "name": "polis-protocol",
-   "domain": "agents-automation",
-   "source_path": "references/skills/polis-protocol/INSTRUCTIONS.md",
-   "triggers": [
-    "polis-protocol",
-    "polis protocol",
-    "agents automation polis protocol",
-    "Coordinate multi-vendor AI agents as a self-improving team",
-    "Coordinate multi-vendor AI agents as a self-improving team — a learning router assigns work by track record and citizens can amend the protocol's own rules."
-   ],
-   "origin": "github",
-   "incomplete": true
-  },
-  {
    "name": "azure-smart-city-iot-solution-builder",
    "domain": "web-development",
    "source_path": "references/skills/azure-smart-city-iot-solution-builder/INSTRUCTIONS.md",
@@ -76650,8 +75527,7 @@
     "Azure Resource Manager SDK for Cosmos DB in .NET.",
     "Azure Resource Manager SDK for Cosmos DB in .NET. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "tech-stack-evaluator",
@@ -77535,8 +76411,7 @@
     "Delegate coding tasks to the Pi coding agent CLI (`pi`) only when the",
     "Delegate coding tasks to the Pi coding agent CLI (`pi`) only when the (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "agent-harness-construction",
@@ -77900,8 +76775,7 @@
     "Evaluate, adapt, and safely install Context Kit personal context artifacts for Claude Code or adjacent agent workflows.",
     "Evaluate, adapt, and safely install Context Kit personal context artifacts for Claude Code or adjacent agent workflows. (github-skills)"
    ],
-   "origin": "github",
-   "incomplete": true
+   "origin": "github"
   },
   {
    "name": "hunt-grpc",
@@ -78507,6 +77381,230 @@
     "Writing documents for agents. Use when creating or editing skills, or modifying AGENTS.md or CLAUDE.md."
    ],
    "origin": "github"
+  },
+  {
+   "name": "online-vscode-mobile-coding",
+   "domain": "web-development",
+   "source_path": "references/skills/online-vscode-mobile-coding/INSTRUCTIONS.md",
+   "triggers": [
+    "online-vscode-mobile-coding",
+    "online vscode mobile coding",
+    "web-development online vscode mobile coding",
+    "کدنویسی آنلاین با VS Code از آیفون",
+    "کدنویسی آنلاین با VS Code از آیفون و موبایل، بدون لپ‌تاپ — وقتی کاربر می‌خواهد از گوشی وارد VS Code شود، این ریپو را ویرایش کند یا از کنسول آیفون مگااسکیل و مسیریاب مهارت‌ها استفاده کند.",
+    "code online ba vscode az iphone"
+   ],
+   "origin": "pack"
+  },
+  {
+   "name": "hermes-autonomous-self-improvement",
+   "domain": "agents-automation",
+   "source_path": "references/skills/hermes-autonomous-self-improvement/INSTRUCTIONS.md",
+   "triggers": [
+    "hermes-autonomous-self-improvement",
+    "hermes autonomous self improvement",
+    "agents-automation hermes autonomous self improvement",
+    "خود اصلاحی هرمس",
+    "ارتقای هرمس بر اساس مموری چت",
+    "یادگیری خودکار هرمس با تایید کلاد",
+    "hermes self improvement claude code karpathy",
+    "eslah va erteghaye hermes ba taiid claude",
+    "hermes skill evolution"
+   ],
+   "origin": "pack"
+  },
+  {
+   "name": "pro-code-review",
+   "domain": "web-development",
+   "source_path": "references/skills/pro-code-review/INSTRUCTIONS.md",
+   "triggers": [
+    "pro-code-review",
+    "pro code review",
+    "web development pro code review",
+    "بازبینی حرفه‌ای کد (correctness، امنیت، کارایی، تست، خوانایی) با شدت‌بندی یافته‌ها و مسیر واقعی خرابی",
+    "بازبینی حرفه‌ای کد (correctness، امنیت، کارایی، تست، خوانایی) با شدت‌بندی یافته‌ها و مسیر واقعی خرابی — وقتی کاربر می‌خواهد یک diff، PR یا فایل را قبل از merge ",
+    "review pull request",
+    "بازبینی کد",
+    "ریویو کد",
+    "بررسی PR",
+    "کد ریویو"
+   ]
+  },
+  {
+   "name": "pro-debugging",
+   "domain": "web-development",
+   "source_path": "references/skills/pro-debugging/INSTRUCTIONS.md",
+   "triggers": [
+    "pro-debugging",
+    "pro debugging",
+    "web development pro debugging",
+    "دیباگ نظام‌مند و ریشه‌یابی باگ (بازتولید، فرضیه، bisect، اصلاح، تست regression) برای هر زبان و فریم‌ورکی",
+    "دیباگ نظام‌مند و ریشه‌یابی باگ (بازتولید، فرضیه، bisect، اصلاح، تست regression) برای هر زبان و فریم‌ورکی — وقتی کاربر می‌گوید چیزی کار نمی‌کند، خطا می‌دهد، کند ",
+    "debug",
+    "debugging",
+    "fix bug",
+    "root cause",
+    "دیباگ",
+    "رفع باگ",
+    "پیدا کردن باگ",
+    "خطا میده",
+    "کار نمیکنه"
+   ]
+  },
+  {
+   "name": "pro-testing-strategy",
+   "domain": "web-development",
+   "source_path": "references/skills/pro-testing-strategy/INSTRUCTIONS.md",
+   "triggers": [
+    "pro-testing-strategy",
+    "pro testing strategy",
+    "web development pro testing strategy",
+    "طراحی استراتژی تست حرفه‌ای (unit، integration، e2e، TDD، پوشش ریسک) با Vitest/Jest، Playwright و pytest",
+    "طراحی استراتژی تست حرفه‌ای (unit، integration، e2e، TDD، پوشش ریسک) با Vitest/Jest، Playwright و pytest — وقتی کاربر می‌خواهد تست بنویسد، پوشش تست را بالا ببرد ",
+    "test strategy",
+    "write tests",
+    "unit test",
+    "e2e test",
+    "تست نویسی",
+    "نوشتن تست",
+    "پوشش تست"
+   ]
+  },
+  {
+   "name": "pro-frontend-engineering",
+   "domain": "web-development",
+   "source_path": "references/skills/pro-frontend-engineering/INSTRUCTIONS.md",
+   "triggers": [
+    "pro-frontend-engineering",
+    "pro frontend engineering",
+    "web development pro frontend engineering",
+    "مهندسی فرانت‌اند حرفه‌ای با React و TypeScript (معماری کامپوننت، state، کارایی، دسترس‌پذیری، RTL و فونت فارسی)",
+    "مهندسی فرانت‌اند حرفه‌ای با React و TypeScript (معماری کامپوننت، state، کارایی، دسترس‌پذیری، RTL و فونت فارسی) — وقتی کاربر رابط کاربری وب می‌سازد، بازطراحی یا ",
+    "frontend",
+    "react typescript",
+    "react component",
+    "فرانت اند",
+    "رابط کاربری react",
+    "راست چین",
+    "rtl"
+   ]
+  },
+  {
+   "name": "pro-backend-api-design",
+   "domain": "web-development",
+   "source_path": "references/skills/pro-backend-api-design/INSTRUCTIONS.md",
+   "triggers": [
+    "pro-backend-api-design",
+    "pro backend api design",
+    "web development pro backend api design",
+    "طراحی بک‌اند و API حرفه‌ای (قرارداد REST، خطاها، اعتبارسنجی، احراز هویت و مجوز، idempotency، دیتابیس و migration)",
+    "طراحی بک‌اند و API حرفه‌ای (قرارداد REST، خطاها، اعتبارسنجی، احراز هویت و مجوز، idempotency، دیتابیس و migration) — وقتی کاربر سرویس، endpoint یا مدل داده می‌سا",
+    "backend",
+    "rest api",
+    "database schema",
+    "بک اند",
+    "طراحی api",
+    "دیتابیس",
+    "وب هوک"
+   ]
+  },
+  {
+   "name": "pro-security-review",
+   "domain": "web-development",
+   "source_path": "references/skills/pro-security-review/INSTRUCTIONS.md",
+   "triggers": [
+    "pro-security-review",
+    "pro security review",
+    "web development pro security review",
+    "بازبینی امنیتی حرفه‌ای اپ وب و API (OWASP Top 10، احراز هویت و مجوز، رازها، تزریق، وابستگی‌ها، داده‌ی شخصی)",
+    "بازبینی امنیتی حرفه‌ای اپ وب و API (OWASP Top 10، احراز هویت و مجوز، رازها، تزریق، وابستگی‌ها، داده‌ی شخصی) — وقتی کاربر قبل از انتشار، بعد از تغییر حساس یا برا",
+    "security review",
+    "owasp",
+    "امنیت",
+    "بررسی امنیتی",
+    "نشت کلید",
+    "امنیت سایت"
+   ]
+  },
+  {
+   "name": "pro-ui-design-system",
+   "domain": "graphic-design",
+   "source_path": "references/skills/pro-ui-design-system/INSTRUCTIONS.md",
+   "triggers": [
+    "pro-ui-design-system",
+    "pro ui design system",
+    "graphic design pro ui design system",
+    "ساخت دیزاین سیستم و رابط کاربری حرفه‌ای (توکن‌های رنگ، تایپوگرافی فارسی، فاصله‌گذاری، grid، کامپوننت‌ها، حالت تاریک، کنتراست)",
+    "ساخت دیزاین سیستم و رابط کاربری حرفه‌ای (توکن‌های رنگ، تایپوگرافی فارسی، فاصله‌گذاری، grid، کامپوننت‌ها، حالت تاریک، کنتراست) — وقتی کاربر رابط یا کیت UI یکدست ",
+    "ui design",
+    "ui kit",
+    "design tokens",
+    "دیزاین سیستم",
+    "طراحی رابط کاربری",
+    "طراحی ui",
+    "حالت تاریک"
+   ]
+  },
+  {
+   "name": "pro-ux-design",
+   "domain": "product-design",
+   "source_path": "references/skills/pro-ux-design/INSTRUCTIONS.md",
+   "triggers": [
+    "pro-ux-design",
+    "pro ux design",
+    "product design pro ux design",
+    "طراحی تجربهٔ کاربری حرفه‌ای (هدف کاربر، جریان کار، معماری اطلاعات، wireframe، ارزیابی هیوریستیک، متن رابط) برای وب، اپ و فروشگاه آنلاین",
+    "طراحی تجربهٔ کاربری حرفه‌ای (هدف کاربر، جریان کار، معماری اطلاعات، wireframe، ارزیابی هیوریستیک، متن رابط) برای وب، اپ و فروشگاه آنلاین — وقتی کاربر می‌خواهد مس",
+    "ux design",
+    "user experience",
+    "user flow",
+    "wireframe",
+    "usability",
+    "طراحی تجربه کاربری",
+    "یو ایکس",
+    "جریان کاربر",
+    "نرخ تبدیل"
+   ]
+  },
+  {
+   "name": "pro-brand-identity",
+   "domain": "graphic-design",
+   "source_path": "references/skills/pro-brand-identity/INSTRUCTIONS.md",
+   "triggers": [
+    "pro-brand-identity",
+    "pro brand identity",
+    "graphic design pro brand identity",
+    "طراحی هویت بصری و لوگوی حرفه‌ای (استراتژی برند، مفهوم لوگو، انواع لوگو، رنگ، تایپوگرافی، سیستم بصری و راهنمای برند)",
+    "طراحی هویت بصری و لوگوی حرفه‌ای (استراتژی برند، مفهوم لوگو، انواع لوگو، رنگ، تایپوگرافی، سیستم بصری و راهنمای برند) — وقتی کاربر لوگو، هویت برند یا بازطراحی برن",
+    "logo design",
+    "brand identity",
+    "visual identity",
+    "brand book",
+    "طراحی لوگو",
+    "هویت بصری",
+    "هویت برند",
+    "برندبوک"
+   ]
+  },
+  {
+   "name": "pro-git-workflow",
+   "domain": "web-development",
+   "source_path": "references/skills/pro-git-workflow/INSTRUCTIONS.md",
+   "triggers": [
+    "pro-git-workflow",
+    "pro git workflow",
+    "web development pro git workflow",
+    "گردش کار حرفه‌ای Git و انتشار (شاخه‌بندی، commit معنادار، PR کوچک، حل تعارض، CI سبز، نسخه‌دهی و rollback)",
+    "گردش کار حرفه‌ای Git و انتشار (شاخه‌بندی، commit معنادار، PR کوچک، حل تعارض، CI سبز، نسخه‌دهی و rollback) — وقتی کاربر می‌خواهد تغییر را تمیز ثبت کند، PR بسازد،",
+    "git",
+    "pull request",
+    "merge conflict",
+    "release",
+    "گیت",
+    "کامیت",
+    "حل تعارض",
+    "انتشار نسخه"
+   ]
   }
  ]
 }

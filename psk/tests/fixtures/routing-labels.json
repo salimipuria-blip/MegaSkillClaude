@@ -1,0 +1,956 @@
+{
+ "schema": 1,
+ "description": "Labelled gold set for the PSK router. 'expect' is the domain a human reviewer would rank first; 'accept' lists further domains that are still a correct answer. Cases with safety=must-not-match must return zero selections (empty, stop-word-only, numeric-only and noise queries). Kept in sync with tests/fixtures/routing-corpus.json by scripts/routing-accuracy.mjs.",
+ "domains": [
+  "agents-automation",
+  "business-sales",
+  "content-writing",
+  "data-spreadsheets",
+  "general",
+  "graphic-design",
+  "image-ai",
+  "knowledge-research",
+  "product-design",
+  "prompt-requirements",
+  "skill-development",
+  "social-media",
+  "travel-outdoors",
+  "video-ai",
+  "web-development"
+ ],
+ "cases": [
+  {
+   "id": "fa-01",
+   "expect": [
+    "social-media"
+   ],
+   "accept": [
+    "graphic-design"
+   ]
+  },
+  {
+   "id": "fa-02",
+   "expect": [
+    "graphic-design"
+   ],
+   "accept": [
+    "image-ai",
+    "social-media"
+   ]
+  },
+  {
+   "id": "fa-03",
+   "expect": [
+    "social-media"
+   ],
+   "accept": [
+    "content-writing",
+    "business-sales"
+   ]
+  },
+  {
+   "id": "fa-04",
+   "expect": [
+    "social-media"
+   ],
+   "accept": [
+    "video-ai"
+   ]
+  },
+  {
+   "id": "fa-05",
+   "expect": [
+    "web-development"
+   ],
+   "accept": [
+    "business-sales"
+   ]
+  },
+  {
+   "id": "fa-06",
+   "expect": [
+    "graphic-design"
+   ],
+   "accept": [
+    "image-ai"
+   ]
+  },
+  {
+   "id": "fa-07",
+   "expect": [
+    "data-spreadsheets"
+   ],
+   "accept": [
+    "business-sales"
+   ]
+  },
+  {
+   "id": "fa-08",
+   "expect": [
+    "data-spreadsheets"
+   ],
+   "accept": [
+    "business-sales"
+   ]
+  },
+  {
+   "id": "fa-09",
+   "expect": [
+    "knowledge-research"
+   ],
+   "accept": [
+    "business-sales"
+   ]
+  },
+  {
+   "id": "fa-10",
+   "expect": [
+    "business-sales"
+   ],
+   "accept": [
+    "content-writing",
+    "social-media"
+   ]
+  },
+  {
+   "id": "fa-11",
+   "expect": [
+    "video-ai"
+   ],
+   "accept": [
+    "content-writing"
+   ]
+  },
+  {
+   "id": "fa-12",
+   "expect": [
+    "graphic-design"
+   ],
+   "accept": [
+    "image-ai"
+   ]
+  },
+  {
+   "id": "fa-13",
+   "expect": [
+    "prompt-requirements"
+   ],
+   "accept": [
+    "knowledge-research",
+    "content-writing"
+   ]
+  },
+  {
+   "id": "fa-14",
+   "expect": [
+    "prompt-requirements"
+   ],
+   "accept": [
+    "content-writing"
+   ]
+  },
+  {
+   "id": "fa-15",
+   "expect": [
+    "travel-outdoors"
+   ],
+   "accept": [
+    "agents-automation"
+   ]
+  },
+  {
+   "id": "fa-16",
+   "expect": [
+    "travel-outdoors"
+   ],
+   "accept": []
+  },
+  {
+   "id": "fa-17",
+   "expect": [
+    "graphic-design"
+   ],
+   "accept": [
+    "image-ai",
+    "business-sales"
+   ]
+  },
+  {
+   "id": "fa-18",
+   "expect": [
+    "web-development"
+   ],
+   "accept": []
+  },
+  {
+   "id": "fa-19",
+   "expect": [
+    "social-media"
+   ],
+   "accept": [
+    "business-sales"
+   ]
+  },
+  {
+   "id": "fa-20",
+   "expect": [
+    "image-ai"
+   ],
+   "accept": [
+    "prompt-requirements",
+    "graphic-design"
+   ]
+  },
+  {
+   "id": "fa-21",
+   "expect": [
+    "business-sales"
+   ],
+   "accept": [
+    "product-design",
+    "skill-development"
+   ]
+  },
+  {
+   "id": "fa-22",
+   "expect": [
+    "business-sales"
+   ],
+   "accept": [
+    "web-development"
+   ]
+  },
+  {
+   "id": "fa-23",
+   "expect": [
+    "web-development"
+   ],
+   "accept": [
+    "content-writing"
+   ]
+  },
+  {
+   "id": "fa-24",
+   "expect": [
+    "graphic-design"
+   ],
+   "accept": [
+    "business-sales",
+    "product-design"
+   ]
+  },
+  {
+   "id": "fa-25",
+   "expect": [
+    "business-sales"
+   ],
+   "accept": [
+    "data-spreadsheets"
+   ]
+  },
+  {
+   "id": "fa-26",
+   "expect": [
+    "agents-automation"
+   ],
+   "accept": [
+    "business-sales"
+   ]
+  },
+  {
+   "id": "fa-27",
+   "expect": [
+    "social-media"
+   ],
+   "accept": [
+    "agents-automation"
+   ]
+  },
+  {
+   "id": "fa-28",
+   "expect": [
+    "business-sales"
+   ],
+   "accept": [
+    "social-media",
+    "content-writing"
+   ]
+  },
+  {
+   "id": "fa-29",
+   "expect": [
+    "graphic-design"
+   ],
+   "accept": []
+  },
+  {
+   "id": "fa-30",
+   "expect": [
+    "social-media"
+   ],
+   "accept": [
+    "business-sales",
+    "graphic-design"
+   ]
+  },
+  {
+   "id": "fa-31",
+   "expect": [
+    "image-ai"
+   ],
+   "accept": [
+    "web-development"
+   ]
+  },
+  {
+   "id": "fa-32",
+   "expect": [
+    "video-ai"
+   ],
+   "accept": [
+    "image-ai"
+   ]
+  },
+  {
+   "id": "fa-33",
+   "expect": [
+    "web-development"
+   ],
+   "accept": [
+    "business-sales",
+    "content-writing"
+   ]
+  },
+  {
+   "id": "fa-34",
+   "expect": [
+    "data-spreadsheets"
+   ],
+   "accept": [
+    "skill-development"
+   ]
+  },
+  {
+   "id": "fa-35",
+   "expect": [
+    "business-sales"
+   ],
+   "accept": []
+  },
+  {
+   "id": "fa-36",
+   "expect": [
+    "graphic-design"
+   ],
+   "accept": [
+    "product-design"
+   ]
+  },
+  {
+   "id": "fa-37",
+   "expect": [
+    "social-media"
+   ],
+   "accept": [
+    "content-writing"
+   ]
+  },
+  {
+   "id": "fa-38",
+   "expect": [
+    "social-media"
+   ],
+   "accept": []
+  },
+  {
+   "id": "fa-39",
+   "expect": [
+    "graphic-design"
+   ],
+   "accept": [
+    "video-ai"
+   ]
+  },
+  {
+   "id": "fa-40",
+   "expect": [
+    "travel-outdoors"
+   ],
+   "accept": []
+  },
+  {
+   "id": "en-01",
+   "expect": [
+    "social-media"
+   ],
+   "accept": []
+  },
+  {
+   "id": "en-02",
+   "expect": [
+    "graphic-design"
+   ],
+   "accept": [
+    "business-sales"
+   ]
+  },
+  {
+   "id": "en-03",
+   "expect": [
+    "social-media"
+   ],
+   "accept": [
+    "content-writing",
+    "business-sales"
+   ]
+  },
+  {
+   "id": "en-04",
+   "expect": [
+    "social-media"
+   ],
+   "accept": []
+  },
+  {
+   "id": "en-05",
+   "expect": [
+    "web-development"
+   ],
+   "accept": [
+    "business-sales"
+   ]
+  },
+  {
+   "id": "en-06",
+   "expect": [
+    "graphic-design"
+   ],
+   "accept": [
+    "image-ai"
+   ]
+  },
+  {
+   "id": "en-07",
+   "expect": [
+    "data-spreadsheets"
+   ],
+   "accept": []
+  },
+  {
+   "id": "en-08",
+   "expect": [
+    "data-spreadsheets"
+   ],
+   "accept": [
+    "business-sales"
+   ]
+  },
+  {
+   "id": "en-09",
+   "expect": [
+    "knowledge-research"
+   ],
+   "accept": [
+    "business-sales"
+   ]
+  },
+  {
+   "id": "en-10",
+   "expect": [
+    "business-sales"
+   ],
+   "accept": [
+    "content-writing",
+    "social-media"
+   ]
+  },
+  {
+   "id": "en-11",
+   "expect": [
+    "video-ai"
+   ],
+   "accept": [
+    "content-writing"
+   ]
+  },
+  {
+   "id": "en-12",
+   "expect": [
+    "graphic-design"
+   ],
+   "accept": []
+  },
+  {
+   "id": "en-13",
+   "expect": [
+    "prompt-requirements"
+   ],
+   "accept": [
+    "knowledge-research",
+    "content-writing"
+   ]
+  },
+  {
+   "id": "en-14",
+   "expect": [
+    "prompt-requirements"
+   ],
+   "accept": [
+    "content-writing"
+   ]
+  },
+  {
+   "id": "en-15",
+   "expect": [
+    "travel-outdoors"
+   ],
+   "accept": []
+  },
+  {
+   "id": "en-16",
+   "expect": [
+    "travel-outdoors"
+   ],
+   "accept": []
+  },
+  {
+   "id": "en-17",
+   "expect": [
+    "graphic-design"
+   ],
+   "accept": [
+    "image-ai"
+   ]
+  },
+  {
+   "id": "en-18",
+   "expect": [
+    "web-development"
+   ],
+   "accept": []
+  },
+  {
+   "id": "en-19",
+   "expect": [
+    "social-media"
+   ],
+   "accept": [
+    "business-sales"
+   ]
+  },
+  {
+   "id": "en-20",
+   "expect": [
+    "image-ai"
+   ],
+   "accept": [
+    "prompt-requirements"
+   ]
+  },
+  {
+   "id": "en-21",
+   "expect": [
+    "business-sales"
+   ],
+   "accept": [
+    "product-design",
+    "skill-development"
+   ]
+  },
+  {
+   "id": "en-22",
+   "expect": [
+    "business-sales"
+   ],
+   "accept": []
+  },
+  {
+   "id": "en-23",
+   "expect": [
+    "web-development"
+   ],
+   "accept": [
+    "content-writing"
+   ]
+  },
+  {
+   "id": "en-24",
+   "expect": [
+    "graphic-design"
+   ],
+   "accept": [
+    "business-sales"
+   ]
+  },
+  {
+   "id": "en-25",
+   "expect": [
+    "agents-automation"
+   ],
+   "accept": [
+    "business-sales"
+   ]
+  },
+  {
+   "id": "en-26",
+   "expect": [
+    "social-media"
+   ],
+   "accept": [
+    "agents-automation"
+   ]
+  },
+  {
+   "id": "en-27",
+   "expect": [
+    "business-sales"
+   ],
+   "accept": [
+    "social-media",
+    "content-writing"
+   ]
+  },
+  {
+   "id": "en-28",
+   "expect": [
+    "graphic-design"
+   ],
+   "accept": []
+  },
+  {
+   "id": "en-29",
+   "expect": [
+    "social-media"
+   ],
+   "accept": [
+    "business-sales"
+   ]
+  },
+  {
+   "id": "en-30",
+   "expect": [
+    "image-ai"
+   ],
+   "accept": [
+    "web-development"
+   ]
+  },
+  {
+   "id": "en-31",
+   "expect": [
+    "video-ai"
+   ],
+   "accept": [
+    "image-ai"
+   ]
+  },
+  {
+   "id": "en-32",
+   "expect": [
+    "web-development"
+   ],
+   "accept": [
+    "business-sales",
+    "content-writing"
+   ]
+  },
+  {
+   "id": "en-33",
+   "expect": [
+    "data-spreadsheets"
+   ],
+   "accept": [
+    "skill-development"
+   ]
+  },
+  {
+   "id": "en-34",
+   "expect": [
+    "business-sales"
+   ],
+   "accept": []
+  },
+  {
+   "id": "en-35",
+   "expect": [
+    "graphic-design"
+   ],
+   "accept": [
+    "product-design",
+    "image-ai"
+   ]
+  },
+  {
+   "id": "en-36",
+   "expect": [
+    "social-media"
+   ],
+   "accept": [
+    "content-writing"
+   ]
+  },
+  {
+   "id": "en-37",
+   "expect": [
+    "social-media"
+   ],
+   "accept": []
+  },
+  {
+   "id": "en-38",
+   "expect": [
+    "graphic-design"
+   ],
+   "accept": [
+    "video-ai"
+   ]
+  },
+  {
+   "id": "en-39",
+   "expect": [
+    "travel-outdoors"
+   ],
+   "accept": []
+  },
+  {
+   "id": "en-40",
+   "expect": [
+    "skill-development"
+   ],
+   "accept": [
+    "product-design",
+    "agents-automation",
+    "business-sales"
+   ]
+  },
+  {
+   "id": "mx-01",
+   "expect": [
+    "graphic-design"
+   ],
+   "accept": [
+    "social-media",
+    "image-ai"
+   ]
+  },
+  {
+   "id": "mx-02",
+   "expect": [
+    "web-development"
+   ],
+   "accept": [
+    "business-sales"
+   ]
+  },
+  {
+   "id": "mx-03",
+   "expect": [
+    "data-spreadsheets"
+   ],
+   "accept": [
+    "business-sales"
+   ]
+  },
+  {
+   "id": "mx-04",
+   "expect": [
+    "social-media"
+   ],
+   "accept": [
+    "content-writing"
+   ]
+  },
+  {
+   "id": "mx-05",
+   "expect": [
+    "social-media"
+   ],
+   "accept": [
+    "video-ai"
+   ]
+  },
+  {
+   "id": "mx-06",
+   "expect": [
+    "graphic-design"
+   ],
+   "accept": [
+    "image-ai"
+   ]
+  },
+  {
+   "id": "mx-07",
+   "expect": [
+    "social-media"
+   ],
+   "accept": [
+    "video-ai"
+   ]
+  },
+  {
+   "id": "mx-08",
+   "expect": [
+    "knowledge-research"
+   ],
+   "accept": [
+    "business-sales"
+   ]
+  },
+  {
+   "id": "mx-09",
+   "expect": [
+    "web-development"
+   ],
+   "accept": []
+  },
+  {
+   "id": "mx-10",
+   "expect": [
+    "business-sales"
+   ],
+   "accept": [
+    "agents-automation"
+   ]
+  },
+  {
+   "id": "mx-11",
+   "expect": [
+    "social-media"
+   ],
+   "accept": []
+  },
+  {
+   "id": "mx-12",
+   "expect": [
+    "data-spreadsheets"
+   ],
+   "accept": [
+    "business-sales"
+   ]
+  },
+  {
+   "id": "mx-13",
+   "expect": [
+    "graphic-design"
+   ],
+   "accept": [
+    "image-ai"
+   ]
+  },
+  {
+   "id": "mx-14",
+   "expect": [
+    "prompt-requirements"
+   ],
+   "accept": [
+    "content-writing"
+   ]
+  },
+  {
+   "id": "mx-15",
+   "expect": [
+    "content-writing"
+   ],
+   "accept": [
+    "travel-outdoors",
+    "web-development"
+   ]
+  },
+  {
+   "id": "mx-16",
+   "expect": [
+    "image-ai"
+   ],
+   "accept": [
+    "prompt-requirements",
+    "graphic-design"
+   ]
+  },
+  {
+   "id": "mx-17",
+   "expect": [
+    "agents-automation"
+   ],
+   "accept": [
+    "skill-development"
+   ]
+  },
+  {
+   "id": "mx-18",
+   "expect": [
+    "business-sales"
+   ],
+   "accept": [
+    "data-spreadsheets",
+    "web-development"
+   ]
+  },
+  {
+   "id": "mx-19",
+   "expect": [
+    "video-ai"
+   ],
+   "accept": [
+    "social-media"
+   ]
+  },
+  {
+   "id": "mx-20",
+   "expect": [
+    "graphic-design"
+   ],
+   "accept": [
+    "social-media",
+    "image-ai"
+   ]
+  },
+  {
+   "id": "edge-01",
+   "safety": "must-not-match",
+   "expect": [],
+   "accept": []
+  },
+  {
+   "id": "edge-02",
+   "safety": "must-not-match",
+   "expect": [],
+   "accept": []
+  },
+  {
+   "id": "edge-03",
+   "safety": "must-not-match",
+   "expect": [],
+   "accept": []
+  },
+  {
+   "id": "edge-04",
+   "safety": "must-not-match",
+   "expect": [],
+   "accept": []
+  },
+  {
+   "id": "edge-05",
+   "safety": "must-not-match",
+   "expect": [],
+   "accept": []
+  },
+  {
+   "id": "edge-06",
+   "safety": "must-not-match",
+   "expect": [],
+   "accept": []
+  },
+  {
+   "id": "edge-07",
+   "safety": "must-not-match",
+   "expect": [],
+   "accept": []
+  },
+  {
+   "id": "edge-08",
+   "safety": "must-not-match",
+   "expect": [],
+   "accept": []
+  }
+ ]
+}

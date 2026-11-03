@@ -1,3 +1,4 @@
+import { fetchWithTimeout } from './resilience.mjs';
 // Voice and photos. Voice → text with Gemini (audio understanding), fallback Whisper on Workers AI.
 // Photos are passed to Gemini as images; without Gemini, LLaVA on Workers AI describes them in text first.
 
@@ -49,11 +50,11 @@ export async function describeImage(env, data, question) {
 // Telegram file → { data: base64, mime }.
 export async function telegramFile(env, fileId, fallbackMime) {
   const api = `https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}`;
-  const info = await (await fetch(`${api}/getFile`, {
+  const info = await (await fetchWithTimeout(`${api}/getFile`, {
     method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ file_id: fileId }),
   })).json().catch(() => ({}));
   if (!info.ok || !info.result || !info.result.file_path) throw new Error('فایل از تلگرام دریافت نشد (حداکثر ۲۰ مگابایت).');
-  const res = await fetch(`https://api.telegram.org/file/bot${env.TELEGRAM_BOT_TOKEN}/${info.result.file_path}`);
+  const res = await fetchWithTimeout(`https://api.telegram.org/file/bot${env.TELEGRAM_BOT_TOKEN}/${info.result.file_path}`);
   if (!res.ok) throw new Error('دانلود فایل از تلگرام ناموفق بود.');
   const bytes = new Uint8Array(await res.arrayBuffer());
   if (bytes.length > MAX_MEDIA_BYTES) throw new Error('فایل خیلی بزرگ است (حداکثر ۸ مگابایت).');

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState, type ComponentType } from 'react';
 import {
-  BarChart3, Boxes, Cog, LayoutDashboard, LogOut, Menu, Moon, Receipt, ShieldCheck, ShoppingBag, Sun, TrendingUp, Users, UsersRound, Wallet, KeyRound, AlertTriangle,
+  BarChart3, Boxes, Cog, LayoutDashboard, LogOut, Menu, Moon, Receipt, ShieldCheck, ShoppingBag, Sun, TrendingUp, Users, UsersRound, Wallet, KeyRound, TriangleAlert,
 } from 'lucide-react';
 import { can, changeOwnPassword, currentUser, licenseState, logout, useStore, MIN_PASSWORD, type Permission } from './core/store';
 import { ROLES } from './core/permissions';
@@ -178,7 +178,7 @@ export default function App() {
         <LocalOnlyNotice />
         {lic.state !== 'active' && (can(user.role, 'settings.store') || lic.state === 'expired') && (
           <div className={`banner ${lic.state === 'expiring' ? 'warn' : 'bad'}`} role="alert">
-            <AlertTriangle size={16} />
+            <TriangleAlert size={16} />
             {lic.state === 'expiring' && `اشتراک سامانه تا ${lic.daysLeft.toLocaleString('fa-IR')} روز دیگر منقضی می‌شود.`}
             {lic.state === 'grace' && `اشتراک منقضی شده؛ دورهٔ مهلت ${(db.license.graceDays + lic.daysLeft).toLocaleString('fa-IR')} روز دیگر.`}
             {lic.state === 'expired' && 'اشتراک منقضی شده و ثبت فروش متوقف است. با FJCOD تماس بگیرید.'}
@@ -186,7 +186,7 @@ export default function App() {
         )}
         {persistWarning && (
           <div className="banner bad" role="alert">
-            <AlertTriangle size={16} /> فضای ذخیره‌سازی مرورگر در دسترس نیست؛ از «سیستم و مجوز» نسخهٔ پشتیبان بگیرید.
+            <TriangleAlert size={16} /> فضای ذخیره‌سازی مرورگر در دسترس نیست؛ از «سیستم و مجوز» نسخهٔ پشتیبان بگیرید.
           </div>
         )}
         <header className="topbar">

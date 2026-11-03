@@ -3,11 +3,11 @@
 Skills: 117
 
 - `academy-watermark-planner` → `references/skills/academy-watermark-planner/INSTRUCTIONS.md`
-- `ai-image-generation-studio` → `references/skills/ai-image-generation-studio/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `ai-image-generation-studio` → `references/skills/ai-image-generation-studio/INSTRUCTIONS.md`
 - `ai-image-prompt-builder` → `references/skills/ai-image-prompt-builder/INSTRUCTIONS.md`
 - `background-remover-batch` → `references/skills/background-remover-batch/INSTRUCTIONS.md`
 - `badge-patch-designer` → `references/skills/badge-patch-designer/INSTRUCTIONS.md`
-- `beatra-ai-video-studio` → `references/skills/beatra-ai-video-studio/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `beatra-ai-video-studio` → `references/skills/beatra-ai-video-studio/INSTRUCTIONS.md`
 - `before-after-collage-maker` → `references/skills/before-after-collage-maker/INSTRUCTIONS.md`
 - `bookstore-infographic-assistant` → `references/skills/bookstore-infographic-assistant/INSTRUCTIONS.md`
 - `bookstore-mockup-assistant` → `references/skills/bookstore-mockup-assistant/INSTRUCTIONS.md`
@@ -37,9 +37,9 @@ Skills: 117
 - `drone-photography-legal-prompts` → `references/skills/drone-photography-legal-prompts/INSTRUCTIONS.md`
 - `ecolodge-flatlay-autopilot` → `references/skills/ecolodge-flatlay-autopilot/INSTRUCTIONS.md`
 - `ecolodge-flatlay-planner` → `references/skills/ecolodge-flatlay-planner/INSTRUCTIONS.md`
-- `ecommerce-listing-image-set` → `references/skills/ecommerce-listing-image-set/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `ecommerce-listing-image-set` → `references/skills/ecommerce-listing-image-set/INSTRUCTIONS.md`
 - `ecommerce-packshot-kit` → `references/skills/ecommerce-packshot-kit/INSTRUCTIONS.md`
-- `etsy-shop-catalog` → `references/skills/etsy-shop-catalog/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `etsy-shop-catalog` → `references/skills/etsy-shop-catalog/INSTRUCTIONS.md`
 - `event-palette-analyzer` → `references/skills/event-palette-analyzer/INSTRUCTIONS.md`
 - `exif-metadata-cleaner` → `references/skills/exif-metadata-cleaner/INSTRUCTIONS.md`
 - `fashion-ghost-mannequin` → `references/skills/fashion-ghost-mannequin/INSTRUCTIONS.md`
@@ -88,7 +88,7 @@ Skills: 117
 - `pitch-deck-diagrams` → `references/skills/pitch-deck-diagrams/INSTRUCTIONS.md`
 - `portrait-retouch-guide` → `references/skills/portrait-retouch-guide/INSTRUCTIONS.md`
 - `product-photo-prompt-kit` → `references/skills/product-photo-prompt-kit/INSTRUCTIONS.md`
-- `product-photo-studio` → `references/skills/product-photo-studio/INSTRUCTIONS.md` [incomplete: excluded from default routing]
+- `product-photo-studio` → `references/skills/product-photo-studio/INSTRUCTIONS.md`
 - `qr-art-generator` → `references/skills/qr-art-generator/INSTRUCTIONS.md`
 - `real-estate-photo-kit` → `references/skills/real-estate-photo-kit/INSTRUCTIONS.md`
 - `realestate-flatlay-pack` → `references/skills/realestate-flatlay-pack/INSTRUCTIONS.md`

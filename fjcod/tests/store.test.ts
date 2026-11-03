@@ -7,17 +7,17 @@ const { getDB } = store;
 
 describe('store flows (in-memory storage fallback)', () => {
   it('identifies the user (and position) from the password alone', () => {
-    const res = store.login('222222');
+    const res = store.login('fx-deputy-0');
     expect(res.ok && res.user.role).toBe('deputy');
     store.logout();
-    const c2 = store.login('333332');
+    const c2 = store.login('fx-cashier-2');
     expect(c2.ok && c2.user.id).toBe('u-cashier-2');
     store.logout();
   });
 
   it('throttles globally after 5 wrong passwords', () => {
     for (let i = 0; i < 5; i++) expect(store.login('nope-' + i).ok).toBe(false);
-    const locked = store.login('222222');
+    const locked = store.login('fx-deputy-0');
     expect(locked.ok).toBe(false);
     if (!locked.ok) expect(locked.error).toMatch(/صبر/);
     getDB().authGuard.lockedUntil = 0; // test-only reset of the throttle
@@ -25,12 +25,12 @@ describe('store flows (in-memory storage fallback)', () => {
 
   it('cashier: forced password change, shift, checkout, change returned', () => {
     const id = 'u-cashier-1';
-    const res = store.login('333331');
+    const res = store.login('fx-cashier-1');
     expect(res.ok && res.mustChange).toBe(true);
-    expect(() => store.changeOwnPassword('333331', '333331')).toThrow();
+    expect(() => store.changeOwnPassword('fx-cashier-1', 'fx-cashier-1')).toThrow();
     // a password already used by another account is refused (password = identity)
-    expect(() => store.changeOwnPassword('333331', '111111')).toThrow(/قابل استفاده نیست/);
-    store.changeOwnPassword('333331', 'cash-9988');
+    expect(() => store.changeOwnPassword('fx-cashier-1', 'fx-manager-0')).toThrow(/قابل استفاده نیست/);
+    store.changeOwnPassword('fx-cashier-1', 'cash-9988');
     expect(store.currentUser()!.mustChangePassword).toBe(false);
 
     const p = getDB().products.find((x) => x.stock > 3)!;
@@ -60,7 +60,7 @@ describe('store flows (in-memory storage fallback)', () => {
   });
 
   it('manager: refunds restock and respect remaining quantity', () => {
-    store.login('111111');
+    store.login('fx-manager-0');
     const s = getDB().sales.find((x) => x.refunds.length === 0 && x.items[0].qty >= 1)!;
     const pid = s.items[0].productId;
     const stock = getDB().products.find((p) => p.id === pid)!.stock;
@@ -79,7 +79,7 @@ describe('store flows (in-memory storage fallback)', () => {
   });
 
   it('consultant: holds a cart for the cashier queue but cannot sell', () => {
-    store.login('444442');
+    store.login('fx-cons-2');
     const p = getDB().products[0];
     expect(() => store.checkout({ lines: [{ productId: p.id, qty: 1 }], discount: 0, pointsRedeem: 0, customerId: null, consultantId: null, payments: [] })).toThrow(/مجوز/);
     store.holdCart({ label: 'پرو ۲', customerId: null, items: [{ productId: p.id, qty: 1 }] });
@@ -88,7 +88,7 @@ describe('store flows (in-memory storage fallback)', () => {
   });
 
   it('owner: license renewal, backup round-trip and clean start', () => {
-    store.login('fjcod1405');
+    store.login('fx-owner-0');
     const exp = getDB().license.expiresAt;
     store.renewLicense('monthly');
     expect(getDB().license.expiresAt).toBeGreaterThan(exp);
@@ -113,7 +113,7 @@ describe('store flows (in-memory storage fallback)', () => {
     const m = store.migrate(v1);
     const migrated = m.users.find((u) => u.id === 'u-cashier-2')!;
     expect(verifyPassword('333333', migrated.salt, migrated.passwordHash)).toBe(false);
-    expect(verifyPassword('333332', migrated.salt, migrated.passwordHash)).toBe(true);
+    expect(verifyPassword('fx-cashier-2', migrated.salt, migrated.passwordHash)).toBe(true);
     expect(m.authGuard).toEqual({ fails: 0, lockedUntil: 0 });
     expect(m.schema).toBe(2);
   });

@@ -103,7 +103,8 @@ function bootScroll() {
   });
 
   lenis.on("scroll", ScrollTrigger.update);
-  gsap.ticker.add((time) => lenis.tick(time * 1000));
+  // Lenis 1.x drives frames through raf(ms); there is no tick() (it threw on every frame).
+  gsap.ticker.add((time) => lenis.raf(time * 1000));
   gsap.ticker.lagSmoothing(0);
 
   lenis.on("scroll", ({ progress: p }) => {
@@ -172,7 +173,7 @@ function bootDevices() {
     tab.addEventListener("click", () => {
       tabs.forEach((item) => {
         item.classList.toggle("is-on", item === tab);
-        item.setAttribute("aria-selected", item === tab ? "true" : "false");
+        item.setAttribute("aria-pressed", item === tab ? "true" : "false");
       });
       theater?.setAttribute("data-view", tab.dataset.view);
     });
@@ -193,8 +194,23 @@ function bootDevices() {
   });
 }
 
+// While the dialog is open, everything behind it is inert: Tab cannot leave the dialog and screen
+// readers do not read the page underneath. Focus returns to the button that opened it.
+const background = ["nav", "main", "progress"].map((id) => document.getElementById(id)).concat(document.querySelector(".site-foot"));
+let opener = null;
+
+function setBackgroundInert(on) {
+  background.forEach((el) => {
+    if (!el) return;
+    if (on) el.setAttribute("inert", "");
+    else el.removeAttribute("inert");
+  });
+}
+
 function openLive(kind) {
   if (!overlay) return;
+  opener = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+  setBackgroundInert(true);
   overlay.hidden = false;
   overlay.dataset.live = kind;
   overlay.classList.add("is-open");
@@ -210,6 +226,9 @@ function closeLive() {
   overlay.classList.remove("is-open");
   overlay.hidden = true;
   document.body.style.overflow = "";
+  setBackgroundInert(false);
+  opener?.focus();
+  opener = null;
 }
 
 window.addEventListener("load", () => {

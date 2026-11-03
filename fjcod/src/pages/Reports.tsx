@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Download, FileBarChart, Percent, Receipt, ShoppingCart, Wallet } from 'lucide-react';
+import { Download, FileChartColumnIncreasing, Percent, Receipt, ShoppingCart, Wallet } from 'lucide-react';
 import { useStore } from '../core/store';
 import { aggregate, inRange, sellerOf, topProducts } from '../core/growth';
 import { saleNet, saleProfit } from '../core/sales';
@@ -91,7 +91,7 @@ export function Reports() {
       </div>
       <div className="grid grid-4">
         <Kpi icon={<Wallet size={16} />} label="فروش خالص" value={tomanShort(r.agg.revenue)} unit="تومان" foot={`مرجوعی: ${tomanShort(r.refunds)}`} />
-        <Kpi icon={<FileBarChart size={16} />} label="سود ناخالص" value={tomanShort(r.agg.profit)} unit="تومان" foot={`حاشیه: ${fa(r.agg.revenue ? (r.agg.profit / r.agg.revenue) * 100 : 0)}٪`} />
+        <Kpi icon={<FileChartColumnIncreasing size={16} />} label="سود ناخالص" value={tomanShort(r.agg.profit)} unit="تومان" foot={`حاشیه: ${fa(r.agg.revenue ? (r.agg.profit / r.agg.revenue) * 100 : 0)}٪`} />
         <Kpi icon={<Receipt size={16} />} label="تعداد فاکتور" value={fa(r.agg.count)} foot={`${fa(r.agg.items)} قلم کالا`} />
         <Kpi icon={<ShoppingCart size={16} />} label="میانگین سبد" value={tomanShort(r.agg.avgBasket)} unit="تومان" />
         <Kpi icon={<Percent size={16} />} label="تخفیف و امتیاز اعطایی" value={tomanShort(r.discounts)} unit="تومان" foot={`${fa(share(r.discounts, r.agg.revenue + r.discounts))}٪ از فروش ناخالص`} />

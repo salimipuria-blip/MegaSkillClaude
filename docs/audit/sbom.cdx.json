@@ -1,7 +1,7 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.5",
-  "serialNumber": "urn:uuid:5808d8cd-cd69-53a8-8e1d-e0d972f46e8b",
+  "serialNumber": "urn:uuid:40e2e545-50fd-27a9-2bcd-599f1852600a",
   "version": 1,
   "metadata": {
     "timestamp": "1970-01-01T00:00:00.000Z",
@@ -3606,7 +3606,7 @@
       "name": "react",
       "version": "19.3.0",
       "purl": "pkg:npm/%40types%2Freact@19.3.0",
-      "scope": "optional",
+      "scope": "required",
       "properties": [
         {
           "name": "sbom:app",
@@ -3614,7 +3614,7 @@
         },
         {
           "name": "sbom:dev",
-          "value": "true"
+          "value": "false"
         },
         {
           "name": "sbom:integrity",
@@ -3829,7 +3829,7 @@
       "name": "csstype",
       "version": "3.2.3",
       "purl": "pkg:npm/csstype@3.2.3",
-      "scope": "optional",
+      "scope": "required",
       "properties": [
         {
           "name": "sbom:app",
@@ -3837,7 +3837,7 @@
         },
         {
           "name": "sbom:dev",
-          "value": "true"
+          "value": "false"
         },
         {
           "name": "sbom:integrity",
@@ -4177,10 +4177,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "fjcod:pkg:npm/lucide-react@0.540.0",
+      "bom-ref": "fjcod:pkg:npm/lucide-react@1.59.0",
       "name": "lucide-react",
-      "version": "0.540.0",
-      "purl": "pkg:npm/lucide-react@0.540.0",
+      "version": "1.59.0",
+      "purl": "pkg:npm/lucide-react@1.59.0",
       "scope": "required",
       "properties": [
         {
@@ -4193,7 +4193,7 @@
         },
         {
           "name": "sbom:integrity",
-          "value": "sha512-armkCAqQvO62EIX4Hq7hqX/q11WSZu0Jd23cnnqx0/49yIxGXyL/zyZfBxNN9YDx0ensPTb4L+DjTh3yQXUxtQ=="
+          "value": "sha512-5qgMyyCPU6OvnKpLS2t693+ZtiqA8oaSweWoUows0BLFKFf6V75m4+CptpmohZHpD5IuOVIBXHBBiv2vpLJmtw=="
         }
       ]
     },
@@ -4353,10 +4353,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "fjcod:pkg:npm/playwright-core@1.63.0",
+      "bom-ref": "fjcod:pkg:npm/playwright-core@1.64.1",
       "name": "playwright-core",
-      "version": "1.63.0",
-      "purl": "pkg:npm/playwright-core@1.63.0",
+      "version": "1.64.1",
+      "purl": "pkg:npm/playwright-core@1.64.1",
       "scope": "optional",
       "properties": [
         {
@@ -4369,7 +4369,7 @@
         },
         {
           "name": "sbom:integrity",
-          "value": "sha512-rYCsBF/M5HjUch52bbtVONEFjv6Xu8sm8h72dNlR5bzIE1fvC/bxgspzkjSfU+MweEMmPM8KJebG6nnyxo5mCg=="
+          "value": "sha512-BC4s8y6SEVA6Q1rSxZTto8hI1KUI3xXlHGZgvGqP4IqPdI/a6FX9H29IDNz7vKo9l21b6LfYosScPL6M3xxyDQ=="
         }
       ]
     },
@@ -4397,10 +4397,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "fjcod:pkg:npm/react-dom@19.3.0",
+      "bom-ref": "fjcod:pkg:npm/react-dom@19.3.1",
       "name": "react-dom",
-      "version": "19.3.0",
-      "purl": "pkg:npm/react-dom@19.3.0",
+      "version": "19.3.1",
+      "purl": "pkg:npm/react-dom@19.3.1",
       "scope": "required",
       "properties": [
         {
@@ -4413,7 +4413,7 @@
         },
         {
           "name": "sbom:integrity",
-          "value": "sha512-JDk8dgif51OjFoDE70+OT9ICyYr+69HlmihNwp1+Nsfbna3t5sIiCa9ZJktDmQ4/1b/rn26hIAR2uYXDMr5r0Q=="
+          "value": "sha512-Y0bARz53lhEC1NMCASs0/j+faB/zqt3R8hpvg1e8+61ZVJ4UL0UdC4cBbXfZMcIuhrfgeILTLe+ZeBCavQPtKQ=="
         }
       ]
     },
@@ -4441,10 +4441,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "fjcod:pkg:npm/react@19.3.0",
+      "bom-ref": "fjcod:pkg:npm/react@19.3.1",
       "name": "react",
-      "version": "19.3.0",
-      "purl": "pkg:npm/react@19.3.0",
+      "version": "19.3.1",
+      "purl": "pkg:npm/react@19.3.1",
       "scope": "required",
       "properties": [
         {
@@ -4457,7 +4457,7 @@
         },
         {
           "name": "sbom:integrity",
-          "value": "sha512-E8LUcbtBWt20bbl2YoHfx4ZDBdxVTfOKtCZn9cDSJ4l6/nuoApcpIBcj47t2wZoVX8g2ZHuMHbiShgCR1T5Sog=="
+          "value": "sha512-QNhWdt7nrgVWWQG58QuGsAR3jv3Hbe4mb4vz7w2csnHavciZJgda1CPNaldF6eVxv90ud3jUXpKlHL69gO38yw=="
         }
       ]
     },
@@ -6755,10 +6755,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "hermes:pkg:npm/wrangler@4.149.0",
+      "bom-ref": "hermes:pkg:npm/wrangler@4.151.2",
       "name": "wrangler",
-      "version": "4.149.0",
-      "purl": "pkg:npm/wrangler@4.149.0",
+      "version": "4.151.2",
+      "purl": "pkg:npm/wrangler@4.151.2",
       "scope": "optional",
       "properties": [
         {
@@ -6771,7 +6771,161 @@
         },
         {
           "name": "sbom:integrity",
-          "value": "sha512-OzK7xmB5r5iLKb3cIT3783g13fe6T7xyeKu9LEdUyl+DKAM2KP/jkjnE0OUhyw+mB/XJM9ycjgF3MWm8PR9amg=="
+          "value": "sha512-yIT5Q08eVP2ZSE4XHGZ81Y+Y1b25uzp7LANwV2siaEt/O7TpeiFiEih/xHwARHGQo8sufs2ZaILGxCccHgjQPg=="
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "hermes:pkg:npm/wrangler%2Fnode_modules/%40cloudflare/workerd-darwin-64@1.20261019.1",
+      "name": "wrangler/node_modules/@cloudflare/workerd-darwin-64",
+      "version": "1.20261019.1",
+      "purl": "pkg:npm/wrangler%2Fnode_modules/%40cloudflare/workerd-darwin-64@1.20261019.1",
+      "scope": "optional",
+      "properties": [
+        {
+          "name": "sbom:app",
+          "value": "hermes"
+        },
+        {
+          "name": "sbom:dev",
+          "value": "true"
+        },
+        {
+          "name": "sbom:integrity",
+          "value": "sha512-5ZILbAta/fBQvhmAYeCE7dKMMYIr7N9wJEX50fEGLKSIwGtvT0HzSfHNIK/O7cBQ4gHQ2WfIiPClvwcye6E0fA=="
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "hermes:pkg:npm/wrangler%2Fnode_modules/%40cloudflare/workerd-darwin-arm64@1.20261019.1",
+      "name": "wrangler/node_modules/@cloudflare/workerd-darwin-arm64",
+      "version": "1.20261019.1",
+      "purl": "pkg:npm/wrangler%2Fnode_modules/%40cloudflare/workerd-darwin-arm64@1.20261019.1",
+      "scope": "optional",
+      "properties": [
+        {
+          "name": "sbom:app",
+          "value": "hermes"
+        },
+        {
+          "name": "sbom:dev",
+          "value": "true"
+        },
+        {
+          "name": "sbom:integrity",
+          "value": "sha512-cww2Ab6lVMxpTiEEjKmPI58p5EMo0vYTZSH+3WkqXJdQgc3ES66GuL247+U2B2YWajhhu2tqj7jySrXneU749g=="
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "hermes:pkg:npm/wrangler%2Fnode_modules/%40cloudflare/workerd-linux-64@1.20261019.1",
+      "name": "wrangler/node_modules/@cloudflare/workerd-linux-64",
+      "version": "1.20261019.1",
+      "purl": "pkg:npm/wrangler%2Fnode_modules/%40cloudflare/workerd-linux-64@1.20261019.1",
+      "scope": "optional",
+      "properties": [
+        {
+          "name": "sbom:app",
+          "value": "hermes"
+        },
+        {
+          "name": "sbom:dev",
+          "value": "true"
+        },
+        {
+          "name": "sbom:integrity",
+          "value": "sha512-4++VRi9vkQROYqrpZYOixIJuVDmujkwrT4kszsxNFlvcmsX6Mr2GumvxIN3gIixS3vJUh3Umdtkthqj5X0S3Xw=="
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "hermes:pkg:npm/wrangler%2Fnode_modules/%40cloudflare/workerd-linux-arm64@1.20261019.1",
+      "name": "wrangler/node_modules/@cloudflare/workerd-linux-arm64",
+      "version": "1.20261019.1",
+      "purl": "pkg:npm/wrangler%2Fnode_modules/%40cloudflare/workerd-linux-arm64@1.20261019.1",
+      "scope": "optional",
+      "properties": [
+        {
+          "name": "sbom:app",
+          "value": "hermes"
+        },
+        {
+          "name": "sbom:dev",
+          "value": "true"
+        },
+        {
+          "name": "sbom:integrity",
+          "value": "sha512-75PVtJOwfjScQ53sbLtQXI7D8yP1c21t+WEUPaYbqkzaz4ZqfR5wAd+zuWs8G5Q7kOj2SQIvEfY5Sn8Y+UVrnA=="
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "hermes:pkg:npm/wrangler%2Fnode_modules/%40cloudflare/workerd-windows-64@1.20261019.1",
+      "name": "wrangler/node_modules/@cloudflare/workerd-windows-64",
+      "version": "1.20261019.1",
+      "purl": "pkg:npm/wrangler%2Fnode_modules/%40cloudflare/workerd-windows-64@1.20261019.1",
+      "scope": "optional",
+      "properties": [
+        {
+          "name": "sbom:app",
+          "value": "hermes"
+        },
+        {
+          "name": "sbom:dev",
+          "value": "true"
+        },
+        {
+          "name": "sbom:integrity",
+          "value": "sha512-z49fvKTETMCnG6wnMcQwxx9CpryFceiKz04FRjq26EkhCyzRNJ6c3UXhyZz3r5f1CXnnBZc5DcU8ZouPkUJCqw=="
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "hermes:pkg:npm/wrangler%2Fnode_modules/miniflare@5.20261019.0-beta",
+      "name": "wrangler/node_modules/miniflare",
+      "version": "5.20261019.0-beta",
+      "purl": "pkg:npm/wrangler%2Fnode_modules/miniflare@5.20261019.0-beta",
+      "scope": "optional",
+      "properties": [
+        {
+          "name": "sbom:app",
+          "value": "hermes"
+        },
+        {
+          "name": "sbom:dev",
+          "value": "true"
+        },
+        {
+          "name": "sbom:integrity",
+          "value": "sha512-NmE6Yz7MSdjrfr3lMaMAVO55rIm3+6YXllOkJOMy6pPQITDuDeo0PYRedp7pju2olNWmrAlf1i1LIWYfGQvvuw=="
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "hermes:pkg:npm/wrangler%2Fnode_modules/workerd@1.20261019.1",
+      "name": "wrangler/node_modules/workerd",
+      "version": "1.20261019.1",
+      "purl": "pkg:npm/wrangler%2Fnode_modules/workerd@1.20261019.1",
+      "scope": "optional",
+      "properties": [
+        {
+          "name": "sbom:app",
+          "value": "hermes"
+        },
+        {
+          "name": "sbom:dev",
+          "value": "true"
+        },
+        {
+          "name": "sbom:integrity",
+          "value": "sha512-UUYRUq/7DmeCl11YriNbcVbjUZVLtt8uuCXFu+nz77hGFf8d4DEVXoCYtnA+MlBatE4+wxoj47DVqzK3xGBAiw=="
         }
       ]
     },
@@ -7464,11 +7618,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-android-arm-eabi@4.67.4",
+      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-android-arm-eabi@4.64.6",
       "group": "@rollup",
       "name": "rollup-android-arm-eabi",
-      "version": "4.67.4",
-      "purl": "pkg:npm/%40rollup%2Frollup-android-arm-eabi@4.67.4",
+      "version": "4.64.6",
+      "purl": "pkg:npm/%40rollup%2Frollup-android-arm-eabi@4.64.6",
       "scope": "optional",
       "properties": [
         {
@@ -7481,17 +7635,17 @@
         },
         {
           "name": "sbom:integrity",
-          "value": "sha512-/v/pUAPOcwp+r1Hjjdg0cBV1TE89CzGKrKh2FgkIQw2QBcIMmVPOCSfuOZStCn4Xh/98HXfo/ht6ztcssctPNg=="
+          "value": "sha512-FkO19Fowv/OQeJZPVfdetJaI3/VpbZmBsnmAlR/rQ+b3QwfiGQiOpVegpSRH331kelvHTVw9hXYG3DwjAaRzyQ=="
         }
       ]
     },
     {
       "type": "library",
-      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-android-arm64@4.67.4",
+      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-android-arm64@4.64.6",
       "group": "@rollup",
       "name": "rollup-android-arm64",
-      "version": "4.67.4",
-      "purl": "pkg:npm/%40rollup%2Frollup-android-arm64@4.67.4",
+      "version": "4.64.6",
+      "purl": "pkg:npm/%40rollup%2Frollup-android-arm64@4.64.6",
       "scope": "optional",
       "properties": [
         {
@@ -7504,40 +7658,17 @@
         },
         {
           "name": "sbom:integrity",
-          "value": "sha512-6tmmB/P52Vt167FXXEw5auiEUgTtZz7aqUgWHqYXToIUE0HFDY6fTdAyeekjjsNk6O/8dtpSKtClxSj1mMneKQ=="
+          "value": "sha512-si5/Etm6MphPc2xYHnk455Shls/hoMjTy3mhXge4OPmvCw7TwC4KP4fKokAlKLV4XaQvLvgSHfafPcblLMYYdQ=="
         }
       ]
     },
     {
       "type": "library",
-      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-android-x64@4.67.4",
-      "group": "@rollup",
-      "name": "rollup-android-x64",
-      "version": "4.67.4",
-      "purl": "pkg:npm/%40rollup%2Frollup-android-x64@4.67.4",
-      "scope": "optional",
-      "properties": [
-        {
-          "name": "sbom:app",
-          "value": "lithos"
-        },
-        {
-          "name": "sbom:dev",
-          "value": "true"
-        },
-        {
-          "name": "sbom:integrity",
-          "value": "sha512-8Z9Q4RmotVmuL4llOvqX814JNiOK1oqoBv+glG5KbpRfUiypqzz2/fxIzK4Pq129l4dT5a8Gszmpc0/XPYoFuQ=="
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-darwin-arm64@4.67.4",
+      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-darwin-arm64@4.64.6",
       "group": "@rollup",
       "name": "rollup-darwin-arm64",
-      "version": "4.67.4",
-      "purl": "pkg:npm/%40rollup%2Frollup-darwin-arm64@4.67.4",
+      "version": "4.64.6",
+      "purl": "pkg:npm/%40rollup%2Frollup-darwin-arm64@4.64.6",
       "scope": "optional",
       "properties": [
         {
@@ -7550,17 +7681,17 @@
         },
         {
           "name": "sbom:integrity",
-          "value": "sha512-pnq6hssxTtwuRAl6Kdi/+IDY+b1IhkUetjhUkdLAAJCssjfqtL2Oqy/FXJVJFtAWOu1oRlArIvf0Yk1O92x2HQ=="
+          "value": "sha512-PQCl3q7b0BgvVt72i2xrWM6I5KliwwVe4GpWW5QDGyUQawDS9aPZss/aGyFqBmxdRxlE8wDc9CaxiQ5DHRSp/Q=="
         }
       ]
     },
     {
       "type": "library",
-      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-darwin-x64@4.67.4",
+      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-darwin-x64@4.64.6",
       "group": "@rollup",
       "name": "rollup-darwin-x64",
-      "version": "4.67.4",
-      "purl": "pkg:npm/%40rollup%2Frollup-darwin-x64@4.67.4",
+      "version": "4.64.6",
+      "purl": "pkg:npm/%40rollup%2Frollup-darwin-x64@4.64.6",
       "scope": "optional",
       "properties": [
         {
@@ -7573,17 +7704,17 @@
         },
         {
           "name": "sbom:integrity",
-          "value": "sha512-BeIrGZvHMVdJg/N+ohZfFywG/gF41684YhDj2wBvouj7m9ziP1tZDUNwzXRiDY+3WIKngaC4hiUBqVtBPGP5og=="
+          "value": "sha512-l9DFl1Itb1YYdSrP1K3U8ih44AOHa/p+Q4WMMDfGvH5qVWp+ajfgS1DlYo4yCRh8wJ2ZJv0Fqccf+ULAmMFjmg=="
         }
       ]
     },
     {
       "type": "library",
-      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-freebsd-arm64@4.67.4",
+      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-freebsd-arm64@4.64.6",
       "group": "@rollup",
       "name": "rollup-freebsd-arm64",
-      "version": "4.67.4",
-      "purl": "pkg:npm/%40rollup%2Frollup-freebsd-arm64@4.67.4",
+      "version": "4.64.6",
+      "purl": "pkg:npm/%40rollup%2Frollup-freebsd-arm64@4.64.6",
       "scope": "optional",
       "properties": [
         {
@@ -7596,17 +7727,17 @@
         },
         {
           "name": "sbom:integrity",
-          "value": "sha512-fRFX/oqNg/g780DKoS8RIfYcZD59Ru5O/bSeK1N7gQljBFrTxJY/q5EX4eMs5SrJf32VgVBVVYCdfPpzAwPPnQ=="
+          "value": "sha512-bR4GR3205N9+od0+l5Dd9/iZTDpJkIe6d6Ydp2qbcQZJLmKBdYQQRp8gbWpbMt92twKJY66o1vK4NkoKQODIrA=="
         }
       ]
     },
     {
       "type": "library",
-      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-freebsd-x64@4.67.4",
+      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-freebsd-x64@4.64.6",
       "group": "@rollup",
       "name": "rollup-freebsd-x64",
-      "version": "4.67.4",
-      "purl": "pkg:npm/%40rollup%2Frollup-freebsd-x64@4.67.4",
+      "version": "4.64.6",
+      "purl": "pkg:npm/%40rollup%2Frollup-freebsd-x64@4.64.6",
       "scope": "optional",
       "properties": [
         {
@@ -7619,17 +7750,17 @@
         },
         {
           "name": "sbom:integrity",
-          "value": "sha512-bSrBRopG1q+0RuOsW0NtYTtIODlvNA3T3ebx5WnQVdSxWIoXFmj+rZdHUHdSLgFdZ5M6VGmekYE7r4RMGQXjfg=="
+          "value": "sha512-XTVNaDzcFl2TeBglvxdGgsCv9JGtAGRAoJENmGBR/XvDH2mA2K0IXc2aMfP0dR8mexSXSKifJ85FixoXX1wfTw=="
         }
       ]
     },
     {
       "type": "library",
-      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-linux-arm-gnueabihf@4.67.4",
+      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-linux-arm-gnueabihf@4.64.6",
       "group": "@rollup",
       "name": "rollup-linux-arm-gnueabihf",
-      "version": "4.67.4",
-      "purl": "pkg:npm/%40rollup%2Frollup-linux-arm-gnueabihf@4.67.4",
+      "version": "4.64.6",
+      "purl": "pkg:npm/%40rollup%2Frollup-linux-arm-gnueabihf@4.64.6",
       "scope": "optional",
       "properties": [
         {
@@ -7642,17 +7773,17 @@
         },
         {
           "name": "sbom:integrity",
-          "value": "sha512-L8IvdrJVtl65g1ozwDSyjGPG+FmibhCdFUwmqTItJLw0S3+Oj4QzFs7rfgTUiK7rsPjkCLdG1/GApFxoynXFJQ=="
+          "value": "sha512-qWc6qbc+25ugG9vqPR9P422KJBbVfZ05mjcMggoq8tsfWP+eRfC+/tiDdIlRF5VL2pDVZWN9zAhWsmu7R1+7Dw=="
         }
       ]
     },
     {
       "type": "library",
-      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-linux-arm-musleabihf@4.67.4",
+      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-linux-arm-musleabihf@4.64.6",
       "group": "@rollup",
       "name": "rollup-linux-arm-musleabihf",
-      "version": "4.67.4",
-      "purl": "pkg:npm/%40rollup%2Frollup-linux-arm-musleabihf@4.67.4",
+      "version": "4.64.6",
+      "purl": "pkg:npm/%40rollup%2Frollup-linux-arm-musleabihf@4.64.6",
       "scope": "optional",
       "properties": [
         {
@@ -7665,17 +7796,17 @@
         },
         {
           "name": "sbom:integrity",
-          "value": "sha512-h7PcoQOzC31jshNpQ48J0akB9tsghjkSjSl5AZ6XsVGTxVsln7t7C4SQyw62tNVSaz2SeHgk4VT2ELbL17BSHQ=="
+          "value": "sha512-V4Nwkp8844X/Xnww3PI1LYS0YPei8XQEVG70R+5MPZGO7AhYoun4hCN7Svs4U3wbQLZbwiz+9xRFhUZZdRl8Ww=="
         }
       ]
     },
     {
       "type": "library",
-      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-linux-arm64-gnu@4.67.4",
+      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-linux-arm64-gnu@4.64.6",
       "group": "@rollup",
       "name": "rollup-linux-arm64-gnu",
-      "version": "4.67.4",
-      "purl": "pkg:npm/%40rollup%2Frollup-linux-arm64-gnu@4.67.4",
+      "version": "4.64.6",
+      "purl": "pkg:npm/%40rollup%2Frollup-linux-arm64-gnu@4.64.6",
       "scope": "optional",
       "properties": [
         {
@@ -7688,17 +7819,17 @@
         },
         {
           "name": "sbom:integrity",
-          "value": "sha512-KSPuOBNHoOl7AsVjeY1KZci8+0up0U4TFAHU5IzBYN8P+Z6cB9DZq28+JQycZW7f6WLLa/tSzhV7Rdy95bVi+g=="
+          "value": "sha512-xb72A1aPaaIsp+a88VtRae/ovIEXislbUMyp7b9AQQU7ZkP2m/+ik6DW9TQcJyw5R8/RIailF9zExYwkjR++UA=="
         }
       ]
     },
     {
       "type": "library",
-      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-linux-arm64-musl@4.67.4",
+      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-linux-arm64-musl@4.64.6",
       "group": "@rollup",
       "name": "rollup-linux-arm64-musl",
-      "version": "4.67.4",
-      "purl": "pkg:npm/%40rollup%2Frollup-linux-arm64-musl@4.67.4",
+      "version": "4.64.6",
+      "purl": "pkg:npm/%40rollup%2Frollup-linux-arm64-musl@4.64.6",
       "scope": "optional",
       "properties": [
         {
@@ -7711,17 +7842,17 @@
         },
         {
           "name": "sbom:integrity",
-          "value": "sha512-0E/mKmVk1PlQeQYygIwQm0jlwjANTzGSiNBMPrFx+rdFGFj/2Axh4p6XwcrystQIqXZVudTaGsdbDpzYgJ4wSA=="
+          "value": "sha512-pbcs1BVBwC43hZkjhjlF8Rx8m5G0KnhLZs9Azy/gqccP6UsNSzJr0hKGIAVPqzAH1O/NdPxxC9GVGb4msQg/aw=="
         }
       ]
     },
     {
       "type": "library",
-      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-linux-loong64-gnu@4.67.4",
+      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-linux-loong64-gnu@4.64.6",
       "group": "@rollup",
       "name": "rollup-linux-loong64-gnu",
-      "version": "4.67.4",
-      "purl": "pkg:npm/%40rollup%2Frollup-linux-loong64-gnu@4.67.4",
+      "version": "4.64.6",
+      "purl": "pkg:npm/%40rollup%2Frollup-linux-loong64-gnu@4.64.6",
       "scope": "optional",
       "properties": [
         {
@@ -7734,17 +7865,17 @@
         },
         {
           "name": "sbom:integrity",
-          "value": "sha512-Fvw7dOSc2Sa9UOipRZVI0zOgdLCzsjVyD/6JuHXzUHTXFu7mMgmeX/0/bCVBIut1dz+nWz3pV4WpS/Qg0XVnxw=="
+          "value": "sha512-EKOC8os6Vsg487ZLKUqzLF99Jsmnq6tu7O7mAELakNpcA+8KadktFf/JYdRuHe/DzCUXmN38pUKu4XBcKlqGbQ=="
         }
       ]
     },
     {
       "type": "library",
-      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-linux-loong64-musl@4.67.4",
+      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-linux-loong64-musl@4.64.6",
       "group": "@rollup",
       "name": "rollup-linux-loong64-musl",
-      "version": "4.67.4",
-      "purl": "pkg:npm/%40rollup%2Frollup-linux-loong64-musl@4.67.4",
+      "version": "4.64.6",
+      "purl": "pkg:npm/%40rollup%2Frollup-linux-loong64-musl@4.64.6",
       "scope": "optional",
       "properties": [
         {
@@ -7757,17 +7888,17 @@
         },
         {
           "name": "sbom:integrity",
-          "value": "sha512-jzxbVHaE7V3F+P0wEK7UydQtvv7Twfdtx58jI5/3VRx1jJxyrn+qFwfXmqjVFxPhBl+zjaRs+ZJMFJw7vdHaQA=="
+          "value": "sha512-v/SQ68GnSlr/HyjB79sNXesGDwkOPu9JjbHfmWaymCiM+nZsQ9TstG1KfA4MuEvTr2d3PoY8PhFxj9bt0e32JA=="
         }
       ]
     },
     {
       "type": "library",
-      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-linux-ppc64-gnu@4.67.4",
+      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-linux-ppc64-gnu@4.64.6",
       "group": "@rollup",
       "name": "rollup-linux-ppc64-gnu",
-      "version": "4.67.4",
-      "purl": "pkg:npm/%40rollup%2Frollup-linux-ppc64-gnu@4.67.4",
+      "version": "4.64.6",
+      "purl": "pkg:npm/%40rollup%2Frollup-linux-ppc64-gnu@4.64.6",
       "scope": "optional",
       "properties": [
         {
@@ -7780,17 +7911,17 @@
         },
         {
           "name": "sbom:integrity",
-          "value": "sha512-fhtrzp9p4GjEJVaigaap9g6X9nP6xgJtKiLLXSDgpE18HXufA5aqfltGn+KAqMtVZReJZfOrXm//y5YSA9BWbA=="
+          "value": "sha512-G3pmliMQ7r15zFFNwBlaT/xTdSLi4lfgI7CUrQueyKYheNVhrd8JrWCE6Ll8xf4AA1RZFqq+mNJYntiElsVOyA=="
         }
       ]
     },
     {
       "type": "library",
-      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-linux-ppc64-musl@4.67.4",
+      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-linux-ppc64-musl@4.64.6",
       "group": "@rollup",
       "name": "rollup-linux-ppc64-musl",
-      "version": "4.67.4",
-      "purl": "pkg:npm/%40rollup%2Frollup-linux-ppc64-musl@4.67.4",
+      "version": "4.64.6",
+      "purl": "pkg:npm/%40rollup%2Frollup-linux-ppc64-musl@4.64.6",
       "scope": "optional",
       "properties": [
         {
@@ -7803,17 +7934,17 @@
         },
         {
           "name": "sbom:integrity",
-          "value": "sha512-uynaF7IUHwAckV0S+yC1f5esy9gB+aqCBsPH5BOck32TYdCuAn2lVG5tvUcFnEsrviGEmRZxE1NHSOieUPYJEg=="
+          "value": "sha512-XQTB/IPoB/wG6x/wu9uomAt8YH61IAr5iZTubMiad/lu88sotq2ocz9hJd556+Jz2kIkF7ZQZIsUuWE3OWqtcA=="
         }
       ]
     },
     {
       "type": "library",
-      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-linux-riscv64-gnu@4.67.4",
+      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-linux-riscv64-gnu@4.64.6",
       "group": "@rollup",
       "name": "rollup-linux-riscv64-gnu",
-      "version": "4.67.4",
-      "purl": "pkg:npm/%40rollup%2Frollup-linux-riscv64-gnu@4.67.4",
+      "version": "4.64.6",
+      "purl": "pkg:npm/%40rollup%2Frollup-linux-riscv64-gnu@4.64.6",
       "scope": "optional",
       "properties": [
         {
@@ -7826,17 +7957,17 @@
         },
         {
           "name": "sbom:integrity",
-          "value": "sha512-uaqRFdfb8eIa2bVHN/FE3ndCvR0zV2xv0AwjCfxrqSu6l6fp/54VhjfhslKlf2RIik9L1jwlt4E56PeVX6tQtQ=="
+          "value": "sha512-O5mpokth6+ydMuwiGtY8fIjvOBfH7u6SzmDNmZ3k6GK5C6iEAC2q2ZN/T5L9jYILx0IcCT0KnfMDihQ5yQFSBw=="
         }
       ]
     },
     {
       "type": "library",
-      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-linux-riscv64-musl@4.67.4",
+      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-linux-riscv64-musl@4.64.6",
       "group": "@rollup",
       "name": "rollup-linux-riscv64-musl",
-      "version": "4.67.4",
-      "purl": "pkg:npm/%40rollup%2Frollup-linux-riscv64-musl@4.67.4",
+      "version": "4.64.6",
+      "purl": "pkg:npm/%40rollup%2Frollup-linux-riscv64-musl@4.64.6",
       "scope": "optional",
       "properties": [
         {
@@ -7849,17 +7980,17 @@
         },
         {
           "name": "sbom:integrity",
-          "value": "sha512-JZRow7kmxUDEASnxHuVG5itTm+nTXi9BQUABcVUnUEngC+OPwMrpx1uJ9hIA/v+IcAEBL52ktCSPXk5OJn9Jqg=="
+          "value": "sha512-aIFxbAD9v3TvIaEDsKmukjcDg1JS4/tFXw8SHyQQgzOwzWCQ4cyDK7Ju1pQKqUXDFkEu/BZCFDCDATsKhQcB/Q=="
         }
       ]
     },
     {
       "type": "library",
-      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-linux-s390x-gnu@4.67.4",
+      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-linux-s390x-gnu@4.64.6",
       "group": "@rollup",
       "name": "rollup-linux-s390x-gnu",
-      "version": "4.67.4",
-      "purl": "pkg:npm/%40rollup%2Frollup-linux-s390x-gnu@4.67.4",
+      "version": "4.64.6",
+      "purl": "pkg:npm/%40rollup%2Frollup-linux-s390x-gnu@4.64.6",
       "scope": "optional",
       "properties": [
         {
@@ -7872,17 +8003,17 @@
         },
         {
           "name": "sbom:integrity",
-          "value": "sha512-rdrh4e+Lq9fCNKoDPaCqeHXbQCe7yl77Ukl45tlSClwYdZ1gpFGZz1XLJdYtY++FRlfL5aHvb6/0n3GDW/Nxsw=="
+          "value": "sha512-fuNo1UwBc6BxnHDOxxguQL/InhheMN3RJcJMb0b4xP8r5Q3CNCrJbVg0eCIFuJ4e/zAfjR2gYbOfbzO/G7CIyw=="
         }
       ]
     },
     {
       "type": "library",
-      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-linux-x64-gnu@4.67.4",
+      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-linux-x64-gnu@4.64.6",
       "group": "@rollup",
       "name": "rollup-linux-x64-gnu",
-      "version": "4.67.4",
-      "purl": "pkg:npm/%40rollup%2Frollup-linux-x64-gnu@4.67.4",
+      "version": "4.64.6",
+      "purl": "pkg:npm/%40rollup%2Frollup-linux-x64-gnu@4.64.6",
       "scope": "optional",
       "properties": [
         {
@@ -7895,17 +8026,17 @@
         },
         {
           "name": "sbom:integrity",
-          "value": "sha512-wL7MS4r0fYcxluF3ne2plofHZiB/LsqNCnyaUlyiKpAJLb6agPSFz7DEFCfkonWAZXMrLwCmC08b2ZEnEdJkog=="
+          "value": "sha512-05v6wFKDKJPZs9xlytVrrRu6IbRuoSvlH9xNwEOafXsKyjBFZPvAcZz2VIAB/M+lblYeKa9iOYC4RDVdfcAAaw=="
         }
       ]
     },
     {
       "type": "library",
-      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-linux-x64-musl@4.67.4",
+      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-linux-x64-musl@4.64.6",
       "group": "@rollup",
       "name": "rollup-linux-x64-musl",
-      "version": "4.67.4",
-      "purl": "pkg:npm/%40rollup%2Frollup-linux-x64-musl@4.67.4",
+      "version": "4.64.6",
+      "purl": "pkg:npm/%40rollup%2Frollup-linux-x64-musl@4.64.6",
       "scope": "optional",
       "properties": [
         {
@@ -7918,17 +8049,17 @@
         },
         {
           "name": "sbom:integrity",
-          "value": "sha512-4H0XHfd2VufGjX7NjUyeue78sD0bRIoKSGjGqO+F5nSvL6jN48NAU7esdmtFEYxZXwObLtt3MJ/kHS0jASMW3g=="
+          "value": "sha512-wJXKcdMjvkc/FaavZXNP1yW4i0pfOmhZAIWRSLG2yJ0PB0TWi7dkLErhX0u0vptDcXKKO/m1Y/YTeuyvb2MXwg=="
         }
       ]
     },
     {
       "type": "library",
-      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-openbsd-x64@4.67.4",
+      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-openbsd-x64@4.64.6",
       "group": "@rollup",
       "name": "rollup-openbsd-x64",
-      "version": "4.67.4",
-      "purl": "pkg:npm/%40rollup%2Frollup-openbsd-x64@4.67.4",
+      "version": "4.64.6",
+      "purl": "pkg:npm/%40rollup%2Frollup-openbsd-x64@4.64.6",
       "scope": "optional",
       "properties": [
         {
@@ -7941,17 +8072,17 @@
         },
         {
           "name": "sbom:integrity",
-          "value": "sha512-osRHQbE55pZpCLetpMsFmhkapyZnAUH73qRKMh+npi3boUom6u6hdaTTPSxlInXxwJHsn9r2uDhdz0V7Yoxx2A=="
+          "value": "sha512-cwg7/h0ThvJwy8CBkmACdiHAxRWpbsCmIsjOt+Zzx0hTnIcSUmKYEV03bGg+hD827OnwUsbKh1ZZDW754xWyBA=="
         }
       ]
     },
     {
       "type": "library",
-      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-openharmony-arm64@4.67.4",
+      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-openharmony-arm64@4.64.6",
       "group": "@rollup",
       "name": "rollup-openharmony-arm64",
-      "version": "4.67.4",
-      "purl": "pkg:npm/%40rollup%2Frollup-openharmony-arm64@4.67.4",
+      "version": "4.64.6",
+      "purl": "pkg:npm/%40rollup%2Frollup-openharmony-arm64@4.64.6",
       "scope": "optional",
       "properties": [
         {
@@ -7964,17 +8095,17 @@
         },
         {
           "name": "sbom:integrity",
-          "value": "sha512-95+exYEyOwrZePsE0czi4q7X5lxKPa21+lmyAZlwbYENITQ0Unk4HAQAFp/p+KhXBHBx9mUABXRYjOC5A1wY3Q=="
+          "value": "sha512-T0RkYIJbdYXJEQFw+tMBO09KDFdgmNxkHsof3wWAABrvnx15Yh8RytmrgYy9+q9cBeBNZF66MMQZC+5nzEz6vg=="
         }
       ]
     },
     {
       "type": "library",
-      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-win32-arm64-msvc@4.67.4",
+      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-win32-arm64-msvc@4.64.6",
       "group": "@rollup",
       "name": "rollup-win32-arm64-msvc",
-      "version": "4.67.4",
-      "purl": "pkg:npm/%40rollup%2Frollup-win32-arm64-msvc@4.67.4",
+      "version": "4.64.6",
+      "purl": "pkg:npm/%40rollup%2Frollup-win32-arm64-msvc@4.64.6",
       "scope": "optional",
       "properties": [
         {
@@ -7987,17 +8118,17 @@
         },
         {
           "name": "sbom:integrity",
-          "value": "sha512-FOXOcKhNQpO4Po+Ynan6IbtM67SrXZbgpRJWVYwz53CT5veI7sVzDwVBmWS65N5Imv+wK3SVhIPAl+C5DXXNCg=="
+          "value": "sha512-KlfpmF1AAIdAWxt8QQNClbpLFlAUfYOzqIuJ7IXEStMHpFRuH78RG6FjqPb3Rqhh0K89F5npvG+/i3Fjl6IveQ=="
         }
       ]
     },
     {
       "type": "library",
-      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-win32-ia32-msvc@4.67.4",
+      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-win32-ia32-msvc@4.64.6",
       "group": "@rollup",
       "name": "rollup-win32-ia32-msvc",
-      "version": "4.67.4",
-      "purl": "pkg:npm/%40rollup%2Frollup-win32-ia32-msvc@4.67.4",
+      "version": "4.64.6",
+      "purl": "pkg:npm/%40rollup%2Frollup-win32-ia32-msvc@4.64.6",
       "scope": "optional",
       "properties": [
         {
@@ -8010,17 +8141,17 @@
         },
         {
           "name": "sbom:integrity",
-          "value": "sha512-cklKh0gJOkAZQcWziQa3hrjxZKN+PCHZ7SPTyGJDAiBVr05ZXlEjGFCG7zFJMaVibxsmzAe1FimN4u/HBns9+Q=="
+          "value": "sha512-MrTLjd7Jlt9/ZavJZYG61KQv9Iy9bzbY+yXy73Xvwoa2uP66wvDShkyBr5Chz/yrE6lbD/zHMuTmKQVNQqBApg=="
         }
       ]
     },
     {
       "type": "library",
-      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-win32-x64-gnu@4.67.4",
+      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-win32-x64-gnu@4.64.6",
       "group": "@rollup",
       "name": "rollup-win32-x64-gnu",
-      "version": "4.67.4",
-      "purl": "pkg:npm/%40rollup%2Frollup-win32-x64-gnu@4.67.4",
+      "version": "4.64.6",
+      "purl": "pkg:npm/%40rollup%2Frollup-win32-x64-gnu@4.64.6",
       "scope": "optional",
       "properties": [
         {
@@ -8033,17 +8164,17 @@
         },
         {
           "name": "sbom:integrity",
-          "value": "sha512-AegwxJPc9bvUp8fQtlsUHkFMOMkGylWU7glyL+YD4vwG+QaYoGXYLSsQoeTD7kvoLZrVlMWNVhTg1dedY5C1VQ=="
+          "value": "sha512-8fWDH1CkPI8GdBKAxzHDza7UmgficsKo2+MVbvUgOGhB0629w5sHMg3Qu5y7TZsrYKHHWpz8fla4KvoT7WsO3Q=="
         }
       ]
     },
     {
       "type": "library",
-      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-win32-x64-msvc@4.67.4",
+      "bom-ref": "lithos:pkg:npm/%40rollup%2Frollup-win32-x64-msvc@4.64.6",
       "group": "@rollup",
       "name": "rollup-win32-x64-msvc",
-      "version": "4.67.4",
-      "purl": "pkg:npm/%40rollup%2Frollup-win32-x64-msvc@4.67.4",
+      "version": "4.64.6",
+      "purl": "pkg:npm/%40rollup%2Frollup-win32-x64-msvc@4.64.6",
       "scope": "optional",
       "properties": [
         {
@@ -8056,17 +8187,17 @@
         },
         {
           "name": "sbom:integrity",
-          "value": "sha512-RJZnrwTWj7Iq2ooBwoGbDdC65tDwYawneGcAfFMJqVUrRZMcskka6nTkBpXR/47G7kzn3EW2qupExnaBy11vwg=="
+          "value": "sha512-9/c9PWdr5GCIHkkxiHM1HjNBQMVdftP4O8QTcoUAaRza2FSqJ4axbf8QAnBuE6BIGQDl71SaRPeDdDYid5ecTw=="
         }
       ]
     },
     {
       "type": "library",
-      "bom-ref": "lithos:pkg:npm/%40types%2Festree@1.0.10",
+      "bom-ref": "lithos:pkg:npm/%40types%2Festree@1.0.9",
       "group": "@types",
       "name": "estree",
-      "version": "1.0.10",
-      "purl": "pkg:npm/%40types%2Festree@1.0.10",
+      "version": "1.0.9",
+      "purl": "pkg:npm/%40types%2Festree@1.0.9",
       "scope": "optional",
       "properties": [
         {
@@ -8079,7 +8210,7 @@
         },
         {
           "name": "sbom:integrity",
-          "value": "sha512-lTyOMnOcmRBzdCv6/4zUZCrEhV0xrqQiUZBZtVcbmLHBXKLnN8q89v/wKRF/Q0HbwVsqbIG3o5HDoFl9sduM+g=="
+          "value": "sha512-GhdPgy1el4/ImP05X05Uw4cw2/M93BCUmnEvWZNStlCzEKME4Fkk+YpoA5OiHNQmoS7Cafb8Xa3Pya8m1Qrzeg=="
         }
       ]
     },
@@ -8217,10 +8348,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "lithos:pkg:npm/postcss@8.5.32",
+      "bom-ref": "lithos:pkg:npm/postcss@8.5.30",
       "name": "postcss",
-      "version": "8.5.32",
-      "purl": "pkg:npm/postcss@8.5.32",
+      "version": "8.5.30",
+      "purl": "pkg:npm/postcss@8.5.30",
       "scope": "optional",
       "properties": [
         {
@@ -8233,16 +8364,16 @@
         },
         {
           "name": "sbom:integrity",
-          "value": "sha512-LJlKCCAUFKOuZxipUdYw1NzIITEsPcgyOG9LkvRJvuKj/bRzbuRY0ARXvL0pWGpsZvn8jku+LMep2eU0seHp8g=="
+          "value": "sha512-zkd+e9S1AQHhmaBKye9zlFHWjOwVgqXl1q3ECYy8561K7qxR2cREf/STLskulBFd78k6AOFeA+ff1TtEzk9bAA=="
         }
       ]
     },
     {
       "type": "library",
-      "bom-ref": "lithos:pkg:npm/rollup@4.67.4",
+      "bom-ref": "lithos:pkg:npm/rollup@4.64.6",
       "name": "rollup",
-      "version": "4.67.4",
-      "purl": "pkg:npm/rollup@4.67.4",
+      "version": "4.64.6",
+      "purl": "pkg:npm/rollup@4.64.6",
       "scope": "optional",
       "properties": [
         {
@@ -8255,7 +8386,7 @@
         },
         {
           "name": "sbom:integrity",
-          "value": "sha512-Lsv3oKcz5jgOQJej/p7nfwbVEdAbDT+z6OPf/SCdI+nF+q2ENp0pTKT35ZwXAmH8g45mfrIiJeEyAqKYSYoL9Q=="
+          "value": "sha512-fX1Vy+UNKdXn+xKDnu/HBXbHVr1AY8cSdQj9BU4kLv5aFCMqGpvrVbyUMmjN3DdzWhSAuTbcX8PCNEVaumthYA=="
         }
       ]
     },

@@ -1,75 +1,91 @@
 version: 2
-
-# Dependency updates are deliberately slow and grouped:
-# a cooldown keeps a freshly published (possibly compromised) release from
-# reaching CI on day zero, and grouped PRs keep the review surface small.
 updates:
-  # Only actual application manifests, not vendored skill examples.
-  # No root npm manifest or orchestrator pip manifest exists yet.
+  # Actual runnable project manifests only; ignore vendored skill examples.
+  # No root npm manifest or orchestrator pip manifest exists.
   - package-ecosystem: "npm"
     directory: "/psk"
     schedule:
       interval: "weekly"
     cooldown:
       default-days: 7
-    open-pull-requests-limit: 5
-    groups:
-      psk-minor-patch:
-        patterns: ["*"]
-        update-types: ["minor", "patch"]
   - package-ecosystem: "npm"
     directory: "/lithos"
     schedule:
       interval: "weekly"
     cooldown:
       default-days: 7
-    open-pull-requests-limit: 5
-    groups:
-      lithos-minor-patch:
-        patterns: ["*"]
-        update-types: ["minor", "patch"]
   - package-ecosystem: "npm"
     directory: "/fjcod"
     schedule:
       interval: "weekly"
     cooldown:
       default-days: 7
-    open-pull-requests-limit: 5
+    # react and react-dom are an atomic pair here too, but for a third reason. A
+    # single-package bump does not break `npm ci` (both ranges are ^19.1.0, so no
+    # peer range is violated) and it does not break the build or the unit tests -
+    # it breaks the browser smoke. #111 raises only react to ^19.3.1 while
+    # react-dom stays at ^19.1.0, and its fjcod-e2e job fails in the smoke step
+    # after 512s, with install, build and every other job green. Meanwhile main
+    # (both at ^19.1.0) passes the same smoke, so the mixed pair is what differs.
+    # Group them so the pair always moves together.
     groups:
-      fjcod-minor-patch:
-        patterns: ["*"]
-        update-types: ["minor", "patch"]
+      react:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@types/react"
+          - "@types/react-dom"
   - package-ecosystem: "npm"
     directory: "/bison-brand-book"
     schedule:
       interval: "weekly"
     cooldown:
       default-days: 7
-    open-pull-requests-limit: 5
-    groups:
-      bison-minor-patch:
-        patterns: ["*"]
-        update-types: ["minor", "patch"]
   - package-ecosystem: "npm"
     directory: "/hermes"
     schedule:
       interval: "weekly"
     cooldown:
       default-days: 7
-    open-pull-requests-limit: 5
+  - package-ecosystem: "npm"
+    directory: "/viking-team/motion"
+    schedule:
+      interval: "weekly"
+    cooldown:
+      default-days: 7
+    # remotion and @remotion/cli must carry the same exact version, which
+    # viking-team/motion/tests/composition.test.mjs asserts twice (equality, and a
+    # ^\d+\.\d+\.\d+$ pin). One PR per package therefore always fails that test: that
+    # is why #105 and #107 could never go green and were closed once this group
+    # produced #112, which moved both packages together and passed.
+    #
+    # react and react-dom are the same class of pair for a different reason. This
+    # manifest pins both to 18.3.1, so a PR that moves only one half to 19.x makes
+    # the install step fail on the peer range: react-dom@18.3.1 wants react@^18.3.1.
+    # #113 and #114 each move one half and both fail "Install the isolated
+    # motion-study dependencies" for exactly that reason, read out of their own
+    # lockfiles - #113 resolves react 19.3.1 against react-dom 18.3.1, and #114 is
+    # the mirror image. Grouping the four names keeps the pair atomic.
     groups:
-      hermes-minor-patch:
-        patterns: ["*"]
-        update-types: ["minor", "patch"]
-  # GitHub Actions are updated in one grouped PR; every merged bump still has to
-  # keep the SHA-pin contract enforced by tests/test_audit_contract.py.
+      remotion:
+        patterns:
+          - "remotion"
+          - "@remotion/*"
+      react:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@types/react"
+          - "@types/react-dom"
+  - package-ecosystem: "npm"
+    directory: "/brands/viking-offroad/stickers/src"
+    schedule:
+      interval: "weekly"
+    cooldown:
+      default-days: 7
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
     cooldown:
       default-days: 7
-    open-pull-requests-limit: 3
-    groups:
-      actions-all:
-        patterns: ["*"]

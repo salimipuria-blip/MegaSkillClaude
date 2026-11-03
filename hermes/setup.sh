@@ -170,13 +170,11 @@ main() {
     ok "check-only: skipping install/configure/service steps"
   else
     if ! command -v hermes >/dev/null 2>&1; then
-      # Never pipe a remote script straight into a shell: download it first, so a
-      # network hiccup cannot execute a truncated or substituted script, and pin it
-      # with HERMES_INSTALLER_SHA256 when the expected digest is known.
+      # Never pipe a remote script into a shell: download it first, verify the
+      # optional HERMES_INSTALLER_SHA256, then execute it from disk.
       installer=$(mktemp "${TMPDIR:-/tmp}/hermes-install.XXXXXXXX.sh") || die 'cannot create temp file for the installer'
       if ! curl -fsSL --proto '=https' --tlsv1.2 --max-time 90 -o "$installer" https://hermes-agent.nousresearch.com/install.sh; then
-        rm -f -- "$installer"
-        die 'could not download the Hermes installer over HTTPS'
+        rm -f -- "$installer"; die 'could not download the Hermes installer over HTTPS'
       fi
       [ -s "$installer" ] || { rm -f -- "$installer"; die 'downloaded Hermes installer is empty'; }
       if [ -n "${HERMES_INSTALLER_SHA256:-}" ]; then
@@ -184,7 +182,7 @@ main() {
           || { rm -f -- "$installer"; die 'Hermes installer checksum mismatch - refusing to run it'; }
         ok 'installer checksum verified (HERMES_INSTALLER_SHA256)'
       else
-        warn 'HERMES_INSTALLER_SHA256 is not set: the installer was downloaded to disk and is run unverified.'
+        warn 'HERMES_INSTALLER_SHA256 is not set: the installer is downloaded and run unverified.'
         warn "Pin it with: HERMES_INSTALLER_SHA256=$(sha256sum "$installer" | cut -d' ' -f1) bash hermes/setup.sh"
       fi
       bash "$installer" || { rm -f -- "$installer"; die 'Hermes installer failed'; }

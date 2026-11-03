@@ -2,4 +2,4 @@ Source: https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/playw
 Repository: sickn33/agentic-awesome-skills
 License: MIT (see ../_licenses/sickn33__agentic-awesome-skills__LICENSE)
 Companion files from the source folder are included (files over 1 MB and nested sub-skills excluded).
-INCOMPLETE: SKILL.md references files not present here (they live elsewhere in the upstream repo or do not exist upstream): references/assertions.md, references/config.md, references/fixtures.md, references/page-objects.md, templates/BasePage.java, templates/BaseTest.java
+Restored 2026-10-23: SKILL.md refreshed to the latest upstream version; 6 companion file(s) restored.

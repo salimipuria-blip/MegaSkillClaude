@@ -1,13 +1,13 @@
 # graphic-design
 
-Skills: 229
+Skills: 230
 
 - `academy-brochure-reporter` → `psk/data/skills/academy-brochure-reporter/SKILL.md`
 - `academy-grid-reporter` → `psk/data/skills/academy-grid-reporter/SKILL.md`
 - `academy-typepair-library` → `psk/data/skills/academy-typepair-library/SKILL.md`
-- `ai-logo-maker` → `library/github-skills/ai-logo-maker/SKILL.md` [incomplete: excluded from default routing]
+- `ai-logo-maker` → `library/github-skills/ai-logo-maker/SKILL.md`
 - `ai-loop` → `library/github-skills/ai-loop/SKILL.md`
-- `ai-photo-restyler` → `library/github-skills/ai-photo-restyler/SKILL.md` [incomplete: excluded from default routing]
+- `ai-photo-restyler` → `library/github-skills/ai-photo-restyler/SKILL.md`
 - `audit-preparation` → `library/github-skills/audit-preparation/SKILL.md`
 - `binary-diff` → `library/github-skills/binary-diff/SKILL.md`
 - `bleed-margin-checklist` → `psk/data/skills/bleed-margin-checklist/SKILL.md`
@@ -55,7 +55,7 @@ Skills: 229
 - `developer-advocacy` → `library/github-skills/developer-advocacy/SKILL.md`
 - `developer-sandbox` → `library/github-skills/developer-sandbox/SKILL.md`
 - `dl-flyer-spec-kit` → `psk/data/skills/dl-flyer-spec-kit/SKILL.md`
-- `dse-loop` → `library/github-skills/dse-loop/SKILL.md` [incomplete: excluded from default routing]
+- `dse-loop` → `library/github-skills/dse-loop/SKILL.md`
 - `duotone-retro-kit` → `psk/data/skills/duotone-retro-kit/SKILL.md`
 - `ebook-layout-designer` → `psk/data/skills/ebook-layout-designer/SKILL.md`
 - `ecolodge-brochure-assistant` → `psk/data/skills/ecolodge-brochure-assistant/SKILL.md`
@@ -141,21 +141,22 @@ Skills: 229
 - `persian-miniature-remix` → `psk/data/skills/persian-miniature-remix/SKILL.md`
 - `persian-typography-rules` → `psk/data/skills/persian-typography-rules/SKILL.md`
 - `planning-and-task-breakdown` → `library/github-skills/planning-and-task-breakdown/SKILL.md`
-- `platform-engineering` → `library/github-skills/platform-engineering/SKILL.md` [incomplete: excluded from default routing]
 - `poster-composition-kit` → `psk/data/skills/poster-composition-kit/SKILL.md`
-- `poster-design-studio` → `library/github-skills/poster-design-studio/SKILL.md` [incomplete: excluded from default routing]
+- `poster-design-studio` → `library/github-skills/poster-design-studio/SKILL.md`
 - `poster-generator-skill` → `psk/data/skills/poster-generator-skill/SKILL.md`
 - `presentation-master-kit` → `psk/data/skills/presentation-master-kit/SKILL.md`
 - `primer-design` → `library/github-skills/primer-design/SKILL.md`
 - `print-house-handoff-pack` → `psk/data/skills/print-house-handoff-pack/SKILL.md`
 - `prioritization-frameworks` → `library/github-skills/prioritization-frameworks/SKILL.md`
+- `pro-brand-identity` → `library/skills/pro-brand-identity/SKILL.md`
+- `pro-ui-design-system` → `library/skills/pro-ui-design-system/SKILL.md`
 - `product-design` → `library/github-skills/product-design/SKILL.md`
 - `product-strategist` → `library/github-skills/product-strategist/SKILL.md`
 - `qdrant-vertical-scaling` → `library/github-skills/qdrant-vertical-scaling/SKILL.md`
 - `qiime2-amplicon` → `library/github-skills/qiime2-amplicon/SKILL.md`
 - `qiskit` → `library/github-skills/qiskit/SKILL.md`
 - `quarkus-tdd` → `library/github-skills/quarkus-tdd/SKILL.md`
-- `radare2` → `library/github-skills/radare2/SKILL.md` [incomplete: excluded from default routing]
+- `radare2` → `library/github-skills/radare2/SKILL.md`
 - `realestate-grid-assistant` → `psk/data/skills/realestate-grid-assistant/SKILL.md`
 - `realestate-pattern-workflow` → `psk/data/skills/realestate-pattern-workflow/SKILL.md`
 - `realestate-poster-monitor` → `psk/data/skills/realestate-poster-monitor/SKILL.md`

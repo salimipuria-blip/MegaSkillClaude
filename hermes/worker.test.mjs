@@ -2,7 +2,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import worker, { webhookSecret, appKey, setupKey, chunks, MODELS, CF_MODELS } from './worker.mjs';
-import { imageRequest, IMAGE_MODEL } from './image.mjs';
+import { imageRequest, sizeFor, IMAGE_MODEL } from './image.mjs';
 import { hashPassword } from './auth.mjs';
 import { USERS } from './users.mjs';
 import { loadLog, loadNotes, addNote, appendTurn, archiveAndClear, clearNotes } from './memory.mjs';
@@ -227,6 +227,57 @@ test('weather endpoint needs the key and falls back to Tehran', async () => {
   assert.deepEqual((await callApi(baseEnv(), '/api/weather')).body, { city: 'Tehran', temp: 21.4, code: 0 });
 });
 
+test('app: /repo answers straight from GitHub, no model involved', async () => {
+  const urls = [];
+  globalThis.fetch = async (url) => {
+    const u = String(url); urls.push(u);
+    if (u.includes('/commits?')) return new Response(JSON.stringify([{ sha: 'abc1234def', commit: { message: 'feat: live pulse' } }]));
+    if (u.includes('/actions/runs')) return new Response(JSON.stringify({ workflow_runs: [] }));
+    if (u.includes('/pulls')) return new Response(JSON.stringify([]));
+    throw new Error('unexpected fetch ' + u);
+  };
+  const res = await callApi({ ...baseEnv(), GITHUB_REPO_TOKEN: 'tok' }, '/api/chat', { message: '/repo' });
+  assert.equal(res.status, 200);
+  assert.match(res.body.reply, /abc1234 feat: live pulse/);
+  assert.equal(urls.some((u) => u.includes('generativelanguage')), false);
+});
+
+test('app: any wording about the repo reaches GitHub through the brain\'s own tool call', async () => {
+  const geminiBodies = [], urls = [];
+  globalThis.fetch = async (url, init = {}) => {
+    const u = String(url); urls.push(u);
+    if (u.includes('generativelanguage')) {
+      const body = JSON.parse(init.body); geminiBodies.push(body);
+      const answered = body.contents.some((c) => (c.parts || []).some((p) => p.functionResponse));
+      const parts = answered ? [{ text: 'آخرین تغییر: feat: live pulse (abc1234)' }] : [{ functionCall: { name: 'repo_status', args: { commits: 3 } } }];
+      return new Response(JSON.stringify({ candidates: [{ content: { role: 'model', parts } }] }));
+    }
+    if (u.includes('/commits?')) return new Response(JSON.stringify([{ sha: 'abc1234def', commit: { message: 'feat: live pulse' } }]));
+    if (u.includes('/actions/runs')) return new Response(JSON.stringify({ workflow_runs: [] }));
+    if (u.includes('/pulls')) return new Response(JSON.stringify([]));
+    return new Response('{}', { status: 404 });
+  };
+  const res = await callApi({ ...baseEnv(), GITHUB_REPO_TOKEN: 'tok' }, '/api/chat', { message: 'آخرین تغییرات پروژه چی بود؟' });
+  assert.equal(res.body.reply, 'آخرین تغییر: feat: live pulse (abc1234)');
+  const fns = geminiBodies[0].tools.find((t) => t.functionDeclarations).functionDeclarations.map((d) => d.name);
+  assert.deepEqual(fns, ['repo_status', 'repo_read_file', 'repo_pull_request']);
+  assert.match(geminiBodies[0].systemInstruction.parts[0].text, /REPOSITORY \(owner\)/);
+  assert.ok(urls.some((u) => u.includes('/commits?sha=main&per_page=3')));
+  // Without a read token the model is not offered tools it could not use.
+  geminiBodies.length = 0;
+  await callApi(baseEnv(), '/api/chat', { message: 'وضعیت ریپو؟' });
+  assert.equal((geminiBodies[0].tools || []).some((t) => t.functionDeclarations), false);
+});
+
+test('pulse endpoint needs the key and reports presence only', async () => {
+  assert.equal((await callApi(baseEnv(), '/api/pulse', undefined, 'nope')).status, 401);
+  const res = await callApi(baseEnv(), '/api/pulse');
+  assert.equal(res.status, 200);
+  assert.equal(res.body.abilities.telegram, true);
+  assert.equal(res.body.abilities.app, true);
+  assert.equal(JSON.stringify(res.body).includes(baseEnv().TELEGRAM_BOT_TOKEN), false);
+});
+
 test('/app in Telegram sends the private link with the derived key', async () => {
   const env = baseEnv();
   const calls = mockFetch();
@@ -238,6 +289,14 @@ test('long replies are split under the Telegram limit', () => {
   const parts = chunks('x'.repeat(9000));
   assert.equal(parts.length, 3);
   assert.ok(parts.every((p) => p.length <= 4000));
+});
+
+test('long replies never split an emoji in half', () => {
+  const str = 'x'.repeat(3999) + '😀' + 'y'.repeat(10); // the emoji straddles the 4000 cut
+  const parts = chunks(str);
+  assert.equal(parts.join(''), str);
+  assert.ok(parts.every((p) => p.length <= 4000 && !/[\ud800-\udbff]$/.test(p) && !/^[\udc00-\udfff]/.test(p)));
+  assert.deepEqual(chunks(''), ['']);
 });
 
 // ── Team accounts ──
@@ -554,9 +613,13 @@ test('Telegram: «عکس بساز» sends a generated photo and keeps the prompt
   const photo = calls.find((c) => c.url.endsWith('/sendPhoto'));
   assert.ok(photo, 'sendPhoto called');
   assert.equal(photo.body.get('chat_id'), OWNER);
-  assert.equal(photo.body.get('caption'), 'misty forest lake, ultra realistic');
+  assert.match(photo.body.get('caption'), /^misty forest lake, ultra realistic/);
+  assert.match(photo.body.get('caption'), /Viking Offroad/);
+  assert.match(photo.body.get('caption'), /no text, letters, numbers, logo/);
   const img = env.AI.calls.find((c) => c.model === IMAGE_MODEL);
-  assert.equal(img.input.prompt, 'misty forest lake, ultra realistic');
+  assert.match(img.input.prompt, /^misty forest lake, ultra realistic/);
+  assert.match(img.input.prompt, /Portrait-friendly composition/);
+  assert.match(img.input.prompt, /no text, letters, numbers, logo/);
   const log = JSON.parse(env.MEMORY.store.get(`history:${OWNER}`));
   assert.match(log[1].parts[0].text, /عکس ساخته شد/);
 });
@@ -925,13 +988,38 @@ test('owner /trip command returns the public page link', async () => {
   assert.match(sent(calls)[0], /https:\/\/hermes\.example\.workers\.dev\/trip/);
 });
 
-test('image prompt: Persian request never reaches the image model raw; vague asks become a Viking scene', async () => {
+test('Viking image prompts preserve post/story formats and keep exact text out of the image model', async () => {
   const { imagePrompt, BRAND_SCENE } = await import('./image.mjs');
   const fails = async () => { throw new Error('down'); };
-  assert.equal(await imagePrompt(fails, {}, 'یه پست واسه اینستاگرام بساز'), BRAND_SCENE);
-  assert.equal(await imagePrompt(async () => '(no model)', {}, 'پست اینستا'), BRAND_SCENE);
+  const fallback = await imagePrompt(fails, {}, 'یه پست واسه اینستاگرام بساز');
+  assert.match(BRAND_SCENE, /single paddleboarder|lone paddleboarder/);
+  assert.doesNotMatch(BRAND_SCENE, /4x4|vehicle/i);
+  assert.ok(fallback.startsWith(BRAND_SCENE));
+  assert.match(fallback, /4:5 carousel/);
+  assert.match(fallback, /no text, letters, numbers, logo/);
+  const fallbackStory = await imagePrompt(async () => '(no model)', {}, 'Instagram Story 9:16 for Viking Offroad');
+  assert.match(fallbackStory, /^Instagram Story 9:16 for Viking Offroad/);
+  assert.match(fallbackStory, /9:16 Story/);
+  assert.match(fallbackStory, /no text/);
   assert.equal(await imagePrompt(async () => 'a red jeep on a dune', {}, 'جیپ قرمز'), 'a red jeep on a dune');
   assert.equal(await imagePrompt(fails, {}, 'a red jeep'), 'a red jeep');
+
+  let system = '';
+  const built = await imagePrompt(async (_env, _contents, promptSystem) => {
+    system = promptSystem;
+    return 'misty mountain lake at golden hour';
+  }, {}, 'Instagram Story 9:16 for Viking Offroad, paddleboarder in mist');
+  assert.match(system, /VIKING REFERENCE ART DIRECTION/);
+  assert.match(system, /central 84%/);
+  assert.match(built, /Portrait 9:16 Story/);
+  assert.match(built, /no text/);
+  assert.deepEqual(sizeFor('Instagram Story 9:16'), { width: 720, height: 1280 });
+  assert.deepEqual(sizeFor('پست اینستاگرام ۴:۵'), { width: 1024, height: 1280 });
+});
+
+test('story/post command prefixes keep the format after the verb is removed', () => {
+  assert.equal(imageRequest('استوری بساز: کمپ کنار دریاچه'), 'Instagram Story 9:16: کمپ کنار دریاچه');
+  assert.equal(imageRequest('پست بساز: تور جنگلی وایکینگ'), 'Instagram feed post 4:5: تور جنگلی وایکینگ');
 });
 
 test('when every Gemini model is out of quota, the next free provider answers (bad keys are skipped)', async () => {

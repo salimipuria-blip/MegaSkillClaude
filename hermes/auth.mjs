@@ -22,12 +22,14 @@ function sameText(a, b) {
   return diff === 0;
 }
 
-// The account, with a password changed in the app (KV) taking precedence over users.mjs.
+// The account: users.mjs, then the owner's changes in KV (acct:<username>: accounts created
+// in the app, disabled flag, sign-out time), then a password changed in the app (pw:<username>).
 async function account(env, username) {
   const base = Object.hasOwn(USERS, username) ? USERS[username] : null;
-  if (!base) return null;
+  const rec = env.MEMORY ? await env.MEMORY.get(`acct:${username}`, 'json') : null;
+  if (!base && !(rec && rec.hash)) return null;
   const changed = env.MEMORY ? await env.MEMORY.get(`pw:${username}`, 'json') : null;
-  return { ...base, ...(changed || {}) };
+  return { ...(base || {}), ...(rec || {}), ...(changed || {}) };
 }
 
 async function sign(env, data) {
@@ -50,6 +52,7 @@ export async function login(env, username, password) {
     return { error: 'نام کاربری یا رمز اشتباه است.', status: 401 };
   }
   if (fails && env.MEMORY) await env.MEMORY.delete(failKey);
+  if (acc.disabled) return { error: 'این حساب غیرفعال است. با مالک تماس بگیر.', status: 403 };
   const exp = Date.now() + SESSION_DAYS * 864e5;
   const data = `${username}.${exp}`;
   return { token: `${data}.${await sign(env, data)}`, user: { username, name: acc.name, role: acc.role, locks: acc.locks || [] } };
@@ -63,7 +66,10 @@ export async function sessionUser(env, token) {
   if (!(Number(exp) > Date.now())) return null;
   if (!sameText(await sign(env, `${username}.${exp}`), sig)) return null;
   const acc = await account(env, username);
-  return acc ? { username, name: acc.name, role: acc.role, locks: acc.locks || [] } : null;
+  if (!acc || acc.disabled) return null;
+  // A password reset or disable signs the person out: tokens issued before it stop working.
+  if (acc.validAfter && Number(exp) - SESSION_DAYS * 864e5 < acc.validAfter) return null;
+  return { username, name: acc.name, role: acc.role, locks: acc.locks || [] };
 }
 
 export async function changePassword(env, username, oldPassword, newPassword) {

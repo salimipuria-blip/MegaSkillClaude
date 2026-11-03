@@ -1,5 +1,5 @@
 import { useEffect, useRef, useSyncExternalStore, type ReactNode } from 'react';
-import { AlertCircle, ArrowDownRight, ArrowUpRight, CheckCircle2, Minus, X } from 'lucide-react';
+import { CircleAlert, ArrowDownRight, ArrowUpRight, CircleCheck, Minus, X } from 'lucide-react';
 import { ActionError } from '../core/store';
 import { pct } from '../lib/format';
 
@@ -45,7 +45,7 @@ export function Toasts() {
     <div className="toasts" role="status" aria-live="polite">
       {list.map((t) => (
         <div key={t.id} className={`toast ${t.kind}`}>
-          {t.kind === 'error' ? <AlertCircle size={18} aria-hidden /> : <CheckCircle2 size={18} aria-hidden />}
+          {t.kind === 'error' ? <CircleAlert size={18} aria-hidden /> : <CircleCheck size={18} aria-hidden />}
           <span>{t.text}</span>
         </div>
       ))}

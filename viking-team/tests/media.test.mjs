@@ -70,10 +70,29 @@ test('storage failures show a placeholder and do not create/download blob URLs',
   assert.equal(f.anchors.length, 0);
 });
 
-test('detached gallery cards release the downloaded blob immediately', async () => {
+test('detached gallery cards get no image, and the cached blob is still released on leave', async () => {
   const f = fixture();
   f.card.isConnected = false;
   await vm.runInContext('renderPhotos()', f.context);
   assert.equal(f.images.length, 0);
+  vm.runInContext('releaseUrls()', f.context);
+  assert.deepEqual(f.revoked, f.urls);
+});
+
+test('the 20s refresh reuses cached private images instead of downloading them again', async () => {
+  const f = fixture();
+  await vm.runInContext('renderPhotos()', f.context);
+  await vm.runInContext('renderPhotos()', f.context);
+  assert.deepEqual(f.storageCalls, ['trips/fixture/image.png']);
+  assert.equal(f.images.length, 2);
+  assert.equal(f.images[1].src, f.urls[0]);
+  assert.deepEqual(f.revoked, []);
+});
+
+test('a deleted photo releases its cached blob on the next render', async () => {
+  const f = fixture();
+  await vm.runInContext('renderPhotos()', f.context);
+  vm.runInContext('photos = []', f.context);
+  await vm.runInContext('renderPhotos()', f.context);
   assert.deepEqual(f.revoked, f.urls);
 });

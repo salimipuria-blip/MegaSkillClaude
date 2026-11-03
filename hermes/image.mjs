@@ -1,21 +1,34 @@
+import { fetchWithTimeout } from './resilience.mjs';
 // Image generation: the best free models on Cloudflare Workers AI (FLUX.2, Leonardo, FLUX.1), then Gemini image if paid.
-// Triggered by messages such as «عکس بساز: ...», «تصویر بساز ...» or /img ... in Telegram and the web app.
+// Viking social creatives use the repository art direction; image models produce a clean photo layer,
+// while Persian type and the official logo are composed later with real fonts and approved brand assets.
+
+import { isVikingImageRequest, vikingFormat, vikingImageDirection } from './viking-style.mjs';
 
 export const IMAGE_MODEL = '@cf/black-forest-labs/flux-1-schnell';
 const GEMINI_API = 'https://generativelanguage.googleapis.com/v1beta';
 const DAY = 86400;
-const IMAGE_RE = /^(?:\/img(?:@\w+)?|\/image|(?:یه|یک)?\s*(?:عکس|تصویر|پوستر|طرح)\s*(?:بساز|بکش|درست\s*کن)|بساز\s*(?:یه|یک)?\s*(?:عکس|تصویر)|draw|generate\s+(?:an?\s+)?image(?:\s+of)?)\s*[:：،,.\-]?\s*/i;
+const IMAGE_RE = /^(?:\/img(?:@\w+)?|\/image|(?:یه|یک)?\s*(?:عکس|تصویر|پوستر|طرح|پست|استوری|کاروسل)\s*(?:بساز|بکش|درست\s*کن)|بساز\s*(?:یه|یک)?\s*(?:عکس|تصویر|پست|استوری)|draw|generate\s+(?:an?\s+)?image(?:\s+of)?)\s*[:：،,.\-]?\s*/i;
 // The owner runs Viking Offroad, so a vague request ("a post for Instagram") means a Viking scene, never a random subject.
-export const BRAND_SCENE = 'cinematic photo of a Viking Offroad adventure in northern Iran: 4x4 offroad vehicles beside a misty forest lake, ' +
-  'people paddleboarding, tents and a glowing campfire, mountains, golden hour light, warm orange tones, wide angle, ultra realistic, high detail';
+export const BRAND_SCENE = 'cinematic Viking Offroad reference scene: a lone paddleboarder on a misty forest lake at sunrise, wooded mountains, amber reflections and deep natural-green shadows, photorealistic premium outdoor-campaign style';
 const PROMPT_SYSTEM = 'You write prompts for a photorealistic text-to-image model. Rewrite the request as ONE vivid English prompt ' +
-  '(subject, setting, light, mood, camera/composition, "ultra realistic, high detail"). Keep every concrete detail the user gave. ' +
-  'The user runs Viking Offroad (offroad tours, camping, lake paddleboarding, campfire nights in Iranian nature). If the request names no ' +
-  `clear subject (e.g. "an Instagram post", "a story", "a cover"), build the scene from this brand: ${BRAND_SCENE}. ` +
-  'No text, letters or logos in the image unless asked. Output only the prompt, at most 80 words.';
+  '(subject, setting, light, mood, camera/composition, and useful negative space). Preserve every concrete detail the user gave. ' +
+  'The user runs Viking Offroad (Iranian off-road trips, camping, lakes and paddleboarding). If the request has no clear subject ' +
+  '(for example, only "an Instagram post" or "a story"), use this brand scene: ' + BRAND_SCENE + '. ' +
+  'For Viking campaign creatives, generate only the clean photographic background: no Persian/Latin text, letters, numbers, logos, ' +
+  'watermarks, ribbons, cards, badges or emoji; exact copy and the approved logo are composed separately with real fonts/assets. ' +
+  'Viking is the brand name, not a Norse theme. Output only the image prompt, at most 55 words.';
+
+/** Prompt instructions passed to the text model that rewrites Persian requests for image models. */
+export function imagePromptSystem(request) {
+  const direction = isVikingImageRequest(request) ? vikingImageDirection(request) : '';
+  return direction
+    ? `${PROMPT_SYSTEM}\n\nVIKING REFERENCE ART DIRECTION: ${direction}\nInclude only the user's unique scene details in at most 30 additional words; the fixed art direction is appended automatically.`
+    : PROMPT_SYSTEM;
+}
 
 // Natural requests anywhere in the sentence: «یه عکس از جنگل پاییزی بساز/بده/بکش», «generate an image of ...».
-const NOUN = '(?:عکس|تصویر|پوستر|بنر|لوگو|والپیپر|کاور|طرح|نقاشی|ایلوستریشن)';
+const NOUN = '(?:عکس|تصویر|پوستر|بنر|لوگو|والپیپر|کاور|طرح|نقاشی|ایلوستریشن|پست|استوری|کاروسل)';
 const VERB = '(?:بساز|بسازی|بسازید|بکش|درست\\s*کن|طراحی\\s*کن|تولید\\s*کن|خلق\\s*کن|بده|بفرست)';
 const INTENT_FA = new RegExp(`${NOUN}[^.!؟?\\n]{0,60}?${VERB}(?![\\u0600-\\u06FF])`);
 const INTENT_EN = /\b(?:generate|create|draw|make|render)\s+(?:me\s+)?(?:an?\s+|the\s+)?(?:\w+\s+){0,3}?(?:image|picture|photo|poster|illustration|logo)\b/i;
@@ -26,19 +39,35 @@ const NOT_NEW = /(?:این|اون|همین)\s*(?:عکس|تصویر)|عکسی\s*�
 export function imageRequest(input) {
   const text = String(input).trim();
   const m = text.match(IMAGE_RE);
-  if (m) return text.slice(m[0].length).trim().slice(0, 1000);
+  if (m) {
+    const description = text.slice(m[0].length).trim().slice(0, 1000);
+    if (!description) return '';
+    // The command itself can contain the format («استوری بساز: ...»); preserve it after stripping the verb.
+    const format = vikingFormat(m[0]);
+    const label = format === 'story' ? 'Instagram Story 9:16' : format === 'post' ? 'Instagram feed post 4:5' : '';
+    return `${label ? `${label}: ` : ''}${description}`.slice(0, 1000);
+  }
   if (text.length <= 600 && !NOT_NEW.test(text) && (INTENT_FA.test(text) || INTENT_EN.test(text))) return text.slice(0, 1000);
   return null;
 }
 
-// Persian (or short) requests become a detailed English prompt; if the text brain fails, use the request as is.
+// Persian requests are translated into an image-model prompt; brand direction is repeated in the
+// final prompt so the image backend gets it even if the text model only paraphrases the user.
 export async function imagePrompt(ask, env, request) {
+  const direction = vikingImageDirection(request);
+  const finish = (base) => {
+    const source = String(base || '').trim();
+    // HF/Pollinations accept at most 900 prompt characters; keep the art-direction suffix intact.
+    const subject = direction && source.length > 260 ? source.slice(0, 260).replace(/\s+\S*$/, '') : source;
+    return `${subject}${direction ? `. ${direction}` : ''}`.slice(0, 2000);
+  };
   try {
-    const out = (await ask(env, [{ role: 'user', parts: [{ text: request }] }], PROMPT_SYSTEM, false)).trim().replace(/^["'`]+|["'`]+$/g, '');
-    if (out && /[a-z]{3}/i.test(out) && !out.startsWith('(')) return out.slice(0, 2000);
+    const system = imagePromptSystem(request);
+    const out = (await ask(env, [{ role: 'user', parts: [{ text: request }] }], system, false)).trim().replace(/^["'`]+|["'`]+$/g, '');
+    if (out && /[a-z]{3}/i.test(out) && !out.startsWith('(')) return finish(out);
   } catch { /* fall through */ }
-  // No usable rewrite: image models don't understand Persian, so never send it raw — use the brand scene instead.
-  return /[a-z]{3}/i.test(request) ? request : BRAND_SCENE;
+  // No usable rewrite: never send Persian to the image model raw; use a truthful English scene fallback.
+  return finish(/[a-z]{3}/i.test(request) ? request : BRAND_SCENE);
 }
 
 // Free models on Cloudflare Workers AI, best first; all share the free 10,000 neurons/day, so when the budget
@@ -52,12 +81,13 @@ export const CF_IMAGE_MODELS = [
   { id: IMAGE_MODEL, name: 'flux-1-schnell', square: true, extra: { steps: 8 } },
 ];
 
-// Shape from the request: story/reel 9:16, post/portrait 4:5, banner/landscape 16:9, else square.
+// Shape from the request: exact 9:16 story, 4:5 feed post, 16:9 banner, else square.
+// These model sizes scale cleanly to the approved templates (1080×1920 and 1080×1350).
 export function sizeFor(text) {
   const t = String(text || '');
-  if (/استوری|ریلز|story|reel|9:16/i.test(t)) return { width: 768, height: 1344 };
-  if (/پست|اینستا|عمودی|پرتره|post|portrait|4:5/i.test(t)) return { width: 1024, height: 1280 };
-  if (/بنر|افقی|کاور|landscape|banner|16:9|wide/i.test(t)) return { width: 1344, height: 768 };
+  if (/استوری|ریلز|story|reel|9\s*[:x×/]\s*16/i.test(t)) return { width: 720, height: 1280 };
+  if (/پست|کاروسل|اینستا|عمودی|پرتره|post|carousel|portrait|4\s*[:x×/]\s*5/i.test(t)) return { width: 1024, height: 1280 };
+  if (/بنر|افقی|کاور|landscape|banner|16\s*[:x×/]\s*9|wide/i.test(t)) return { width: 1344, height: 768 };
   return { width: 1024, height: 1024 };
 }
 
@@ -132,7 +162,7 @@ export async function hfImage(env, prompt, size = { width: 1024, height: 1024 })
   const text = String(prompt).slice(0, 900);
   const reasons = [];
   for (const model of HF_IMAGE_MODELS) {
-    const res = await fetch(`https://router.huggingface.co/hf-inference/models/${model}`, {
+    const res = await fetchWithTimeout(`https://router.huggingface.co/hf-inference/models/${model}`, {
       method: 'POST',
       headers: { 'content-type': 'application/json', accept: 'image/jpeg', ...auth },
       body: JSON.stringify({ inputs: text, parameters: { width: size.width, height: size.height } }),
@@ -145,7 +175,7 @@ export async function hfImage(env, prompt, size = { width: 1024, height: 1024 })
   }
   // Same free credits, other inference providers behind the HF router (OpenAI-style images API).
   for (const [provider, model] of HF_ROUTED) {
-    const res = await fetch(`https://router.huggingface.co/${provider}/v1/images/generations`, {
+    const res = await fetchWithTimeout(`https://router.huggingface.co/${provider}/v1/images/generations`, {
       method: 'POST',
       headers: { 'content-type': 'application/json', ...auth },
       body: JSON.stringify({ model, prompt: text, n: 1, width: size.width, height: size.height, response_format: 'b64_json' }),
@@ -164,7 +194,7 @@ export const FREE_IMAGE_API = 'https://image.pollinations.ai/prompt/';
 export async function freeImage(prompt, size = { width: 1024, height: 1024 }, token = '') {
   const seed = crypto.getRandomValues(new Uint32Array(1))[0] % 1000000;
   const url = `${FREE_IMAGE_API}${encodeURIComponent(String(prompt).slice(0, 900))}?width=${size.width}&height=${size.height}&model=flux&nologo=true&seed=${seed}`;
-  const res = await fetch(url, token ? { headers: { authorization: `Bearer ${String(token).trim()}` } } : undefined);
+  const res = await fetchWithTimeout(url, token ? { headers: { authorization: `Bearer ${String(token).trim()}` } } : undefined);
   const mime = (res.headers.get('content-type') || '').split(';')[0];
   if (res.status === 402 || res.status === 401) throw new Error(`Pollinations: ${res.status} (رایگانِ بی‌کلید بسته است${token ? '' : '؛ POLLINATIONS_TOKEN لازم'})`);
   if (!res.ok || !mime.startsWith('image/')) throw new Error(`Pollinations: ${res.status}`);
@@ -179,7 +209,7 @@ export async function geminiImageModels(env) {
   const cached = env.MEMORY ? await env.MEMORY.get('image-models', 'json') : null;
   let models = cached;
   if (!models) {
-    const res = await fetch(`${GEMINI_API}/models?pageSize=1000`, { headers: { 'x-goog-api-key': env.GEMINI_API_KEY } });
+    const res = await fetchWithTimeout(`${GEMINI_API}/models?pageSize=1000`, { headers: { 'x-goog-api-key': env.GEMINI_API_KEY } });
     if (!res.ok) throw new Error(`فهرست مدل‌های جمینی در دسترس نیست (${res.status}).`);
     const data = await res.json();
     const version = (n) => parseFloat((n.match(/gemini-(\d+(?:\.\d+)?)/) || [0, 0])[1]);
@@ -199,7 +229,7 @@ export async function geminiImage(env, prompt) {
   if (!models.length) throw new Error('این کلید جمینی مدل تصویر ندارد.');
   let lastErr = null;
   for (const model of models) {
-    const res = await fetch(`${GEMINI_API}/models/${model}:generateContent`, {
+    const res = await fetchWithTimeout(`${GEMINI_API}/models/${model}:generateContent`, {
       method: 'POST',
       headers: { 'content-type': 'application/json', 'x-goog-api-key': env.GEMINI_API_KEY },
       body: JSON.stringify({ contents: [{ role: 'user', parts: [{ text: prompt }] }],

@@ -1,6 +1,6 @@
 # product-design
 
-Skills: 144
+Skills: 145
 
 - `academy-checkout-pack` → `psk/data/skills/academy-checkout-pack/SKILL.md`
 - `academy-empty-state-autopilot` → `psk/data/skills/academy-empty-state-autopilot/SKILL.md`
@@ -75,7 +75,7 @@ Skills: 144
 - `itil-expert` → `library/github-skills/itil-expert/SKILL.md`
 - `journey-map-camper` → `psk/data/skills/journey-map-camper/SKILL.md`
 - `julia-pro` → `library/github-skills/julia-pro/SKILL.md`
-- `jurisdiction-format` → `library/github-skills/jurisdiction-format/SKILL.md` [incomplete: excluded from default routing]
+- `jurisdiction-format` → `library/github-skills/jurisdiction-format/SKILL.md`
 - `leiloeiro-ia` → `library/github-skills/leiloeiro-ia/SKILL.md`
 - `logistics-exception-management` → `library/github-skills/logistics-exception-management/SKILL.md`
 - `loyalty-ui-kit` → `psk/data/skills/loyalty-ui-kit/SKILL.md`
@@ -100,6 +100,7 @@ Skills: 144
 - `playwright-skill` → `library/github-skills/playwright-skill/SKILL.md`
 - `postmortem` → `library/github-skills/postmortem/SKILL.md`
 - `pricing-page-ux-kit` → `psk/data/skills/pricing-page-ux-kit/SKILL.md`
+- `pro-ux-design` → `library/skills/pro-ux-design/SKILL.md`
 - `production-scheduling` → `library/github-skills/production-scheduling/SKILL.md`
 - `promotion-upgrade-requests` → `library/github-skills/promotion-upgrade-requests/SKILL.md`
 - `prototype-test-plan` → `psk/data/skills/prototype-test-plan/SKILL.md`
@@ -128,7 +129,7 @@ Skills: 144
 - `stepper-progress-kit` → `psk/data/skills/stepper-progress-kit/SKILL.md`
 - `strategic-alignment` → `library/github-skills/strategic-alignment/SKILL.md`
 - `table-mobile-patterns` → `psk/data/skills/table-mobile-patterns/SKILL.md`
-- `taobao-shop-catalog` → `library/github-skills/taobao-shop-catalog/SKILL.md` [incomplete: excluded from default routing]
+- `taobao-shop-catalog` → `library/github-skills/taobao-shop-catalog/SKILL.md`
 - `toast-alert-patterns` → `psk/data/skills/toast-alert-patterns/SKILL.md`
 - `tour-a11y-monitor` → `psk/data/skills/tour-a11y-monitor/SKILL.md`
 - `tour-empty-state-assistant` → `psk/data/skills/tour-empty-state-assistant/SKILL.md`

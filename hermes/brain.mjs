@@ -1,3 +1,4 @@
+import { fetchWithTimeout } from './resilience.mjs';
 // Shared model adapters for the Worker and SQLite conversation actor.
 import { SKILLS } from './skills.mjs';
 import { askProviders, configuredProviders } from './providers.mjs';
@@ -5,11 +6,15 @@ import { describeImage } from './media.mjs';
 
 export const MODELS = ['gemini-3.8-flash', 'gemini-3.7-flash', 'gemini-3.5-flash-lite', 'gemini-2.5-flash'];
 export const CF_MODELS = ['@cf/google/gemma-3-12b-it', '@cf/meta/llama-3.3-70b-instruct-fp8-fast'];
+// Coding mode tries Workers AI's code model first.
+export const CF_CODE_MODELS = ['@cf/moonshotai/kimi-k2.7-code', '@cf/qwen/qwen2.5-coder-32b-instruct', ...CF_MODELS];
 const GEMINI_API = 'https://generativelanguage.googleapis.com/v1beta';
 export const STYLE = "Reply in the user's language (usually Persian). Be direct and accurate; short by default, detailed when the task needs it. Say so when you are not sure.\n" +
   "You CAN hear and see: voice messages are transcribed for you, and photos the user sends are attached to their message. " +
   "You CAN search Google for current facts (news, prices, weather, schedules) when the Gemini brain is active; use it instead of guessing, and keep the sources line.\n" +
-  "You CAN make images: a message that starts with «عکس بساز:» (or /img) is turned into a picture automatically. When the user wants a picture, tell them to send «عکس بساز: <description>»; when they ask for a design or post, also offer ready «عکس بساز: ...» lines for its backgrounds.\n" + SKILLS;
+  "You CAN make images: a message that starts with «عکس بساز:» (or /img) is turned into a picture automatically. When the user wants a picture, tell them to send «عکس بساز: <description>»; when they ask for a design or post, also offer ready «عکس بساز: ...» lines for its backgrounds.\n" +
+  "You CANNOT run shell or git commands, open zip/tar files, read the user's computer or act later on your own: never ask for an upload of a project or promise «I will run it and send the output». For the owner's repository use the repo_* tools when they are offered; when they are not, say so and point to /repo (commits, CI, open PRs), /ci, /prs, /file <path>, /review <path>.\n" +
+  "You CAN edit the user's own photos: when they send a picture with an instruction (retouch, swap the background, relight, restore an old photo, upscale, remove an object, studio product shot, cinematic colour) it is edited professionally and sent back. Tell them to send the photo with what they want changed; text ON a photo is set with a real font layer, so tell them to write «روی عکس بنویس: <متن>» and that the words stay readable; drawing a logo/graphic is the only thing still refused.\n" + SKILLS;
 export const SYSTEM = "You are Hermes, Puria's personal assistant (Viking Offroad brand). " + STYLE;
 
 // Photo turn: Gemini sees the image itself; otherwise Workers AI describes it and the text brain answers.
@@ -28,7 +33,8 @@ export async function see(env, contents, system, images, input, tools = null) {
 }
 
 // Brains in order: Gemini (search + Google tools) → other free providers whose key is set → Workers AI.
-export async function ask(env, contents, system = SYSTEM, search = true, tools = null) {
+// opts.code = coding mode: code-specialist models first and room for longer answers.
+export async function ask(env, contents, system = SYSTEM, search = true, tools = null, opts = {}) {
   const errors = [];
   if (env.GEMINI_API_KEY) {
     try {
@@ -40,7 +46,7 @@ export async function ask(env, contents, system = SYSTEM, search = true, tools =
   }
   if (configuredProviders(env).length) {
     try {
-      return await askProviders(env, contents, system);
+      return await askProviders(env, contents, system, { ...opts, tools });
     } catch (err) {
       errors.push(err.message);
       console.error('[Hermes] free providers failed:', err.message);
@@ -48,7 +54,7 @@ export async function ask(env, contents, system = SYSTEM, search = true, tools =
   }
   if (env.AI) {
     try {
-      return await askWorkersAI(env, contents, system);
+      return await askWorkersAI(env, contents, system, opts);
     } catch (err) {
       errors.push(err.message);
     }
@@ -56,7 +62,7 @@ export async function ask(env, contents, system = SYSTEM, search = true, tools =
   throw new Error(errors.length ? errors.join(' | ') : 'هیچ مغزی تنظیم نشده (کلید جمینی یا یکی از کلیدهای رایگان دیگر).');
 }
 
-export async function askWorkersAI(env, contents, system = SYSTEM) {
+export async function askWorkersAI(env, contents, system = SYSTEM, { code = false } = {}) {
   const messages = [
     { role: 'system', content: system },
     ...contents.map((c) => ({
@@ -65,9 +71,9 @@ export async function askWorkersAI(env, contents, system = SYSTEM) {
     })),
   ];
   let lastError;
-  for (const model of CF_MODELS) {
+  for (const model of code ? CF_CODE_MODELS : CF_MODELS) {
     try {
-      const out = await env.AI.run(model, { messages, max_tokens: 1024 });
+      const out = await env.AI.run(model, { messages, max_tokens: code ? 2048 : 1024 });
       const reply = (out && (out.response ||
         (out.choices && out.choices[0] && out.choices[0].message && out.choices[0].message.content))) || '';
       if (String(reply).trim()) return String(reply).trim();
@@ -84,7 +90,7 @@ export async function askGemini(env, contents, system = SYSTEM, search = true, t
   const order = cached ? [cached, ...MODELS.filter((m) => m !== cached)] : MODELS;
   const call = (model, convo, withSearch, withFns) => {
     const t = [...(withFns && tools ? [{ functionDeclarations: tools.declarations }] : []), ...(withSearch ? [{ google_search: {} }] : [])];
-    return fetch(`${GEMINI_API}/models/${model}:generateContent`, {
+    return fetchWithTimeout(`${GEMINI_API}/models/${model}:generateContent`, {
       method: 'POST',
       headers: { 'content-type': 'application/json', 'x-goog-api-key': env.GEMINI_API_KEY },
       body: JSON.stringify({ systemInstruction: { parts: [{ text: system }] }, contents: convo, ...(t.length ? { tools: t } : {}) }),

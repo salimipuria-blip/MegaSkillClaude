@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="fa" dir="rtl"><head><meta charset="utf-8">
+<title>وایکینگ آفرود — تور و کمپ</title>
+<style>
+@font-face{font-family:Vazir;src:url(vazir.woff2) format("woff2");font-weight:100 900}
+:root{--o:#F28A1E}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:clip;background:#000;font-family:Vazir,sans-serif}
+#stage{position:fixed;left:0;top:0;width:1080px;height:1920px;overflow:hidden}
+.scene{position:absolute;inset:0;overflow:hidden;opacity:0}
+.scene img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform-origin:50% 60%}
+.shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.78) 0%,rgba(0,0,0,.25) 38%,rgba(0,0,0,0) 55%,rgba(0,0,0,.55) 100%)}
+.vig{position:absolute;inset:0;box-shadow:inset 0 0 260px 80px rgba(0,0,0,.85);pointer-events:none}
+.txt{position:absolute;right:90px;left:90px;top:230px;color:#fff;text-align:right}
+.kick{font-weight:800;font-size:44px;color:var(--o);letter-spacing:0;display:flex;align-items:center;gap:22px}
+.kick i{display:block;height:6px;background:var(--o);width:0}
+.big{font-weight:900;font-size:150px;line-height:1.12;margin-top:28px;text-shadow:0 6px 40px rgba(0,0,0,.6)}
+.big .w{display:inline-block;opacity:0}
+.or{color:var(--o)}
+.end{top:200px}
+.cta{margin-top:46px;display:inline-block;font-weight:800;font-size:46px;color:#000;background:var(--o);padding:18px 44px;border-radius:999px;opacity:0}
+.leak{position:absolute;inset:0 -240px;opacity:0;mix-blend-mode:screen;background:radial-gradient(ellipse 70% 45% at 85% 30%,rgba(242,138,30,.95),rgba(242,90,20,.35) 45%,transparent 75%)}
+.bar{position:absolute;left:0;right:0;bottom:0;height:10px;background:rgba(255,255,255,.12)}
+.bar b{display:block;height:100%;width:0;background:var(--o);margin-right:0;margin-left:auto}
+.grain{position:absolute;inset:0;opacity:.07;background-image:radial-gradient(#fff 1px,transparent 1px);background-size:3px 3px;mix-blend-mode:overlay}
+</style></head>
+<body>
+<div id="stage">
+<section class="scene" id="s1"><img src="s1.png" alt=""><div class="shade"></div>
+  <div class="txt"><div class="kick"><i></i>وایکینگ آفرود</div>
+  <div class="big"><span class="w">جاده</span> <span class="w">تموم</span><br><span class="w">می‌شه…</span></div></div></section>
+<section class="scene" id="s2"><img src="s2.png" alt=""><div class="shade"></div>
+  <div class="txt"><div class="big"><span class="w">ماجرا</span><br><span class="w">تازه</span> <span class="w or">شروع</span><br><span class="w or">می‌شه</span></div></div></section>
+<section class="scene" id="s3"><img src="s3.png" alt=""><div class="shade" style="background:linear-gradient(180deg,rgba(0,0,0,.2),rgba(0,0,0,0) 40%,rgba(0,0,0,.85) 100%)"></div>
+  <div class="txt end"><div class="kick"><i></i>وایکینگ آفرود</div>
+  <div class="big" style="font-size:138px"><span class="w">تور</span> <span class="w or">آفرود</span><br><span class="w">و</span> <span class="w or">کمپ</span></div>
+  <div class="cta">برای رزرو دایرکت بده</div></div></section>
+<div class="leak" id="leak"></div><div class="vig"></div><div class="grain" id="grain"></div>
+<div class="bar"><b id="bar"></b></div>
+</div>
+<script>
+// Deterministic timeline: seek(t) renders the frame at t seconds, so capture is frame-exact.
+const D=10,S=[[0,3.6],[3.3,6.9],[6.6,10]],X=.3;
+const cl=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
+const eo=t=>1-Math.pow(1-t,3), eio=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+const prog=(t,a,d)=>cl((t-a)/d);
+function seek(t){
+  S.forEach(([a,b],i)=>{
+    const el=document.getElementById('s'+(i+1));
+    const fin=i?prog(t,a,X):1, fout=i<2?1-prog(t,b-X,X):1;
+    el.style.opacity=Math.min(fin,fout);
+    const k=prog(t,a,b-a);
+    const img=el.querySelector('img');
+    const sc=i==1?1.2-.1*eio(k):1.06+.12*eio(k);
+    const ty=i==0?-30*eio(k):i==2?40*eio(k):0;
+    img.style.transform=`translateY(${ty}px) scale(${sc})`;
+    const base=a+(i?0.35:0.15);
+    el.querySelectorAll('.w').forEach((w,j)=>{
+      const p=eo(prog(t,base+.22*j,.55));
+      w.style.opacity=p; w.style.transform=`translateY(${(1-p)*70}px)`; w.style.filter=`blur(${(1-p)*10}px)`;
+      const out=i<2?prog(t,b-.45,.35):0; if(out){w.style.opacity=p*(1-out);w.style.transform=`translateY(${-out*40}px)`}
+    });
+    const line=el.querySelector('.kick i'); if(line) line.style.width=(90*eo(prog(t,a+.05,.6)))+'px';
+    const kick=el.querySelector('.kick'); if(kick) kick.style.opacity=eo(prog(t,a,.4))*(i<2?1-prog(t,b-.45,.35):1);
+    const cta=el.querySelector('.cta'); if(cta){const p=eo(prog(t,8.2,.5));cta.style.opacity=p;cta.style.transform=`scale(${.85+.15*p})`}
+  });
+  document.getElementById('bar').style.width=(t/D*100)+'%';
+  document.getElementById('grain').style.backgroundPosition=`${(t*97%7)}px ${(t*53%5)}px`;
+  // orange light-leak flash peaking on each cut
+  const lk=[3.45,6.75].reduce((m,c)=>Math.max(m,Math.exp(-Math.pow((t-c)/.22,2))),0);
+  const L=document.getElementById('leak');L.style.opacity=lk*.85;L.style.transform=`translateX(${(t%3.3)*-40}px)`;
+}
+window.seek=seek;
+if(!navigator.webdriver){let t0=performance.now();(function f(n){seek(((n-t0)/1000)%D);requestAnimationFrame(f)})(t0)}
+</script></body></html>

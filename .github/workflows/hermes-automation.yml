@@ -1,0 +1,53 @@
+name: Hermes automation (plan only)
+
+# Corrected version of the pasted workflow:
+#   * manual dispatch only, dry-run/validate only — it never writes skeleton
+#     files, never pushes 100 branches and never auto-merges;
+#   * least-privilege permissions (read-only);
+#   * gh is preinstalled on GitHub runners — no apt-get install step;
+#   * actions pinned to the same majors as the repo's existing CI.
+on:
+  workflow_dispatch:
+    inputs:
+      manifest:
+        description: "Manifest path"
+        required: true
+        default: "tasks/hermes_tasks.json"
+        type: choice
+        options: ["tasks/hermes_tasks.json", "tasks/hermes_tasks.legacy.sample.json"]
+      only:
+        description: "Optional task ids, e.g. 1,2 (empty = all in manifest)"
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hermes-automation
+  cancel-in-progress: false
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.12"
+      - name: Validate manifest
+        env:
+          MANIFEST: ${{ inputs.manifest }}
+        run: python3 tasks/apply_hermes_tasks.py --manifest "$MANIFEST" --validate-only
+      - name: Dry-run plan (no writes, no pushes, no PRs, no merges)
+        env:
+          # Workflow inputs are attacker-controlled strings: pass them through env.
+          MANIFEST: ${{ inputs.manifest }}
+          ONLY: ${{ inputs.only }}
+        run: |
+          args=(--manifest "$MANIFEST")
+          if [ -n "$ONLY" ]; then args+=(--only "$ONLY"); fi
+          python3 tasks/apply_hermes_tasks.py "${args[@]}"

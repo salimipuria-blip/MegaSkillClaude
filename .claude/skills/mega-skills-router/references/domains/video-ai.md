@@ -68,7 +68,7 @@ Skills: 123
 - `longform-youtube-structure` → `psk/data/skills/longform-youtube-structure/SKILL.md`
 - `lower-thirds-fa-kit` → `psk/data/skills/lower-thirds-fa-kit/SKILL.md`
 - `motion-graphics-presets` → `psk/data/skills/motion-graphics-presets/SKILL.md`
-- `music-generation-studio` → `library/github-skills/music-generation-studio/SKILL.md` [incomplete: excluded from default routing]
+- `music-generation-studio` → `library/github-skills/music-generation-studio/SKILL.md`
 - `music-sfx-picker` → `psk/data/skills/music-sfx-picker/SKILL.md`
 - `nature-asmr-clip-plan` → `psk/data/skills/nature-asmr-clip-plan/SKILL.md`
 - `nuts-chapters-monitor` → `psk/data/skills/nuts-chapters-monitor/SKILL.md`
@@ -100,7 +100,7 @@ Skills: 123
 - `storyboard-ai-generator` → `psk/data/skills/storyboard-ai-generator/SKILL.md`
 - `subtitle-style-guide-fa` → `psk/data/skills/subtitle-style-guide-fa/SKILL.md`
 - `talking-avatar-guide` → `psk/data/skills/talking-avatar-guide/SKILL.md`
-- `talking-avatar-video` → `library/github-skills/talking-avatar-video/SKILL.md` [incomplete: excluded from default routing]
+- `talking-avatar-video` → `library/github-skills/talking-avatar-video/SKILL.md`
 - `talking-head-setup-guide` → `psk/data/skills/talking-head-setup-guide/SKILL.md`
 - `testimonial-video-kit` → `psk/data/skills/testimonial-video-kit/SKILL.md`
 - `tour-broll-optimizer` → `psk/data/skills/tour-broll-optimizer/SKILL.md`
@@ -115,8 +115,8 @@ Skills: 123
 - `video-description-writer-fa` → `psk/data/skills/video-description-writer-fa/SKILL.md`
 - `video-editor` → `psk/data/skills/video-editor/SKILL.md`
 - `video-router` → `library/github-skills/video-router/SKILL.md`
-- `viral-video-teardown-remake` → `library/github-skills/viral-video-teardown-remake/SKILL.md` [incomplete: excluded from default routing]
-- `voice-cloning-studio` → `library/github-skills/voice-cloning-studio/SKILL.md` [incomplete: excluded from default routing]
+- `viral-video-teardown-remake` → `library/github-skills/viral-video-teardown-remake/SKILL.md`
+- `voice-cloning-studio` → `library/github-skills/voice-cloning-studio/SKILL.md`
 - `voiceover-script-fa` → `psk/data/skills/voiceover-script-fa/SKILL.md`
 - `watermark-burner-video` → `psk/data/skills/watermark-burner-video/SKILL.md`
 - `wedding-compression-planner` → `psk/data/skills/wedding-compression-planner/SKILL.md`

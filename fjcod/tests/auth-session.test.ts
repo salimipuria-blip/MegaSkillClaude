@@ -9,8 +9,9 @@ function storage() {
   };
 }
 
-beforeEach(() => {
+beforeEach(async () => {
   vi.resetModules();
+  await import('./setup'); // fresh module graph: re-apply the fixture password provider
   vi.stubGlobal('localStorage', storage());
   vi.stubGlobal('sessionStorage', storage());
 });
@@ -27,7 +28,7 @@ describe('local session hardening (not a server authentication substitute)', () 
 
   it('storage edits cannot switch a logged-in cashier into another account', async () => {
     const store = await import('../src/core/store');
-    expect(store.login('333331').ok).toBe(true);
+    expect(store.login('fx-cashier-1').ok).toBe(true);
     sessionStorage.setItem('cham.session', 'u-owner');
     expect(store.currentUser()?.role).toBe('cashier');
     expect(() => store.exportBackup()).toThrow(/مجوز/);
@@ -35,7 +36,7 @@ describe('local session hardening (not a server authentication substitute)', () 
 
   it('a page reload locks the session without resetting persisted business data', async () => {
     const before = await import('../src/core/store');
-    expect(before.login('fjcod1405').ok).toBe(true);
+    expect(before.login('fx-owner-0').ok).toBe(true);
     const sales = before.getDB().sales.length;
     expect(sessionStorage.getItem('cham.session')).toBeNull();
     vi.resetModules();
@@ -46,7 +47,7 @@ describe('local session hardening (not a server authentication substitute)', () 
 
   it('changing the current record role cannot grant permissions to the existing session', async () => {
     const store = await import('../src/core/store');
-    store.login('333331');
+    store.login('fx-cashier-1');
     const cashier = store.getDB().users.find((u) => u.id === 'u-cashier-1')!;
     cashier.role = 'owner';
     expect(store.currentUser()).toBeNull();
@@ -55,8 +56,8 @@ describe('local session hardening (not a server authentication substitute)', () 
 
   it('a legitimate password change keeps the verified local session usable', async () => {
     const store = await import('../src/core/store');
-    store.login('333331');
-    store.changeOwnPassword('333331', 'fixture-new-pass');
+    store.login('fx-cashier-1');
+    store.changeOwnPassword('fx-cashier-1', 'fixture-new-pass');
     expect(store.currentUser()?.role).toBe('cashier');
     expect(store.currentUser()?.mustChangePassword).toBe(false);
     store.logout();
@@ -65,7 +66,7 @@ describe('local session hardening (not a server authentication substitute)', () 
 
   it('restoring a backup with different owner credentials requires reauthentication', async () => {
     const store = await import('../src/core/store');
-    store.login('fjcod1405');
+    store.login('fx-owner-0');
     const backup = JSON.parse(store.exportBackup());
     const owner = backup.users.find((u: { role: string }) => u.role === 'owner');
     owner.passwordHash = 'changed-fixture-hash';

@@ -12,7 +12,9 @@ const SUFFIX = /(هایی|های|ها|ای|ی)$/u;
 
 export function normalize(v) { return String(v||'').toLowerCase().normalize('NFKC').replace(/[أإآ]/g,'ا').replace(/ي/g,'ی').replace(/ك/g,'ک').replace(/[ً-ٰٟ‏‪-‮]/g,'').replace(/‌/g,'').replace(/[^\p{L}\p{N}]+/gu,' ').replace(/\s+/g,' ').trim(); }
 export function tokens(v) {
- const t=normalize(v).split(' ').filter(s=>s.length>1&&!STOP.has(s));
+ // A pure number is not a topic: "90 day roadmap" must not reach "surya-ocr-90-langs".
+ // Numeric-only queries therefore produce no tokens at all and route to nothing (see edge cases).
+ const t=normalize(v).split(' ').filter(s=>s.length>1&&!STOP.has(s)&&!/^\p{N}+$/u.test(s));
  const out=new Set(t);
  for(const w of t){
    const stem=w.length>4?w.replace(SUFFIX,''):w;
@@ -84,13 +86,37 @@ export function routeSkills(registry,query,{limit=8}={}){
  // Weight of the query = rarest form of each typed word, so stems/aliases don't double-count.
  const queryWeight=tk.reduce((s,t)=>s+idf(t),0)||1;
  const domainSignals=[];
+ // Patterns are matched against normalize()d text: آ/أ/إ fold to ا and ZWNJ is removed, so both
+ // spellings are listed where it matters. A design artefact (banner, poster, menu, card, thumbnail)
+ // asks for graphic-design, while the bare
+ // word "web" is only a qualifier there ("typography for a web banner"): the web-development signal
+ // stays only for queries that also name a real site surface.
+ const designArtefact=/banner|poster|logo|typography|thumbnail|business card|menu|بنر|پوستر|لوگو|تایپوگرافی|کارت ویزیت|منو/.test(norm);
+ const siteSurface=/website|site|page|landing|ecommerce|shop|فروشگاه|وبسایت|وب سایت|سایت|صفحه|لندینگ/.test(norm);
  if(/استوری|instagram|story|اینستاگرام|ریلز|reels/.test(norm))domainSignals.push(['social-media',0.65],['content-writing',0.12]);
  if(/design|طراحی|تصویر|image|عکس|photo|لوگو|logo|پوستر|poster/.test(norm))domainSignals.push(['graphic-design',0.17],['image-ai',0.10]);
- if(/website|وبسایت|سایت|web|landing|لندینگ/.test(norm))domainSignals.push(['web-development',0.75],['product-design',0.12]);
+ if(/website|وبسایت|وب سایت|سایت|web|landing|لندینگ/.test(norm)&&!(designArtefact&&!siteSurface))domainSignals.push(['web-development',0.75],['product-design',0.12]);
  if(/تحقیق|research|رقبا|بازار/.test(norm))domainSignals.push(['knowledge-research',0.35],['business-sales',0.13]);
  if(/فروش|sales|مشتری|customer/.test(norm))domainSignals.push(['business-sales',0.42]);
  if(/اکسل|excel|جدول|spreadsheet|sheet/.test(norm))domainSignals.push(['data-spreadsheets',0.6]);
  if(/ویدیو|video|فیلم|reels/.test(norm))domainSignals.push(['video-ai',0.2]);
+ if(designArtefact&&!siteSurface)domainSignals.push(['graphic-design',0.15]);
+ if(/translat|ترجمه|برگردان/.test(norm))domainSignals.push(['prompt-requirements',0.5]);
+ if(/pricing|price|قیمت|strategy|استراتژی|business model|مدل کسب/.test(norm))domainSignals.push(['business-sales',0.32]);
+ if(/podcast|پادکست|audio|صدا|noise|نویز|denoise/.test(norm))domainSignals.push(['video-ai',0.3]);
+ // Campaign intent is a social/content job even when the topic noun points elsewhere:
+ // "ramadan campaign ideas" must not land on a travel etiquette skill that merely shares "ramadan".
+ if(/campaign|کمپین/.test(norm))domainSignals.push(['social-media',0.35],['business-sales',0.15]);
+ // "brand identity" / brand-kit work is graphic design; the bare word "brand" stays neutral because
+ // personal-brand voice sheets legitimately belong to social media.
+ if(/brand identity|هویت برند|brand kit|brand book|brandbook/.test(norm))domainSignals.push(['graphic-design',0.40],['product-design',0.10]);
+ // Roadmap / startup / business-plan intent: no core skill carries the words "roadmap" or "startup",
+ // so without this signal the query degrades to whatever shares the token "map" (نقشه راه → map).
+ if(/roadmap|نقشه راه|استارتاپ|startup|business plan|طرح کسب/.test(norm))domainSignals.push(['business-sales',0.45],['product-design',0.12]);
+ // Reporting/analytics intent spreadsheets and business reporting; the ranking among them is still
+ // decided by lexical evidence, the signal only lifts the two plausible domains.
+ if(/analytics|تحلیل|گزارش|report|dashboard|داشبورد|kpi/.test(norm))domainSignals.push(['data-spreadsheets',0.30],['business-sales',0.22]);
+ if(/افرود|آفرود|offroad|off-road|کوهنوردی|hiking|camping|کمپینگ|کویر|desert|roadtrip|road trip|طبیعتگردی|طبیعت گردی/.test(norm))domainSignals.push(['travel-outdoors',0.5]);
  const wantsPlan=/طراحی|بساز|ساخت|سناریو|برنامه|create|design|make|build|plan|generate/.test(norm);
  const wantsPublish=/انتشار|منتشر|زمانبندی|زمان بندی|publish|post|schedule/.test(norm);
  const out=[];
@@ -104,8 +130,18 @@ export function routeSkills(registry,query,{limit=8}={}){
    if(wantsPlan&&/planner|generator|design|scripting|sequence|ideas|copy|frontend/.test(r.name))score+=0.19;
    if(wantsPlan&&!wantsPublish&&/repost|publisher|auto-publisher|monitor|scheduler|auditor|dm-export/.test(r.name))score-=0.26;
    if(/website|سایت|وبسایت/.test(norm)&&/landing-page-generator|frontend-design|website/.test(r.name))score+=0.25;
-   if(/استوری|story/.test(norm)&&/story-sequence|story-engagement|storyboard/.test(r.name))score+=0.18;
-   if(r.domain==='general')score-=0.05;
+ if(/استوری|story/.test(norm)&&/story-sequence|story-engagement|storyboard/.test(r.name))score+=0.18;
+ // Domain.scope guard: a query that names a website surface and no social platform must not be
+ // answered by an Instagram-scoped skill, even when it shares an exact Persian phrase
+ // ("گزارش هفتگی" lives inside ig-analytics-reporter's triggers).
+ const namesSocialPlatform=/instagram|اینستاگرام|اینستا|استوری|story|ریلز|reels|tiktok|تیک|linkedin|لینکدین|یوتیو?ب|youtube|shorts/.test(norm);
+ if(siteSurface&&!namesSocialPlatform&&/(^ig-|instagram|ig-)/.test(r.name))score-=0.55;
+ // Same conflict at domain granularity: a self-declared social-media skill (its own triggers carry
+ // "social media") yields to a website-surface answer when the query never names a social platform.
+ if(siteSurface&&!namesSocialPlatform&&r.domain==='social-media')score-=0.15;
+ // 'general' is the fallback domain, not a specialisation: with only a -0.05 penalty it used to win
+ // on near-ties ("reels برای youtube shorts" → general/reels-scripting over video-ai and social-media).
+ if(r.domain==='general')score-=0.18;
    out.push({id:r.id,name:r.name,domain:r.domain,score:Math.round(score*1000)/1000,triggerHits:hits,skillLoaded:!!r.content,contentStatus:r.contentStatus});
  }
  out.sort((a,b)=>b.score-a.score||b.triggerHits-a.triggerHits||a.name.localeCompare(b.name));

@@ -13,7 +13,11 @@
 ## ساخت دوباره
 ```bash
 cd brands/viking-offroad/stickers/src
-npm install --no-package-lock
+npm ci                      # lockfile کامیت شده (package-lock.json) ⇒ نصبِ بازتولیدپذیر
 node render.js all          # همه‌ی پک‌ها؛ یا: node render.js 0,2 --sheets فقط پیش‌نمایش
 ```
+`package-lock.json` کامیت شده و `npm ci` دقیقاً `playwright-core@1.56.0` را می‌آورد؛ SHA-256 هر ۳۷۳ PNG خروجی در `MANIFEST.json` ثبت است و نگهبانِ `tests/test_repo_normalization.py` آن را با فایل‌های روی دیسک مقایسه می‌کند، پس ساختِ دوباره یا ویرایشِ پنهانِ یک استیکر قرمز می‌شود.
 مسیر کروم را با `CHROMIUM_PATH` بده اگر Playwright آن را پیدا نکرد. جمله‌ی جدید = یک خط در `packs.js`.
+
+## کنترل کیفیت و جریان
+از ریشهٔ monorepo: `python3 scripts/check_brand_assets.py --stickers` (تعداد پک/PNG، ابعاد ۵۱۲×۵۱۲، RGBA، preview و cover). این گیت ساختار را بررسی می‌کند، نه کیفیت طراحی یا شفافیت تک‌تک پیکسل‌ها؛ بازبینی چشمی همچنان لازم است. وضعیت به‌روز در [`brands/viking-offroad/PROGRESS.md`](../../PROGRESS.md) و دستور توسعه در [`docs/directives/09-viking-brand-assets.md`](../../../docs/directives/09-viking-brand-assets.md) است.

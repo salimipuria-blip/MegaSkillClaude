@@ -119,9 +119,34 @@ export async function relevantSkills(env, text) {
   }
 }
 
+let namesCache = null;
+
+// Runtime: one skill by its exact name (from skills/names.json, written by build-skills.mjs), as { name, text } or null.
+export async function skillByName(env, name) {
+  try {
+    if (!env.ASSETS) return null;
+    if (!namesCache) { const r = await asset(env, 'skills/names.json'); namesCache = r ? await r.json() : {}; }
+    if (!Object.hasOwn(namesCache, name)) return null;
+    const r = await asset(env, `skills/s/${namesCache[name]}.md`);
+    if (!r) return null;
+    const d = await r.text();
+    const nl = d.indexOf('\n');
+    return { name: d.slice(0, nl).replace(/^#\s*/, ''), text: d.slice(nl + 1) };
+  } catch (err) {
+    console.error('[Hermes] skill lookup failed:', err.message);
+    return null;
+  }
+}
+
+// Stored skills keep up to SKILL_CHARS (6,000); in the prompt each is cut to PROMPT_SKILL_CHARS, since
+// three 6k skills pushed requests past the free tiers' size limits (GitHub ~8k tokens, Groq 6–12k
+// tokens/min) and spent quota on every message.
+export const PROMPT_SKILL_CHARS = 2000;
+const clip = (text) => (text.length > PROMPT_SKILL_CHARS ? `${text.slice(0, PROMPT_SKILL_CHARS).replace(/\s+\S*$/, '')} …` : text);
+
 export function skillsBlock(skills) {
   if (!skills.length) return '';
   return '\n\nSPECIALIZED SKILLS selected for this request from the Mega Skills library. Apply what helps; ignore parts that ' +
     'need tools, files or actions you do not have, and never claim to have run code or opened links.\n' +
-    skills.map((s) => `\n### ${s.name}\n${s.text}`).join('\n');
+    skills.map((s) => `\n### ${s.name}\n${clip(String(s.text || ''))}`).join('\n');
 }

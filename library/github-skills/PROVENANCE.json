@@ -1,14 +1,14 @@
 {
  "schema": "megaskillclaude.provenance/1",
- "generated_at": "2026-11-03T21:20:13+00:00",
+ "generated_at": "2026-11-03T23:22:44+00:00",
  "deterministic": true,
  "hashes": "sha256 over (relative path, file sha256, size) of every file, sorted",
  "totals": {
-  "indexed": 3011,
-  "present": 3011,
+  "indexed": 2946,
+  "present": 2946,
   "missing": 0,
-  "bytes": 118449545,
-  "repos": 29
+  "bytes": 127470177,
+  "repos": 28
  },
  "repos": {
   "AgriciDaniel/claude-obsidian": {
@@ -34,8 +34,8 @@
   },
   "Jeffallan/claude-skills": {
    "license": "MIT",
-   "skills": 55,
-   "present": 55,
+   "skills": 54,
+   "present": 54,
    "upstream_ref": "HEAD",
    "upstream_commit": "078a25cc5bfd8011459be7b91d004e900c1d02d3"
   },
@@ -48,8 +48,8 @@
   },
   "K-Dense-AI/scientific-agent-skills": {
    "license": "MIT",
-   "skills": 170,
-   "present": 170,
+   "skills": 169,
+   "present": 169,
    "upstream_ref": "HEAD",
    "upstream_commit": "a25cf9ec00e2745d03f8704acf6f6919694ccd9a"
   },
@@ -62,8 +62,8 @@
   },
   "Orchestra-Research/AI-Research-SKILLs": {
    "license": "MIT",
-   "skills": 86,
-   "present": 86,
+   "skills": 70,
+   "present": 70,
    "upstream_ref": "HEAD",
    "upstream_commit": "773a52944ba4747a18bd4ae9ade53fff041adcbc"
   },
@@ -104,8 +104,8 @@
   },
   "browser-act/skills": {
    "license": "MIT",
-   "skills": 98,
-   "present": 98,
+   "skills": 96,
+   "present": 96,
    "upstream_ref": "HEAD",
    "upstream_commit": "11c057b03f92101642cadc9f840564574120d184"
   },
@@ -118,8 +118,8 @@
   },
   "github/awesome-copilot": {
    "license": "MIT",
-   "skills": 270,
-   "present": 270,
+   "skills": 265,
+   "present": 265,
    "upstream_ref": "HEAD",
    "upstream_commit": "8178d1939a203f691067073dcab2a3f1e14072d3"
   },
@@ -146,10 +146,10 @@
   },
   "obra/superpowers": {
    "license": "MIT",
-   "skills": 13,
-   "present": 13,
+   "skills": 12,
+   "present": 12,
    "upstream_ref": "HEAD",
-   "upstream_commit": "2ce8aa15d05bd57213e6f746f953aafb7ded7a8b"
+   "upstream_commit": "22f0b463e7a5e579904dd6211a520321035526f7"
   },
   "phuryn/pm-skills": {
    "license": "MIT",
@@ -167,8 +167,8 @@
   },
   "sickn33/agentic-awesome-skills": {
    "license": "MIT",
-   "skills": 1389,
-   "present": 1389,
+   "skills": 1354,
+   "present": 1354,
    "upstream_ref": "HEAD",
    "upstream_commit": "a66414d271abb5d028d685083c9efd8afeef8021"
   },
@@ -186,24 +186,17 @@
    "upstream_ref": "HEAD",
    "upstream_commit": "a4065941f12be7967436261d9934784e381d423c"
   },
-  "virgiliojr94/book-to-skill": {
-   "license": "MIT",
-   "skills": 1,
-   "present": 1,
-   "upstream_ref": "HEAD",
-   "upstream_commit": "e7bb659d3261491c8b28793dcb9102fa64a46c22"
-  },
   "wanshuiyin/Auto-claude-code-research-in-sleep": {
    "license": "MIT",
-   "skills": 72,
-   "present": 72,
+   "skills": 71,
+   "present": 71,
    "upstream_ref": "HEAD",
    "upstream_commit": "f76ec8d6b77792e2242cca049e08d0cbb7d54e19"
   },
   "wshobson/agents": {
    "license": "MIT",
-   "skills": 98,
-   "present": 98,
+   "skills": 96,
+   "present": 96,
    "upstream_ref": "HEAD",
    "upstream_commit": "7e2fb559cf4b824b27f1fec49fe88f7511066d26"
   },
@@ -316,10 +309,10 @@
    "license": "MIT",
    "url": "https://github.com/AgriciDaniel/claude-obsidian/tree/HEAD/skills/wiki-mode",
    "status": "present",
-   "files": 8,
-   "bytes": 7851,
-   "sha256": "536b7f663be5963ee0f225957b22134f80d9c69027638ab11bbd136e7420f125",
-   "skill_md_sha256": "4862cce74fa58fba69f4f85039205f2a7b432a5bc4562a68070694049e54e21c"
+   "files": 10,
+   "bytes": 42680,
+   "sha256": "d1955947c73f0a0540a7ef246a55ca551034788cf805e6dc0fca07681013ec50",
+   "skill_md_sha256": "47d267864295d6cda09c4f7f767cf24786ecfb843341506e7472c29ba870a2cf"
   },
   {
    "name": "wiki-query",
@@ -985,19 +978,6 @@
    "skill_md_sha256": "9f5feff0c3957fa4f1a872833f5df9cef7d3b68ec4d94812e1e659e0aeb28d21"
   },
   {
-   "name": "shopify-expert",
-   "local": "shopify-expert",
-   "upstream_path": "skills/shopify-expert",
-   "repo": "Jeffallan/claude-skills",
-   "license": "MIT",
-   "url": "https://github.com/Jeffallan/claude-skills/tree/HEAD/skills/shopify-expert",
-   "status": "present",
-   "files": 7,
-   "bytes": 107067,
-   "sha256": "14e2c27e645b6e03645eb67ebcc2cfdf9066ecfa74cfb67d304b8a939c99d3fb",
-   "skill_md_sha256": "0f3028f75de59c5055b6a7390afe0a6df172aea8830b803348fb44ee22be069b"
-  },
-  {
    "name": "spark-engineer",
    "local": "spark-engineer",
    "upstream_path": "skills/spark-engineer",
@@ -1577,9 +1557,9 @@
    "license": "MIT",
    "url": "https://github.com/K-Dense-AI/scientific-agent-skills/tree/HEAD/skills/bulk-rnaseq",
    "status": "present",
-   "files": 9,
-   "bytes": 72739,
-   "sha256": "55f69efa2682764c1a93d87d5ebef414697d2fa3072f88f11a776d7db346e08d",
+   "files": 10,
+   "bytes": 86245,
+   "sha256": "e229f8b5ce5181e139c7f19efa26c90e4511462fa6ed6a276456b8297845a199",
    "skill_md_sha256": "e945e970268505368e20d9ddc0c135de469e86626d67565ae9047fb05f70cdbf"
   },
   {
@@ -1971,19 +1951,6 @@
    "bytes": 24916,
    "sha256": "6d9323655595d0fef50b9af3f6c92b626a05e02a899b55db55a3cc850d7acb28",
    "skill_md_sha256": "134b5ea684815b99c56fadf92a1cb42d37eaca4245515278e404b8876b7acfe0"
-  },
-  {
-   "name": "generate-image",
-   "local": "generate-image",
-   "upstream_path": "skills/generate-image",
-   "repo": "K-Dense-AI/scientific-agent-skills",
-   "license": "MIT",
-   "url": "https://github.com/K-Dense-AI/scientific-agent-skills/tree/HEAD/skills/generate-image",
-   "status": "present",
-   "files": 4,
-   "bytes": 65957,
-   "sha256": "bcc5f955c8fac13c2cff0832abc92bc2d2f218c4e2c87efb0e5848f47818c240",
-   "skill_md_sha256": "42438be890c5ba875ddee1bbbf505e623433886a2b180f21b2012f72d038f92a"
   },
   {
    "name": "geniml",
@@ -3884,19 +3851,6 @@
    "skill_md_sha256": "9fcacf1c041d71ef1e61c7cac2bb7a2c42c3d19d6c2a0fc2e5f5a3c9641b7a3e"
   },
   {
-   "name": "constitutional-ai",
-   "local": "constitutional-ai",
-   "upstream_path": "07-safety-alignment/constitutional-ai",
-   "repo": "Orchestra-Research/AI-Research-SKILLs",
-   "license": "MIT",
-   "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/tree/HEAD/07-safety-alignment/constitutional-ai",
-   "status": "present",
-   "files": 2,
-   "bytes": 8740,
-   "sha256": "11703f7921efba9bad0e62df96e7f7b346fa3a701c7bb94a91940dbdbcf10202",
-   "skill_md_sha256": "186267074ebdae7d3f9a5c8fb1505536c31bbe7ffba5fd18a052f8258d2005c0"
-  },
-  {
    "name": "creative-thinking-for-research",
    "local": "creative-thinking-for-research",
    "upstream_path": "21-research-ideation/creative-thinking-for-research",
@@ -3921,19 +3875,6 @@
    "bytes": 42855,
    "sha256": "36a499bb835ab8fc978224f56ce9cf07b4d168b1d34fbbe26e44eea2aca37270",
    "skill_md_sha256": "8760f968af1118e3dde5bc8443613be5ef7046a5639d26079d596fcf6d2483ff"
-  },
-  {
-   "name": "distributed-llm-pretraining-torchtitan",
-   "local": "distributed-llm-pretraining-torchtitan",
-   "upstream_path": "01-model-architecture/torchtitan",
-   "repo": "Orchestra-Research/AI-Research-SKILLs",
-   "license": "MIT",
-   "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/tree/HEAD/01-model-architecture/torchtitan",
-   "status": "present",
-   "files": 6,
-   "bytes": 28963,
-   "sha256": "22e8dc52105aac72c006911612db350e166da5c7996a667aed60ee1a084bc990",
-   "skill_md_sha256": "530b85ddadfc69e2cfd3bbdd7cdb03c89f7ddd00ba0e84fed8ac43e98a25a4d8"
   },
   {
    "name": "dspy",
@@ -4027,32 +3968,6 @@
    "skill_md_sha256": "79a494b9212c73810d53527800c69f80acd6aa1907fca8c614c69583cac76e89"
   },
   {
-   "name": "fine-tuning-openvla-oft",
-   "local": "fine-tuning-openvla-oft",
-   "upstream_path": "18-multimodal/openvla-oft",
-   "repo": "Orchestra-Research/AI-Research-SKILLs",
-   "license": "MIT",
-   "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/tree/HEAD/18-multimodal/openvla-oft",
-   "status": "present",
-   "files": 6,
-   "bytes": 28920,
-   "sha256": "be969d452b67cc7af32f7fb8c5ddcffdc7a3804abd9f3aba93e338e69fe34636",
-   "skill_md_sha256": "07492556c7479f18d353c80a4f92450fbe301811e664fc45d0070fcdd9587c9e"
-  },
-  {
-   "name": "fine-tuning-serving-openpi",
-   "local": "fine-tuning-serving-openpi",
-   "upstream_path": "18-multimodal/openpi",
-   "repo": "Orchestra-Research/AI-Research-SKILLs",
-   "license": "MIT",
-   "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/tree/HEAD/18-multimodal/openpi",
-   "status": "present",
-   "files": 7,
-   "bytes": 23078,
-   "sha256": "d33a9407bf0103cfab701aa889a84415388379d25886e127bcf109ac2331cfab",
-   "skill_md_sha256": "60af709a253bd745330e43067b22667b932a393e65a3cde6660a25d0ffbe4742"
-  },
-  {
    "name": "fine-tuning-with-trl",
    "local": "fine-tuning-with-trl",
    "upstream_path": "06-post-training/trl-fine-tuning",
@@ -4144,19 +4059,6 @@
    "skill_md_sha256": "d2ff3f9eed2cb8e15cb98e8e2398ca359325a32fd5d16ebfe0d115d7624583af"
   },
   {
-   "name": "implementing-llms-litgpt",
-   "local": "implementing-llms-litgpt",
-   "upstream_path": "01-model-architecture/litgpt",
-   "repo": "Orchestra-Research/AI-Research-SKILLs",
-   "license": "MIT",
-   "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/tree/HEAD/01-model-architecture/litgpt",
-   "status": "present",
-   "files": 6,
-   "bytes": 57199,
-   "sha256": "fe72e9568c4d8baff872fa465e28b18f734a68ee962953489b8b0b033332837a",
-   "skill_md_sha256": "523f0b786c915af20a7980857e174b838e4440afe851bd16917ef69f8042adb2"
-  },
-  {
    "name": "instructor",
    "local": "instructor",
    "upstream_path": "16-prompt-engineering/instructor",
@@ -4222,19 +4124,6 @@
    "skill_md_sha256": "d74caa45483f5b3c6bd6267e39b444627989ff90fdb84b6c2e7c3da4ddf143ef"
   },
   {
-   "name": "llamaguard",
-   "local": "llamaguard",
-   "upstream_path": "07-safety-alignment/llamaguard",
-   "repo": "Orchestra-Research/AI-Research-SKILLs",
-   "license": "MIT",
-   "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/tree/HEAD/07-safety-alignment/llamaguard",
-   "status": "present",
-   "files": 2,
-   "bytes": 9750,
-   "sha256": "3dbcd458eed3e9eb8972cae708d4f404c68a2b564c713efced4c892a9b592081",
-   "skill_md_sha256": "80c5afb39cb153d82e08dca44fbd3ea75a5e950b8bef65c2c1af8bbbe9ef3992"
-  },
-  {
    "name": "llamaindex",
    "local": "llamaindex",
    "upstream_path": "14-agents/llamaindex",
@@ -4246,45 +4135,6 @@
    "bytes": 29224,
    "sha256": "d20663c76721331ae96022d293d95b2ace8a2bcb79a0540dcb611d9f9151fa8e",
    "skill_md_sha256": "a603d319831beb1e46efd9299532b2462ee0d0cf01d7aa8928bd21763a3d9760"
-  },
-  {
-   "name": "llava",
-   "local": "llava",
-   "upstream_path": "18-multimodal/llava",
-   "repo": "Orchestra-Research/AI-Research-SKILLs",
-   "license": "MIT",
-   "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/tree/HEAD/18-multimodal/llava",
-   "status": "present",
-   "files": 3,
-   "bytes": 13073,
-   "sha256": "e6604f3148b2c542df64c0f7bf1032582bd4e77d3ba9a40084cf0af280feacbd",
-   "skill_md_sha256": "e2c915ece2f3e50ea110320b7a364dd36361d3010e102e800416dfa3b4299745"
-  },
-  {
-   "name": "long-context",
-   "local": "long-context",
-   "upstream_path": "19-emerging-techniques/long-context",
-   "repo": "Orchestra-Research/AI-Research-SKILLs",
-   "license": "MIT",
-   "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/tree/HEAD/19-emerging-techniques/long-context",
-   "status": "present",
-   "files": 5,
-   "bytes": 59150,
-   "sha256": "a72dab043752c250a9b95824db7a253345f47be56b2f373df214b5507637f6c5",
-   "skill_md_sha256": "6426eb21a38b8a314078292b8172d889b7f2b1a226901fcda78ac4d28a98a5e7"
-  },
-  {
-   "name": "mamba-architecture",
-   "local": "mamba-architecture",
-   "upstream_path": "01-model-architecture/mamba",
-   "repo": "Orchestra-Research/AI-Research-SKILLs",
-   "license": "MIT",
-   "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/tree/HEAD/01-model-architecture/mamba",
-   "status": "present",
-   "files": 5,
-   "bytes": 30500,
-   "sha256": "826d27394c3a4115f6716d5aba362ab56b04e537d650963699e7659b073ecb3d",
-   "skill_md_sha256": "51ddf99c12a472a78c258bddf7e66e72cf45d9e04969f3300cc8d68aaaef9b0e"
   },
   {
    "name": "miles-rl-training",
@@ -4443,19 +4293,6 @@
    "skill_md_sha256": "eb9da6a1a81c492fb143cde0714f355ab042fcfe967b31bdb1fc78a5cb0e761f"
   },
   {
-   "name": "optimizing-attention-flash",
-   "local": "optimizing-attention-flash",
-   "upstream_path": "10-optimization/flash-attention",
-   "repo": "Orchestra-Research/AI-Research-SKILLs",
-   "license": "MIT",
-   "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/tree/HEAD/10-optimization/flash-attention",
-   "status": "present",
-   "files": 4,
-   "bytes": 25277,
-   "sha256": "e9366b782affa8ac856a40db231664d6ef28a60d0047b7267a6373e963ff1a37",
-   "skill_md_sha256": "e0c1da83766332e0f3db4bcca954c3a70be399632758dcec2680aa82e236438d"
-  },
-  {
    "name": "outlines",
    "local": "outlines",
    "upstream_path": "16-prompt-engineering/outlines",
@@ -4599,19 +4436,6 @@
    "skill_md_sha256": "17fc974b3f3b67b1648c5cb93b3bdc557fbd64df8463d8fbc8f71bdf88575a7c"
   },
   {
-   "name": "segment-anything-model",
-   "local": "segment-anything-model",
-   "upstream_path": "18-multimodal/segment-anything",
-   "repo": "Orchestra-Research/AI-Research-SKILLs",
-   "license": "MIT",
-   "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/tree/HEAD/18-multimodal/segment-anything",
-   "status": "present",
-   "files": 4,
-   "bytes": 41611,
-   "sha256": "9ff78b9e6ca6d697874cc05b07eab2de2162521c2aef076edaee7a3ebda16686",
-   "skill_md_sha256": "6ac5c2f96cf7d0ae5f787164678701266930129aa06cc21818f20f77dacb6a71"
-  },
-  {
    "name": "sentence-transformers",
    "local": "sentence-transformers",
    "upstream_path": "15-rag/sentence-transformers",
@@ -4664,19 +4488,6 @@
    "skill_md_sha256": "05e664a43bb82df2363ef22ceba81a41394a2b819c3367b2413f661485085c8f"
   },
   {
-   "name": "simpo-training",
-   "local": "simpo-training",
-   "upstream_path": "06-post-training/simpo",
-   "repo": "Orchestra-Research/AI-Research-SKILLs",
-   "license": "MIT",
-   "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/tree/HEAD/06-post-training/simpo",
-   "status": "present",
-   "files": 5,
-   "bytes": 32849,
-   "sha256": "a17ad49258720c1b1555600b5ecc51375fca099c9f47cfb889134d84111425c0",
-   "skill_md_sha256": "2a74bd2378857c520066fbe84fc0c6c556d0fa0b8c4afde1eab1c0abfb51ed8a"
-  },
-  {
    "name": "skypilot-multi-cloud-orchestration",
    "local": "skypilot-multi-cloud-orchestration",
    "upstream_path": "09-infrastructure/skypilot",
@@ -4690,19 +4501,6 @@
    "skill_md_sha256": "de1be4556d8a8f7929003ca4b672e5fbb755588b1e95068973896b63d3034965"
   },
   {
-   "name": "slime-rl-training",
-   "local": "slime-rl-training",
-   "upstream_path": "06-post-training/slime",
-   "repo": "Orchestra-Research/AI-Research-SKILLs",
-   "license": "MIT",
-   "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/tree/HEAD/06-post-training/slime",
-   "status": "present",
-   "files": 4,
-   "bytes": 31209,
-   "sha256": "285299fd83ee2f900dc8d4c0ba19af992c8b705af12f7cb29285e79157e64958",
-   "skill_md_sha256": "117c8fd2d57d878e45c698f9f0485326ed4630aeaec761aa1222d7a36458cc07"
-  },
-  {
    "name": "sparse-autoencoder-training",
    "local": "sparse-autoencoder-training",
    "upstream_path": "04-mechanistic-interpretability/saelens",
@@ -4714,19 +4512,6 @@
    "bytes": 31607,
    "sha256": "7ca341a795082013dae505f243dfdc52da546372c698505af47177435d50a8cd",
    "skill_md_sha256": "3af1fa0e513a96c953f4fbd28b1a6cd764fa9c27e512c6f0cfd2b80c2a1706ae"
-  },
-  {
-   "name": "speculative-decoding",
-   "local": "speculative-decoding",
-   "upstream_path": "19-emerging-techniques/speculative-decoding",
-   "repo": "Orchestra-Research/AI-Research-SKILLs",
-   "license": "MIT",
-   "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/tree/HEAD/19-emerging-techniques/speculative-decoding",
-   "status": "present",
-   "files": 4,
-   "bytes": 33314,
-   "sha256": "044b8eac92123a4f9f7c1918b0546c81a6032e11361308caad9c2e0b4f3cb748",
-   "skill_md_sha256": "d818b841ffe3e338569ab7caa0d54516f51c649e52fd1af2d5de5d0435b39f99"
   },
   {
    "name": "stable-diffusion-image-generation",
@@ -4794,19 +4579,6 @@
    "skill_md_sha256": "809da22c47d5caadbcca9d3db7e82e227c174dbaa98f4a01cf2a678ffaffcbf0"
   },
   {
-   "name": "training-llms-megatron",
-   "local": "training-llms-megatron",
-   "upstream_path": "08-distributed-training/megatron-core",
-   "repo": "Orchestra-Research/AI-Research-SKILLs",
-   "license": "MIT",
-   "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/tree/HEAD/08-distributed-training/megatron-core",
-   "status": "present",
-   "files": 6,
-   "bytes": 49660,
-   "sha256": "a301761049b1b46e978aa871e19e009bab82573b0aa3a6a44e9907353859e3c3",
-   "skill_md_sha256": "6e69257341b9ee01b22a46905e93f6fe2339b9f8147c7f77da46be7b366b6556"
-  },
-  {
    "name": "transformer-lens-interpretability",
    "local": "transformer-lens-interpretability",
    "upstream_path": "04-mechanistic-interpretability/transformer-lens",
@@ -4818,19 +4590,6 @@
    "bytes": 32526,
    "sha256": "7ddb62e71a47729480d05a4f35dc79f56ed4ee7c956a78feb36702168760f2dd",
    "skill_md_sha256": "9ac5a790a59f46e430a9015a1e8c52338666f3426e36085c4ef38665b10b4e24"
-  },
-  {
-   "name": "verl-rl-training",
-   "local": "verl-rl-training",
-   "upstream_path": "06-post-training/verl",
-   "repo": "Orchestra-Research/AI-Research-SKILLs",
-   "license": "MIT",
-   "url": "https://github.com/Orchestra-Research/AI-Research-SKILLs/tree/HEAD/06-post-training/verl",
-   "status": "present",
-   "files": 4,
-   "bytes": 24534,
-   "sha256": "2122f9158ea034b6598b4a1f601b12c235d24aa720b21bf79b5a1d8ddf2f4fa5",
-   "skill_md_sha256": "1167e2b2994c9b0780edc44d5bc3a3eef69dc816af08af8f28ef9c19163d1285"
   },
   {
    "name": "weights-and-biases",
@@ -5919,9 +5678,9 @@
    "license": "MIT",
    "url": "https://github.com/affaan-m/ECC/tree/HEAD/skills/autonomous-loops",
    "status": "present",
-   "files": 2,
-   "bytes": 25247,
-   "sha256": "5d3fa97b96e404af270510cc0dce5b36e26c29310b348e8e4b5655c502c209e8",
+   "files": 3,
+   "bytes": 41427,
+   "sha256": "0e3bcb1f041bd227bd3dc24fc893dc1232e85be7a2b772536b19e9e5df0e9aed",
    "skill_md_sha256": "c2db797295500b9c2b31d9dd2451ef28727346c739b5d1d3366f0f9ea2e823dc"
   },
   {
@@ -6244,9 +6003,9 @@
    "license": "MIT",
    "url": "https://github.com/affaan-m/ECC/tree/HEAD/skills/configure-ecc",
    "status": "present",
-   "files": 2,
-   "bytes": 8388,
-   "sha256": "b6766146eafa3dd0edf2c86b9441dbc145270627cf86e8bf489d5ab4a6509ed6",
+   "files": 3,
+   "bytes": 13051,
+   "sha256": "bc9f2dbc7af2566a2af920e18ccba4c1cc00c2777dfe47d7ae08bbf95204bc29",
    "skill_md_sha256": "ad87612e3cd745332625cd707179f4e98dc78da99183640f985637022ec9d650"
   },
   {
@@ -6673,9 +6432,9 @@
    "license": "MIT",
    "url": "https://github.com/affaan-m/ECC/tree/HEAD/skills/dmux-workflows",
    "status": "present",
-   "files": 2,
-   "bytes": 6790,
-   "sha256": "5d27c324618287f45d62cf6e0c125673149ba70439d370a089a1311b85a7a8eb",
+   "files": 4,
+   "bytes": 27755,
+   "sha256": "8196c53956529f3ff4a379484ab3f66926090b426173153737ed5998ae9b5424",
    "skill_md_sha256": "6e4028d61a556d58fa2cdc6162d6837c082974a7161b2d703967bec472308c56"
   },
   {
@@ -6777,9 +6536,9 @@
    "license": "MIT",
    "url": "https://github.com/affaan-m/ECC/tree/HEAD/skills/ecc-guide",
    "status": "present",
-   "files": 2,
-   "bytes": 6159,
-   "sha256": "59242df5632dae30eec61f160b002f5fd73a7dffcc7e7b85a81cec1cd6e09da9",
+   "files": 5,
+   "bytes": 55459,
+   "sha256": "09bcf849119abadcc78fe2457cc1b97839e366e0c31d16edb647a1ec4bd4d26a",
    "skill_md_sha256": "472d72a270cbd7f4eaf7fc73a1313f40a4995575c5e2d2ff4f91c280f5ee5df9"
   },
   {
@@ -6881,9 +6640,9 @@
    "license": "MIT",
    "url": "https://github.com/affaan-m/ECC/tree/HEAD/skills/eval-harness",
    "status": "present",
-   "files": 2,
-   "bytes": 9138,
-   "sha256": "84eb8dba6b4b494b0ed8a60f6685a2b961c55a128ba4ddb235d8a6050a9716e4",
+   "files": 3,
+   "bytes": 14524,
+   "sha256": "3cd6fa349ca933d90aafd167385977f28b02fdecf44b1ecc28255ac24c1c6875",
    "skill_md_sha256": "3a5339a5a80099a5c9d55da9b6c8e05a690f5befc6f78d779c75dd79d818ca07"
   },
   {
@@ -7063,10 +6822,10 @@
    "license": "MIT",
    "url": "https://github.com/affaan-m/ECC/tree/HEAD/skills/gateguard",
    "status": "present",
-   "files": 2,
-   "bytes": 9739,
-   "sha256": "69615534e8d08a0a8bf7cc8b0d8850b3ac7e2ab2941ec261184b14015454c1de",
-   "skill_md_sha256": "33e89b52b5f76ade2508165271bcf425fc3b792e56a92405c356a7e94077610a"
+   "files": 3,
+   "bytes": 139754,
+   "sha256": "0b8294f203bfa4f1d51eb4f616062ad215ee624b18bcac4a41c44af7dec00c4b",
+   "skill_md_sha256": "54083368cd78dea6ea178a8cf666557f41bbc70edaa3be32b8639df9de1c1795"
   },
   {
    "name": "generating-python-installer",
@@ -7908,9 +7667,9 @@
    "license": "MIT",
    "url": "https://github.com/affaan-m/ECC/tree/HEAD/skills/nanoclaw-repl",
    "status": "present",
-   "files": 2,
-   "bytes": 1537,
-   "sha256": "62c8b7a4235c24b44613c43ea97dcdc2f2b707b77239fb1cb8269daf0f05051a",
+   "files": 3,
+   "bytes": 17717,
+   "sha256": "52e10bddb72ae263f8de3bd3f2474a448fef9c2c9dfe228bfaa58dabd4de1e79",
    "skill_md_sha256": "75786102fd1a49d1bbed11f75bc014a93e1bb2eed2cdc0088f1bad0e92d29291"
   },
   {
@@ -9169,9 +8928,9 @@
    "license": "MIT",
    "url": "https://github.com/affaan-m/ECC/tree/HEAD/skills/unified-memory",
    "status": "present",
-   "files": 2,
-   "bytes": 8264,
-   "sha256": "f212e9cb4963f9efc48d32942c00ed595eabdcd2ab07bdab9f21d4d67c4a801e",
+   "files": 3,
+   "bytes": 17894,
+   "sha256": "0472d211eeb0c4a61810d646a90349c7f75dc59873790c08e2bcb289056b11ef",
    "skill_md_sha256": "c42e96155783a44a50f13ab63e9d7f33c9d03b7a1f30777ef434401469c1630a"
   },
   {
@@ -10326,9 +10085,9 @@
    "license": "MIT",
    "url": "https://github.com/alirezarezvani/claude-skills/tree/HEAD/.gemini/skills/confluence-expert",
    "status": "present",
-   "files": 7,
-   "bytes": 76802,
-   "sha256": "486de6d1e5ba575d97b2700ccf88c09b68a36a883ad1e0feb822dac858d8450c",
+   "files": 8,
+   "bytes": 93663,
+   "sha256": "059790d35fef26941941651f6016feb4c423571060ac8b467480131bf7791b5b",
    "skill_md_sha256": "f0d5062618eaf048f5215fc6b41d19c9549132c021a504f789c8689352f37be2"
   },
   {
@@ -13239,8 +12998,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/1688-product-detail",
    "status": "present",
    "files": 6,
-   "bytes": 28073,
-   "sha256": "98b5adfc8782d8b1dbd69182005eabd6034e1fea061408a653a52f6af4a40926",
+   "bytes": 27934,
+   "sha256": "81150e58c16ee27b1f1aa09da6e0dc45e1ce789a36a98432c69bd74e0f552aad",
    "skill_md_sha256": "c90ff058e920a21ec1e7404d3d8d4acb22e1a75249e64d4e257c2a08b3a2c5b9"
   },
   {
@@ -13252,8 +13011,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/airbnb-listing-detail",
    "status": "present",
    "files": 3,
-   "bytes": 16605,
-   "sha256": "dfbdcc43bfd047f44dfeaf80c58a1044662f0095ae5b89e02409b92dcd24068e",
+   "bytes": 16466,
+   "sha256": "3b650e6edab5d011b322f2f9846d6c9d98d50b4c6c1115d875656b486018b30d",
    "skill_md_sha256": "a61f302eca8a7693fee4b81e034f796253fedfb658e1813e66a6bc50e4dbfda6"
   },
   {
@@ -13265,8 +13024,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/airbnb-search-listing",
    "status": "present",
    "files": 3,
-   "bytes": 8418,
-   "sha256": "3460e00ca850ede03f9330dce6dcdfd06b4b43cd6f2ff6e610795aae40708cb0",
+   "bytes": 8279,
+   "sha256": "708f56c9ec6ea97ba288856fa16d2de3804242f3cb57a37c25933f2f666e51f6",
    "skill_md_sha256": "93cf9ccb8e765fb14cfce97835d402a8ac835e13b95c438b6fb497446f52685f"
   },
   {
@@ -13278,8 +13037,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/amazon-alexa-qa",
    "status": "present",
    "files": 5,
-   "bytes": 15242,
-   "sha256": "7c027938610b32fec137ad66ff8f07c4972505fba015c10158af595895278ace",
+   "bytes": 15103,
+   "sha256": "600279085eaf6b3cbc5d9806d5485dd6f0883db3f91bf27ee3378ccf117407fd",
    "skill_md_sha256": "6135a66153ed5fc19ff71d429bd6e945f33769cdeef82173b958dd9b525e0dc2"
   },
   {
@@ -13317,8 +13076,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/amazon-bestseller-listing",
    "status": "present",
    "files": 3,
-   "bytes": 13135,
-   "sha256": "4c731619e629437a3bfe67282a0f11cef45775b40c0524c592c13325a460a673",
+   "bytes": 12996,
+   "sha256": "99afeb3fc5107633bfd21188dc951c94b2ac17811227ed7a474f316f3a03e8f6",
    "skill_md_sha256": "677b3ff51cfe5f4e6f933b453aabddab289f3020e3791b88cdf1db4ef1e6936f"
   },
   {
@@ -13369,8 +13128,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/amazon-product-detail",
    "status": "present",
    "files": 3,
-   "bytes": 27323,
-   "sha256": "2e1297607100fea1f0a7261939ce3224594ab34eb15e3ee331dbc1ac53d578b6",
+   "bytes": 27184,
+   "sha256": "6dbd343b67754b1d85be30ca163c022b9b07a5f8b22015eb5608b02c24a65468",
    "skill_md_sha256": "6bbb3cf28b42af5919bd29243e3847cbafea373eb75559eb69f4e1fb0693d902"
   },
   {
@@ -13408,8 +13167,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/amazon-search-listing",
    "status": "present",
    "files": 3,
-   "bytes": 16328,
-   "sha256": "ad90bc8bd9abc13db202f251f0febeaaac5b2ea8ccb3f7270dca1324f1cb3a63",
+   "bytes": 16189,
+   "sha256": "161a2f71c368f08834f2b5c48ce258af6c2b523b22013a1b7fe851bac0ed1324",
    "skill_md_sha256": "17edd8103404ff2e0cc7ee27483e771c16bd40d4c5097232cdf1465939b85854"
   },
   {
@@ -13447,8 +13206,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/video-platforms/douyin-video-search",
    "status": "present",
    "files": 3,
-   "bytes": 13097,
-   "sha256": "325beb299d0d74c712810deb4773b41140377730ccf85b3102147b946f7e2eb9",
+   "bytes": 12958,
+   "sha256": "6d3d9137f0aadd2b42cfab72ec71e45ac19c44cdda9b7e1f3bf218e200f36436",
    "skill_md_sha256": "2e3dfa9a02bfb135629b408d42a1c416b55532d23bcf7eb1408d505d6e9cf857"
   },
   {
@@ -13460,8 +13219,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/ebay-item-detail",
    "status": "present",
    "files": 3,
-   "bytes": 22732,
-   "sha256": "2613d12bdbcc44194aad6cd564a2cc17d9f8dbe4df32a876e84c2d05f382276a",
+   "bytes": 22593,
+   "sha256": "a4fc2f91bd21ec15984d2a2d7207b5ce1b69a01435ba23807fed27663d60def6",
    "skill_md_sha256": "179fa866a7b22676a891521e75a1c82d8daa2c64be69be3f0a0d0c73c6405b1a"
   },
   {
@@ -13473,8 +13232,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/ebay-search-listing",
    "status": "present",
    "files": 3,
-   "bytes": 20309,
-   "sha256": "49a23377c79fd3904c3318b21ef0ec7e92422e1e2c1808359aa46b5f7e20725d",
+   "bytes": 20170,
+   "sha256": "d5a156277dc8ceea818b4814c434563d87c0b73be46a543d51e1e35b380f48e5",
    "skill_md_sha256": "cf346c301fdd3a8ebc2fd169e78fc2ea5a673310b52ee288e8ef26ff08e8fe6f"
   },
   {
@@ -13486,8 +13245,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/ebay-sold-listings-search",
    "status": "present",
    "files": 5,
-   "bytes": 40368,
-   "sha256": "d660a0604494986b587aca50dff6ed46a681e2602cb32401bf7034eb793c0be0",
+   "bytes": 40229,
+   "sha256": "7e4345eeeda330a4c64b1b80a98727ed99893d09dd93c0a951279a009cd8c882",
    "skill_md_sha256": "22575b34bdfa22ef1dcb6d356046f91f17fbd8b789943c25f4d4cafb3218110f"
   },
   {
@@ -13499,8 +13258,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/ecommerce-listing",
    "status": "present",
    "files": 4,
-   "bytes": 17404,
-   "sha256": "1b29ac23cff0370034a0ee5e62a6396ea524df95a86f992b6388299aa9f0d910",
+   "bytes": 17265,
+   "sha256": "3186bbfbc491f926e5b8a874da4a2938e03bd8845b9497e3b7cd2cb55e33b319",
    "skill_md_sha256": "9c0c5b6110b77560fc7b9f8a758c400e51e5b6eace67fdf3d9d96e42feb978d4"
   },
   {
@@ -13511,9 +13270,9 @@
    "license": "MIT",
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/ecommerce-product-detail",
    "status": "present",
-   "files": 3,
-   "bytes": 16434,
-   "sha256": "9159dcb85c603b62a7b4a1c05fe805ce88a268f9c57884334a859f98f4c696c5",
+   "files": 4,
+   "bytes": 23871,
+   "sha256": "7e1dc54ff59cc9bafe49d2296938ffd9274ed76c3c739df92a09e483b1812c32",
    "skill_md_sha256": "37dcde8179d8cc47e05cb8fd6c4283322481b6e31a6e1c9afa071761c53ea4b3"
   },
   {
@@ -13525,8 +13284,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/ecommerce-reviews",
    "status": "present",
    "files": 3,
-   "bytes": 12088,
-   "sha256": "d81fffba6f1dceed1e86104094df3e291432b79898dcbdba6489ee24933fb6c8",
+   "bytes": 11949,
+   "sha256": "3b3e85a7ac21ccd053e183364d6c019fe96791ac3a0aa58182aeffb1fd6fe5db",
    "skill_md_sha256": "8eac5fa7a96da212bd57a205da468ec787580d5accd1cce120cdb46e4bc0606f"
   },
   {
@@ -13538,8 +13297,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/ecommerce-seller-info",
    "status": "present",
    "files": 3,
-   "bytes": 10233,
-   "sha256": "515dc6ca62bbd5a21c82a0ac40d7d496869789b5ca1cf15e53e065c48d862873",
+   "bytes": 10094,
+   "sha256": "54dacef818e6465c70da259552fd7018a723210565ff683457bfe4532822d2ee",
    "skill_md_sha256": "502d6a855aa76aaa8ab940b419db5681f8ff975a6dc8bbeededb043bdacde46e"
   },
   {
@@ -13551,8 +13310,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/etsy-category-listing",
    "status": "present",
    "files": 3,
-   "bytes": 15542,
-   "sha256": "71d0cb2b166c543a7dfe3443cd6803f73caa35c34f59f8db69e1d68d39fb7344",
+   "bytes": 15403,
+   "sha256": "ef9e507c63ee3b128804584145ce822460b498c38c2729297716264012956110",
    "skill_md_sha256": "c5aa34b7a2db70eb7a306b643273f90e8605691aca9959c785dba4dcd924a6a7"
   },
   {
@@ -13564,8 +13323,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/etsy-keyword-search",
    "status": "present",
    "files": 3,
-   "bytes": 16580,
-   "sha256": "3479fd0926e2d0286f655894b9a4eaf7db3ab415f6f96046d473cc823be720df",
+   "bytes": 16441,
+   "sha256": "e0c1bea021d1c59d73120c2832a68307b4f8ec0c8dc69bc6ebac5eda15568317",
    "skill_md_sha256": "4cf6142483e52e731a8f41bf0c68481ad4efb2fb8068ae6f8618872664bf50d4"
   },
   {
@@ -13577,8 +13336,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/etsy-product-detail",
    "status": "present",
    "files": 3,
-   "bytes": 17126,
-   "sha256": "4eff7187e80036e2180ebe12d5bbcd4562ce4c96c3c3fc15b358e2c8d888f4fd",
+   "bytes": 16987,
+   "sha256": "a8061fa8e19dde29d55cbe71e889fd9f83dfada677d34547bd9274e447ad2890",
    "skill_md_sha256": "68e9a3eaa296f2c44415f50cda094763d6c34cd318819ae8c9576b01858df10c"
   },
   {
@@ -13590,8 +13349,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/etsy-shop-catalog",
    "status": "present",
    "files": 3,
-   "bytes": 15131,
-   "sha256": "82bc36fa2c3eb0f86d357d36979ae5028a8786e837b4e35575a5028f288d9b98",
+   "bytes": 14992,
+   "sha256": "284007cebff61ad2fd4b929a1babf73cdaacc4d451e7ed14eb74d33f2f37f1ac",
    "skill_md_sha256": "7d547b37cf55f599cafb0822888e2f44551922c3ec097643cdabd506d7b06c5c"
   },
   {
@@ -13603,8 +13362,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/facebook-ads-library-search",
    "status": "present",
    "files": 3,
-   "bytes": 14675,
-   "sha256": "ac4005b6fe01a9d76de66d2daed0309c4d1176cd3f679947c1d6212993105be2",
+   "bytes": 14536,
+   "sha256": "b19200f7ab4199a000e25983d19b62169fd7d162eec3c499e66d8974a95c942c",
    "skill_md_sha256": "c503bd0cd2602b39cec27803276262514c4af3e50d1504fb9447fc7ee1c6bfeb"
   },
   {
@@ -13616,8 +13375,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/facebook-groups-scrape-posts",
    "status": "present",
    "files": 3,
-   "bytes": 24502,
-   "sha256": "bede2b90f6e49728384baeccfdd5b97345b9bcfaef2c2733cc9a4ed270897378",
+   "bytes": 24363,
+   "sha256": "8bc48958bbbe870f5e15a0fab6e43a89a887826ea0888e8fa08fd17c2745feb9",
    "skill_md_sha256": "b7d653c139a5bf5b6822fec8122d1a8d223e9b69b5b8aa1b4dda46aa7ddfe1ac"
   },
   {
@@ -13629,8 +13388,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/facebook-page-posts",
    "status": "present",
    "files": 4,
-   "bytes": 18885,
-   "sha256": "5ff69c95082e900e46329dfb17d0e21a1e54f7c8bf7648a8ab85f594c4199db6",
+   "bytes": 18746,
+   "sha256": "1b793ff5a22b6c2a877d993e222ad56cda7b3f0bdb419ed2d53d169e06118f32",
    "skill_md_sha256": "40579e0c05940a0b3ebdeac689c7ff7163e14a9c5d55bc7883398ac7ebb3a430"
   },
   {
@@ -13642,8 +13401,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/facebook-page-profile-posts",
    "status": "present",
    "files": 4,
-   "bytes": 24574,
-   "sha256": "5c2dc65cc1ce398863baacf9daa24238998c7e05b0759f1440a76e8daaedff20",
+   "bytes": 24435,
+   "sha256": "b457a50984a9a26112a9b47c612129a00dce9a90ec050e53729caa62aa69ebf3",
    "skill_md_sha256": "a04dfcfef08597f6bc9ec61299790f372cf978f0335bb6126aa2aa9546489217"
   },
   {
@@ -13668,8 +13427,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/goofish-item-detail",
    "status": "present",
    "files": 3,
-   "bytes": 11780,
-   "sha256": "709ed0cba496a00c61b87b8d9460fdef5ae78b29167cd51b53da05720dfab534",
+   "bytes": 11641,
+   "sha256": "2d0c8f2b4f0da92f15cf59c8e57f2e19da9adfab8dde8e13a8cb8214a28e77cb",
    "skill_md_sha256": "c84e820263bf9fb04ec4d56ef7173a2a11bfd20d1aea61528d772a7ba5f874d1"
   },
   {
@@ -13681,8 +13440,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/goofish-search-list",
    "status": "present",
    "files": 5,
-   "bytes": 17241,
-   "sha256": "25bc409f1a8461f56017d2824893057633ba640024492df7bcb38cb3e8b9ffac",
+   "bytes": 17102,
+   "sha256": "c81d0fd14a5fa71117cecd8b38cc6a99a88eeb182d9f67132c4c0d51e43b2d5b",
    "skill_md_sha256": "c0b1cd44d7f82bade14aa44cf003890150a869aec010702142c93c2bfac51c7c"
   },
   {
@@ -13720,8 +13479,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/lead-generation/google-maps-contact-extract",
    "status": "present",
    "files": 5,
-   "bytes": 24064,
-   "sha256": "3abec62220003fe00b25f66810bfd4619ae9ae2dfa26560fa6b2b5ebbd97848a",
+   "bytes": 23925,
+   "sha256": "6dc170b978c1f25b2509bbdcca487adde5023062dbbeac3b3a2e33e81f893913",
    "skill_md_sha256": "ee0494a615a807124fee1dbda7a62de19be9f668a75b54a3fcf8a0574af9b9e5"
   },
   {
@@ -13772,8 +13531,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/search-research/google-search-serp",
    "status": "present",
    "files": 3,
-   "bytes": 13851,
-   "sha256": "c59f18936fc4b119385e897d30bf5b95c58fad5fbaba355328dd0bfa38f90ada",
+   "bytes": 13712,
+   "sha256": "4b177883a3bc4b9b6ba34289bd3a16e36559eaa777e6236ef607a7add6aa0201",
    "skill_md_sha256": "b01f0f85a1887086f220fee875d3f056e1bce71a1566e4be659894cbc7110fd8"
   },
   {
@@ -13785,8 +13544,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/lead-generation/google-social-media-finder",
    "status": "present",
    "files": 3,
-   "bytes": 10428,
-   "sha256": "c7a555996b066a0964bf19f29a21080dcd1bfad3b383788f0f43b2fd9e93c49d",
+   "bytes": 10289,
+   "sha256": "b71230756d687e5e55c198d26aecb4851eecdd115a3879aba8c2ebd96436cd31",
    "skill_md_sha256": "b29d40b81e7929c66c8ee47513831764d4913f1a0c6861800d0b428174927fb5"
   },
   {
@@ -13798,8 +13557,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/lead-generation/indeed-job-search",
    "status": "present",
    "files": 4,
-   "bytes": 16285,
-   "sha256": "15245b7221374a8e8b69c39572635b11c8ec13dce6d54ef975519ec4b5e880df",
+   "bytes": 16146,
+   "sha256": "09666cec2754a6f6dfe0532618262dd39ffc03479400c9a4324f1ce3f5be4435",
    "skill_md_sha256": "9a230fd491430dd789d38e174a7fb05c599ca5fb5676304b4f69ca05c1fddee5"
   },
   {
@@ -13824,8 +13583,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/instagram-hashtag-posts",
    "status": "present",
    "files": 4,
-   "bytes": 13073,
-   "sha256": "99577847bedf47542294f5b64af45273fd2fe767c4670ee7f1ab8944309202a0",
+   "bytes": 12934,
+   "sha256": "f9704dc80a5a9b711da268e51673cf477bfaae93fbe55ca5bad424875e2f4764",
    "skill_md_sha256": "3c86d5316a0483dacef0d161d8e50924791ac46c1106c2b4245b991564b69d18"
   },
   {
@@ -13837,8 +13596,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/instagram-place-posts",
    "status": "present",
    "files": 4,
-   "bytes": 12543,
-   "sha256": "d934d240370897d0a889e38960e8ce1b140f714afa8f3c72ce464defab4bdc94",
+   "bytes": 12404,
+   "sha256": "ab689f3303bd46c29c9d6a1d775feb3c65003b8c3e481fdff6aed6b862a31537",
    "skill_md_sha256": "a544d2301f42952a4e028a2b8ccf6c98c05e18bae2dc2df912bb992e3eecfaf7"
   },
   {
@@ -13850,8 +13609,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/instagram-post-comments",
    "status": "present",
    "files": 4,
-   "bytes": 10291,
-   "sha256": "60bbc01ab92c9dbc33ccb9954fc696f2d25dffc98f55fb729b36f8370145b5bc",
+   "bytes": 10152,
+   "sha256": "3009177e6e2c00e7f312a2cbddcf7e45fb93410a8460248f4b81a9a2667c6b46",
    "skill_md_sha256": "652300e0a80f003db009adf99edea9d676082a76aa6d0bf8c6a04acebe7fea1a"
   },
   {
@@ -13863,8 +13622,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/instagram-profile-meta",
    "status": "present",
    "files": 3,
-   "bytes": 6990,
-   "sha256": "ea79cfd197526be91562c28a61340c9dcf3ac2deea593d615b513236df9bb3de",
+   "bytes": 6851,
+   "sha256": "5de84bc3c3e84cd4960278c7389c87564cbf8b29d828e29bd92a7af5d3be0727",
    "skill_md_sha256": "ecf3710e57201218f1d2b26c0f14bfc19ad2c2e3d6f2c7e6db3138880cd4a97a"
   },
   {
@@ -13876,8 +13635,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/instagram-profile-posts",
    "status": "present",
    "files": 4,
-   "bytes": 10701,
-   "sha256": "f658eb74655bdc6bf8cdf5eff2eb746d948f853bf50db95a58101a88f9c6fcae",
+   "bytes": 10562,
+   "sha256": "7b99727273f4f918a0ea081a7664dae9fae58114947021e59fd272453e80047d",
    "skill_md_sha256": "bb7d5d03b4969b66bd63086b2a7e15deeeeeb2eb75bcb34cb7cc2426bd442d1e"
   },
   {
@@ -13889,8 +13648,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/lead-generation/linkedin-jobs-search",
    "status": "present",
    "files": 4,
-   "bytes": 17031,
-   "sha256": "b70e07b966e74b21d85e4725e55258d7b3d997a83023ffcdea171c5d90c0aaf8",
+   "bytes": 16892,
+   "sha256": "e551ec9a704c687b39e350260f68e3dcd993824158dbce42ff40a3e9eff78706",
    "skill_md_sha256": "8defaaeb3060786e42dcaa18d6abcd8789c7b8fa24827217a6010cde4afb8864"
   },
   {
@@ -13902,8 +13661,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/lead-generation/producthunt-launches",
    "status": "present",
    "files": 6,
-   "bytes": 19395,
-   "sha256": "b9be5217a6d39a7e824928d4bb1389e3bc3e3201285c258e2ebbe9d11c3465ee",
+   "bytes": 19256,
+   "sha256": "26d4ba98207145268be334acf3b741432e2a3729f7b99df7fe1c8bd6d725eb4d",
    "skill_md_sha256": "16b376dd5133f379cd2242df51fb3bc52d3bd6c02d3981a5202f48ac0026c741"
   },
   {
@@ -13941,8 +13700,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/taobao-keyword-search",
    "status": "present",
    "files": 3,
-   "bytes": 10628,
-   "sha256": "1f882a5cb7def47d2aa1a3bd5e25d575deaa288d9a98b3eb78815f8de2d400aa",
+   "bytes": 10489,
+   "sha256": "1f1438ff0ac40e9cae190bba066d9651699a5b0626e1de670c8e59370080740c",
    "skill_md_sha256": "8b3810ec085135cd46fabf6ba8412ea5504f2abfb9727e4964a4869e7cd2a6aa"
   },
   {
@@ -13954,8 +13713,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/taobao-product-detail",
    "status": "present",
    "files": 3,
-   "bytes": 11273,
-   "sha256": "aef85a1c9801491cb69df7705db75168f59f51c791e6a9d21db609608c056d49",
+   "bytes": 11134,
+   "sha256": "77f66d7668f09ef0d5fdd8cbb4952a50482877a7adc3f0804c243a47c124f6b2",
    "skill_md_sha256": "82a2d6aa1c11f44fcd873f836667bd806d39c74de2ffed655327aade68919a9b"
   },
   {
@@ -13967,8 +13726,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/taobao-product-reviews",
    "status": "present",
    "files": 4,
-   "bytes": 12757,
-   "sha256": "066d4b60347299ca5e3e621ac1f8240cb85072520a3a40ebe6ce6fb7ecadcef0",
+   "bytes": 12618,
+   "sha256": "7e057e5f61900adeb56c7d65f1ee801cf391bedb0e57a20c4145528ccbd4726e",
    "skill_md_sha256": "2b043b73f514d9b8b3f7dcfad0a69f734c78883f5f7b12a67cc643eb1a6eb88a"
   },
   {
@@ -13980,8 +13739,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/taobao-shop-catalog",
    "status": "present",
    "files": 3,
-   "bytes": 8488,
-   "sha256": "a7d7e4667ddc4f8487e5e815bd6c556a8fc513ebe6373444a7c1086a7f6e3154",
+   "bytes": 8349,
+   "sha256": "0a7a6179ca2e8eca1f84883d5d0586719c2ce22cd8372fa215fc734a7cbd617f",
    "skill_md_sha256": "a05f70f18127455afeb00bc36e0f6c2538387c6b4858014c234fdecced9103cf"
   },
   {
@@ -13993,8 +13752,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/threads-keyword-search",
    "status": "present",
    "files": 3,
-   "bytes": 10810,
-   "sha256": "c5cf5b56b505118ff0505d7ae9c8de99028c45f43b8300fa5aed233a268a8f30",
+   "bytes": 10671,
+   "sha256": "2e99f10008368e6ab7fc9fca2892a28bf475a50cd2be9308fe8364142a720e8c",
    "skill_md_sha256": "3859a507f669cd6db411153d0c282d15fa90d18747ce5d0e5f7cc421e17d650a"
   },
   {
@@ -14006,8 +13765,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/threads-profile-search",
    "status": "present",
    "files": 4,
-   "bytes": 12250,
-   "sha256": "5550019207dab1ff1f44ef4dcbb7e1ebb12ab7f34e74faf7ff8eb599eaaef374",
+   "bytes": 12111,
+   "sha256": "3b381f4678624bfc975176c571cbe62d05b1e978d042ca52666cba950d837060",
    "skill_md_sha256": "8b5a5965cfebaf8533c9091b5a8f67ca9a2ea551458dea0e54ed91f0424e28bb"
   },
   {
@@ -14019,8 +13778,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/threads-user-posts",
    "status": "present",
    "files": 4,
-   "bytes": 13535,
-   "sha256": "d07fbe3c096a55439372ba084e2d6b1ab433f5a26b41552d765eb3fc9ac716e9",
+   "bytes": 13396,
+   "sha256": "9a1b611fee3f0a86b5615fdf552c03221144cf2476bbcab8fdccfd73fabd83fa",
    "skill_md_sha256": "a1b1ec0558148dfa546938b5fd9cf293ca2fc4c6b14c2aef34a06ba53c7732af"
   },
   {
@@ -14032,8 +13791,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/video-platforms/tiktok-hashtag-videos",
    "status": "present",
    "files": 3,
-   "bytes": 9332,
-   "sha256": "76ccab65ffe59d10af86b5c9e0e8785f9f7d79eb30a1c73b6cf560d7225de131",
+   "bytes": 9193,
+   "sha256": "2a277193163774eaac1a73fe08f485c09bfddd168610f78d5c75bd074ef89be6",
    "skill_md_sha256": "c811e05ad9d3035fab23fdcf014cdedde3bf9a0b391e6794a34501df0fdd9667"
   },
   {
@@ -14045,8 +13804,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/video-platforms/tiktok-profile-videos",
    "status": "present",
    "files": 2,
-   "bytes": 7492,
-   "sha256": "3e961bcce3fb7d6eb4e151a6af93af0bfb30f74097cf88179d7eac51b08f2990",
+   "bytes": 7353,
+   "sha256": "2212612ff0150b972de0f1bb68d98fb252d2adaa4f2a48a259c65e39af438be0",
    "skill_md_sha256": "b03d1cee3b095d649f369f8d1e8e735018074289229b8bbacae53bb855af5e74"
   },
   {
@@ -14058,8 +13817,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/video-platforms/tiktok-search-videos",
    "status": "present",
    "files": 2,
-   "bytes": 6800,
-   "sha256": "370e12a26499471ed62df80e4e256e229c37b50aab229272b7f72cc3573e9c35",
+   "bytes": 6661,
+   "sha256": "677bf378c00a8e56706915a34efc5dcef7668a60dd37d6fd6f7b597745ca8231",
    "skill_md_sha256": "426ba94ea8d00d80785370807bc918ea8254063ad8295407b793bead93bf5daf"
   },
   {
@@ -14071,8 +13830,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/video-platforms/tiktok-video-detail",
    "status": "present",
    "files": 3,
-   "bytes": 10264,
-   "sha256": "97d9e5c9b89f1fe2a24ac2c9de3238f4f345c87635e8509f833a25a1cb1300a2",
+   "bytes": 10125,
+   "sha256": "762670ef9b4aa373ead5a12ca2bc104cf3d29b2b286a0e03b4ff01f08e42e78a",
    "skill_md_sha256": "895bf3be476ac8c8df8598c773cc71f8d7e64e3d7ef513f9c4a894b1c26b7dcb"
   },
   {
@@ -14084,8 +13843,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/trustpilot-company-info",
    "status": "present",
    "files": 3,
-   "bytes": 15985,
-   "sha256": "b6d761a549772e50d26bed90e3f821b43f0516e9a38c23a890b555d59f7a666c",
+   "bytes": 15846,
+   "sha256": "5e66e193c668531ef01c31203ccb96ff64fff9cb8762b2aed72b0413c5dc1ccb",
    "skill_md_sha256": "44ea82c7170be44f129802b361ab57b56a3226771b4fbee5dd8f4fbf72c47601"
   },
   {
@@ -14097,8 +13856,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/trustpilot-reviews",
    "status": "present",
    "files": 3,
-   "bytes": 24147,
-   "sha256": "4950a33a9a04edcd3ca958ab40244e03ea733cb70407e657ecbb3889e13593c5",
+   "bytes": 24008,
+   "sha256": "f3d1e81a39e876788e6e3ed59da70e5053311521c7c71503554802e8c1150bd3",
    "skill_md_sha256": "82ec880c5da7d4c1c7a8f27416fa5858fc8f9650070147a2a95a80ef106d3206"
   },
   {
@@ -14110,8 +13869,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/walmart-category-listing",
    "status": "present",
    "files": 3,
-   "bytes": 10633,
-   "sha256": "62ce85c7d73dec4410ef92bdaed07dfb653a3ae596b5bb5469276fee879496f4",
+   "bytes": 10494,
+   "sha256": "9f35b99d710b7972a24508ce73ae315e62bf3a619e8e5be1bb13c969c8d315e8",
    "skill_md_sha256": "28d728f5bdf04053f308f3fee5ffb29ea7a23f1dbe953fe0f565e04deec35d0c"
   },
   {
@@ -14123,8 +13882,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/walmart-keyword-search",
    "status": "present",
    "files": 3,
-   "bytes": 10612,
-   "sha256": "a3bab34007c183788f39b4d05dac7b0742cbdc2f276a9f0444cbf15553f95661",
+   "bytes": 10473,
+   "sha256": "27e3e48c87fc2595db5c6a0221f5f5db5f4d0a4138f6ebcff1d3aaf4b0bab3a7",
    "skill_md_sha256": "7db070be55984a97435ecd950da54dd0cf76e29160b02cb81f8f968854667f07"
   },
   {
@@ -14136,8 +13895,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/walmart-product-detail",
    "status": "present",
    "files": 3,
-   "bytes": 15137,
-   "sha256": "bf2fe3e0074a00e094b068c588bbc06f1ea9ed7aa4a591c443a3b3028367ae0f",
+   "bytes": 14998,
+   "sha256": "c6a843b35009ba74b441fc525cbee9d57a4b1916c8498d4baf0aacbe28d03c7c",
    "skill_md_sha256": "3b3e2c9c99b08de4380de303496acb276a6c4aa98d14d97378ee1daf352e8975"
   },
   {
@@ -14149,8 +13908,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/ecommerce/walmart-product-reviews",
    "status": "present",
    "files": 3,
-   "bytes": 10076,
-   "sha256": "77865b9abfb013565fc5c193900577653c4d82cdb22c2d423587e8b3fa4cdab9",
+   "bytes": 9937,
+   "sha256": "d2b69ad82ca9876bf0511eda8c3e8a8f8c78baf31f260cc25defa452ff820a23",
    "skill_md_sha256": "8809b030cc6480f93bd516db7e19f831440e6725658b3c22c047acfb6ceed3da"
   },
   {
@@ -14175,8 +13934,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/search-research/webcrawler-deep-crawl",
    "status": "present",
    "files": 6,
-   "bytes": 38047,
-   "sha256": "6cb287163362f870cb404a97d7b751d45cb807bc8a04b75b68a80f516d77beef",
+   "bytes": 37908,
+   "sha256": "5b8eabd188d5effdd18e307ba6c4dcb0eff8b97c1af8fd9558fe23a3cd8499d0",
    "skill_md_sha256": "c9dbe2038b13e20c3e1e5d053517d1dff34bf385041da43945088d42e250e1d4"
   },
   {
@@ -14204,19 +13963,6 @@
    "bytes": 42236,
    "sha256": "1daa5f2daf74d413d86e17c48d098e8ab231a979c7c19c7666e1de8d2bc4ccaf",
    "skill_md_sha256": "5a8b8efe012c3a2a24cf35e5bf33c4b71bd9e4a2404f0cb9176d14285a785858"
-  },
-  {
-   "name": "x-keyword-comment",
-   "local": "x-keyword-comment",
-   "upstream_path": "solutions/social-listening/x-keyword-comment",
-   "repo": "browser-act/skills",
-   "license": "MIT",
-   "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/x-keyword-comment",
-   "status": "present",
-   "files": 4,
-   "bytes": 20591,
-   "sha256": "ddbdbf9e966f4a4aae8067f3b00a8d0b4c72c57b6e9815bb8c7216dcb950624e",
-   "skill_md_sha256": "fb28368ec8c7e2ca0a51476db4c05ee02977280ecd6274a10e87f6e68ff91d74"
   },
   {
    "name": "x-tweet-by-conversation",
@@ -14266,8 +14012,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/x-tweet-search",
    "status": "present",
    "files": 3,
-   "bytes": 15807,
-   "sha256": "0eb076d0a6e8883c104c371c37422ef66f36fa8ba079ec7fb26dbdc5a276d4e1",
+   "bytes": 15668,
+   "sha256": "26c7b84b9a06a27ae485f283a9d1b7bd8797eb05d787a3a899425613acce4335",
    "skill_md_sha256": "08824bb92064c4c6487a67b1b7e64d8270e0454a42c5ca4c6067bfbc4f65ea03"
   },
   {
@@ -14284,19 +14030,6 @@
    "skill_md_sha256": "77153fe685c2347135e7695fcfdd57f6bae4b8b64964d0c70c80c7e0cd4142ed"
   },
   {
-   "name": "xiaohongshu-auto-posting",
-   "local": "xiaohongshu-auto-posting",
-   "upstream_path": "solutions/social-listening/xiaohongshu-auto-posting",
-   "repo": "browser-act/skills",
-   "license": "MIT",
-   "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/xiaohongshu-auto-posting",
-   "status": "present",
-   "files": 2,
-   "bytes": 16420,
-   "sha256": "ce55e1bf12e7b8f73e7ef98351badc503b280d89330df50c53d7125ddbfde354",
-   "skill_md_sha256": "8d0279299df3c854f8f94965ff2fd5c6d5f9469788837b60c03a1992b7b42c75"
-  },
-  {
    "name": "xiaohongshu-note-detail",
    "local": "xiaohongshu-note-detail",
    "upstream_path": "solutions/social-listening/xiaohongshu-note-detail",
@@ -14305,8 +14038,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/xiaohongshu-note-detail",
    "status": "present",
    "files": 4,
-   "bytes": 12427,
-   "sha256": "a1fc85300cb5540559d3fc4a86e8ed9e7a14df9f1500eddcc340f8eb979f31e5",
+   "bytes": 12288,
+   "sha256": "60a171e4221b6643aef4ec3c44ebff72ae43187fe861f39a7cf595383b2ffcde",
    "skill_md_sha256": "3f00832a898da71cf339e701b1814b02ccdffdd6ce43815df10f10b3f65dfe4e"
   },
   {
@@ -14318,8 +14051,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/xiaohongshu-search",
    "status": "present",
    "files": 3,
-   "bytes": 10677,
-   "sha256": "50f19079354c5d2b56f65a68d3d67ab4f606d418b549b7dd4acdf4f9fb3317a6",
+   "bytes": 10538,
+   "sha256": "bda42a709ff5a945a4993ff67878fc2eeb22de5ebd835b0c1243f61042bc3adf",
    "skill_md_sha256": "4acbed7730dea6776543de8c01883d1a033d544d064d42bd71a8bd7dec5bb5ef"
   },
   {
@@ -14331,8 +14064,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/xiaohongshu-search-full",
    "status": "present",
    "files": 4,
-   "bytes": 30388,
-   "sha256": "74fae87c0f0b04434cc5a06952ed9961afdbd8eb36bb5b373b61390742633b8e",
+   "bytes": 30249,
+   "sha256": "dace1b7137782fea42f2952169876e6d3ecb8255a4a08dd3fd41713ad4bbc97d",
    "skill_md_sha256": "98f79bfa69de691b339fcb757d3ef6ad97eefe95686b9a4a5097f0c55c8f6005"
   },
   {
@@ -14344,8 +14077,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/social-listening/xiaohongshu-user-profile",
    "status": "present",
    "files": 4,
-   "bytes": 12121,
-   "sha256": "b52d205112c3c1b17644f77657283bbd311ee647df8344a6c117662f356a3d2c",
+   "bytes": 11982,
+   "sha256": "34d26540e58139172ac252cf763a668a2f79836609f87e2cdc2cf9c7941a85d8",
    "skill_md_sha256": "9751973d7d87ced3e07fa9d88547434d2b5468637c06741b104bb58012084095"
   },
   {
@@ -14396,8 +14129,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/lead-generation/youtube-channel-business-email",
    "status": "present",
    "files": 5,
-   "bytes": 28641,
-   "sha256": "ff895082a581a275b45f5b5612795c2c348233dd64851141cfae86ad7b1bde7e",
+   "bytes": 28502,
+   "sha256": "377e7c4ea506a05f0fb2e4e0e26f5d57108d176eec288268570377fa6503254e",
    "skill_md_sha256": "d0d9645f595c29eaf10d4bd23834700094a8f74437c9b36dd2dc82c393b7f34c"
   },
   {
@@ -14448,8 +14181,8 @@
    "url": "https://github.com/browser-act/skills/tree/HEAD/solutions/video-platforms/youtube-transcript",
    "status": "present",
    "files": 5,
-   "bytes": 13563,
-   "sha256": "e00904b273acc0ea58b6339378a54fc391f8cde4d4b43c7d466a5618dfd6db67",
+   "bytes": 13424,
+   "sha256": "add18dda4dce59b86e3f254f0df6e93326d458928b98583fb25ce80a7797708e",
    "skill_md_sha256": "9b3bf197609a0dbf1e44b65ca6681c0d3d1104387635aa876c2a11b89e0cbadb"
   },
   {
@@ -15318,9 +15051,9 @@
    "license": "MIT",
    "url": "https://github.com/github/awesome-copilot/tree/HEAD/.github/skills/create-canvas-extension",
    "status": "present",
-   "files": 2,
-   "bytes": 5687,
-   "sha256": "232ad06448f161727627d53f63a4d2ef47062626ee6af40ad13d5788f02249b9",
+   "files": 3,
+   "bytes": 55827,
+   "sha256": "f816daf42000f335c2fd1e6796577e0eee0e5af659bedf5fb001ed846fe180a1",
    "skill_md_sha256": "8efc23571f738d4e9d9d5b6fb25d664ff438c7db2c3b3792399d04a9e66991b3"
   },
   {
@@ -15348,19 +15081,6 @@
    "bytes": 8662,
    "sha256": "a5f89f6e4c335fac7f92bd715d184cb2fa429bdc43c699321c8f9a369815a0c9",
    "skill_md_sha256": "11caba1048cbdbfca6f7ce13a0e0580d6e9d943f7b775ee24978ece1d3334066"
-  },
-  {
-   "name": "create-llms",
-   "local": "create-llms",
-   "upstream_path": "skills/create-llms",
-   "repo": "github/awesome-copilot",
-   "license": "MIT",
-   "url": "https://github.com/github/awesome-copilot/tree/HEAD/skills/create-llms",
-   "status": "present",
-   "files": 2,
-   "bytes": 7780,
-   "sha256": "6db8288288fa425ed9b730d37e5f473177f15879b37487a18d21aacab35a9081",
-   "skill_md_sha256": "713aff883a2c8b2b2d2b9d450e2adedbf96b390245511c0f0aa3839367fd6ea6"
   },
   {
    "name": "create-technical-spike",
@@ -15413,19 +15133,6 @@
    "bytes": 14139,
    "sha256": "a4e6bd7fc92219df20d0c8c8eb6ec46c9566bb06c512b5bf927d1b3c089b3d82",
    "skill_md_sha256": "325e70e82f3edecb7312a7e504a89e87c8fb684c8f2aa55df6f29905ef1bf859"
-  },
-  {
-   "name": "d365-solution-blueprint",
-   "local": "d365-solution-blueprint",
-   "upstream_path": "skills/d365-solution-blueprint",
-   "repo": "github/awesome-copilot",
-   "license": "MIT",
-   "url": "https://github.com/github/awesome-copilot/tree/HEAD/skills/d365-solution-blueprint",
-   "status": "present",
-   "files": 4,
-   "bytes": 35450,
-   "sha256": "ec8fab4f17d795451791d1c0c8c2c008e0d9e7883352f1d82935b67becd5a96b",
-   "skill_md_sha256": "02081f3e9a4f41fe32b8c85aeadfcd7af9593c43e522e12966afbedd680625d5"
   },
   {
    "name": "daily-focus-board",
@@ -15725,19 +15432,6 @@
    "bytes": 360242,
    "sha256": "a5efd7a6fc3f9f1016e3e152017312c24660ede6c6f1a8e932895efd301142a6",
    "skill_md_sha256": "af6d0628e806be430903743ca1795f715937e65ef81d4c3f0544fb326d23dce2"
-  },
-  {
-   "name": "gdpr-compliant",
-   "local": "gdpr-compliant",
-   "upstream_path": "skills/gdpr-compliant",
-   "repo": "github/awesome-copilot",
-   "license": "MIT",
-   "url": "https://github.com/github/awesome-copilot/tree/HEAD/skills/gdpr-compliant",
-   "status": "present",
-   "files": 4,
-   "bytes": 30809,
-   "sha256": "10a5d20c6fb689c89a1f8aca715369059e08e46940576b3e422f114c391a6591",
-   "skill_md_sha256": "e1f33a817a1d0f7165f4f6652cfeb52632ba124067c3f46c37f867cde730242e"
   },
   {
    "name": "gen-specs-as-issues",
@@ -16982,9 +16676,9 @@
    "license": "MIT",
    "url": "https://github.com/github/awesome-copilot/tree/HEAD/skills/qdrant-search-quality",
    "status": "present",
-   "files": 2,
-   "bytes": 1633,
-   "sha256": "7a7e5d1979af0aa344d0b6009c40b1bf8f73acfbf84cf8ea9342f134aa8a9f94",
+   "files": 4,
+   "bytes": 12357,
+   "sha256": "3dc7817d20c8e49bacf3aa42fa66514ab4cf55d7a23d78d4068bba14e76f58dc",
    "skill_md_sha256": "3af84e9019065cd90cc79210c5833153fc62acdcf55bda359ab7876809be0803"
   },
   {
@@ -17755,19 +17449,6 @@
    "skill_md_sha256": "050f2dd8319fcddebfca3a9d9ddc375efbf66df792c4f63219c7e3f1bdb29a3f"
   },
   {
-   "name": "tm7-threat-model",
-   "local": "tm7-threat-model",
-   "upstream_path": "skills/tm7-threat-model",
-   "repo": "github/awesome-copilot",
-   "license": "MIT",
-   "url": "https://github.com/github/awesome-copilot/tree/HEAD/skills/tm7-threat-model",
-   "status": "present",
-   "files": 2,
-   "bytes": 15412,
-   "sha256": "987ed7279b16f21a9f4340c440c7993c2f7062272559acc545f682c851b9690a",
-   "skill_md_sha256": "6f0613a2b3343f5f86b37b78c856a718df92507600ce8f4543e4e9ffe4e18fc0"
-  },
-  {
    "name": "transloadit-media-processing",
    "local": "transloadit-media-processing",
    "upstream_path": "skills/transloadit-media-processing",
@@ -17857,19 +17538,6 @@
    "bytes": 6678,
    "sha256": "e9eaa0f5ec6e49f4536cde6d127a06d0fd3f1b92d58839500e315994bcbef69c",
    "skill_md_sha256": "08f62222ba518b54dd0f369c539f6f75dabb32893768e0cb2ff49ecb1e8cb7a9"
-  },
-  {
-   "name": "update-llms",
-   "local": "update-llms",
-   "upstream_path": "skills/update-llms",
-   "repo": "github/awesome-copilot",
-   "license": "MIT",
-   "url": "https://github.com/github/awesome-copilot/tree/HEAD/skills/update-llms",
-   "status": "present",
-   "files": 2,
-   "bytes": 8877,
-   "sha256": "c4cdeaa1274177d92b5154781504f94288548f7060688f83f465447a4946a59a",
-   "skill_md_sha256": "7377a6b500b054bf41a50b744faba999a44d64dce0201e0a0108ce06e6726fcf"
   },
   {
    "name": "v-development",
@@ -18074,9 +17742,9 @@
    "license": "MIT",
    "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/misc/git-guardrails-claude-code",
    "status": "present",
-   "files": 2,
-   "bytes": 2614,
-   "sha256": "cfab83f04863eca3e8fc602310789ab99cf22376b4be75a335f9f2eda65b692a",
+   "files": 4,
+   "bytes": 3293,
+   "sha256": "9443cf9d793e6ea9395d9df0f826f56111433492b52539f76f03ce7778d2960d",
    "skill_md_sha256": "69b291d655626a01602b998a1836fcb93c058ede68dfafddfd71e87f17074764"
   },
   {
@@ -18438,9 +18106,9 @@
    "license": "MIT",
    "url": "https://github.com/mattpocock/skills/tree/HEAD/skills/engineering/wizard",
    "status": "present",
-   "files": 2,
-   "bytes": 4411,
-   "sha256": "ee7bac2259de12b84a105245c0803add1678eea8001fd5da6da27f4a352dcb9a",
+   "files": 4,
+   "bytes": 14065,
+   "sha256": "f6de11f3410a1dd3ae0a0e1499738b183e3dbae02673488b89835ea9f2f06d3a",
    "skill_md_sha256": "bdf31d48211ea559878f95a4f344aeabf8d85897488ba564382bab0b000daac1"
   },
   {
@@ -18464,10 +18132,10 @@
    "license": "MIT",
    "url": "https://github.com/nidhinjs/prompt-master/tree/HEAD/.",
    "status": "present",
-   "files": 5,
-   "bytes": 33655,
-   "sha256": "38f5cb3bbf1832793ab9a5494918b95d264f1d3a25bafdedba4b70ed52c7b4a5",
-   "skill_md_sha256": "651e5490f4b51c6e6ca32cc26eed10dff52f344b95a1b9122105f0c8d8e1506a"
+   "files": 8,
+   "bytes": 82142,
+   "sha256": "13b25755140f809d25a9bfb377b3d06750ff1814446aaa233ff65f76291c6f9c",
+   "skill_md_sha256": "36e68cdcd62c38b2f99c2538c83fefb8c8837ea9b7eed75297fe76e45c452e75"
   },
   {
    "name": "brainstorming",
@@ -18624,19 +18292,6 @@
    "bytes": 10600,
    "sha256": "b57f005a9ab2af0540965724aaf356d1b80b817de833a68aec21c9679ed7f409",
    "skill_md_sha256": "a6c67c1900064347c2a329990dd3c555657c51c3ec53b259a08aa01a2c26139a"
-  },
-  {
-   "name": "writing-skills",
-   "local": "writing-skills",
-   "upstream_path": "skills/writing-skills",
-   "repo": "obra/superpowers",
-   "license": "MIT",
-   "url": "https://github.com/obra/superpowers/tree/HEAD/skills/writing-skills",
-   "status": "present",
-   "files": 8,
-   "bytes": 108063,
-   "sha256": "eeec69dfd3d7a64b89747d788f8be90291eede67a261dad842ac2dd13b7115cd",
-   "skill_md_sha256": "bbdfe742f853562e643a3d40d64476359d47881e39cef80a189283fa26d11ab9"
   },
   {
    "name": "ansoff-matrix",
@@ -18997,9 +18652,9 @@
    "license": "MIT",
    "url": "https://github.com/shanraisshan/claude-code-best-practice/tree/HEAD/.claude/skills/agent-browser",
    "status": "present",
-   "files": 2,
-   "bytes": 8311,
-   "sha256": "70c2e758d03368f39f92141b037b10d2d351f5a750fdb1192f7fb97512efce5e",
+   "files": 11,
+   "bytes": 95507,
+   "sha256": "287988bfc69fee4daa76f39ab7aed67e6e76db08e286c07aa71bdd0d44e4b72c",
    "skill_md_sha256": "84effb42371bac499123843088fe4304d8b7c5de765722e3ad92cc0f7cc68557"
   },
   {
@@ -19283,10 +18938,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/agent-framework-azure-ai-py",
    "status": "present",
-   "files": 2,
-   "bytes": 10875,
-   "sha256": "05ce83456248cbdc99afc02ed4b230244530978bb351a36b2b848ecd7be5b7a9",
-   "skill_md_sha256": "80e516162fbe39e579725872254f9104c605eefd050337599b1c0c84f71d44f4"
+   "files": 8,
+   "bytes": 50145,
+   "sha256": "e8f3d1fe5df9b1b6d470e40aa6229031d5f2a89a559ad00ac3bca67ea20839c6",
+   "skill_md_sha256": "6d69c532092d8e078459bba4810a91ac738d188cebf765328c4a42db15477a7e"
   },
   {
    "name": "agent-harness-fault-injection",
@@ -19452,9 +19107,9 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/agy-delegate",
    "status": "present",
-   "files": 6,
-   "bytes": 32619,
-   "sha256": "3865a34a754cc5416259895ff182b007d8512e1dc9ddb002c3c6392c723becfe",
+   "files": 7,
+   "bytes": 65458,
+   "sha256": "3c03b7a1ff6f3aab02bef19d1bf600b32aff5439d7aa656fe9ec7c7339ec60e6",
    "skill_md_sha256": "cff44bfc11302a038ecc06b19e7813989a29034a15cefcf463f578f279c82407"
   },
   {
@@ -19517,10 +19172,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/ai-image-generation-studio",
    "status": "present",
-   "files": 2,
-   "bytes": 13087,
-   "sha256": "8d57ff70ee65ac1310910e86c1ee77bfb42d330e017909f426c97381c10542d7",
-   "skill_md_sha256": "fdf8a1abbe0687b7f487504952e9fc0a2c8e9316eb4265e14603d43eb82d9a1f"
+   "files": 5,
+   "bytes": 179076,
+   "sha256": "38d53bfa1a93ec4bc3701e2a86c338d68e710c72d9d41744c5d9aee2044b4619",
+   "skill_md_sha256": "726b19fe1637261210c18872d597498298b164b1ad77054ff389bc5c2e1ebb04"
   },
   {
    "name": "ai-inference-service-mesh",
@@ -19543,10 +19198,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/ai-logo-maker",
    "status": "present",
-   "files": 2,
-   "bytes": 12708,
-   "sha256": "ce6027d0d06542cf5daffd9938855135c6c0223c0731c5fd70d4d566448fa599",
-   "skill_md_sha256": "107adb2b61b39f4a1d09b5c6820935ca380c16a229bc53c98c62444a567159ca"
+   "files": 5,
+   "bytes": 178601,
+   "sha256": "8e78930a9232f568ef00e662523c755ecd666258bdb042c0cc97df3b82378e76",
+   "skill_md_sha256": "5c5a30a6d8d61d82fdd6dc614b582bab60425d5624a0fcd45aa8f8e74b8dd17c"
   },
   {
    "name": "ai-loop",
@@ -19582,10 +19237,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/ai-multilingual-dubbing",
    "status": "present",
-   "files": 2,
-   "bytes": 13121,
-   "sha256": "c4af6875c664efa71f645d6121faae8c1e230d865ce9adcdd32d6fe3a9ab368f",
-   "skill_md_sha256": "c03a9b36dcf017d57e3f10744e940b061b9a419ff186fb08f0d502e015aa71c3"
+   "files": 5,
+   "bytes": 179207,
+   "sha256": "5247f71cbbaa79cae2032f76a00e3a803c0492ed4642649c0ea38104f8557cfe",
+   "skill_md_sha256": "ea2d1c2175e9a2a8367418bbc0dcc95e4cc5dfb547a1a054117ca4ba737018a0"
   },
   {
    "name": "ai-native-cli",
@@ -19621,10 +19276,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/ai-photo-restyler",
    "status": "present",
-   "files": 2,
-   "bytes": 12879,
-   "sha256": "330096ba2b531d23ac826aac87ef9430e488cb737b41d28de514d473e9b65ba0",
-   "skill_md_sha256": "4f2a4fc360c7c42818fe0223732072da70b0337f05f420daa8b149f1f1b4cfe1"
+   "files": 5,
+   "bytes": 178691,
+   "sha256": "e3d34a4195d956bff6e10a22316c20d4b1bd3bb0896fe4f0448052e93f696e30",
+   "skill_md_sha256": "63a3b657c9751143b5f868d15911bf40b94311d0b890ea25375f36b55bd1884c"
   },
   {
    "name": "ai-pipeline-orchestration",
@@ -19647,10 +19302,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/ai-podcast-voiceover",
    "status": "present",
-   "files": 2,
-   "bytes": 12988,
-   "sha256": "004a31bcc0786c4aa1a6cb3f17d772ef6ec1ee69da763e835385add6d6282524",
-   "skill_md_sha256": "9f4db8077b620ccac9e3702d582ceeb2cb6b4f390cb829d78abca18ea5f6b712"
+   "files": 5,
+   "bytes": 179008,
+   "sha256": "803bbc3c506c7f24d34379e0145bad844cbca6804ef0f07125ae056fc53e95de",
+   "skill_md_sha256": "7b1acd98a87258814901d00a7457fdde8d4229fc3ab4bb6c91b49a6c99735228"
   },
   {
    "name": "ai-seo",
@@ -19686,10 +19341,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/ai-studio-image",
    "status": "present",
-   "files": 9,
-   "bytes": 105635,
-   "sha256": "bb176e2a30bf815675ebd3efd1f33326845aacc9fbc562d14e2e5079d2cd3eb2",
-   "skill_md_sha256": "c67dfd3415d5581a479314fca058620726738d6614d18088918bd02b14c61e32"
+   "files": 10,
+   "bytes": 126808,
+   "sha256": "aef335851ec5fcb1e1e9daee9823c5287c5c86364be5b0a9f4a19c1146d8d002",
+   "skill_md_sha256": "23d8a336c3fa6b15eac31801bec87e4d10eb7ca91a01d1260d239ed421587fef"
   },
   {
    "name": "aider-delegate",
@@ -19699,9 +19354,9 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/aider-delegate",
    "status": "present",
-   "files": 6,
-   "bytes": 35620,
-   "sha256": "cd299432ce6a0b7c4944df517b0682afdb142bdafd7ac032b77b130776a11b73",
+   "files": 7,
+   "bytes": 68459,
+   "sha256": "312bd4942e151175c71f7273606ca68e94b3a254a0895ff871ad01884ea21ee5",
    "skill_md_sha256": "d30bb1d5c0016761b038de0ac7de1687c5ab5d9be4e8c8bfb7699c0996afa51c"
   },
   {
@@ -20134,19 +19789,6 @@
    "skill_md_sha256": "c4a766e8fe5ee39cf5144b69b8287e9ad53aa788fac98795a1117b81c4c33327"
   },
   {
-   "name": "appdeploy",
-   "local": "appdeploy",
-   "upstream_path": "skills/appdeploy",
-   "repo": "sickn33/agentic-awesome-skills",
-   "license": "MIT",
-   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/appdeploy",
-   "status": "present",
-   "files": 2,
-   "bytes": 9731,
-   "sha256": "e89ab0bc57ff51761d023dbc0437515e841dab8d4d19556619d9ed317e4d4d16",
-   "skill_md_sha256": "05efdb1872e815c60d909642c6d16f2f277dbaf0b9112d0736c83f9d6777be61"
-  },
-  {
    "name": "appium-skill",
    "local": "appium-skill",
    "upstream_path": "skills/appium-skill",
@@ -20206,9 +19848,9 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/applicationinsights-web-ts",
    "status": "present",
-   "files": 2,
-   "bytes": 22763,
-   "sha256": "a6f178781041b0818ac29bea3eacc95913429697953d6ac1dce1971facf6748d",
+   "files": 5,
+   "bytes": 63732,
+   "sha256": "3d5626abea4d6df645dffbaa70911d064ac53f4a36e15036db73e8766104c0d5",
    "skill_md_sha256": "c75b8ac8b60536a83945938aef7fdd824198cc20240fcc4e2344ed50e342e57f"
   },
   {
@@ -20492,10 +20134,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/automated-triage",
    "status": "present",
-   "files": 2,
-   "bytes": 13368,
-   "sha256": "956dc32ebe470f425806c519a77cb2d934dad47978bb5802a66a288208fe2310",
-   "skill_md_sha256": "f436eca23e46f5cc1c436d5f6fa85993ca0478cc3f3a6ef80f6569e91a2e964e"
+   "files": 6,
+   "bytes": 42810,
+   "sha256": "636f4170ed3b26858b2f6dc003545301898140f0453bd8312e54bfaec049d48d",
+   "skill_md_sha256": "f05d1582fbf6f591c0ccab3348893b5da3946c3388529df3cebdf1f2b81cdf59"
   },
   {
    "name": "aws-agentic-ai",
@@ -20505,9 +20147,9 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/aws-agentic-ai",
    "status": "present",
-   "files": 2,
-   "bytes": 13435,
-   "sha256": "b9580ea5d0a6ad0ceefa82630fec696c8c3bd4c9a6b74d32ac4da01ce69b3eb6",
+   "files": 6,
+   "bytes": 175499,
+   "sha256": "b8823382edebff9daea6599b11ed2a4a3ae26f3bc8b053694cb99e8230d34a90",
    "skill_md_sha256": "393cb6b58b6a06a7820ca84b9be819d7ab23865cfe3356323020dbead95cf69f"
   },
   {
@@ -20518,10 +20160,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/aws-cdk-development",
    "status": "present",
-   "files": 2,
-   "bytes": 10451,
-   "sha256": "daff380ad26535ac829872264a221f4b788fc41b743322abc226f524a74b7a75",
-   "skill_md_sha256": "a32eddf7b3412bb221f89997d15fa36254878c6ce92f4e40b8042fdc7182cc77"
+   "files": 6,
+   "bytes": 31054,
+   "sha256": "5afd53bb025c8f6c6375685487c45c0fe8f02b4898444d87ae913fa344ce035e",
+   "skill_md_sha256": "5429b9b92ba472cfb33f8d350f7f8b008d5c55d2d5a4116c7de501b5349145b1"
   },
   {
    "name": "aws-cloudtrail",
@@ -20557,9 +20199,9 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/aws-cost-operations",
    "status": "present",
-   "files": 2,
-   "bytes": 9970,
-   "sha256": "301ed49e560628409310db2df917df4928d369cd29f103ce2442991d32ae2a06",
+   "files": 4,
+   "bytes": 34147,
+   "sha256": "3e53a708bda13bd0d8ebc55ad788139ac8acb06b0cc70b0cb5390e1a2fe6fa53",
    "skill_md_sha256": "df22c35e55fa87229250d4333fc7f0b972177dedcbbabfaa94c87f2733efb490"
   },
   {
@@ -20674,9 +20316,9 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/aws-serverless-eda",
    "status": "present",
-   "files": 2,
-   "bytes": 13334,
-   "sha256": "560795e4269a72a41943bfd63424c443677ff40bf6a6288c9efba4967f84ab68",
+   "files": 8,
+   "bytes": 129404,
+   "sha256": "dd1d65436a1772cd49ae53a2d129bbf4aac0961f2d8176bfc2f2f5bc5472dbdd",
    "skill_md_sha256": "88aeaaec47dade7fe9c1d91ad64d69fbca497f1364e5d7caed29a34f9da0053a"
   },
   {
@@ -20687,10 +20329,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/aws-sst-development",
    "status": "present",
-   "files": 2,
-   "bytes": 10954,
-   "sha256": "c810e38c21c2c5e0cac18eb0d75b13b9df82a1bf241eed3aa00e9c19d3635edf",
-   "skill_md_sha256": "89c548157487ea74379268ee9b67d43c94cf53917ee0f167a9df3735adabd580"
+   "files": 7,
+   "bytes": 51154,
+   "sha256": "999655fe20bd36c9d8b688a485f2f9a1998c1c4f07ed07c1bcdefc653feaa79e",
+   "skill_md_sha256": "ee4a807a9656f67765382488a29dddcdaab5d37217dc761816d4d39c48223fe9"
   },
   {
    "name": "aws-vpc",
@@ -20739,10 +20381,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azd-deployment",
    "status": "present",
-   "files": 2,
-   "bytes": 8868,
-   "sha256": "6e80c92951d69bf3865fdd49619339de8a643481810565e4a713eae93bd2c3e8",
-   "skill_md_sha256": "fbaf70fbe7bf033912f3f28d31d316f0d97c5f1e800e87264c21af298b995702"
+   "files": 3,
+   "bytes": 20799,
+   "sha256": "85766ba297a6f8dfd44da53b097526550e3e58c529ea897dc7f99cdd5fcdf65a",
+   "skill_md_sha256": "d5143b81c4a9d87e156a829c17d364611a0aae87e4d96a29cccd80a6c4a923ff"
   },
   {
    "name": "azure-ai-agents-persistent-dotnet",
@@ -20921,10 +20563,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azure-ai-projects-py",
    "status": "present",
-   "files": 2,
-   "bytes": 9312,
-   "sha256": "cd9da3be2a5c47ed8586762d37cb188126c1c084a66a8cf8599fd0dd64e5c989",
-   "skill_md_sha256": "c216cb794c09bc1b7161f19c7d7a2c15674463071d9bef55b8bd3fba198513a8"
+   "files": 15,
+   "bytes": 130447,
+   "sha256": "bdcd77cd7c73bbb2128597183efb6f02dffce071e9914f6eca6f7e19816ef9c8",
+   "skill_md_sha256": "e9aff9fa97a6aabf22e8a86c23deb33e410419df5c4ceb6b8346a40022363b4d"
   },
   {
    "name": "azure-ai-projects-ts",
@@ -21051,10 +20693,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azure-ai-voicelive-py",
    "status": "present",
-   "files": 2,
-   "bytes": 9688,
-   "sha256": "843efdb0646b6bdc2810d51ca23a447dcb63a0779e48d2648a1e1a4987000617",
-   "skill_md_sha256": "7cd4ec26c1f70ebdc5f52797bf595399a55abc6a2c216593794eb20aa909514c"
+   "files": 7,
+   "bytes": 56878,
+   "sha256": "9b308e506f0c85194116980b6c9c7fcb6983b3f2acbc162260f219788d43ec16",
+   "skill_md_sha256": "a7c6a8c179126b5ca75a602c7673ea657d067d9efc9632622a8b2c5814785ffb"
   },
   {
    "name": "azure-ai-voicelive-ts",
@@ -21194,10 +20836,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azure-cosmos-db-py",
    "status": "present",
-   "files": 2,
-   "bytes": 9885,
-   "sha256": "a85668aaf627dbb04e89a9e6e99b4ac62f4d261574f117d84acc3009b2143a2a",
-   "skill_md_sha256": "af5c4f0751edd5b50d3a12f51555b6dac191c2904702d0ba1c975c221ab0b61e"
+   "files": 12,
+   "bytes": 86431,
+   "sha256": "fafcdb40d69adf616f69f7953f64bf5655679c99d7f71dfd31890e2750c84d09",
+   "skill_md_sha256": "106b98b0e479fbb9f9dabbc529c4e3dbce469c2524d63594f3bdc84e64737357"
   },
   {
    "name": "azure-cosmos-java",
@@ -21211,19 +20853,6 @@
    "bytes": 8079,
    "sha256": "b056fd172955390010c93cb0951e5d712e8f87ff60a7288b6b1357eb4f4848b9",
    "skill_md_sha256": "6ea79d1921bd393d9164489860cfa6de54badfaa51ae331bdf7260da5c177291"
-  },
-  {
-   "name": "azure-cosmos-py",
-   "local": "azure-cosmos-py",
-   "upstream_path": "skills/azure-cosmos-py",
-   "repo": "sickn33/agentic-awesome-skills",
-   "license": "MIT",
-   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azure-cosmos-py",
-   "status": "present",
-   "files": 2,
-   "bytes": 7707,
-   "sha256": "ee90f1d24bc47a9077b1c5b045cab89d778c4da18f2ae831d190d075515d14bd",
-   "skill_md_sha256": "279bb31c38106ab563738d67bef4cf0d9b79d100418c4ae6c5fd5e8385310530"
   },
   {
    "name": "azure-cosmos-ts",
@@ -21250,19 +20879,6 @@
    "bytes": 9633,
    "sha256": "aed3e59556fdf896a688830fd32674b8929a0e16f777879ae6b09e801e8a0ed1",
    "skill_md_sha256": "4d34d6c7d04a425a6d06a195a2767f0a998dd3a98a5ef7d0172bb2671840203d"
-  },
-  {
-   "name": "azure-devops",
-   "local": "azure-devops",
-   "upstream_path": "skills/azure-devops",
-   "repo": "sickn33/agentic-awesome-skills",
-   "license": "MIT",
-   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azure-devops",
-   "status": "present",
-   "files": 2,
-   "bytes": 9873,
-   "sha256": "89769a1fcc179028df4417c4634d0edbec505358db4cd4363cf5e5abf7e9a5db",
-   "skill_md_sha256": "399689cab2ac15362be4044e176024e8486ed61ee50ec4b13fc79d7795fe0ca1"
   },
   {
    "name": "azure-eventgrid-dotnet",
@@ -21324,10 +20940,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azure-eventhub-py",
    "status": "present",
-   "files": 2,
-   "bytes": 7714,
-   "sha256": "df404fc7783dcd295d65c0b7bc127502b5136e925a9668a8e5aa8cbec24555f9",
-   "skill_md_sha256": "3769eb45a0323b1f4eaf81a031d3488cc27fa0172d62b80607037054f0d85b3f"
+   "files": 7,
+   "bytes": 45139,
+   "sha256": "04a0a1ed9b0ece4c641e16500f2d7a7838b223766a41d8fd196332935d02c388",
+   "skill_md_sha256": "de1192c46e7c83279cb6e9e81688defb7cb0ca166d771803c9b08015a9339172"
   },
   {
    "name": "azure-eventhub-ts",
@@ -21484,19 +21100,6 @@
    "bytes": 7047,
    "sha256": "9956a2d52f5e6dfbe78f195c66cfec7f0abf0b043d8388fa518dd1fead5c9753",
    "skill_md_sha256": "cf7e249691970764759754c914a853decca4610f8b97b027e13f812f3b61e558"
-  },
-  {
-   "name": "azure-mgmt-apimanagement-dotnet",
-   "local": "azure-mgmt-apimanagement-dotnet",
-   "upstream_path": "skills/azure-mgmt-apimanagement-dotnet",
-   "repo": "sickn33/agentic-awesome-skills",
-   "license": "MIT",
-   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azure-mgmt-apimanagement-dotnet",
-   "status": "present",
-   "files": 2,
-   "bytes": 10327,
-   "sha256": "6161dce881f579d05117cdc85cbd23fb5d4480c2dc64ef26b95dbf207ffdb916",
-   "skill_md_sha256": "d18fd3c5dc081d17eb0582422a513ab17967746ca13ee21f58e362ce5bda7440"
   },
   {
    "name": "azure-mgmt-apimanagement-py",
@@ -21740,10 +21343,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azure-resource-manager-cosmosdb-dotnet",
    "status": "present",
-   "files": 2,
-   "bytes": 8482,
-   "sha256": "46b3fdddb838b54448eb94ffdc2630526996e1363ab43a8d209ae00e7e41f639",
-   "skill_md_sha256": "e08d8ca1c77fdef702d98d24a820d2dc52ceb0e97c5b269d96eab016c992ff95"
+   "files": 7,
+   "bytes": 36765,
+   "sha256": "b89cb2f84e84881cd931351f59b81c49cec3aaaf162c978ad77510f7a27e5e57",
+   "skill_md_sha256": "0d28eec156481a170e033a93f84db9494629ceb560e1073a84b21f90bf766699"
   },
   {
    "name": "azure-resource-manager-durabletask-dotnet",
@@ -21818,10 +21421,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azure-resource-manager-sql-dotnet",
    "status": "present",
-   "files": 2,
-   "bytes": 10445,
-   "sha256": "ccf9fb9a511b173c0933b4d75147902c0b58bf6a7d5447006bc94ccde9f6f2e6",
-   "skill_md_sha256": "a08ecaa18b0a65b00579334c3fedb09b9770d78b8352547e0c0f7e357a645596"
+   "files": 7,
+   "bytes": 31738,
+   "sha256": "351f887cca12e919bc60f011cb92c497fa80638987bf038904da886e7efc9dd0",
+   "skill_md_sha256": "a67321fe15afe08e06a325e4ece623aca6185a7a0e67e1289b82018fbbb262de"
   },
   {
    "name": "azure-search-documents-dotnet",
@@ -21831,10 +21434,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azure-search-documents-dotnet",
    "status": "present",
-   "files": 2,
-   "bytes": 10199,
-   "sha256": "e7ef1ce96e641bb43c2a20f67134245d9bce667391aff9f2eb72923661d2e2fb",
-   "skill_md_sha256": "06b309281223c9e98e7db430f980d58f2407e164a188eb76f68a8754b80e1185"
+   "files": 6,
+   "bytes": 25911,
+   "sha256": "51563db00e988ea6bef67229b556bbe16ec913a08d11473ff06d3da04594a8b6",
+   "skill_md_sha256": "91aa62c2840b97492d5bc84ca1fa0ba395f8b4f7dc852703d747ed21c7815b6b"
   },
   {
    "name": "azure-search-documents-ts",
@@ -21909,10 +21512,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azure-servicebus-py",
    "status": "present",
-   "files": 2,
-   "bytes": 8842,
-   "sha256": "5452b23daa1aac4ab1af469a77fe5e6a12e9fc0fc51c047d38823e0594300faf",
-   "skill_md_sha256": "6f983d2731336995070bd42a2b392843e5afd41aaa9b026bd6b2219253651b2e"
+   "files": 7,
+   "bytes": 53702,
+   "sha256": "09365836c080b868bf26037dc4ce054efebcae5343f433e12a52c13300d5cb38",
+   "skill_md_sha256": "1a528cc5429e35d4a5b7f80c1f7ba75586d6017674165e2d2bd1a68dbe81754f"
   },
   {
    "name": "azure-servicebus-rust",
@@ -21935,10 +21538,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/azure-speech-to-text-rest-py",
    "status": "present",
-   "files": 2,
-   "bytes": 11365,
-   "sha256": "4f3c41bf5fa1aaf86daa7451d3fab6cc838e65dcae1ac2fa41e00dea4d54258f",
-   "skill_md_sha256": "c254a1170b2ba2b839f14aef04c10c96d0db3069c2ec3d75782c157dd5a68ca2"
+   "files": 5,
+   "bytes": 21688,
+   "sha256": "2eba4d614427fa4da3a53b13cb43d640f1f1878a8fe2e8aefe962d7103cfec56",
+   "skill_md_sha256": "9b6407bb044416637fb4841a059e3280a3a452222cb7decd92ba8a7c9c2b1468"
   },
   {
    "name": "azure-sql",
@@ -22026,9 +21629,9 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/babysit-pr",
    "status": "present",
-   "files": 2,
-   "bytes": 19853,
-   "sha256": "bd6f109a1fae2328115337f4562d558ec8a615329d67f7be798cc9502743151a",
+   "files": 3,
+   "bytes": 31221,
+   "sha256": "fc31b4f507c59da75092b729103d1605ed596c31bcdb9ed533e2ad4f1449d8fb",
    "skill_md_sha256": "8328827f039eaf95d9c8fe1eaa97899d495c2df26118e5c5966caf712a9a9939"
   },
   {
@@ -22169,10 +21772,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/beatra",
    "status": "present",
-   "files": 2,
-   "bytes": 12682,
-   "sha256": "1d279494eeb524fc74db280e01fe4c5d26aa90716dc72428f4aae39c6fea0d02",
-   "skill_md_sha256": "32654546b1d7f33074440132cc1188fad79b0d3d8339e61ef8020f38f74aac3b"
+   "files": 5,
+   "bytes": 178478,
+   "sha256": "58857905908ea09f17be82ef71412a5bd0b9630f625e17c49342b2551221a508",
+   "skill_md_sha256": "fc1f8c8001abe24c06fb64d2773e9c3296a6bd964d528db4abb766029eb317c5"
   },
   {
    "name": "beatra-ai-video-studio",
@@ -22182,10 +21785,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/beatra-ai-video-studio",
    "status": "present",
-   "files": 2,
-   "bytes": 13612,
-   "sha256": "4aad65efcd453e2ab51dd2ad56507f0b58b7bc7e2aac1985e5e2ce54ad6abca4",
-   "skill_md_sha256": "3690ab480a7c9826d87cce42c940a223d42e0f233207f2a31675cfbf6d9b3401"
+   "files": 5,
+   "bytes": 179480,
+   "sha256": "8b7f99af7e91aac94a1e812e38a0b0e0f96f89d1a85e6dc03cbb4f81e31736eb",
+   "skill_md_sha256": "d552d4d6e87e48a4afe31e1622a3565aa3db21feb3041a97e4554b5599b496f9"
   },
   {
    "name": "bento-ui",
@@ -23014,9 +22617,9 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/claude-delegate",
    "status": "present",
-   "files": 6,
-   "bytes": 37690,
-   "sha256": "f143e9be37e4e9ce40801a40d0a1b784992a6e87550d9c642034fb9ea775b3a7",
+   "files": 7,
+   "bytes": 70529,
+   "sha256": "cd18d02856d603a51e2b3b9fec2b8901938925ed43f4aa0263a3bda787367d44",
    "skill_md_sha256": "557f592d308aa92723a90f1d0b0a60419b3bd267ad704d0d906590b9478791af"
   },
   {
@@ -23163,32 +22766,6 @@
    "skill_md_sha256": "c75a2e32dfa56d9e32f51fb1bf844cd1b47da15f2395083bece4a29cfde34796"
   },
   {
-   "name": "cloudformation",
-   "local": "cloudformation",
-   "upstream_path": "skills/cloudformation",
-   "repo": "sickn33/agentic-awesome-skills",
-   "license": "MIT",
-   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/cloudformation",
-   "status": "present",
-   "files": 2,
-   "bytes": 14921,
-   "sha256": "b75c9f1df2eb6f9b1c7f41241e0aafe0948a1e5a52edb2490977892a10394444",
-   "skill_md_sha256": "906a5b12687a7c02940dbce5212b9dc61540ab476187e1ca6969186abc5fe8f5"
-  },
-  {
-   "name": "cmux",
-   "local": "cmux",
-   "upstream_path": "skills/cmux",
-   "repo": "sickn33/agentic-awesome-skills",
-   "license": "MIT",
-   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/cmux",
-   "status": "present",
-   "files": 2,
-   "bytes": 14656,
-   "sha256": "159c6875360ffb33bbcea236269e8e398daba24747ed0be5ec447482c09d42bd",
-   "skill_md_sha256": "579df9f69e691697f3b6496fe3cccb9f789521f5c51c80aa054d8e4a50be8d39"
-  },
-  {
    "name": "co-marketing",
    "local": "co-marketing",
    "upstream_path": "skills/co-marketing",
@@ -23252,19 +22829,6 @@
    "bytes": 11806,
    "sha256": "fc5734d0f98702de2132036d32526a1eacf7d9bcd85cccebee76546f7935e53f",
    "skill_md_sha256": "1af7513d1799b8b1081eb538b543d1717315e4926e36f82630bd199f67a308fa"
-  },
-  {
-   "name": "code-review-ai-ai-review",
-   "local": "code-review-ai-ai-review",
-   "upstream_path": "skills/code-review-ai-ai-review",
-   "repo": "sickn33/agentic-awesome-skills",
-   "license": "MIT",
-   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/code-review-ai-ai-review",
-   "status": "present",
-   "files": 2,
-   "bytes": 16392,
-   "sha256": "fa7c3650266316b4a6f34af50adcc479060f4c015899db9d321d05e334d41a92",
-   "skill_md_sha256": "1b2f0785e72b0858f7686d1751613fba01a2a239501669037efb8d86f8febd91"
   },
   {
    "name": "code-review-checklist",
@@ -23378,9 +22942,9 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/codex-delegate",
    "status": "present",
-   "files": 6,
-   "bytes": 40114,
-   "sha256": "3634c8e2a7ce079d4648e9b6b1eab896c59ad4bd7b5ae39805379ba0c815503e",
+   "files": 7,
+   "bytes": 72953,
+   "sha256": "e8234be63fc04ac21cf944f63074a1753be95072b9d83abd2c18362289c325b4",
    "skill_md_sha256": "3d1a94b3d5f7c6d69ab6c723d54fce85957c3efff74ba50bc7691b01a9e88afd"
   },
   {
@@ -23469,9 +23033,9 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/commandcode-delegate",
    "status": "present",
-   "files": 6,
-   "bytes": 50323,
-   "sha256": "a827ab0aca8bf6a2ed4dd8160014cfa5740c3932cf48c1bf757dc94f006d9e11",
+   "files": 7,
+   "bytes": 83162,
+   "sha256": "dabc5d166b2a2bbaab9971224dfea0c3357e6dab8eecf032b6087386eb696d6b",
    "skill_md_sha256": "a50e7a26d1e01bc43ff5e4a4ba57f9d81ee6d1f85d8c9355252e0d2f2b59b85f"
   },
   {
@@ -23677,10 +23241,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/constant-time-analysis",
    "status": "present",
-   "files": 2,
-   "bytes": 10092,
-   "sha256": "496e310869d56814ac73a2df8a2f9cbf590e0e39a4b30b63754d93cf75c40aaf",
-   "skill_md_sha256": "4dc47910e9f4cd7da509412752893cf1f2333326edb30c86973ee94298b5116b"
+   "files": 12,
+   "bytes": 83215,
+   "sha256": "02b5b1e803e35ef5205f2f2b4fceb3dddae8ea733d82850629942385afcb25fc",
+   "skill_md_sha256": "d1cc56508b935c89ec2258f1c186690f761f89a1d86689fe58173e28c4875aa3"
   },
   {
    "name": "container-registries",
@@ -23820,10 +23384,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/context-kit",
    "status": "present",
-   "files": 2,
-   "bytes": 6568,
-   "sha256": "64248118d64d393d2de828d3d314c6663242047cef133c687e33416e0db21e44",
-   "skill_md_sha256": "cb0d451b08aa9d834133826d9ef8dfbb428a68004b4b0c1086689b3ffc329c5f"
+   "files": 3,
+   "bytes": 7620,
+   "sha256": "3eb6142c74acbfb2b7b9ead7c1ef66635e5a7a2bc509341bcb322e46363352fc",
+   "skill_md_sha256": "be739002166193169972cee6273f4b1b47377d030c182a3e685f2d716a5386f9"
   },
   {
    "name": "context-manager",
@@ -23924,9 +23488,9 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/copilot-delegate",
    "status": "present",
-   "files": 6,
-   "bytes": 28713,
-   "sha256": "97926f8217f6b98ca08b8f8a14b3a5178c14b8f4a5d6d25c34f1b6ac14d6a0c5",
+   "files": 7,
+   "bytes": 61552,
+   "sha256": "36d1f3788e76f620f2f2425df87e62136a031c466e9bfa79e8ea8bdfca75e54b",
    "skill_md_sha256": "f336fe49be2b319ebf0aab218204c707ca4c1647c3b78e878b177c665526fc7b"
   },
   {
@@ -23941,19 +23505,6 @@
    "bytes": 16449,
    "sha256": "3b6cbd1fb7a6f8da2def89b763c22e19eca7808ccfa42f4494fefd33626a32c1",
    "skill_md_sha256": "32052e5e8bcd9563057af9dd027336689b2a3642d7cea85a833ca668683578c0"
-  },
-  {
-   "name": "cowork-to-code-bridge",
-   "local": "cowork-to-code-bridge",
-   "upstream_path": "skills/cowork-to-code-bridge",
-   "repo": "sickn33/agentic-awesome-skills",
-   "license": "MIT",
-   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/cowork-to-code-bridge",
-   "status": "present",
-   "files": 2,
-   "bytes": 10888,
-   "sha256": "762c83c5f45433d609a2153de21e416724884ed2079a11b284c1852aaaea5a5f",
-   "skill_md_sha256": "1f361778a41760d436c62ef975397a10703a738a4d142f5f310a49d0a64b6b6c"
   },
   {
    "name": "create-branch",
@@ -24093,10 +23644,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/csv-manual-export",
    "status": "present",
-   "files": 3,
-   "bytes": 24000,
-   "sha256": "881b23762c5dd5af826d39b7cc6f6604c7c60f79052deeed6b79990042f63fa6",
-   "skill_md_sha256": "f811dbce369bc0673527a6b9ad887f02863f8cdc9f6e94017434f51b063044ec"
+   "files": 4,
+   "bytes": 58870,
+   "sha256": "5c10475b33fccdeaffc80f5776047838f35059451499816722e2b9ec189434ef",
+   "skill_md_sha256": "55c527379bb83cb3d464af16ca4bcbd30dfd8c7ee132b1fc1fb65ebe2ef87851"
   },
   {
    "name": "cucumber-skill",
@@ -24132,9 +23683,9 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/cursor-delegate",
    "status": "present",
-   "files": 6,
-   "bytes": 31335,
-   "sha256": "eafabf1eeaabee9e65992f7e359ac51fd76c8dcd0768c76cfab62e90fb2d868a",
+   "files": 7,
+   "bytes": 64174,
+   "sha256": "ce26042ddff063f19831521f1c791a41928d2872e6d156728fc1f7fb2459aab1",
    "skill_md_sha256": "bb6adbc05a71e4d8bfb195f644a374e181c41a0cc1f0f3258c6138f61782c3ea"
   },
   {
@@ -24522,10 +24073,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/debug-buttercup",
    "status": "present",
-   "files": 2,
-   "bytes": 10378,
-   "sha256": "658324d81b411c4befe1f718658bd71e4e5feab13c5ac5ac149d4efbb761ce2a",
-   "skill_md_sha256": "76bd1e2e26939c6f39159c1550b659632577c7834757a77edf11128b8d800955"
+   "files": 3,
+   "bytes": 12365,
+   "sha256": "11f82523560889491f5b1a5aaff78b21664dcbaeac062cc4a015295a0c059708",
+   "skill_md_sha256": "96a8415b355ea7537ead881d7af9c12bb61c1835e0093a725bf45c316194fd17"
   },
   {
    "name": "debugging-code",
@@ -24565,19 +24116,6 @@
    "bytes": 4939,
    "sha256": "a112fdc5dee8fbcbeb15cbb7b82750f378cb7176985af57def56d54e4326cffb",
    "skill_md_sha256": "ab1816aceae7d0d428134cf10a3498763d169b18dca43b467d0ebf07c49de2e3"
-  },
-  {
-   "name": "defi-protocol-templates",
-   "local": "defi-protocol-templates",
-   "upstream_path": "skills/defi-protocol-templates",
-   "repo": "sickn33/agentic-awesome-skills",
-   "license": "MIT",
-   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/defi-protocol-templates",
-   "status": "present",
-   "files": 2,
-   "bytes": 15761,
-   "sha256": "c74cd3c3172b2e495822945006636c6efe64d9dffdf8820906b0318599860633",
-   "skill_md_sha256": "acd3281c4616704b0bc2a0eabb1fe58c9ab60609a2f5672e61f91ff014f58312"
   },
   {
    "name": "dei-dashboard",
@@ -24795,10 +24333,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/devcontainer-setup",
    "status": "present",
-   "files": 2,
-   "bytes": 8753,
-   "sha256": "a28e4274cb638ea756b15dad2b65e858af137c482ca839900ca16c2d146bd600",
-   "skill_md_sha256": "c0da48fe1febf020129df68689fa8f47b599f52365b6d8aabbea2671632ed83a"
+   "files": 6,
+   "bytes": 34715,
+   "sha256": "be470ae87971af9ed1592187d7681aea5fbd432b69e0959c1c3c2bd4009bfcd2",
+   "skill_md_sha256": "34d0af1c0d20b689f0ad9e73651f45ccfb6a5c376c77dbeb1298d1f322b8c6c2"
   },
   {
    "name": "developer-advocacy",
@@ -24964,10 +24502,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/diagram-generator",
    "status": "present",
-   "files": 4,
-   "bytes": 15026,
-   "sha256": "7a597fb1bef8607ab1dbe4f18b1ebde37a526cf1b1c160591aff1150454e9fae",
-   "skill_md_sha256": "f9dc667fb4fd2559bd8b653a1bc9b5b59c306dec7527c51e2ebd95990fa189f7"
+   "files": 7,
+   "bytes": 23735,
+   "sha256": "737187c11a5ddd00d8dc51425be73cf0adfd5082431f69dc025072d9589e8060",
+   "skill_md_sha256": "b0e9cab627683102c203dd1b077ad1c309e4df744c45ca5905f1053d2c32f250"
   },
   {
    "name": "diary",
@@ -25347,19 +24885,6 @@
    "skill_md_sha256": "dbe01db6408f879d4f842be0e0101fc9ec452cfaa53be43dc3d287ae5d28c007"
   },
   {
-   "name": "duotone-design",
-   "local": "duotone-design",
-   "upstream_path": "skills/design-it/duotone-design",
-   "repo": "sickn33/agentic-awesome-skills",
-   "license": "MIT",
-   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/design-it/duotone-design",
-   "status": "present",
-   "files": 2,
-   "bytes": 8841,
-   "sha256": "6e7bef1d57ae7ee074fb8aa6e482dc92206e42cb8e8237d53ae4f5568ac9162d",
-   "skill_md_sha256": "b99f16f937e91ceea9942ed856d448032c3ae0d0053ad8259a5acc0659643b50"
-  },
-  {
    "name": "dwarf-expert",
    "local": "dwarf-expert",
    "upstream_path": "skills/dwarf-expert",
@@ -25458,10 +24983,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/ecommerce-listing-image-set",
    "status": "present",
-   "files": 2,
-   "bytes": 13224,
-   "sha256": "e98280293c961eff44af619d3b55ab9fc5a44508f889590124fdc2ce7c82e467",
-   "skill_md_sha256": "9443561722301f2a33ba5a1268140909504efe494866f8ce47ebbb2a2e481e2b"
+   "files": 5,
+   "bytes": 179048,
+   "sha256": "d5fca170f7fcd5551a213090448d6ee94591f781adcdfac89ab94c1c720c8e53",
+   "skill_md_sha256": "4bebaaad4d26f9c3f9745b420a49f9ce4a47b00e7fd30e72539e89a735872673"
   },
   {
    "name": "editorial-design",
@@ -25553,19 +25078,6 @@
    "bytes": 16313,
    "sha256": "1f5d06283f025ae7687cea25a61433b23660e011988a17a64f00ec366086ca9e",
    "skill_md_sha256": "206b558255347dda6d3e6bf4da56ca45275c278c453b28629fce5a5b8c851a5d"
-  },
-  {
-   "name": "emergency-card",
-   "local": "emergency-card",
-   "upstream_path": "skills/emergency-card",
-   "repo": "sickn33/agentic-awesome-skills",
-   "license": "MIT",
-   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/emergency-card",
-   "status": "present",
-   "files": 2,
-   "bytes": 17929,
-   "sha256": "4f1e1310bce967d4c3dfe4511eadc3b25592318091c0eb1006d8472cda1fb3a4",
-   "skill_md_sha256": "f5aaa04548057e99beebc34db5e94ab909af0bd5bcb8944b8c5ac9efa1442d12"
   },
   {
    "name": "employee-suggestion-hub",
@@ -26589,10 +26101,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/frontend-slides-frontend-slides",
    "status": "present",
-   "files": 2,
-   "bytes": 31342,
-   "sha256": "dac20f4df9fc47e570b2902e79c243122d5f99269945820b6c6a429510701f59",
-   "skill_md_sha256": "5dd7f3d166cfe7a77643c9ab2e4b9c4f7d4d4dc6d56456ef6eaecd32da066096"
+   "files": 8,
+   "bytes": 65612,
+   "sha256": "c3975fea4e9eb6fc63956caebefc623c1800d431ec3610ab61e95a97d716bdde",
+   "skill_md_sha256": "b8b98137debd73156786a173a200928c999d4988e94b478e5d717a52a6eb380f"
   },
   {
    "name": "frutiger-aero",
@@ -27031,10 +26543,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/gha-security-review",
    "status": "present",
-   "files": 2,
-   "bytes": 9585,
-   "sha256": "311a792df58306843050cb7a128a8f62bd4fd12347343fe69c2a3f4c6fe134ed",
-   "skill_md_sha256": "13dcdd011a1e6cbb2414187ec7c54baaf9196f345ff8cec3698f1131f11ec727"
+   "files": 13,
+   "bytes": 91925,
+   "sha256": "e8b68d996a2ae0236eda0670dd8445b44550c83964613b46d14dbf90475c6c23",
+   "skill_md_sha256": "da4ef40305b9436c447b89afe0e4c9fef761bee449efe4b20ca7b1224c02d89f"
   },
   {
    "name": "git-advanced-workflows",
@@ -27317,9 +26829,9 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/grok-delegate",
    "status": "present",
-   "files": 6,
-   "bytes": 39399,
-   "sha256": "d72540d443e033a1f4c19568fdd5da7a98726d060b53d2f8c3b02559163fef7d",
+   "files": 7,
+   "bytes": 72238,
+   "sha256": "8c36425f68b4a847bc0714ea8621b0d9f787133a63a5f06c6749497ba022495c",
    "skill_md_sha256": "ef557e313d159ef1138fe3f97a9932bbb82da980065e29d663328aa1113881ac"
   },
   {
@@ -27399,19 +26911,6 @@
    "bytes": 6345,
    "sha256": "5dce957960b8438d4f58335a8e82ab96b9f0834df4ca0420b96f3d6c74de30d1",
    "skill_md_sha256": "df8ef069ec99896f488bc78feea7a8ade4742881ad34d7c1fdc275f2374a22d3"
-  },
-  {
-   "name": "helm-charts",
-   "local": "helm-charts",
-   "upstream_path": "skills/helm-charts",
-   "repo": "sickn33/agentic-awesome-skills",
-   "license": "MIT",
-   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/helm-charts",
-   "status": "present",
-   "files": 2,
-   "bytes": 11023,
-   "sha256": "e62117e8582aa7e733ec7270e8ca4746fe7719f554e3dc5660089798fa888744",
-   "skill_md_sha256": "265578a221c279b1024d4d863173ba566874d605b21be3e8707233c438735b95"
   },
   {
    "name": "helpdesk-automation",
@@ -27609,19 +27108,6 @@
    "skill_md_sha256": "9e8ce478170d52f8bc57b0b3b1461c1c3a08854d2fe3bc92a837b737d8d17482"
   },
   {
-   "name": "hugging-face-datasets",
-   "local": "hugging-face-datasets",
-   "upstream_path": "skills/hugging-face-datasets",
-   "repo": "sickn33/agentic-awesome-skills",
-   "license": "MIT",
-   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/hugging-face-datasets",
-   "status": "present",
-   "files": 3,
-   "bytes": 18082,
-   "sha256": "f20942b416303267af01589948b1036e54a0508139ba527c3dd533bfb2364dc7",
-   "skill_md_sha256": "faf63f718db8e8434d936837dae9f71293e2599f64dbf363c2d8eff6e7394e0d"
-  },
-  {
    "name": "hugging-face-gradio",
    "local": "hugging-face-gradio",
    "upstream_path": "skills/hugging-face-gradio",
@@ -27681,10 +27167,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/hugging-face-tool-builder",
    "status": "present",
-   "files": 2,
-   "bytes": 6631,
-   "sha256": "e82b9e4f5387ed2e57ea076dc6a0627db5b5103ef25d1fcdaa4f86bf5972e993",
-   "skill_md_sha256": "3a05f00b5cf0626e18c21af04827a7e6a3a60f05e36347075bc5b289197e54af"
+   "files": 9,
+   "bytes": 30261,
+   "sha256": "727ca843c320ed5f0a4fad79f6490ce68326d6fcdcab9b58a5cbb99a21f2c229",
+   "skill_md_sha256": "5f342e40b47fd4951e1fd980009a7d64f9451016e0a7bcdcc7b5c8586223a58d"
   },
   {
    "name": "hugging-face-trackio",
@@ -27802,19 +27288,6 @@
    "bytes": 48478,
    "sha256": "3f0b4d2e2ee6d3341fb2b4ac30f58db420454a0bf9acce8135ae312f8216d35c",
    "skill_md_sha256": "bc985988f32e806f39e07ccfe7139ff57845939a14e69371d62866c705fc6d7d"
-  },
-  {
-   "name": "humanize-chinese",
-   "local": "humanize-chinese",
-   "upstream_path": "skills/humanize-chinese",
-   "repo": "sickn33/agentic-awesome-skills",
-   "license": "MIT",
-   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/humanize-chinese",
-   "status": "present",
-   "files": 2,
-   "bytes": 5906,
-   "sha256": "290bbb27936672f330cde937951c2bd4b6a968ac9970c9458040b97d22d1ac2c",
-   "skill_md_sha256": "59e8bd4a2a1cb60f332251e0e33fb0b55f6cd1b5d09f83d3aef7a9329f10ecfd"
   },
   {
    "name": "hunt-aspnet",
@@ -28253,10 +27726,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/ida-reverse",
    "status": "present",
-   "files": 4,
-   "bytes": 33280,
-   "sha256": "8e0c2107eb66e0f52da44088573c8ff662c4178d17b658c95e04548b5f8cc82b",
-   "skill_md_sha256": "248567ce8832f0aab861efd6ee6b689efc055baa8c04bbd261390b656d890d90"
+   "files": 11,
+   "bytes": 79093,
+   "sha256": "6c1f753fd70c10b7d6555c219879b043ce233daba9adfb392c4bcaa1fa755cd8",
+   "skill_md_sha256": "016305e8bf1915fc694ec8d536c95ecc7c596356f2ef8c2221b31b225d2f30ca"
   },
   {
    "name": "idea-autopsy",
@@ -28649,19 +28122,6 @@
    "skill_md_sha256": "a20607b963ce9d56ef14195baf5e00b72c409942cbebac47bc5184ee3b56cdfd"
   },
   {
-   "name": "iterate-pr",
-   "local": "iterate-pr",
-   "upstream_path": "skills/iterate-pr",
-   "repo": "sickn33/agentic-awesome-skills",
-   "license": "MIT",
-   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/iterate-pr",
-   "status": "present",
-   "files": 2,
-   "bytes": 8373,
-   "sha256": "cdf851eb2b6403d2c51c775121acd785ed120d0600c8edbff824123afe0bf060",
-   "skill_md_sha256": "d2ad80dc51a8dea356b83b4447b64f4c7356e57b74cf13d5040367fc97ef80cb"
-  },
-  {
    "name": "itil-expert",
    "local": "itil-expert",
    "upstream_path": "skills/itil-expert",
@@ -29026,19 +28486,6 @@
    "skill_md_sha256": "58b5b146debbe7ac0a360e140e367c787b906e0fcf948217d976888ea87036be"
   },
   {
-   "name": "layered-design",
-   "local": "layered-design",
-   "upstream_path": "skills/design-it/layered-design",
-   "repo": "sickn33/agentic-awesome-skills",
-   "license": "MIT",
-   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/design-it/layered-design",
-   "status": "present",
-   "files": 2,
-   "bytes": 9408,
-   "sha256": "248639891f8688f9398851532aef9197c093e4268c513ee8e7c3cd44e3a6afa9",
-   "skill_md_sha256": "53eca040bdbcff16420a23037f69454b760a3c16ee1cb45372ec454b188330c3"
-  },
-  {
    "name": "lead-magnets",
    "local": "lead-magnets",
    "upstream_path": "skills/lead-magnets",
@@ -29332,10 +28779,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/llm-evaluation",
    "status": "present",
-   "files": 2,
-   "bytes": 15068,
-   "sha256": "9cfc115c3f1e200ca7fc14e52d849fd9385f38797313c0042592037b038d54c3",
-   "skill_md_sha256": "367d51bdd9780a6286f0c0e6f2d73de4aa69296d798c2d1559c5fb0726f152d2"
+   "files": 4,
+   "bytes": 27302,
+   "sha256": "72a5b66ce888e468f9b0366e72c9621b620bb6856e39b0a422894d78cd98f375",
+   "skill_md_sha256": "9abf92538721f388eedf9ddf76fcdfe5855967e9d15f4be5c0ae95441d1c70b7"
   },
   {
    "name": "llm-fine-tuning",
@@ -29488,10 +28935,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/logic-review",
    "status": "present",
-   "files": 3,
-   "bytes": 36231,
-   "sha256": "cd7d894dd6506e19fe0b4b783984ae057a4636e70027c68a704a014f6ab44126",
-   "skill_md_sha256": "d2ed57f2b5a294268582b42df2199d54e33c78fca943ec3ad0d04d8e8d854e04"
+   "files": 4,
+   "bytes": 119447,
+   "sha256": "334910473aa0783d2a7929510c224d45aa9aefebaa965f57997f1179494fd704",
+   "skill_md_sha256": "358194564eaa415c3584ffbeb80825bff37944d806355116db31985a7164448c"
   },
   {
    "name": "logo-image-design",
@@ -29527,10 +28974,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/longbridge-fundamentals",
    "status": "present",
-   "files": 2,
-   "bytes": 8368,
-   "sha256": "ea3abae121f526f17a3478a450f5d13ba463db2239a8b82296287dcd3b2e7052",
-   "skill_md_sha256": "dbbde4235d88aa74165683ca38945eeb07739ba695762172df6cdf22e2536eef"
+   "files": 25,
+   "bytes": 112230,
+   "sha256": "c67594b90b3089d7e0f93d7a551f00189ef99eab1bc1ebd25b98fb60b37cd43d",
+   "skill_md_sha256": "74f9610fe7aed19d0f358ecb990884fb89f8985b6d99d81e6863c2efba5427c5"
   },
   {
    "name": "longbridge-market-data",
@@ -29540,10 +28987,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/longbridge-market-data",
    "status": "present",
-   "files": 2,
-   "bytes": 7522,
-   "sha256": "cb8c03e71121a7dcbfea8c001616a436ae058bb1efa37f684cd853ba1b8df4a3",
-   "skill_md_sha256": "e26414caa6c4178379f50856861b48088e1db062b123232806d6f95be603d7a6"
+   "files": 22,
+   "bytes": 51219,
+   "sha256": "620ec3ac86f689996c7d54600853a36428716fa10f86fa6e8f61093f6c81df4a",
+   "skill_md_sha256": "e072a9dc17c1bd53309b06b3f6144bf2bffabf97a359be4d37b6c8c781643a08"
   },
   {
    "name": "longbridge-research",
@@ -29631,10 +29078,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/m365-agents-dotnet",
    "status": "present",
-   "files": 2,
-   "bytes": 10181,
-   "sha256": "c2be2980f6d0f0a6bfdb070a09178516e59920a7146e4fe87242b26e54dfd783",
-   "skill_md_sha256": "08002396486360c374b334796719e4fdc259b144e59a10cb175ac92782e2cd68"
+   "files": 3,
+   "bytes": 13894,
+   "sha256": "6f33eef8e2cf1e676b21213b1dda1a7eac744ae878d5eb1304775cd6392fd106",
+   "skill_md_sha256": "cc6499b28053d2dc9f9438ef5b94797879833ae770235c953799a3185d7c297a"
   },
   {
    "name": "m365-agents-py",
@@ -29644,10 +29091,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/m365-agents-py",
    "status": "present",
-   "files": 2,
-   "bytes": 12598,
-   "sha256": "67059e626fca90ce78b82c67508b7a54e604cebe6e89e5b727789fc230109081",
-   "skill_md_sha256": "c0c0f732dd801688f2a0d118cf5cf8b40690a2bc2ffa73a9439b03c6bc549030"
+   "files": 3,
+   "bytes": 16311,
+   "sha256": "60112e783ac6f8164af81d20e0c578362bd4bb62c0574b8dbcfbd73b21eff484",
+   "skill_md_sha256": "185ef835c4750fc37bd1a8b94da2b2a162efaa6f728f18bf7ddec84a5d2c5a27"
   },
   {
    "name": "m365-entra-attack",
@@ -29741,19 +29188,6 @@
    "skill_md_sha256": "39dcb009dff5058be5d1aecd4f446829dd21e791b2422356cad6122837c3f77e"
   },
   {
-   "name": "mailtrap-testing-with-sandbox",
-   "local": "mailtrap-testing-with-sandbox",
-   "upstream_path": "skills/mailtrap-testing-with-sandbox",
-   "repo": "sickn33/agentic-awesome-skills",
-   "license": "MIT",
-   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/mailtrap-testing-with-sandbox",
-   "status": "present",
-   "files": 2,
-   "bytes": 8229,
-   "sha256": "e85ca96ca4f61bbbe90567652549066a35c33899c62da38016f1db75d9f6bc6a",
-   "skill_md_sha256": "d0c8d11a6253da83304447c79acfec1a2446f4bdf5d8a73f6318b578f8c71239"
-  },
-  {
    "name": "maintain-codex-wiki",
    "local": "maintain-codex-wiki",
    "upstream_path": "skills/maintain-codex-wiki",
@@ -29845,19 +29279,6 @@
    "skill_md_sha256": "575516baa39fc97f5a69b7de946c76a20d53a651579b16448dfb58f20418f0c4"
   },
   {
-   "name": "makepad-deployment",
-   "local": "makepad-deployment",
-   "upstream_path": "plugins/agentic-bundle-makepad-builder/skills/makepad-deployment",
-   "repo": "sickn33/agentic-awesome-skills",
-   "license": "MIT",
-   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/plugins/agentic-bundle-makepad-builder/skills/makepad-deployment",
-   "status": "present",
-   "files": 2,
-   "bytes": 12702,
-   "sha256": "1ddd56150a83aeaf8db47b8ef203caa3ee527add232b8afe81ba726da559318c",
-   "skill_md_sha256": "6452e443fd810215b94493cc06fab8e6740c3fce319a27a473fbf297ff9b80c5"
-  },
-  {
    "name": "makepad-widgets",
    "local": "makepad-widgets",
    "upstream_path": "plugins/agentic-bundle-makepad-builder/skills/makepad-widgets",
@@ -29905,9 +29326,9 @@
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/market-sizing-analysis",
    "status": "present",
    "files": 4,
-   "bytes": 33035,
-   "sha256": "756e5ff1710f09058c21ff4f4dea18092a41c5f91027d5d99a04236ec972dfd3",
-   "skill_md_sha256": "15c6b5a4c3eccc8d8933d1d2886ee5bdbd2368ef632381bff1e08e27b4e76df1"
+   "bytes": 24418,
+   "sha256": "18d9269a409c35116533a42e6f51c5c5c46b129dec966b8e6f37eb6eabe29c00",
+   "skill_md_sha256": "2ac236546a2bba4deda575fb9919af1af1c293abdb747c9eb87b7022a64525a8"
   },
   {
    "name": "marketing-mindset",
@@ -30339,19 +29760,6 @@
    "skill_md_sha256": "7a5866f7d3680bffc01850f601cf1c5db84139c24904383e0e165ee743478447"
   },
   {
-   "name": "model-serving-kubernetes",
-   "local": "model-serving-kubernetes",
-   "upstream_path": "skills/model-serving-kubernetes",
-   "repo": "sickn33/agentic-awesome-skills",
-   "license": "MIT",
-   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/model-serving-kubernetes",
-   "status": "present",
-   "files": 2,
-   "bytes": 9828,
-   "sha256": "42568dc56bd208b52d1692764ca10a7f13ad002a10712a7aaccfd35393c1f872",
-   "skill_md_sha256": "3675cb2d718c9b2b46e998a927822087daa452d0bbe59b8862b22de15b0af1e0"
-  },
-  {
    "name": "model-supply-chain-security",
    "local": "model-supply-chain-security",
    "upstream_path": "skills/model-supply-chain-security",
@@ -30424,10 +29832,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/monte-carlo-analyze-root-cause",
    "status": "present",
-   "files": 2,
-   "bytes": 16749,
-   "sha256": "77425cf66640159c36a8ec88c3735876b5cec85f9e53936f37e577789e87d6f9",
-   "skill_md_sha256": "070327192018e22b88b25019ba44dacce38c7dea987b40ce0deb1b3ce8e4e504"
+   "files": 13,
+   "bytes": 59829,
+   "sha256": "2ee5ed8f2bffb05b710089dcf1db579389b91c80503147b00d974803d646abf4",
+   "skill_md_sha256": "0309dab9eb3175508830f7d2cf6a500fd7c74626704e34c782a8c4f6d5960e61"
   },
   {
    "name": "monte-carlo-asset-health",
@@ -30437,10 +29845,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/monte-carlo-asset-health",
    "status": "present",
-   "files": 2,
-   "bytes": 10171,
-   "sha256": "38fd96583114738f7051807e9d6d65819a7e9129c618ffd6c88e5e12407fa469",
-   "skill_md_sha256": "6641b4227a2f2de726c8b348f7bc875193e5d82135be89a2fc53ab121872c7c0"
+   "files": 6,
+   "bytes": 31703,
+   "sha256": "ae4a830536151b1f9ed10c735bd8d1c49ab44d60db797bebc6c32d6a3a1ebe18",
+   "skill_md_sha256": "1437dc6cff4207100d03e9149946685c64369820c89fe48586683fba61c509c2"
   },
   {
    "name": "monte-carlo-context-detection",
@@ -30476,10 +29884,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/monte-carlo-monitoring-advisor",
    "status": "present",
-   "files": 2,
-   "bytes": 21138,
-   "sha256": "26261812999f8178a31d43a9fc38eb346df0b97a8778b8d8e11d9652ffeb264e",
-   "skill_md_sha256": "f4810baca9fb04a2464f2da3050d6b23c6ddd2b00dbfa2fcdab4971d9d5e1bc3"
+   "files": 6,
+   "bytes": 83333,
+   "sha256": "eb10675b752c46bc6908352bff5630443831419a960cec269255d294c74082f4",
+   "skill_md_sha256": "002918cd4047f7bc8faa11dcb8380782ef78de34d7965a85982d54f7f4dec64d"
   },
   {
    "name": "monte-carlo-performance-diagnosis",
@@ -30489,10 +29897,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/monte-carlo-performance-diagnosis",
    "status": "present",
-   "files": 2,
-   "bytes": 8686,
-   "sha256": "92d34c531fcd381b204a10e7e40ec21da6d170e1510d7c9817d429ceee2d37a9",
-   "skill_md_sha256": "f00998bebfdb2bcd46a6783acaa6eaae457bd08844b85470a1436b7c59031456"
+   "files": 6,
+   "bytes": 27937,
+   "sha256": "2d4bc0b974fc21dbddcd43fa208a6770ca36ce1422aad13bb971478c6ab7d73a",
+   "skill_md_sha256": "32579101681c04a05f85968e26119bd560e7f980cc247aa497bc4e1250e557e6"
   },
   {
    "name": "monte-carlo-prevent",
@@ -30528,10 +29936,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/monte-carlo-remediation",
    "status": "present",
-   "files": 2,
-   "bytes": 16474,
-   "sha256": "3cd48f426a2d0cb39e70dca2ac5f428e10ed6d665a775e02e1bc98b63daff16f",
-   "skill_md_sha256": "89373e7a1d9a25f275fc3ba6d7ebad12bfeb71fe04815872200f98d22f689e02"
+   "files": 7,
+   "bytes": 56012,
+   "sha256": "17e2bd1d406fd66ffbb2dbcaa10cea9d5185d529498ce1fb0ec941a96cca8fef",
+   "skill_md_sha256": "ffe5f84213e12ba1fb0e054e5d4cf3f4e1e085774c3ce79c3e43b5ec02c1b547"
   },
   {
    "name": "monte-carlo-storage-cost-analysis",
@@ -30541,10 +29949,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/monte-carlo-storage-cost-analysis",
    "status": "present",
-   "files": 2,
-   "bytes": 9581,
-   "sha256": "2710a3daf28947733bbe68898738abd0de9e2263689e0f91c202709f995b7603",
-   "skill_md_sha256": "60d7ca1e552ec2947e10488ac6ae495e579511e2d58d70b787d19857f8561df6"
+   "files": 5,
+   "bytes": 26733,
+   "sha256": "8dbbcb5bf35b70438a9f8852ac7e259c1a583b954b32155e87593dfab23d2e33",
+   "skill_md_sha256": "7e7ca429472d324eb30a21eb639a6b2da0d1e902579e9f09e9c6ff093a7d959a"
   },
   {
    "name": "monthly-closing-statements",
@@ -30684,10 +30092,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/music-generation-studio",
    "status": "present",
-   "files": 2,
-   "bytes": 12971,
-   "sha256": "328244967e32dfe654fa1e092b7d8a125ddc6fafa2d27065d612300937b775d9",
-   "skill_md_sha256": "03fdee3341f28030ad45f1e4ac6497e6e534c0ea98bfd5fa5d4dff1a52c6c9a2"
+   "files": 5,
+   "bytes": 178776,
+   "sha256": "6797c893f219801c0b2eff76ae81a4b786c8b66235e5ea0a4cfe91d696ff047a",
+   "skill_md_sha256": "e573fc819bbea6693fcbea1cea18170a046e3bee6b0f57696beabea4c7391aea"
   },
   {
    "name": "mysql",
@@ -30827,9 +30235,9 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/neon-ai-gateway",
    "status": "present",
-   "files": 2,
-   "bytes": 15413,
-   "sha256": "a22c2d1cf1e3ee7313fc23138423ab98afa1e5c9ef76a81e405022963d465388",
+   "files": 3,
+   "bytes": 21988,
+   "sha256": "85149a5510d8d99f101ca6acab2a5226f06e6cf50771a82b5b93659ffc50f643",
    "skill_md_sha256": "81aa7ad8ffed2e9f8b8acb2f0667920574928eb3afefdb5182af558c08f60912"
   },
   {
@@ -31132,19 +30540,6 @@
    "skill_md_sha256": "e65210086c151e7637416baa579d8596b2ed31bc8c7d61fd15e300ee82abf546"
   },
   {
-   "name": "nsfw-ai-spicyapi",
-   "local": "nsfw-ai-spicyapi",
-   "upstream_path": "skills/nsfw-ai-spicyapi",
-   "repo": "sickn33/agentic-awesome-skills",
-   "license": "MIT",
-   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/nsfw-ai-spicyapi",
-   "status": "present",
-   "files": 2,
-   "bytes": 6612,
-   "sha256": "c62290aeaac53e60a7e7b310a6bfd66d3204476b514feda7292c23830776c33f",
-   "skill_md_sha256": "81a09604ca3a785dd7c68c7d961e78d3aa3ab191f24c1ea02a8f0f0cfd0cb4ee"
-  },
-  {
    "name": "nx-workspace-patterns",
    "local": "nx-workspace-patterns",
    "upstream_path": "skills/nx-workspace-patterns",
@@ -31230,10 +30625,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/odw",
    "status": "present",
-   "files": 2,
-   "bytes": 4706,
-   "sha256": "5537140dcb1bae9db6a95e3bd851c5714c86ac7cfe6efb2d031706edeb925c03",
-   "skill_md_sha256": "92cee3314b04894fbbea0a5724f913c92cd5613dc50cffdd39a24d882da1ccab"
+   "files": 3,
+   "bytes": 10962,
+   "sha256": "493c74acf0fedaf5e2e38c971c4e46b13a28df58875f5a580368bdb9b84ad3bc",
+   "skill_md_sha256": "f5e5780c50f12e722cbd808c4a3348372bb91a875db1fea1179ef2ee208bbb59"
   },
   {
    "name": "offboarding-exit",
@@ -31321,10 +30716,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/omp-delegate",
    "status": "present",
-   "files": 6,
-   "bytes": 32776,
-   "sha256": "9d467c5749096095c2a1a468b2db334916dfb7c91bf3fa156b2cff84b0a2f952",
-   "skill_md_sha256": "ea8fe1a031d44c2f3fbe8088c4911b9878ceaa6a12f2f01f1af6384c49f1825c"
+   "files": 9,
+   "bytes": 68238,
+   "sha256": "928a1720ab96e2fbc73d87c57910ff7de6442062d661b8e6de5f3485ac2e8bab",
+   "skill_md_sha256": "5832237a72ed00d6e1b5db0d7f0439dfc6cdb46ec8e9ae59eaea5d22c808f9ca"
   },
   {
    "name": "onboarding",
@@ -31438,10 +30833,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/opencode-delegate",
    "status": "present",
-   "files": 6,
-   "bytes": 40991,
-   "sha256": "233e89c8a7405f993efd98e34a0fe75b97a41e6dd3dc20a99982c44f1081f546",
-   "skill_md_sha256": "a62f76ee88e2a04f07179e62ae7aef6f8a9ffde37101da4b03b1b72bc5fded65"
+   "files": 9,
+   "bytes": 78436,
+   "sha256": "13f4fc0bfc0682f9c416248fa4c0f31c601ec24a8fbde82d1c1c9706eecf383c",
+   "skill_md_sha256": "89677d121592d1ec4315d833cd3e6537b50db138c67466500411c7660b055bb0"
   },
   {
    "name": "openshift",
@@ -31704,19 +31099,6 @@
    "skill_md_sha256": "d0d2a1e04a6e612f6d8c2783dda1759cd2f4e0445bd74819cca5e1b50de2962f"
   },
   {
-   "name": "paypal-integration",
-   "local": "paypal-integration",
-   "upstream_path": "skills/paypal-integration",
-   "repo": "sickn33/agentic-awesome-skills",
-   "license": "MIT",
-   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/paypal-integration",
-   "status": "present",
-   "files": 2,
-   "bytes": 14855,
-   "sha256": "33f2f1e6891cb6b6e44e9c8c6f4114c877e03f003bdd6c60358008724ccc8521",
-   "skill_md_sha256": "c5a9c343d555b4ac806c387a48eea3a38b0a3fb2fa9b68497c99d48c049b1174"
-  },
-  {
    "name": "payroll-finance",
    "local": "payroll-finance",
    "upstream_path": "skills/payroll-finance",
@@ -31847,19 +31229,6 @@
    "skill_md_sha256": "9e73c4cabe47bee8e76d4391e899d9ff7a5c98fefed62eee18f333d3d7aaa648"
   },
   {
-   "name": "performance-testing-review-ai-review",
-   "local": "performance-testing-review-ai-review",
-   "upstream_path": "skills/performance-testing-review-ai-review",
-   "repo": "sickn33/agentic-awesome-skills",
-   "license": "MIT",
-   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/performance-testing-review-ai-review",
-   "status": "present",
-   "files": 2,
-   "bytes": 16418,
-   "sha256": "99086808b6953f08473238e91044f8ee6f727a07a7efc3ba2302dd37d024bfc3",
-   "skill_md_sha256": "77ee1d8599d2e81b0514e2d7da52b563e0bb8ed30e5df21457c42e21d1dd4851"
-  },
-  {
    "name": "performance-tuning",
    "local": "performance-tuning",
    "upstream_path": "skills/performance-tuning",
@@ -31906,10 +31275,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/pi-delegate",
    "status": "present",
-   "files": 6,
-   "bytes": 28940,
-   "sha256": "e9dbe5d83fa11df2751bb436c2b8247c4765445ffe0675c0c57b6d87177070c9",
-   "skill_md_sha256": "f78f57cb028a4f143bddc60a9a545f13b494a90669bda86efb1c0a8ea2e10adc"
+   "files": 9,
+   "bytes": 64453,
+   "sha256": "8b0e032e756a756b84bc6d744dccb7ad988672eccca6c067b2156c857c3a88d6",
+   "skill_md_sha256": "fb7728a5261e59643076236a0e76c45641e956b2a0d0218729b39ef7f093489a"
   },
   {
    "name": "pipedrive-automation",
@@ -31951,19 +31320,6 @@
    "skill_md_sha256": "69bc951315ba9e93f1ca397bba3e86cbf36175e79646a9a68441317330c246fc"
   },
   {
-   "name": "platform-engineering",
-   "local": "platform-engineering",
-   "upstream_path": "skills/platform-engineering",
-   "repo": "sickn33/agentic-awesome-skills",
-   "license": "MIT",
-   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/platform-engineering",
-   "status": "present",
-   "files": 3,
-   "bytes": 33906,
-   "sha256": "e3ca77c672384011e6545065cda1338d6b62b5a3d5ae05a2107a2ea48e451b09",
-   "skill_md_sha256": "d4a7517184075853c1f1006e08233e086e5dd04912ce1d3e2e5cbf2c27a1a3c6"
-  },
-  {
    "name": "playwright-java",
    "local": "playwright-java",
    "upstream_path": "skills/playwright-java",
@@ -31971,10 +31327,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/playwright-java",
    "status": "present",
-   "files": 8,
-   "bytes": 48648,
-   "sha256": "a3e120b9fc2a4872bad18542a3266a187723ffd569fa47a85ed77eee5fd9c767",
-   "skill_md_sha256": "926783e260e485b9e49d9e30a6fa79506fab9d9b873a66cd8c61e641aa4aa170"
+   "files": 14,
+   "bytes": 83572,
+   "sha256": "79affb51b10c04d2ad03fafa8eb271b13dc07ec73cb0e5af10430803321808cd",
+   "skill_md_sha256": "0039fb01926c8521f6a15ef856c46413ed41acbb1fe44255370531c5c8d48545"
   },
   {
    "name": "playwright-skill",
@@ -32023,10 +31379,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/polars",
    "status": "present",
-   "files": 2,
-   "bytes": 10714,
-   "sha256": "1c47bd361b94c0c1058eb16924afb8bdf49f550fa8e6a657af1847b4a342b21b",
-   "skill_md_sha256": "ffc010cd5c0edb6125f38eb356fb5941d5b13d675bdcdfbc66f749e6807e91c0"
+   "files": 10,
+   "bytes": 83112,
+   "sha256": "fec3b2e7c13e8d177887a3d5ef411876c72bf365cce1f01085c503e8b7dcf06e",
+   "skill_md_sha256": "bf46f800d06e487dae29eb4b7c9134f780127c7fe8a8603b62c73da4db67affb"
   },
   {
    "name": "policy-acknowledgement",
@@ -32068,19 +31424,6 @@
    "skill_md_sha256": "fcbf7322fad060ba6535dabb8435f676575d75e59af041d1d2a2153cda6b1d03"
   },
   {
-   "name": "polis-protocol",
-   "local": "polis-protocol",
-   "upstream_path": "skills/polis-protocol",
-   "repo": "sickn33/agentic-awesome-skills",
-   "license": "MIT",
-   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/polis-protocol",
-   "status": "present",
-   "files": 2,
-   "bytes": 6315,
-   "sha256": "5f61a7ecc3c42cd0f96fa309ce66198b760f1cb9e706d6e36013f555f283ab17",
-   "skill_md_sha256": "5913eba4028289e1e0ffdd93c5821b4cc7c181a4fc3cf1ccb10897f0891806d0"
-  },
-  {
    "name": "polis-protocol-a-self-optimizing-city-of-agents",
    "local": "polis-protocol-a-self-optimizing-city-of-agents",
    "upstream_path": "skills/polis-protocol-a-self-optimizing-city-of-agents",
@@ -32088,10 +31431,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/polis-protocol-a-self-optimizing-city-of-agents",
    "status": "present",
-   "files": 2,
-   "bytes": 16216,
-   "sha256": "de9871b10bfe9937091a6133ff28fbeb3afd0a0dd15dca95376ad0d49349de04",
-   "skill_md_sha256": "3e027fed4b0846a4d8380c1deac32c29a434c200e1167f649b30b57f5f8da9fa"
+   "files": 12,
+   "bytes": 119912,
+   "sha256": "b59c3993e4e4edfad772fda366cabc35fc0a567cbbe5839a50b5563855b2fb98",
+   "skill_md_sha256": "5b78380d122875f3ea4ec4ac754ddf1f3283c33a5665535686295a296674137e"
   },
   {
    "name": "posix-shell-pro",
@@ -32114,10 +31457,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/poster-design-studio",
    "status": "present",
-   "files": 2,
-   "bytes": 12990,
-   "sha256": "ac2c5ee860e3d596fe57b4cf7e06e6940143ae5e71073939e6c738c59ff4ff75",
-   "skill_md_sha256": "acee546a06fcc0743ac9c938a8127d147343f93204399258293b6fc0d17233b4"
+   "files": 5,
+   "bytes": 178789,
+   "sha256": "67085beeb8185e11ca1dcb9f770289aca22813da553c31f49085c059854d5445",
+   "skill_md_sha256": "db3d43431c6af085476a03ca9e4dcf9f7b805e79da6b42248d482e92b9e07126"
   },
   {
    "name": "postgresql",
@@ -32400,10 +31743,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/product-photo-studio",
    "status": "present",
-   "files": 2,
-   "bytes": 12960,
-   "sha256": "ac6d6c177dcb3da3eddc7a5dfce49db5651f89acabde6717b406236ddc85f4d1",
-   "skill_md_sha256": "d287c6604e7ab09c498f00db255d3f5797b55438ea97e57b89fabeea45b559d3"
+   "files": 5,
+   "bytes": 178775,
+   "sha256": "87b7e3cef9f1a58158287106a76488eda08ac5d1a52837b8ea9a9b801d25a3ca",
+   "skill_md_sha256": "dfcaa7ccefc3246484a628ae132ab01ac9538368ae6605e73a73d9991cac7b40"
   },
   {
    "name": "production-code-audit",
@@ -32510,19 +31853,6 @@
    "skill_md_sha256": "d1696dccfd2b9b5d1f0fbe8cb10dfdbd257b7269812953645e102244a2568e2c"
   },
   {
-   "name": "prometheus-configuration",
-   "local": "prometheus-configuration",
-   "upstream_path": "skills/prometheus-configuration",
-   "repo": "sickn33/agentic-awesome-skills",
-   "license": "MIT",
-   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/prometheus-configuration",
-   "status": "present",
-   "files": 2,
-   "bytes": 11514,
-   "sha256": "db2b1a494b240f1dcac61d4d6d3149ca92312316ec00d00811542e8ca360fcd4",
-   "skill_md_sha256": "789ab0da6f982db339664fc4585270af888c561bbef459d4cec1c5ba3da7b01e"
-  },
-  {
    "name": "prometheus-grafana",
    "local": "prometheus-grafana",
    "upstream_path": "skills/prometheus-grafana",
@@ -32627,19 +31957,6 @@
    "skill_md_sha256": "05f3850ef43fe3c489bcfb96e0da9a0c35de41f6b55b7870a31ebc4a5fd5c17a"
   },
   {
-   "name": "pubmed-database",
-   "local": "pubmed-database",
-   "upstream_path": "skills/pubmed-database",
-   "repo": "sickn33/agentic-awesome-skills",
-   "license": "MIT",
-   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/pubmed-database",
-   "status": "present",
-   "files": 2,
-   "bytes": 16148,
-   "sha256": "77ca18f94e50ed9cbeacc6b87b362ed761895d6d9390057f2c04a907aaa411d7",
-   "skill_md_sha256": "bc56f7163bd595d650767dd89502172071a3496318031acd3c9a6148b77b2f12"
-  },
-  {
    "name": "purchase-accounting",
    "local": "purchase-accounting",
    "upstream_path": "skills/purchase-accounting",
@@ -32725,10 +32042,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/radare2",
    "status": "present",
-   "files": 3,
-   "bytes": 16475,
-   "sha256": "e5494134c3b141a47adc28cb00bb39add2aa95b6da81bd9a390a27656f15cb39",
-   "skill_md_sha256": "2d9af0f3b38ecf6bc3f4b9d11d0d0641bf928c8edb185b69656adc35efe52a15"
+   "files": 4,
+   "bytes": 20176,
+   "sha256": "25aac44ccd70934aeacd3147eed29194ce54c6f1e553f11e08c449f13afc641a",
+   "skill_md_sha256": "37fa83ce8193ed5053a209281b0eeeccf4241dfe53f35f898310e832e7dfcaca"
   },
   {
    "name": "radix-ui-design-system",
@@ -33108,19 +32425,6 @@
    "skill_md_sha256": "37aec1c56b6701ef8fe9519a867c2ae6ebf90bd1b988a4e8fdfb4822ec0cf3de"
   },
   {
-   "name": "retro-design",
-   "local": "retro-design",
-   "upstream_path": "skills/design-it/retro-design",
-   "repo": "sickn33/agentic-awesome-skills",
-   "license": "MIT",
-   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/design-it/retro-design",
-   "status": "present",
-   "files": 2,
-   "bytes": 10423,
-   "sha256": "55aef8f7e58ca7597eded0fca632c41b84bc3556fd9f062afceb48991abaae6e",
-   "skill_md_sha256": "ece338ba5dd1bcb8f4fa0b8795da31517bcbbae83d75fa3bde683355ec9cc715"
-  },
-  {
    "name": "retro-futurism",
    "local": "retro-futurism",
    "upstream_path": "skills/design-it/retro-futurism",
@@ -33457,19 +32761,6 @@
    "bytes": 21127,
    "sha256": "779eae709d09b4b7afc543a0677196b227ba60d988af2937c5f6c18f1080a825",
    "skill_md_sha256": "c278269d6bde70af70593974a8621bd2e0e1ccbdd93aac6cfec955203751c591"
-  },
-  {
-   "name": "sast-configuration",
-   "local": "sast-configuration",
-   "upstream_path": "plugins/agentic-bundle-aas-secure-app-builder/skills/sast-configuration",
-   "repo": "sickn33/agentic-awesome-skills",
-   "license": "MIT",
-   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/plugins/agentic-bundle-aas-secure-app-builder/skills/sast-configuration",
-   "status": "present",
-   "files": 2,
-   "bytes": 7083,
-   "sha256": "3bef916c04fe8720cb9ee41292fcb18c57bfc4021dc4b7284d938fbd3b71e9f3",
-   "skill_md_sha256": "7e480483eb779fcd2f5142f435bab223e3b703e9bce8969e4dbe5516c557b003"
   },
   {
    "name": "sast-scanning",
@@ -33973,10 +33264,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/seo-image-gen",
    "status": "present",
-   "files": 2,
-   "bytes": 9099,
-   "sha256": "5958a40d56a848f17f550df79ac6019aa794b3d04f5d62133f08786f7d0541cd",
-   "skill_md_sha256": "4d2d7860df46e7b57ffa38667a181fcb07d71fbb776ce11f88297c549463cb43"
+   "files": 9,
+   "bytes": 41474,
+   "sha256": "0539d8cef232851981be5da525d442941d0b4cbc764151651e1a7808d2d6bce0",
+   "skill_md_sha256": "1d24973637248c23cad3915537639b69ca0e4786724dcc53f887379f74162124"
   },
   {
    "name": "seo-programmatic",
@@ -34265,19 +33556,6 @@
    "skill_md_sha256": "e4fedd7a11f2a2c8cb780280b28c0c680451ef763dfe3e64e0f92d5f0a238873"
   },
   {
-   "name": "skyvern-browser-automation",
-   "local": "skyvern-browser-automation",
-   "upstream_path": "skills/skyvern-browser-automation",
-   "repo": "sickn33/agentic-awesome-skills",
-   "license": "MIT",
-   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/skyvern-browser-automation",
-   "status": "present",
-   "files": 2,
-   "bytes": 14841,
-   "sha256": "92bc853a10d4851e42dc048141817be511e5cd6ad7c79b4c614aa3f82e8f6b9d",
-   "skill_md_sha256": "5d9e1520d5572b85fa0908880f87ef7bce93f78db752129b749c18f9c1ef4a6f"
-  },
-  {
    "name": "slack-automation",
    "local": "slack-automation",
    "upstream_path": "skills/slack-automation",
@@ -34298,10 +33576,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/slideops",
    "status": "present",
-   "files": 2,
-   "bytes": 9726,
-   "sha256": "fa00cc60388bf7b5c8d728290c17b983b6656f1f0a72e8dec8969ebe7fb3991a",
-   "skill_md_sha256": "8562dcbbf4fc83b04ed1cb324ef4414a2911202256baae993c38f99429efcc83"
+   "files": 10,
+   "bytes": 90952,
+   "sha256": "9cdc47525bc8ba694d9064cffbc4f04545084ff9f935df653573f7a6d5c65d29",
+   "skill_md_sha256": "8a0af01942411209fb4ee0643ed019ad1ee55e3a908b4f4d040198ed5a94d63d"
   },
   {
    "name": "smart-contract-formal-verification",
@@ -34473,32 +33751,6 @@
    "skill_md_sha256": "e56bc44da495c348c3b50ff80fc6055a424153b59b1ea131afd2506ad71a1488"
   },
   {
-   "name": "spatial-computing-ui",
-   "local": "spatial-computing-ui",
-   "upstream_path": "skills/design-it/spatial-computing-ui",
-   "repo": "sickn33/agentic-awesome-skills",
-   "license": "MIT",
-   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/design-it/spatial-computing-ui",
-   "status": "present",
-   "files": 2,
-   "bytes": 12015,
-   "sha256": "dd5cc124e694e5d6dfc1e5a518b109971ae5fbf8196c3d8d20747c481e0221e0",
-   "skill_md_sha256": "9188bac1b1be58c7ac875b0e320d60fec35313d3b560cebb98406df94f6033bf"
-  },
-  {
-   "name": "spatial-design",
-   "local": "spatial-design",
-   "upstream_path": "skills/design-it/spatial-design",
-   "repo": "sickn33/agentic-awesome-skills",
-   "license": "MIT",
-   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/design-it/spatial-design",
-   "status": "present",
-   "files": 2,
-   "bytes": 11036,
-   "sha256": "1a69f9cf91a18bc594929615ada1390c961b3bd7437f05021ed2aec19487bc38",
-   "skill_md_sha256": "35353e96078e2f73ce3e83c87723f62324568c00f04754b522c53c06032f57db"
-  },
-  {
    "name": "spec-driven-loop",
    "local": "spec-driven-loop",
    "upstream_path": "skills/spec-driven-loop",
@@ -34558,9 +33810,9 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/sql-sentinel",
    "status": "present",
-   "files": 2,
-   "bytes": 6494,
-   "sha256": "aa82282848d93c1cad63a45c35e58847c08fd7db89028c463c35ebc9bec886c8",
+   "files": 3,
+   "bytes": 37976,
+   "sha256": "267f1ab5bf73126f71be52b5f76e5b7c543370a4547b450e8304436fcd174ae2",
    "skill_md_sha256": "de0b94c76c924c9eca9ca748c50a07ed99e84bdf878a4e1f900d7838e9b29e8f"
   },
   {
@@ -34779,10 +34031,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/suno-lyrics-to-song",
    "status": "present",
-   "files": 2,
-   "bytes": 12866,
-   "sha256": "a82217b87ded31749bef78989e8004fdc12cb3930329c36ebca6b5d8cf66ac4d",
-   "skill_md_sha256": "5906fbc94c28c816e1563f5622ec4f8081acc05d0f6911f8e516d33185930d42"
+   "files": 5,
+   "bytes": 178663,
+   "sha256": "024f1c450cc63c68d8b46d158a395e9be5f15e4fc73ccbd857cdf27f84293e4b",
+   "skill_md_sha256": "3762f31ae99950517b0557af54fd9c9010bddd0920826852bc4f2b0f32e47bf9"
   },
   {
    "name": "supabase",
@@ -34915,19 +34167,6 @@
    "skill_md_sha256": "ce4a617e90a508dcbe6583870389a03995f59a6221ad7d126f3d746b30726d7f"
   },
   {
-   "name": "synthwave",
-   "local": "synthwave",
-   "upstream_path": "skills/design-it/synthwave",
-   "repo": "sickn33/agentic-awesome-skills",
-   "license": "MIT",
-   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/design-it/synthwave",
-   "status": "present",
-   "files": 2,
-   "bytes": 8987,
-   "sha256": "79c2435f308dcb867afa854b39ed80181630fdacb1415857c1144a24efbe90f7",
-   "skill_md_sha256": "5ba27471e9615b2f015a8c8550a93b72107783b71f196918cd70791a95b159ba"
-  },
-  {
    "name": "system-prompt-lookup",
    "local": "system-prompt-lookup",
    "upstream_path": "skills/system-prompt-lookup",
@@ -35000,10 +34239,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/talking-avatar-video",
    "status": "present",
-   "files": 2,
-   "bytes": 13074,
-   "sha256": "d7d7ee1e7f2a4f4b54994b771e3382f432b466ad004f72cb0575189cf4d68e13",
-   "skill_md_sha256": "99588d5dc2c4510e9603d05dd2749ff289a7e9719ec7c4ff606dc7e234933131"
+   "files": 5,
+   "bytes": 178923,
+   "sha256": "d59399455e193a0f6e4b3a7d488c8c9a5391641cb1cf873b599b5ec211bd51fa",
+   "skill_md_sha256": "21792a1ac7070efd20edea9abc9c233caf2363cdb7f5dc61302d34c9b263f5ff"
   },
   {
    "name": "tanstack-query-expert",
@@ -35017,19 +34256,6 @@
    "bytes": 9688,
    "sha256": "f41d4aef0228bc77ffea96375dd74baf63033d01c07c02df7072dbdc99b6eeff",
    "skill_md_sha256": "5881078ba47e1c7d64db2d97c58dde6e92b9d2340cbb77927e50423c764e5ab7"
-  },
-  {
-   "name": "task-intelligence",
-   "local": "task-intelligence",
-   "upstream_path": "skills/task-intelligence",
-   "repo": "sickn33/agentic-awesome-skills",
-   "license": "MIT",
-   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/task-intelligence",
-   "status": "present",
-   "files": 4,
-   "bytes": 18727,
-   "sha256": "d791927f39071dbfd1024a2a691f636e51ab07a5410bfa14ee1a407f23f6a25c",
-   "skill_md_sha256": "d5c9fe274865a3f5de2b070638d691f3818d27b9207ceb6ba805c89dbea61a83"
   },
   {
    "name": "tax-register",
@@ -35663,10 +34889,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/tune-monitor",
    "status": "present",
-   "files": 2,
-   "bytes": 13717,
-   "sha256": "73b1cc89244715cb969b8a64026211d138bb43b2f1f76ce15be1f84604781475",
-   "skill_md_sha256": "a4082dfed7ba5c9e51cca93d222d008c1e1faef7b6d88e38891e1fef6d507907"
+   "files": 8,
+   "bytes": 50169,
+   "sha256": "8ea6d20367f2ee38e272d9e31bc562accaa01d531a322269d7715820035883ea",
+   "skill_md_sha256": "074fd2b19adae81c2d3a1592450f1d1e1c29b329998c6df7729be30537b62de3"
   },
   {
    "name": "turborepo-caching",
@@ -35823,19 +35049,6 @@
    "bytes": 33535,
    "sha256": "4751312aa0b6bf4670fd6ea711ddb4b095c19acbe8cd2adf90ff4f6bb4d889cd",
    "skill_md_sha256": "79975227a9c56bdcc4bf66c207eea116173a941ecbaf399b4237466ead2d4c9c"
-  },
-  {
-   "name": "uniprot-database",
-   "local": "uniprot-database",
-   "upstream_path": "skills/uniprot-database",
-   "repo": "sickn33/agentic-awesome-skills",
-   "license": "MIT",
-   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/uniprot-database",
-   "status": "present",
-   "files": 2,
-   "bytes": 7620,
-   "sha256": "299be90291a63c278d6d03e6c95832637a491c5de4d37b1dc33b153efaec4936",
-   "skill_md_sha256": "7b3530db2ef02b0afeec9d8503380fd5e29b021bd969c5d1fc1fa47dd78b9c56"
   },
   {
    "name": "unit-testing-test-generate",
@@ -36018,19 +35231,6 @@
    "bytes": 13947,
    "sha256": "14073f2e8bd766cdd63e0504d3c304df36b8e1f05e236f3fc650fac296075978",
    "skill_md_sha256": "3e5752ecc062eab19fd1e42a1cd2f902175158ed15f656c5ec387aa12ab30a20"
-  },
-  {
-   "name": "using-neon",
-   "local": "using-neon",
-   "upstream_path": "skills/using-neon",
-   "repo": "sickn33/agentic-awesome-skills",
-   "license": "MIT",
-   "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/using-neon",
-   "status": "present",
-   "files": 2,
-   "bytes": 5683,
-   "sha256": "1d75f099fb0850e417f65f508126e77e6c7b23789d6823d836d5f1b08b3aef17",
-   "skill_md_sha256": "31f25e7fa3da73e2bc21df40eb6de47692900357e68496ecd2e508f06448b6fd"
   },
   {
    "name": "vaporwave",
@@ -36287,10 +35487,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/viral-video-teardown-remake",
    "status": "present",
-   "files": 2,
-   "bytes": 13408,
-   "sha256": "5ca4559a7bf4251315c3b38f8c2b59404702b51816cc429fee405ef37b109551",
-   "skill_md_sha256": "28a3e83b9e8ed56b1aae738c543dad7cbedc34b8cffd1d77c0346abaefd7fac3"
+   "files": 5,
+   "bytes": 179217,
+   "sha256": "55d47cb15bb7089469d9bdba7cdb9762416a6af809c40514aab0671dfadda26e",
+   "skill_md_sha256": "132f79faa373d5422b307896d3f7e46ee4c3cba0f7a7a39b8b78909aeb092ead"
   },
   {
    "name": "vitest-skill",
@@ -36326,10 +35526,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/voice-cloning-studio",
    "status": "present",
-   "files": 2,
-   "bytes": 13084,
-   "sha256": "69a94f1452a72bf64967c29a3b53dce44ff93e27540be24db1985bba69fbe897",
-   "skill_md_sha256": "6d7c7d10ab24ef7c62cfc413edfbc8fc86d0404f87d59f4d3a2c028588396129"
+   "files": 5,
+   "bytes": 178893,
+   "sha256": "3e01e1bc7dad456bbec21710066d8069a46377fd626428dd63a3e88b18b11fc2",
+   "skill_md_sha256": "c1c1ab275cc866b2906e8c4091cda9f7b371b0425a9300d605b503fb867a1abf"
   },
   {
    "name": "voiceover-narration-studio",
@@ -36339,10 +35539,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/voiceover-narration-studio",
    "status": "present",
-   "files": 2,
-   "bytes": 13136,
-   "sha256": "c197c0d185b085bf630dc8ede899e16233e7ccd73ad4e1a9e237e8949b49646f",
-   "skill_md_sha256": "aa15c336b7b539795a80ea5e71a5dbc5a691d1851d8775c8f75f3d6789fa9af2"
+   "files": 5,
+   "bytes": 178954,
+   "sha256": "7175ec348babdfad0b4f81f274e9b4f014d4118041fae7bbca090a7dadcc4f15",
+   "skill_md_sha256": "d3e4f2301cbab8961e23cc8f0d9fcfd8b9fdfb5b7c717bffac6ba83095de9b32"
   },
   {
    "name": "vpn-setup",
@@ -36404,10 +35604,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/warp-delegate",
    "status": "present",
-   "files": 6,
-   "bytes": 36152,
-   "sha256": "9b710b965bafca68f7a32571cff6a37760b7937ec0cbdf2d8a3a245b7e79b491",
-   "skill_md_sha256": "e06e83a458830ea41096f59b20f1519c917407d7f450ad0d81b76e46488ba71b"
+   "files": 9,
+   "bytes": 72727,
+   "sha256": "849a36180c1abf528e3b6361698f2bd1173e010fd76dea67f9505bfbcc4cbd2c",
+   "skill_md_sha256": "115317e772c0f6ddcaebbf05e5308bb3d0861fd2ee0590daf2e03ae9d01d9006"
   },
   {
    "name": "weather-data-lifecycle-management",
@@ -36989,10 +36189,10 @@
    "license": "MIT",
    "url": "https://github.com/sickn33/agentic-awesome-skills/tree/HEAD/skills/zcode-delegate",
    "status": "present",
-   "files": 6,
-   "bytes": 29829,
-   "sha256": "1ba1bf43f5ececf220b26ffbc0784932aca8740fe744532184f42ffc2d73a760",
-   "skill_md_sha256": "c2fdd350991583c92e60ccafaddc6702c5abdd417ff34a690939d7a796bb59c3"
+   "files": 9,
+   "bytes": 80327,
+   "sha256": "4c92604a8da83c6361a095f819b81be9aab4b26213af373b943668833fb896b0",
+   "skill_md_sha256": "6ef25a9b11bf1f414dde68660ac6c14af1b84ad47cae60cec4627814ed27cdb8"
   },
   {
    "name": "zendesk-automation",
@@ -37080,10 +36280,10 @@
    "license": "MIT",
    "url": "https://github.com/titanwings/distilly/tree/HEAD/.",
    "status": "present",
-   "files": 5,
-   "bytes": 70789,
-   "sha256": "487afe7017cbad19f927acddcf289bfdcc6bca7b5098267cd4f06f857789d6bd",
-   "skill_md_sha256": "b91bbfc6b7503c2f8cac5457b705474c92da915c15621f4fea11744631886ebf"
+   "files": 136,
+   "bytes": 1872140,
+   "sha256": "c244a20cfaa9efcac0e266b9ce26940fcbfcba000335f5428dffb94f7d6bb788",
+   "skill_md_sha256": "43d9df84a0c94adb54a028fd40af50daeed844f83ab67090cd0f1fcc45f7841a"
   },
   {
    "name": "archify",
@@ -37097,19 +36297,6 @@
    "bytes": 10602703,
    "sha256": "1bbe987f5d15b473474613771a4813d3d9234e3bc00f1f92c1e5957ceb4d2e20",
    "skill_md_sha256": "66dfe99b35d7ceff95bcbdb00f138b8b3ec8094629acf69efba1eeda1013aaf3"
-  },
-  {
-   "name": "book-to-skill",
-   "local": "book-to-skill",
-   "upstream_path": ".",
-   "repo": "virgiliojr94/book-to-skill",
-   "license": "MIT",
-   "url": "https://github.com/virgiliojr94/book-to-skill/tree/HEAD/.",
-   "status": "present",
-   "files": 5,
-   "bytes": 56503,
-   "sha256": "e341ae9504a6f04cfbc8d7da416012c3cfe49efd30bca1f3e98011549b0f8956",
-   "skill_md_sha256": "6a3d7ce3d3689020cd4089f8cad9c0a9f8237abfaf896ff20677031dac4592b1"
   },
   {
    "name": "ablation-planner",
@@ -37132,9 +36319,9 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/alphaxiv",
    "status": "present",
-   "files": 2,
-   "bytes": 9328,
-   "sha256": "ff535539c07350c8557ba33d4ee5503ed8720d883d2b8f0b55620796346243a9",
+   "files": 4,
+   "bytes": 48990,
+   "sha256": "0c775c9345b919bc89ebccc26b80dd405a0261693ea0a97d7db6f27c423d7768",
    "skill_md_sha256": "65d74ca93c42a7b16e7446b41b7eb133d46fdfa5b65d4a3d8f0327857039db3a"
   },
   {
@@ -37145,9 +36332,9 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/arxiv",
    "status": "present",
-   "files": 2,
-   "bytes": 9830,
-   "sha256": "71ab4b02443253e1bb7ed77625fb9fca35045c13eaf8678b1200c47ee7c7d2da",
+   "files": 6,
+   "bytes": 76274,
+   "sha256": "88d76ad6b98d04b288c0393ae92791c77cdb5f3c7f0d0c6efe47294658c3a342",
    "skill_md_sha256": "474be36fb19d0dd99ddc8c6fa2d684836a45dca9d02051d98b5c79ac979307ed"
   },
   {
@@ -37158,9 +36345,9 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex-claude-review/auto-paper-improvement-loop",
    "status": "present",
-   "files": 2,
-   "bytes": 36905,
-   "sha256": "f30fac6e85bea7008f45c30f715e907170b3079431fd3e8a83b1985937c3f9a7",
+   "files": 3,
+   "bytes": 60560,
+   "sha256": "bac9050422ee84a7a8b0886c6e592a0dd35d5de46550e2b94e1ab081440e367a",
    "skill_md_sha256": "b0a8a6a64f8ac0403bc75d25aaec2d8add7dfba987a11c52de95a581e231d4bf"
   },
   {
@@ -37171,9 +36358,9 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex-claude-review/auto-review-loop",
    "status": "present",
-   "files": 2,
-   "bytes": 31117,
-   "sha256": "2c74f0314e155eaaa55c738bb4d57d4b172211b5401dbe438427c3a32baa1b66",
+   "files": 8,
+   "bytes": 91949,
+   "sha256": "0650115dcc684af6eddfa6914395fc5be5b1320fcfe11be7e9cf506a3f1563df",
    "skill_md_sha256": "cd2e877606a8b3eb2d636edff19f8ff068a2ef021928abcd17ece0fbfff2917b"
   },
   {
@@ -37184,9 +36371,9 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/auto-review-loop-llm",
    "status": "present",
-   "files": 2,
-   "bytes": 8787,
-   "sha256": "df769860b0c92723a19cc67c0081d24f953c046c105a27996acd190b34452a9a",
+   "files": 7,
+   "bytes": 56132,
+   "sha256": "0d69f237bfe67a07ec7f207608fb9af2809e5f7863d8821a9e676ad069fbba55",
    "skill_md_sha256": "f46c40b1a3edcc63b07cf263253fc01e706d2335bd851d672d66099b29774cf8"
   },
   {
@@ -37197,9 +36384,9 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/auto-review-loop-minimax",
    "status": "present",
-   "files": 2,
-   "bytes": 12726,
-   "sha256": "200cb8bc037918a5600399edc118383c4d7260955bc835a3cd7325d417876324",
+   "files": 5,
+   "bytes": 21355,
+   "sha256": "3ed87935b8214d579e7bd0834557c1785b8939d4260a1f15ee5ce87727ebe6e9",
    "skill_md_sha256": "a6f768b079f1ef3f9531167c4557a09cef64aae69518ee557317263fd2c8bc33"
   },
   {
@@ -37210,10 +36397,10 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/citation-audit",
    "status": "present",
-   "files": 2,
-   "bytes": 31319,
-   "sha256": "10a5fda486a0648c9a248832f326033532398d8b2957aab7fdf5f1a99e1b3943",
-   "skill_md_sha256": "08c75f43bc03d525898d05a36c5e8459ae0877939b436a2b39f9161c6a3e7c42"
+   "files": 12,
+   "bytes": 138027,
+   "sha256": "7c15ba6ae04c45f626c2d5bf62b5a8df96097233bdb3bfb34dbf23c7f066e921",
+   "skill_md_sha256": "3f140b0fd75152b239c4fc2ec88c12828efab5da0fc8cbcd1710bafafbe36385"
   },
   {
    "name": "claims-drafting",
@@ -37223,10 +36410,10 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/claims-drafting",
    "status": "present",
-   "files": 2,
-   "bytes": 10762,
-   "sha256": "5a94a6781fc0fffe8e9d20e993260b39e5977024d224d4c314d2b1ffb445b5e4",
-   "skill_md_sha256": "28c5027ae12cb928df35a5e079263fd5680e1bf2816bf86c847f195ad456ac40"
+   "files": 6,
+   "bytes": 42829,
+   "sha256": "d3513a57791531eb2496739ef9a322a3d5d42b4c041b65411c7e2eb97018743d",
+   "skill_md_sha256": "7afad61907eed73e9535ab83604f110e5bd9afbf1b593f6fb3826c6e5bedb244"
   },
   {
    "name": "comm-lit-review",
@@ -37249,9 +36436,9 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/deepxiv",
    "status": "present",
-   "files": 2,
-   "bytes": 8778,
-   "sha256": "b49aee87d004d36bbdc95fc7e607fccc81486f15c5a3ef2113cf004680665890",
+   "files": 6,
+   "bytes": 75222,
+   "sha256": "a27c70bf49e1092b9c14cc2596d888f443af75af8d8079f4c1d2d8055aa40361",
    "skill_md_sha256": "19d6b9a334f56398be97f68727feaf7689134e5294f7d9507a2d071b1eeed148"
   },
   {
@@ -37262,9 +36449,9 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/dse-loop",
    "status": "present",
-   "files": 2,
-   "bytes": 14103,
-   "sha256": "f79e71ba4f0df5e050740f66b3af86ef4cff8a41ba090add5a60a75d5c03e65e",
+   "files": 3,
+   "bytes": 34173,
+   "sha256": "350a6a992744b818e4d745d975736231bddd56bb122962358f94d0e288d27ced",
    "skill_md_sha256": "daf99d22d3fd955ca197cfc79bc3dc999e6283018f84be8887fe2f3465f74f68"
   },
   {
@@ -37288,10 +36475,10 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/experiment-audit",
    "status": "present",
-   "files": 2,
-   "bytes": 11649,
-   "sha256": "03abf8e185666f8e73c71b599e9de7405607432aaa3aec1beb668d3eceab31e5",
-   "skill_md_sha256": "cc660aaf2bb9d28e07270af8cf30ce96a6bbd1490cbe0d6e4ef97442e2be19ad"
+   "files": 12,
+   "bytes": 95883,
+   "sha256": "085f03c584ab60cb0a46f303c4be835522c3a3c1ef5c990ba78ac54f229d3053",
+   "skill_md_sha256": "355a22aa16bbd08ca78cd3e83784d77606fe4405790969273426f5cfdfec0da3"
   },
   {
    "name": "experiment-bridge",
@@ -37301,10 +36488,10 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/experiment-bridge",
    "status": "present",
-   "files": 2,
-   "bytes": 17507,
-   "sha256": "b88da608669f6890cafe08c0ad1259f85be18e8095f8daf6e470d31b104b854e",
-   "skill_md_sha256": "8325b87f1bb3c5293f5f52365f1be31b47fd79e1dc7dcde4e8986d5363e0c798"
+   "files": 9,
+   "bytes": 68494,
+   "sha256": "3ac32c4a52e319a20ac83d3d2c04a048b5633dc02eaf3fa4ef1ce7e74ec325df",
+   "skill_md_sha256": "2b7aaab38753f3aeb8a85d2e6bd77d8eeeb29a8850dc0637102567fd0ed0c1e5"
   },
   {
    "name": "experiment-plan",
@@ -37314,9 +36501,9 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/experiment-plan",
    "status": "present",
-   "files": 2,
-   "bytes": 10250,
-   "sha256": "581391ebc24d69bb05369af360a560487e8dc15243cbfc09967f3e47cb3dafe8",
+   "files": 5,
+   "bytes": 18879,
+   "sha256": "9493bf3db9b21c3552e8a534e58e482a82f324a6f47d54954ae79ff60af206e1",
    "skill_md_sha256": "61812df053fd8717cccb248fcabec3863f930eaedba03463bc059294dcc3863a"
   },
   {
@@ -37327,9 +36514,9 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/experiment-queue",
    "status": "present",
-   "files": 4,
-   "bytes": 40332,
-   "sha256": "b0eac4c55aee471ea529d9725dbe381501aa24319acf8a7daf32615bc9b12e8d",
+   "files": 7,
+   "bytes": 88927,
+   "sha256": "6d9bd022d358fc2f32a02ea529ceada13b2110626e135cdb4ebcf56d176f6810",
    "skill_md_sha256": "6da32285f905d77664334bba7f7bbc2c069814ff5c3bc266ecc00f6c77d77208"
   },
   {
@@ -37340,10 +36527,10 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/figure-spec",
    "status": "present",
-   "files": 2,
-   "bytes": 11502,
-   "sha256": "e2b2d4a694c6ea316da99f09cecde53ba3e1eb498e8f4b339d3028e43be196bc",
-   "skill_md_sha256": "f5a23ca71f1264b05949b036ea0fb61e6f35690850dd86409c28a3ffdbd026ea"
+   "files": 6,
+   "bytes": 71326,
+   "sha256": "d033837dd6db6f64669e1ac9fada7c374e4d1bc619e47aad49b8ace2ad2825d9",
+   "skill_md_sha256": "16f75e4ec3789cd9fbdea633f4a0a9340b05d2f316ae0c03998d24f8f9eef2a3"
   },
   {
    "name": "formula-derivation",
@@ -37379,10 +36566,10 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/grant-proposal",
    "status": "present",
-   "files": 2,
-   "bytes": 35633,
-   "sha256": "5eebbc491c890be0eeecf1f1330d7b6e45d058fbf1d9b638e9664278297c6807",
-   "skill_md_sha256": "b7870c8f02db4da3be64f77b4225818306ced16c771331143768c3f9b1fc46ac"
+   "files": 7,
+   "bytes": 99567,
+   "sha256": "fdd30784d34363a9035c0eebe93f13a23814498cdfb9390c1f79ce020a7975cf",
+   "skill_md_sha256": "7895090d09e9ed629c7fd70f6d23f07ec925a0f004a8f811672a2d9c61324076"
   },
   {
    "name": "idea-creator",
@@ -37392,10 +36579,10 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/idea-creator",
    "status": "present",
-   "files": 2,
-   "bytes": 24344,
-   "sha256": "fc11c80a31caac2fc230e1a29c0b7dda41bb9065e2aa490cbc56c3dc6706db7c",
-   "skill_md_sha256": "5774e7c52c9725f8d6c15ddfc3562eac20d70d9e2c16d45e27e100008fd2d5b8"
+   "files": 10,
+   "bytes": 83598,
+   "sha256": "12bf5874946024ee5be6e7528a98868300a6aa0ac0c0646d07cc4de2268b1e64",
+   "skill_md_sha256": "45988b60f405384275f41c2d1955663b123129029542be7cf72ae441ce69224e"
   },
   {
    "name": "idea-discovery",
@@ -37405,9 +36592,9 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex-gemini-review/idea-discovery",
    "status": "present",
-   "files": 2,
-   "bytes": 13565,
-   "sha256": "bcc9e9a8dfdc0fdccb0d09206aa10b92e5edb6aa1c893a463f9536b1bbd93e86",
+   "files": 5,
+   "bytes": 22774,
+   "sha256": "b4fa3385572229e3396f48d50451124e2b0c412773867acb178ea3cd6e1e11fb",
    "skill_md_sha256": "618a9f8aa7ea804e162d8e1ab3b10ee1e393a966107401fcc661b2a1d8f7de78"
   },
   {
@@ -37418,10 +36605,10 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/idea-discovery-robot",
    "status": "present",
-   "files": 2,
-   "bytes": 15743,
-   "sha256": "605ea021e131356d651729c143e019d1369449bbf880057879680b4cc4ba8930",
-   "skill_md_sha256": "fb8df95860c8cbebdad335f433d3518552126f39bcba0c838f792e0174f92942"
+   "files": 5,
+   "bytes": 25168,
+   "sha256": "f425c59e1a3339aa0ee1239b004159578f4b54da4a8dfb1320ec6c4321b75945",
+   "skill_md_sha256": "34cac6ec8a44fa6ef203c29eb22d84468f6e1aaa13a8860f890855b7aea1e3d5"
   },
   {
    "name": "integrity-forensics",
@@ -37431,9 +36618,9 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/integrity-forensics",
    "status": "present",
-   "files": 2,
-   "bytes": 17719,
-   "sha256": "62a9cf911d5e5a2071d77cd682ed752a982478d02d9d75c05e2d60973dedf1ca",
+   "files": 6,
+   "bytes": 109373,
+   "sha256": "ab5db88a79eba930394ffc4bee741967a4825f7c4ec21e850952cfafd1165e7f",
    "skill_md_sha256": "33cdf3f4fd2a8dea073a73e2cba870576c576b1d201efa3d0a4bde2e7e7256ed"
   },
   {
@@ -37457,10 +36644,10 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/invention-structuring",
    "status": "present",
-   "files": 2,
-   "bytes": 7339,
-   "sha256": "4fe1a8a8e0b96daf10ea9a4ad412b102a24ff86df801f5336a50ac12f238798f",
-   "skill_md_sha256": "361e8dc62078454a8bf4b0fdb9fa6c0f19570a331d21ce070ee014dc92a8d598"
+   "files": 3,
+   "bytes": 17416,
+   "sha256": "a8f30556c1e7cec98d0484faf702259ea93da3185e6a38eccdff93f192bf3820",
+   "skill_md_sha256": "1053541abe5dae9f50fcf2e858b236512e25ed4a33d2178f6fbcab9b4a18bdf8"
   },
   {
    "name": "jurisdiction-format",
@@ -37470,9 +36657,9 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/jurisdiction-format",
    "status": "present",
-   "files": 2,
-   "bytes": 7393,
-   "sha256": "a414c9aad2b8d97300afdbd29c8aaec5a302d76757dbf893f21efbbd0fe24938",
+   "files": 5,
+   "bytes": 29270,
+   "sha256": "9e08dd0b011c8af233f2bcb24a8e785b706ea6d4e79d3326f91e7f55f56bf239",
    "skill_md_sha256": "7683f58c4ad6465b4c4dd4f360876b12b0132777ca4ba40c1e48b777f4b40bb9"
   },
   {
@@ -37483,10 +36670,10 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/kill-argument",
    "status": "present",
-   "files": 2,
-   "bytes": 25546,
-   "sha256": "6b6cf17889add5b49e4cef25c8a4ef7f49b56f2706fd96b14e2ccd2b513b0d79",
-   "skill_md_sha256": "7a222081ddd9548f7ce560a202c3888783cc34ee0fe81c35ee87c5a7b652aa59"
+   "files": 14,
+   "bytes": 340867,
+   "sha256": "5e33bb09481a1ec691eec7c639437cfb71ba1fb507ac878c1f037be1f36ef0bd",
+   "skill_md_sha256": "182606e3397cb860912ce812faf2172f3be88d83d1a3f00075d9e64087dc2ee3"
   },
   {
    "name": "mermaid-diagram",
@@ -37509,10 +36696,10 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/meta-apply",
    "status": "present",
-   "files": 2,
-   "bytes": 8522,
-   "sha256": "f2e819d0f684c6e593073ab07fac1fc5c58e3cbd82342eca900c2413a27b5253",
-   "skill_md_sha256": "0760749e7a26315d836f0ce52c94b2014f09b186f5de015cb3da5ead9875e629"
+   "files": 6,
+   "bytes": 67651,
+   "sha256": "91afacdc56c466d6dec6519f78e95bfde5558299ebf8e9d9719ba15531c0932c",
+   "skill_md_sha256": "725cef0195f0b5eebee5161e80c8aff68102a294d3c2a9fcbb327eac803eba15"
   },
   {
    "name": "meta-optimize",
@@ -37522,10 +36709,10 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/meta-optimize",
    "status": "present",
-   "files": 2,
-   "bytes": 17956,
-   "sha256": "1f1a23f826e2a47bd98adfba567cc31620685e82221183be15457a1d4cdd187d",
-   "skill_md_sha256": "f106e33aa3e0684e5d3b8ef304375f821c5c4f89bb795cb9dc4de190fe4c4f65"
+   "files": 10,
+   "bytes": 91727,
+   "sha256": "5d3ae06677292913d07f465b102a8e257dd07424164d0ae7d335714d34db04e0",
+   "skill_md_sha256": "c2619caa6fcc9370c87e20159d33cdaf625a280f416029b25375e6218e522b50"
   },
   {
    "name": "novelty-check",
@@ -37535,10 +36722,10 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/novelty-check",
    "status": "present",
-   "files": 2,
-   "bytes": 7781,
-   "sha256": "f394bb90b458686599027b476ac68d6af35e6c1203ecf7bc4852760193283f47",
-   "skill_md_sha256": "7738e665e8a7ad358e016ea3fcfa0f994e1f064f3626fe2fa454217a2750f3a0"
+   "files": 8,
+   "bytes": 150188,
+   "sha256": "adee2ddd5f9d408ca3fd1fb73b510fd1180470661cd0c6d559c44d457d49ea24",
+   "skill_md_sha256": "a3fed2c3fb050285d1ede36a2ee24922ccfb663bb0c3fe85df2f9f553f0266b2"
   },
   {
    "name": "openalex",
@@ -37548,9 +36735,9 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/openalex",
    "status": "present",
-   "files": 2,
-   "bytes": 10138,
-   "sha256": "421cee3189994373b54de9a4cb8d6384fcff2745de01df7ec54c58637cc6897a",
+   "files": 4,
+   "bytes": 49800,
+   "sha256": "cbf30d2362a2e4e515eedde2001014f61ffa69118ed35a7e478c87c1f1eedd97",
    "skill_md_sha256": "6af90a676a2e3a27b896258f2855931c2bf31ca259d135d45dc61ab1cea05dd6"
   },
   {
@@ -37574,10 +36761,10 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/paper-claim-audit",
    "status": "present",
-   "files": 2,
-   "bytes": 14552,
-   "sha256": "294502b051a08fe01b73cb16a467bfb621e5c8595367b4a3e81145a301fa4927",
-   "skill_md_sha256": "53bc00ee13d861e76e4f5a1a5d4f0ab40544ca563ee328af4c38bcb19b64a95b"
+   "files": 10,
+   "bytes": 93471,
+   "sha256": "32cb66f17ac33ca5cdefbfdce4fe9a98068c7b1ce57032c20c7b276fa35b9388",
+   "skill_md_sha256": "583f275e2ed1d4c2f1d6fe4cb7e9733322f2b2c11c8948aa8d2fa66cfe910af2"
   },
   {
    "name": "paper-compile",
@@ -37613,9 +36800,9 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/paper-illustration",
    "status": "present",
-   "files": 2,
-   "bytes": 33757,
-   "sha256": "b9b4d81d82ea0a4293080fd91878c3243a014481814a5b43a503f8de1e2f72c7",
+   "files": 4,
+   "bytes": 87275,
+   "sha256": "a17892041242a4a0c89737359c0826ff40b90bb6ffb2b7c64d7626f2c247e00e",
    "skill_md_sha256": "af9307d178b8242c9a8d2e94c1264add91d5aa2bbc6444556b51b501c1918e65"
   },
   {
@@ -37626,10 +36813,10 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/paper-illustration-image2",
    "status": "present",
-   "files": 3,
-   "bytes": 28056,
-   "sha256": "0188539b3991035b030a695b4d3101d39f8ccfb5a99c2e468c0b02a84f382e5a",
-   "skill_md_sha256": "ed99bfb0e1a98b3acf17d00178bb03e4e5d8775ab737141a6b59a0549765a726"
+   "files": 5,
+   "bytes": 68807,
+   "sha256": "f2bfd448a85fe14297a306c2ab967463c739d0d04f5841673bdc418857259128",
+   "skill_md_sha256": "b259aef1df0780f95c9103c4739d80829b52bcc8d5ad581c46f66749c289912f"
   },
   {
    "name": "paper-plan",
@@ -37639,10 +36826,10 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/paper-plan",
    "status": "present",
-   "files": 2,
-   "bytes": 13235,
-   "sha256": "df5b9e60d247b6ae250772174b62cd8b8e13ebf7f47fce2578e2f8a893001c08",
-   "skill_md_sha256": "f57db68d201585c238522fdc38d7db16007638821f5f202faea723bdbcb8ff6d"
+   "files": 9,
+   "bytes": 55952,
+   "sha256": "355bd20b725f7454acdcfec1d16972a22161fde2464655eaea9f27c393ede16b",
+   "skill_md_sha256": "52fe5632eed977ede5abe2a10c484f0477c7cf7d60afe218bfc7807a3e2ad337"
   },
   {
    "name": "paper-poster-html",
@@ -37652,10 +36839,10 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/paper-poster-html",
    "status": "present",
-   "files": 32,
-   "bytes": 466324,
-   "sha256": "730bd7df1e711518eb74f723df8f205efdd9c83086866b8abf978df1da46d217",
-   "skill_md_sha256": "b3c55d212f5c0cbccc94ec62813ad8df9302467edd825c62959edb4ba2778f8e"
+   "files": 35,
+   "bytes": 519287,
+   "sha256": "7a03afb9ec7fb68f49d7477999b958aca7993ccc49f9deebcb18ae19052ec523",
+   "skill_md_sha256": "745cfde9da124cbd236b398749d790510916138d329a5ca4a21c75e15163b483"
   },
   {
    "name": "paper-slides",
@@ -37678,10 +36865,10 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/paper-talk",
    "status": "present",
-   "files": 2,
-   "bytes": 21528,
-   "sha256": "878e165421d161f210cbecad34d318ac798043fb90c91ab0c5e002b8b57b9dd1",
-   "skill_md_sha256": "5d55889df72fef0f1f9c11057d82e1200a33ea7ba8d54163fef413b0f5e08c4a"
+   "files": 5,
+   "bytes": 38265,
+   "sha256": "275e56440f54c47802106f049c1973047bacaeb7397ae2a76e3e52fc92da8fcd",
+   "skill_md_sha256": "92010297a6bf7295c6128b8fc17a10390eada5c23de3721a50cd3c05aa61e69c"
   },
   {
    "name": "paper-write",
@@ -37691,10 +36878,10 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/paper-write",
    "status": "present",
-   "files": 26,
-   "bytes": 936965,
-   "sha256": "cd4660c60709b870381065aff3b6ef18e62414901527c9bd6a03ca098f001d76",
-   "skill_md_sha256": "83ce11957792c6a63cbadc092a2c41556a5997333e8eba5729e4f2c2d0663583"
+   "files": 29,
+   "bytes": 969484,
+   "sha256": "0da4da1f8828c314ba04c0402abc4645a905030b487bafb8f002fc8c166213f9",
+   "skill_md_sha256": "8c9dfda633c72d276c1a6d7c0066f582cf93d2df88575a4bb035e4743a888f61"
   },
   {
    "name": "paper-writing",
@@ -37704,9 +36891,9 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex-gemini-review/paper-writing",
    "status": "present",
-   "files": 2,
-   "bytes": 13984,
-   "sha256": "73688af319d7715deb5f7e284eeb904ee28ea14331e912610602295a0e31d554",
+   "files": 5,
+   "bytes": 23193,
+   "sha256": "78b831a2c660b8a3e8ddd3d0b81fa9ffab3b55bafe394d4063cabd39c0ff1132",
    "skill_md_sha256": "dac8f71654be7fd575e968a701d1e6d821bfc7b0be0278becb6eb7fc63b4283f"
   },
   {
@@ -37743,10 +36930,10 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/proof-checker",
    "status": "present",
-   "files": 2,
-   "bytes": 29191,
-   "sha256": "006b509af3ac5393b0aaeba09d4ec90063494e13f40f0e94e99f7be4ec95cdda",
-   "skill_md_sha256": "4153418cd1c3f83e7eded201bf297dc8e1974cc478e81e25bf87fe01f56caa22"
+   "files": 9,
+   "bytes": 90736,
+   "sha256": "5e53721b5b75037c9381adead0f8b55aefb0debd6a75fbfc0087262f5e73ab25",
+   "skill_md_sha256": "716a86370b1768b616943d449ab106b901fa55e239ab76ef9f5eebb9779ba39e"
   },
   {
    "name": "proof-orchestrator",
@@ -37782,9 +36969,9 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/qzcli",
    "status": "present",
-   "files": 2,
-   "bytes": 8463,
-   "sha256": "40d4e250da955b2a21e4d2ef3060e191437ebacd84eb4e928b08089f00ce53f6",
+   "files": 3,
+   "bytes": 18932,
+   "sha256": "cc82ce712d345c2aea690dcce7c84c7a23161a242167747993091ead4460b360",
    "skill_md_sha256": "328953e6e4a21f8a38e979f9729818721af387724b799cb7cc96e072d0012d2f"
   },
   {
@@ -37795,10 +36982,10 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/rebuttal",
    "status": "present",
-   "files": 2,
-   "bytes": 25195,
-   "sha256": "8abdcce63c32e5d5746ba037cf0227bc1dfbc85e597365fd058d395ae402996f",
-   "skill_md_sha256": "36b9f570181c5afcf4149e4a911613f421733d4f3fcb84579709c8097d514f02"
+   "files": 8,
+   "bytes": 231821,
+   "sha256": "97f84cc3e156e531eac6727214583a60ee5e86166313babf2295f491aa1ee689",
+   "skill_md_sha256": "52ec75bf57fb3ffe6ffdc8c468f69815a12dba4679b0a4f9ac2acb64ebadcb03"
   },
   {
    "name": "render-html",
@@ -37808,23 +36995,10 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/render-html",
    "status": "present",
-   "files": 5,
-   "bytes": 74579,
-   "sha256": "cea383892c8a455eadf0d83041bef95c0230135a015a8c18af9b49557d0e5688",
-   "skill_md_sha256": "b138edeaa632cbbb3783b6441d80b19f4b146ee35063fc6e7d29ec86f549be99"
-  },
-  {
-   "name": "research-implement-feature",
-   "local": "research-implement-feature",
-   "upstream_path": "skills/skills-codex/research-implement-feature",
-   "repo": "wanshuiyin/Auto-claude-code-research-in-sleep",
-   "license": "MIT",
-   "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/research-implement-feature",
-   "status": "present",
-   "files": 2,
-   "bytes": 22251,
-   "sha256": "e2eb732a4fea1da85adcf298dcb565dbff6cf75d1320bc9ccdd2d18e885858b9",
-   "skill_md_sha256": "e3bef56705839d295a45ac9f045e6ebfc7ad916f4fd2de60353814aa0d9eb90e"
+   "files": 8,
+   "bytes": 102710,
+   "sha256": "a9e6c9e540e4b08b9b01a34c9a57b237cd297889f0f7eef0ceae10475060c3f6",
+   "skill_md_sha256": "13b96aee8d05acd637d32b6806a83c93392ea198d7eb338419afcb54cd02610b"
   },
   {
    "name": "research-lit",
@@ -37834,10 +37008,10 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/research-lit",
    "status": "present",
-   "files": 2,
-   "bytes": 28365,
-   "sha256": "31029f86c6cac678dadd6e45670c7e2b4b790b85a146090f9e0c65d148800010",
-   "skill_md_sha256": "d6293c58a6d6319b7ae5075ee9a1587ae83368400fbe15ff89a338e52e549c61"
+   "files": 6,
+   "bytes": 98635,
+   "sha256": "719d7091cf451871e98b93f0b539dfe0680ae66bd71e74a9c4a3ceb8714555d3",
+   "skill_md_sha256": "87844f4afb7b71a4cdd71b4073b11c0aee3d22e5cfa4f00db1b84c2469059fd4"
   },
   {
    "name": "research-pipeline",
@@ -37847,10 +37021,10 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/research-pipeline",
    "status": "present",
-   "files": 2,
-   "bytes": 20157,
-   "sha256": "a28190f139cedc5cd537d6d2b8f5fef2e1327693feeae8ca878d93ef49dc5952",
-   "skill_md_sha256": "b68d43c7c9c5b735e0df98c554c701b300633ef3f7009274b026fc52847d6750"
+   "files": 8,
+   "bytes": 60078,
+   "sha256": "e7a97c012b7bf4d8e16a3d8c4706a790d51c215d9238082b382ea4b7add5d3e1",
+   "skill_md_sha256": "8caec65ac3988cd619dcdada3f0e72069536e01c94bf91fe853bf799567eca9d"
   },
   {
    "name": "research-refine",
@@ -37860,10 +37034,10 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/research-refine",
    "status": "present",
-   "files": 2,
-   "bytes": 31602,
-   "sha256": "ae9f689f1b76289415f9a57059cf48897f1acb9a1f37e8dea71c925a93719da0",
-   "skill_md_sha256": "9f61281f7615d221596ea316b9c823392a3ef1b0c3dcaa1c0be704968d8f3d15"
+   "files": 6,
+   "bytes": 45979,
+   "sha256": "45fa0219a158c39f8793e814c0a21c4890359495788a4c164b117560204e4d3e",
+   "skill_md_sha256": "0bd57b339f0badf257df1cb5325a4ee8a69e7eab2f7ab4c8babdaafcbc56a798"
   },
   {
    "name": "research-refine-pipeline",
@@ -37873,10 +37047,10 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/research-refine-pipeline",
    "status": "present",
-   "files": 2,
-   "bytes": 6779,
-   "sha256": "6ea4d60d4662f9f7cdaad9141b75db0c59fa931209fb40ea073bd505839e6444",
-   "skill_md_sha256": "a3276db7ff225b6316c61c49d403e80f80592102310c74c1d6deb3dc9e8ae696"
+   "files": 5,
+   "bytes": 16204,
+   "sha256": "96edb664c39a17ec34ef5cbb12de35d5af9cf94a088d962b33985b5fd54b0f17",
+   "skill_md_sha256": "65538a42c2f697c627b8e209d9c5aafcec338dbe12f8f22e82cb2a707d719262"
   },
   {
    "name": "research-review",
@@ -37886,10 +37060,10 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/research-review",
    "status": "present",
-   "files": 2,
-   "bytes": 13088,
-   "sha256": "8b409ed91019716dbb0c1ef4809e1fa8746b42a14faef32e2c1d6c9a00d2c17d",
-   "skill_md_sha256": "85c75d2bef1f08e2e7d2e6a7f6bc0ae42faecf942d5314d25f17376e1292597f"
+   "files": 11,
+   "bytes": 215843,
+   "sha256": "776dabec893e151a64a7c84911ce24d5b23b64e2fe56f6e739bb9789c8c1694a",
+   "skill_md_sha256": "70190357b1abf871e9c92c41deda89b2479361efe0f13b618887076206845192"
   },
   {
    "name": "research-wiki",
@@ -37899,9 +37073,9 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/research-wiki",
    "status": "present",
-   "files": 2,
-   "bytes": 18563,
-   "sha256": "ac1a63d066b686fa22fe415da6abade1cbbb1a49641c5a09fcac5e65b41f5305",
+   "files": 6,
+   "bytes": 71426,
+   "sha256": "e66fad2ef35cb36928dd8970797f05470bd1bf88c2a53e7fc31fa63cd26030b3",
    "skill_md_sha256": "c3e9acaf94402cb7648763772ee6c2d41a4f76328595354fb658647d4b2f7ca9"
   },
   {
@@ -37912,10 +37086,10 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/resubmit-pipeline",
    "status": "present",
-   "files": 2,
-   "bytes": 33770,
-   "sha256": "3d4615f3395372684e7ee25deb6cdfd3f67ed5891e63f17fb3246baa5917cd75",
-   "skill_md_sha256": "2a0eafe7073abe3a113142376a7c4a9d0cc8fe8c2819ec268dc83be3c195128a"
+   "files": 6,
+   "bytes": 68917,
+   "sha256": "2c34b8462c09b6b277a8b7886d2da3387ebc2dafed7b1cad9a316b94288dcd31",
+   "skill_md_sha256": "11137004644537951fe76ce7935dcdd25c25ada6420aa7dc3059b334014911ac"
   },
   {
    "name": "result-to-claim",
@@ -37925,10 +37099,10 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/result-to-claim",
    "status": "present",
-   "files": 2,
-   "bytes": 12656,
-   "sha256": "542b7eaf87d8e7a78e0cb954578057505b255d5c7288611da73a022f9a213417",
-   "skill_md_sha256": "ef20f93859c8d28a610dc76d18fd1ce68055f22761e8a73cb67774d6b102dbca"
+   "files": 6,
+   "bytes": 32028,
+   "sha256": "7737726629bae80d8eb640e4594c960559366ada840a4c854d893cbbd83a5fda",
+   "skill_md_sha256": "64e22a4bc242c9ed51f80a3db36e98db9c32ef60b30a393ec758e22cfa9e1494"
   },
   {
    "name": "run-experiment",
@@ -37938,9 +37112,9 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/run-experiment",
    "status": "present",
-   "files": 2,
-   "bytes": 9434,
-   "sha256": "cd36faab7ae13c09f10065a0cf2f7db8243fc93d641df2ae1ba41b9181ccc1f9",
+   "files": 3,
+   "bytes": 19903,
+   "sha256": "fd6b629a85fa2728f5f70d625c2d1b9cc2527c4e666100a5d92dcc7c0039dce9",
    "skill_md_sha256": "8325128eab14c7f82213d44c8e78e98f44ca680baa9c78f3bee8766f8e9f464a"
   },
   {
@@ -37951,9 +37125,9 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/semantic-scholar",
    "status": "present",
-   "files": 2,
-   "bytes": 11495,
-   "sha256": "10ac2fb1563153b54606460b7ce38453280604bf8ef438bfb0114b73ae4a1025",
+   "files": 6,
+   "bytes": 77939,
+   "sha256": "16a95911bc60f63ee86f6f8e217adfb18e8b6666357e0550a877ded33d05cc3e",
    "skill_md_sha256": "41be9cd7d08d2d795d4fe0c87d23288712febd2807b8d4d38a2ea9c54ebb31e8"
   },
   {
@@ -37964,9 +37138,9 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/serverless-modal",
    "status": "present",
-   "files": 2,
-   "bytes": 13696,
-   "sha256": "346d69e86d92415fc471b5c86f67284bc165596a3b14df2f8e12959ce727e5d4",
+   "files": 3,
+   "bytes": 24165,
+   "sha256": "7cc7d790a85997eed058a0b914bca7016b5490e2a3d1a53c5fa0adcf1683b8a7",
    "skill_md_sha256": "a57ba889e70f4108f1b1427e1b352ca892918f6216eb2678289b3d829a9d7325"
   },
   {
@@ -37977,10 +37151,10 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/slides-polish",
    "status": "present",
-   "files": 2,
-   "bytes": 28997,
-   "sha256": "36abd6d37bcfa20baea35d09e3b4bfe520564a2f5e87e2c427dbb415f2d3f6b8",
-   "skill_md_sha256": "7eb6782a599d6cef7cad0c093ceacb5dc593b884933c8ca7cc9590102af221ad"
+   "files": 7,
+   "bytes": 57775,
+   "sha256": "2b4ed20668200577ebbfe50058a4c4773f3104ca6085f21be488585c4865e06c",
+   "skill_md_sha256": "48ecd4303711721de586e6341e55a1b5ff8520f8370550f42cc5210e5d181004"
   },
   {
    "name": "specification-writing",
@@ -37990,10 +37164,10 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/specification-writing",
    "status": "present",
-   "files": 2,
-   "bytes": 9161,
-   "sha256": "437a50179cf2cb2e84cec4d7bb77db2c52fbdcdd8c54ea823a4c8ad634bd9b2a",
-   "skill_md_sha256": "b122119891e53358ae3e9d03e12097cf689f2da997a66b3c90909e21e51eb1b4"
+   "files": 4,
+   "bytes": 28558,
+   "sha256": "c32da222c54555c416f9ec3facc45e77f82fb860e4b652a236f66a8713b1fb90",
+   "skill_md_sha256": "e6de83cdf45ddba8fe70da36aac09c677d9afcb33efcbc941ce5320b90f48601"
   },
   {
    "name": "vast-gpu",
@@ -38003,9 +37177,9 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/vast-gpu",
    "status": "present",
-   "files": 2,
-   "bytes": 16256,
-   "sha256": "4506208d293485cf9dfb89c89d1c89ae93d0f35a4a7308c7891d5948b14bb03d",
+   "files": 3,
+   "bytes": 26725,
+   "sha256": "c9aaf4bf8976f7f2e4114d6ec45968f4c2065bc49538eb9131f89f2fe5cbdf3f",
    "skill_md_sha256": "38e0f7c622e85bc96978ffb945c3f07a779f4f8e931cac917e51f8be8e8624d4"
   },
   {
@@ -38029,9 +37203,9 @@
    "license": "MIT",
    "url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/tree/HEAD/skills/skills-codex/wiki-enrich",
    "status": "present",
-   "files": 2,
-   "bytes": 17377,
-   "sha256": "78ae0c461411060c4c4d2efe8aca58fed700ac04b8cb3fba4667d31185c796f5",
+   "files": 10,
+   "bytes": 70741,
+   "sha256": "44f76c6124bd9cc1c02097ecb760e05a9d4f485117e6b284e345c53654ecc6e3",
    "skill_md_sha256": "4e649eb74694527bb70fd68ac8be83bbeccdf690c15336afcb1ae584e39fd718"
   },
   {
@@ -38438,19 +37612,6 @@
    "skill_md_sha256": "9ee1be2a4913dfd0f0f804ebf1447b002f5193041c9da2c2a7f8a400ac2477c0"
   },
   {
-   "name": "grounded-vault",
-   "local": "grounded-vault",
-   "upstream_path": "plugins/documentation-standards/skills/grounded-vault",
-   "repo": "wshobson/agents",
-   "license": "MIT",
-   "url": "https://github.com/wshobson/agents/tree/HEAD/plugins/documentation-standards/skills/grounded-vault",
-   "status": "present",
-   "files": 3,
-   "bytes": 14318,
-   "sha256": "de4dadf70cfa48fbb802adafcb2d8e9df38aceb14ae1ce336cccb38ec49144e0",
-   "skill_md_sha256": "8c646c8dd078029950f9d6292a1b79a8c97cb290c02c496d869c80c8089ae80b"
-  },
-  {
    "name": "grpo-rlvr-training",
    "local": "grpo-rlvr-training",
    "upstream_path": "plugins/llm-finetuning/skills/grpo-rlvr-training",
@@ -38607,19 +37768,6 @@
    "skill_md_sha256": "051546e6887f9143c2ee794b57aa55c28909e985b3d6d02647afea0b58419641"
   },
   {
-   "name": "ml-pipeline-workflow",
-   "local": "ml-pipeline-workflow",
-   "upstream_path": "plugins/machine-learning-ops/skills/ml-pipeline-workflow",
-   "repo": "wshobson/agents",
-   "license": "MIT",
-   "url": "https://github.com/wshobson/agents/tree/HEAD/plugins/machine-learning-ops/skills/ml-pipeline-workflow",
-   "status": "present",
-   "files": 2,
-   "bytes": 7613,
-   "sha256": "4b5863c08e13fada526f27e64d3b312a6efc4bbe878f2fcea7bc5bc1394475ec",
-   "skill_md_sha256": "3049880901f70761137ef8818c6e0e5c357e5d108b82be48003e98c882a31c8b"
-  },
-  {
    "name": "mobile-ios-design",
    "local": "mobile-ios-design",
    "upstream_path": "plugins/ui-design/skills/mobile-ios-design",
@@ -38692,9 +37840,9 @@
    "license": "MIT",
    "url": "https://github.com/wshobson/agents/tree/HEAD/plugins/incident-response/skills/on-call-handoff-patterns",
    "status": "present",
-   "files": 3,
-   "bytes": 10419,
-   "sha256": "92eb09f44baa753a8de5e731ff3495c765d781065480d4438e0a7147f9c6c8bb",
+   "files": 4,
+   "bytes": 14028,
+   "sha256": "2e6efc8499dc7f832826fb7f8bd8870b437693697fe3dd28d8c50e1447856d0c",
    "skill_md_sha256": "46d03bf3a2922e77d0393dc6c0f0342056a25af15bee7c7523b0adc6d1e5d49e"
   },
   {
@@ -38757,9 +37905,9 @@
    "license": "MIT",
    "url": "https://github.com/wshobson/agents/tree/HEAD/plugins/llm-finetuning/skills/preference-optimization",
    "status": "present",
-   "files": 3,
-   "bytes": 14965,
-   "sha256": "8abb9dc1b68adca9ae27f4a358bab8393608cc14ab641f458fcf018191ff3640",
+   "files": 4,
+   "bytes": 24693,
+   "sha256": "e620233c55b3b55410f7934b77995c661ce8ddff6100d1855d044064bce23be7",
    "skill_md_sha256": "c5756fa59c8c99475b6fee92199ea17f060ba3895d5ff5ab2b544ed4ac996fe8"
   },
   {
@@ -38952,9 +38100,9 @@
    "license": "MIT",
    "url": "https://github.com/wshobson/agents/tree/HEAD/plugins/llm-finetuning/skills/quantized-export",
    "status": "present",
-   "files": 3,
-   "bytes": 21155,
-   "sha256": "93191d404962a3db7e853409e7679bb587776605f0a3afaaf2bbae1458a104fd",
+   "files": 4,
+   "bytes": 23778,
+   "sha256": "daf8d82a688f81e90d80fec30725d301de5b2b1f6867141066b9117f5286889d",
    "skill_md_sha256": "3dd467b79dcf2218f3655a205cc4756bfe9b91f1a8ba1492011db0dced6615ad"
   },
   {
@@ -39277,9 +38425,9 @@
    "license": "MIT",
    "url": "https://github.com/wshobson/agents/tree/HEAD/plugins/llm-finetuning/skills/vision-sft",
    "status": "present",
-   "files": 3,
-   "bytes": 14275,
-   "sha256": "8f0c971151cacc258525bab6f4ba2c602aebc0a4550ed4e7b02724079ff11019",
+   "files": 4,
+   "bytes": 16898,
+   "sha256": "88f7ecb860347e80d0b1e8ee10d50bdd04537095d1afcb4968be9d68c90b4c15",
    "skill_md_sha256": "376e4bc7fa04d037025ef7c83fc994b5aedfdee96c76f3a1c3e5da0379e3f706"
   },
   {

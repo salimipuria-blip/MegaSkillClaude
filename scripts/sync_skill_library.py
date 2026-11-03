@@ -3,13 +3,15 @@
 Run from any directory: python scripts/sync_skill_library.py [--check]
 The project index is canonical. Companion files stay duplicated for portable installation, but
 CI verifies their bytes; edit library/ or psk/data/, not the generated plugin references.
-No originals or unrecognized files are deleted.
+No originals are deleted. In the generated plugin it removes the folder of a skill that is no longer
+indexed and notice/domain files it no longer writes; extra files inside a live skill's folder are kept.
 """
 from __future__ import annotations
 
 import argparse
 import copy
 import json
+import shutil
 from collections import defaultdict
 from pathlib import Path
 
@@ -90,8 +92,10 @@ def synchronize(root: Path = ROOT, *, check: bool = False) -> list[str]:
 
     rendered_domains = [(directory, domains(payload)) for directory, payload in [(PROJECT, project), (PLUGIN, plugin)]]
     changed = []
+    expected: set[Path] = set()
     def update(path: Path, data: bytes) -> None:
         _inside(root, path)
+        expected.add(path)
         if path.is_file() and path.read_bytes() == data:
             return
         changed.append(str(path.relative_to(root)))
@@ -117,6 +121,21 @@ def synchronize(root: Path = ROOT, *, check: bool = False) -> list[str]:
     for path in sorted(licenses.rglob('*')):
         if path.is_file():
             update(_inside(root, PLUGIN / 'references/licenses' / path.relative_to(licenses)), _inside(licenses, path).read_bytes())
+    # A skill, domain or notice removed from the canonical side would otherwise stay installable
+    # forever. Only what sync owns outright is pruned: the folder of a skill that is no longer indexed,
+    # and notice/domain files it did not just write. Extra files inside a live skill's folder are kept.
+    stale = []
+    skills_tree = _inside(root, PLUGIN / 'references/skills')
+    if skills_tree.is_dir():
+        stale += [path for path in sorted(skills_tree.iterdir()) if path.name not in seen]
+    for tree in (PLUGIN / 'references/licenses', PROJECT / 'references/domains', PLUGIN / 'references/domains'):
+        tree = _inside(root, tree)
+        if tree.is_dir():
+            stale += [path for path in sorted(tree.rglob('*')) if path.is_file() and path not in expected]
+    for path in stale:
+        changed.append(str(path.relative_to(root)))
+        if not check:
+            shutil.rmtree(path) if path.is_dir() and not path.is_symlink() else path.unlink()
     return changed
 
 

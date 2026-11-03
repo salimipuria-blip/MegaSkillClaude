@@ -1,25 +1,14 @@
 import type { Customer, DB, PaymentMethod, Product, Sale, Settings, User } from './types';
 import type { RoleId } from './types';
-import { hashPassword } from '../lib/crypto';
+import { hashPassword, randomSalt } from '../lib/crypto';
+import { issueInitialPasswords, type PasswordMap } from './initial-passwords';
 import { computeCart } from './sales';
 import { addDays, startOfDay } from '../lib/format';
 
 export const SCHEMA_VERSION = 2;
 
-/**
- * First-login passwords, unique per account because the password alone
- * identifies the user. Every account must replace it on first sign-in.
- */
-export const DEFAULT_PASSWORDS: Record<string, string> = {
-  'u-owner': 'fjcod1405',
-  'u-manager': '111111',
-  'u-deputy': '222222',
-  'u-cashier-1': '333331',
-  'u-cashier-2': '333332',
-  'u-cons-1': '444441',
-  'u-cons-2': '444442',
-  'u-cons-3': '444443',
-};
+/** Seeded staff accounts. Their first-login passwords come from issueInitialPasswords(). */
+export const SEED_USER_IDS = ['u-owner', 'u-manager', 'u-deputy', 'u-cashier-1', 'u-cashier-2', 'u-cons-1', 'u-cons-2', 'u-cons-3'] as const;
 
 export function defaultSettings(): Settings {
   return {
@@ -52,14 +41,14 @@ function mulberry32(seed: number) {
   };
 }
 
-function makeUser(id: string, name: string, role: RoleId, now: number, extra: Partial<User> = {}): User {
-  const salt = `${id}-salt`;
+function makeUser(id: string, name: string, role: RoleId, now: number, passwords: PasswordMap, extra: Partial<User> = {}): User {
+  const salt = randomSalt();
   return {
     id,
     name,
     role,
     salt,
-    passwordHash: hashPassword(DEFAULT_PASSWORDS[id], salt),
+    passwordHash: hashPassword(passwords[id], salt),
     active: true,
     mustChangePassword: true,
     monthlyTarget: 0,
@@ -69,16 +58,16 @@ function makeUser(id: string, name: string, role: RoleId, now: number, extra: Pa
   };
 }
 
-export function defaultUsers(now: number): User[] {
+export function defaultUsers(now: number, passwords: PasswordMap = issueInitialPasswords([...SEED_USER_IDS])): User[] {
   return [
-    makeUser('u-owner', 'FJCOD', 'owner', now),
-    makeUser('u-manager', 'مدیر فروشگاه', 'manager', now),
-    makeUser('u-deputy', 'معاون فروشگاه', 'deputy', now),
-    makeUser('u-cashier-1', 'صندوقدار ۱', 'cashier', now),
-    makeUser('u-cashier-2', 'صندوقدار ۲', 'cashier', now),
-    makeUser('u-cons-1', 'مشاور ۱ — سارا', 'consultant', now, { monthlyTarget: 600_000_000, commissionPct: 2 }),
-    makeUser('u-cons-2', 'مشاور ۲ — نیما', 'consultant', now, { monthlyTarget: 500_000_000, commissionPct: 2 }),
-    makeUser('u-cons-3', 'مشاور ۳ — مهسا', 'consultant', now, { monthlyTarget: 450_000_000, commissionPct: 2 }),
+    makeUser('u-owner', 'FJCOD', 'owner', now, passwords),
+    makeUser('u-manager', 'مدیر فروشگاه', 'manager', now, passwords),
+    makeUser('u-deputy', 'معاون فروشگاه', 'deputy', now, passwords),
+    makeUser('u-cashier-1', 'صندوقدار ۱', 'cashier', now, passwords),
+    makeUser('u-cashier-2', 'صندوقدار ۲', 'cashier', now, passwords),
+    makeUser('u-cons-1', 'مشاور ۱ — سارا', 'consultant', now, passwords, { monthlyTarget: 600_000_000, commissionPct: 2 }),
+    makeUser('u-cons-2', 'مشاور ۲ — نیما', 'consultant', now, passwords, { monthlyTarget: 500_000_000, commissionPct: 2 }),
+    makeUser('u-cons-3', 'مشاور ۳ — مهسا', 'consultant', now, passwords, { monthlyTarget: 450_000_000, commissionPct: 2 }),
   ];
 }
 

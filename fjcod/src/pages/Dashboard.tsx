@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { AlertTriangle, Banknote, Flame, Package, Receipt, ShoppingBag, ShoppingCart, Target, TrendingUp, Trophy } from 'lucide-react';
+import { TriangleAlert, Banknote, Flame, Package, Receipt, ShoppingBag, ShoppingCart, Target, TrendingUp, Trophy } from 'lucide-react';
 import type { PageId } from '../App';
 import { can, currentUser, openShiftOf, useStore } from '../core/store';
 import { comparePeriod, dailySeries, growthStreak, sellerOf, targetProgress, topProducts } from '../core/growth';
@@ -143,7 +143,7 @@ export function Dashboard({ go }: { go: (p: PageId) => void }) {
         {storeWide ? (
           <section className="card">
             <div className="card-head">
-              <h3 className="row" style={{ gap: 8 }}><AlertTriangle size={16} color="var(--warn)" /> کم‌موجودی</h3>
+              <h3 className="row" style={{ gap: 8 }}><TriangleAlert size={16} color="var(--warn)" /> کم‌موجودی</h3>
               <button className="btn btn-sm" onClick={() => go('products')}>انبار</button>
             </div>
             {lowStock.length === 0 ? (

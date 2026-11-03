@@ -2,11 +2,11 @@
 
 Cinematic digital brand book for **BISON** — a luxury outdoor house.
 
-**Live site (GitHub Pages):** https://salimipuria-blip.github.io/bison-brand-book/
+**Source:** `bison-brand-book/` in the private `MegaSkillClaude` monorepo (deployed by Vercel).
+The old standalone repo and its GitHub Pages site are retired (Pages returns 404, raw links 403).
 
-**Repo:** https://github.com/salimipuria-blip/bison-brand-book
-
-**Download ZIP:** https://github.com/salimipuria-blip/bison-brand-book/raw/arena/01a016c5-bison-brand-book/public/BISON-Brand-Book.zip
+**Download ZIP:** served by the site at `/BISON-Brand-Book.zip` (`public/BISON-Brand-Book.zip`). It opens
+offline: unzip and double-click `index.html`. Rebuild it with `npm run zip` after changing the site.
 
 The site is a long-scroll identity system with live **desktop** and **mobile** product demos, built from the [UI/UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) design-intelligence workflow (Scroll-Triggered Storytelling, exaggerated minimalism, Cormorant + Montserrat, iron / bone / gold).
 
@@ -20,8 +20,10 @@ npm run dev
 Then open the local URL. The dev server binds to `0.0.0.0` so preview hosts work.
 
 ```bash
+npm test        # static, accessibility and ZIP contracts (node:test, no extra deps; needs `unzip`)
 npm run build
 npm run preview
+npm run zip     # rebuild the offline ZIP (needs `zip`)
 ```
 
 ## What’s inside

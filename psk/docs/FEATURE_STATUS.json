@@ -1,8 +1,31 @@
 {
- "as_of": "2026-10-04",
- "implemented": ["lexical IDF router with Persian bridges", "3000 SKILL.md bodies with SHA-256 integrity check", "repaired-hash allowlist for 10 skills", "plan mode with verified skill instructions", "free-tier provider adapter with failover and :free guard", "answer mode with honest failure codes", "bearer-token API guard, fail-closed on Vercel", "local dev server for browser QA", "routing contract snapshot (108 fixed cases) in npm test", "offline routing benchmark (npm run bench:routing)", "opt-in privacy-safe routing telemetry (PSK_TELEMETRY, off by default)"],
- "pending_owner_action": ["create Vercel project from GitHub (root: psk) if automatic linking fails", "add ENGINE_TOKEN", "add at least one free provider key"],
- "pending_build": ["cookie session instead of pasted bearer token", "task history (Supabase free tier)", "30-frame narrative map and cinematic story rebuild", "PWA manifest and icons", "MCP/tool execution", "router gold-set evaluation in CI"],
+ "as_of": "2026-10-14",
+ "implemented": [
+  "lexical IDF router with Persian bridges",
+  "3000 SKILL.md bodies with SHA-256 integrity check",
+  "repaired-hash allowlist for 10 skills",
+  "plan mode with verified skill instructions",
+  "free-tier provider adapter with failover and :free guard",
+  "answer mode with honest failure codes",
+  "bearer-token API guard, fail-closed on Vercel",
+  "local dev server for browser QA",
+  "routing contract snapshot (108 fixed cases) in npm test",
+  "offline routing benchmark (npm run bench:routing)",
+  "opt-in privacy-safe routing telemetry (PSK_TELEMETRY, off by default)",
+  "labelled router gold set (108 cases) with accuracy metric and CI floor (>=80% top-3)"
+ ],
+ "pending_owner_action": [
+  "create Vercel project from GitHub (root: psk) if automatic linking fails",
+  "add ENGINE_TOKEN",
+  "add at least one free provider key"
+ ],
+ "pending_build": [
+  "cookie session instead of pasted bearer token",
+  "task history (Supabase free tier)",
+  "30-frame narrative map and cinematic story rebuild",
+  "PWA manifest and icons",
+  "MCP/tool execution"
+ ],
  "mocked": [],
  "blocked": []
 }
