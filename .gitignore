@@ -8,3 +8,13 @@ node_modules/
 !.env.example
 !**/.env.example
 !**/.env.*.example
+
+# Local tooling and build output (audit baseline, 2026-11)
+.venv/
+venv/
+dist/
+build/
+e2e-shots/
+*.log
+.pytest_cache/
+.ruff_cache/

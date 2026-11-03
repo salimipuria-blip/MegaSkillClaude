@@ -19,6 +19,10 @@ CI واحد (`.github/workflows/ci.yml`) روی هر PR تست و بیلد هم�
 
 اصلاحات امنیتی، تفاوت تست محلی با انتشار زنده، و مراحل فعال‌سازی: [گزارش سخت‌سازی](docs/REPO_HARDENING.md). CHAM هنوز بک‌اند امن ندارد؛ محافظت نشست آن موقت است.
 
+ممیزی: [تحلیل عمیق مخزن](docs/REPO_DEEP_ANALYSIS_2026-11-03.md) ·
+[جعبه‌ابزار ممیزی حرفه‌ای](docs/AUDIT_TOOLKIT_2026-11.md) ·
+[ممیزی ریپوهای ستاره‌دار](docs/STARRED_REPOS_AUDIT_2026-11.md) (خروجی ماشین‌خوان: `docs/audit/starred-repos-2026-11.csv`).
+
 ## وصل کردن سایت‌های زنده به این مخزن
 
 `fjcod/`، `viking-team/` و `bison-brand-book/` هنوز از مخزن‌های قدیمی خودشان منتشر می‌شوند. تا وقتی این اتصال عوض نشود، تغییرات اینجا روی آن سایت‌ها نمی‌رود.
@@ -35,3 +39,26 @@ CI واحد (`.github/workflows/ci.yml`) روی هر PR تست و بیلد هم�
 [روال مدیریت پروژه و تست‌ها](.github/PROJECT_MANAGEMENT.md)،
 [چک‌لیست انتشار](.github/RELEASE_CHECKLIST.md) و
 [پیشنهاد نقشهٔ راه ۹۰روزه](docs/ROADMAP_90D.md) را ببینید.
+
+## امنیت و ممیزی (نسخهٔ ۲۰۲۶.۱۱.۰)
+
+هر یافتهٔ ممیزی به یک گیتِ اجراشدنی تبدیل شده است، نه یک ادعا در سند:
+
+| گیت | ابزار | کجا اجرا می‌شود |
+| --- | --- | --- |
+| قرارداد ممیزی (پین اکشن‌ها، هدرها، پرووننس، ممنوعیت `curl` به شل) | `python3 -m unittest tests.test_audit_contract` | pre-commit، `repo_health_check.sh`، CI |
+| اسکن راز | gitleaks (تاریخ کامل) + `detect-secrets` با `.secrets.baseline` | `security.yml`، pre-commit |
+| تحلیل ایستا | Semgrep با قواعد پروژه در `.semgrep/rules.yml` + قواعد رجیستری | `security.yml` |
+| سخت‌سازی ورک‌فلوها | `zizmor` (persona: auditor) | `security.yml`، محلی |
+| آسیب‌پذیری وابستگی‌ها | `npm audit` روی lockfileهای متعهدشده | `security.yml` |
+| SBOM + پرووننس مهارت‌ها | `scripts/audit/make_sbom.mjs`، `scripts/audit/skill_provenance.py` | CI + هلث‌چک |
+
+```bash
+python3 -m venv .venv && . .venv/bin/activate
+pip install semgrep bandit detect-secrets zizmor
+bash scripts/audit/run_scans.sh          # همهٔ گیت‌ها + خروجی در docs/audit/
+```
+
+* گزارش کامل اصلاحات: [`docs/AUDIT_REMEDIATION_2026-11-04.md`](docs/AUDIT_REMEDIATION_2026-11-04.md)
+* سیاست گزارش آسیب‌پذیری: [`SECURITY.md`](SECURITY.md)
+* مجوز و متون شخص ثالث: [`LICENSE`](LICENSE)، [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md)

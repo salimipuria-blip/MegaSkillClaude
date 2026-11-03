@@ -1,0 +1,41 @@
+MIT License
+
+Copyright (c) 2026 Puria Salimi (salimipuria-blip)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+Scope note / محدودهٔ مجوز
+
+This MIT license covers the original code in this repository (applications,
+engine, tooling, documentation and media that were produced for this project).
+
+Third-party material is NOT relicensed by this file:
+
+* `library/**` and the skills vendored from upstream repositories keep their
+  upstream licenses. Provenance and the license of every vendored repository
+  are recorded in `library/github-skills/PROVENANCE.json` and
+  `docs/audit/starred-repos-2026-11.csv`.
+* Any dependency installed from npm/PyPI keeps its own license; the generated
+  inventory is `docs/audit/sbom.cdx.json`.
+* Images, fonts and brand assets keep the terms stated next to them
+  (`brand/`, `brands/`, `bison-brand-book/`, `viking-team/`).
+
+If a vendored folder carries its own `LICENSE`, that file wins for that folder.

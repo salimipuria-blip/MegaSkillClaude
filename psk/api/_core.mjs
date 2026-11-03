@@ -2,6 +2,7 @@ import crypto from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 import {loadRegistry, routeSkills, skillTexts} from '../engine/router.mjs';
 import {chat, providerStatus} from '../engine/providers.mjs';
+import {rateLimit} from './_limits.mjs';
 
 // Registry and verified SKILL.md bodies are bundled with the function (vercel.json includeFiles).
 const registry=loadRegistry(new URL('../data/skills-registry.json', import.meta.url),{
@@ -9,11 +10,16 @@ const registry=loadRegistry(new URL('../data/skills-registry.json', import.meta.
   repairedFile:fileURLToPath(new URL('../data/skills-repaired.json', import.meta.url))});
 const MAX_INPUT=4000;
 export function headers(res) {
-  res.setHeader('Cache-Control','no-store');
+  res.setHeader('Cache-Control','no-store, max-age=0');
   res.setHeader('X-Content-Type-Options','nosniff');
-  res.setHeader('Content-Security-Policy',"default-src 'none'; frame-ancestors 'none'");
+  res.setHeader('X-Frame-Options','DENY');
+  res.setHeader('Referrer-Policy','no-referrer');
+  res.setHeader('Cross-Origin-Resource-Policy','same-origin');
+  res.setHeader('Content-Security-Policy',"default-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'");
   return res;
 }
+// Burst brake applied before authentication so token guessing is bounded too.
+export function limit(req,res,scope){return rateLimit(req,res,scope);}
 export function reply(res,status,body) {return headers(res).status(status).json(body);}
 export function guard(req,res,method) {
   if(req.method!==method){res.setHeader('Allow',method);reply(res,405,{error:'Method not allowed'});return false;}

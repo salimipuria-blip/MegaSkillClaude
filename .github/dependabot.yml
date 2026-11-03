@@ -1,4 +1,8 @@
 version: 2
+
+# Dependency updates are deliberately slow and grouped:
+# a cooldown keeps a freshly published (possibly compromised) release from
+# reaching CI on day zero, and grouped PRs keep the review surface small.
 updates:
   # Only actual application manifests, not vendored skill examples.
   # No root npm manifest or orchestrator pip manifest exists yet.
@@ -6,23 +10,66 @@ updates:
     directory: "/psk"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 7
+    open-pull-requests-limit: 5
+    groups:
+      psk-minor-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
   - package-ecosystem: "npm"
     directory: "/lithos"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 7
+    open-pull-requests-limit: 5
+    groups:
+      lithos-minor-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
   - package-ecosystem: "npm"
     directory: "/fjcod"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 7
+    open-pull-requests-limit: 5
+    groups:
+      fjcod-minor-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
   - package-ecosystem: "npm"
     directory: "/bison-brand-book"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 7
+    open-pull-requests-limit: 5
+    groups:
+      bison-minor-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
   - package-ecosystem: "npm"
     directory: "/hermes"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 7
+    open-pull-requests-limit: 5
+    groups:
+      hermes-minor-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+  # GitHub Actions are updated in one grouped PR; every merged bump still has to
+  # keep the SHA-pin contract enforced by tests/test_audit_contract.py.
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 7
+    open-pull-requests-limit: 3
+    groups:
+      actions-all:
+        patterns: ["*"]

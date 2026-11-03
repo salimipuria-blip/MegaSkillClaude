@@ -1,0 +1,39 @@
+# Gitleaks configuration for salimipuria-blip/MegaSkillClaude
+#
+# Policy: the default rule set stays ON (never disable a rule to make CI green).
+# Anything excluded below is either (a) third-party reference material that is
+# audited by its own pipeline (SkillSpector + PROVENANCE.json hashes), or
+# (b) obviously fake test material that must never be rotated.
+title = "MegaSkillClaude secret policy"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Documented exclusions; every entry needs a reason."
+paths = [
+  # Vendored skill sources: third-party content, hashed in PROVENANCE.json and
+  # scanned by the skill-supply-chain job instead of the secret scanner.
+  '''library/github-skills/.*''',
+  # Test fixtures that intentionally contain scanner-shaped strings.
+  '''psk/tests/.*''',
+  '''tests/fixtures/.*''',
+  # Sanitized examples only (real dotenv files are git-ignored and blocked).
+  '''.*\.env(\..*)?\.example$''',
+  # Audit evidence: scanner output may quote a rule description, not a secret.
+  '''docs/audit/.*''',
+]
+regexes = [
+  # Fake tokens used by the test suite and the example env file.
+  '''test-example-token-[0-9a-zA-Z]{8,}''',
+  '''gsk_test[a-zA-Z0-9_]*''',
+  '''AIza_test[a-zA-Z0-9_]*''',
+  '''sk_test_[a-zA-Z0-9]*''',
+]
+stopwords = [
+  "example",
+  "placeholder",
+  "changeme",
+  "your-token-here",
+  "xxxxxxxx",
+]

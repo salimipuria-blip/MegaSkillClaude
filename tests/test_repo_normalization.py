@@ -36,6 +36,11 @@ class HealthCheckTests(unittest.TestCase):
             'orchestrator/scripts/audit/check_repository_contract.py',
             'viking-team/team/index.html', 'viking-team/team/styles.css',
             'viking-team/team/app.js',
+            # 2026-11-04 audit baseline: the health check now also requires the
+            # licence/security baseline and runs the audit contract.
+            'LICENSE', 'SECURITY.md', 'CHANGELOG.md', 'THIRD-PARTY-NOTICES.md',
+            '.github/workflows/security.yml', 'tests/test_audit_contract.py',
+            'psk/api/_limits.mjs', 'psk/tests/limits.test.mjs',
         ]
         for name in files:
             file = self.root / name

@@ -1,0 +1,15 @@
+# Keep Semgrep focused on first-party code: vendored skills and generated
+# evidence are audited by their own jobs (provenance hashes + SkillSpector).
+library/
+docs/
+brand/
+brands/
+bison-brand-book/public/
+viking-team/media/
+psk/data/
+node_modules/
+*.min.js
+*.svg
+*.webp
+*.woff2
+*.pdf
