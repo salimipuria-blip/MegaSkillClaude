@@ -26,6 +26,7 @@ concurrency:
 jobs:
   probe:
     runs-on: ubuntu-latest
+    environment: production-health
     timeout-minutes: 10
     steps:
       - name: Wait for Workers Builds to deploy the push

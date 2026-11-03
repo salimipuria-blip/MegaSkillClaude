@@ -6,14 +6,20 @@ updates:
     directory: "/psk"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 7
   - package-ecosystem: "npm"
     directory: "/lithos"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 7
   - package-ecosystem: "npm"
     directory: "/fjcod"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 7
     # react and react-dom are an atomic pair here too, but for a third reason. A
     # single-package bump does not break `npm ci` (both ranges are ^19.1.0, so no
     # peer range is violated) and it does not break the build or the unit tests -
@@ -33,14 +39,20 @@ updates:
     directory: "/bison-brand-book"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 7
   - package-ecosystem: "npm"
     directory: "/hermes"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 7
   - package-ecosystem: "npm"
     directory: "/viking-team/motion"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 7
     # remotion and @remotion/cli must carry the same exact version, which
     # viking-team/motion/tests/composition.test.mjs asserts twice (equality, and a
     # ^\d+\.\d+\.\d+$ pin). One PR per package therefore always fails that test: that
@@ -69,7 +81,11 @@ updates:
     directory: "/brands/viking-offroad/stickers/src"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 7
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 7

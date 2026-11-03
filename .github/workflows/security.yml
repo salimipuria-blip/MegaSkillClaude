@@ -1,0 +1,183 @@
+name: Security
+
+# Every gate here maps to an audit finding (docs/STARRED_REPOS_AUDIT_2026-11.md
+# and docs/REPO_DEEP_ANALYSIS_2026-11-03.md). Nothing in this workflow is
+# advisory except the registry-rule pass, which needs network access.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    # Weekly, so a new advisory against an unchanged lockfile still fails loudly.
+    - cron: "0 4 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: security-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  GITLEAKS_VERSION: "8.30.1"
+  SEMGREP_VERSION: "1.183.0"
+
+jobs:
+  secrets:
+    name: Secrets (gitleaks, full history)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Install gitleaks with checksum verification
+        shell: bash
+        run: |
+          set -euo pipefail
+          base="https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}"
+          asset="gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+          curl -fsSL --proto '=https' --tlsv1.2 -o /tmp/"$asset" "$base/$asset"
+          curl -fsSL --proto '=https' --tlsv1.2 -o /tmp/gitleaks-checksums.txt "$base/gitleaks_${GITLEAKS_VERSION}_checksums.txt"
+          ( cd /tmp && grep -E " \*?${asset}$" gitleaks-checksums.txt | sha256sum -c - )
+          tar -xzf /tmp/"$asset" -C /tmp gitleaks
+          install -m 0755 /tmp/gitleaks /usr/local/bin/gitleaks
+          gitleaks version
+      - name: Scan tracked history
+        shell: bash
+        run: |
+          set -euo pipefail
+          common=(--config .gitleaks.toml --redact --no-banner --exit-code 1)
+          if gitleaks git --help >/dev/null 2>&1; then
+            gitleaks git . "${common[@]}"
+          else
+            gitleaks detect --source . "${common[@]}"
+          fi
+
+  semgrep:
+    name: Static analysis (Semgrep)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: "3.12"
+      - name: Install Semgrep
+        run: python -m pip install --disable-pip-version-check "semgrep==${SEMGREP_VERSION}"
+      - name: Project rules (blocking)
+        run: |
+          semgrep scan --config .semgrep/rules.yml --severity ERROR --error \
+            --sarif --output semgrep-local.sarif --quiet .
+      - name: Registry rules (second opinion)
+        continue-on-error: true
+        run: |
+          semgrep scan --config p/secrets --severity ERROR --error --quiet .
+          semgrep scan --config p/default --severity ERROR --error --quiet .
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: always()
+        with:
+          name: semgrep-sarif
+          path: semgrep-local.sarif
+          if-no-files-found: ignore
+
+  workflows:
+    name: Workflow hardening (zizmor)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+          persist-credentials: false
+      - uses: zizmorcore/zizmor-action@45d7276c9ca790aabd705e31ca99c6185c3e76dd # v0.8.1
+        with:
+          version: "1.32.0"
+          persona: auditor
+          min-severity: medium
+          min-confidence: high
+          online-audits: false
+          advanced-security: false
+          inputs: "."
+
+  contract:
+    name: Audit contract (tests/test_audit_contract.py)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+      - run: python -m unittest tests.test_audit_contract -v
+      - name: Skill provenance has not drifted
+        run: python3 scripts/audit/skill_provenance.py --check
+
+  dependencies:
+    name: Dependencies (${{ matrix.app }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        app: [fjcod, bison-brand-book, hermes, lithos]
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+      - name: Audit against the committed lockfile
+        working-directory: ${{ matrix.app }}
+        run: |
+          npm ci --ignore-scripts --no-audit --no-fund
+          npm audit --audit-level=high
+
+  sbom:
+    name: SBOM is current
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+      - run: node scripts/audit/make_sbom.mjs
+      - name: SBOM must match the committed lockfiles
+        run: git diff --exit-code -- docs/audit/sbom.cdx.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: sbom-cyclonedx
+          path: docs/audit/sbom.cdx.json
+
+  dependency-review:
+    name: Dependency review (pull requests)
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+          persist-credentials: false
+      - uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0
+        with:
+          fail-on-severity: high
+          comment-summary-in-pr: on-failure

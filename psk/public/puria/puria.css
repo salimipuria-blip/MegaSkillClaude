@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@1,6..96,500&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&family=Inter:wght@400;500;600;700;800;900&display=swap');
+/* Self-hosted fonts (SIL OFL 1.1) — removes the Google Fonts dependency and keeps CSP font-src 'self'. */
+@import url('./fonts/fonts.css');
 
 :root { font-family: Inter, Arial, sans-serif; color: #11110f; background: #ece8e1; --paper: #eeeae3; --ink: #10100f; --scarlet: #ff2400; --line: rgba(16, 16, 15, .18); }
 * { box-sizing: border-box; }

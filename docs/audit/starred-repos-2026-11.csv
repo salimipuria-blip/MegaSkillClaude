@@ -1,0 +1,110 @@
+repo,category,stars,license,pushed,files,skill_md,ci_workflows,tests,verdict,flags,vendored_skills
+morluto/rea,agent,426569,MIT,2026-11-03,7095,5,35,3536,ℹ️ فقط بررسی سطحی,,0
+msitarzewski/agency-agents,agent,166284,MIT,2026-10-25,384,0,6,0,ℹ️ فقط بررسی سطحی,بدون تست,0
+langchain-ai/langchain,agent,148956,MIT,2026-11-03,3277,0,27,1098,ℹ️ فقط بررسی سطحی,,0
+paperclipai/paperclip,agent,110791,MIT,2026-11-03,13780,83,30,5005,ℹ️ فقط بررسی سطحی,,0
+Panniantong/Agent-Reach,agent,108394,MIT,2026-11-01,122,1,2,31,✅ قابل استفاده با pin,curl|bash در مستندات,0
+ChatGPTNextWeb/NextChat,agent,88937,MIT,2026-10-20,423,0,7,36,ℹ️ فقط بررسی سطحی,,0
+heygen-com/hyperframes,agent,78274,Apache-2.0,2026-11-03,9634,28,21,3009,ℹ️ فقط بررسی سطحی,,0
+vectorize-io/hindsight,agent,58479,MIT,2026-11-03,5202,20,9,1310,ℹ️ فقط بررسی سطحی,,0
+alibaba/open-code-review,agent,49359,Apache-2.0,2026-11-03,1132,4,14,50,ℹ️ فقط بررسی سطحی,,0
+THU-MAIC/OpenMAIC,agent,42586,MIT,2026-11-03,3851,26,8,1438,ℹ️ فقط بررسی سطحی,,0
+Tencent/WeKnora,agent,36381,NOASSERTION,2026-11-03,6191,4,13,432,ℹ️ فقط بررسی سطحی,SPDX نامشخص,0
+1jehuang/jcode,agent,21441,MIT,2026-11-03,2857,1,18,254,ℹ️ فقط بررسی سطحی,,0
+TencentCloud/Octop,agent,11522,MIT,2026-11-03,4192,63,11,863,ℹ️ فقط بررسی سطحی,,0
+CopilotKit/OpenBot,agent,10005,MIT,2026-11-03,2709,3,6,1077,ℹ️ فقط بررسی سطحی,,0
+macro-inc/macro,agent,6113,AGPL-3.0,2026-11-03,40132,29,60,3880,⚠️ copyleft,copyleft,0
+agent-substrate/substrate,agent,6050,Apache-2.0,2026-11-03,13999,6,4,50,ℹ️ فقط بررسی سطحی,,0
+youtube-jono/seo-agent,agent,31,—,2026-09-10,88,0,0,0,⛔ بدون مجوز,بدون مجوز در ریشه|بدون CI|بدون تست,0
+trimstray/the-book-of-secret-knowledge,app,255636,MIT,2024-11-19,6,0,0,0,ℹ️ فقط بررسی سطحی,بدون CI|بدون تست|بیش از ۱ سال بدون تغییر,0
+n8n-io/n8n,app,209464,NOASSERTION,2026-11-03,33261,41,109,12421,ℹ️ فقط بررسی سطحی,SPDX نامشخص,0
+microsoft/vscode,app,194532,MIT,2026-11-03,20748,79,14,7109,ℹ️ فقط بررسی سطحی,,0
+521xueweihan/HelloGitHub,app,186637,—,2026-10-31,268,0,0,0,⛔ بدون مجوز,بدون مجوز در ریشه|بدون CI|بدون تست,0
+f/prompts.chat,app,175717,NOASSERTION,2026-11-03,1814,4,4,103,ℹ️ فقط بررسی سطحی,SPDX نامشخص,0
+microsoft/generative-ai-for-beginners,app,122920,MIT,2026-11-02,11070,1,7,4,ℹ️ فقط بررسی سطحی,,0
+immich-app/immich,app,118098,AGPL-3.0,2026-11-03,3587,0,27,502,⚠️ copyleft,copyleft,0
+microsoft/TypeScript,app,111729,Apache-2.0,2026-11-03,51386,4,13,4432,ℹ️ فقط بررسی سطحی,tree ناقص,0
+denoland/deno,app,108793,MIT,2026-10-29,14954,6,11,12704,ℹ️ فقط بررسی سطحی,,0
+angular/angular,app,101098,MIT,2026-11-03,11704,7,11,4615,ℹ️ فقط بررسی سطحی,,0
+ant-design/ant-design,app,100064,MIT,2026-11-03,5068,9,33,1160,ℹ️ فقط بررسی سطحی,,0
+OpenCut-app/OpenCut,app,97238,MIT,2026-09-24,130,0,2,0,ℹ️ فقط بررسی سطحی,بدون تست,0
+storybookjs/storybook,app,91442,MIT,2026-11-03,9086,24,20,1169,ℹ️ فقط بررسی سطحی,,0
+mermaid-js/mermaid,app,90995,MIT,2026-11-03,4364,0,25,426,ℹ️ فقط بررسی سطحی,,0
+jingyaogong/minimind,app,64833,Apache-2.0,2026-10-27,49,0,0,0,ℹ️ فقط بررسی سطحی,بدون CI|بدون تست,0
+bilawalsidhu/gods-eye-view,app,62519,NOASSERTION,2026-11-03,2850,1,1,875,ℹ️ فقط بررسی سطحی,SPDX نامشخص,0
+HKUDS/DeepTutor,app,54688,Apache-2.0,2026-10-31,4471,8,8,1478,ℹ️ فقط بررسی سطحی,,0
+dkhamsing/open-source-ios-apps,app,52995,CC0-1.0,2026-11-03,28,0,3,0,ℹ️ فقط بررسی سطحی,بدون تست,0
+dypsilon/frontend-dev-bookmarks,app,47699,—,2024-05-21,62,0,0,0,⛔ بدون مجوز,بدون مجوز در ریشه|بدون CI|بدون تست|بیش از ۱ سال بدون تغییر,0
+tashfeenahmed/freellmapi,app,46967,MIT,2026-11-02,1302,0,4,471,ℹ️ فقط بررسی سطحی,,0
+DataExpert-io/data-engineer-handbook,app,44960,—,2026-08-03,124,0,0,5,⛔ بدون مجوز,بدون مجوز در ریشه|بدون CI,0
+pingdotgg/t3code,app,44055,MIT,2026-11-03,29224,15,24,7581,ℹ️ فقط بررسی سطحی,,0
+psf/black,app,42108,MIT,2026-11-02,559,0,13,406,ℹ️ فقط بررسی سطحی,,0
+lightpanda-io/browser,app,41130,AGPL-3.0,2026-11-03,1493,0,12,740,⚠️ copyleft,copyleft,0
+Twigpine/openclaude,app,34266,NOASSERTION,2026-11-02,3640,0,5,881,ℹ️ فقط بررسی سطحی,SPDX نامشخص,0
+standard/standard,app,29425,MIT,2025-07-11,111,0,4,5,ℹ️ فقط بررسی سطحی,بیش از ۱ سال بدون تغییر,0
+eslint/eslint,app,27604,MIT,2026-11-02,2361,0,10,1204,ℹ️ فقط بررسی سطحی,,0
+Renhuai123/ziwei-doushu,app,14937,MIT,2026-11-03,129,0,1,17,ℹ️ فقط بررسی سطحی,,0
+HumanAIGC/AnimateAnyone,app,14782,Apache-2.0,2025-09-20,3,0,0,0,ℹ️ فقط بررسی سطحی,بدون CI|بدون تست|بیش از ۱ سال بدون تغییر,0
+milind-soni/OpenMausBot,app,11659,Apache-2.0,2026-11-03,6655,6,16,2234,ℹ️ فقط بررسی سطحی,,0
+anthropics/claude-code-action,app,9777,MIT,2026-11-03,225,0,14,66,ℹ️ فقط بررسی سطحی,,0
+0xzr/freellmpool,app,144,MIT,2026-10-30,317,0,12,77,ℹ️ فقط بررسی سطحی,,0
+AnganSamadder/openkilo,app,18,MIT,2026-02-13,23,0,2,0,ℹ️ فقط بررسی سطحی,بدون تست,0
+sindresorhus/awesome,awesome,530260,CC0-1.0,2026-09-02,23,0,1,0,مرجع,,0
+awesome-selfhosted/awesome-selfhosted,awesome,333393,NOASSERTION,2026-11-02,6,0,0,0,مرجع,SPDX نامشخص|بدون CI,0
+vinta/awesome-python,awesome,332236,NOASSERTION,2026-11-02,131,4,2,5,مرجع,SPDX نامشخص,0
+avelino/awesome-go,awesome,191896,MIT,2026-11-03,108,0,6,0,مرجع,,0
+Hack-with-Github/Awesome-Hacking,awesome,124511,CC0-1.0,2026-10-27,7,0,1,0,مرجع,,0
+MunGell/awesome-for-beginners,awesome,91027,—,2026-10-01,10,0,3,0,مرجع,بدون مجوز در ریشه,0
+DopplerHQ/awesome-interview-questions,awesome,85363,—,2024-07-29,6,0,1,0,مرجع,بدون مجوز در ریشه|archived|بیش از ۱ سال بدون تغییر,0
+binhnguyennus/awesome-scalability,awesome,75375,MIT,2026-01-04,10,0,0,0,مرجع,بدون CI,0
+enaqx/awesome-react,awesome,75160,—,2026-09-04,2,0,0,0,مرجع,بدون مجوز در ریشه|بدون CI,0
+prakhar1989/awesome-courses,awesome,72525,—,2023-05-04,3,0,0,0,مرجع,بدون مجوز در ریشه|بدون CI|بیش از ۱ سال بدون تغییر,0
+sindresorhus/awesome-nodejs,awesome,67368,CC0-1.0,2026-09-02,11,0,0,0,مرجع,بدون CI,0
+Solido/awesome-flutter,awesome,61773,—,2026-09-03,8,0,0,0,مرجع,بدون مجوز در ریشه|بدون CI,0
+rust-unofficial/awesome-rust,awesome,60306,CC0-1.0,2026-11-03,22,0,4,0,مرجع,,0
+tiimgreen/github-cheat-sheet,awesome,60139,MIT,2024-04-15,9,0,0,0,مرجع,بدون CI|بیش از ۱ سال بدون تغییر,0
+wasabeef/awesome-android-ui,awesome,58283,MIT,2026-06-05,412,0,0,0,مرجع,بدون CI,0
+hesreallyhim/awesome-claude-code,awesome,57180,NOASSERTION,2026-11-03,56,0,5,6,مرجع,SPDX نامشخص,0
+vsouza/awesome-ios,awesome,53857,MIT,2026-08-27,20,0,2,0,مرجع,,0
+VoltAgent/awesome-openclaw-skills,awesome,53527,MIT,2026-10-30,35,0,1,0,مرجع,,0
+lukasz-madon/awesome-remote-job,awesome,50330,—,2026-09-21,9,0,1,0,مرجع,بدون مجوز در ریشه,0
+DovAmir/awesome-design-patterns,awesome,49605,—,2024-10-25,3,0,0,0,مرجع,بدون مجوز در ریشه|بدون CI|بیش از ۱ سال بدون تغییر,0
+akullpp/awesome-java,awesome,49426,CC-BY-SA-4.0,2026-09-23,12,0,1,0,مرجع,share-alike,0
+brillout/awesome-react-components,awesome,48791,CC0-1.0,2026-01-26,5,0,1,0,مرجع,,0
+docker/awesome-compose,awesome,46628,CC0-1.0,2026-10-26,502,0,1,8,مرجع,,0
+ashishps1/awesome-system-design-resources,awesome,43052,GPL-3.0,2026-11-01,26,0,0,0,مرجع,copyleft|بدون CI,0
+goabstract/Awesome-Design-Tools,awesome,41741,MIT,2024-07-28,133,0,0,0,مرجع,بدون CI|بیش از ۱ سال بدون تغییر,0
+PatrickJS/awesome-cursorrules,awesome,41092,CC0-1.0,2026-05-30,295,0,1,9,مرجع,,0
+open-free-llm-api/awesome-freellm-apis,awesome,5087,MIT,2026-10-27,15,0,0,0,مرجع,بدون CI,0
+NVIDIA/SkillSpector,security,24191,Apache-2.0,2026-11-03,507,33,4,281,⚠️ با احتیاط,الگوی راز: 1,0
+NVIDIA/OpenShell,security,21042,Apache-2.0,2026-11-03,2199,29,58,327,ℹ️ فقط بررسی سطحی,,0
+obra/superpowers,skills,311788,MIT,2026-11-03,231,15,0,70,⚠️ با احتیاط,بدون CI|وندر شده: 13,13
+mattpocock/skills,skills,311268,MIT,2026-11-01,184,39,3,0,ℹ️ فقط بررسی سطحی,بدون تست|وندر شده: 31,31
+affaan-m/ECC,skills,296443,MIT,2026-11-02,4701,1068,15,585,⚠️ با احتیاط,الگوی راز: 8|وندر شده: 279,279
+multica-ai/andrej-karpathy-skills,skills,229011,—,2026-04-20,9,1,0,0,⛔ بدون مجوز,بدون مجوز در ریشه|بدون CI|بدون تست,0
+anthropics/skills,skills,187063,—,2026-10-28,446,20,0,1,⛔ بدون مجوز,بدون مجوز در ریشه|بدون CI,0
+DietrichGebert/ponytail,skills,183640,MIT,2026-10-29,216,12,2,24,✅ قابل استفاده با pin,وندر شده: 1,1
+nextlevelbuilder/ui-ux-pro-max-skill,skills,144718,MIT,2026-11-02,704,13,6,112,✅ قابل استفاده با pin,,0
+addyosmani/agent-skills,skills,113023,MIT,2026-11-01,240,25,1,7,✅ قابل استفاده با pin,وندر شده: 23,23
+thedotmack/claude-mem,skills,111727,Apache-2.0,2026-11-03,2889,44,9,1453,ℹ️ فقط بررسی سطحی,,0
+nexu-io/open-design,skills,105716,Apache-2.0,2026-11-03,14199,562,55,3199,ℹ️ فقط بررسی سطحی,,0
+ruvnet/RuView,skills,102222,MIT,2026-11-03,3881,54,38,428,ℹ️ فقط بررسی سطحی,,0
+pbakaus/impeccable,skills,101381,Apache-2.0,2026-11-03,4443,26,4,2546,ℹ️ فقط بررسی سطحی,,0
+tt-a1i/archify,skills,93110,Apache-2.0,2026-11-03,1189,5,6,360,ℹ️ فقط بررسی سطحی,وندر شده: 1,1
+bytedance/deer-flow,skills,84950,MIT,2026-11-03,4501,33,19,1926,ℹ️ فقط بررسی سطحی,,0
+mvanhorn/last30days-skill,skills,66474,MIT,2026-11-03,615,1,9,318,✅ قابل استفاده با pin,,0
+cathrynlavery/diagram-design,skills,64628,MIT,2026-11-03,696,1,4,0,⚠️ با احتیاط,بدون تست|وندر شده: 1,1
+blader/humanizer,skills,64358,MIT,2026-10-28,14,1,1,0,⚠️ با احتیاط,بدون تست,0
+coreyhaines31/marketingskills,skills,58282,MIT,2026-10-31,817,53,6,147,✅ قابل استفاده با pin,,0
+wshobson/agents,skills,42152,MIT,2026-11-02,1172,185,6,45,✅ قابل استفاده با pin,وندر شده: 98,98
+anthropics/financial-services,skills,41020,Apache-2.0,2026-10-28,363,112,3,0,⚠️ با احتیاط,بدون تست,0
+anthropics/knowledge-work-plugins,skills,34590,Apache-2.0,2026-11-03,1285,252,6,0,⚠️ با احتیاط,بدون تست|curl|bash در مستندات,0
+mksglu/context-mode,skills,33366,NOASSERTION,2026-11-03,599,11,5,252,ℹ️ فقط بررسی سطحی,SPDX نامشخص,0
+cursor/plugins,skills,15230,—,2026-11-03,2061,173,1,789,⛔ بدون مجوز,بدون مجوز در ریشه,0
+humanlayer/skills,skills,5572,MIT,2026-11-01,103,7,0,0,ℹ️ فقط بررسی سطحی,بدون CI|بدون تست,0
+Jakeschincariol/instagram-agent-skill,skills,4639,MIT,2026-09-13,28,13,0,0,⚠️ با احتیاط,بدون CI|بدون تست,0
+expo/skills,skills,4036,MIT,2026-11-01,185,25,1,18,ℹ️ فقط بررسی سطحی,,0
+Dimillian/Skills,skills,4025,MIT,2026-03-29,102,16,0,0,⚠️ با احتیاط,بدون CI|بدون تست,0
+rebelytics/one-skill-to-rule-them-all,skills,3709,CC-BY-4.0,2026-11-02,40,1,1,1,✅ قابل استفاده با pin,,0
+chaseai-yt/claudex-loop,skills,3333,NOASSERTION,2026-10-14,29,6,1,1,✅ قابل استفاده با pin,SPDX نامشخص,0
+jgravelle/jcodemunch-mcp,skills,2832,NOASSERTION,2026-11-03,1830,11,20,1040,ℹ️ فقط بررسی سطحی,SPDX نامشخص,0

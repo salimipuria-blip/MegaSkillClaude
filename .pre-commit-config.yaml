@@ -1,4 +1,6 @@
 # Local-only hooks (hermes/#028, #065): no downloads, no network.
+# Audit toolchain (2026-11): pip install semgrep bandit detect-secrets zizmor
+# Full local audit: bash scripts/audit/run_scans.sh
 # Install: pipx install pre-commit && pre-commit install
 repos:
   - repo: local
@@ -20,3 +22,20 @@ repos:
         entry: python3 orchestrator/scripts/audit/check_repository_contract.py
         language: system
         pass_filenames: false
+      - id: audit-contract
+        name: Audit contract (action pinning, headers, provenance)
+        entry: python3 -m unittest tests.test_audit_contract
+        language: system
+        pass_filenames: false
+        files: ^(\.github/|psk/(api|vercel\.json)|library/github-skills/(INDEX|PROVENANCE)\.json|tests/test_audit_contract\.py|docs/audit/|LICENSE|SECURITY\.md)
+      - id: secrets-baseline
+        name: No new secrets against .secrets.baseline
+        entry: bash -c 'command -v detect-secrets-hook >/dev/null 2>&1 || exit 0; detect-secrets-hook --baseline .secrets.baseline "$@"' --
+        language: system
+        types: [text]
+      - id: workflow-action-pins
+        name: Actions must be pinned to a commit SHA
+        entry: python3 -m unittest tests.test_audit_contract.WorkflowPinning
+        language: system
+        pass_filenames: false
+        files: ^\.github/workflows/

@@ -20,9 +20,12 @@ python3 -m pip install --quiet --user pytest pyyaml || failed+=("pip")
 
 step "Deno (orchestrator gateway)"
 if ! command -v deno >/dev/null 2>&1; then
-  curl -fsSL https://deno.land/install.sh | sh -s -- -y >/dev/null 2>&1 \
+  deno_installer=$(mktemp) \
+    && curl -fsSL --proto '=https' --tlsv1.2 -o "$deno_installer" https://deno.land/install.sh \
+    && sh "$deno_installer" -s -- -y >/dev/null 2>&1 \
     && echo 'export PATH="$HOME/.deno/bin:$PATH"' >> "$HOME/.bashrc" \
     || failed+=("deno")
+  rm -f -- "${deno_installer:-}" 2>/dev/null || true
 fi
 
 step "Project doctor (quick list)"

@@ -32,14 +32,22 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-python@v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: "3.12"
       - name: Validate manifest
-        run: python3 tasks/apply_hermes_tasks.py --manifest "${{ inputs.manifest }}" --validate-only
+        env:
+          MANIFEST: ${{ inputs.manifest }}
+        run: python3 tasks/apply_hermes_tasks.py --manifest "$MANIFEST" --validate-only
       - name: Dry-run plan (no writes, no pushes, no PRs, no merges)
+        env:
+          # Workflow inputs are attacker-controlled strings: pass them through env.
+          MANIFEST: ${{ inputs.manifest }}
+          ONLY: ${{ inputs.only }}
         run: |
-          args=(--manifest "${{ inputs.manifest }}")
-          if [ -n "${{ inputs.only }}" ]; then args+=(--only "${{ inputs.only }}"); fi
+          args=(--manifest "$MANIFEST")
+          if [ -n "$ONLY" ]; then args+=(--only "$ONLY"); fi
           python3 tasks/apply_hermes_tasks.py "${args[@]}"

@@ -49,3 +49,26 @@ CI واحد در `.github/workflows/ci.yml` گیت‌های کد، تست، type
 ## انتشار سایت‌های قدیمی
 
 `fjcod/`، `viking-team/` و `bison-brand-book/` هنوز از مخازن/اتصال‌های قدیمی منتشر می‌شوند؛ تغییر اینجا لزوماً روی سایت زنده نمی‌رود. پیش از Archive مخزن قدیمی، اتصال Vercel را با Root Directory پوشهٔ پروژه به همین مخزن منتقل و یک deployment واقعی را جداگانه تأیید کن. دستورهای دقیق در [ROADMAP.md](ROADMAP.md) هستند.
+
+## امنیت و ممیزی (نسخهٔ ۲۰۲۶.۱۱.۰)
+
+هر یافتهٔ ممیزی به یک گیتِ اجراشدنی تبدیل شده است، نه یک ادعا در سند:
+
+| گیت | ابزار | کجا اجرا می‌شود |
+| --- | --- | --- |
+| قرارداد ممیزی (پین اکشن‌ها، هدرها، پرووننس، ممنوعیت `curl` به شل) | `python3 -m unittest tests.test_audit_contract` | pre-commit، `repo_health_check.sh`، CI |
+| اسکن راز | gitleaks (تاریخ کامل) + `detect-secrets` با `.secrets.baseline` | `security.yml`، pre-commit |
+| تحلیل ایستا | Semgrep با قواعد پروژه در `.semgrep/rules.yml` + قواعد رجیستری | `security.yml` |
+| سخت‌سازی ورک‌فلوها | `zizmor` (persona: auditor) | `security.yml`، محلی |
+| آسیب‌پذیری وابستگی‌ها | `npm audit` روی lockfileهای متعهدشده | `security.yml` |
+| SBOM + پرووننس مهارت‌ها | `scripts/audit/make_sbom.mjs`، `scripts/audit/skill_provenance.py` | CI + هلث‌چک |
+
+```bash
+python3 -m venv .venv && . .venv/bin/activate
+pip install semgrep bandit detect-secrets zizmor
+bash scripts/audit/run_scans.sh          # همهٔ گیت‌ها + خروجی در docs/audit/
+```
+
+* گزارش کامل اصلاحات: [`docs/AUDIT_REMEDIATION_2026-11-04.md`](docs/AUDIT_REMEDIATION_2026-11-04.md)
+* سیاست گزارش آسیب‌پذیری: [`SECURITY.md`](SECURITY.md)
+* مجوز و متون شخص ثالث: [`LICENSE`](LICENSE)، [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md)

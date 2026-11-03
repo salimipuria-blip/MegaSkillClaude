@@ -1,0 +1,182 @@
+# Local Semgrep rules — deterministic, no network, no registry account.
+# Registry rules (`p/default`, `p/secrets`) run in CI as a second opinion; these
+# rules exist so `pre-commit` and an offline developer machine get the same
+# verdict, and so every rule has a project-specific message.
+rules:
+  - id: msc-js-dynamic-eval
+    languages: [javascript, typescript]
+    severity: ERROR
+    message: >-
+      Dynamic code execution (eval / new Function) in serverless code is remote
+      code execution waiting to happen. Use a parser or an allowlist instead.
+    patterns:
+      - pattern-either:
+          - pattern: eval(...)
+          - pattern: new Function(...)
+    paths:
+      exclude:
+        - "**/psk/public/vendor/**"
+        - "**/*.min.js"
+
+  - id: msc-js-child-process-shell
+    languages: [javascript, typescript]
+    severity: ERROR
+    message: >-
+      Command execution with a shell or an interpolated command allows argument
+      injection. Prefer execFile/spawn with an argument array and shell: false.
+    patterns:
+      - pattern-either:
+          - patterns:
+              - pattern-inside: |
+                  $CP = require('node:child_process')
+                  ...
+              - pattern: $CP.$FN(...)
+          - patterns:
+              - pattern-inside: |
+                  import * as $CP from 'node:child_process'
+                  ...
+              - pattern: $CP.$FN(...)
+          - patterns:
+              - pattern-inside: |
+                  import {..., $FN, ...} from 'node:child_process'
+                  ...
+              - pattern: $FN(...)
+          - patterns:
+              - pattern-inside: |
+                  $CP = require('child_process')
+                  ...
+              - pattern: $CP.$FN(...)
+          - patterns:
+              - pattern-inside: |
+                  import * as $CP from 'child_process'
+                  ...
+              - pattern: $CP.$FN(...)
+          - patterns:
+              - pattern-inside: |
+                  import {..., $FN, ...} from 'child_process'
+                  ...
+              - pattern: $FN(...)
+          - pattern-regex: |-
+              child_process\.(exec|execSync)\(
+          - pattern-regex: |-
+              child_process\.spawn\([^)]*shell\s*:\s*true
+      - metavariable-regex:
+          metavariable: $FN
+          regex: ^(exec|execSync)$
+    paths:
+      exclude:
+        - "**/*.test.mjs"
+        - "**/tests/**"
+
+  - id: msc-generic-hardcoded-secret
+    languages: [generic]
+    severity: ERROR
+    message: >-
+      Possible hard-coded credential. Server secrets belong in Vercel/Supabase
+      environment variables, never in a tracked file.
+    patterns:
+      - pattern-either:
+          - pattern-regex: >-
+              (?i)\b(api[_-]?key|secret|token|passwd|password|private[_-]?key|service[_-]?role)\b\s*[:=]\s*["'][A-Za-z0-9_\-+/=]{24,}["']
+      - pattern-not-regex: (?i)(example|placeholder|dummy|redacted|xxxx|changeme|your[_-])
+      - pattern-not-regex: (?i)(test-example-token|gsk_test|sk_test_|AIza_test)
+    paths:
+      exclude:
+        - "**/library/**"
+        - "**/docs/**"
+        - "**/*.md"
+        - "**/*.example"
+        - "**/psk/tests/**"
+        - "**/tests/**"
+
+  - id: msc-shell-curl-pipe
+    languages: [generic]
+    severity: ERROR
+    message: >-
+      Piping a download into a shell executes unverified remote code. Download
+      to a file, verify a SHA-256, then execute it.
+    pattern-regex: |-
+      \b(curl|wget)\b[^\n|]*\|\s*(sudo\s+)?(bash|sh|zsh)\b
+    paths:
+      exclude:
+        - "**/library/**"
+        - "**/docs/**"
+        - "**/*.md"
+
+  - id: msc-insecure-http-url
+    languages: [generic]
+    severity: WARNING
+    message: Plain HTTP endpoint — use HTTPS so tokens and content are not sent in clear.
+    pattern-regex: |-
+      (?<![\w.-])http://(?!localhost|127\.0\.0\.1|0\.0\.0\.0|www\.w3\.org)[a-z0-9.-]+\.[a-z]{2,}
+    paths:
+      exclude:
+        - "**/library/**"
+        - "**/docs/**"
+        - "**/*.md"
+        - "**/*.svg"
+        - "**/*.xml"
+        - "**/*.txt"
+        - "**/LICENSE*"
+        - "**/fonts/**"
+        # Tests assert that plain-HTTP origins are rejected on purpose.
+        - "**/*.test.mjs"
+        - "**/tests/**"
+        - "**/test/**"
+
+  - id: msc-wildcard-cors
+    languages: [generic]
+    severity: ERROR
+    message: >-
+      Wildcard CORS on an authenticated API lets any site read responses.
+      Echo an explicit allowlisted origin instead.
+    pattern-regex: |-
+      (?i)access-control-allow-origin["']?\s*[:=]\s*["']\*
+    paths:
+      exclude:
+        - "**/library/**"
+        - "**/docs/**"
+
+  - id: msc-python-subprocess-shell
+    languages: [python]
+    severity: ERROR
+    message: >-
+      subprocess with shell=True and an interpolated command is command
+      injection. Pass an argument list and keep shell=False.
+    pattern-either:
+      - pattern: subprocess.$FN(..., shell=True, ...)
+      - pattern: os.system(...)
+      - pattern: os.popen(...)
+    paths:
+      exclude:
+        - "**/library/**"
+        - "**/tests/**"
+
+  - id: msc-python-eval
+    languages: [python]
+    severity: ERROR
+    message: eval/exec on non-literal input executes arbitrary code.
+    pattern-either:
+      - pattern: eval(...)
+      - pattern: exec(...)
+    paths:
+      exclude:
+        - "**/library/**"
+        - "**/tests/**"
+
+  - id: msc-weak-hash-for-secret
+    languages: [python, javascript, typescript]
+    severity: WARNING
+    message: MD5/SHA-1 are not acceptable for password or token hashing; use PBKDF2/scrypt/argon2 or HMAC-SHA-256.
+    pattern-either:
+      - pattern: hashlib.md5(...)
+      - pattern: hashlib.sha1(...)
+      - pattern: crypto.createHash("md5")
+      - pattern: crypto.createHash("sha1")
+
+  - id: msc-jwt-none-alg
+    languages: [javascript, typescript, python]
+    severity: ERROR
+    message: Accepting the "none" JWT algorithm disables signature verification.
+    pattern-regex: |-
+      (?i)algorithms?\s*[:=]\s*\[?\s*["']none["']

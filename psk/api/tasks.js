@@ -1,7 +1,7 @@
 import crypto from 'node:crypto';
-import {guard,reply,route,inputCheck,planOf,skills,answerMessages,chat} from './_core.mjs';
+import {guard,limit,reply,route,inputCheck,planOf,skills,answerMessages,chat} from './_core.mjs';
 import {instrument} from '../engine/telemetry.mjs';
-export default instrument('tasks',async function handler(req,res,ctx){if(!guard(req,res,'POST'))return;
+export default instrument('tasks',async function handler(req,res,ctx){if(!limit(req,res,'tasks'))return;if(!guard(req,res,'POST'))return;
  let d=req.body;
  if(typeof d==='string'){try{d=JSON.parse(d)}catch{return reply(res,400,{error:'Invalid JSON'});}}
  if(!d||typeof d!=='object'||Array.isArray(d)||Buffer.byteLength(JSON.stringify(d))>12000)return reply(res,413,{error:'Invalid or oversized request body'});
