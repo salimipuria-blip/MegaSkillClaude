@@ -70,7 +70,7 @@ npm test
 
 اندازه‌گیریِ واقعی در **۲۰۲۶-۱۰-۲۰** — این بخش با نگهبانِ `tests/test_status_counters.py` قفل است: هر عدد از منبعِ canonicalِ خودش در ریپو بازخوانی می‌شود، پس عددِ کهنه یا جابه‌جاییِ واژه قرمز می‌شود. بخش‌های تاریخ‌دارِ پایین/بالای همین سند snapshotِ همان دورند و دست نمی‌خورند (بندِ ۷ «قواعد مشترک»).
 
-- `npm test` در `psk/` ⇒ **۶۵ تست** (بدون وابستگیِ npm؛ فقط `node --test`؛ ۵۷ تستِ پایه + ۸ تستِ `tests/limits.test.mjs` برای سقفِ نرخ).
+- `npm test` در `psk/` ⇒ **۶۶ تست** (بدون وابستگیِ npm؛ فقط `node --test`؛ ۵۷ تستِ پایه + ۹ تستِ `tests/limits.test.mjs` برای سقفِ نرخ — از جمله رگرسیونِ «windowMs override»).
 - قراردادِ مسیریابی: **۱۰۸ کیس** طلایی در `psk/tests/fixtures/routing-golden.json` (`len(cases)`).
 - رجیستریِ مهارتِ خودِ psk: **۳٬۰۰۰ مهارت** در `psk/data/skills-registry.json` و **۱۰ مورد** در allowlist تعمیر (`skills-repaired.json` → `repaired`).
 - **NOT RUN:** Answer Mode زنده (نیاز به `GROQ_API_KEY`)، انتشار روی Vercel و تستِ واقعی از iPhone.

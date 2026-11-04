@@ -351,7 +351,14 @@ test('admin sees the team; members can change their password', async () => {
   const token = (await loginAs(env, 'tester', 'pass-1234')).body.token;
   assert.equal((await callApi(env, '/api/password', { old: 'wrong', new: 'new-pass-99' }, token)).status, 401);
   assert.equal((await callApi(env, '/api/password', { old: 'pass-1234', new: 'short' }, token)).status, 400);
-  assert.equal((await callApi(env, '/api/password', { old: 'pass-1234', new: 'new-pass-99' }, token)).status, 200);
+  const rotated = await callApi(env, '/api/password', { old: 'pass-1234', new: 'new-pass-99' }, token);
+  assert.equal(rotated.status, 200);
+  // Session rotation on password change: the token presented above is now dead,
+  // and the fresh token in the response is the only way to keep working.
+  assert.equal((await callApi(env, '/api/me', undefined, token)).status, 401,
+    'the pre-rotation session must be signed out');
+  assert.ok(rotated.body.token && rotated.body.token !== token, 'a fresh session is issued');
+  assert.equal((await callApi(env, '/api/me', undefined, rotated.body.token)).status, 200);
   assert.equal((await loginAs(env, 'tester', 'pass-1234')).status, 401);
   assert.equal((await loginAs(env, 'tester', 'new-pass-99')).status, 200);
 });

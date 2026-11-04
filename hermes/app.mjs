@@ -1212,7 +1212,12 @@ export const APP_HTML = String.raw`<!doctype html>
     const old = prompt('رمز فعلی:'); if (!old) return;
     const next = prompt('رمز جدید (حداقل ۸ حرف):'); if (!next) return;
     if (prompt('رمز جدید را دوباره بنویس:') !== next) { alert('دو رمز یکی نیستند.'); return; }
-    try { await api('/api/password', { old, new: next }); alert('رمز عوض شد.'); } catch (err) { alert(err.message); }
+    try {
+      // Every old session dies on the server; keep working with the fresh token.
+      const out = await api('/api/password', { old, new: next });
+      if (out.token) store.set('hermes-session', out.token);
+      alert('رمز عوض شد؛ بقیهٔ نشست‌ها بسته شدند.');
+    } catch (err) { alert(err.message); }
   };
 
   $('lform').addEventListener('submit', async (e) => {

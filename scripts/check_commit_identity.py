@@ -72,7 +72,10 @@ def find_identity_claims(text: str) -> list[dict[str, str]]:
 
 
 def git(*args: str) -> str:
-    result = subprocess.run(("git", *args), capture_output=True, text=True, timeout=120)
+    # Fixed "git" binary, argv tuple, no shell; range/SHA arguments come from the
+    # caller's allowlisted flags, never from request data. Same contract as
+    # scripts/audit/skill_provenance.py (bandit B603/B607 reviewed there).
+    result = subprocess.run(("git", *args), capture_output=True, text=True, timeout=120)  # nosec B603 B607
     if result.returncode != 0:
         raise RuntimeError(result.stderr.strip() or f"git {' '.join(args)} failed")
     return result.stdout

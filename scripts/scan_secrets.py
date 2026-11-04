@@ -27,7 +27,10 @@ def findings(data):
 
 
 def scan(root=ROOT):
-    paths = subprocess.run(['git', 'ls-files', '-z'], cwd=root, check=True,
+    # Fixed argv, no shell; `root` is the repository root constant. The bandit notes
+    # below are reviewed (B603 subprocess / B607 partial path) and match the
+    # annotation style in scripts/audit/skill_provenance.py.
+    paths = subprocess.run(['git', 'ls-files', '-z'], cwd=root, check=True,  # nosec B603 B607
                            stdout=subprocess.PIPE).stdout.split(b'\0')
     matched = 0
     errors = 0

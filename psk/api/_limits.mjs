@@ -86,7 +86,9 @@ export function rateLimit(req, res, scope = 'default', opts = {}) {
   const limit = limitFor(scope, configured, opts.env);
   const outcome = consume(`${scope}:${clientId(req)}`, {
     limit,
-    windowMs: windowMs ?? opts.windowMs,
+    // opts first: DEFAULT_LIMITS always carries windowMs, so `windowMs ?? opts.windowMs`
+    // silently discarded the test seam (caught 2026-11-04 by tests/limits.test.mjs).
+    windowMs: opts.windowMs ?? windowMs,
     now: opts.now,
     store: opts.store ?? buckets,
   });

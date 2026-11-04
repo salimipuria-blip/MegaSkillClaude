@@ -25,6 +25,12 @@ FIRST_PARTY_SKIP = {
     # are prose we never execute; they are catalogued in THIRD-PARTY-NOTICES.md.
     "plugins/mega-skills-router/skills",
 }
+# Directory names skipped at ANY depth, not just at the repo root. The prefix-based
+# FIRST_PARTY_SKIP above only caught a root-level `node_modules`; nested installs such
+# as `viking-team/motion/node_modules/dotenv/README.md` (which ships example private
+# keys) leaked into the secret scan and turned `doctor` red on every developer machine
+# that had run `npm ci`. Vendored dependency trees are never first-party code.
+SKIP_PARTS = {"node_modules", ".git", ".venv", "__pycache__"}
 
 
 def workflow_files() -> list[Path]:
@@ -47,6 +53,8 @@ def first_party_text_files() -> list[Path]:
         if not path.is_file():
             continue
         rel = path.relative_to(ROOT)
+        if any(part in SKIP_PARTS for part in rel.parts):
+            continue
         if any(str(rel).startswith(prefix) for prefix in FIRST_PARTY_SKIP):
             continue
         if path.suffix.lower() in {

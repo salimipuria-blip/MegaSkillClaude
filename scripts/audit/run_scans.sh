@@ -61,8 +61,11 @@ else miss bandit; fi
 
 note "5/7 GitHub Actions hardening (zizmor)"
 if need zizmor; then
-  zizmor --format sarif . > "$OUT/zizmor.sarif" 2>/dev/null || true
-  if zizmor --persona auditor --min-severity medium --format plain . 2>&1 | grep -q "No findings"; then
+  # --offline keeps this script true to its header ("every gate that works
+  # offline"): without it the artipacked audit needs the GitHub API and the whole
+  # run aborts on machines where github.com is unreachable (sandbox/CI egress rules).
+  zizmor --offline --format sarif . > "$OUT/zizmor.sarif" 2>/dev/null || true
+  if zizmor --offline --persona auditor --min-severity medium --format plain . 2>&1 | grep -q "No findings"; then
     ok "zizmor: no findings (auditor persona)"
   else
     bad "zizmor findings (see $OUT/zizmor.sarif)"
@@ -70,12 +73,16 @@ if need zizmor; then
 else miss zizmor; fi
 
 note "6/7 Dependency audit (npm, committed lockfiles only)"
-for app in fjcod bison-brand-book hermes lithos; do
+# viking-team/motion is included: it ships a committed lockfile and its remotion
+# stack had 10 high advisories until 2026-11-04 — leaving it out of this loop hid them.
+for app in fjcod bison-brand-book hermes lithos viking-team/motion; do
+  # Nested paths (viking-team/motion) must not leak a slash into the artifact name.
+  slug=$(printf '%s' "$app" | tr '/' '-')
   if [ -f "$app/package-lock.json" ]; then
-    if ( cd "$app" && npm audit --audit-level=high --json > "$OUT/npm-audit-$app.json" 2>/dev/null ); then
+    if ( cd "$app" && npm audit --audit-level=high --json > "$OUT/npm-audit-$slug.json" 2>/dev/null ); then
       ok "$app: no high/critical advisories"
     else
-      bad "$app: advisories at high or above (see $OUT/npm-audit-$app.json)"
+      bad "$app: advisories at high or above (see $OUT/npm-audit-$slug.json)"
     fi
   else
     bad "$app: no package-lock.json committed"

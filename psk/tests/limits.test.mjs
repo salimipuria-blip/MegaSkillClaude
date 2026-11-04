@@ -105,3 +105,17 @@ test('documented defaults are conservative and non-zero', () => {
     assert.equal(cfg.windowMs, 60_000, `${scope} window is one minute`);
   }
 });
+
+test('rateLimit honours the windowMs override — regression for the dead test seam', () => {
+  // 2026-11-04: `windowMs ?? opts.windowMs` made DEFAULT_LIMITS always win and the
+  // override never reached consume(); the bucket used to reset after 60s here.
+  const store = new Map();
+  const req = {headers: {'x-real-ip': '203.0.113.9'}};
+  const res = () => { const h = {}; return {h, setHeader: (k, v) => { h[k] = v; }, status: () => ({json: () => {}})}; };
+  assert.equal(rateLimit(req, res(), 'tasks', {store, now: 10_000, windowMs: 250}), true);
+  const bucket = store.get('tasks:203.0.113.9');
+  assert.equal(bucket.resetAt - 10_000, 250, 'override must reach the bucket, not the default 60_000');
+  // same key inside the short window is limited; after it, allowed again
+  assert.equal(rateLimit(req, res(), 'tasks', {store, now: 10_100, windowMs: 250, env: {PSK_RATE_LIMIT_TASKS: '1'}}), false);
+  assert.equal(rateLimit(req, res(), 'tasks', {store, now: 10_251, windowMs: 250, env: {PSK_RATE_LIMIT_TASKS: '1'}}), true);
+});
