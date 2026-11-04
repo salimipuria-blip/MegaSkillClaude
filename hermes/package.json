@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "miniflare": "5.20261006.1-alpha",
-    "wrangler": "4.151.2"
+    "wrangler": "4.155.0"
   },
   "overrides": {
     "undici": "7.30.1"
