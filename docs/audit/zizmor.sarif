@@ -7,12 +7,239 @@
           "executionSuccessful": true
         }
       ],
-      "results": [],
+      "results": [
+        {
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "importance": "important",
+                      "location": {
+                        "logicalLocations": [
+                          {
+                            "properties": {
+                              "symbolic": {
+                                "annotation": "this step",
+                                "feature_kind": "KeyOnly",
+                                "key": {
+                                  "Local": {
+                                    "verbatim_path": "./.github/workflows/ci.yml"
+                                  }
+                                },
+                                "kind": "Related",
+                                "route": {
+                                  "route": [
+                                    {
+                                      "Key": "jobs"
+                                    },
+                                    {
+                                      "Key": "infinity"
+                                    },
+                                    {
+                                      "Key": "steps"
+                                    },
+                                    {
+                                      "Index": 3
+                                    },
+                                    {
+                                      "Key": "run"
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          }
+                        ],
+                        "message": {
+                          "text": "this step"
+                        },
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": ".github/workflows/ci.yml"
+                          },
+                          "region": {
+                            "endColumn": 12,
+                            "endLine": 141,
+                            "snippet": {
+                              "text": "run"
+                            },
+                            "sourceLanguage": "yaml",
+                            "startColumn": 9,
+                            "startLine": 141
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "importance": "essential",
+                      "location": {
+                        "logicalLocations": [
+                          {
+                            "properties": {
+                              "symbolic": {
+                                "annotation": "installs a package outside of a lockfile",
+                                "feature_kind": {
+                                  "Subfeature": {
+                                    "after": 0,
+                                    "fragment": {
+                                      "Regex": "npm\\s+install\\s+\\-\\-no\\-save\\s+\\-\\-no\\-audit\\s+\\-\\-no\\-fund\\s+jsdom"
+                                    }
+                                  }
+                                },
+                                "key": {
+                                  "Local": {
+                                    "verbatim_path": "./.github/workflows/ci.yml"
+                                  }
+                                },
+                                "kind": "Primary",
+                                "route": {
+                                  "route": [
+                                    {
+                                      "Key": "jobs"
+                                    },
+                                    {
+                                      "Key": "infinity"
+                                    },
+                                    {
+                                      "Key": "steps"
+                                    },
+                                    {
+                                      "Index": 3
+                                    },
+                                    {
+                                      "Key": "run"
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          }
+                        ],
+                        "message": {
+                          "text": "installs a package outside of a lockfile"
+                        },
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": ".github/workflows/ci.yml"
+                          },
+                          "region": {
+                            "endColumn": 62,
+                            "endLine": 141,
+                            "snippet": {
+                              "text": "npm install --no-save --no-audit --no-fund jsdom"
+                            },
+                            "sourceLanguage": "yaml",
+                            "startColumn": 14,
+                            "startLine": 141
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "kind": "fail",
+          "level": "note",
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "properties": {
+                    "symbolic": {
+                      "annotation": "installs a package outside of a lockfile",
+                      "feature_kind": {
+                        "Subfeature": {
+                          "after": 0,
+                          "fragment": {
+                            "Regex": "npm\\s+install\\s+\\-\\-no\\-save\\s+\\-\\-no\\-audit\\s+\\-\\-no\\-fund\\s+jsdom"
+                          }
+                        }
+                      },
+                      "key": {
+                        "Local": {
+                          "verbatim_path": "./.github/workflows/ci.yml"
+                        }
+                      },
+                      "kind": "Primary",
+                      "route": {
+                        "route": [
+                          {
+                            "Key": "jobs"
+                          },
+                          {
+                            "Key": "infinity"
+                          },
+                          {
+                            "Key": "steps"
+                          },
+                          {
+                            "Index": 3
+                          },
+                          {
+                            "Key": "run"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              ],
+              "message": {
+                "text": "installs a package outside of a lockfile"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": ".github/workflows/ci.yml"
+                },
+                "region": {
+                  "endColumn": 62,
+                  "endLine": 141,
+                  "snippet": {
+                    "text": "npm install --no-save --no-audit --no-fund jsdom"
+                  },
+                  "sourceLanguage": "yaml",
+                  "startColumn": 14,
+                  "startLine": 141
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "ad-hoc installation of packages: installs a package outside of a lockfile"
+          },
+          "properties": {
+            "zizmor/confidence": "High",
+            "zizmor/persona": "Regular",
+            "zizmor/severity": "Low"
+          },
+          "ruleId": "zizmor/adhoc-packages"
+        }
+      ],
       "tool": {
         "driver": {
           "downloadUri": "https://github.com/zizmorcore/zizmor",
           "informationUri": "https://docs.zizmor.sh",
           "name": "zizmor",
+          "rules": [
+            {
+              "help": {
+                "markdown": "`adhoc-packages`: ad-hoc installation of packages\n\nDocs: <https://docs.zizmor.sh/audits/#adhoc-packages>",
+                "text": "ad-hoc installation of packages"
+              },
+              "helpUri": "https://docs.zizmor.sh/audits/#adhoc-packages",
+              "id": "zizmor/adhoc-packages",
+              "name": "adhoc-packages",
+              "properties": {
+                "tags": [
+                  "security"
+                ]
+              }
+            }
+          ],
           "semanticVersion": "1.32.0",
           "version": "1.32.0"
         }

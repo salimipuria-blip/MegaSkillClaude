@@ -69,14 +69,14 @@ export function isValidDB(x: unknown): x is DB {
  * README. Only hashes are kept, to detect and rotate accounts still using them; never the passwords.
  */
 const LEAKED_DEFAULT_HASHES: Record<string, string> = {
-  'u-owner': 'bfbdcf2fe43cdc13aa2d7787ce06c6a3f62c446621d4c6f675cefdf46a4435ce',
-  'u-manager': '24a96789d9bde0de72b53f7cb6988330c3a733e60c55aa26df715a3ca58f56f5',
-  'u-deputy': '4caadfa9e2af3959570458c83cf9b967756f259254c7f931c7e21d79f0b2fce9',
-  'u-cashier-1': '074834bc73b1f4f4faada84d31749a537174eca748ab47f7b2d30fa5a4507652',
-  'u-cashier-2': '2a81e0126547485724b059f8d4dca96118fcebf8e5baebc2b956dda40e6e7264',
-  'u-cons-1': '60d84bdf2c2967e3b6000e171fe64a98b962e1d9ddb880b974286ede5191dbbb',
-  'u-cons-2': 'ddc7c49455453f3a4b4dc895e4061ef22bd349b9918f48cff7eb37e5bc2d9849',
-  'u-cons-3': 'b569bf58d9391f55aec96fa6888453937bd9cb6d28cfa245833c15c1eaffabfa',
+  'u-owner': 'bfbdcf2fe43cdc13aa2d7787ce06c6a3f62c446621d4c6f675cefdf46a4435ce',  // pragma: allowlist secret // gitleaks:allow — denylist hash of an already-public default password, not a secret
+  'u-manager': '24a96789d9bde0de72b53f7cb6988330c3a733e60c55aa26df715a3ca58f56f5',  // pragma: allowlist secret // gitleaks:allow — denylist hash of an already-public default password, not a secret
+  'u-deputy': '4caadfa9e2af3959570458c83cf9b967756f259254c7f931c7e21d79f0b2fce9',  // pragma: allowlist secret // gitleaks:allow — denylist hash of an already-public default password, not a secret
+  'u-cashier-1': '074834bc73b1f4f4faada84d31749a537174eca748ab47f7b2d30fa5a4507652',  // pragma: allowlist secret // gitleaks:allow — denylist hash of an already-public default password, not a secret
+  'u-cashier-2': '2a81e0126547485724b059f8d4dca96118fcebf8e5baebc2b956dda40e6e7264',  // pragma: allowlist secret // gitleaks:allow — denylist hash of an already-public default password, not a secret
+  'u-cons-1': '60d84bdf2c2967e3b6000e171fe64a98b962e1d9ddb880b974286ede5191dbbb',  // pragma: allowlist secret // gitleaks:allow — denylist hash of an already-public default password, not a secret
+  'u-cons-2': 'ddc7c49455453f3a4b4dc895e4061ef22bd349b9918f48cff7eb37e5bc2d9849',  // pragma: allowlist secret // gitleaks:allow — denylist hash of an already-public default password, not a secret
+  'u-cons-3': 'b569bf58d9391f55aec96fa6888453937bd9cb6d28cfa245833c15c1eaffabfa',  // pragma: allowlist secret // gitleaks:allow — denylist hash of an already-public default password, not a secret
 };
 
 /** Fill any missing fields so older backups keep working after upgrades. */

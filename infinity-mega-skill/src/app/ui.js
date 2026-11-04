@@ -42,7 +42,9 @@ export function h(strings, ...values) {
       const v = values[i];
       if (v instanceof RawHTML) out += v.value;
       else if (Array.isArray(v)) out += v.map((x) => (x instanceof RawHTML ? x.value : esc(x))).join('');
-      else if (v instanceof Node) out += v.outerHTML;
+      // `Node` is a browser-only global; a bare `instanceof Node` throws ReferenceError under
+      // node --test, which made h() unusable server-side (caught by security.test.mjs).
+      else if (typeof Node !== 'undefined' && v instanceof Node) out += v.outerHTML;
       else out += esc(v);
     }
   });

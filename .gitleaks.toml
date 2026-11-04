@@ -22,6 +22,9 @@ paths = [
   '''.*\.env(\..*)?\.example$''',
   # Audit evidence: scanner output may quote a rule description, not a secret.
   '''docs/audit/.*''',
+  # detect-secrets baseline: every entry is an MD5 of a reviewed finding, and the
+  # `"hashed_secret": "<md5>"` shape trips gitleaks' generic keyword assignment rule.
+  '''\.secrets\.baseline''',
 ]
 regexes = [
   # Fake tokens used by the test suite and the example env file.

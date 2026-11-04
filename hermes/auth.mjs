@@ -81,5 +81,16 @@ export async function changePassword(env, username, oldPassword, newPassword) {
   }
   const salt = hex(crypto.getRandomValues(new Uint8Array(16)));
   await env.MEMORY.put(`pw:${username}`, JSON.stringify({ salt, hash: await hashPassword(newPassword, salt) }));
-  return { ok: true };
+  // A self-service password change must sign every existing session out — the same
+  // promise resetPassword in accounts.mjs makes. Until 2026-11-04 only `pw:` was
+  // written here, so a token stolen before the rotation kept working for up to
+  // SESSION_DAYS after the password had already changed.
+  const rec = (await env.MEMORY.get(`acct:${username}`, 'json')) || {};
+  rec.validAfter = Date.now();
+  await env.MEMORY.put(`acct:${username}`, JSON.stringify(rec));
+  // The caller's own session keeps working: hand back a token issued after the cut-off
+  // (issuedAt >= validAfter, because exp is computed after the bump).
+  const exp = Date.now() + SESSION_DAYS * 864e5;
+  const data = `${username}.${exp}`;
+  return { ok: true, token: `${data}.${await sign(env, data)}` };
 }

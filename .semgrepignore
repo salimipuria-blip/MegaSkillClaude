@@ -8,6 +8,18 @@ bison-brand-book/public/
 viking-team/media/
 psk/data/
 node_modules/
+# Vendored third-party skill references shipped in-repo; covered by the
+# provenance job and THIRD-PARTY-NOTICES.md, not by first-party rules.
+plugins/
+.claude/skills/_licenses/
+# Detector scripts embed the malicious patterns they detect (the audit contract
+# asserts this), and their fixtures feed them evil strings on purpose.
+scripts/scan_secrets.py
+scripts/scan_third_party_skills.py
+tests/test_third_party_skill_scan.py
+# http:// URLs inside a docstring/sample that document already-fixed bugs.
+tasks/apply_hermes_tasks.py
+tasks/hermes_tasks.legacy.sample.json
 *.min.js
 *.svg
 *.webp
