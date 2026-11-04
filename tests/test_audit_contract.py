@@ -72,6 +72,34 @@ def first_party_text_files() -> list[Path]:
 
 
 class WorkflowPinning(unittest.TestCase):
+    def test_no_duplicate_keys_in_any_with_block(self):
+        """GitHub rejects a workflow with a duplicate mapping key before any job starts
+        (`total_count: 0, conclusion: failure` — observed 2026-11-04 when a hardening pass
+        inserted a second `persist-credentials` into checkout steps). PyYAML silently eats
+        duplicates, so local YAML lint never caught it; this guard scans with-blocks."""
+        offenders = []
+        for path in workflow_files():
+            block_indent = None
+            seen: set[str] = set()
+            for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+                head = re.match(r"^(\s+)with:\s*$", line)
+                if head:
+                    block_indent = len(head.group(1))
+                    seen = set()
+                    continue
+                if block_indent is None or not line.strip():
+                    continue
+                indent = len(line) - len(line.lstrip())
+                if indent <= block_indent:
+                    block_indent = None
+                    continue
+                key = re.match(r"^\s*([\w.-]+):", line)
+                if key:
+                    if key.group(1) in seen:
+                        offenders.append(f"{path.relative_to(ROOT)}:{number} duplicate `{key.group(1)}`")
+                    seen.add(key.group(1))
+        self.assertEqual(offenders, [])
+
     def test_every_action_is_pinned_to_a_commit_sha(self):
         unpinned = []
         for path in workflow_files():
