@@ -50,16 +50,23 @@ jobs:
         run: |
           set -euo pipefail
           common=(--config .gitleaks.toml --redact --no-banner --exit-code 1)
+          RANGE=""
           if [ "${{ github.event_name }}" = "pull_request" ]; then
             # PRs gate on the commits under review only: the repository's old history
             # still contains incidents the owner must rotate/rewrite (tracked in
             # docs/AUDIT_REMEDIATION_2026-11-04.md), so scanning it here would stay
             # red forever and everyone would learn to ignore the gate.
             RANGE="${{ github.event.pull_request.base.sha }}..HEAD"
+          elif [ "${{ github.event_name }}" = "push" ] && [ "${{ github.event.before }}" != "0000000000000000000000000000000000000000" ]; then
+            # On main pushes gate on the pushed commits only; the FULL-HISTORY scan
+            # belongs to the weekly schedule so a green main still means "no new leak".
+            RANGE="${{ github.event.before }}..${{ github.sha }}"
+          fi
+          if [ -n "$RANGE" ]; then
             echo "scanning $RANGE"
             gitleaks git --log-opts="$RANGE" . "${common[@]}"
           else
-            # Full-history scan on main pushes and the weekly schedule.
+            # Weekly schedule and zero-before pushes: full history, fails loudly once a week.
             if gitleaks git --help >/dev/null 2>&1; then
               gitleaks git . "${common[@]}"
             else
