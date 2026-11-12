@@ -5,6 +5,7 @@
 //   node scripts/doctor.mjs psk lithos      # only the projects you name
 //   node scripts/doctor.mjs --list          # ids, folders and the exact steps
 //   node scripts/doctor.mjs --json          # machine-readable result
+//   node scripts/doctor.mjs --strict        # fail if a required step cannot run
 //   node scripts/doctor.mjs --fix           # print the exact command to fix each failure
 //   node scripts/doctor.mjs --timeout=900   # per-step timeout in seconds (default 600)
 //
@@ -12,7 +13,7 @@
 // of the fast job (routing accuracy, golden snapshot, audit, index freshness). A step is:
 //   pass  - exit 0
 //   fail  - non-zero exit; the report prints the exact command and the last lines of output
-//   skip  - a required tool is absent (deno, a browser, node_modules) - never treated as failure
+//   skip  - a required tool is absent (deno, a browser, node_modules); required skips fail in strict mode
 // Exit code: 0 when nothing failed, 1 otherwise.
 import {spawnSync} from 'node:child_process';
 import {existsSync, readFileSync} from 'node:fs';
@@ -23,6 +24,7 @@ const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const argTimeout = process.argv.find((a) => a.startsWith('--timeout='));
 const TIMEOUT_MS = (Number(argTimeout?.split('=')[1]) || 600) * 1000;
 const JSON_OUT = process.argv.includes('--json');
+const STRICT = process.argv.includes('--strict');
 const SHOW_FIX = process.argv.includes('--fix');
 
 const has = (p) => existsSync(path.join(root, p));
@@ -95,7 +97,7 @@ const PROJECTS = [
     steps: [
       {name: 'shell-syntax', cmd: 'bash -n hermes/setup.sh hermes/config.sh hermes/logger.sh', why: 'سینتکس نصب‌کننده'},
       {name: 'check', cmd: 'npm run check --prefix hermes', why: 'سینتکس همهٔ ماژول‌ها'},
-      {name: 'tests', cmd: 'npm test --prefix hermes', why: '۲۶۳ تست واحد (استودیو، لایهٔ متن، fetch با timeout، یادآورها، کدنویسی و دانش پروژه‌ها)'},
+      {name: 'tests', cmd: 'npm test --prefix hermes', why: '۲۷۱ تست واحد (استودیو، لایهٔ متن، fetch با timeout، یادآورها، کدنویسی و دانش پروژه‌ها)'},
       {name: 'integration', cmd: 'npm run test:integration --prefix hermes', why: '۱۰ رگرسیون روی workerd محلی'},
       {name: 'skills-build', cmd: 'node hermes/build-skills.mjs', optional: true, why: 'ساخت دارایی‌های مهارت'},
     ],
@@ -251,8 +253,9 @@ if (process.argv.includes('--list')) {
   process.exit(0);
 }
 
-if (!selected.length) {
-  console.error(`unknown project id: ${wanted.join(', ')}\nknown: ${PROJECTS.map((p) => p.id).join(', ')}`);
+const unknown = wanted.filter((id) => !selected.some((project) => project.id === id));
+if (unknown.length) {
+  console.error(`unknown project id: ${unknown.join(', ')}\nknown: ${PROJECTS.map((p) => p.id).join(', ')}`);
   process.exit(2);
 }
 
@@ -262,7 +265,9 @@ for (const project of selected) {
   const rows = [];
   for (const step of project.steps) {
     const out = runStep(project, step);
-    const status = out.status === 'fail' && step.optional ? 'warn' : out.status;
+    let { status } = out;
+    if (status === 'fail' && step.optional) status = 'warn';
+    if (status === 'skip' && STRICT && !step.optional) status = 'fail';
     rows.push({step: step.name, cmd: step.cmd, why: step.why, optional: !!step.optional, ...out, status});
   }
   results.push({project: project.id, label: project.label, folder: project.folder, rows});
@@ -296,7 +301,9 @@ if (JSON_OUT) {
     }
   } else {
     const skipped = results.flatMap((r) => r.rows.filter((x) => x.status === 'skip').map((x) => `${r.project}:${x.step}`));
-    console.log(`all required checks passed in ${((Date.now() - startedAll) / 1000).toFixed(1)}s`);
+    const missingRequired = results.some((r) => r.rows.some((row) => row.status === 'skip' && !row.optional));
+    const summary = missingRequired ? 'required checks incomplete' : 'all required checks passed';
+    console.log(`${summary} in ${((Date.now() - startedAll) / 1000).toFixed(1)}s`);
     if (skipped.length) console.log(`skipped (missing tool/deps): ${skipped.join(', ')}`);
   }
 }

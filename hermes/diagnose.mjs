@@ -5,10 +5,10 @@
 import { fetchWithTimeout } from './resilience.mjs';
 import { PROVIDERS, configuredProviders } from './providers.mjs';
 import { FREE_IMAGE_API } from './image.mjs';
+import { CF_MODELS } from './brain.mjs';
 
 const GEMINI_API = 'https://generativelanguage.googleapis.com/v1beta';
 const TIMEOUT = 8000;
-const CF_PROBE_MODEL = '@cf/meta/llama-3.2-1b-instruct';
 // 140 chars is enough for an upstream reason; an explained failure carries the fix *and* that
 // reason as evidence, so it gets a longer budget rather than losing one of the two.
 const trim = (s, max = 140) => String(s || '').replace(/\s+/g, ' ').trim().slice(0, max);
@@ -110,9 +110,11 @@ export async function diagnose(env = {}) {
     }
   }
   if (env.AI) {
-    checks.push(probe('Workers AI (Cloudflare)', 'text+image', async () => {
-      await env.AI.run(CF_PROBE_MODEL, { messages: [{ role: 'user', content: 'ok' }], max_tokens: 1 });
-      return 'سهمیهٔ امروز باقی است';
+    checks.push(probe('Workers AI (Cloudflare)', 'text', async () => {
+      const out = await env.AI.run(CF_MODELS[0], { messages: [{ role: 'user', content: 'Reply OK.' }], max_tokens: 8 });
+      const reply = out?.response ?? out?.choices?.[0]?.message?.content;
+      if (typeof reply !== 'string' || !reply.trim()) throw new Error('Empty Workers AI text response');
+      return CF_MODELS[0];
     }));
   }
   if (env.HF_TOKEN) {

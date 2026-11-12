@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
+import { copyFileSync, mkdirSync, mkdtempSync, rmSync } from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
@@ -20,4 +22,33 @@ test("repo doctor executes the root Python suite instead of a zero-test false gr
   const count = commonTests.output.match(/Ran (\d+) tests/);
   assert.ok(count, `doctor output did not report unittest discovery: ${commonTests.output}`);
   assert.ok(Number(count[1]) >= 50, `expected the full root suite, got ${count[1]} tests`);
+});
+
+
+test("strict doctor rejects missing required dependencies but keeps optional checks skipped", (t) => {
+  const root = mkdtempSync(path.join(os.tmpdir(), "doctor-strict-"));
+  t.after(() => rmSync(root, { recursive: true, force: true }));
+  mkdirSync(path.join(root, "scripts"));
+  mkdirSync(path.join(root, "fjcod"));
+  const script = path.join(root, "scripts", "doctor.mjs");
+  copyFileSync(path.join(ROOT, "scripts", "doctor.mjs"), script);
+
+  const normal = spawnSync(process.execPath, [script, "fjcod"], { encoding: "utf8" });
+  assert.equal(normal.status, 0);
+  assert.match(normal.stdout, /required checks incomplete/);
+  const strict = spawnSync(process.execPath, [script, "fjcod", "--strict", "--json"], { encoding: "utf8" });
+  assert.equal(strict.status, 1);
+  const report = JSON.parse(strict.stdout);
+  assert.equal(report.failures, 1);
+  assert.deepEqual(report.results[0].rows.map((row) => row.status), ["fail", "skip"]);
+});
+
+test("doctor rejects mixed known and unknown project ids before running checks", () => {
+  const result = spawnSync(process.execPath, [
+    "scripts/doctor.mjs", "hermes", "typo-one", "typo-two", "--strict", "--json", "--timeout=1",
+  ], { cwd: ROOT, encoding: "utf8", timeout: 10_000 });
+
+  assert.equal(result.status, 2);
+  assert.equal(result.stdout, "");
+  assert.match(result.stderr, /unknown project id: typo-one, typo-two/);
 });

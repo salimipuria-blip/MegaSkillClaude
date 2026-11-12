@@ -1,9 +1,9 @@
 import { fetchWithTimeout } from './resilience.mjs';
 // Voice and photos. Voice → text with Gemini (audio understanding), fallback Whisper on Workers AI.
-// Photos are passed to Gemini as images; without Gemini, LLaVA on Workers AI describes them in text first.
+// Photos are passed to Gemini as images; without Gemini, Moondream on Workers AI describes them in text first.
 
 export const WHISPER = '@cf/openai/whisper-large-v3-turbo';
-export const VISION_CF = '@cf/llava-hf/llava-1.5-7b-hf';
+export const VISION_CF = '@cf/moondream/moondream3.1-9B-A2B';
 export const MAX_MEDIA_BYTES = 8 * 1024 * 1024;
 const TRANSCRIBE = 'Transcribe this audio exactly, in its original language (usually Persian). Output only the transcript, nothing else.';
 
@@ -38,13 +38,22 @@ export async function transcribe(env, askGemini, data, mime) {
 }
 
 // Fallback when Gemini cannot see the photo: a text description from Workers AI.
-export async function describeImage(env, data, question) {
-  if (!env.AI) throw new Error('برای دیدن عکس، کلید جمینی یا Workers AI لازم است.');
-  const bin = atob(data);
-  const image = new Array(bin.length);
-  for (let i = 0; i < bin.length; i++) image[i] = bin.charCodeAt(i);
-  const out = await env.AI.run(VISION_CF, { image, prompt: `Describe this image in detail. ${question}`, max_tokens: 512 });
-  return (out && out.description ? out.description : '').trim();
+export async function describeImage(env, { data, mime }, question) {
+  if (!env.AI) throw new Error('Workers AI is unavailable');
+  if (typeof data !== 'string' || typeof mime !== 'string') throw new Error('Invalid image');
+  const image = parseDataUrl(`data:${mime};base64,${data}`, 'image');
+  if (!image) throw new Error('Invalid image');
+  const out = await env.AI.run(VISION_CF, {
+    task: 'query',
+    image: `data:${image.mime};base64,${image.data}`,
+    question: `Describe the image in enough detail to answer this question: ${question}`,
+    reasoning: false,
+    stream: false,
+    max_tokens: 512,
+  });
+  const answer = typeof out?.answer === 'string' ? out.answer.trim() : '';
+  if (!answer) throw new Error('Empty Workers AI vision response');
+  return answer;
 }
 
 // Telegram file → { data: base64, mime }.

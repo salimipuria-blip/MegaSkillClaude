@@ -138,7 +138,7 @@ test('Workers AI: coding mode starts with the code models', async () => {
   const models = [];
   const env = { AI: { run: async (model, input) => { models.push([model, input.max_tokens]); return { response: 'ok' }; } } };
   await askWorkersAI(env, [{ role: 'user', parts: [{ text: 'x' }] }], 'sys', { code: true });
-  assert.deepEqual(models[0], ['@cf/moonshotai/kimi-k2.7-code', 2048]);
+  assert.deepEqual(models[0], ['@cf/qwen/qwen2.5-coder-32b-instruct', 2048]);
   await askWorkersAI(env, [{ role: 'user', parts: [{ text: 'x' }] }], 'sys');
   assert.equal(models[1][0], '@cf/google/gemma-3-12b-it');
 });

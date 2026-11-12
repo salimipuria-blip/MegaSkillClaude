@@ -56,6 +56,16 @@ test('diagnose names each source and why it fails, and never echoes a key', asyn
   assert.ok(calls.every((c) => !String(c.url).includes('secret-groq-key')));
 });
 
+test('Workers AI text requires content and cannot mark image generation healthy', async () => {
+  const config = { FREE_TEXT: 'off', FREE_IMAGES: 'off' };
+  const healthy = await diagnose({ ...config, AI: { async run() { return { response: 'OK' }; } } });
+  assert.equal(healthy.text, true);
+  assert.equal(healthy.image, false);
+  const empty = await diagnose({ ...config, AI: { async run() { return { response: ' ' }; } } });
+  assert.equal(empty.text, false);
+  assert.equal(empty.checks[0].ok, false);
+});
+
 test('without any working image source the verdict says so in Persian', async () => {
   upstream({ hf: 401 });
   const d = await diagnose(env());

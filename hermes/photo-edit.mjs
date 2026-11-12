@@ -452,9 +452,7 @@ export async function geminiImageList(env) {
 // Workers AI image-to-image models, best first. `strength` is how far the model may travel from the
 // original: low keeps it, high rebuilds it (skill library: img2img strength semantics).
 export const CF_EDIT_MODELS = [
-  { id: '@cf/black-forest-labs/flux-1-schnell', name: 'flux-1-schnell', steps: 4 },
   { id: '@cf/runwayml/stable-diffusion-v1-5-img2img', name: 'sd-v1-5-img2img', guidance: 7.5, steps: 20 },
-  { id: '@cf/stabilityai/stable-diffusion-xl-base-1.0', name: 'sdxl-base', guidance: 7.5, steps: 20 },
 ];
 
 /** Workers AI answers as base64, a stream or raw bytes depending on the model. */

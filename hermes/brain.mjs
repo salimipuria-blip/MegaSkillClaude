@@ -7,7 +7,7 @@ import { describeImage } from './media.mjs';
 export const MODELS = ['gemini-3.8-flash', 'gemini-3.7-flash', 'gemini-3.5-flash-lite', 'gemini-2.5-flash'];
 export const CF_MODELS = ['@cf/google/gemma-3-12b-it', '@cf/meta/llama-3.3-70b-instruct-fp8-fast'];
 // Coding mode tries Workers AI's code model first.
-export const CF_CODE_MODELS = ['@cf/moonshotai/kimi-k2.7-code', '@cf/qwen/qwen2.5-coder-32b-instruct', ...CF_MODELS];
+export const CF_CODE_MODELS = ['@cf/qwen/qwen2.5-coder-32b-instruct', ...CF_MODELS];
 const GEMINI_API = 'https://generativelanguage.googleapis.com/v1beta';
 export const STYLE = "Reply in the user's language (usually Persian). Be direct and accurate; short by default, detailed when the task needs it. Say so when you are not sure.\n" +
   "You CAN hear and see: voice messages are transcribed for you, and photos the user sends are attached to their message. " +
@@ -22,12 +22,16 @@ export async function see(env, contents, system, images, input, tools = null) {
   if (env.GEMINI_API_KEY) {
     try {
       return await askGemini(env, contents, system, true, tools);
-    } catch (err) {
-      if (!env.AI) throw err;
-      console.error('[Hermes] Gemini vision failed, using Workers AI:', err.message);
+    } catch {
+      console.error('[Hermes] Gemini vision failed, trying Workers AI');
     }
   }
-  const description = await describeImage(env, images[0].data, input);
+  let description;
+  try {
+    description = await describeImage(env, images[0], input);
+  } catch {
+    return 'فعلاً نتوانستم عکس را بررسی کنم. دوباره بفرست یا جزئیاتش را در پیام بنویس.';
+  }
   const textOnly = [...contents.slice(0, -1), { role: 'user', parts: [{ text: `${input}\n\n[Description of the attached photo: ${description}]` }] }];
   return ask(env, textOnly, system);
 }

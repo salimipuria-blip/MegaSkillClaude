@@ -783,12 +783,30 @@ test('Telegram photo is shown to Gemini with its caption and kept in memory as t
 
 test('photo without Gemini: Workers AI describes it, then the text brain answers', async () => {
   const env = { ...baseEnv(), GEMINI_API_KEY: undefined, AI: { calls: [], async run(model, input) {
-    this.calls.push({ model, input }); return model.includes('llava') ? { description: 'a jeep in a forest' } : { response: 'جیپ در جنگل' }; } } };
+    this.calls.push({ model, input }); return model.includes('moondream') ? { answer: 'a jeep in a forest' } : { response: 'جیپ در جنگل' }; } } };
   const calls = mediaFetch();
   await post(env, { message: { chat: { id: Number(OWNER), type: 'private' }, from: { id: Number(OWNER) }, photo: [{ file_id: 'p1' }] } });
-  assert.equal(env.AI.calls[0].model, '@cf/llava-hf/llava-1.5-7b-hf');
+  assert.equal(env.AI.calls[0].model, '@cf/moondream/moondream3.1-9B-A2B');
+  assert.equal(env.AI.calls[0].input.task, 'query');
+  assert.equal(env.AI.calls[0].input.stream, false);
+  assert.match(env.AI.calls[0].input.image, /^data:image\/jpeg;base64,/);
   assert.match(env.AI.calls[1].input.messages.at(-1).content, /a jeep in a forest/);
   assert.deepEqual(sent(calls), ['جیپ در جنگل']);
+});
+
+test('vision failure gives an honest response and the next text turn still succeeds', async () => {
+  const env = { ...baseEnv(), GEMINI_API_KEY: undefined, AI: { async run(model) {
+    if (model.includes('moondream')) throw new Error('410 Gone');
+    return { response: 'متن سالم است' };
+  } } };
+  const calls = mediaFetch();
+  await post(env, { message: { chat: { id: Number(OWNER), type: 'private' }, from: { id: Number(OWNER) },
+    photo: [{ file_id: 'p1' }] } });
+  await post(env, message('سلام'));
+  assert.deepEqual(sent(calls), [
+    'فعلاً نتوانستم عکس را بررسی کنم. دوباره بفرست یا جزئیاتش را در پیام بنویس.',
+    'متن سالم است',
+  ]);
 });
 
 test('Gemini answers with Google Search and lists sources', async () => {
