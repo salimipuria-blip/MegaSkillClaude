@@ -31,7 +31,52 @@ const orb=document.getElementById('orb'),coreStatus=document.getElementById('cor
 const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in-view')}),{threshold:.18});document.querySelectorAll('.observe').forEach(s=>observer.observe(s));
 let updating=false;function updateProgress(){const max=document.documentElement.scrollHeight-innerHeight;document.getElementById('progressFill').style.height=`${max>0?Math.min(100,scrollY/max*100):0}%`;updating=false}addEventListener('scroll',()=>{if(!updating){updating=true;requestAnimationFrame(updateProgress)}},{passive:true});updateProgress();
 const glow=document.querySelector('.cursor-glow');if(matchMedia('(pointer:fine)').matches)addEventListener('pointermove',e=>{glow.style.left=e.clientX+'px';glow.style.top=e.clientY+'px'},{passive:true});
-const canvas=document.getElementById('spaceCanvas'),ctx=canvas.getContext('2d');let points=[],ww=0,hh=0,dpr=1,tick=0,animation=0;const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
-function resize(){ww=canvas.clientWidth;hh=canvas.clientHeight;dpr=Math.min(devicePixelRatio||1,1.5);canvas.width=Math.round(ww*dpr);canvas.height=Math.round(hh*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);const count=Math.min(100,Math.max(35,Math.floor(ww*hh/18000)));points=Array.from({length:count},(_,i)=>({x:Math.random()*ww,y:Math.random()*hh,r:Math.random()*1.1+.3,p:Math.random()*Math.PI*2}))}resize();addEventListener('resize',resize,{passive:true});
-function render(){ctx.clearRect(0,0,ww,hh);for(const p of points){ctx.fillStyle=`rgba(116,183,255,${.11+.29*(.5+.5*Math.sin(tick*.009+p.p))})`;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill()}if(!reduced){tick++;animation=requestAnimationFrame(render)}}render();
-document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!reduced){cancelAnimationFrame(animation);render()}else cancelAnimationFrame(animation)});
+// ——— SKILL GALAXY · یک کهکشان سه‌بُعدی از مهارت‌ها ———
+const canvas=document.getElementById('spaceCanvas'),ctx=canvas.getContext('2d');
+let ww=0,hh=0,dpr=1,tick=0,raf=0,mx=0,my=0;
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const TAU=Math.PI*2;
+// کهکشان: هستهٔ روشن + سه بازهٔ مارپیچی (۳۰۰۰ مهارت روی سه ردیف)
+let core=[],arms=[],dust=[],shots=[];
+function buildGalaxy(){
+  const R=Math.min(ww,hh)*0.42, coreN=Math.floor(190+ww/6), armN=Math.floor(300+ww/2.6), dustN=90;
+  core=Array.from({length:coreN},()=>{const r=Math.pow(Math.random(),1.8)*R*0.42,t=Math.random()*TAU,z=(Math.random()-.5)*R*.3;return{x:Math.cos(t)*r,y:(Math.random()-.5)*R*.34,z:Math.sin(t)*r*.82+z,r:Math.random()*1.15+.35,p:Math.random()*TAU,c:Math.random()<.24?'#8fd8ff':Math.random()<.5?'#e9f6ff':'#5fa8ff'}});
+  arms=Array.from({length:armN},()=>{const arm=Math.floor(Math.random()*3),t=Math.pow(Math.random(),.72)*4.6+0.32,R0=Math.pow(t/5.1,1.12)*R+R*.16,spread=(Math.random()+Math.random()+Math.random()-1.5)*R*.15,ang=arm*(TAU/3)+t+spread*.012,r=Math.hypot(R0,spread);return{x:Math.cos(ang)*r,y:(Math.random()-.5)*R*.3*(1-t/6.4),z:Math.sin(ang)*r,r:Math.random()*1.35+.45,p:Math.random()*TAU,c:Math.random()<.18?'#ffd9a0':Math.random()<.5?'#9fe0ff':'#6db4ff',arm}});
+  dust=Array.from({length:dustN},()=>({x:(Math.random()-.5)*ww*1.4,y:(Math.random()-.5)*hh*1.3,z:(Math.random()-.5)*900,r:Math.random()*.75+.2,p:Math.random()*TAU}));
+  shots=[];
+}
+function project(p,rotY,tilt){
+  const cos=Math.cos(rotY),sin=Math.sin(rotY);
+  let x=p.x*cos+p.z*sin,z=-p.x*sin+p.z*cos,y=p.y;
+  const ct=Math.cos(tilt),st=Math.sin(tilt);let y2=y*ct-z*st,z2=y*st+z*ct;y=y2;z=z2;
+  const fov=Math.min(ww,hh)*1.35,d=fov+z+fov*0.32,s=fov/d;
+  return{sx:ww/2+x*s+mx*(s*38),sy:hh/2+y*s+my*(s*26),s,z};
+}
+function resize(){ww=canvas.clientWidth;hh=canvas.clientHeight;dpr=Math.min(devicePixelRatio||1,1.75);canvas.width=Math.round(ww*dpr);canvas.height=Math.round(hh*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);buildGalaxy()}
+resize();addEventListener('resize',resize,{passive:true});
+if(matchMedia('(pointer:fine)').matches)addEventListener('pointermove',e=>{mx=(e.clientX/innerWidth-.5);my=(e.clientY/innerHeight-.5)},{passive:true});
+function star(s,alpha){ctx.globalAlpha=Math.max(0,Math.min(1,alpha));ctx.fillStyle=s.c;ctx.shadowColor=s.c;ctx.shadowBlur=s.r>1.15?9:0;ctx.beginPath();ctx.arc(s.sx,s.sy,s.r*s.s,0,TAU);ctx.fill();ctx.shadowBlur=0;ctx.globalAlpha=1}
+function drawFrame(){
+  ctx.clearRect(0,0,ww,hh);
+  const rotY=tick*0.0021+mx*0.35,tilt=0.62+my*0.18;
+  // هالهٔ مرکزی
+  const halo=project({x:0,y:0,z:0},rotY,tilt);
+  const haloR=Math.min(ww,hh)*.24*halo.s;
+  const g=ctx.createRadialGradient(halo.sx,halo.sy,0,halo.sx,halo.sy,haloR);
+  g.addColorStop(0,'rgba(150,224,255,.9)');g.addColorStop(.18,'rgba(96,186,255,.55)');g.addColorStop(.45,'rgba(38,120,235,.22)');g.addColorStop(1,'rgba(0,30,80,0)');
+  ctx.fillStyle=g;ctx.beginPath();ctx.arc(halo.sx,halo.sy,haloR,0,TAU);ctx.fill();
+  // غبار دوردست (پارالاکس معکوس)
+  for(const p of dust){const q=project(p,rotY*.18,tilt*.7);ctx.globalAlpha=.34+.3*Math.sin(tick*.01+p.p);ctx.fillStyle='#7fb6e8';ctx.beginPath();ctx.arc(q.sx,q.sy,Math.max(.3,p.r*q.s),0,TAU);ctx.fill();ctx.globalAlpha=1}
+  // ستاره‌ها (دوردست به نزدیک)
+  const all=[...core,...arms];for(const o of all)o.j=project(o,rotY,tilt);all.sort((a,b)=>a.j.z-b.j.z);
+  for(const o of all){const tw=.5+.5*Math.sin(tick*.016+o.p);star(o.j,.28+.62*tw)}
+  // سه «مهارتِ راستین» نورانی روی بازوها
+  for(let i=0;i<3;i++){const o=arms[(i*97+tick/240|0)%arms.length];if(o){const q=project(o,rotY,tilt);ctx.globalAlpha=.55+.4*Math.sin(tick*.03+i*2);ctx.strokeStyle='#bfeaff';ctx.lineWidth=1;ctx.beginPath();ctx.arc(q.sx,q.sy,7*q.s+3*Math.sin(tick*.05+i),0,TAU);ctx.stroke();ctx.globalAlpha=1}}
+  // شهاب‌ها
+  if(!reduced&&Math.random()<.012)shots.push({x:Math.random()*ww*.7+ww*.15,y:Math.random()*hh*.3,vx:-(4+Math.random()*4),vy:2.2+Math.random()*1.6,life:1});
+  shots=shots.filter(s=>s.life>0);for(const s of shots){ctx.globalAlpha=s.life;const grad=ctx.createLinearGradient(s.x,s.y,s.x-s.vx*16,s.y-s.vy*16);grad.addColorStop(0,'#eaf7ff');grad.addColorStop(1,'rgba(140,210,255,0)');ctx.strokeStyle=grad;ctx.lineWidth=1.6;ctx.beginPath();ctx.moveTo(s.x,s.y);ctx.lineTo(s.x-s.vx*16,s.y-s.vy*16);ctx.stroke();ctx.globalAlpha=1;s.x+=s.vx;s.y+=s.vy;s.life-=.016}
+  tick++;
+}
+function render(){drawFrame();if(!reduced)raf=requestAnimationFrame(render)}
+render();
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!reduced){cancelAnimationFrame(raf);render()}else cancelAnimationFrame(raf)});

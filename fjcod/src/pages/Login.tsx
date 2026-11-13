@@ -5,6 +5,7 @@ import { forgetInitialPasswords, peekInitialPasswords } from '../core/initial-pa
 import { ROLES } from '../core/permissions';
 import { toast } from '../components/ui';
 import { LocalOnlyNotice } from '../components/LocalOnlyNotice';
+import { LoginBackdrop } from '../components/LoginBackdrop';
 
 /** Password-only entry: the password identifies the user, and the user's position opens its panel. */
 export function Login({ onSuccess }: { onSuccess: (password: string, mustChange: boolean) => void }) {
@@ -35,6 +36,7 @@ export function Login({ onSuccess }: { onSuccess: (password: string, mustChange:
 
   return (
     <div className="login fabric">
+      <LoginBackdrop />
       <main className="login-card">
         <div className="login-hero-name">{db.settings.storeName}</div>
         <div className="login-hero-en">{db.settings.storeNameEn}</div>
