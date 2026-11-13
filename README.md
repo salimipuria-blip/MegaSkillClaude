@@ -24,6 +24,9 @@
 
 `node scripts/doctor.mjs` ترتیب گیت‌های همهٔ پروژه‌ها را اجرا می‌کند؛ با شناسه فقط همان پروژه را بررسی کن:
 
+اتصال Codex به روتر Arena در کنار اشتراک ChatGPT Plus: [راهنمای Codex و Arena](docs/CODEX_ARENA.md).
+بررسی منابع Arena و ایده‌های اجرایی روی پروژه‌ها: [Arena و ایده‌ها](docs/ARENA_IDEAS.md).
+
 ```bash
 node scripts/doctor.mjs                         # همهٔ پروژه‌ها
 node scripts/doctor.mjs psk lithos              # فقط موارد نام‌برده‌شده
