@@ -1,4 +1,9 @@
 name: Viking team static checks
+permissions:
+  contents: read
+concurrency:
+  group: viking-static-${{ github.ref }}
+  cancel-in-progress: true
 on:
   push:
     paths:
@@ -13,9 +18,12 @@ on:
       - 'tests/**'
 jobs:
   validate:
+    name: static checks
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
       - name: Validate browser module syntax
         run: node --check --input-type=module < team/app.js
       - name: Run dependency-free integrity tests
