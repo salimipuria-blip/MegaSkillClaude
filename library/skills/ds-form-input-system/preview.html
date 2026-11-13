@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Form Input System — Preview</title>
+<link rel="stylesheet" href="../ds-design-tokens/tokens/css-variables.css">
+<link rel="stylesheet" href="components/inputs.css">
+<style>
+  body { font-family: var(--ds-font-sans); background: var(--ds-color-background); color: var(--ds-color-text-primary); margin: 0; padding: var(--ds-space-10); line-height: var(--ds-line-height-normal); }
+  .preview-section { max-width: 960px; margin: 0 auto; }
+  h1 { font-size: var(--ds-text-3xl); margin-bottom: var(--ds-space-4); }
+  h2 { font-size: var(--ds-text-xl); margin-top: var(--ds-space-10); margin-bottom: var(--ds-space-4); color: var(--ds-color-text-secondary); }
+  .field-demo { max-width: 400px; margin-bottom: var(--ds-space-6); }
+</style>
+</head>
+<body>
+<div class="preview-section">
+  <h1>DS Form Input System</h1>
+  <p style="color: var(--ds-color-text-muted);">کامپوننت ورودی، انتخاب، متنareas و چک‌باکس</p>
+
+  <h2>ورودی‌های متنی</h2>
+  <div class="field-demo">
+    <label for="email">ایمیل</label>
+    <input type="email" id="email" class="input" placeholder="name@example.com">
+    <p class="helper-text">ایمیل معتبر وارد کنید</p>
+  </div>
+
+  <div class="field-demo">
+    <label for="pass">رمز عبور</label>
+    <input type="password" id="pass" class="input error">
+    <p class="error-text">رمز عبور باید حداقل ۸ کاراکتر باشد</p>
+  </div>
+
+  <div class="field-demo">
+    <label for="role">نقش کاربری</label>
+    <select id="role" class="select">
+      <option>ادمین</option>
+      <option>کاربر عادی</option>
+      <option>مهمان</option>
+    </select>
+  </div>
+
+  <div class="field-demo">
+    <label for="bio">بیوگرافی</label>
+    <textarea id="bio" class="textarea" placeholder="بیوگرافی خود را بنویسید..."></textarea>
+  </div>
+
+  <div class="field-demo field-checkbox">
+    <input type="checkbox" id="agree" class="input-checkbox">
+    <label for="agree">من با قوانین موافقم</label>
+  </div>
+
+  <div class="field-demo field-radio">
+    <input type="radio" id="plan-a" name="plan" class="input-radio">
+    <label for="plan-a">پلان A</label>
+  </div>
+  <div class="field-demo field-radio">
+    <input type="radio" id="plan-b" name="plan" class="input-radio">
+    <label for="plan-b">پلان B</label>
+  </div>
+
+  <div class="field-demo">
+    <label for="disabled">ورودی غیرفعال</label>
+    <input type="text" id="disabled" class="input" disabled value="این فیلد غیرفعال است">
+  </div>
+</div>
+</body>
+</html>

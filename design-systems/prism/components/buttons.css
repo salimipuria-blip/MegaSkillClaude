@@ -1,0 +1,170 @@
+/* ============================================================
+   PRISM — BUTTON COMPONENTS
+   ============================================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-normal);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition:
+    background-color var(--transition-base),
+    color var(--transition-base),
+    border-color var(--transition-base),
+    transform var(--transition-fast),
+    box-shadow var(--transition-base);
+  touch-action: manipulation;
+  user-select: none;
+  text-decoration: none;
+}
+
+.btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--color-focus-ring);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.btn svg {
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+}
+
+/* ── Sizes ── */
+.btn-sm {
+  padding: 6px 12px;
+  font-size: var(--text-sm);
+  border-radius: var(--radius-sm);
+}
+
+.btn-md {
+  padding: 8px 16px;
+  font-size: var(--text-base);
+  border-radius: var(--radius-md);
+}
+
+.btn-lg {
+  padding: 12px 24px;
+  font-size: var(--text-lg);
+  border-radius: var(--radius-lg);
+}
+
+.btn-xl {
+  padding: 16px 32px;
+  font-size: var(--text-xl);
+  border-radius: var(--radius-xl);
+}
+
+.btn-full {
+  width: 100%;
+}
+
+/* ── Variants ── */
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--color-primary-hover);
+}
+
+.btn-primary:active:not(:disabled) {
+  background-color: var(--color-primary-active);
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background-color: var(--color-secondary);
+  color: var(--color-on-secondary);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: var(--color-secondary-hover);
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+}
+
+.btn-outline:hover:not(:disabled) {
+  border-color: var(--color-border-hover);
+  background-color: var(--color-surface-hover);
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: var(--color-text-secondary);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background-color: var(--color-surface-hover);
+  color: var(--color-text-primary);
+}
+
+.btn-destructive {
+  background-color: var(--color-error);
+  color: #ffffff;
+}
+
+.btn-destructive:hover:not(:disabled) {
+  background-color: var(--color-error-hover);
+}
+
+.btn-success {
+  background-color: var(--color-success);
+  color: #ffffff;
+}
+
+.btn-success:hover:not(:disabled) {
+  background-color: var(--color-success-hover);
+}
+
+.btn-icon {
+  padding: var(--space-3);
+  aspect-ratio: 1 / 1;
+  min-width: auto;
+}
+
+.btn-icon svg {
+  width: 1.25em;
+  height: 1.25em;
+}
+
+/* ── Button Group ── */
+.btn-group {
+  display: inline-flex;
+  gap: var(--space-1);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+}
+
+.btn-group .btn {
+  border-radius: 0;
+  border-left-width: 0;
+}
+
+.btn-group .btn:first-child {
+  border-top-left-radius: var(--radius-md);
+  border-bottom-left-radius: var(--radius-md);
+  border-left-width: 1px;
+}
+
+.btn-group .btn:last-child {
+  border-top-right-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+}

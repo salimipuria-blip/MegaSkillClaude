@@ -1,0 +1,170 @@
+/* ============================================================
+   VIVID — BUTTON COMPONENTS
+   Colorful, friendly, mobile-first
+   ============================================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  border: none;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition:
+    background-color var(--transition-base),
+    color var(--transition-base),
+    border-color var(--transition-base),
+    box-shadow var(--transition-base),
+    transform var(--transition-fast);
+  touch-action: manipulation;
+  user-select: none;
+  text-decoration: none;
+}
+
+.btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px var(--color-focus-ring);
+}
+
+.btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  pointer-events: none;
+  transform: none;
+}
+
+.btn svg {
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+}
+
+/* ── Sizes ── */
+.btn-sm { padding: 8px 16px; font-size: var(--text-sm); border-radius: var(--radius-md); }
+.btn-md { padding: 12px 24px; font-size: var(--text-base); border-radius: var(--radius-lg); }
+.btn-lg { padding: 16px 32px; font-size: var(--text-lg); border-radius: var(--radius-xl); }
+.btn-xl { padding: 20px 40px; font-size: var(--text-xl); border-radius: var(--radius-xl); }
+.btn-full { width: 100%; }
+
+/* ── Variants ── */
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--color-primary-hover);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-primary:active:not(:disabled) {
+  background-color: var(--color-primary-active);
+}
+
+.btn-secondary {
+  background-color: var(--color-text-secondary);
+  color: #ffffff;
+  box-shadow: var(--shadow-md);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: #374151;
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 2px solid var(--color-border);
+  color: var(--color-text-primary);
+  box-shadow: none;
+}
+
+.btn-outline:hover:not(:disabled) {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background-color: rgba(236, 72, 153, 0.05);
+}
+
+.btn-ghost {
+  background-color: transparent;
+  color: var(--color-text-secondary);
+  box-shadow: none;
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background-color: var(--color-surface-hover);
+  color: var(--color-text-primary);
+}
+
+.btn-destructive {
+  background-color: var(--color-error);
+  color: #ffffff;
+  box-shadow: var(--shadow-md);
+}
+
+.btn-destructive:hover:not(:disabled) {
+  background-color: var(--color-error-hover);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-accent-1 {
+  background-color: var(--color-accent-1);
+  color: #ffffff;
+}
+.btn-accent-2 { background-color: var(--color-accent-2); color: #ffffff; }
+.btn-accent-3 { background-color: var(--color-accent-3); color: #ffffff; }
+.btn-accent-4 { background-color: var(--color-accent-4); color: #ffffff; }
+.btn-accent-5 { background-color: var(--color-accent-5); color: #ffffff; }
+
+.btn-accent-1:hover:not(:disabled) { filter: brightness(0.92); box-shadow: var(--shadow-colorful); }
+.btn-accent-2:hover:not(:disabled) { filter: brightness(0.92); box-shadow: var(--shadow-colorful); }
+.btn-accent-3:hover:not(:disabled) { filter: brightness(0.92); box-shadow: var(--shadow-colorful); }
+.btn-accent-4:hover:not(:disabled) { filter: brightness(0.92); box-shadow: var(--shadow-colorful); }
+.btn-accent-5:hover:not(:disabled) { filter: brightness(0.92); box-shadow: var(--shadow-colorful); }
+
+.btn-icon {
+  padding: var(--space-3);
+  aspect-ratio: 1 / 1;
+  min-width: auto;
+  border-radius: var(--radius-full);
+}
+
+.btn-icon svg {
+  width: 1.25em;
+  height: 1.25em;
+}
+
+/* ── Button Group ── */
+.btn-group {
+  display: inline-flex;
+  gap: var(--space-2);
+  border-radius: var(--radius-xl);
+  border: 2px solid var(--color-border);
+  background-color: var(--color-surface);
+}
+
+.btn-group .btn {
+  border-radius: 0;
+  border-left-width: 0;
+}
+
+.btn-group .btn:first-child {
+  border-top-left-radius: var(--radius-xl);
+  border-bottom-left-radius: var(--radius-xl);
+  border-left-width: 2px;
+}
+
+.btn-group .btn:last-child {
+  border-top-right-radius: var(--radius-xl);
+  border-bottom-right-radius: var(--radius-xl);
+}

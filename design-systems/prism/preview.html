@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prism Design System — Preview</title>
+<link rel="stylesheet" href="tokens/css-variables.css">
+<link rel="stylesheet" href="components/buttons.css">
+<link rel="stylesheet" href="components/inputs.css">
+<link rel="stylesheet" href="components/cards.css">
+<style>
+  body { font-family: var(--font-sans); background: var(--color-background); color: var(--color-text-primary); margin: 0; padding: var(--space-8); line-height: var(--line-height-normal); }
+  .preview-section { max-width: 960px; margin: 0 auto; }
+  h1 { font-size: var(--text-3xl); margin-bottom: var(--space-6); }
+  h2 { font-size: var(--text-xl); margin-top: var(--space-10); margin-bottom: var(--space-4); color: var(--color-text-secondary); }
+  .btn-group-demo { display: flex; gap: var(--space-3); flex-wrap: wrap; margin-bottom: var(--space-6); }
+  .field-demo { max-width: 320px; margin-bottom: var(--space-6); }
+  .card-demo { display: grid; gap: var(--space-6); grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin-bottom: var(--space-10); }
+  .badge { margin-right: var(--space-2); }
+</style>
+</head>
+<body>
+
+<div class="preview-section">
+  <h1>Prism Design System</h1>
+  <p style="color: var(--color-text-muted); font-size: var(--text-lg);">یک سیستم طراحی حرفه‌ای برای محصولات SaaS و ارگانیزیشن</p>
+
+  <h2>دکمه‌ها (Buttons)</h2>
+  <div class="btn-group-demo">
+    <button class="btn btn-primary">primary</button>
+    <button class="btn btn-secondary">secondary</button>
+    <button class="btn btn-outline">outline</button>
+    <button class="btn btn-ghost">ghost</button>
+    <button class="btn btn-destructive">destructive</button>
+    <button class="btn btn-success" disabled>disabled</button>
+    <button class="btn btn-icon" title="ایkon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/></svg></button>
+  </div>
+
+  <h2>ورودی‌ها (Inputs)</h2>
+  <div class="field-demo">
+    <label for="email">ایمیل</label>
+    <input type="email" id="email" class="input" placeholder="name@example.com">
+    <p class="helper-text">ایمیل معتبر وارد کنید</p>
+  </div>
+  <div class="field-demo">
+    <label for="pass">رمز عبور</label>
+    <input type="password" id="pass" class="input error">
+    <p class="error-text">رمز عبور باید حداقل ۸ کاراکتر باشد</p>
+  </div>
+
+  <h2>کارت‌ها (Cards)</h2>
+  <div class="card-demo">
+    <article class="card card-interactive">
+      <div class="card-body">
+        <h3 style="font-size: var(--text-lg); margin: 0 0 var(--space-3) 0;">پروژه جدید</h3>
+        <p style="font-size: var(--text-sm); color: var(--color-text-muted); margin: 0;">توضیحات کوتاه پروژه اینجا قرار می‌گیرد.</p>
+      </div>
+      <div class="card-footer">
+        <span class="badge badge-primary">فعال</span>
+        <button class="btn btn-sm btn-outline">بیشتر</button>
+      </div>
+    </article>
+    <article class="card card-elevated">
+      <div class="card-body">
+        <h3 style="font-size: var(--text-lg); margin: 0 0 var(--space-3) 0;">تحلیل‌ها</h3>
+        <p style="font-size: var(--text-sm); color: var(--color-text-muted); margin: 0;">داشبورد analizات );
+
+
+      </div>
+    </article>
+  </div>
+
+  <h2> nation‌ها و آواتار</h2>
+  <div style="display: flex; gap: var(--space-3); align-items: center; flex-wrap: wrap;">
+    <span class="badge badge-default">Default</span>
+    <span class="badge badge-primary">Primary</span>
+    <span class="badge badge-success">Success</span>
+    <span class="badge badge-warning">Warning</span>
+    <span class="badge badge-error">Error</span>
+    <span class="badge badge-info">Info</span>
+    <div class="avatar avatar-lg">MS</div>
+    <div class="avatar avatar-sm" style="background:#e2e8f0;">A</div>
+  </div>
+</div>
+
+</body>
+</html>
