@@ -1,0 +1,159 @@
+/* ============================================================
+   DS-NAVIGATION-SYSTEM — COMPONENT CSS
+   Depends on: ds-design-tokens/tokens/css-variables.css, ds-button-system/components/buttons.css
+   ============================================================ */
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--ds-space-4) var(--ds-space-6);
+  background-color: var(--ds-color-surface);
+  border-bottom: 1px solid var(--ds-color-border);
+  position: sticky;
+  top: 0;
+  z-index: var(--ds-z-sticky);
+  box-shadow: var(--ds-shadow-sm);
+}
+
+.nav-brand {
+  font-family: var(--ds-font-sans);
+  font-weight: var(--ds-font-weight-bold);
+  font-size: var(--ds-text-lg);
+  color: var(--ds-color-text-primary);
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: var(--ds-space-4);
+  align-items: center;
+}
+
+.nav-link {
+  font-size: var(--ds-text-sm);
+  color: var(--ds-color-text-secondary);
+  text-decoration: none;
+  padding: var(--ds-space-2) var(--ds-space-3);
+  border-radius: var(--ds-radius-md);
+  transition: background-color var(--ds-transition-base), color var(--ds-transition-base);
+}
+
+.nav-link:hover,
+.nav-link:focus-visible {
+  background-color: var(--ds-color-surface-hover);
+  color: var(--ds-color-text-primary);
+}
+
+.nav-link.active {
+  color: var(--ds-color-primary);
+  font-weight: var(--ds-font-weight-semibold);
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-1);
+  font-size: var(--ds-text-xs);
+  color: var(--ds-color-text-muted);
+  padding: var(--ds-space-3) var(--ds-space-4);
+}
+
+.breadcrumb a {
+  color: var(--ds-color-text-secondary);
+  text-decoration: none;
+}
+.breadcrumb a:hover { color: var(--ds-color-primary); }
+
+.breadcrumb-divider {
+  font-size: var(--ds-text-xs);
+  color: var(--ds-color-text-muted);
+}
+
+.tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--ds-color-border);
+  overflow-x: auto;
+  padding-bottom: 1px;
+}
+
+.tab {
+  padding: var(--ds-space-3) var(--ds-space-4);
+  font-size: var(--ds-text-sm);
+  color: var(--ds-color-text-secondary);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: color var(--ds-transition-base), border-color var(--ds-transition-base);
+  white-space: nowrap;
+}
+
+.tab:hover,
+.tab:focus-visible {
+  color: var(--ds-color-primary);
+}
+
+.tab.active {
+  color: var(--ds-color-primary);
+  border-bottom-color: var(--ds-color-primary);
+  font-weight: var(--ds-font-weight-semibold);
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-2);
+  justify-content: center;
+  padding: var(--ds-space-6) 0;
+}
+
+.page-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--ds-color-border);
+  border-radius: var(--ds-radius-md);
+  background-color: var(--ds-color-background);
+  color: var(--ds-color-text-secondary);
+  font-size: var(--ds-text-sm);
+  cursor: pointer;
+  transition: all var(--ds-transition-base);
+}
+
+.page-btn:hover:not(:disabled) {
+  border-color: var(--ds-color-primary);
+  color: var(--ds-color-primary);
+  background-color: var(--ds-color-surface-hover);
+}
+
+.page-btn.active {
+  background-color: var(--ds-color-primary);
+  color: #ffffff;
+  border-color: var(--ds-color-primary);
+}
+
+.page-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.mobile-menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--ds-space-2);
+}
+
+.mobile-menu-toggle svg {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+}
+
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .mobile-menu-toggle { display: block; }
+}

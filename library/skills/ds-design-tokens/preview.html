@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Design Tokens — Preview</title>
+<link rel="stylesheet" href="tokens/css-variables.css">
+<style>
+  body { font-family: var(--ds-font-sans); background: var(--ds-color-background); color: var(--ds-color-text-primary); margin: 0; padding: var(--ds-space-10); line-height: var(--ds-line-height-normal); }
+  .preview-section { max-width: 960px; margin: 0 auto; }
+  h1 { font-size: var(--ds-text-3xl); margin-bottom: var(--ds-space-4); }
+  h2 { font-size: var(--ds-text-xl); margin-top: var(--ds-space-10); margin-bottom: var(--ds-space-4); color: var(--ds-color-text-secondary); }
+  .token-table { width: 100%; border-collapse: collapse; font-family: var(--ds-font-mono); font-size: var(--ds-text-sm); }
+  .token-table th, .token-table td { padding: var(--ds-space-3) var(--ds-space-4); text-align: right; border-bottom: 1px solid var(--ds-color-border); }
+  .token-table thead th { background-color: var(--ds-color-surface); color: var(--ds-color-text-secondary); text-transform: uppercase; font-size: var(--ds-text-xs); }
+  .swatch { display: inline-block; width: 24px; height: 24px; border-radius: var(--ds-radius-md); border: 1px solid var(--ds-color-border); margin-left: var(--ds-space-2); vertical-align: middle; }
+  .space-demo { display: flex; gap: var(--ds-space-2); align-items: center; }
+  .space-block { height: 24px; width: 24px; background: var(--ds-color-primary); border-radius: var(--ds-radius-sm); }
+</style>
+</head>
+<body>
+<div class="preview-section">
+  <h1>DS Design Tokens</h1>
+  <p style="color: var(--ds-color-text-muted);">پایه wszystkie سیستم‌های طراحی مگا‌اسکیل</p>
+
+  <h2>رنگ‌ها</h2>
+  <table class="token-table">
+    <thead><tr><th>نقش</th><th>مقدار</th><th>متغیر CSS</th></tr></thead>
+    <tbody>
+      <tr><td>Primary</td><td><div class="swatch" style="background:var(--ds-color-primary)"></div> #2563eb</td><td><code>--ds-color-primary</code></td></tr>
+      <tr><td>Background</td><td><div class="swatch" style="background:var(--ds-color-background)"></div> #ffffff</td><td><code>--ds-color-background</code></td></tr>
+      <tr><td>Surface</td><td><div class="swatch" style="background:var(--ds-color-surface)"></div> #f8fafc</td><td><code>--ds-color-surface</code></td></tr>
+      <tr><td>Text Primary</td><td><div class="swatch" style="background:var(--ds-color-text-primary)"></div> #0f172a</td><td><code>--ds-color-text-primary</code></td></tr>
+      <tr><td>Border</td><td><div class="swatch" style="background:var(--ds-color-border)"></div> #e2e8f0</td><td><code>--ds-color-border</code></td></tr>
+      <tr><td>Success</td><td><div class="swatch" style="background:var(--ds-color-success)"></div> #10b981</td><td><code>--ds-color-success</code></td></tr>
+      <tr><td>Error</td><td><div class="swatch" style="background:var(--ds-color-error)"></div> #ef4444</td><td><code>--ds-color-error</code></td></tr>
+    </tbody>
+  </table>
+
+  <h2>فاصله‌ها</h2>
+  <div class="space-demo" style="margin-bottom:var(--ds-space-2)"><div class="space-block"></div> space-1 (4px)</div>
+  <div class="space-demo" style="margin-bottom:var(--ds-space-2)"><div class="space-block"></div> space-2 (8px)</div>
+  <div class="space-demo" style="margin-bottom:var(--ds-space-2)"><div class="space-block"></div> space-4 (16px)</div>
+  <div class="space-demo" style="margin-bottom:var(--ds-space-2)"><div class="space-block"></div> space-6 (24px)</div>
+  <div class="space-demo" style="margin-bottom:var(--ds-space-2)"><div class="space-block"></div> space-12 (48px)</div>
+
+  <h2>تایپوGRAPHY</h2>
+  <p style="font-size:var(--ds-text-xs);">text-xs — ۰٫۷۵rem</p>
+  <p style="font-size:var(--ds-text-sm);">text-sm — ۰٫۸۷۵rem</p>
+  <p style="font-size:var(--ds-text-base);">text-base — ۱rem</p>
+  <p style="font-size:var(--ds-text-lg);">text-lg — ۱٫۱۲۵rem</p>
+  <p style="font-size:var(--ds-text-xl);">text-xl — ۱٫۲۵rem</p>
+  <p style="font-size:var(--ds-text-2xl);">text-2xl — ۱٫۵rem</p>
+  <p style="font-size:var(--ds-text-3xl);">text-3xl — ۱٫۸۷۵rem</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+/* ============================================================
+   DS-ICON-SYSTEM — COMPONENT CSS
+   Depends on: ds-design-tokens/tokens/css-variables.css
+   ============================================================ */
+
+.icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.125em;
+  fill: currentColor;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.icon-xs { font-size: 16px; }
+.icon-sm { font-size: 20px; }
+.icon-md { font-size: 24px; }
+.icon-lg { font-size: 32px; }
+.icon-xl { font-size: 48px; }
+
+.icon-color-primary { color: var(--ds-color-primary); }
+.icon-color-success { color: var(--ds-color-success); }
+.icon-color-error { color: var(--ds-color-error); }
+.icon-color-warning { color: var(--ds-color-warning); }
+.icon-color-muted { color: var(--ds-color-text-muted); }
+
+/* Anti-pattern: no emoji icons */
+[role="img"] emoji, .emoji-icon { display: none !important; }

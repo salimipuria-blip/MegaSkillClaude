@@ -1,0 +1,138 @@
+/* ============================================================
+   SLATE DESIGN SYSTEM — CSS DESIGN TOKENS
+   Developer tools / Docs / High-density technical UI
+   ============================================================ */
+
+:root {
+  /* ── Palette ── */
+  --color-background: #f8fafc;        /* slate-50 */
+  --color-background-inverse: #0f172a;
+  --color-surface: #ffffff;
+  --color-surface-hover: #f1f5f9;     /* slate-100 */
+  --color-card: #ffffff;
+
+  /* Text */
+  --color-text-primary: #0f172a;      /* slate-900 */
+  --color-text-secondary: #334155;    /* slate-700 */
+  --color-text-muted: #64748b;        /* slate-500 */
+  --color-text-on-primary: #ffffff;
+
+  /* Mono / Code */
+  --color-code: #be185d;              /* pink-700 for inline code */
+  --color-code-bg: #f1f5f9;
+  --color-text-mono: #1e293b;
+
+  /* Brand */
+  --color-primary: #475569;           /* slate-600 */
+  --color-primary-hover: #334155;     /* slate-700 */
+  --color-primary-active: #1e293b;    /* slate-800 */
+  --color-on-primary: #ffffff;
+
+  /* Secondary */
+  --color-secondary: #94a3b8;         /* slate-400 */
+  --color-secondary-hover: #64748b;
+  --color-on-secondary: #0f172a;
+
+  /* States */
+  --color-success: #15803d;           /* green-700 */
+  --color-success-hover: #14532d;
+  --color-warning: #b45309;           /* amber-700 */
+  --color-warning-hover: #92400e;
+  --color-error: #dc2626;             /* red-600 */
+  --color-error-hover: #b91c1c;
+  --color-info: #2563eb;              /* blue-600 */
+  --color-info-hover: #1d4ed8;
+
+  /* Borders */
+  --color-border: #cbd5e1;            /* slate-300 */
+  --color-border-hover: #94a3b8;      /* slate-400 */
+  --color-focus-ring: rgba(71, 85, 105, 0.4);
+  --color-divider: #e2e8f0;           /* slate-200 */
+
+  /* Shadows — minimal */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.06);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.07);
+  --shadow-none: none;
+
+  /* Border Radius — tight, technical */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 10px;
+  --radius-full: 9999px;
+
+  /* Spacing (4px grid for density) */
+  --space-0: 0px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* Typography */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+
+  --text-xs: 0.75rem;   /* 12px */
+  --text-sm: 0.875rem;  /* 14px */
+  --text-base: 1rem;    /* 16px */
+  --text-lg: 1.125rem;  /* 18px */
+  --text-xl: 1.25rem;   /* 20px */
+  --text-2xl: 1.5rem;   /* 24px */
+  --text-3xl: 1.875rem; /* 30px */
+
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.7;
+
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Transitions — quick, technical */
+  --transition-fast: 100ms ease;
+  --transition-base: 150ms ease;
+  --transition-slow: 200ms ease;
+
+  /* Z-index */
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-modal: 300;
+  --z-popover: 400;
+  --z-tooltip: 500;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: #0f172a;
+    --color-background-inverse: #f8fafc;
+    --color-surface: #1e293b;
+    --color-surface-hover: #334155;
+    --color-card: #1e293b;
+    --color-text-primary: #f8fafc;
+    --color-text-secondary: #cbd5e1;
+    --color-text-muted: #94a3b8;
+    --color-border: #334155;
+    --color-border-hover: #475569;
+    --color-divider: #1e293b;
+    --color-code: #f472b6;
+    --color-code-bg: #1e293b;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-fast: 0ms;
+    --transition-base: 0ms;
+    --transition-slow: 0ms;
+  }
+}

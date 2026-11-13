@@ -1,0 +1,139 @@
+/* ============================================================
+   VIVID DESIGN SYSTEM — CSS DESIGN TOKENS
+   Colorful / Consumer / Mobile-first
+   ============================================================ */
+
+:root {
+  /* ── Brand Palette ── */
+  --color-primary: #ec4899;        /* pink-500 */
+  --color-primary-hover: #db2777;  /* pink-600 */
+  --color-primary-active: #be185d; /* pink-700 */
+  --color-on-primary: #ffffff;
+
+  /* Accent colors */
+  --color-accent-1: #f59e0b;       /* amber-500 */
+  --color-accent-2: #10b981;       /* emerald-500 */
+  --color-accent-3: #3b82f6;       /* blue-500 */
+  --color-accent-4: #8b5cf6;       /* violet-500 */
+  --color-accent-5: #ef4444;       /* red-500 */
+
+  /* Neutral / Surface */
+  --color-background: #ffffff;
+  --color-surface: #fafafa;
+  --color-surface-hover: #f3f4f6;
+  --color-card: #ffffff;
+
+  /* Text */
+  --color-text-primary: #111827;   /* gray-900 */
+  --color-text-secondary: #4b5563; /* gray-600 */
+  --color-text-muted: #9ca3af;     /* gray-400 */
+  --color-text-on-primary: #ffffff;
+
+  /* States */
+  --color-success: #10b981;
+  --color-success-hover: #059669;
+  --color-warning: #f59e0b;
+  --color-warning-hover: #d97706;
+  --color-error: #ef4444;
+  --color-error-hover: #dc2626;
+  --color-info: #3b82f6;
+  --color-info-hover: #2563eb;
+
+  /* Borders */
+  --color-border: #e5e7eb;         /* gray-200 */
+  --color-border-hover: #d1d5db;   /* gray-300 */
+  --color-focus-ring: rgba(236, 72, 153, 0.4);
+  --color-divider: #f9fafb;
+
+  /* Shadows (playful, lifted) */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-colorful: 0 0 30px rgba(236, 72, 153, 0.35);
+  --shadow-none: none;
+
+  /* Border Radius — larger, friendlier */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Spacing (8px grid) */
+  --space-0: 0px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* Typography */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Outfit", "Segoe UI", Roboto, sans-serif;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+  --text-6xl: 3.75rem;
+
+  --line-height-tight: 1.15;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Transitions — bouncier */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: 350ms cubic-bezier(0.68, -0.55, 0.27, 1.55);
+
+  /* Z-index */
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-modal: 300;
+  --z-popover: 400;
+  --z-tooltip: 500;
+}
+
+/* Dark mode (optional) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: #0f172a;
+    --color-surface: #1e293b;
+    --color-surface-hover: #334155;
+    --color-card: #1e293b;
+    --color-text-primary: #f8fafc;
+    --color-text-secondary: #cbd5e1;
+    --color-text-muted: #94a3b8;
+    --color-border: #334155;
+    --color-border-hover: #475569;
+    --color-divider: #1e293b;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-bounce: 150ms ease;
+    --transition-fast: 0ms;
+    --transition-base: 0ms;
+    --transition-slow: 0ms;
+  }
+}

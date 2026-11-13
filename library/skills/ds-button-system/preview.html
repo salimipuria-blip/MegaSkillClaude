@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Button System — Preview</title>
+<link rel="stylesheet" href="../ds-design-tokens/tokens/css-variables.css">
+<link rel="stylesheet" href="components/buttons.css">
+<style>
+  body { font-family: var(--ds-font-sans); background: var(--ds-color-background); color: var(--ds-color-text-primary); margin: 0; padding: var(--ds-space-10); line-height: var(--ds-line-height-normal); }
+  .preview-section { max-width: 960px; margin: 0 auto; }
+  h1 { font-size: var(--ds-text-3xl); margin-bottom: var(--ds-space-4); }
+  h2 { font-size: var(--ds-text-xl); margin-top: var(--ds-space-10); margin-bottom: var(--ds-space-4); color: var(--ds-color-text-secondary); }
+  .btn-group-demo { display: flex; gap: var(--ds-space-3); flex-wrap: wrap; margin-bottom: var(--ds-space-6); }
+</style>
+</head>
+<body>
+<div class="preview-section">
+  <h1>DS Button System</h1>
+  <p style="color: var(--ds-color-text-muted);">کامپوننت دکمه حرفه‌ای با همه variantes و سایزها</p>
+
+  <h2>Variantes</h2>
+  <div class="btn-group-demo">
+    <button class="btn btn-primary">Primary</button>
+    <button class="btn btn-secondary">Secondary</button>
+    <button class="btn btn-outline">Outline</button>
+    <button class="btn btn-ghost">Ghost</button>
+    <button class="btn btn-destructive">Destructive</button>
+    <button class="btn btn-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/></svg></button>
+  </div>
+
+  <h2>سایزها</h2>
+  <div class="btn-group-demo">
+    <button class="btn btn-primary btn-xs">XS</button>
+    <button class="btn btn-primary btn-sm">SM</button>
+    <button class="btn btn-primary btn-md">MD</button>
+    <button class="btn btn-primary btn-lg">LG</button>
+    <button class="btn btn-primary btn-xl">XL</button>
+    <button class="btn btn-primary btn-full">Full Width</button>
+  </div>
+
+  <h2>دکمه‌چین (Toolbar)</h2>
+  <div class="btn-toolbar">
+    <button class="btn btn-sm btn-outline">ذخیره</button>
+    <button class="btn btn-sm btn-primary">استفاده</button>
+    <button class="btn btn-sm btn-ghost">لغو</button>
+  </div>
+</div>
+</body>
+</html>

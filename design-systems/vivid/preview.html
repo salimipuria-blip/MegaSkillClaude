@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vivid Design System — Preview</title>
+<link rel="stylesheet" href="tokens/css-variables.css">
+<link rel="stylesheet" href="components/buttons.css">
+<link rel="stylesheet" href="components/inputs.css">
+<link rel="stylesheet" href="components/cards.css">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap');
+  body { font-family: var(--font-sans); background: var(--color-background); color: var(--color-text-primary); margin: 0; padding: var(--space-10); line-height: var(--line-height-normal); }
+  .preview-section { max-width: 960px; margin: 0 auto; }
+  h1 { font-family: var(--font-display); font-size: var(--text-6xl); font-weight: var(--font-weight-bold); margin-bottom: var(--space-4); letter-spacing: -0.03em; background: linear-gradient(135deg, var(--color-primary), var(--color-accent-3)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  h2 { font-family: var(--font-display); font-size: var(--text-2xl); margin-top: var(--space-12); margin-bottom: var(--space-4); color: var(--color-text-secondary); }
+  p.lead { font-size: var(--text-lg); color: var(--color-text-muted); max-width: 70ch; }
+  .btn-group-demo { display: flex; gap: var(--space-3); flex-wrap: wrap; margin-bottom: var(--space-10); }
+  .field-demo { max-width: 400px; margin-bottom: var(--space-10); }
+  .card-demo { display: grid; gap: var(--space-8); grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-bottom: var(--space-12); }
+  .badge { margin-left: var(--space-2); }
+</style>
+</head>
+<body>
+
+<div class="preview-section">
+  <h1>Vivid</h1>
+  <p class="lead">سیستم طراحی رنگارنگ، شاد و موبایل-اول برای برندهای مصرفی و استارتاپ‌ها</p>
+
+  <h2>دکمه‌ها</h2>
+  <div class="btn-group-demo">
+    <button class="btn btn-primary btn-lg">Primary</button>
+    <button class="btn btn-secondary btn-lg">Secondary</button>
+    <button class="btn btn-outline btn-lg">Outline</button>
+    <button class="btn btn-ghost btn-lg">Ghost</button>
+    <button class="btn btn-destructive btn-lg">Destructive</button>
+    <button class="btn btn-accent-1 btn-lg">Accent 1</button>
+    <button class="btn btn-accent-2 btn-lg">Accent 2</button>
+    <button class="btn btn-icon btn-primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/></svg></button>
+  </div>
+
+  <h2>ورودی‌ها</h2>
+  <div class="field-demo">
+    <label for="email">ایمیل شما</label>
+    <input type="email" id="email" class="input" placeholder="sara@example.com">
+    <p class="helper_text">ما ایمیل شما را ایمن نگه می‌داریم</p>
+  </div>
+  <div class="field-demo">
+    <label for="pass">رمز عبور</label>
+    <input type="password" id="pass" class="input error">
+    <p class="error-text">رمز عبور ضعیف است</p>
+  </div>
+
+  <h2>کارت‌ها</h2>
+  <div class="card-demo">
+    <article class="card card-interactive">
+      <div class="card-image" style="background: linear-gradient(135deg, #fce7f3, #dbeafe);"></div>
+      <div class="card-body">
+        <h3 style="font-family: var(--font-display); font-size: var(--text-xl); margin: 0 0 var(--space-3) 0;">ساخت پروفایل</h3>
+        <p style="font-size: var(--text-sm); color: var(--color-text-muted); margin: 0;">شروع کنید و دنیای جدید را کشف کنید.</p>
+      </div>
+      <div class="card-footer">
+        <span class="badge badge-primary">جدید</span>
+        <button class="btn btn-sm btn-outline">شروع</button>
+      </div>
+    </article>
+    <article class="card card-colorful">
+      <div class="card-body">
+        <h3 style="font-family: var(--font-display); font-size: var(--text-xl); margin: 0 0 var(--space-3) 0;">رنگ‌های شما</h3>
+        <p style="font-size: var(--text-sm); color: var(--color-text-muted); margin: 0;">پالت رنگی سفارشی برای برندتان.</p>
+      </div>
+    </article>
+  </div>
+
+  <div style="display: flex; gap: var(--space-3); align-items: center; flex-wrap: wrap; margin-top: var(--space-10);">
+    <span class="badge badge-default">Default</span>
+    <span class="badge badge-primary">Primary</span>
+    <span class="badge badge-success">Success</span>
+    <span class="badge badge-warning">Warning</span>
+    <span class="badge badge-error">Error</span>
+    <span class="badge badge-info">Info</span>
+    <div class="avatar avatar-lg" style="background:#fce7f3;">V</div>
+    <div class="avatar avatar-sm">A</div>
+  </div>
+</div>
+
+</body>
+</html>

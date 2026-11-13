@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DS Card Layout System — Preview</title>
+<link rel="stylesheet" href="../ds-design-tokens/tokens/css-variables.css">
+<link rel="stylesheet" href="components/cards.css">
+<style>
+  body { font-family: var(--ds-font-sans); background: var(--ds-color-background); color: var(--ds-color-text-primary); margin: 0; padding: var(--ds-space-10); line-height: var(--ds-line-height-normal); }
+  .preview-section { max-width: 960px; margin: 0 auto; }
+  h1 { font-size: var(--ds-text-3xl); margin-bottom: var(--ds-space-4); }
+  h2 { font-size: var(--ds-text-xl); margin-top: var(--ds-space-10); margin-bottom: var(--ds-space-4); color: var(--ds-color-text-secondary); }
+  .card-demo { display: grid; gap: var(--ds-space-6); grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin-bottom: var(--ds-space-8); }
+  .badge { margin-left: var(--ds-space-2); }
+</style>
+</head>
+<body>
+<div class="preview-section">
+  <h1>DS Card Layout System</h1>
+  <p style="color: var(--ds-color-text-muted);">کارت، شبکه (grid)، badge و آواتار</p>
+
+  <h2>کارت‌ها</h2>
+  <div class="card-demo">
+    <article class="card card-interactive">
+      <div class="card-image" style="background: linear-gradient(135deg, #fce7f3, #dbeafe);"></div>
+      <div class="card-body">
+        <h3 style="font-size: var(--ds-text-lg); margin: 0 0 var(--ds-space-3) 0;">پروژه جدید</h3>
+        <p style="font-size: var(--ds-text-sm); color: var(--ds-color-text-muted); margin: 0;">توضیحات کوتاه پروژه اینجا قرار می‌گیرد.</p>
+      </div>
+      <div class="card-footer">
+        <span class="badge badge-primary">فعال</span>
+        <button class="btn btn-sm btn-outline">بیشتر</button>
+      </div>
+    </article>
+    <article class="card card-elevated">
+      <div class="card-body">
+        <h3 style="font-size: var(--ds-text-lg); margin: 0 0 var(--ds-space-3) 0;">تحلیل‌ها</h3>
+        <p style="font-size: var(--ds-text-sm); color: var(--ds-color-text-muted); margin: 0;">داشبورد تحلیلات پیشرفته.</p>
+      </div>
+    </article>
+    <article class="card card-outline">
+      <div class="card-body">
+        <h3 style="font-size: var(--ds-text-lg); margin: 0 0 var(--ds-space-3) 0;">نمونه‌کار</h3>
+        <p style="font-size: var(--ds-text-sm); color: var(--ds-color-text-muted); margin: 0;">نمونه‌کارهای انجام شده.</p>
+      </div>
+    </article>
+  </div>
+
+  <h2>Badge و آواتار</h2>
+  <div style="display: flex; gap: var(--ds-space-3); align-items: center; flex-wrap: wrap;">
+    <span class="badge badge-default">Default</span>
+    <span class="badge badge-primary">Primary</span>
+    <span class="badge badge-success">Success</span>
+    <span class="badge badge-warning">Warning</span>
+    <span class="badge badge-error">Error</span>
+    <span class="badge badge-info">Info</span>
+    <div class="avatar avatar-lg">DS</div>
+    <div class="avatar avatar-sm">A</div>
+  </div>
+
+  <h2>شبکه (Grid)</h2>
+  <div class="grid grid-cols-3" style="margin-top: var(--ds-space-6);">
+    <div style="background: var(--ds-color-surface); border: 1px solid var(--ds-color-border); border-radius: var(--ds-radius-md); padding: var(--ds-space-4);">ستون ۱</div>
+    <div style="background: var(--ds-color-surface); border: 1px solid var(--ds-color-border); border-radius: var(--ds-radius-md); padding: var(--ds-space-4);">ستون ۲</div>
+    <div style="background: var(--ds-color-surface); border: 1px solid var(--ds-color-border); border-radius: var(--ds-radius-md); padding: var(--ds-space-4);">ستون ۳</div>
+  </div>
+</div>
+</body>
+</html>

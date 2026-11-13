@@ -1,0 +1,40 @@
+/* ============================================================
+   DS-ACCESSIBILITY-A11Y — COMPONENT CSS
+   Depends on: ds-design-tokens/tokens/css-variables.css
+   ============================================================ */
+
+/* Skip to content */
+.skip-link {
+  position: absolute;
+  top: -10000px;
+  left: 0;
+  background: var(--ds-color-primary);
+  color: #ffffff;
+  padding: var(--ds-space-2) var(--ds-space-4);
+  z-index: var(--ds-z-tooltip);
+  text-decoration: none;
+  border-radius: var(--ds-radius-md);
+}
+.skip-link:focus {
+  top: var(--ds-space-4);
+  left: var(--ds-space-4);
+}
+
+/* Focus visible enhancement */
+*:focus-visible {
+  outline: 2px solid var(--ds-color-focus-ring);
+  outline-offset: 2px;
+}
+
+/* Screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

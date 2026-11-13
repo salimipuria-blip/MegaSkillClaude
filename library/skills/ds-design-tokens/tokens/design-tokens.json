@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json.schemastore.org/design-token",
+  "name": "DS Design Tokens",
+  "version": "1.0.0",
+  "description": "Foundation design tokens for Mega SkillClaude design systems",
+  "properties": {
+    "colors": {
+      "primary": { "value": "#2563eb", "type": "color" },
+      "primaryHover": { "value": "#1d4ed8", "type": "color" },
+      "secondary": { "value": "#64748b", "type": "color" },
+      "background": { "value": "#ffffff", "type": "color" },
+      "surface": { "value": "#f8fafc", "type": "color" },
+      "card": { "value": "#ffffff", "type": "color" },
+      "textPrimary": { "value": "#0f172a", "type": "color" },
+      "textSecondary": { "value": "#475569", "type": "color" },
+      "textMuted": { "value": "#94a3b8", "type": "color" },
+      "border": { "value": "#e2e8f0", "type": "color" },
+      "focusRing": { "value": "rgba(37, 99, 235, 0.4)", "type": "color" },
+      "success": { "value": "#10b981", "type": "color" },
+      "warning": { "value": "#f59e0b", "type": "color" },
+      "error": { "value": "#ef4444", "type": "color" },
+      "info": { "value": "#3b82f6", "type": "color" }
+    },
+    "spacing": {
+      "0": { "value": "0px", "type": "dimension" },
+      "1": { "value": "4px", "type": "dimension" },
+      "2": { "value": "8px", "type": "dimension" },
+      "3": { "value": "12px", "type": "dimension" },
+      "4": { "value": "16px", "type": "dimension" },
+      "5": { "value": "20px", "type": "dimension" },
+      "6": { "value": "24px", "type": "dimension" },
+      "8": { "value": "32px", "type": "dimension" },
+      "10": { "value": "40px", "type": "dimension" },
+      "12": { "value": "48px", "type": "dimension" },
+      "16": { "value": "64px", "type": "dimension" },
+      "20": { "value": "80px", "type": "dimension" },
+      "24": { "value": "96px", "type": "dimension" }
+    },
+    "borderRadius": {
+      "sm": { "value": "4px", "type": "dimension" },
+      "md": { "value": "8px", "type": "dimension" },
+      "lg": { "value": "12px", "type": "dimension" },
+      "xl": { "value": "20px", "type": "dimension" },
+      "full": { "value": "9999px", "type": "dimension" }
+    },
+    "shadows": {
+      "sm": { "value": "0 1px 2px 0 rgb(0 0 0 / 0.05)", "type": "shadow" },
+      "md": { "value": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)", "type": "shadow" },
+      "lg": { "value": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)", "type": "shadow" },
+      "xl": { "value": "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)", "type": "shadow" }
+    },
+    "typography": {
+      "fontSans": { "value": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif", "type": "font" },
+      "fontMono": { "value": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace", "type": "font" },
+      "textXs": { "value": "0.75rem", "type": "dimension" },
+      "textSm": { "value": "0.875rem", "type": "dimension" },
+      "textBase": { "value": "1rem", "type": "dimension" },
+      "textLg": { "value": "1.125rem", "type": "dimension" },
+      "textXl": { "value": "1.25rem", "type": "dimension" },
+      "text2xl": { "value": "1.5rem", "type": "dimension" },
+      "text3xl": { "value": "1.875rem", "type": "dimension" },
+      "text4xl": { "value": "2.25rem", "type": "dimension" },
+      "lineHeightTight": { "value": "1.25", "type": "number" },
+      "lineHeightNormal": { "value": "1.5", "type": "number" },
+      "lineHeightRelaxed": { "value": "1.75", "type": "number" },
+      "fontWeightNormal": { "value": "400", "type": "number" },
+      "fontWeightMedium": { "value": "500", "type": "number" },
+      "fontWeightSemibold": { "value": "600", "type": "number" },
+      "fontWeightBold": { "value": "700", "type": "number" }
+    },
+    "transitions": {
+      "fast": { "value": "150ms ease", "type": "duration" },
+      "base": { "value": "200ms ease", "type": "duration" },
+      "slow": { "value": "300ms ease", "type": "duration" }
+    },
+    "zIndex": {
+      "dropdown": { "value": "100", "type": "number" },
+      "sticky": { "value": "200", "type": "number" },
+      "modal": { "value": "300", "type": "number" },
+      "popover": { "value": "400", "type": "number" },
+      "tooltip": { "value": "500", "type": "number" }
+    }
+  }
+}

@@ -1,0 +1,86 @@
+/* ============================================================
+   DS-DATA-DISPLAY-SYSTEM — COMPONENT CSS
+   Depends on: ds-design-tokens/tokens/css-variables.css, ds-motion-animation/components/motion.css
+   ============================================================ */
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--ds-font-sans);
+  font-size: var(--ds-text-sm);
+}
+
+.table th,
+.table td {
+  padding: var(--ds-space-3) var(--ds-space-4);
+  text-align: right;
+  border-bottom: 1px solid var(--ds-color-border);
+}
+
+.table thead th {
+  background-color: var(--ds-color-surface);
+  color: var(--ds-color-text-secondary);
+  font-weight: var(--ds-font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: var(--ds-text-xs);
+}
+
+.table tbody tr:hover {
+  background-color: var(--ds-color-surface-hover);
+}
+
+.stat-card {
+  background-color: var(--ds-color-card);
+  border: 1px solid var(--ds-color-border);
+  border-radius: var(--ds-radius-lg);
+  padding: var(--ds-space-6);
+  box-shadow: var(--ds-shadow-sm);
+}
+
+.stat-value {
+  font-family: var(--ds-font-mono);
+  font-size: var(--ds-text-3xl);
+  font-weight: var(--ds-font-weight-bold);
+  color: var(--ds-color-text-primary);
+}
+
+.stat-label {
+  font-size: var(--ds-text-xs);
+  color: var(--ds-color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stat-trend {
+  font-size: var(--ds-text-sm);
+  font-weight: var(--ds-font-weight-medium);
+}
+
+.stat-trend.up { color: var(--ds-color-success); }
+.stat-trend.down { color: var(--ds-color-error); }
+
+.skeleton {
+  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+  background-size: 200% 100%;
+  animation: ds-shimmer 1.5s infinite;
+  border-radius: var(--ds-radius-md);
+  height: 1em;
+}
+
+.skeleton-lg { height: 3rem; border-radius: var(--ds-radius-lg); }
+
+.progress-track {
+  width: 100%;
+  height: var(--ds-space-2);
+  background-color: var(--ds-color-surface);
+  border-radius: var(--ds-radius-full);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: var(--ds-color-primary);
+  border-radius: var(--ds-radius-full);
+  transition: width var(--ds-transition-base);
+}

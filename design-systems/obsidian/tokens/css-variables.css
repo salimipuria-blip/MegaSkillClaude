@@ -1,0 +1,139 @@
+/* ============================================================
+   OBSIDIAN DESIGN SYSTEM — CSS DESIGN TOKENS
+   Dark-first / Premium / Luxury
+   ============================================================ */
+
+:root {
+  /* ── Palette (Dark base) ── */
+  --color-background: #0a0a0a;          /* near-black */
+  --color-background-inverse: #f5f5f4;
+  --color-surface: #171717;             /* gray-900 */
+  --color-surface-hover: #262626;       /* gray-800 */
+  --color-card: #171717;
+  --color-card-hover: #262626;
+
+  /* Text */
+  --color-text-primary: #f5f5f4;        /* gray-50 */
+  --color-text-secondary: #d6d3d1;      /* gray-200 */
+  --color-text-muted: #a8a29e;          /* gray-400 */
+  --color-text-on-primary: #0a0a0a;
+
+  /* Brand / Accent */
+  --color-primary: #a16207;             /* amber-900 / gold */
+  --color-primary-hover: #b45309;       /* amber-800 */
+  --color-primary-active: #92400e;      /* amber-900 */
+  --color-on-primary: #ffffff;
+
+  --color-secondary: #44403c;           /* gray-700 */
+  --color-secondary-hover: #57534e;
+  --color-on-secondary: #ffffff;
+
+  /* States */
+  --color-success: #16a34a;             /* green-600 */
+  --color-success-hover: #15803d;
+  --color-warning: #ca8a04;             /* yellow-600 */
+  --color-warning-hover: #a16207;
+  --color-error: #dc2626;               /* red-600 */
+  --color-error-hover: #b91c1c;
+  --color-info: #2563eb;                /* blue-600 */
+  --color-info-hover: #1d4ed8;
+
+  /* Borders & Rings */
+  --color-border: #272727;              /* gray-800 */
+  --color-border-hover: #3f3f3f;
+  --color-focus-ring: rgba(161, 98, 7, 0.5);
+  --color-divider: #1f1f1f;
+
+  /* Shadows (subtle, glow-based) */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.6);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.7), 0 2px 4px -2px rgb(0 0 0 / 0.5);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.8), 0 4px 6px -4px rgb(0 0 0 / 0.6);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.9), 0 8px 10px -6px rgb(0 0 0 / 0.7);
+  --shadow-glow-primary: 0 0 20px rgba(161, 98, 7, 0.25);
+  --shadow-none: none;
+
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+
+  /* Spacing (8px grid) */
+  --space-0: 0px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* Typography */
+  --font-serif: "Cormorant Garamond", "Noto Serif", serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.8;
+
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms ease;
+
+  /* Z-index */
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-modal: 300;
+  --z-popover: 400;
+  --z-tooltip: 500;
+}
+
+/* Light mode override */
+@media (prefers-color-scheme: light) {
+  :root {
+    --color-background: #fafaf9;
+    --color-background-inverse: #0c0a09;
+    --color-surface: #f5f5f4;
+    --color-surface-hover: #e7e5e4;
+    --color-card: #ffffff;
+    --color-card-hover: #f5f5f4;
+    --color-text-primary: #0c0a09;
+    --color-text-secondary: #44403c;
+    --color-text-muted: #78716c;
+    --color-border: #d6d3d1;
+    --color-border-hover: #a8a29e;
+    --color-divider: #e7e5e4;
+    --color-focus-ring: rgba(161, 98, 7, 0.3);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-fast: 0ms;
+    --transition-base: 0ms;
+    --transition-slow: 0ms;
+  }
+}
