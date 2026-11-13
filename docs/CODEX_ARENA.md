@@ -155,6 +155,17 @@ model is missing both `base_instructions` and `model_messages.instructions_templ
 این دو ارزش نگه‌داشتن یک نصب‌کنندهٔ موازی و رقیب را ندارد؛ راه دستی بالا همان را
 بدون هزینهٔ نگه‌داری می‌دهد.
 
+## مدل‌های کلاد
+
+انتخاب مدل کلاد با همان کانفیگ کار می‌کند:
+
+```bash
+codex exec -p arena -m claude-fable-5-2 "…"
+```
+
+فهرست شناسه‌ها و روش بررسی اینکه کلید تو به Fable 5.2 و بقیهٔ خانواده دسترسی دارد:
+[docs/ARENA_MODELS.md](ARENA_MODELS.md).
+
 ## امنیت
 
 - کلید را در مخزن، `.env` یا تاریخچهٔ شل کامیت نکن.

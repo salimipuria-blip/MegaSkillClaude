@@ -26,6 +26,7 @@
 
 اتصال Codex به روتر Arena در کنار اشتراک ChatGPT Plus: [راهنمای Codex و Arena](docs/CODEX_ARENA.md).
 بررسی منابع Arena و ایده‌های اجرایی روی پروژه‌ها: [Arena و ایده‌ها](docs/ARENA_IDEAS.md).
+مدل‌های Arena (از جمله خانوادهٔ کلاد و Fable 5.2) و روش بررسی دسترسی کلید: [مدل‌ها](docs/ARENA_MODELS.md).
 
 ```bash
 node scripts/doctor.mjs                         # همهٔ پروژه‌ها
