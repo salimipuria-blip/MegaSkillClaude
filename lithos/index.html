@@ -1,6 +1,6 @@
 <!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#050807"><title>Lithos — Live Intelligence</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,500;1,600&display=swap" rel="stylesheet"><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.58.0/dist/umd/supabase.js" integrity="sha384-KX6Y/AMIv9qA8TLCDul2JatZWeyrJVgj3Xu/0r30Nr05xO8md1+wHAgtdsRV9LoE" crossorigin="anonymous"></script><style>
-:root{--bg:#050807;--text:#f6f7f3;--muted:#8f9a94;--line:rgba(255,255,255,.1);--orange:#ef7629;--sage:#87c7b0}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,sans-serif}.serif{font-family:"Playfair Display",serif;font-style:italic}.wrap{max-width:1180px;margin:auto;padding:0 16px}.hero{min-height:42vh;display:grid;align-items:end;border-bottom:1px solid var(--line);background:radial-gradient(circle at 72% 35%,rgba(239,118,41,.16),transparent 30%),linear-gradient(180deg,#020403,#07100c 72%,#050807)}.heroIn{padding:30px 0 38px}.eyebrow{letter-spacing:.22em;text-transform:uppercase;font-size:11px;color:#9da7a1;margin-top:30px}.hero h1{font-size:clamp(48px,9vw,96px);line-height:.9;letter-spacing:-.06em;margin:18px 0 10px}.hero p{color:var(--muted);max-width:620px;line-height:1.7}main{padding:24px 0 70px}.glass{background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.025));border:1px solid var(--line);border-radius:28px}.auth{max-width:720px;margin:auto;padding:28px}.auth h2{font-size:clamp(40px,8vw,64px);line-height:.95;margin:12px 0}.auth p{color:var(--muted);line-height:1.7}.row{display:flex;gap:10px;flex-wrap:wrap}.input{flex:1;min-width:220px;background:#080b09;border:1px solid var(--line);border-radius:16px;padding:15px;color:white;font-size:16px}.btn{border:0;border-radius:16px;padding:14px 17px;font-weight:700;background:var(--orange);color:white}.ghost{background:rgba(255,255,255,.06);border:1px solid var(--line)}.app{display:none}.top{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:14px}.actions{display:flex;gap:8px;flex-wrap:wrap}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}.card{grid-column:span 3;padding:21px;min-height:140px}.wide{grid-column:span 6;padding:22px;min-height:220px}.label{font-size:11px;letter-spacing:.18em;color:#9aa39e}.metric{font-size:42px;letter-spacing:-.06em;margin-top:28px}.sub{font-size:12px;color:var(--sage);margin-top:6px}.kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:18px}.mini{padding:14px;border:1px solid rgba(255,255,255,.07);border-radius:16px}.mini span{font-size:10px;color:var(--muted)}.mini b{display:block;font-size:24px;margin-top:4px}.status{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}.state{font-size:11px;padding:7px 10px;border:1px solid var(--line);border-radius:999px}.good{color:#7ce8b2}.bad{color:#ff9c9c}.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:#121814;border:1px solid var(--line);border-radius:14px;padding:11px 14px;display:none;z-index:10}.msg{color:var(--muted);font-size:13px;margin-top:10px}@media(max-width:800px){.card{grid-column:span 6}.wide{grid-column:span 12}}@media(max-width:520px){.card,.wide{grid-column:span 12}.top{align-items:flex-start;flex-direction:column}}
-</style></head><body><section class="hero"><div class="wrap heroIn"><div class="serif" style="font-size:29px">Lithos</div><div class="eyebrow">Live Intelligence</div><h1><span class="serif">Signals reveal</span><br>where growth begins.</h1><p>Instagram performance, Insights, KPI, leads and OKR in one private monitoring layer.</p></div></section><main><div class="wrap">
+:root{--bg:#050807;--text:#f6f7f3;--muted:#8f9a94;--line:rgba(255,255,255,.1);--orange:#ef7629;--sage:#87c7b0}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,sans-serif}.serif{font-family:"Playfair Display",serif;font-style:italic}.wrap{max-width:1180px;margin:auto;padding:0 16px}.hero{position:relative;overflow:hidden;min-height:42vh;display:grid;align-items:end;border-bottom:1px solid var(--line);background:radial-gradient(circle at 72% 35%,rgba(239,118,41,.16),transparent 30%),linear-gradient(180deg,#020403,#07100c 72%,#050807)}.heroIn{padding:30px 0 38px}.eyebrow{letter-spacing:.22em;text-transform:uppercase;font-size:11px;color:#9da7a1;margin-top:30px}.hero h1{font-size:clamp(48px,9vw,96px);line-height:.9;letter-spacing:-.06em;margin:18px 0 10px}.hero p{color:var(--muted);max-width:620px;line-height:1.7}main{padding:24px 0 70px}.glass{background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.025));border:1px solid var(--line);border-radius:28px}.auth{max-width:720px;margin:auto;padding:28px}.auth h2{font-size:clamp(40px,8vw,64px);line-height:.95;margin:12px 0}.auth p{color:var(--muted);line-height:1.7}.row{display:flex;gap:10px;flex-wrap:wrap}.input{flex:1;min-width:220px;background:#080b09;border:1px solid var(--line);border-radius:16px;padding:15px;color:white;font-size:16px}.btn{border:0;border-radius:16px;padding:14px 17px;font-weight:700;background:var(--orange);color:white}.ghost{background:rgba(255,255,255,.06);border:1px solid var(--line)}.app{display:none}.top{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:14px}.actions{display:flex;gap:8px;flex-wrap:wrap}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}.card{grid-column:span 3;padding:21px;min-height:140px}.wide{grid-column:span 6;padding:22px;min-height:220px}.label{font-size:11px;letter-spacing:.18em;color:#9aa39e}.metric{font-size:42px;letter-spacing:-.06em;margin-top:28px}.sub{font-size:12px;color:var(--sage);margin-top:6px}.kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:18px}.mini{padding:14px;border:1px solid rgba(255,255,255,.07);border-radius:16px}.mini span{font-size:10px;color:var(--muted)}.mini b{display:block;font-size:24px;margin-top:4px}.status{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}.state{font-size:11px;padding:7px 10px;border:1px solid var(--line);border-radius:999px}.good{color:#7ce8b2}.bad{color:#ff9c9c}.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:#121814;border:1px solid var(--line);border-radius:14px;padding:11px 14px;display:none;z-index:10}.msg{color:var(--muted);font-size:13px;margin-top:10px}@media(max-width:800px){.card{grid-column:span 6}.wide{grid-column:span 12}}@media(max-width:520px){.card,.wide{grid-column:span 12}.top{align-items:flex-start;flex-direction:column}}
+</style></head><body><section class="hero"><canvas id="lithosCore" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none"></canvas><div class="wrap heroIn" style="position:relative;z-index:1"><div class="serif" style="font-size:29px">Lithos</div><div class="eyebrow">Live Intelligence</div><h1><span class="serif">Signals reveal</span><br>where growth begins.</h1><p>Instagram performance, Insights, KPI, leads and OKR in one private monitoring layer.</p></div></section><main><div class="wrap">
 <section id="auth" class="glass auth"><div class="label">PRIVATE MONITORING</div><h2 class="serif">Enter the live layer.</h2><p>Sign in with the secure Supabase magic link.</p><div class="row"><input id="email" class="input" type="email" placeholder="you@example.com"><button id="login" class="btn">Send magic link</button></div><div id="msg" class="msg"></div></section>
 <section id="app" class="app"><div class="top"><div><div class="label">LITHOS / LIVE</div><h2 style="margin:4px 0">Command Center</h2><div id="asOf" class="sub">Loading…</div></div><div class="actions"><button id="sync" class="btn">Sync Buffer</button><button id="refresh" class="btn ghost">Refresh</button><button id="logout" class="btn ghost">Sign out</button></div></div><div class="grid">
 <div class="glass card"><div class="label">FOLLOWERS</div><div id="followers" class="metric">—</div><div class="sub">Instagram audience</div></div>
@@ -17,4 +17,110 @@ let asOf=null;async function refresh(){$('asOf').textContent='Loading…';$('asO
 async function sync(silent=false){const {data}=await db.auth.getSession(),token=data.session?.access_token;if(!token)return;let r;try{r=await fetch('/api/buffer-sync',{method:'POST',headers:{Authorization:'Bearer '+token}})}catch(e){toast('Sync network error: '+(e&&e.message||e));return}const p=await r.json().catch(()=>({}));if(!r.ok){toast(p.error||'Sync failed');return}if(!silent)toast('Buffer synced');await refresh()}
 async function render(){const {data}=await db.auth.getSession(),ok=!!data.session;$('auth').style.display=ok?'none':'block';$('app').style.display=ok?'block':'none';if(ok){await refresh();if(!sessionStorage.getItem('lithos-auto')){sessionStorage.setItem('lithos-auto','1');sync(true)}}}
 $('login').onclick=async()=>{const email=$('email').value.trim();if(!email)return;const {error}=await db.auth.signInWithOtp({email,options:{emailRedirectTo:location.origin,shouldCreateUser:false}});$('msg').textContent=error?error.message:'Check your inbox.'};$('sync').onclick=()=>sync(false);$('refresh').onclick=refresh;$('logout').onclick=async()=>{await db.auth.signOut();render()};db.auth.onAuthStateChange(()=>setTimeout(render,0));render();
+</script><script>
+/* Lithos · «هستهٔ زنده» — a rotating facetted geode core, orbiting telemetry satellites,
+   and drifting mineral motes. Canvas pseudo-3D, no libraries, no external assets. */
+(function(){
+  var c=document.getElementById('lithosCore');if(!c)return;var ctx=c.getContext('2d');
+  var TAU=Math.PI*2, reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var W=0,H=0,tick=0,raf=0,mx=0,my=0;
+  var seed=7331;var rnd=function(){seed=(seed*16807)%2147483647;return seed/2147483647};
+  // icosahedron-ish facetted core: rings of vertices
+  var rings=[{y:-1,r:0,n:1},{y:-0.62,r:0.72,n:6},{y:0,r:1,n:8},{y:0.62,r:0.72,n:6},{y:1,r:0,n:1}];
+  var verts=[];
+  rings.forEach(function(rg){for(var i=0;i<rg.n;i++){var a=i/rg.n*TAU+(rg.y===0?TAU/16:0);verts.push({x:Math.cos(a)*rg.r,y:rg.y,z:Math.sin(a)*rg.r})}});
+  // faces from slice triangulation (approx icosahedron)
+  var faces=[];
+  var idx=0, ringStart=[];
+  rings.forEach(function(rg){ringStart.push(idx);idx+=rg.n});
+  // top cap fan
+  for(var i=0;i<6;i++){faces.push([ringStart[0],ringStart[1]+i,ringStart[1]+(i+1)%6])}
+  // middle band
+  for(var i=0;i<8;i++){
+    var a=ringStart[2]+i,b=ringStart[2]+(i+1)%8;
+    faces.push([ringStart[1]+(i%6),a,b]);
+    faces.push([ringStart[1]+(i%6),ringStart[1]+((i+1)%6),b]);
+  }
+  // bottom band
+  for(var i=0;i<6;i++){
+    var a=ringStart[3]+i,b=ringStart[3]+(i+1)%6;
+    faces.push([ringStart[2]+i,a,b]);
+    faces.push([ringStart[2]+i,b,ringStart[2]+(i+1)%8]);
+  }
+  // bottom cap fan
+  for(var i=0;i<6;i++){faces.push([ringStart[4],ringStart[3]+(i+1)%6,ringStart[3]+i])}
+  var sats=[];for(var i=0;i<5;i++){sats.push({ang:i/5*TAU,rad:1.65+((i*37)%10)/22,y:(i%2?1:-1)*(0.28+(i*13)%40/100),ph:i*1.3})}
+  var motes=[];for(var i=0;i<46;i++){motes.push({x:Math.random(),y:Math.random(),r:Math.random()*1.4+.4,p:Math.random()*TAU})}
+  function resize(){var hero=c.parentElement;W=hero.clientWidth;H=hero.clientHeight;var dpr=Math.min(devicePixelRatio||1,1.75);c.width=Math.round(W*dpr);c.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0)}
+  resize();addEventListener('resize',resize,{passive:true});
+  if(matchMedia('(pointer:fine)').matches){addEventListener('pointermove',function(e){mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5},{passive:true})}
+  var visible=true;
+  if('IntersectionObserver' in window){new IntersectionObserver(function(es){visible=es[0].isIntersecting},{threshold:0}).observe(c)}
+  var ORANGE=[239,118,41],SAGE=[135,199,176];
+  function proj(x,y,z,cx,cy,R){var f=Math.min(W,H)*1.35;var d=f+z*R*.9+f*.6;var s=f/d;return{x:cx+x*R*s,y:cy+y*R*s,s:s}}
+  function drawFrame(){
+    tick++;var t=tick*.016;ctx.clearRect(0,0,W,H);
+    var cx=W*.72+mx*34, cy=H*.42+my*20, R=Math.min(W,H)*.26;
+    var rotY=t*.5, rotX=.38+Math.sin(t*.3)*.12+my*.18;
+    var cosY=Math.cos(rotY),sinY=Math.sin(rotY),cosX=Math.cos(rotX),sinX=Math.sin(rotX);
+    var tv=function(v){
+      var x=v.x*cosY+v.z*sinY, z=-v.x*sinY+v.z*cosY, y=v.y;
+      var y2=y*cosX-z*sinX, z2=y*sinX+z*cosX;
+      return{x:x,y:y2,z:z2};
+    };
+    var pv=verts.map(tv);
+    // glow halo behind core
+    var glow=ctx.createRadialGradient(cx,cy,0,cx,cy,R*2.5);
+    glow.addColorStop(0,'rgba(239,118,41,.34)');glow.addColorStop(.4,'rgba(239,118,41,.1)');glow.addColorStop(1,'rgba(239,118,41,0)');
+    ctx.fillStyle=glow;ctx.fillRect(0,0,W,H);
+    // faces painter's algorithm
+    var order=faces.map(function(f){var a=pv[f[0]],b=pv[f[1]],c2=pv[f[2]];return{f:f,z:(a.z+b.z+c2.z)/3,a:a,b:b,c:c2}});
+    order.sort(function(p,q){return p.z-q.z});
+    var light={x:.45,y:.6,z:.66};
+    for(var i=0;i<order.length;i++){
+      var o=order[i];
+      // face normal
+      var ux=o.b.x-o.a.x,uy=o.b.y-o.a.y,uz=o.b.z-o.a.z, vx=o.c.x-o.a.x,vy=o.c.y-o.a.y,vz=o.c.z-o.a.z;
+      var nx=uy*vz-uz*vy, ny=uz*vx-ux*vz, nz=ux*vy-uy*vx; var len=Math.sqrt(nx*nx+ny*ny+nz*nz)||1; nx/=len;ny/=len;nz/=len;
+      var lit=Math.max(0,nx*light.x+ny*light.y+nz*light.z);
+      var pa=proj(o.a.x,o.a.y,o.a.z,cx,cy,R), pb=proj(o.b.x,o.b.y,o.b.z,cx,cy,R), pc=proj(o.c.x,o.c.y,o.c.z,cx,cy,R);
+      var warm=(i%3===0);
+      var rgb=warm?ORANGE:SAGE;
+      var alpha=.16+lit*.6;
+      ctx.beginPath();ctx.moveTo(pa.x,pa.y);ctx.lineTo(pb.x,pb.y);ctx.lineTo(pc.x,pc.y);ctx.closePath();
+      ctx.fillStyle='rgba('+rgb[0]+','+rgb[1]+','+rgb[2]+','+alpha.toFixed(3)+')';
+      ctx.fill();
+      ctx.strokeStyle='rgba(246,247,243,'+(.1+lit*.35).toFixed(3)+')';
+      ctx.lineWidth=.7;ctx.stroke();
+    }
+    // orbital telemetry arcs + satellites
+    ctx.strokeStyle='rgba(135,199,176,.35)';ctx.lineWidth=1;
+    for(var i=0;i<3;i++){
+      var rad=R*(1.35+i*.42), squash=.32+.08*i;
+      ctx.save();ctx.translate(cx,cy);ctx.rotate(-.18+i*.22);ctx.scale(1,squash);
+      ctx.beginPath();ctx.arc(0,0,rad,0,TAU);ctx.stroke();ctx.restore();
+    }
+    for(var i=0;i<sats.length;i++){
+      var s=sats[i];s.ang+=.004;
+      var a=s.ang+mx*.4, x=Math.cos(a)*R*s.rad, z=Math.sin(a)*R*s.rad*.92, y=s.y*R*.9+Math.cos(t*.8+s.ph)*6;
+      var q=proj(x,y,z,cx,cy,R);
+      var r=Math.max(1.2,3.2*q.s);
+      ctx.globalAlpha=.75+.25*Math.sin(t*2+s.ph);
+      ctx.fillStyle=i%2?'#ef7629':'#87c7b0';ctx.shadowColor=ctx.fillStyle;ctx.shadowBlur=10;
+      ctx.beginPath();ctx.arc(q.x,q.y,r,0,TAU);ctx.fill();ctx.shadowBlur=0;ctx.globalAlpha=1;
+    }
+    // mineral motes drifting upward
+    for(var i=0;i<motes.length;i++){var m=motes[i];m.y-=.0006;if(m.y<-.05){m.y=1.05;m.x=Math.random()}
+      ctx.globalAlpha=.28+.3*(.5+.5*Math.sin(t+m.p));ctx.fillStyle=i%3?'#f6f7f3':'#ef9c5a';
+      ctx.beginPath();ctx.arc(m.x*W+Math.sin(t*.7+m.p)*14,m.y*H,m.r,0,TAU);ctx.fill()}
+    ctx.globalAlpha=1;
+  }
+  function render(){
+    drawFrame();
+    if(!reduced && visible) raf=requestAnimationFrame(render);
+    else if(!reduced) raf=requestAnimationFrame(render);
+  }
+  render();
+  document.addEventListener('visibilitychange',function(){if(!document.hidden&&!reduced){cancelAnimationFrame(raf);render()}});
+})();
 </script></body></html>
