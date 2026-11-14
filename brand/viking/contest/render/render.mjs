@@ -144,6 +144,59 @@ async function main() {
     }
   }
 
+  // One-page overview: the whole set in a single file, which is what a client actually reviews.
+  if (opts.sheets && report.generated.length >= 2) {
+    const W = 1800;
+    const pad = 24;
+    const posts = report.generated.filter((g) => g.format === 'post');
+    const rows = report.generated.filter((g) => g.format === 'story');
+    const pw = Math.floor((W - pad * 4) / Math.max(1, posts.length || 1));
+    const ph = Math.round(pw * 1.25);
+    const sw = rows.length ? Math.floor((W - pad * 9) / rows.length) : 0;
+    const sh = Math.round((sw * 16) / 9);
+    const head = 118;
+    const height = head + ph + 96 + (rows.length ? sh + 46 : 0) + pad;
+    const { canvas, ctx } = frame(W, Math.max(600, height));
+    ctx.fillStyle = '#0b0908';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.direction = 'ltr';
+    ctx.textAlign = 'left';
+    ctx.fillStyle = C.tape;
+    ctx.font = '46px VazirBlack';
+    ctx.fillText('AUTUMN ESCAPE', pad, 62);
+    ctx.fillStyle = C.mute;
+    ctx.font = '22px VazirBold';
+    ctx.fillText('Viking Offroad — 3-slide feed carousel + 8 Stories (2 per day, 4 days) — no location disclosed', pad, 96);
+
+    let i = 0;
+    for (const item of posts) {
+      const img = await loadImage(item.path);
+      const x = pad + i * (pw + pad);
+      ctx.drawImage(img, x, head, pw, ph);
+      ctx.fillStyle = C.amberBright;
+      ctx.font = '22px VazirBold';
+      ctx.fillText(`POST ${item.index}/3 — ${item.slug}`, x + 4, head + ph + 26);
+      i += 1;
+    }
+    const y2 = head + ph + 90;
+    if (rows.length) {
+      ctx.fillStyle = C.cream;
+      ctx.font = '22px VazirBold';
+      ctx.fillText('EIGHT STORIES — two per day, four days', pad, y2 - 24);
+      for (const [j, item] of rows.entries()) {
+        const x = pad + j * (sw + pad);
+        const img = await loadImage(item.path);
+        ctx.drawImage(img, x, y2, sw, sh);
+        ctx.fillStyle = C.mute;
+        ctx.font = '20px VazirBold';
+        ctx.fillText(`${item.slot}/8 — day ${item.day}`, x + 2, y2 + sh + 24);
+      }
+    }
+    const sheet = await save(canvas, join(opts.outDir, 'sheets', 'overview.png'));
+    report.sheets.push({ path: join(opts.outDir, 'sheets', 'overview.png'), bytes: sheet });
+    console.log(`sheet overview → ${join(opts.outDir, 'sheets', 'overview.png')}`);
+  }
+
   // Machine-readable manifest: useful for the operator and for the size assertions in tests.
   writeFileSync(join(opts.outDir, 'manifest.json'), `${JSON.stringify({ generatedAt: new Date().toISOString(), ...report }, null, 2)}\n`);
   console.log(`\n${report.generated.length} frames + ${report.sheets.length} sheets → ${opts.outDir}`);

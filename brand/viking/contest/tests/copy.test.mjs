@@ -165,6 +165,15 @@ test('Persian digits are used for every number rendered on the artwork', () => {
   assert.match(post, /fa\(index\)/);
 });
 
+test('copy never uses a separator glyph the brand faces cannot draw', () => {
+  // Lalezar ships no Latin glyphs at all and Vazirmatn draws «·» as a blank box; both would print
+  // tofu in the middle of Persian copy. The Persian comma is the correct separator.
+  for (const { path, value } of allStrings()) {
+    assert.ok(!/[·•\u200e\u200f]/.test(value), `${path} uses an undrawable separator: ${value}`);
+    assert.ok(!/[!?]/.test(value), `${path} uses ASCII punctuation next to Persian: ${value}`);
+  }
+});
+
 test('no template draws an emoji or a network asset', () => {
   for (const file of ['render/post.mjs', 'render/story.mjs', 'render/ornaments.mjs']) {
     const src = read(file);

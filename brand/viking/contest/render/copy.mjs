@@ -36,7 +36,7 @@ export const campaign = {
 
 /** Slide 1 — hook, title, travel dates. */
 export const post1 = {
-  tape: 'قرعه‌کشی سفر رایگان · پاییز وایکینگ',
+  tape: 'قرعه‌کشی سفر رایگان، پاییز وایکینگ',
   latin: campaign.latinName,
   title: campaign.name,
   sub: 'دو روز جنگل، آتش و آدم‌های تازه',
@@ -47,7 +47,7 @@ export const post1 = {
 /** Slide 2 — what the trip actually contains (6 cards + the catering bar). */
 export const post2 = {
   tape: 'برنامهٔ سفر / اقامت و پذیرایی',
-  rooms: `${campaign.roomsValue} / ${campaign.roomsUnit}`,
+  rooms: `${campaign.roomsValue} ، ${campaign.roomsUnit}`,
   cards: [
     { icon: 'cinema', title: 'سینما کمپ', sub: 'فیلم در دل طبیعت' },
     { icon: 'fire', title: 'شب‌نشینی', sub: 'دور آتیش' },
@@ -57,7 +57,7 @@ export const post2 = {
     { icon: 'home', title: 'اقامت سنتی', sub: 'یک شب در دل جنگل' },
   ],
   paysLead: 'پذیرایی فول‌برد',
-  paysSub: 'صبحانه، ناهار و شام · سلف‌سرویس',
+  paysSub: 'صبحانه، ناهار و شام، سلف‌سرویس',
   strip: 'از قدم‌زدن کنار رودخانه تا شب‌نشینی دور آتیش',
 };
 
@@ -103,7 +103,7 @@ export const stories = [
       { label: 'شروع سفر', value: campaign.dates.leave },
       { label: 'پایان سفر', value: campaign.dates.back },
     ],
-    strip: 'قرعه‌کشی سفر رایگان · پاییز وایکینگ',
+    strip: 'قرعه‌کشی سفر رایگان، پاییز وایکینگ',
     photo: 'story-1-lake.jpg',
     focus: 0.5,
     bloom: 'warm',
@@ -130,7 +130,7 @@ export const stories = [
       { label: 'ددلاین', value: campaign.captionLimit },
       { label: 'قرعه‌کشی', value: campaign.drawDate },
     ],
-    strip: 'فقط تا مهر وقت داری · از دستش نده',
+    strip: 'فقط تا مهر وقت داری، از دستش نده',
     photo: 'story-2-fire.jpg',
     focus: 0.58,
     zoom: 1.08,
@@ -268,7 +268,7 @@ export const stories = [
       { label: 'ددلاین', value: campaign.captionLimit },
       { label: 'قرعه‌کشی', value: campaign.drawDate },
     ],
-    strip: 'فقط تا مهر وقت داری · از دستش نده',
+    strip: 'فقط تا مهر وقت داری، از دستش نده',
     photo: 'post-1-hero.jpg',
     focus: 0.38,
     zoom: 1.05,
@@ -293,7 +293,7 @@ export const stories = [
       { label: 'شروع سفر', value: campaign.dates.leave },
       { label: 'پایان سفر', value: campaign.dates.back },
     ],
-    strip: 'رزرو از لینک بیو · فقط تا مهر',
+    strip: 'رزرو از لینک بیو، فقط تا مهر',
     photo: 'story-6-invite.jpg',
     focus: 0.5,
     veil: 0.16,

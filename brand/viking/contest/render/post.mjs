@@ -136,8 +136,9 @@ async function slide2(ctx) {
     });
   });
 
+  // Mixed Persian text: never set in Lalezar, which has no separator glyphs.
   line(ctx, post2.rooms, W / 2, 972, {
-    size: fitSize(ctx, post2.rooms, { family: FONT.display, maxWidth: 900, start: 46 }), family: FONT.display, color: C.white,
+    size: 46, family: safeFamily(post2.rooms, FONT.display), color: C.white,
     glow: 20, glowColor: 'rgba(243,154,43,0.45)', shadow: { blur: 18, y: 4 },
   });
 
@@ -154,6 +155,7 @@ async function slide2(ctx) {
   ctx.fill();
   ctx.restore();
   line(ctx, post2.paysLead, W / 2, barY + 58, { size: 42, family: 'VazirBlack', color: C.ink });
+  // Vazirmatn: this line uses «·», which Lalezar does not ship.
   line(ctx, post2.paysSub, W / 2, barY + 108, { size: 30, family: 'VazirBold', color: 'rgba(20,16,12,0.88)' });
 
   strip(ctx, post2.strip);
