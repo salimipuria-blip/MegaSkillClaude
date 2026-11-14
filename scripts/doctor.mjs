@@ -131,6 +131,7 @@ const PROJECTS = [
       {name: 'renderer-syntax', cmd: 'node --check brand/viking/render.mjs', why: 'نحو رندرر ES module'},
       {name: 'renderer-tests', cmd: 'node --test brand/viking/tests/render.test.mjs', why: 'رندرهای fake و بستن مرورگر در شکست'},
       {name: 'content-contract', cmd: 'node --test brand/viking/tests/content.test.mjs', why: 'ادعاهای کمپین در brief.json هستند و assetها محلی‌اند'},
+      {name: 'contest-contract', cmd: 'node --test brand/viking/contest/tests/copy.test.mjs', why: 'ست مسابقه: بی‌لوکیشن، بدون ادعای ساختگی، ۳ اسلاید + ۸ استوری'},
     ],
   },
   {
