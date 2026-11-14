@@ -1,5 +1,8 @@
 # Codex: پلاس و Arena روی یک دستگاه
 
+[راهنمای مشترک Codex، OpenCode و اتصال مستقیم عامل‌ها](https://github.com/salimipuria-blip/Puria-Salimi-INFINITY-MEGA-SKILL-/blob/claude/p0-core-slice/docs/ARENA-QUICKSTART.fa.md)
+
+
 دو اشتراک کنار هم کار می‌کنند؛ لازم نیست یکی را برای دیگری حذف کنی:
 
 | حالت | دستور | مدل | پرداخت |
