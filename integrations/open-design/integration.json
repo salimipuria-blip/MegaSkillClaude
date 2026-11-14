@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0.0",
+  "project": "Infinity Mega Skill",
+  "integration": "open-design",
+  "source": "https://github.com/nexu-io/open-design",
+  "revision": "59e4f2ae85de7e7318a5e6bdcf3a34584c4b7582",
+  "license": "Apache-2.0",
+  "installer": "integrations/open-design/install.sh",
+  "mode": "isolated Docker service",
+  "status": "launcher committed; runtime installation unverified",
+  "arena": "not connected; credential unavailable in this environment",
+  "figma_design": "https://www.figma.com/design/UZroGnYAvl8KkOrj8uDoQO"
+}
