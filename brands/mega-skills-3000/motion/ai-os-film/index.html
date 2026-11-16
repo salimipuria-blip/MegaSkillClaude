@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="fa">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1920, height=1080">
+<meta name="od-motion-output" content="video">
+<meta name="od-motion-audio" content="required">
+<link rel="alternate" type="video/mp4" href="../mega-skills-ai-os.mp4">
+<title>Mega Skills 3000 · AI OS film</title>
+<style>
+  @font-face { font-family: Vazir; src: url(assets/vazir.woff2) format('woff2'); font-weight: 100 900; }
+  :root { --blue: #2f8cff; --cyan: #5fd0ff; --ink: #050b1f; }
+  html, body { margin: 0; background: #000; overflow: hidden; }
+  #main { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: var(--ink); font-family: Vazir, sans-serif; color: #fff; }
+  .layer { position: absolute; inset: 0; }
+  /* Backdrop: navy depth, perspective grid and drifting motes (the slides' own world) */
+  #bg { background: radial-gradient(ellipse 70% 60% at 50% 45%, #0d2a6b 0%, #071538 45%, #030817 100%); }
+  #grid { position: absolute; left: -20%; right: -20%; bottom: -10%; height: 70%; transform: perspective(700px) rotateX(64deg); transform-origin: 50% 100%;
+    background-image: linear-gradient(rgba(47,140,255,.28) 1px, transparent 1px), linear-gradient(90deg, rgba(47,140,255,.28) 1px, transparent 1px);
+    background-size: 80px 80px; -webkit-mask-image: linear-gradient(transparent, #000 60%); mask-image: linear-gradient(transparent, #000 60%); }
+  #motes i { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: #7cc4ff; box-shadow: 0 0 8px #3b9cff; }
+  /* A slide is the original 1672x941 design scaled to the 1920-wide stage */
+  .scene { opacity: 0; }
+  .cam, .drift { position: absolute; inset: 0; }
+  .slide { position: absolute; left: 0; top: 0; width: 1672px; height: 941px; transform-origin: 0 0; transform: scale(1.148325); }
+  .base, .pc { position: absolute; background-size: 1672px 941px; background-repeat: no-repeat; }
+  .base { inset: 0; }
+  .pc { will-change: transform, opacity, filter; }
+  .sweep { position: absolute; top: -10%; width: 220px; height: 120%; left: 0; opacity: 0; mix-blend-mode: screen; transform: rotate(14deg);
+    background: linear-gradient(90deg, transparent, rgba(120,190,255,.0) 20%, rgba(150,210,255,.55) 50%, rgba(120,190,255,0) 80%, transparent); filter: blur(6px); }
+  #hud { position: absolute; left: 0; top: 0; width: 1672px; height: 112px; transform-origin: 0 0; transform: scale(1.148325); opacity: 0;
+    background: url(assets/s5.jpg) 0 0 / 1672px 941px no-repeat; }
+  #flash { background: radial-gradient(circle at var(--fx, 70%) var(--fy, 50%), rgba(170,220,255,.95), rgba(47,140,255,.55) 25%, rgba(5,11,31,0) 60%); opacity: 0; mix-blend-mode: screen; }
+  #vignette { background: radial-gradient(ellipse 85% 80% at 50% 50%, transparent 60%, rgba(0,0,0,.55)); pointer-events: none; }
+  /* Titles (intro / outro) */
+  .center { position: absolute; left: 0; right: 0; text-align: center; }
+  #line { position: absolute; left: 50%; top: 540px; width: 1000px; height: 2px; margin-left: -500px; background: linear-gradient(90deg, transparent, #9fd6ff, #fff, #9fd6ff, transparent);
+    box-shadow: 0 0 18px #3b9cff, 0 0 40px #2f8cff; transform: scaleX(0); }
+  #brand { top: 410px; font-size: 104px; font-weight: 800; letter-spacing: .14em; direction: ltr; }
+  #brand b { font-weight: 800; background: linear-gradient(90deg, #5fd0ff, #2f6dff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  #tagFa { top: 575px; font-size: 44px; font-weight: 700; direction: rtl; }
+  #tagEn { top: 655px; font-size: 22px; letter-spacing: .6em; color: #8fbfff; direction: ltr; }
+  #o1 { top: 395px; font-size: 76px; font-weight: 800; direction: rtl; }
+  #o1 em { font-style: normal; background: linear-gradient(90deg, #5fd0ff, #3b7bff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  #o2 { top: 525px; font-size: 38px; font-weight: 600; letter-spacing: .12em; direction: ltr; }
+  #o2 b { color: #5fd0ff; }
+  #o3 { top: 600px; font-size: 26px; font-weight: 500; color: #a9c8f5; direction: rtl; }
+  #o4 { top: 690px; font-size: 18px; letter-spacing: .55em; color: #6f9fd8; direction: ltr; }
+</style>
+</head>
+<body>
+<div id="main" data-composition-id="main" data-start="0" data-duration="37" data-width="1920" data-height="1080" data-fps="30" data-poster-time="6.4">
+  <div class="layer" id="bg"><div id="grid"></div><div class="layer" id="motes"></div></div>
+  <div class="layer" id="scenes"></div>
+  <div id="hud"></div>
+  <div class="layer" id="flash"></div>
+  <div class="layer" id="intro">
+    <div id="line"></div>
+    <div class="center" id="brand">MEGA SKILLS <b>3000</b></div>
+    <div class="center" id="tagFa">سیستم عامل هوش مصنوعی برای اجرای واقعی پروژه‌ها</div>
+    <div class="center" id="tagEn">AI OPERATING SYSTEM</div>
+  </div>
+  <div class="layer" id="outro">
+    <div class="center" id="o1">هوش مصنوعی فقط پاسخ نمی‌دهد؛ <em>عمل می‌کند</em></div>
+    <div class="center" id="o2">MEGA SKILLS <b>3000</b> · HERMES</div>
+    <div class="center" id="o3">سازمان‌های هوشمندتر، آینده‌ی روشن‌تر</div>
+    <div class="center" id="o4">SKILLS · PEOPLE · A BRIGHTER TOMORROW</div>
+  </div>
+  <div class="layer" id="vignette"></div>
+  <audio src="assets/music.wav" data-start="0" data-duration="37" data-volume="1" preload="auto"></audio>
+</div>
+<script src="assets/gsap.min.js"></script>
+<script>
+// ── One configuration: timing, and every slide's regions in its own 1672x941 pixels ──
+const FPS = 30, DURATION = 37, K = 1920 / 1672;
+const INTRO = 3.2, SLIDE = 6, OUTRO_AT = INTRO + 5 * SLIDE; // 33.2
+// Each piece is a window into the same image at the same place, so it lands pixel-exact on the slide.
+// role: t = title, s = subtitle/flow, c = card (staggered), h = hero visual, b = bottom banner, x = side panel
+const SLIDES = [
+  { img: 's1', hero: [1300, 470], pieces: [
+    ['t', 70, 140, 925, 105], ['s', 70, 248, 925, 62], ['s', 70, 315, 880, 50], ['s', 70, 378, 820, 36],
+    ...[73, 293, 512, 732].flatMap((x) => [['c', x - 3, 428, 210, 172], ['c', x - 3, 606, 210, 178]]),
+    ['h', 965, 125, 700, 715], ['b', 330, 815, 1012, 84] ] },
+  { img: 's2', hero: [1300, 420], pieces: [
+    ['t', 70, 140, 570, 115], ['s', 70, 262, 880, 62], ['s', 70, 332, 820, 40],
+    ...[70, 365, 661].flatMap((x) => [['c', x, 390, 282, 204], ['c', x, 602, 282, 212]]),
+    ['h', 978, 120, 670, 600], ['x', 972, 720, 666, 94], ['b', 320, 824, 1030, 80] ] },
+  { img: 's3', hero: [1050, 450], pieces: [
+    ['t', 70, 140, 670, 112], ['s', 70, 266, 750, 62], ['s', 70, 332, 700, 36],
+    ...[70, 309, 548].flatMap((x) => [['c', x, 378, 228, 196], ['c', x, 581, 228, 200]]),
+    ['h', 782, 150, 535, 660], ['x', 1322, 166, 316, 558], ['b', 372, 804, 932, 88] ] },
+  { img: 's4', hero: [1320, 360], pieces: [
+    ['t', 72, 140, 810, 108], ['s', 72, 258, 860, 66], ['s', 72, 332, 800, 36],
+    ...[58, 249, 440, 630, 818].map((x, i) => ['c', x, 382, i < 4 ? 190 : 172, 228]),
+    ...[55, 447, 840, 1234].map((x) => ['c', x, 628, 386, 172]),
+    ['h', 995, 160, 650, 432], ['x', 1495, 500, 160, 118], ['b', 336, 816, 1000, 80] ] },
+  { img: 's5', hero: [1330, 450], pieces: [
+    ['t', 68, 150, 980, 112], ['s', 68, 266, 960, 62], ['s', 72, 334, 760, 36],
+    ...[54, 394, 720].map((x) => ['c', x, 388, 320, 382]),
+    ['h', 1020, 140, 640, 680], ['b', 330, 800, 1012, 88] ] },
+];
+
+// ── Build the DOM ──
+const $ = (s) => document.querySelector(s);
+const el = (tag, cls, parent, style = {}) => { const e = document.createElement(tag); if (cls) e.className = cls; Object.assign(e.style, style); parent.append(e); return e; };
+let seed = 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+for (let i = 0; i < 70; i++) el('i', '', $('#motes'), { left: rnd() * 1920 + 'px', top: rnd() * 1180 + 'px', opacity: .15 + rnd() * .6, transform: `scale(${.5 + rnd() * 1.4})` });
+
+const scenes = SLIDES.map((s, i) => {
+  const src = `url(assets/${s.img}.jpg)`;
+  const scene = el('div', 'layer scene', $('#scenes'));
+  const cam = el('div', 'cam', scene), drift = el('div', 'drift', cam), slide = el('div', 'slide', drift);
+  const origin = `${s.hero[0] * K}px ${s.hero[1] * K}px`;
+  cam.style.transformOrigin = origin; // the dive goes into the cube
+  drift.style.transformOrigin = '960px 560px'; // the slow push stays centred so no edge content leaves the frame
+  const base = el('div', 'base', slide, { backgroundImage: src });
+  const pieces = s.pieces.map(([role, x, y, w, h]) => {
+    const p = el('div', 'pc', slide, { left: x + 'px', top: y + 'px', width: w + 'px', height: h + 'px', backgroundImage: src, backgroundPosition: `${-x}px ${-y}px` });
+    p.dataset.role = role; return p;
+  });
+  const hero = s.pieces.find((p) => p[0] === 'h');
+  const sweep = el('div', 'sweep', slide, { top: hero[2] + 'px', height: hero[4] + 'px' });
+  return { scene, cam, drift, base, pieces, sweep, hero, def: s, i };
+});
+
+// ── Master timeline (absolute seconds) ──
+const tl = gsap.timeline({ paused: true });
+const clock = { t: 0 };
+tl.to(clock, { t: DURATION, duration: DURATION, ease: 'none' }, 0);
+
+// Ambient world: the grid and motes drift for the whole film.
+tl.fromTo('#grid', { backgroundPosition: '0px 0px' }, { backgroundPosition: '0px 640px', duration: DURATION, ease: 'none' }, 0);
+tl.fromTo('#motes', { y: 0 }, { y: -120, duration: DURATION, ease: 'none' }, 0);
+tl.fromTo('#bg', { opacity: 0 }, { opacity: 1, duration: 1.2, ease: 'power2.out' }, 0);
+
+// Intro: a light line draws, the wordmark resolves out of wide tracking, then the line lifts into the HUD.
+tl.fromTo('#line', { scaleX: 0, opacity: 1 }, { scaleX: 1, duration: 1.0, ease: 'expo.out' }, 0.25);
+tl.fromTo('#brand', { opacity: 0, letterSpacing: '.6em', filter: 'blur(14px)' }, { opacity: 1, letterSpacing: '.14em', filter: 'blur(0px)', duration: 1.2, ease: 'expo.out' }, 0.45);
+tl.fromTo('#tagFa', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: .8, ease: 'power3.out' }, 1.05);
+tl.fromTo('#tagEn', { opacity: 0, letterSpacing: '1.2em' }, { opacity: 1, letterSpacing: '.6em', duration: 1.0, ease: 'power3.out' }, 1.25);
+tl.to(['#brand', '#tagFa', '#tagEn'], { opacity: 0, y: -30, filter: 'blur(10px)', duration: .55, ease: 'power2.in', stagger: .05 }, 2.55);
+tl.to('#line', { top: 62, scaleX: 1.9, opacity: 0, duration: .7, ease: 'power3.inOut' }, 2.6);
+tl.fromTo('#hud', { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: .6, ease: 'power3.out' }, 3.0);
+
+function flash(at, s) {
+  tl.set('#flash', { '--fx': (s.def.hero[0] * K / 19.2) + '%', '--fy': (s.def.hero[1] * K / 10.8) + '%' }, at);
+  tl.fromTo('#flash', { opacity: 0 }, { opacity: .9, duration: .22, ease: 'power2.in' }, at);
+  tl.to('#flash', { opacity: 0, duration: .6, ease: 'power2.out' }, at + .22);
+}
+
+scenes.forEach((s, i) => {
+  const t0 = INTRO + i * SLIDE - (i === 0 ? .3 : .25); // incoming overlaps the outgoing zoom
+  const end = INTRO + (i + 1) * SLIDE;
+  // Arrival: the camera comes out of the cube it zoomed into (match-cut), the slide rebuilds itself.
+  tl.fromTo(s.scene, { opacity: 0 }, { opacity: 1, duration: .35, ease: 'power1.out' }, t0);
+  tl.fromTo(s.cam, { scale: 1.32 }, { scale: 1, duration: 1.1, ease: 'expo.out' }, t0);
+  tl.fromTo(s.drift, { scale: 1 }, { scale: 1.03, duration: SLIDE + .3, ease: 'sine.inOut' }, t0);
+  tl.fromTo(s.base, { filter: 'brightness(.18) blur(12px)' }, { filter: 'brightness(1) blur(0px)', duration: 1.9, ease: 'power2.inOut' }, t0 + .15);
+  const by = (r) => s.pieces.filter((p) => p.dataset.role === r);
+  const land = (nodes, at, from, dur = .75, stagger = 0) => nodes.length && tl.fromTo(nodes, { opacity: 0, filter: 'blur(10px)', ...from },
+    { opacity: 1, x: 0, y: 0, scale: 1, filter: 'blur(0px)', duration: dur, ease: 'power3.out', stagger }, at);
+  land(by('h'), t0 + .25, { y: 70, scale: .9 }, 1.2);
+  land(by('t'), t0 + .35, { x: 60 }, .8);
+  land(by('s'), t0 + .55, { y: 22 }, .7, .1);
+  land(by('c'), t0 + .8, { y: 46, scale: .96 }, .65, .07);
+  land(by('x'), t0 + 1.2, { x: 40 }, .7);
+  land(by('b'), t0 + 1.45, { y: 40 }, .7);
+  // A light pass across the hero once everything has landed.
+  tl.fromTo(s.sweep, { x: s.hero[1] - 260, opacity: 0 }, { x: s.hero[1] + s.hero[3] + 60, opacity: 1, duration: 1.3, ease: 'power1.inOut' }, t0 + 2.4);
+  tl.to(s.sweep, { opacity: 0, duration: .3 }, t0 + 3.4);
+  // Exit: dive into the cube; the last slide instead pulls back for the closing line.
+  if (i < scenes.length - 1) {
+    tl.to(s.cam, { scale: 1.75, duration: .6, ease: 'power3.in' }, end - .6);
+    tl.to(s.scene, { opacity: 0, duration: .25, ease: 'power1.in' }, end - .2);
+    flash(end - .3, scenes[i + 1]);
+  } else {
+    tl.to(s.cam, { scale: .9, duration: 1.4, ease: 'power3.inOut' }, OUTRO_AT - .6);
+    tl.to(s.scene, { opacity: .14, filter: 'blur(8px)', duration: 1.2, ease: 'power2.inOut' }, OUTRO_AT - .4);
+  }
+});
+
+// Outro: the platform's own promise, then the wordmark; hold to the end.
+tl.fromTo('#o1', { opacity: 0, y: 30, filter: 'blur(10px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: .9, ease: 'power3.out' }, OUTRO_AT + .2);
+tl.fromTo('#o2', { opacity: 0, letterSpacing: '.5em' }, { opacity: 1, letterSpacing: '.12em', duration: 1.0, ease: 'expo.out' }, OUTRO_AT + .8);
+tl.fromTo('#o3', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: .7, ease: 'power3.out' }, OUTRO_AT + 1.1);
+tl.fromTo('#o4', { opacity: 0 }, { opacity: 1, duration: .8, ease: 'power2.out' }, OUTRO_AT + 1.4);
+tl.to('#line', { top: 760, scaleX: 1, opacity: 1, duration: .01 }, OUTRO_AT + .7);
+tl.fromTo('#line', { scaleX: 0 }, { scaleX: .6, duration: 1.0, ease: 'expo.out' }, OUTRO_AT + .72);
+
+window.__timelines = { main: tl };
+window.seek = (t) => { tl.seek(Math.min(Math.max(t, 0), DURATION - 1e-4), true); };
+window.ready = Promise.all([document.fonts.load('700 40px Vazir'), document.fonts.ready,
+  ...['s1', 's2', 's3', 's4', 's5'].map((n) => new Promise((ok) => { const im = new Image(); im.onload = im.onerror = ok; im.src = `assets/${n}.jpg`; }))]);
+// Preview: scale the stage to the window and loop; the renderer sets __odMotionRender and seeks itself.
+if (!window.__odMotionRender && !/[?&]render/.test(location.search)) {
+  const fit = () => { const k = Math.min(innerWidth / 1920, innerHeight / 1080); $('#main').style.transform = `scale(${k})`; $('#main').style.transformOrigin = '0 0'; };
+  fit(); addEventListener('resize', fit);
+  window.ready.then(() => { const a = $('audio'); let t0 = performance.now(), paused = false;
+    $('#main').onclick = () => { paused = !paused; if (paused) a.pause(); else { t0 = performance.now() - clock.t * 1000; a.currentTime = clock.t; a.play().catch(() => {}); } };
+    (function loop(now) { if (!paused) { const t = ((now - t0) / 1000) % DURATION; if (t < clock.t - .5) { a.currentTime = 0; } seek(t); } requestAnimationFrame(loop); })(performance.now());
+    a.play().catch(() => {}); });
+}
+</script>
+</body>
+</html>

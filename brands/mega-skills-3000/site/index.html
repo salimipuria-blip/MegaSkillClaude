@@ -1,0 +1,354 @@
+<title>Mega Skills 3000</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800;900&family=Chakra+Petch:wght@500;600&display=swap">
+<style>
+  /* Layout: a fixed HUD over a scroll story; each chapter pins one slide and a camera walks it
+     (title → cards → the AI-OS cube), then dives into the cube to reach the next chapter. */
+  :root {
+    --ink: #040a1c;        /* page ground: the slides' own navy-black */
+    --navy: #0a1a44;       /* raised panels */
+    --line: #1d3f8f;       /* hairlines and frames */
+    --fg: #eaf1ff;         /* text */
+    --muted: #8ea7d6;      /* secondary text */
+    --blue: #2f7dff;       /* the brand's electric blue */
+    --cyan: #5fd0ff;       /* highlights */
+    --fa: "Vazirmatn", "Vazir", Tahoma, system-ui, sans-serif;
+    --hud: "Chakra Petch", ui-monospace, "SF Mono", Menlo, monospace;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: auto; }
+  body { margin: 0; background: var(--ink); color: var(--fg); font: 400 16px/1.8 var(--fa); direction: rtl; overflow-x: clip;
+    padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: var(--ink); }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; border-radius: 4px; }
+  .latin { direction: ltr; unicode-bidi: isolate; }
+  .label { font: 600 12px/1 var(--hud); letter-spacing: .32em; text-transform: uppercase; color: var(--muted); direction: ltr; }
+
+  /* World: perspective grid + glow, fixed behind everything */
+  .world { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden;
+    background: radial-gradient(ellipse 70% 55% at 50% 38%, #0f2b6e 0%, #081536 45%, var(--ink) 100%); }
+  .world::after { content: ""; position: absolute; left: -30%; right: -30%; bottom: -12%; height: 62%; transform: perspective(700px) rotateX(64deg); transform-origin: 50% 100%;
+    background-image: linear-gradient(rgba(47,125,255,.22) 1px, transparent 1px), linear-gradient(90deg, rgba(47,125,255,.22) 1px, transparent 1px);
+    background-size: 72px 72px; -webkit-mask-image: linear-gradient(transparent, #000 70%); mask-image: linear-gradient(transparent, #000 70%); }
+
+  /* HUD */
+  .hud { position: fixed; top: env(safe-area-inset-top, 0px); left: 0; right: 0; z-index: 50;
+    padding: 12px max(16px, env(safe-area-inset-right, 0px)) 12px max(16px, env(safe-area-inset-left, 0px));
+    background: linear-gradient(rgba(4,10,28,.92), rgba(4,10,28,.55)); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(47,125,255,.18); }
+  .hud-row { display: flex; align-items: center; gap: 20px; max-width: 1400px; margin: 0 auto; }
+  .mark { display: flex; align-items: center; gap: 10px; text-decoration: none; font: 700 15px/1 var(--fa); white-space: nowrap; }
+  .mark svg { width: 30px; height: 20px; flex: none; }
+  .chapters { display: flex; gap: 4px; margin-inline-start: auto; list-style: none; padding: 0; margin-block: 0; }
+  .chapters a { display: block; padding: 6px 12px; border-radius: 999px; text-decoration: none; font-size: 13.5px; color: var(--muted); transition: color .2s, background .2s; }
+  .chapters a:hover { color: var(--fg); }
+  .chapters a.on { color: var(--fg); background: rgba(47,125,255,.22); box-shadow: inset 0 0 0 1px rgba(95,208,255,.35); }
+  .progress { position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; transform-origin: 100% 50%; transform: scaleX(0);
+    background: linear-gradient(270deg, var(--cyan), var(--blue)); box-shadow: 0 0 10px var(--blue); }
+
+  /* Opening */
+  .open { max-width: 1200px; margin: 0 auto; padding-block: calc(env(safe-area-inset-top, 0px) + 140px) 72px; display: grid; gap: 26px; }
+  .open .label { color: var(--cyan); }
+  .open h1 { margin: 0; font: 900 clamp(46px, 9vw, 128px)/1 var(--fa); letter-spacing: .02em; direction: ltr; text-align: right; text-wrap: balance; }
+  .open h1 b { background: linear-gradient(90deg, var(--blue), var(--cyan)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .open .lede { margin: 0; max-width: 34ch; font: 700 clamp(22px, 3vw, 36px)/1.5 var(--fa); text-wrap: balance; }
+  .open .sub { margin: 0; max-width: 60ch; color: var(--muted); font-size: clamp(16px, 1.6vw, 19px); }
+  .flow { display: flex; flex-wrap: wrap; gap: 10px 14px; direction: ltr; justify-content: flex-end; }
+  .flow span { font: 600 12px/1 var(--hud); letter-spacing: .26em; color: var(--muted); }
+  .flow i { font-style: normal; color: var(--blue); }
+  .toc { list-style: none; padding: 0; margin: 18px 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; counter-reset: ch; }
+  .toc a { display: grid; gap: 4px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: rgba(10,26,68,.55); text-decoration: none; transition: border-color .2s, transform .2s; }
+  .toc a:hover { border-color: var(--cyan); transform: translateY(-2px); }
+  .toc .label { font-size: 10.5px; color: var(--cyan); }
+  .toc strong { font-size: 16px; font-weight: 700; }
+  .cue { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+  .cue .bar { width: 2px; height: 34px; background: linear-gradient(var(--cyan), transparent); animation: cue 1.8s ease-in-out infinite; }
+  @keyframes cue { 0%, 100% { transform: scaleY(.4); transform-origin: top; } 50% { transform: scaleY(1); } }
+
+  /* Chapter: a pinned stage — slide frame + caption */
+  .chapter { position: relative; }
+  .stage { min-height: 100svh; display: grid; align-content: center; justify-items: center; gap: 18px;
+    padding-block: calc(env(safe-area-inset-top, 0px) + 74px) 22px; }
+  .frame { position: relative; width: min(100%, calc((100svh - 250px) * 1.7768), 1500px); aspect-ratio: 1672 / 941; max-width: 100%;
+    border-radius: 14px; overflow: hidden; background: #050c22; box-shadow: 0 0 0 1px rgba(47,125,255,.28), 0 30px 80px rgba(0,0,0,.55), 0 0 90px rgba(47,125,255,.14); }
+  .cam { position: absolute; left: 0; top: 0; width: 1672px; height: 941px; transform-origin: 0 0; will-change: transform; }
+  .base, .pc { position: absolute; background-size: 1672px 941px; background-repeat: no-repeat; }
+  .base { inset: 0; }
+  .glint { position: absolute; top: 0; height: 100%; width: 180px; left: 0; opacity: 0; pointer-events: none; mix-blend-mode: screen; transform: skewX(-14deg);
+    background: linear-gradient(90deg, transparent, rgba(140,205,255,.45), transparent); }
+  .caption { width: min(100%, 980px); display: grid; grid-template-columns: auto 1fr; gap: 6px 18px; align-items: baseline; min-height: 92px; }
+  .caption .num { grid-row: span 2; font: 600 13px/1 var(--hud); letter-spacing: .2em; color: var(--cyan); direction: ltr; padding-top: 6px; }
+  .caption h2 { margin: 0; font: 800 clamp(20px, 2.4vw, 30px)/1.35 var(--fa); text-wrap: balance; }
+  .steps { position: relative; min-height: 2.2em; }
+  .step { margin: 0; color: var(--muted); font-size: clamp(15px, 1.5vw, 18px); line-height: 1.75; }
+  .stack .step + .step { display: none; } /* until the script takes over, the first line stands alone */
+  .js .steps .step { position: absolute; inset: 0 0 auto 0; }
+  .dots { display: flex; gap: 6px; direction: ltr; justify-content: flex-end; }
+  .dots i { width: 22px; height: 3px; border-radius: 2px; background: rgba(142,167,214,.3); transition: background .3s; }
+  .dots i.on { background: var(--cyan); box-shadow: 0 0 8px var(--blue); }
+
+  /* Film + close */
+  .film { max-width: 1200px; margin: 0 auto; padding-block: 90px 40px; display: grid; gap: 18px; }
+  .film h2, .close h2 { margin: 0; font: 800 clamp(26px, 3.4vw, 44px)/1.3 var(--fa); text-wrap: balance; }
+  .film video { width: 100%; max-width: 100%; aspect-ratio: 16 / 9; border-radius: 14px; background: #000; box-shadow: 0 0 0 1px rgba(47,125,255,.28), 0 30px 80px rgba(0,0,0,.5); }
+  .film p { margin: 0; color: var(--muted); }
+  .close { max-width: 1200px; margin: 0 auto; padding-block: 80px calc(env(safe-area-inset-bottom, 0px) + 60px); display: grid; gap: 18px; justify-items: center; text-align: center; }
+  .close h2 em { font-style: normal; background: linear-gradient(90deg, var(--blue), var(--cyan)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .close .line { width: min(420px, 70%); height: 2px; background: linear-gradient(90deg, transparent, var(--cyan), transparent); box-shadow: 0 0 14px var(--blue); }
+  .close p { margin: 0; color: var(--muted); }
+
+  @media (max-width: 760px) {
+    .chapters { display: none; }
+    .hud-row .now { margin-inline-start: auto; }
+    .stage { align-content: start; padding-top: calc(env(safe-area-inset-top, 0px) + 96px); }
+    .frame { width: 100%; aspect-ratio: auto; height: min(60svh, 118vw); border-radius: 12px; }
+    .caption { grid-template-columns: 1fr; }
+    .caption .num { grid-row: auto; padding-top: 0; }
+  }
+  @media (min-width: 761px) { .hud-row .now { display: none; } }
+  .now { font: 600 11px/1 var(--hud); letter-spacing: .24em; color: var(--cyan); direction: ltr; }
+  @media (prefers-reduced-motion: reduce) { .cue .bar { animation: none; } }
+</style>
+
+<div class="world" aria-hidden="true"></div>
+
+<header class="hud">
+  <div class="hud-row">
+    <a class="mark" href="#top" aria-label="Mega Skills 3000">
+      <svg viewBox="0 0 30 20" aria-hidden="true"><path d="M1 19 9 3l5 9 5-9 10 16h-6l-4-7-5 7-5-7-4 7z" fill="url(#mg)"/><defs><linearGradient id="mg" x1="0" x2="1"><stop offset="0" stop-color="#2f7dff"/><stop offset="1" stop-color="#5fd0ff"/></linearGradient></defs></svg>
+      <span class="latin">Mega Skills 3000</span>
+    </a>
+    <ul class="chapters" id="chapters"></ul>
+    <span class="now" id="now">AI OPERATING SYSTEM</span>
+  </div>
+  <div class="progress" id="progress"></div>
+</header>
+
+<main id="top">
+  <section class="open" aria-labelledby="t-open">
+    <span class="label">AI OPERATING SYSTEM</span>
+    <h1 id="t-open">Hermes × <b>3000</b></h1>
+    <p class="lede">سیستم عامل هوش مصنوعی برای اجرای واقعی پروژه‌ها</p>
+    <p class="sub">از ایده تا اجرا؛ با ارکستریشن، مهارت، ابزار و مدل در یک هستهٔ واحد.</p>
+    <div class="flow"><span>IDEAS</span><i>→</i><span>SKILLS</span><i>→</i><span>TOOLS</span><i>→</i><span>MODELS</span><i>→</i><span>ORCHESTRATION</span><i>→</i><span>REAL IMPACT</span></div>
+    <ol class="toc" id="toc"></ol>
+    <div class="cue"><span class="bar"></span><span class="label">SCROLL</span></div>
+  </section>
+
+  <div id="story"></div>
+
+  <section class="film" id="film" aria-labelledby="t-film">
+    <span class="label">THE FILM · 37s</span>
+    <h2 id="t-film">همهٔ داستان در ۳۷ ثانیه</h2>
+    <video src="assets/film.mp4" poster="assets/s1.jpg" controls playsinline preload="metadata"></video>
+    <p>صدا دارد؛ برای پخش، روی ویدیو بزن.</p>
+  </section>
+
+  <section class="close" aria-labelledby="t-close">
+    <div class="line"></div>
+    <h2 id="t-close">هوش مصنوعی فقط پاسخ نمی‌دهد؛ <em>عمل می‌کند</em></h2>
+    <p>سازمان‌های هوشمندتر، آینده‌ی روشن‌تر</p>
+    <span class="label">SKILLS · PEOPLE · A BRIGHTER TOMORROW</span>
+  </section>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous"></script>
+<script>
+// Every chapter: the slide, its pieces (windows into the same image at the same place, so the
+// assembled slide is pixel-identical to the design), and the camera stops with the slide's own words.
+const W = 1672, H = 941;
+const CHAPTERS = [
+  { id: 'hermes', name: 'Hermes × 3000', img: 's1', cube: [965, 125, 700, 715],
+    pieces: [['t', 70, 140, 925, 105], ['s', 70, 248, 925, 62], ['s', 70, 315, 880, 50], ['s', 70, 378, 820, 36],
+      ...[73, 293, 512, 732].flatMap((x) => [['c', x - 3, 428, 210, 172], ['c', x - 3, 606, 210, 178]]), ['b', 330, 815, 1012, 84]],
+    title: 'سیستم عامل هوش مصنوعی برای اجرای واقعی پروژه‌ها',
+    stops: [[60, 140, 940, 280, 'از ایده تا اجرا؛ با ارکستریشن، مهارت، ابزار و مدل در یک هستهٔ واحد'],
+            [60, 422, 890, 368, 'Hermes، Skills، MCP، Models، Python، Node، Git و Orchestration کنار هم'],
+            [965, 125, 700, 715, 'پلتفرم یکپارچه برای ساخت، مدیریت و اجرای Agentهای هوشمند']] },
+  { id: 'local', name: 'اجرای Local', img: 's2', cube: [978, 120, 670, 600],
+    pieces: [['t', 70, 140, 570, 115], ['s', 70, 262, 880, 62], ['s', 70, 332, 820, 40],
+      ...[70, 365, 661].flatMap((x) => [['c', x, 390, 282, 204], ['c', x, 602, 282, 212]]), ['x', 972, 720, 666, 94], ['b', 320, 824, 1030, 80]],
+    title: 'زیرساخت محلی آماده برای توسعه و تست عملیاتی',
+    stops: [[60, 140, 890, 240, 'DEVELOP + TEST + INTEGRATE + VALIDATE + DEPLOY LOCALLY'],
+            [60, 385, 890, 430, 'Python 3.11، Node 22، uv، Git و Skillهای اولیه آماده‌اند؛ Hermes Repo در حال آماده‌سازی است'],
+            [972, 120, 676, 700, 'پایه فنی آماده است؛ گام بعدی Sync، Provider و Smoke Test است']] },
+  { id: 'mcp', name: 'ابزارها و MCP', img: 's3', cube: [782, 150, 535, 660],
+    pieces: [['t', 70, 140, 670, 112], ['s', 70, 266, 750, 62], ['s', 70, 332, 700, 36],
+      ...[70, 309, 548].flatMap((x) => [['c', x, 378, 228, 196], ['c', x, 581, 228, 200]]), ['x', 1322, 166, 316, 558], ['b', 372, 804, 932, 88]],
+    title: 'اتصال Agent به فایل، Git، ترمینال و ابزارهای محلی',
+    stops: [[60, 140, 760, 240, 'CONNECT → TOOLS → EXECUTE → AUTOMATE → REAL IMPACT'],
+            [60, 372, 730, 412, 'Files، Git، Terminal، Browser، Local Tools و MCP Server'],
+            [1322, 166, 316, 558, 'اجرای واقعی، اتصال مستقیم، کاهش کار دستی'],
+            [782, 150, 535, 660, 'هوش مصنوعی فقط پاسخ نمی‌دهد؛ عمل می‌کند']] },
+  { id: 'chaining', name: 'Skill Chaining', img: 's4', cube: [995, 160, 650, 432],
+    pieces: [['t', 72, 140, 810, 108], ['s', 72, 258, 860, 66], ['s', 72, 332, 800, 36],
+      ...[58, 249, 440, 630, 818].map((x, i) => ['c', x, 382, i < 4 ? 190 : 172, 228]),
+      ...[55, 447, 840, 1234].map((x) => ['c', x, 628, 386, 172]), ['x', 1495, 500, 160, 118], ['b', 336, 816, 1000, 80]],
+    title: 'ترکیب چند Skill برای اجرای مأموریت‌های پیچیده',
+    stops: [[55, 378, 935, 236, 'تحلیل ← انتخاب ← اجرا ← بررسی ← نتیجه'],
+            [50, 624, 1572, 180, 'چندمرحله‌ای، قابل کنترل، تکرارپذیر، قابل توسعه'],
+            [995, 160, 650, 440, 'چند Skill، یک جریان اجرایی منسجم']] },
+  { id: 'models', name: 'مدل‌ها و Providerها', img: 's5', cube: [1020, 140, 640, 680],
+    pieces: [['t', 68, 150, 980, 112], ['s', 68, 266, 960, 62], ['s', 72, 334, 760, 36],
+      ...[54, 394, 720].map((x) => ['c', x, 388, 320, 382]), ['b', 330, 800, 1012, 88]],
+    title: 'معماری چندمدلی برای پایداری، کیفیت و کنترل هزینه',
+    stops: [[50, 385, 970, 390, 'Qwen / Hugging Face اصلی، Provider جایگزین برای تداوم، Codex پشتیبان ممتاز'],
+            [1020, 140, 640, 680, 'Failover، Model Switching، Cost Control، Provider Abstraction'],
+            [330, 800, 1012, 88, 'معماری مدل‌محور نیست؛ انعطاف‌پذیر و قابل تعویض است']] },
+];
+
+const $ = (s, r = document) => r.querySelector(s);
+const el = (tag, attrs = {}, parent) => { const e = document.createElement(tag); Object.assign(e, attrs); if (parent) parent.append(e); return e; };
+const story = $('#story');
+
+// ── Build: HUD links, table of contents, and one pinned stage per chapter ──
+CHAPTERS.forEach((c, i) => {
+  const n = String(i + 1).padStart(2, '0');
+  el('a', { href: '#' + c.id, textContent: c.name }, el('li', {}, $('#chapters')));
+  const a = el('a', { href: '#' + c.id }, el('li', {}, $('#toc')));
+  el('span', { className: 'label', textContent: 'CHAPTER ' + n }, a); el('strong', { textContent: c.name }, a);
+
+  const sec = el('section', { className: 'chapter', id: c.id }, story);
+  sec.setAttribute('aria-labelledby', 'h-' + c.id);
+  const stage = el('div', { className: 'stage' }, sec);
+  const frame = el('div', { className: 'frame' }, stage);
+  frame.setAttribute('role', 'img'); frame.setAttribute('aria-label', c.name + ': ' + c.title);
+  const cam = el('div', { className: 'cam' }, frame);
+  const src = 'url(assets/' + c.img + '.jpg)';
+  el('div', { className: 'base' }, cam).style.backgroundImage = src;
+  c.pieces = [['h', ...c.cube], ...c.pieces]; // the AI-OS cube lands first: it is where the camera arrives from
+  c.nodes = c.pieces.map(([role, x, y, w, h]) => {
+    const p = el('div', { className: 'pc' }, cam);
+    Object.assign(p.style, { left: x + 'px', top: y + 'px', width: w + 'px', height: h + 'px', backgroundImage: src, backgroundPosition: (-x) + 'px ' + (-y) + 'px' });
+    p.dataset.role = role; return p;
+  });
+  c.base = cam.firstChild;
+  const glint = el('div', { className: 'glint' }, cam);
+  Object.assign(glint.style, { top: c.cube[1] + 'px', height: c.cube[3] + 'px' });
+
+  const cap = el('div', { className: 'caption' }, stage);
+  el('span', { className: 'num', textContent: n + ' / 05' }, cap);
+  el('h2', { id: 'h-' + c.id, textContent: c.title }, cap);
+  const steps = el('div', { className: 'steps stack' }, cap);
+  c.lines = c.stops.map((s) => el('p', { className: 'step', textContent: s[4] }, steps));
+  const dots = el('div', { className: 'dots' }, cap);
+  c.dots = c.stops.map(() => el('i', {}, dots));
+  c.dots[0].classList.add('on');
+  Object.assign(c, { sec, stage, frame, cam, glint, steps });
+});
+
+// ── Camera: fit a rectangle of the slide (its own pixels) into the frame ──
+// Works for any frame shape: 16:9 on desktop, a taller frame on phones.
+function fitTo(c, x, y, w, h, zoomCap = 2.6, pad = .94) {
+  const fw = c.frame.clientWidth, fh = c.frame.clientHeight, base = Math.min(fw / W, fh / H);
+  const k = Math.max(base, Math.min(fw / w, fh / h, base * zoomCap) * pad);
+  const place = (frame, size, centre) => (size * k <= frame ? (frame - size * k) / 2   // smaller than the frame: centre it
+    : Math.min(0, Math.max(frame - size * k, frame / 2 - centre * k)));                // otherwise never past the slide's edge
+  return { x: place(fw, W, x + w / 2), y: place(fh, H, y + h / 2), scale: k };
+}
+const whole = (c) => fitTo(c, 0, 0, W, H, 1, 1);
+
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const hasGsap = typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined';
+
+function setCaption(c, i) {
+  c.lines.forEach((l, k) => { l.style.opacity = k === i ? 1 : 0; l.style.transform = k === i ? 'none' : 'translateY(8px)'; l.setAttribute('aria-hidden', k === i ? 'false' : 'true'); });
+  c.dots.forEach((d, k) => d.classList.toggle('on', k === i));
+}
+
+function staticLayout() {
+  // No pinning: every slide shown whole; captions listed in full.
+  CHAPTERS.forEach((c) => { gsap ? gsap.set(c.cam, whole(c)) : (c.cam.style.transform = 'scale(' + whole(c).scale + ')'); c.steps.classList.remove('stack'); });
+}
+
+if (!hasGsap || reduced) {
+  if (hasGsap) staticLayout(); else CHAPTERS.forEach((c) => { c.cam.style.transform = 'scale(' + (c.frame.clientWidth / W) + ')'; c.steps.classList.remove('stack'); });
+  addEventListener('resize', () => CHAPTERS.forEach((c) => { c.cam.style.transform = 'scale(' + (c.frame.clientWidth / W) + ')'; }));
+} else {
+  document.documentElement.classList.add('js');
+  gsap.registerPlugin(ScrollTrigger);
+  // Mobile URL-bar show/hide changes the viewport height; ignoring it keeps pins from jumping.
+  ScrollTrigger.config({ ignoreMobileResize: true });
+  CHAPTERS.forEach((c) => { c.steps.classList.remove('stack'); setCaption(c, 0); });
+
+  const build = () => {
+    CHAPTERS.forEach((c, ci) => {
+      const last = ci === CHAPTERS.length - 1;
+      const n = c.stops.length;
+      // Scroll budget: assemble, one beat per stop, return to the whole slide, then dive into the cube.
+      const tl = gsap.timeline({ defaults: { ease: 'power2.inOut' } });
+      gsap.set(c.cam, whole(c));
+      const by = (r) => c.nodes.filter((p) => p.dataset.role === r);
+      tl.fromTo(c.cam, fitTo(c, c.cube[0], c.cube[1], c.cube[2], c.cube[3], 1.5), { ...whole(c), duration: 1, ease: 'power3.out', immediateRender: true }, 0);
+      tl.fromTo(c.base, { opacity: .2, filter: 'blur(6px)' }, { opacity: 1, filter: 'blur(0px)', duration: .5, ease: 'power1.inOut' }, 1.15);
+      tl.set(c.base, { filter: 'none' }, 1.65);
+      // fromTo with explicit end states: plain from() tweens could stay at their start in a scrubbed timeline.
+      const land = (nodes, from, dur, at, stagger = 0) => nodes.length && tl.fromTo(nodes, { opacity: .15, ...from },
+        { opacity: 1, x: 0, y: 0, scale: 1, duration: dur, stagger, ease: 'power3.out', immediateRender: true }, at);
+      land(by('h'), { y: 40, scale: .92 }, .9, 0);
+      land(by('t'), { x: 80 }, .8, .1);
+      land(by('s'), { y: 26 }, .7, .25, .1);
+      land(by('c'), { y: 50, scale: .96 }, .7, .4, .06);
+      land(by('x'), { x: 50 }, .7, .6);
+      land(by('b'), { y: 40 }, .7, .7);
+      let at = 1.6;
+      c.stops.forEach((s, k) => {
+        tl.to(c.cam, { ...fitTo(c, s[0], s[1], s[2], s[3]), duration: 1 }, at);
+        if (k === n - 1) tl.fromTo(c.glint, { x: c.cube[0] - 200, opacity: 0 }, { x: c.cube[0] + c.cube[2], opacity: 1, duration: 1, ease: 'none' }, at + .6);
+        at += 1.6;
+      });
+      tl.to(c.cam, { ...whole(c), duration: 1 }, at);
+      tl.to(c.glint, { opacity: 0, duration: .2 }, at);
+      if (!last) {
+        tl.to(c.cam, { ...fitTo(c, c.cube[0] + c.cube[2] * .3, c.cube[1] + c.cube[3] * .3, c.cube[2] * .4, c.cube[3] * .4, 5), duration: 1, ease: 'power3.in' }, at + 1.3);
+      } else tl.to({}, { duration: .6 }, at + 1);
+      ScrollTrigger.create({
+        trigger: c.sec, start: 'top top', end: () => '+=' + Math.round(innerHeight * (1.2 + n * .75)),
+        pin: c.stage, pinSpacing: true, scrub: .7, animation: tl, invalidateOnRefresh: true,
+        onToggle: (self) => { if (self.isActive) markChapter(ci); },
+        onUpdate: () => { const k = Math.max(0, Math.min(n - 1, Math.floor((tl.time() - 1.6 + .6) / 1.6))); if (k !== c.shown) { c.shown = k; setCaption(c, k); } },
+      });
+      c.tl = tl;
+    });
+  };
+
+  let current = -1;
+  function markChapter(i) {
+    if (i === current) return; current = i;
+    document.querySelectorAll('#chapters a').forEach((a, k) => a.classList.toggle('on', k === i));
+    $('#now').textContent = i < 0 ? 'AI OPERATING SYSTEM' : 'CHAPTER ' + String(i + 1).padStart(2, '0') + ' / 05';
+  }
+  const wire = () => {
+    build();
+    ScrollTrigger.create({ start: 0, end: 'max', onUpdate: (self) => gsap.set('#progress', { scaleX: self.progress }) });
+    ScrollTrigger.create({ trigger: '.open', start: 'top top', end: 'bottom top', onEnterBack: () => markChapter(-1) });
+    ScrollTrigger.create({ trigger: '#film', start: 'top 60%', onEnter: () => markChapter(-1), onLeaveBack: () => markChapter(CHAPTERS.length - 1) });
+  };
+  wire();
+
+  // Re-fit the camera only when the width changes (rotation, desktop resize); height-only changes
+  // (the phone's URL bar) never rebuild the story.
+  let lastW = innerWidth;
+  addEventListener('resize', () => {
+    if (Math.abs(innerWidth - lastW) < 2) return;
+    lastW = innerWidth;
+    const y = scrollY;
+    ScrollTrigger.getAll().forEach((t) => t.kill());
+    CHAPTERS.forEach((c) => { c.tl.kill(); gsap.set([c.cam, c.stage, c.base, c.glint, ...c.nodes], { clearProps: 'transform,opacity,filter' }); c.shown = 0; setCaption(c, 0); });
+    wire();
+    ScrollTrigger.refresh(); scrollTo(0, y);
+  });
+
+  // Chapter links: jump to the start of that chapter's pin.
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[href^="#"]'); if (!a) return;
+    const target = a.getAttribute('href') === '#top' ? document.body : document.getElementById(a.getAttribute('href').slice(1));
+    if (!target) return; e.preventDefault();
+    window.scrollTo({ top: target === document.body ? 0 : target.getBoundingClientRect().top + scrollY, behavior: 'smooth' });
+  });
+}
+</script>
