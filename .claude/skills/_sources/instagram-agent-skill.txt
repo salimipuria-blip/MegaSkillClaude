@@ -1,0 +1,6 @@
+instagram-agent-skill
+repo: https://github.com/Jakeschincariol/instagram-agent-skill
+commit: d03c56bb598be770c60b201f94237e5d1a4268a6
+license: MIT
+reviewed: 2026-11-02 — stdlib-only Python (no network, no subprocess, no credentials); SKILL.md forbids logging in for the user or scraping.
+skills: ig-audit ig-caption ig-carousel ig-comment ig-dm ig-human ig-plan ig-profile ig-reel ig-reply ig-repurpose ig-story ig-viral 
