@@ -199,7 +199,7 @@ jobs:
           if [ "$state" != "enabled" ]; then
             echo "::notice::Dependency review skipped — Dependency graph is disabled in repository security settings (owner action; see docs/AUDIT_REMEDIATION_2026-11-04.md)."
           fi
-      - uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0
+      - uses: actions/dependency-review-action@bbc44d14a204704ccc493733616cd1e93a0321ec # v5.0.1
         if: steps.depgraph.outputs.enabled == 'enabled'
         with:
           fail-on-severity: high
